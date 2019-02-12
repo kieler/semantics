@@ -19,6 +19,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.*
+import java.util.Map
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * A CodeContainer contains a map of files. Each file is represented by a string.
@@ -31,6 +33,7 @@ import static com.google.common.base.Preconditions.*
 class CodeContainer {
     
     @Accessors List<CodeFile> files = <CodeFile>newArrayList
+    @Accessors List<Map<CodeGeneratorNames, String>> naming = <Map<CodeGeneratorNames, String>> newArrayList
     
     def get(String file) {
         files.findFirst[fileName.equals(file)]

@@ -13,11 +13,12 @@
 package de.cau.cs.kieler.kicool.compilation.codegen
 
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.annotations.NamedObject
+
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.annotations.Nameable
 
 /**
@@ -34,13 +35,17 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     
     @Accessors var T rootObject
     @Accessors var E moduleObject
-    @Accessors var Processor<T, CodeContainer> processorInstance
+    @Accessors var AbstractCodeGenerator<T, E> processorInstance            // Also the instance of the code generator
     @Accessors var Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap
     @Accessors var String codeFilename
     @Accessors var CodeGeneratorModule<T, E> parent
     
-    def CodeGeneratorModule<T, E> configure(String baseName, T rootObject, E moduleObject, Processor<T, CodeContainer> processorInstance, 
-        Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap, String codeFilename, CodeGeneratorModule<T, E> parent
+    @Accessors var String name
+    @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
+    
+    def CodeGeneratorModule<T, E> configure(String baseName, T rootObject, E moduleObject, AbstractCodeGenerator<T, E> processorInstance, 
+        Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap, String codeFilename, CodeGeneratorModule<T, E> parent,
+        IProperty<String> namingProperty
     ) {
         this.baseName = baseName
         this.rootObject = rootObject
@@ -55,6 +60,11 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
         
         configure
         
+        this.name = prefix + baseName + suffix
+        if (namingProperty !== null) {
+            customNaming(namingProperty)
+        }
+        
         return this
     }
     
@@ -63,6 +73,10 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     }
     
     override getName() {
+        return this.name
+    }
+    
+    protected def getModuleName() {
         if (moduleObject instanceof Nameable) {
             return moduleObject.name
         } else if (moduleObject !== null) {
@@ -94,6 +108,19 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     protected def hostcodeSafeName(String string) {
         if (string === null) return ""
         string.replaceAll("[\\s-]","_")
+    }    
+    
+    protected def customNaming(IProperty<String> namingProperty) {
+        var naming = processorInstance.environment.getProperty(namingProperty)
+        val namingMagic = processorInstance.environment.getProperty(CODE_NAMING_MAGIC)
+        
+        if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_PREFIX) {
+            naming = moduleName + naming
+        } else if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_SUFFIX) {
+            naming = naming + moduleName
+        }
+        
+        this.name = naming 
     }    
     
 }

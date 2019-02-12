@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import java.util.Set
 
 /**
  * Internal class for handling the processor environments.
@@ -133,11 +134,15 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
                     target.propertyMap.put(k, clone)
                 }
             } else if (v instanceof List<?>) {
-                if (k.equals(Environment.ERRORS)) {
+                if (k.equals(Environment.ERRORS) || k.equals(Environment.WARNINGS) || k.equals(Environment.INFOS)) {
                     target.propertyMap.put(k, new LinkedList<String>(v as List<String>))
                 } else {
                     target.propertyMap.put(k, v)
                 }
+            } else if (v instanceof Set<?>) {
+                    target.propertyMap.put(k, v)
+            } else if (v instanceof Map<?,?>) {
+                    target.propertyMap.put(k, v)
             } else {
                 target.propertyMap.put(k, v)
 //                    System.err.println("Prime environment wants to copy value of key \"" + k + "\", but the value "+ 

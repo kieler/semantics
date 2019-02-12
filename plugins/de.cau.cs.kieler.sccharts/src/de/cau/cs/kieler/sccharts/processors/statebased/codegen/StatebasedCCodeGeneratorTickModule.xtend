@@ -44,10 +44,6 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
         logic = (parent as StatebasedCCodeGeneratorModule).logic as StatebasedCCodeGeneratorLogicModule
     }
     
-    override getName() {
-        TICK_NAME + baseName + suffix
-    }
-    
     override generateInit() {
         code.add(
             MLC("The surrounding application should call " + getName + "() once per clock tick.",

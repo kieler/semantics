@@ -49,7 +49,9 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
         for (scg : rootModel.scgs) {
-            val generatorModule = createCodeGenetatorModule.configure("", rootModel, scg, this, moduleMap, scg.name, null)
+            val generatorModule = createCodeGenetatorModule.configure(scg.name, rootModel, scg, this, moduleMap, 
+                scg.name, null, null
+            )
             moduleMap.put(scg, generatorModule)
             generatorModule.suffix = hostcodeSafeName(scg.name)
         }

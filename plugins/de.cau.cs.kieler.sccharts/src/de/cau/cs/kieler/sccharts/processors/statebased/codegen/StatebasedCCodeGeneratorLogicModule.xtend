@@ -60,7 +60,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     }
     
     override getName() {
-        struct.getStateName(rootState) + baseName + suffix
+        struct.getStateName(rootState)
     }
     
     @Accessors val functions = <StringBuilder> newLinkedList

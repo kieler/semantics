@@ -58,7 +58,8 @@ class StatebasedCCodeGenerator extends AbstractCodeGenerator<SCCharts, State> {
     
     override createModuleMap(SCCharts rootModel, Map<State, CodeGeneratorModule<SCCharts, State>> moduleMap) {
         for (rootState : rootModel.rootStates) {
-            val generatorModule = createCodeGenetatorModule.configure("", rootModel, rootState, this, moduleMap, rootState.name, null)
+            val generatorModule = createCodeGenetatorModule.configure(rootState.name.hostcodeSafeName, 
+                rootModel, rootState, this, moduleMap, rootState.name, null, null)
             moduleMap.put(rootState, generatorModule)
             generatorModule.suffix = hostcodeSafeName(rootState.name)
             (generatorModule as StatebasedCCodeGeneratorModule).printDebug = environment.getProperty(PRINT_DEBUG_ENABLED)

@@ -83,10 +83,6 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     @Accessors Map<State, String> stateEnumNames = <State, String> newHashMap
     @Accessors Map<ControlflowRegion, String> contextNames = <ControlflowRegion, String> newHashMap
     
-    override getName() {
-        STRUCT_NAME + baseName + suffix
-    }
-    
     def getVariableName() {
         STRUCT_CONTEXT_NAME
     }
