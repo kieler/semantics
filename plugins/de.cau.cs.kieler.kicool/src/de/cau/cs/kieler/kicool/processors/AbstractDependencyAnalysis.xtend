@@ -64,6 +64,13 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+
+    public static val IProperty<Boolean> ALLOW_OLD_SC_SYNTAX = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", true)
+
+    public static val IProperty<Boolean> ALLOW_MULTIPLE_RELATIVE_READERS = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.multipleRelativeReaders", false)
+
         
     public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
         new Property<ValuedObjectAccessors>("de.cau.cs.kieler.kexpressions.keffects.dependencies.valuedObjectAccessors", null)
@@ -132,6 +139,13 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         
         val writeVOI = new ValuedObjectIdentifier(assignment)
         
+        // If a writer was detected, remove previously registered read accesses,
+        // because the access is recognized as write and we don't want another write-read
+        // dependency to be created.
+        for (readAccess : valuedObjectAccessors.getAccesses(writeVOI).filter[ node == assignment ].toList) {
+            valuedObjectAccessors.removeAccess(writeVOI, readAccess)
+        }        
+        
         for(index : assignment.indices) {
             val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
             if (indexReaderVOIs.contains(writeVOI)) {
@@ -146,8 +160,28 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             var ValuedObject scheduleObject = null       
             var priority = GLOBAL_WRITE
             
-            if (readVOIs.contains(writeVOI)) priority = GLOBAL_RELATIVE_WRITE
-            if (assignment.operator != AssignOperator.ASSIGN) priority = GLOBAL_RELATIVE_WRITE
+            // Detect relative writes.
+            if (environment.getProperty(ALLOW_OLD_SC_SYNTAX)) {
+                if (readVOIs.contains(writeVOI)) {
+                    if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
+                        priority = GLOBAL_RELATIVE_WRITE
+                    } else {
+                        if (readVOIs.filter[it == writeVOI].size == 1 && assignment.operator == AssignOperator.ASSIGN) {
+                            priority = GLOBAL_RELATIVE_WRITE    
+                        }
+                    }
+                }
+            }
+            
+            if (assignment.operator != AssignOperator.ASSIGN) {
+                if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
+                    priority = GLOBAL_RELATIVE_WRITE
+                } else {
+                    if (!readVOIs.contains(writeVOI)) {
+                        priority = GLOBAL_RELATIVE_WRITE    
+                    }
+                }
+             }
             
             if (sched instanceof ScheduleObjectReference) {
                 schedule = sched.valuedObject.declaration as ScheduleDeclaration
@@ -272,7 +306,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         if (!concurrent && saveOnlyConflicting) return
         val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
         if (confluent && saveOnlyConflicting) return
-
+        
         val dependency = source.node.createDependency(target.node) => [
             it.reference = valuedObjectIdentifier.valuedObject
             it.type = type

@@ -6,6 +6,7 @@ import de.cau.cs.kieler.annotations.StringPragma
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.annotations.AnnotationsFactory
+import java.util.List
 
 /**
  * Annotations extensions
@@ -30,6 +31,13 @@ class PragmaExtensions {
         AnnotationsFactory::eINSTANCE.createStringPragma => [
             it.name = name
             it.values += value
+        ]
+    }
+    
+    def StringPragma createStringPragma(String name, List<String> values) {
+        AnnotationsFactory::eINSTANCE.createStringPragma => [
+            it.name = name
+            it.values.addAll(values)
         ]
     }
 
