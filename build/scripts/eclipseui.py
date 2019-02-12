@@ -69,9 +69,9 @@ def main(args):
 
     # report
     if len(failed):
-        print('\nThe following non-eclipse-ui plugins do not comply with the defined requirements:')
+        errPrint('%s The following non-eclipse-ui plugins do not comply with the defined requirements:' % ('[WARNING]' if args.warn else '[ERROR]'))
         for fail in failed:
-            print(' - %s' % fail)
+            errPrint(' - %s' % fail)
 
     # indicate error
     if not args.warn and len(failed):
@@ -86,24 +86,18 @@ def checkDependencies(base, args):
             for line in file.readlines()[1:]:
                 dep = line.split(':')[1]
                 if isBanned.match(dep):
-                    message('Has (possibly transient) dependency to banned plugin: %s' % dep, args)
+                    print('Has (possibly transient) dependency to banned plugin: %s' % dep)
                     success = False
             return success
     else:
-        message('Missing dependencies file (%s)' % DEP_FILE, args)
+        print('Missing dependencies file (%s)' % DEP_FILE)
         return False
 
 def checkPluginXml(base, args):
     if isfile(join(base, 'plugin.xml')):
-        message('Has plugin.xml', args)
+        print('Has plugin.xml')
         return False
     return True
-
-def message(msg, args):
-    if args.warn:
-        print('[WARNING] ' + msg)
-    else:
-        errPrint('[ERROR] ' + msg)
 
 def stop(msg):
     errPrint('[ERROR] ' + msg)
