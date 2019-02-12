@@ -69,9 +69,9 @@ def main(args):
 
     # report
     if len(failed):
-        errPrint('%s The following non-eclipse-ui plugins do not comply with the defined requirements:' % ('[WARNING]' if args.warn else '[ERROR]'))
+        print('%s The following non-eclipse-ui plugins do not comply with the defined requirements:' % ('[WARNING]' if args.warn else '[ERROR]'))
         for fail in failed:
-            errPrint(' - %s' % fail)
+            print(' - %s' % fail)
 
     # indicate error
     if not args.warn and len(failed):
