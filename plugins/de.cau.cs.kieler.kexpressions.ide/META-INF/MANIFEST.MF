@@ -19,6 +19,5 @@ Export-Package: de.cau.cs.kieler.kexpressions.ide,
  de.cau.cs.kieler.kexpressions.ide.keffects.contentassist.antlr.internal,
  de.cau.cs.kieler.kexpressions.ide.kext,
  de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr,
- de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.internal,
- de.cau.cs.kieler.kexpressions.ide.kext.highlighting
+ de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.internal
 
