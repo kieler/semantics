@@ -18,8 +18,8 @@ import de.cau.cs.kieler.sccharts.text.SCTXResource
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.ui.editor.IXtextEditorCallback
 import org.eclipse.xtext.ui.editor.XtextEditor
+import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback
 import org.eclipse.xtext.ui.validation.IResourceUIValidatorExtension
 import org.eclipse.xtext.util.concurrent.IUnitOfWork
 import org.eclipse.xtext.validation.CheckMode
@@ -29,7 +29,7 @@ import org.eclipse.xtext.validation.CheckMode
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCTXEditorCallback extends IXtextEditorCallback.NullImpl {
+class SCTXEditorCallback extends ValidatingEditorCallback {
     
     @Inject var Injector injector
     
@@ -46,6 +46,9 @@ class SCTXEditorCallback extends IXtextEditorCallback.NullImpl {
         if (resource instanceof SCTXResource) {
             resource.reloadImporters
         }
+        
+        // Validate
+        super.afterSave(editor)
         
         // Display error marker on file
         if (editor.resource !== null && injector !== null) {

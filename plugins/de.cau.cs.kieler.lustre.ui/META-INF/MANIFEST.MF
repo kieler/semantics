@@ -4,6 +4,7 @@ Bundle-Name: Lustre UI
 Bundle-Vendor: Kiel University
 Bundle-Version: 0.14.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.lustre.ui; singleton:=true
+Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.lustre,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,

@@ -74,6 +74,14 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 } else {
                     feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_0_5_2_0_0, transition.trigger)
                 }
+                
+                // Propability
+                if (transition.triggerProbability > 0) {
+                    feeder.accept(tg.triggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0, transition.triggerProbability)
+                }
+                if (transition.nondeterministic) {
+                    feeder.accept(tg.nondeterministicNondeterministicKeyword_2_0_5_4_0)
+                }
             }
             // do?
             for (idxEffect : transition.effects.indexed) {
@@ -99,6 +107,14 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                     feeder.accept(tg.triggerAtomicExpressionParserRuleCall_2_1_1_2_1_0, transition.trigger)
                 } else {
                     feeder.accept(tg.triggerBoolScheduleExpressionParserRuleCall_2_1_1_2_0_0, transition.trigger)
+                }
+                
+                // Propability
+                if (transition.triggerProbability > 0) {
+                    feeder.accept(tg.triggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0, transition.triggerProbability)
+                }
+                if (transition.nondeterministic) {
+                    feeder.accept(tg.nondeterministicNondeterministicKeyword_2_1_1_4_0)
                 }
             }
             // do?
