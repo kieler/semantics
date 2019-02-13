@@ -24,7 +24,7 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 class DebugEnvironmentModelsToggle extends AbstractAction {
 
     private static val DEBUG_ENVIRONMENT_MODELS_TOGGLE_ACTION_DEFAULT = false
-    
+
     @Accessors boolean isChecked
 
     new(CompilerView view) {

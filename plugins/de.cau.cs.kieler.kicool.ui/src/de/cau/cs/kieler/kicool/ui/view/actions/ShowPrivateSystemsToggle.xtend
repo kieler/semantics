@@ -24,9 +24,9 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 class ShowPrivateSystemsToggle extends AbstractAction {
 
     private static val SHOW_PRIVATE_SYSTEMS_TOGGLE_ACTION_DEFAULT = false
-    
+
     @Accessors boolean isChecked
-    
+
     new(CompilerView view) {
         super(view, 
             "Show Private Systems", 
