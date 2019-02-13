@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright 2018 by
+ * Copyright 2019 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -16,6 +16,9 @@ import com.google.inject.Injector
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
+ * 
+ * sdo
+ * 
  */
 class EsterelStandaloneSetup extends EsterelStandaloneSetupGenerated {
     
