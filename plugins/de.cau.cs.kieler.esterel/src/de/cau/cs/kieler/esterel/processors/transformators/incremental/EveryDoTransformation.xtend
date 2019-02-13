@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
  * @author mrb
  *
  */
-class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
+class EveryDoTransformation extends AbstractSCEstDynamicProcessor<EveryDo> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -44,32 +44,7 @@ class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof EveryDo) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-            environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
-        }
-        else {
-            model.eAllContents.filter(EveryDo).toList.forEach[transform]
-        }
-    }
-    
-    def transform(EveryDo everyDo) {
+    override transform(EveryDo everyDo) {
         val statements = getContainingList(everyDo)
         val pos = statements.indexOf(everyDo)
         val await = createAwait
@@ -86,6 +61,7 @@ class EveryDoTransformation extends InplaceProcessor<EsterelProgram> {
         statements.set(pos, await)
         statements.add(pos+1, loop)
         lastStatement = await
+        environment.setProperty(SCEstIntermediateProcessor.TRANSFORM_THIS_STATEMENT, true)
     }
     
 }

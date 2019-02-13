@@ -123,7 +123,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (expression.eContainer !== null && expression.eContainer instanceof OperatorExpression) {
 			val myPrecedence = expression.operator.precedence
 			val parentPrecedence = (expression.eContainer as OperatorExpression).operator.precedence
-			if (myPrecedence >= parentPrecedence) {
+			if (myPrecedence > parentPrecedence) {
 				return "(" + result + ")"
 			} else {
 				return result

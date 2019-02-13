@@ -1,0 +1,7 @@
+public system de.cau.cs.kieler.scl.netlist.java
+	label "SCL Netlist-based (Java)"
+
+de.cau.cs.kieler.scl.processors.transformators.scl2scg
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+system de.cau.cs.kieler.scg.netlist
+de.cau.cs.kieler.scg.processors.codegen.java

@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.EObject
  * @author mrb
  *
  */
-class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
+class AwaitTransformation extends AbstractSCEstDynamicProcessor<Await> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -48,31 +48,7 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof Await) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(Await).toList.forEach[transform]
-        }
-    }
-    
-    def transform(Await await) {
+    override transform(Await await) {
         var statements =  await.getContainingList
         var pos = statements.indexOf(await)
         
@@ -128,7 +104,7 @@ class AwaitTransformation extends InplaceProcessor<EsterelProgram> {
                     }
                 }
             }
-        }    
+        }  
     }
     
     def awaitCases(Await await) {

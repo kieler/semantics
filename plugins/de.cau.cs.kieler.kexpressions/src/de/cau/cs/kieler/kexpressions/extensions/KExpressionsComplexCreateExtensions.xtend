@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kexpressions.extensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import java.util.List
 
 /**
  * @author ssm
@@ -34,7 +35,15 @@ class KExpressionsComplexCreateExtensions {
             return second
         }
         return createLogicalAndExpression(first, second)
-    }  
+    }
+    
+    def Expression and(List<? extends Expression> expressions) {
+        switch(expressions.size) {
+            case 0: return FALSE
+            case 1: return expressions.head
+            default: return createLogicalAndExpression => [subExpressions.addAll(expressions)]
+        }
+    }
     
     // Create an OR Expression add expressionFirst or expressionSecond as a sub expression.
     // If expressionFirst is null, just return expressionSecond.    
@@ -43,6 +52,14 @@ class KExpressionsComplexCreateExtensions {
             return second
         }
         return createLogicalOrExpression(first, second)
+    }
+    
+    def Expression or(List<? extends Expression> expressions) {
+        switch(expressions.size) {
+            case 0: return TRUE
+            case 1: return expressions.head
+            default: return createLogicalOrExpression => [subExpressions.addAll(expressions)]
+        }
     }
 
     // Create an NOT Expression and add expression as a sub expression.

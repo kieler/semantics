@@ -2,12 +2,14 @@ developer system de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy
     label "State-based Lean Deployment (Arduino)"
 
 system de.cau.cs.kieler.sccharts.statebased.lean
+pre process de.cau.cs.kieler.kicool.deploy.model.includes
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/arduino/libs/json": "lib",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/arduino/templates/arduino-main.ftl": "templates/arduino-main.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/arduino/templates/arduino-timing.ftl": "templates/arduino-timing.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/arduino/templates/arduino-serial.ftl": "templates/arduino-serial.ftl",
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
 }
@@ -15,7 +17,8 @@ pre process de.cau.cs.kieler.kicool.deploy.macroAnnotations
 pre process de.cau.cs.kieler.sccharts.arduino.template
 de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.template.injection.includes" : [
-        "arduino-timing.ftl"
+        "arduino-timing.ftl",
+        "arduino-serial.ftl"
     ],
     "de.cau.cs.kieler.kicool.deploy.templates": {
         "templates/arduino-main.ftl": "kieler-gen.ino"
@@ -26,7 +29,7 @@ de.cau.cs.kieler.kicool.deploy.compiler.arduino config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["kieler-gen.ino"],
     "de.cau.cs.kieler.kicool.deploy.compiler.sources.include-generated": false,
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.board": "arduino:avr:uno",
-    "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM4",
+    "de.cau.cs.kieler.kicool.deploy.compiler.arduino.port": "COM5",
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.upload": true,
     "de.cau.cs.kieler.kicool.deploy.compiler.arduino.verify": false    
 }

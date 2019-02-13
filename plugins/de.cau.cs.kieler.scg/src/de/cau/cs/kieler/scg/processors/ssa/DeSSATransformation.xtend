@@ -23,9 +23,10 @@ import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
 import javax.inject.Inject
+
 import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
-import de.cau.cs.kieler.scg.ssa.SSAParameterProperty
+
 /**
  * The SSA transformation for SCGs
  * 
@@ -72,6 +73,9 @@ class DeSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
         if (parameterMapping === null) {
             environment.errors.add("Missing SSA parameter mapping information!")
             return scg
+        }
+        if (!parameterMapping.values.forall[scg.basicBlocks.contains(it)]) {
+            environment.warnings.add("Illegal SSA parameter mapping information. Mapping refers to basic block not contained in the model")
         }
         
         // ---------------

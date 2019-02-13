@@ -120,8 +120,9 @@ class ProjectInfrastructure {
                 modelFile = null
             }
         }
+
+        val inputModel = environment.getProperty(ORIGINAL_MODEL)
         if (modelFile === null) {
-            val inputModel = environment.getProperty(ORIGINAL_MODEL)
             if (inputModel instanceof EObject) {
                 resource = inputModel.eResource
                 if (resource !== null) {
@@ -140,10 +141,10 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (modelFile !== null) {
                 name = modelFile.toString
-            } else if (modelFile instanceof Nameable) {
-                name = modelFile.name
+            } else if (inputModel instanceof Nameable) {
+                name = inputModel.name
             }
-            name = name.replaceAll("/", "-")
+            name = name.replaceAll("/|\\\\", "-")
             name = name.replaceAll(" |\\.", "-")
             
             // Create Folder

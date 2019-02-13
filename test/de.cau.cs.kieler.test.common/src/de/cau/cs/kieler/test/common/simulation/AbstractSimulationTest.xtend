@@ -120,7 +120,7 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
                     simulationTraceEventData.remove(context)
 
                     // Configure trace
-                    context.setTrace(traceFile.traces.get(i), true)
+                    context.setTrace(traceFile.traces.get(i), true, false)
                     context.mode = ManualMode
                     
                     // Start simulation

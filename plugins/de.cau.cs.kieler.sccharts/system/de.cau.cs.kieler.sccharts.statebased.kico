@@ -6,6 +6,7 @@ de.cau.cs.kieler.sccharts.processors.triggerEffect
 de.cau.cs.kieler.sccharts.processors.surfaceDepth config {
     "de.cau.cs.kieler.sccharts.processors.surfaceDepth.DTO": false
 }
+post process de.cau.cs.kieler.sccharts.processors.voRise
 de.cau.cs.kieler.sccharts.scg.processors.SCG
 de.cau.cs.kieler.scg.processors.dependency
 de.cau.cs.kieler.scg.processors.priorities

@@ -4,7 +4,6 @@
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.cdt.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.compare.ide.ui.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.mwe.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
@@ -20,11 +19,6 @@
       <unit id="org.freemarker" version="0.0.0"/>
       <unit id="org.eclipse.orbit.mongodb" version="0.0.0"/>
       <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180606145124/repository/"/>
-    </location>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
-      <unit id="org.apache.batik.swing" version="1.6.0.v201011041432"/>
-      <unit id="org.apache.batik.transcoder" version="1.6.0.v201011041432"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20180330011457/repository/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
@@ -54,6 +48,10 @@
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.lejos.nxt.ldt.feature.feature.group" version="0.0.0"/>
       <repository location="http://www.lejos.org/tools/eclipse/plugin/nxj/"/>
+    </location>
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
+      <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
+      <repository location="http://download.eclipse.org/egit/updates"/>
     </location>
   </locations>
 </target>

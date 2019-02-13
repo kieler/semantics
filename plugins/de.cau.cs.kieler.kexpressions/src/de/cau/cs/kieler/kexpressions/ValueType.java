@@ -60,10 +60,14 @@ public enum ValueType implements Enumerator {
      * The '<em><b>UNSIGNED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * @deprecated No longer used in grammars
+     * <!-- end-model-doc -->
      * @see #UNSIGNED_VALUE
      * @generated
      * @ordered
      */
+    @Deprecated
     UNSIGNED(2, "UNSIGNED", "unsigned"),
 
     /**
@@ -103,10 +107,14 @@ public enum ValueType implements Enumerator {
      * The '<em><b>DOUBLE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * @deprecated No longer used in grammars
+     * <!-- end-model-doc -->
      * @see #DOUBLE_VALUE
      * @generated
      * @ordered
      */
+    @Deprecated
     DOUBLE(5, "DOUBLE", "double"),
 
     /**
@@ -206,11 +214,15 @@ public enum ValueType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * @deprecated No longer used in grammars
+     * <!-- end-model-doc -->
      * @see #UNSIGNED
      * @model literal="unsigned"
      * @generated
      * @ordered
      */
+    @Deprecated
     public static final int UNSIGNED_VALUE = 2;
 
     /**
@@ -267,11 +279,15 @@ public enum ValueType implements Enumerator {
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * @deprecated No longer used in grammars
+     * <!-- end-model-doc -->
      * @see #DOUBLE
      * @model literal="double"
      * @generated
      * @ordered
      */
+    @Deprecated
     public static final int DOUBLE_VALUE = 5;
 
     /**

@@ -30,21 +30,25 @@ abstract class EsterelCompiler {
     protected var File root
     
     protected def resolveRoot(String compiler) {
-        val base = bundlePath.resolve("compiler").toFile
-        if (base.directory) {
-            val compilerBase = new File(base, compiler)
-            if (compilerBase.directory) {
-                val platform = new File(compilerBase, Platform.OS)
-                if (platform.directory) {
-                    root = platform
-                } else {
-                    val arch = new File(compilerBase, Platform.OS + Platform.OSArch)
-                    if (arch.directory) {
-                        root = arch
+        try {
+            val base = bundlePath.resolve("compiler").toFile
+            if (base.directory) {
+                val compilerBase = new File(base, compiler)
+                if (compilerBase.directory) {
+                    val platform = new File(compilerBase, Platform.OS)
+                    if (platform.directory) {
+                        root = platform
+                    } else {
+                        val arch = new File(compilerBase, Platform.OS + Platform.OSArch)
+                        if (arch.directory) {
+                            root = arch
+                        }
                     }
                 }
             }
-        }
+       } catch(Exception e) {
+           e.printStackTrace
+       }
     }
     
     def isAvailable() {

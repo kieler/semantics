@@ -8,7 +8,6 @@ import com.google.inject.Provider;
 import com.google.inject.name.Names;
 import de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.KExtParser;
 import de.cau.cs.kieler.kexpressions.ide.kext.contentassist.antlr.internal.InternalKExtLexer;
-import de.cau.cs.kieler.kexpressions.kext.validation.KExtValidatorConfigurationBlock;
 import de.cau.cs.kieler.kexpressions.ui.kext.contentassist.KExtProposalProvider;
 import de.cau.cs.kieler.kexpressions.ui.kext.labeling.KExtDescriptionLabelProvider;
 import de.cau.cs.kieler.kexpressions.ui.kext.labeling.KExtLabelProvider;
@@ -50,7 +49,6 @@ import org.eclipse.xtext.ui.refactoring.ui.IRenameSupport;
 import org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferences;
 import org.eclipse.xtext.ui.resource.ResourceServiceDescriptionLabelProvider;
 import org.eclipse.xtext.ui.shared.Access;
-import org.eclipse.xtext.ui.validation.AbstractValidatorConfigurationBlock;
 
 /**
  * Manual modifications go to {@link KExtUiModule}.
@@ -106,11 +104,6 @@ public abstract class AbstractKExtUiModule extends DefaultUiModule {
 	// contributed by org.eclipse.xtext.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment2
 	public void configureContentAssistLexerProvider(Binder binder) {
 		binder.bind(InternalKExtLexer.class).toProvider(LexerProvider.create(InternalKExtLexer.class));
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends AbstractValidatorConfigurationBlock> bindAbstractValidatorConfigurationBlock() {
-		return KExtValidatorConfigurationBlock.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

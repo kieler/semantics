@@ -3,23 +3,28 @@
  */
 package de.cau.cs.kieler.simulation.trace.validation
 
-//import org.eclipse.xtext.validation.Check
+import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 
+//import org.eclipse.xtext.validation.Check
 /**
  * This class contains custom validation rules. 
- *
+ * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class KTraceValidator extends AbstractKTraceValidator {
 
-//  public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MyDslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+    public static val DUBLICATE_LABEL = "Duplicate label"
+
+    /*
+     * Checks if labels are unique
+     */
+    @Check
+    def checkUniqueLabel(Trace trace) {
+        trace.ticks.groupBy[name].forEach [ name, labels |
+            if (!name.nullOrEmpty && labels.size > 1) {
+                labels.forEach[error(DUBLICATE_LABEL, it, null, -1)]
+            }
+        ]
+    }
 }

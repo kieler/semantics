@@ -541,6 +541,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         // Add supertypes to classes
         sclProgramEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
+        sclProgramEClass.getESuperTypes().add(theAnnotationsPackage.getNameable());
         moduleEClass.getESuperTypes().add(this.getScope());
         moduleEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         statementEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());

@@ -9,6 +9,7 @@ import de.cau.cs.kieler.annotations.Pragma
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
 import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.annotations.StringAnnotation
 
 class AnnotationsFormatter extends AbstractFormatter2 {
 	
@@ -17,7 +18,9 @@ class AnnotationsFormatter extends AbstractFormatter2 {
     def dispatch format(Annotation annotation, extension IFormattableDocument document) {
         annotation.regionFor.keyword("[")?.prepend[ noSpace ].append[ noSpace ]
         annotation.regionFor.keyword("]")?.prepend[ noSpace ]
-        annotation.regionFor.keyword(",")?.prepend[ noSpace ]
+        for (k : annotation.regionFor.keywords(",")) {
+            k.prepend[ noSpace ]  
+        }
         annotation.regionFor.keyword("@")?.append[ noSpace ]
         annotation.append[ newLine highPriority ]
     }

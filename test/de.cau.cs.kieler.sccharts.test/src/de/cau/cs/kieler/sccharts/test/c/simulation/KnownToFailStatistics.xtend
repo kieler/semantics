@@ -18,6 +18,8 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import java.util.List
 import org.junit.Test
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
+import org.junit.runner.RunWith
 
 /**
  * Prints out the semantic simulation tests that are known to fail.
@@ -25,6 +27,7 @@ import org.junit.Test
  * @author aas
  *
  */
+@RunWith(ModelsRepositoryTestRunner)
 class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
 
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
@@ -35,7 +38,11 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
                                           "simulation-fails-netlist-java",
                                           "simulation-fails-netlist-java-with-tts",
                                           "simulation-fails-prio-java",
-                                          "simulation-fails-prio-java-with-tts"]
+                                          "simulation-fails-prio-java-with-tts",
+                                          "simulation-fails-statebased-c",
+                                          "simulation-fails-statebased-java",
+                                          "netlist-fails",
+                                          "prio-fails"]
     
     protected static val scchartsInjector = SCTXStandaloneSetup.doSetup()
     
@@ -70,11 +77,12 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
     
     def static void printStatistics() {
         // TODO: Call this after ALL tests are done
+        println(" == RESULTS ==")
         for(entry : knownToFailTests.entrySet) {
             val knownToFailList = entry.value
-            System.err.println(knownToFailList.size+" known to fail tests of property '"+entry.key+"':")
+            println(knownToFailList.size+" known to fail tests of property '"+entry.key+"':")
             for(modelData : knownToFailList) {
-                System.err.println("\t'"+modelData.modelPath+"'")
+                println("\t'"+modelData.modelPath+"'")
             }
         }
     }

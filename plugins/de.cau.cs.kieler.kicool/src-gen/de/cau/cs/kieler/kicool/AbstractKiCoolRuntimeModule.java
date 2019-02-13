@@ -14,7 +14,6 @@ import de.cau.cs.kieler.kicool.scoping.KiCoolScopeProvider;
 import de.cau.cs.kieler.kicool.serializer.KiCoolSemanticSequencer;
 import de.cau.cs.kieler.kicool.serializer.KiCoolSyntacticSequencer;
 import de.cau.cs.kieler.kicool.services.KiCoolGrammarAccess;
-import de.cau.cs.kieler.kicool.validation.KiCoolConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.kicool.validation.KiCoolValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
-import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link KiCoolRuntimeModule}.
@@ -137,11 +135,6 @@ public abstract class AbstractKiCoolRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends KiCoolValidator> bindKiCoolValidator() {
 		return KiCoolValidator.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
-		return KiCoolConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

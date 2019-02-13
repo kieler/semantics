@@ -13,6 +13,7 @@ import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.GrammarUtil;
@@ -100,7 +101,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
 		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cInputsEmissionParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
+		private final RuleCall cInputsPureOrValuedEmissionParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cPercentSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Alternatives cAlternatives_2_1 = (Alternatives)cGroup_2.eContents().get(1);
@@ -109,7 +110,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOutputKeyword_2_1_1_0 = (Keyword)cGroup_2_1_1.eContents().get(0);
 		private final Keyword cColonKeyword_2_1_1_1 = (Keyword)cGroup_2_1_1.eContents().get(1);
 		private final Assignment cOutputsAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cOutputsEmissionParserRuleCall_2_2_0 = (RuleCall)cOutputsAssignment_2_2.eContents().get(0);
+		private final RuleCall cOutputsPureOrValuedEmissionParserRuleCall_2_2_0 = (RuleCall)cOutputsAssignment_2_2.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cAnnotationsKVPairParserRuleCall_3_0 = (RuleCall)cAnnotationsAssignment_3.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
@@ -124,25 +125,25 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//EsoTick ktrace::Tick:
-		//	{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+		//	{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 		//	annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)?
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)? annotations+=KVPair* ('%%'
-		//('Output:' | 'Output' ':') annotations+=KVPair*)? ';'
+		//{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
+		//annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)? ';'
 		public Group getGroup() { return cGroup; }
 		
 		//{ktrace::Tick}
 		public Action getTickAction_0() { return cTickAction_0; }
 		
-		//inputs+=Emission*
+		//inputs+=PureOrValuedEmission*
 		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
 		
-		//Emission
-		public RuleCall getInputsEmissionParserRuleCall_1_0() { return cInputsEmissionParserRuleCall_1_0; }
+		//PureOrValuedEmission
+		public RuleCall getInputsPureOrValuedEmissionParserRuleCall_1_0() { return cInputsPureOrValuedEmissionParserRuleCall_1_0; }
 		
-		//('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+		//('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'%'
@@ -163,11 +164,11 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_2_1_1_1() { return cColonKeyword_2_1_1_1; }
 		
-		//outputs+=Emission*
+		//outputs+=PureOrValuedEmission*
 		public Assignment getOutputsAssignment_2_2() { return cOutputsAssignment_2_2; }
 		
-		//Emission
-		public RuleCall getOutputsEmissionParserRuleCall_2_2_0() { return cOutputsEmissionParserRuleCall_2_2_0; }
+		//PureOrValuedEmission
+		public RuleCall getOutputsPureOrValuedEmissionParserRuleCall_2_2_0() { return cOutputsPureOrValuedEmissionParserRuleCall_2_2_0; }
 		
 		//annotations+=KVPair*
 		public Assignment getAnnotationsAssignment_3() { return cAnnotationsAssignment_3; }
@@ -345,49 +346,88 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.simulation.trace.KTrace.KTick");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cInputsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cInputsAssignmentParserRuleCall_1_0 = (RuleCall)cInputsAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cOutputsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cOutputsAssignmentParserRuleCall_2_1_0 = (RuleCall)cOutputsAssignment_2_1.eContents().get(0);
-		private final Keyword cPauseKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_1_0_0 = (RuleCall)cNameAssignment_1_0.eContents().get(0);
+		private final Keyword cColonKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cInputsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cInputsAssignmentParserRuleCall_2_0 = (RuleCall)cInputsAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cOutputsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cOutputsAssignmentParserRuleCall_3_1_0 = (RuleCall)cOutputsAssignment_3_1.eContents().get(0);
+		private final Keyword cPauseKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cGotoKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cGotoAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final CrossReference cGotoTickCrossReference_5_1_0 = (CrossReference)cGotoAssignment_5_1.eContents().get(0);
+		private final RuleCall cGotoTickIDTerminalRuleCall_5_1_0_1 = (RuleCall)cGotoTickCrossReference_5_1_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//KTick ktrace::Tick:
-		//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
-		//	'pause'? ';';
+		//	{ktrace::Tick} (name=ID ':')?
+		//	inputs+=Assignment* ('=>' outputs+=Assignment+)?
+		//	'pause'? ('goto' goto=[ktrace::Tick])?
+		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)? 'pause'? ';'
+		//{ktrace::Tick} (name=ID ':')? inputs+=Assignment* ('=>' outputs+=Assignment+)? 'pause'? ('goto' goto=[ktrace::Tick])?
+		//';'
 		public Group getGroup() { return cGroup; }
 		
 		//{ktrace::Tick}
 		public Action getTickAction_0() { return cTickAction_0; }
 		
+		//(name=ID ':')?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1_0() { return cNameAssignment_1_0; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0_0() { return cNameIDTerminalRuleCall_1_0_0; }
+		
+		//':'
+		public Keyword getColonKeyword_1_1() { return cColonKeyword_1_1; }
+		
 		//inputs+=Assignment*
-		public Assignment getInputsAssignment_1() { return cInputsAssignment_1; }
+		public Assignment getInputsAssignment_2() { return cInputsAssignment_2; }
 		
 		//Assignment
-		public RuleCall getInputsAssignmentParserRuleCall_1_0() { return cInputsAssignmentParserRuleCall_1_0; }
+		public RuleCall getInputsAssignmentParserRuleCall_2_0() { return cInputsAssignmentParserRuleCall_2_0; }
 		
 		//('=>' outputs+=Assignment+)?
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_3() { return cGroup_3; }
 		
 		//'=>'
-		public Keyword getEqualsSignGreaterThanSignKeyword_2_0() { return cEqualsSignGreaterThanSignKeyword_2_0; }
+		public Keyword getEqualsSignGreaterThanSignKeyword_3_0() { return cEqualsSignGreaterThanSignKeyword_3_0; }
 		
 		//outputs+=Assignment+
-		public Assignment getOutputsAssignment_2_1() { return cOutputsAssignment_2_1; }
+		public Assignment getOutputsAssignment_3_1() { return cOutputsAssignment_3_1; }
 		
 		//Assignment
-		public RuleCall getOutputsAssignmentParserRuleCall_2_1_0() { return cOutputsAssignmentParserRuleCall_2_1_0; }
+		public RuleCall getOutputsAssignmentParserRuleCall_3_1_0() { return cOutputsAssignmentParserRuleCall_3_1_0; }
 		
 		//'pause'?
-		public Keyword getPauseKeyword_3() { return cPauseKeyword_3; }
+		public Keyword getPauseKeyword_4() { return cPauseKeyword_4; }
+		
+		//('goto' goto=[ktrace::Tick])?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'goto'
+		public Keyword getGotoKeyword_5_0() { return cGotoKeyword_5_0; }
+		
+		//goto=[ktrace::Tick]
+		public Assignment getGotoAssignment_5_1() { return cGotoAssignment_5_1; }
+		
+		//[ktrace::Tick]
+		public CrossReference getGotoTickCrossReference_5_1_0() { return cGotoTickCrossReference_5_1_0; }
+		
+		//ID
+		public RuleCall getGotoTickIDTerminalRuleCall_5_1_0_1() { return cGotoTickIDTerminalRuleCall_5_1_0_1; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 	
 	
@@ -511,7 +551,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//EsoTick ktrace::Tick:
-	//	{ktrace::Tick} inputs+=Emission* ('%' ('Output:' | 'Output' ':') outputs+=Emission*)?
+	//	{ktrace::Tick} inputs+=PureOrValuedEmission* ('%' ('Output:' | 'Output' ':') outputs+=PureOrValuedEmission*)?
 	//	annotations+=KVPair* ('%%' ('Output:' | 'Output' ':') annotations+=KVPair*)?
 	//	';';
 	public EsoTickElements getEsoTickAccess() {
@@ -556,8 +596,10 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//KTick ktrace::Tick:
-	//	{ktrace::Tick} inputs+=Assignment* ('=>' outputs+=Assignment+)?
-	//	'pause'? ';';
+	//	{ktrace::Tick} (name=ID ':')?
+	//	inputs+=Assignment* ('=>' outputs+=Assignment+)?
+	//	'pause'? ('goto' goto=[ktrace::Tick])?
+	//	';';
 	public KTickElements getKTickAccess() {
 		return pKTick;
 	}
@@ -867,9 +909,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Effect Rule
 	//// An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 	//// function call effect.
+	//// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
-	//	Assignment | PostfixEffect | Emission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect | PrintCallEffect |
-	//	RandomizeCallEffect;
+	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
@@ -885,15 +930,39 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Example: A, B(2)
 	//// Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 	//// annotations defined in the annotations grammar.		
-	//Emission keffects::Emission:
+	//PureEmission keffects::Emission:
 	//	annotations+=QuotedStringAnnotation*
-	//	reference=ValuedObjectReference ("(" newValue=Expression ")")? ('schedule' schedule+=ScheduleObjectReference+)?;
-	public KEffectsGrammarAccess.EmissionElements getEmissionAccess() {
-		return gaKEffects.getEmissionAccess();
+	//	reference=ValuedObjectReference ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.PureEmissionElements getPureEmissionAccess() {
+		return gaKEffects.getPureEmissionAccess();
 	}
 	
-	public ParserRule getEmissionRule() {
-		return getEmissionAccess().getRule();
+	public ParserRule getPureEmissionRule() {
+		return getPureEmissionAccess().getRule();
+	}
+	
+	//// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+	//// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
+	//ValuedEmission keffects::Emission:
+	//	annotations+=QuotedStringAnnotation*
+	//	reference=ValuedObjectReference
+	//	"(" newValue=Expression ")" ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.ValuedEmissionElements getValuedEmissionAccess() {
+		return gaKEffects.getValuedEmissionAccess();
+	}
+	
+	public ParserRule getValuedEmissionRule() {
+		return getValuedEmissionAccess().getRule();
+	}
+	
+	//PureOrValuedEmission keffects::Emission:
+	//	ValuedEmission | PureEmission;
+	public KEffectsGrammarAccess.PureOrValuedEmissionElements getPureOrValuedEmissionAccess() {
+		return gaKEffects.getPureOrValuedEmissionAccess();
+	}
+	
+	public ParserRule getPureOrValuedEmissionRule() {
+		return getPureOrValuedEmissionAccess().getRule();
 	}
 	
 	//// Assignment Rule
@@ -952,8 +1021,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	'call' valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -1222,7 +1290,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Everything that evaluates to a primitive number value.
 	//// Similar to the boolean rule this rule is there for overview reasons.
 	//ValuedExpression Expression:
-	//	ShiftLeftExpression;
+	//	ShiftExpressions;
 	public KExpressionsGrammarAccess.ValuedExpressionElements getValuedExpressionAccess() {
 		return gaKExpressions.getValuedExpressionAccess();
 	}
@@ -1231,8 +1299,62 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedExpressionAccess().getRule();
 	}
 	
+	//ShiftExpressions Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftExpressionsElements getShiftExpressionsAccess() {
+		return gaKExpressions.getShiftExpressionsAccess();
+	}
+	
+	public ParserRule getShiftExpressionsRule() {
+		return getShiftExpressionsAccess().getRule();
+	}
+	
+	//ShiftLeftRightExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftLeftRightExpressionElements getShiftLeftRightExpressionAccess() {
+		return gaKExpressions.getShiftLeftRightExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftRightExpressionRule() {
+		return getShiftLeftRightExpressionAccess().getRule();
+	}
+	
+	//ShiftLeftRightUnsignedExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftLeftRightUnsignedExpressionElements getShiftLeftRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftLeftRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftLeftRightUnsignedExpressionRule() {
+		return getShiftLeftRightUnsignedExpressionAccess().getRule();
+	}
+	
+	//ShiftRightRightUnsignedExpression Expression:
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	public KExpressionsGrammarAccess.ShiftRightRightUnsignedExpressionElements getShiftRightRightUnsignedExpressionAccess() {
+		return gaKExpressions.getShiftRightRightUnsignedExpressionAccess();
+	}
+	
+	public ParserRule getShiftRightRightUnsignedExpressionRule() {
+		return getShiftRightRightUnsignedExpressionAccess().getRule();
+	}
+	
 	//ShiftLeftExpression Expression:
-	//	ShiftRightExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
 	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return gaKExpressions.getShiftLeftExpressionAccess();
@@ -1243,7 +1365,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ShiftRightExpression Expression:
-	//	ShiftRightUnsignedExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
 	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return gaKExpressions.getShiftRightExpressionAccess();
@@ -1254,8 +1376,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ShiftRightUnsignedExpression Expression:
-	//	AddExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=AddExpression) ('>>>' subExpressions+=AddExpression)*)?;
+	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
+	//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
 	public KExpressionsGrammarAccess.ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return gaKExpressions.getShiftRightUnsignedExpressionAccess();
 	}
@@ -1264,13 +1386,26 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
 	
+	//SumExpression Expression:
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)
+	//	('+' subExpressions+=SubExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=AddExpression) ('-'
+	//	subExpressions+=AddExpression)*)?;
+	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
+		return gaKExpressions.getSumExpressionAccess();
+	}
+	
+	public ParserRule getSumExpressionRule() {
+		return getSumExpressionAccess().getRule();
+	}
+	
 	//// Add Expression Rule
 	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 1 + 2
 	//AddExpression Expression:
-	//	SubExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
-	//	subExpressions+=SubExpression)*)?;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator
+	//	subExpressions+=ProductExpression) ('+' subExpressions+=ProductExpression)*)?;
 	public KExpressionsGrammarAccess.AddExpressionElements getAddExpressionAccess() {
 		return gaKExpressions.getAddExpressionAccess();
 	}
@@ -1284,8 +1419,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: var(A) - i
 	//SubExpression Expression:
-	//	MultExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=MultExpression)
-	//	('-' subExpressions+=MultExpression)*)?;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
+	//	subExpressions+=ProductExpression) ('-' subExpressions+=ProductExpression)*)?;
 	public KExpressionsGrammarAccess.SubExpressionElements getSubExpressionAccess() {
 		return gaKExpressions.getSubExpressionAccess();
 	}
@@ -1294,13 +1429,67 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubExpressionAccess().getRule();
 	}
 	
+	//ProductExpression Expression:
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
+	//	('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
+	//	subExpressions+=MultModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.ProductExpressionElements getProductExpressionAccess() {
+		return gaKExpressions.getProductExpressionAccess();
+	}
+	
+	public ParserRule getProductExpressionRule() {
+		return getProductExpressionAccess().getRule();
+	}
+	
+	//MultDivExpression Expression:
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
+	//	('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
+	//	subExpressions+=MultModExpression)*)?;
+	public KExpressionsGrammarAccess.MultDivExpressionElements getMultDivExpressionAccess() {
+		return gaKExpressions.getMultDivExpressionAccess();
+	}
+	
+	public ParserRule getMultDivExpressionRule() {
+		return getMultDivExpressionAccess().getRule();
+	}
+	
+	//MultModExpression Expression:
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
+	//	('*' subExpressions+=DivModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.MultModExpressionElements getMultModExpressionAccess() {
+		return gaKExpressions.getMultModExpressionAccess();
+	}
+	
+	public ParserRule getMultModExpressionRule() {
+		return getMultModExpressionAccess().getRule();
+	}
+	
+	//DivModExpression Expression:
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression)
+	//	('/' subExpressions+=MultModExpression)*
+	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
+	//	subExpressions+=MultDivExpression)*)?;
+	public KExpressionsGrammarAccess.DivModExpressionElements getDivModExpressionAccess() {
+		return gaKExpressions.getDivModExpressionAccess();
+	}
+	
+	public ParserRule getDivModExpressionRule() {
+		return getDivModExpressionAccess().getRule();
+	}
+	
 	//// Mult Expression Rule
 	//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	DivExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivExpression) ('*'
-	//	subExpressions+=DivExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1314,8 +1503,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 / 4
 	//DivExpression Expression:
-	//	ModExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=ModExpression) ('/'
-	//	subExpressions+=ModExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=NegExpression) ('/'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.DivExpressionElements getDivExpressionAccess() {
 		return gaKExpressions.getDivExpressionAccess();
 	}
@@ -1329,8 +1518,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: i % j
 	//ModExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator
-	//	subExpressions+=AtomicValuedExpression) ('%' subExpressions+=AtomicValuedExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=NegExpression) ('%'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.ModExpressionElements getModExpressionAccess() {
 		return gaKExpressions.getModExpressionAccess();
 	}
@@ -1860,7 +2049,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" |
+	//	PURE="pure" | BOOL="bool" |
 	//	INT="int" | FLOAT="float" |
 	//	STRING="string";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
@@ -1960,6 +2149,71 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getNullValueAccess().getRule();
 	}
 	
+	//// New Json Annotations
+	//JsonPragma:
+	//	'#' name=ExtendedID value=JsonObjectValue;
+	public KExpressionsGrammarAccess.JsonPragmaElements getJsonPragmaAccess() {
+		return gaKExpressions.getJsonPragmaAccess();
+	}
+	
+	public ParserRule getJsonPragmaRule() {
+		return getJsonPragmaAccess().getRule();
+	}
+	
+	//JsonAnnotation:
+	//	'@' name=ExtendedID value=JsonObjectValue;
+	public KExpressionsGrammarAccess.JsonAnnotationElements getJsonAnnotationAccess() {
+		return gaKExpressions.getJsonAnnotationAccess();
+	}
+	
+	public ParserRule getJsonAnnotationRule() {
+		return getJsonAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//Pragma annotations::Pragma:
+	//	super | JsonPragma;
+	public KExpressionsGrammarAccess.PragmaElements getPragmaAccess() {
+		return gaKExpressions.getPragmaAccess();
+	}
+	
+	public ParserRule getPragmaRule() {
+		return getPragmaAccess().getRule();
+	}
+	
+	//@Override
+	//Annotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.AnnotationElements getAnnotationAccess() {
+		return gaKExpressions.getAnnotationAccess();
+	}
+	
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//ValuedAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaKExpressions.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+	
+	//@Override
+	//QuotedStringAnnotation annotations::Annotation:
+	//	super | JsonAnnotation;
+	public KExpressionsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+		return gaKExpressions.getQuotedStringAnnotationAccess();
+	}
+	
+	public ParserRule getQuotedStringAnnotationRule() {
+		return getQuotedStringAnnotationAccess().getRule();
+	}
+	
 	//terminal HOSTCODE:
 	//	"`" ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | "`"))* "`";
 	public TerminalRule getHOSTCODERule() {
@@ -1977,24 +2231,24 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// The different annotation sub rules are tested in order. Hence, order matters! 
 	//Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
+	public AnnotationsGrammarAccess.AnnotationElements getAnnotationsAnnotationAccess() {
 		return gaAnnotations.getAnnotationAccess();
 	}
 	
-	public ParserRule getAnnotationRule() {
-		return getAnnotationAccess().getRule();
+	public ParserRule getAnnotationsAnnotationRule() {
+		return getAnnotationsAnnotationAccess().getRule();
 	}
 	
 	//// General rule for pragmas
 	//// We only have string and tag pragmas.    
 	//Pragma:
 	//	StringPragma | PragmaTag;
-	public AnnotationsGrammarAccess.PragmaElements getPragmaAccess() {
+	public AnnotationsGrammarAccess.PragmaElements getAnnotationsPragmaAccess() {
 		return gaAnnotations.getPragmaAccess();
 	}
 	
-	public ParserRule getPragmaRule() {
-		return getPragmaAccess().getRule();
+	public ParserRule getAnnotationsPragmaRule() {
+		return getAnnotationsPragmaAccess().getRule();
 	}
 	
 	//// Valued Annotation Rule
@@ -2003,12 +2257,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// due to ambiguities.
 	//ValuedAnnotation Annotation:
 	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation;
-	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getAnnotationsValuedAnnotationAccess() {
 		return gaAnnotations.getValuedAnnotationAccess();
 	}
 	
-	public ParserRule getValuedAnnotationRule() {
-		return getValuedAnnotationAccess().getRule();
+	public ParserRule getAnnotationsValuedAnnotationRule() {
+		return getAnnotationsValuedAnnotationAccess().getRule();
 	}
 	
 	//// Restricted Type Annotation Rule
@@ -2031,12 +2285,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// rule and to avoid grammar ambiguities.)  
 	//QuotedStringAnnotation Annotation:
 	//	CommentAnnotation | QuotedKeyStringValueAnnotation | QuotedTypedKeyStringValueAnnotation | TagAnnotation;
-	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getQuotedStringAnnotationAccess() {
+	public AnnotationsGrammarAccess.QuotedStringAnnotationElements getAnnotationsQuotedStringAnnotationAccess() {
 		return gaAnnotations.getQuotedStringAnnotationAccess();
 	}
 	
-	public ParserRule getQuotedStringAnnotationRule() {
-		return getQuotedStringAnnotationAccess().getRule();
+	public ParserRule getAnnotationsQuotedStringAnnotationRule() {
+		return getAnnotationsQuotedStringAnnotationAccess().getRule();
 	}
 	
 	//// CommentAnnotation

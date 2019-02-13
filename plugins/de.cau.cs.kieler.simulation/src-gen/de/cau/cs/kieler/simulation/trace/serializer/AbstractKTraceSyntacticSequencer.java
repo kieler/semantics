@@ -33,7 +33,7 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	protected AbstractElementAlias match_EsoTick_OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1__;
 	protected AbstractElementAlias match_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q;
 	protected AbstractElementAlias match_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q;
-	protected AbstractElementAlias match_KTick_PauseKeyword_3_q;
+	protected AbstractElementAlias match_KTick_PauseKeyword_4_q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
@@ -53,7 +53,7 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 		match_EsoTick_OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_1_0()), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getColonKeyword_4_1_1_1())), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_0()));
 		match_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getPercentSignKeyword_2_0()), new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_2_1_1_0()), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getColonKeyword_2_1_1_1())), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_2_1_0())));
 		match_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getPercentSignPercentSignKeyword_4_0()), new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_1_0()), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getColonKeyword_4_1_1_1())), new TokenAlias(false, false, grammarAccess.getEsoTickAccess().getOutputKeyword_4_1_0())));
-		match_KTick_PauseKeyword_3_q = new TokenAlias(false, true, grammarAccess.getKTickAccess().getPauseKeyword_3());
+		match_KTick_PauseKeyword_4_q = new TokenAlias(false, true, grammarAccess.getKTickAccess().getPauseKeyword_4());
 		match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_1_1()));
 		match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_4_1()));
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
@@ -94,8 +94,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 				emit_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q.equals(syntax))
 				emit_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_KTick_PauseKeyword_3_q.equals(syntax))
-				emit_KTick_PauseKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_KTick_PauseKeyword_4_q.equals(syntax))
+				emit_KTick_PauseKeyword_4_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q.equals(syntax))
 				emit_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q.equals(syntax))
@@ -229,8 +229,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     'Output:' | ('Output' ':')
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) '%' (ambiguity) outputs+=Emission
-	 *     inputs+=Emission '%' (ambiguity) outputs+=Emission
+	 *     (rule start) '%' (ambiguity) outputs+=PureOrValuedEmission
+	 *     inputs+=PureOrValuedEmission '%' (ambiguity) outputs+=PureOrValuedEmission
 	 */
 	protected void emit_EsoTick_OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -243,8 +243,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
 	 *     annotations+=KVPair '%%' (ambiguity) annotations+=KVPair
-	 *     inputs+=Emission ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
-	 *     outputs+=Emission '%%' (ambiguity) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission ('%' ('Output:' | ('Output' ':')))? '%%' (ambiguity) annotations+=KVPair
+	 *     outputs+=PureOrValuedEmission '%%' (ambiguity) annotations+=KVPair
 	 */
 	protected void emit_EsoTick_OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -258,9 +258,9 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
 	 *     (rule start) (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule start)
 	 *     (rule start) (ambiguity) annotations+=KVPair
-	 *     inputs+=Emission (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
-	 *     inputs+=Emission (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule end)
-	 *     inputs+=Emission (ambiguity) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission (ambiguity) '%%' ('Output:' | ('Output' ':')) annotations+=KVPair
+	 *     inputs+=PureOrValuedEmission (ambiguity) ('%%' ('Output:' | ('Output' ':')))? ';' (rule end)
+	 *     inputs+=PureOrValuedEmission (ambiguity) annotations+=KVPair
 	 */
 	protected void emit_EsoTick___PercentSignKeyword_2_0___OutputKeyword_2_1_0_or___OutputKeyword_2_1_1_0_ColonKeyword_2_1_1_1______q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -273,8 +273,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule start)
 	 *     annotations+=KVPair (ambiguity) ';' (rule end)
-	 *     inputs+=Emission ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule end)
-	 *     outputs+=Emission (ambiguity) ';' (rule end)
+	 *     inputs+=PureOrValuedEmission ('%' ('Output:' | ('Output' ':')))? (ambiguity) ';' (rule end)
+	 *     outputs+=PureOrValuedEmission (ambiguity) ';' (rule end)
 	 */
 	protected void emit_EsoTick___PercentSignPercentSignKeyword_4_0___OutputKeyword_4_1_0_or___OutputKeyword_4_1_1_0_ColonKeyword_4_1_1_1______q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -286,10 +286,15 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) ';' (rule start)
+	 *     (rule start) (ambiguity) 'goto' goto=[Tick|ID]
 	 *     inputs+=Assignment (ambiguity) ';' (rule end)
+	 *     inputs+=Assignment (ambiguity) 'goto' goto=[Tick|ID]
+	 *     name=ID ':' (ambiguity) ';' (rule end)
+	 *     name=ID ':' (ambiguity) 'goto' goto=[Tick|ID]
 	 *     outputs+=Assignment (ambiguity) ';' (rule end)
+	 *     outputs+=Assignment (ambiguity) 'goto' goto=[Tick|ID]
 	 */
-	protected void emit_KTick_PauseKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_KTick_PauseKeyword_4_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

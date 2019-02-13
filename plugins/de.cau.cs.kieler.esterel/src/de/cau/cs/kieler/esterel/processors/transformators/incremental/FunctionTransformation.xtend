@@ -27,7 +27,7 @@ import de.cau.cs.kieler.esterel.FunctionDeclaration
  * @author mrb
  *
  */
-class FunctionTransformation extends InplaceProcessor<EsterelProgram> {
+class FunctionTransformation extends AbstractSCEstDynamicProcessor<EsterelFunctionCall> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -46,41 +46,19 @@ class FunctionTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-//        if (isDynamicCompilation) {
-        if (false) {
-            if (nextStatement instanceof EsterelFunctionCall) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(EsterelFunctionCall).toList.forEach[transform]
-            model.eAllContents.filter(Module).toList.forEach[ m |
-                m.declarations.removeIf[it instanceof FunctionDeclaration]
-            ]
-        }
-    }
-    
-    def transform(EsterelFunctionCall function) {
+    override transform(EsterelFunctionCall function) {
         var newF = createFunction(function.function.name)
         for (e : function.parameter) {
             newF.parameters.add(createParameter(copy(e), false))
         }
         function.replace(newF)
         lastStatement = newF
+    }
+    
+    override finishTransformation() {
+        model.eAllContents.filter(Module).toList.forEach[ m |
+            m.declarations.removeIf[it instanceof FunctionDeclaration]
+        ]
     }
     
 }

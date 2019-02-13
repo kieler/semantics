@@ -358,10 +358,42 @@ class SCChartsLegacyConverter {
         return createAssignment => [
             annotations.addAll(asm.annotations.map[convert as Annotation])
             
-            reference = (asm.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject).reference
-            expression = asm.expression.convert as Expression
+            val vo = asm.valuedObject.convert as de.cau.cs.kieler.kexpressions.ValuedObject
+            reference = vo.reference
             reference.indices.addAll(asm.indices.map[convert as Expression])
+            expression = asm.expression.convert as Expression
             operator = AssignOperator.getByName(asm.operator.getName)
+            // Convert old relative write sytax (x = x + 1) to new one (x += 1)
+            if (operator == AssignOperator.ASSIGN && // Normal assignment
+                expression instanceof de.cau.cs.kieler.kexpressions.OperatorExpression && // top level operator expression
+                expression.eAllContents.filter(de.cau.cs.kieler.kexpressions.ValuedObjectReference).filter[valuedObject == vo].size == 1 && // only one reference
+                (expression as de.cau.cs.kieler.kexpressions.OperatorExpression).subExpressions.size > 1 &&
+                (expression as de.cau.cs.kieler.kexpressions.OperatorExpression).subExpressions.filter(de.cau.cs.kieler.kexpressions.ValuedObjectReference).exists[valuedObject == vo] // reference on top level
+            ) {
+                val oe = expression as de.cau.cs.kieler.kexpressions.OperatorExpression
+                operator = switch(oe.operator) {
+                    case ADD: AssignOperator.ASSIGNADD
+                    case BITWISE_AND: AssignOperator.ASSIGNAND
+                    case BITWISE_OR: AssignOperator.ASSIGNOR
+                    case BITWISE_XOR: AssignOperator.ASSIGNXOR
+                    case DIV: AssignOperator.ASSIGNDIV
+                    case LOGICAL_AND: AssignOperator.ASSIGNAND
+                    case LOGICAL_OR: AssignOperator.ASSIGNOR
+                    case MOD: AssignOperator.ASSIGNMOD
+                    case MULT: AssignOperator.ASSIGNMUL
+                    case SHIFT_LEFT: AssignOperator.ASSIGNSHIFTLEFT
+                    case SHIFT_RIGHT: AssignOperator.ASSIGNSHIFTRIGHT
+                    case SHIFT_RIGHT_UNSIGNED: AssignOperator.ASSIGNSHIFTRIGHTUNSIGNED
+                    case SUB: AssignOperator.ASSIGNSUB
+                    default: AssignOperator.ASSIGN
+                }
+                if (operator !== AssignOperator.ASSIGN) {
+                    oe.subExpressions.removeIf[it instanceof de.cau.cs.kieler.kexpressions.ValuedObjectReference && (it as de.cau.cs.kieler.kexpressions.ValuedObjectReference).valuedObject == vo]
+                    if (oe.subExpressions.size == 1) {
+                        expression = oe.subExpressions.head
+                    }
+                }
+            }
         ]
     } 
     
@@ -399,6 +431,7 @@ class SCChartsLegacyConverter {
             
             valuedObjects.addAll(decl.valuedObjects.map[convert as de.cau.cs.kieler.kexpressions.ValuedObject])
             type = ValueType.getByName(decl.type.getName)
+            if (type === ValueType.DOUBLE) type = ValueType.FLOAT
             input = decl.input
             output = decl.output
             static = decl.static

@@ -3,6 +3,8 @@
 package de.cau.cs.kieler.simulation.trace.ktrace.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
+import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
@@ -88,6 +90,8 @@ public class KTraceSwitch<T> extends Switch<T> {
                 Tick tick = (Tick)theEObject;
                 T result = caseTick(tick);
                 if (result == null) result = caseAnnotatable(tick);
+                if (result == null) result = caseNamedObject(tick);
+                if (result == null) result = caseNameable(tick);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -167,6 +171,36 @@ public class KTraceSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseAnnotatable(Annotatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Named Object</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNamedObject(NamedObject object) {
         return null;
     }
 

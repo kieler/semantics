@@ -13,31 +13,31 @@
  */
 package de.cau.cs.kieler.sccharts.processors.transformators
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import java.util.List
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.DelayType
 
 /**
  * SCCharts Termination Transformation.
@@ -48,8 +48,9 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 class Termination extends SCChartsProcessor implements Traceable {
 
-    public static val ANNOTATION_TERMINATIONTRANSITION = "terminationtransition"
-    public static val ANNOTATION_FINALSTATE = "finalstate"
+    public static val ANNOTATION_TERMINATION = "_termination"
+    public static val ANNOTATION_TERMINATION_DELAYED = "_termination_delayed"
+    public static val ANNOTATION_FINALSTATE = "_finalstate"
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -64,6 +65,10 @@ class Termination extends SCChartsProcessor implements Traceable {
  
     override process() {
         setModel(model.transform)
+    }
+    
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [ rootStates.forEach[ transform ] ]
     }
 
 
@@ -95,7 +100,7 @@ class Termination extends SCChartsProcessor implements Traceable {
     @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
+    static public final String GENERATED_PREFIX = "_T"
     
     // -------------------------------------------------------------------------
     // --                       T E R M I N A T I O N                         --
@@ -142,9 +147,7 @@ class Termination extends SCChartsProcessor implements Traceable {
             return
         }
         
-        val hasConditionalTerminations = terminationTransitions.exists[trigger != null]
-        var Expression triggerExpression = null
-
+        val termVariables = newArrayList
         // terminationTransition.setDefaultTrace
 
         // Walk thru all regions that must terminate and create one termination valuedObject per
@@ -153,11 +156,11 @@ class Termination extends SCChartsProcessor implements Traceable {
             region.setDefaultTrace
             // Setup the auxiliary termination valuedObject indicating that a normal termination
             // should be taken.
-            val finishedValuedObject = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
+            val termVar = state.parentRegion.parentState.createVariable(GENERATED_PREFIX + "term").
                 setTypeBool.uniqueName
-            voStore.update(finishedValuedObject, SCCHARTS_GENERATED)
+            voStore.update(termVar, SCCHARTS_GENERATED)
             val resetFinished = state.createEntryAction
-            resetFinished.effects.add(finishedValuedObject.createAssignment(FALSE))
+            resetFinished.effects.add(termVar.createAssignment(FALSE))
 
             val finalStates = region.states.filter[isFinal]
             
@@ -179,7 +182,7 @@ class Termination extends SCChartsProcessor implements Traceable {
                 
                 if (!connectorCase) {
                     for (transition : finalState.incomingTransitions) {
-                        transition.effects.add(finishedValuedObject.createAssignment(TRUE))
+                        transition.effects.add(termVar.createAssignment(TRUE))
                     }
                 } else {
                     //Optimization-case:
@@ -191,57 +194,61 @@ class Termination extends SCChartsProcessor implements Traceable {
                         transition.setTargetState(connector)
                     }
                     val connectorTransition = connector.createTransitionTo(finalState).setImmediate
-                    connectorTransition.effects.add(finishedValuedObject.createAssignment(TRUE))
+                    connectorTransition.effects.add(termVar.createAssignment(TRUE))
                     
                 }
-                finalState.createStringAnnotation(ANNOTATION_FINALSTATE, "")
+                finalState.addTagAnnotation(ANNOTATION_FINALSTATE)
             }
             
 
             // Optimization: see above            
-            if (termTriggerDelayed && !finishedValuedObject.name.endsWith("D")) {
-                 finishedValuedObject.name = (finishedValuedObject.name + "D")
-                 finishedValuedObject.uniqueName
+            if (termTriggerDelayed) {
+                termVar.addTagAnnotation(ANNOTATION_TERMINATION_DELAYED)
             }
-            voStore.update(finishedValuedObject)
-            
-            if (triggerExpression == null) {
-                triggerExpression = finishedValuedObject.reference;
-            } else {
-                triggerExpression = triggerExpression.and(finishedValuedObject.reference);
-            }
+            termVariables += termVar
         }
 
         for (terminationTransition : terminationTransitions) {
             terminationTransition.setDefaultTrace
             
-            terminationTransition.preemption = PreemptionType::WEAKABORT
-            
-            // TODO: check if optimization is correct in all cases!
-            // We should NOT do this for conditional terminations!
-            if (!(terminationTransition.trigger != null)) {
-                terminationTransition.createStringAnnotation(ANNOTATION_TERMINATIONTRANSITION, "")
-                terminationTransition.setImmediate(true);
-            } else {
-                // A normal termination should immediately be trigger-able! (test 145) 
-                // if not a delayed-conditional termination!
-                terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
+            // Special handling of delay type.
+            // If the delay type is explicitly given it should be obeyed
+            // An undefined value results in an immediate transition if no trigger is given or
+            // a delayed transition if a trigger is present because condiontion are be default checked delayed
+            // See KISEMA-1314
+            if (terminationTransition.trigger === null && terminationTransition.delay === DelayType.DELAYED) {
+                // Delayed transiotins w/o trigger need one to be handeled correctly by the weak abort transformation
+                terminationTransition.trigger = TRUE
             }
+            terminationTransition.setImmediate(terminationTransition.implicitlyImmediate)
 
-            // if there is just one valuedObject, we do not need an AND!
-            if (triggerExpression != null) {
-                if (terminationTransition.trigger != null) {
-                    terminationTransition.setTrigger(terminationTransition.trigger.and(triggerExpression.copy));
-                } else {
-                    terminationTransition.setTrigger(triggerExpression.copy);
-                }
-            }
+            terminationTransition.setTypeWeakAbort
+            terminationTransition.addTerminationCheck(termVariables)
         }
-
-    }
-
-    def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
     }
     
+    def addTerminationCheck(Transition termination, List<ValuedObject> termVariables) {
+        if (!termVariables.empty) {
+            termination.annotations += AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+                // Mark for special treatment in abort:
+                // This abort should not abort regions also marked as with this annotation
+                it.name = Termination.ANNOTATION_TERMINATION
+                it.values.addAll(termVariables.map[name])
+            ]
+            if (termVariables.size > 1) {
+                val vars = <Expression>newArrayList
+                vars.addAll(termVariables.map[reference])
+                if (termination.trigger !== null) {
+                    vars.add(0, termination.trigger)
+                }
+                termination.setTrigger(vars.and)
+            } else {
+                termination.setTrigger(termination.trigger.and(termVariables.head.reference))
+            }
+        }
+    }
+    
+    def setRegionTerm(Region region, ValuedObject term) {
+        region.addStringAnnotation(ANNOTATION_TERMINATION, term.name)
+    }
 }

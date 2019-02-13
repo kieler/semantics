@@ -6,7 +6,7 @@ Bundle-Version: 0.14.0.qualifier
 Bundle-Vendor: Kiel University
 Automatic-Module-Name: de.cau.cs.kieler.kicool.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Require-Bundle: org.antlr.runtime,
+Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.kicool,
  org.eclipse.xtext.ide,
  com.google.guava,
@@ -26,4 +26,3 @@ Export-Package: de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kicool.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.kicool.ide.language.server,
  de.cau.cs.kieler.kicool.ide.view
-

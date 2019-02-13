@@ -14,7 +14,6 @@ import de.cau.cs.kieler.esterel.scest.scoping.SCEstScopeProvider;
 import de.cau.cs.kieler.esterel.scest.serializer.SCEstSemanticSequencer;
 import de.cau.cs.kieler.esterel.scest.serializer.SCEstSyntacticSequencer;
 import de.cau.cs.kieler.esterel.scest.services.SCEstGrammarAccess;
-import de.cau.cs.kieler.esterel.scest.validation.SCEstConfigurableIssueCodesProvider;
 import de.cau.cs.kieler.esterel.scest.validation.SCEstValidator;
 import java.util.Properties;
 import org.eclipse.xtext.Constants;
@@ -46,7 +45,6 @@ import org.eclipse.xtext.serializer.sequencer.ISemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.eclipse.xtext.service.SingletonBinding;
-import org.eclipse.xtext.validation.ConfigurableIssueCodesProvider;
 
 /**
  * Manual modifications go to {@link SCEstRuntimeModule}.
@@ -137,11 +135,6 @@ public abstract class AbstractSCEstRuntimeModule extends DefaultRuntimeModule {
 	@SingletonBinding(eager=true)
 	public Class<? extends SCEstValidator> bindSCEstValidator() {
 		return SCEstValidator.class;
-	}
-	
-	// contributed by org.eclipse.xtext.xtext.generator.validation.ValidatorFragment2
-	public Class<? extends ConfigurableIssueCodesProvider> bindConfigurableIssueCodesProvider() {
-		return SCEstConfigurableIssueCodesProvider.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2

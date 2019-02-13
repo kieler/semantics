@@ -16,7 +16,7 @@ import java.io.File
 import java.nio.file.Files
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtend.lib.annotations.Data
+import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.*
 
@@ -45,96 +45,114 @@ class CodeContainer {
     }
     
     def add(String fileName, String code) {
-        files += new CodeFile(fileName, code)
+        return new CodeFile(fileName, code) => [files += it]
+    }
+    
+    def addProxy(File file) {
+        return new CodeFile(file, null) => [files += it]
+    }
+        
+    def addProxy(File file, String code) {
+        return new CodeFile(file, code) => [files += it]
     }
     
     def addCHeader(String fileName, String code, String dataStructName) {
-        files += new CCodeFile(fileName, code, true, dataStructName)
+        return new CCodeFile(fileName, code, true, dataStructName) => [files += it]
     }
     
     def addCCode(String fileName, String code, String dataStructName) {
-        files += new CCodeFile(fileName, code, false, dataStructName)
+        return new CCodeFile(fileName, code, false, dataStructName) => [files += it]
     }
     
     def addJavaCode(String fileName, String code) {
         checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
-        files += new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java")))
+        return new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java"))) => [files += it]
     }
     
     def addProxyCCodeFile(File file) {
-        files += new ProxyCCodeFile(file)
+        return new CCodeFile(file) => [files += it]
     }
     
     def addProxyJavaFile(File file) {
-        files += new ProxyJavaCodeFile(file)
+        return new JavaCodeFile(file) => [files += it]
     }
 }
 
-@Data
+@FinalFieldsConstructor
 class CodeFile {
     
-    val String fileName
-    val String code
+    @Accessors val String fileName
+    @Accessors val String code
+    @Accessors var File underlyingFile = null
     
+    new(File underlyingFile) {
+        this(underlyingFile, null)
+    }
+    
+    new(File underlyingFile, String content) {
+        this(underlyingFile.name, content)
+        this.underlyingFile = underlyingFile
+    }
+        
     def getFile() {
-        return new File(fileName)
+        if (underlyingFile !== null) {
+            return underlyingFile
+        } else {
+            return new File(fileName)
+        }
+    }
+    
+    def isProxy() {
+        return underlyingFile !== null
+    }
+    
+    def getCode() {
+        if (code !== null) {
+            return code
+        } else if (underlyingFile !== null) {
+            return new String(Files.readAllBytes(file.toPath))
+        } else {
+            return null
+        }
     }
 }
 
-@Data
 class CCodeFile extends CodeFile {
     
-    val boolean header
-    val String dataStructName
-}
-
-class ProxyCCodeFile extends CCodeFile {
+    @Accessors var boolean header
+    @Accessors var String dataStructName
     
-    val File file
-    var String contentCache
-    
-    new(File file) {
-        super(file.name, null, file.name.endsWith(".h"), null)
-        this.file = file
+    new(File underlyingFile) {
+        this(underlyingFile, null)
     }
     
-    override getFile() {
-        return file
+    new(File underlyingFile, String content) {
+        this(underlyingFile.name, content, underlyingFile.name.endsWith(".h"), null)
+        this.underlyingFile = underlyingFile
     }
     
-    override getCode() {
-        if (contentCache === null) {
-            contentCache = new String(Files.readAllBytes(file.toPath))
-        }
-        return contentCache
-    }    
+    new(String fileName, String code, boolean header, String dataStructName) {
+        super(fileName, code)
+        this.header = header
+        this.dataStructName = dataStructName
+    }
 }
 
-@Data
 class JavaCodeFile extends CodeFile {
     
-    val String className
-}
-
-
-class ProxyJavaCodeFile extends JavaCodeFile {
+    @Accessors var String className
     
-    val File file
-    var String contentCache
-    
-    new(File file) {
-        super(file.name, null, file.name)
-        this.file = file
+    new(File underlyingFile) {
+        this(underlyingFile, null)
     }
     
-    override getFile() {
-        return file
+    new(File underlyingFile, String content) {
+        this(underlyingFile.name, content, underlyingFile.name)
+        this.underlyingFile = underlyingFile
     }
     
-    override getCode() {
-        if (contentCache === null) {
-            contentCache = new String(Files.readAllBytes(file.toPath))
-        }
-        return contentCache
-    }    
+    new(String fileName, String code, String className) {
+        super(fileName, code)
+        this.className = className
+    }
 }

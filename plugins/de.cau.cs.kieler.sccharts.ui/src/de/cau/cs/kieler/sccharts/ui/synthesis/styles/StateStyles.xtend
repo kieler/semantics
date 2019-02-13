@@ -14,41 +14,42 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortLabelPlacement
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.PortConstraints
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.kgraph.KPort
-import org.eclipse.elk.core.options.PortSide
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import org.eclipse.elk.core.options.PortLabelPlacement
-import java.util.EnumSet
-import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Styles for {@link State}.
@@ -225,6 +226,7 @@ class StateStyles {
             
             fontBold = true
             fontSize = stateLabelTextSize
+            //suppressSelectability
         ]
     }
 
@@ -236,7 +238,10 @@ class StateStyles {
             // Add surrounding space
             setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
                 
-            eAllContents.filter(KText).forEach[fontSize = stateLabelTextSize]
+            eAllContents.filter(KText).forEach[
+                fontSize = stateLabelTextSize
+                //suppressSelectability
+            ]
 
             children.head => [
                 setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
@@ -339,6 +344,16 @@ class StateStyles {
     
     package def highlightHighlight(KText ktext) {
         ktext.foreground = KEYWORD.color;
+    }
+    
+    /**
+     * Sets the selection style of the state.
+     */
+    def setSelectionStyle(KNode node) {
+        node.KContainerRendering => [
+            selectionLineWidth = if (lineWidthValue > 2) 1.2f * lineWidthValue else 2 * lineWidthValue;
+            selectionForeground = SELECTION.color;
+        ]
     }
 
     /**

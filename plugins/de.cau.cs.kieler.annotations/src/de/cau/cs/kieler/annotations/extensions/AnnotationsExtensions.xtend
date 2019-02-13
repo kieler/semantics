@@ -12,6 +12,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
+import java.util.List
 
 /**
  * Annotations extensions
@@ -48,6 +49,13 @@ class AnnotationsExtensions {
 			it.values += value
 		]
 	}
+	
+    def Annotation createStringAnnotation(String name, List<String> value) {
+        AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            it.name = name
+            it.values.addAll(value)
+        ]
+    }	
 
     def Annotation createTypedStringAnnotation(String name, String type, String value) {
         AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
@@ -132,6 +140,9 @@ class AnnotationsExtensions {
         ]
     }
     
+    def addTagAnnotation(Annotatable annotatable, String name) {
+        annotatable.annotations += createTagAnnotation(name)
+    }
     
     def boolean hasEqualAnnotationValue(Annotatable source, String name, Annotatable target) {
         if (!source.hasAnnotation(name) || !target.hasAnnotation(name)) return false;
