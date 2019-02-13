@@ -13,13 +13,9 @@
 package de.cau.cs.kieler.language.server.registration
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import com.google.inject.Singleton
-import de.cau.cs.kieler.annotations.ide.highlighting.AnnotationsHighlighting
-import de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlighting
-import de.cau.cs.kieler.kexpressions.ide.kext.highlighting.KExtHighlighting
-import de.cau.cs.kieler.lustre.ide.highlighting.LustreHighlighting
-import de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlighting
-import de.cau.cs.kieler.scl.ide.highlighting.SCLHighlighting
+import de.cau.cs.kieler.language.server.LanguageRegistration
 import java.util.ArrayList
 import java.util.List
 import org.apache.log4j.Logger
@@ -28,10 +24,6 @@ import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
-import com.google.inject.Injector
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
-import com.google.inject.TypeLiteral
-import de.cau.cs.kieler.language.server.LanguageRegistration
 
 /**
  * Implements methods to extend the LSP to allow compilation

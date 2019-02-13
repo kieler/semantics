@@ -18,5 +18,7 @@ Export-Package: de.cau.cs.kieler.scl.ide,
  de.cau.cs.kieler.scl.ide.contentassist.antlr.internal,
  de.cau.cs.kieler.scl.ide.highlighting
  org.eclipse.xtend.lib.macro
-Export-Package: de.cau.cs.kieler.scl.ide.contentassist.antlr,
- de.cau.cs.kieler.scl.ide.contentassist.antlr.internal
+Export-Package: de.cau.cs.kieler.scl.ide,
+ de.cau.cs.kieler.scl.ide.contentassist.antlr,
+ de.cau.cs.kieler.scl.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.scl.ide.highlighting
