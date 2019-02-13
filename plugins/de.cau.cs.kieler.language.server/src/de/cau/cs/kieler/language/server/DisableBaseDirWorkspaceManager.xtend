@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -18,10 +18,13 @@ import org.eclipse.xtext.util.CancelIndicator
 import org.eclipse.xtext.validation.Issue
 
 /**
+ * The initialize message of the LSP sends a baseDir of the workspace. Xtext automatically uses that to create
+ * a folder with Xtext nature. This is not what we want since it heavily influences performance.
+ * 
  * @author sdo
  *
  */
-class MyWorkspaceManager extends WorkspaceManager {
+class DisableBaseDirWorkspaceManager extends WorkspaceManager {
     override void initialize(URI baseDir, (URI, Iterable<Issue>)=>void issueAcceptor, CancelIndicator cancelIndicator) {
         refreshWorkspaceConfig(cancelIndicator)
     }

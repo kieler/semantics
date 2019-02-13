@@ -70,7 +70,7 @@ class LanguageServerLauncher extends ServerLauncher {
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
         val languageServer = injector.getInstance(LanguageServerImpl)
-        languageServer.workspaceManager = injector.createChildInjector([new MyWorkspaceManager()]).getInstance(MyWorkspaceManager)
+        languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
         val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
         val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
         kicoolExtension.kgraphLSEx = kgtExt
