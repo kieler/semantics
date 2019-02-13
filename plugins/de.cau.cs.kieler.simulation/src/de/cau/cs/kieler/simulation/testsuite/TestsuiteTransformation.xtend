@@ -14,7 +14,6 @@ package de.cau.cs.kieler.simulation.testsuite
 
 import com.google.inject.Guice
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
@@ -48,6 +47,7 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         val value = model
         
         val TestsuiteCompilationData data = new TestsuiteCompilationData
+        data.logger = logger
         
         var String[] code = {}
         if (value.files.size == 1) {
@@ -73,15 +73,22 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             
             // destination: <destinationFolder>
             } else if (lowerLine.startsWith("destination:")) {
-                data.destination = line.substring(12).trim
-                logger.println("Set Destination to: " + data.destination)
+                if (data.destination === null) {
+                    data.destination = line.substring(12).trim
+                    environment.setProperty(ProjectInfrastructure.MODEL_DST_PATH, data.destination)
+                    logger.println("Set Destination to: " + data.destination)
+                } else {
+                    logger.println("ERROR destination already set to " + data.destination +
+                                    " (" + line.substring(12).trim + ")"
+                                    )
+                }
             
             // src-root: <srcRootFolder>
             } else if (lowerLine.startsWith("src-root:")) {
                 data.root = line.substring(9).trim
                 logger.println("Set src-root to: " + data.root)
             
-            // destination: <destinationFolder>
+            // binfolder: <binFolder>
             } else if (lowerLine.startsWith("binfolder:")) {
                 data.generatedFolder = line.substring(10).trim
                 logger.println("Set binaries-folder to: " + data.generatedFolder)
@@ -106,11 +113,6 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             logger.println(v.toString)
         ]
         
-        
-        
-        //this.updateProgress(0.5)
-        //Thread.sleep(5000)
-        
         val result = logger.closeLog("env.log")
         value.files.forEach[f| result.add(f.fileName, "got: "+f.code)]
         model = result
@@ -126,7 +128,6 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         try {
             Files
                 .walk(path)
-                //.parallel()
                 .filter  [file| file.toFile.isFile && data.validFile(file)]
                 .forEach [file|
                     compile(data, file)
@@ -149,12 +150,10 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             val compileModel = resource.getContents().head
             try {
                 // get a compilation context
-                val cc = Compile.createCompilationContext(data.system, compileModel)
-                cc.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, file.toString)
-                data.fillEnvitonment(cc.startEnvironment)
+                val cc = data.getCompilationContext(compileModel, file)
                 
                 // run the compiler
-                cc.compile
+                cc?.compile
             } catch (Exception e) {
                 environment.errors.add(e)
                 logger.println(" << ERROR <<")
@@ -167,6 +166,14 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             logger.println(" << ERROR <<")
             logger.println("Error: could not load model from file " + file)
             e.printStackTrace(logger)
+            logger.println(" >> ----- >>")
+        } catch (OutOfMemoryError e) {
+            logger.println(" << ERROR << OutOfMemory <<")
+            logger.println("Error: could not load/compile model from file " + file)
+            logger.println(" >> ----- >>")
+        } catch (StackOverflowError e) {
+            logger.println(" << ERROR << StackOverflow <<")
+            logger.println("Error: could not load/compile model from file " + file)
             logger.println(" >> ----- >>")
         }
         

@@ -12,38 +12,98 @@
  */
 package de.cau.cs.kieler.simulation.testsuite
 
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import java.nio.file.Path
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.deploy.Logger
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.StandardCopyOption
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author mek
  *
  */
 class TestsuiteCompilationData {
-    public String root
-    public String destination
-    public String generatedFolder
-    public String fileEndsWithFilter
-    public System system
+    public Logger logger = new Logger
+    public String root               = null
+    public String destination        = null
+    public String generatedFolder    = null
+    public String fileEndsWithFilter = ""
+    public System system             = null
+    public boolean localCompilation  = true
     
     def validFile(Path file) {
         return file.fileName.toString.endsWith(fileEndsWithFilter)
     }
     
-    def fillEnvitonment(Environment env) {
+    def relativePath(Path path) {
         if (root !== null) {
-            env.setProperty(ProjectInfrastructure.MODEL_SRC_PATH,  root)
+            return Paths.get(root).relativize(path)
+        } else {
+            return Paths.get("")
         }
+    }
+    
+    def destinationPath(Path path) {
         if (destination !== null) {
-            env.setProperty(ProjectInfrastructure.MODEL_DST_PATH,  destination)
+            return Paths.get(destination).resolve(path)
+        } else {
+            return path
         }
+    }
+    
+    def targetFolder(Path modelFile) {
+        return destinationPath(relativePath(modelFile.parent))
+                .resolve(modelFile.fileName.toString.split("\\.", 2).get(0).replace(' ', '_'))
+    }
+    
+    def getCompilationContext(EObject compileModel, Path modelFile) {
+        if (!Files.exists(modelFile)) {
+            return null
+        }
+        
+        val cc = Compile.createCompilationContext(system, compileModel)
+        val env = cc.startEnvironment
+        
+        
+        if (localCompilation) {
+            val targetFolder = targetFolder(modelFile)
+            Files.createDirectories(targetFolder)
+            val localModelFile = targetFolder.resolve(modelFile.fileName)
+            // copy file if original != local and local doesn't exist or is older/same age
+            if (!modelFile.equals(localModelFile) &&
+                (!Files.exists(localModelFile) ||
+                    Files.getLastModifiedTime(modelFile)
+                    .compareTo(Files.getLastModifiedTime(localModelFile)) >= 0)) {
+                Files.copy(modelFile, localModelFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+            
+            env.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, localModelFile.toString)
+            env.setProperty(ProjectInfrastructure.OWN_MODEL_FOLDER, false)
+            
+        } else {
+            env.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, modelFile.toString)
+            env.setProperty(ProjectInfrastructure.OWN_MODEL_FOLDER, true)
+            if (root !== null) {
+                env.setProperty(ProjectInfrastructure.MODEL_SRC_PATH,  root)
+            }
+            if (destination !== null) {
+                env.setProperty(ProjectInfrastructure.MODEL_DST_PATH,  destination)
+            }
+        }
+        
+        env.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
+        
         if (generatedFolder !== null && generatedFolder != "") {
             env.setProperty(ProjectInfrastructure.USE_GENERATED_FOLDER, true)
             env.setProperty(ProjectInfrastructure.GENERATED_NAME, generatedFolder)
         } else {
             env.setProperty(ProjectInfrastructure.USE_GENERATED_FOLDER, false)
         }
+        
+        return cc
     }
 }
