@@ -34,7 +34,7 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
-      <repository location="file://var/atlassian/bamboo/xml-data/build-dir/KISEMA-NSI-JOB1/pragmatics-repository/"/>
+      <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/semantics-integration/pragmatics/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
