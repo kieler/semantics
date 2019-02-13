@@ -139,13 +139,15 @@ class ProjectInfrastructure {
             var name = "unknown"
             if (resource !== null && resource.URI !== null && resource.URI.platform) {
                 name = resource.URI.toPlatformString(true)
+            } else if (resource !== null && resource.URI !== null && resource.URI.file) {
+                name = resource.URI.toFileString
             } else if (modelFile !== null) {
                 name = modelFile.toString
             } else if (inputModel instanceof Nameable) {
                 name = inputModel.name
             }
             name = name.replaceAll("/|\\\\", "-")
-            name = name.replaceAll(" |\\.", "-")
+            name = name.replaceAll(" |\\.|:", "-")
             
             // Create Folder
             val folder = project.getFolder(name)
