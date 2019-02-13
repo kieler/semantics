@@ -75,7 +75,9 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             } else if (lowerLine.startsWith("destination:")) {
                 if (data.destination === null) {
                     data.destination = line.substring(12).trim
-                    environment.setProperty(ProjectInfrastructure.MODEL_DST_PATH, data.destination)
+                    environment.getPropertyComputeIfAbsent(
+                        ProjectInfrastructure.PATH_VARIABLES, [newHashMap]
+                    ).put("DST_ROOT", data.destination)
                     logger.println("Set Destination to: " + data.destination)
                 } else {
                     logger.println("ERROR destination already set to " + data.destination +
@@ -114,7 +116,6 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         ]
         
         val result = logger.closeLog("env.log")
-        value.files.forEach[f| result.add(f.fileName, "got: "+f.code)]
         model = result
     }
     

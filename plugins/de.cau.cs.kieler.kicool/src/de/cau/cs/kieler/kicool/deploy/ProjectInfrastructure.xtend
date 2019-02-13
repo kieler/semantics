@@ -19,7 +19,10 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File
 import java.io.PrintStream
+import java.nio.file.Paths
 import java.util.List
+import java.util.Map
+import java.util.Map.Entry
 import java.util.Set
 import org.eclipse.core.resources.IProject
 import org.eclipse.core.resources.IResource
@@ -33,9 +36,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 
 import static extension org.eclipse.xtend.lib.annotations.AccessorType.*
-import java.nio.file.Paths
-import java.util.Map
-import java.nio.file.Path
 
 /**
  * 
@@ -44,36 +44,34 @@ import java.nio.file.Path
  * @kieler.rating 2018-05-18 proposed yellow  
  */
 class ProjectInfrastructure {
-
-    public static val IProperty<Map<String, String>> PATH_VARIABLES =
-        new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.project.path.variables", null)
-
+    
     public static val IProperty<ProjectInfrastructure> PROJECT_INFRASTRUCTURE = 
         new Property<ProjectInfrastructure>("de.cau.cs.kieler.kicool.deploy.project", null)
-
-    public static val IProperty<String> MODEL_SRC_PATH =
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.src.path", null)
-    public static val IProperty<String> MODEL_DST_PATH =
-        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.dst.path", null)
     
     public static val IProperty<String> MODEL_FILE_PATH = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.file.path", null)
-        
+    
+    
     public static val IProperty<Boolean> USE_TEMPORARY_PROJECT = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.use", true)
-
+    
     public static val IProperty<String> TEMPORARY_PROJECT_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.name", "KIELER-Temp")
-        
+    
+    
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
-
+    
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
-
+    
+    
+    public static val IProperty<Map<String, String>> PATH_VARIABLES =
+        new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.project.path.variables", null)
+    
     public static val IProperty<Boolean> OWN_MODEL_FOLDER =
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.model.ownfolder", false)
-
+    
     public static val Set<IProject> createdTemporaryProjects = newHashSet
 
     @Accessors(AccessorType.PUBLIC_GETTER)
@@ -130,9 +128,10 @@ class ProjectInfrastructure {
     
     new(Environment environment) {
         var Resource resource = null
-        
         variables = environment.getPropertyComputeIfAbsent(PATH_VARIABLES, [newHashMap])
         
+        
+        // ############### MODEL_FILE ###############
         // Check if compilation is based on input file
         val inputModelPath = environment.getProperty(MODEL_FILE_PATH)
         if (inputModelPath !== null) {
@@ -141,7 +140,6 @@ class ProjectInfrastructure {
                 modelFile = null
             }
         }
-
         
         // alternatively get path from original model
         val inputModel = environment.getProperty(ORIGINAL_MODEL)
@@ -157,36 +155,49 @@ class ProjectInfrastructure {
                 }
             }
         }
+        
+        // store variables about source file
         if (modelFile !== null) {
-            variables.put("MODEL_FILE_PATH", modelFile.path)
-            variables.put("MODEL_FILE_NAME", modelFile.name)
+            variables.putIfAbsent("MODEL_FILE_PATH", modelFile.path)
+            variables.putIfAbsent("MODEL_FILE_NAME", modelFile.name)
             val nameParts = modelFile.name.split("\\.", 2)
-            variables.put("MODEL_FILE_RAW_NAME", nameParts.get(0))
-            variables.put("MODEL_FILE_EXTENSION", (if (nameParts.length>1) nameParts.get(1) else ""))
+            
+            val rawName = nameParts.get(0)
+            variables.putIfAbsent("MODEL_FILE_RAW_NAME", rawName)
+            variables.putIfAbsent("MODEL_FILE_RAW_NAME_PATHSAVE", rawName.replace(" ", "_"))
+            
+            val fileExtension = if (nameParts.length>1) nameParts.get(1) else ""
+            variables.putIfAbsent("MODEL_FILE_EXTENSION", fileExtension)
+            variables.putIfAbsent("MODEL_FILE_EXTENSION_PATHSAVE", fileExtension.replace(".", "-").replace(" ", "_"))
         }
+        val constModelFile = modelFile
         
         
+        // ############### SOURCE_FOLDER ###############
         // determine model src folder
-        val srcFolderPath = environment.getProperty(MODEL_SRC_PATH)
-        val srcFolder =
-            if (srcFolderPath !== null) {
-                new File(srcFolderPath)
-            } else {
-                if (modelFile !== null) {
-                    modelFile.parentFile
-                }
+        val srcFolderPath = variables.computeIfAbsent("SRC_ROOT",[
+            if (constModelFile !== null) {
+                return constModelFile.parentFile.path
             }
+            return null
+        ])
+        val srcFolder = if (srcFolderPath !== null) new File(srcFolderPath)
         
+        
+        // ############### RELATIVE_SOURCE_PATH ###############
         // get relative path, before temporary project reroutes modelFolder
-        var Path relativeModelPath = null
         if (srcFolder !== null && modelFile !== null){
-            relativeModelPath = Paths
-                .get(srcFolder.path)
-                .relativize(Paths.get(modelFile.parent))
-            variables.put("RELATIVE_PATH", relativeModelPath.toString)
+            variables.computeIfAbsent("RELATIVE_MODEL_PATH", [
+                Paths.get(srcFolder.path)
+                     .relativize(Paths.get(constModelFile.parent))
+                     .toString
+            ])
         }
         
+        
+        // ############### DEFAULT_DESTINATION_ROOT(modelFolder) ###############
         if (environment.getProperty(USE_TEMPORARY_PROJECT)) {
+            // Get folder in project by turning (project)path/modelname into folder name.
             // initialize project
             project = environment.temporaryProject
             
@@ -204,45 +215,78 @@ class ProjectInfrastructure {
             
             // Create Folder
             val folder = project.getFolder(name)
-            if (!folder.exists) {
-                folder.create(true, true, null)
-            }
+            //if (!folder.exists) {
+            //    folder.create(true, true, null)
+            //}
             modelFolder = folder.rawLocation.toFile
         } else if (srcFolder !== null && srcFolder.exists) {
+            // set default destination to source folder
             modelFolder = srcFolder
         } else {
             environment.warnings.add("Can not detect model location to create project infrastructure.")
         }
         
-        if (modelFile !== null && environment.getProperty(OWN_MODEL_FOLDER)) {
-            val modelFileName = modelFile.name.replace(".", "-").replace(" ", "_")
-            variables.put("OWN_MODEL_FOLDER", modelFileName)
-            relativeModelPath = relativeModelPath?.resolve(modelFileName) ?: Paths.get(modelFileName)
-        }
-        modelRootRelative = relativeModelPath?.toString ?: ""
         
-        val dstFolderPath = environment.getProperty(MODEL_DST_PATH)
-        val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath) else modelFolder
+        // ############### OWN_MODEL_FOLDER ###############
+        if (environment.getProperty(OWN_MODEL_FOLDER)) {
+            variables.computeIfAbsent("OWN_MODEL_FOLDER", [
+                variables.get("MODEL_FILE_RAW_NAME_PATHSAVE")
+            ])
+        }
+        
+        
+        // ############### DESTINATION_ROOT ###############
+        val dstFolderPath = variables.computeIfAbsent("DST_ROOT", [
+            modelFolder.path
+        ])
+        val dstFolder = if (dstFolderPath !== null) new File(dstFolderPath)
         
         if (environment.getProperty(USE_GENERATED_FOLDER)) {
-            variables.put("GEN_FOLDER", environment.getProperty(GENERATED_NAME))
+            variables.putIfAbsent("GEN_FOLDER", environment.getProperty(GENERATED_NAME))
         }
         
-        // Create kieler-gen folder
-        if (modelFolder !== null) {
+        
+        // ############### OVERWRITE DESTINATION_ROOT BY PROJECT ###############
+        if (dstFolder !== null && hasProject) {
+            // root folder
+            var gen = project.getFolder(dstFolder.name)
+            if (!gen.exists) {
+                gen.create(true, true, null)
+            }
+            variables.put("DST_ROOT", gen.rawLocation.toFile.path)
+        }
+        
+        
+        // ############### CALCULATE DESTINATION/FLATEN VARIABLES ###############
+        // add default output path
+        variables.computeIfAbsent("DST", [
+            variableReplacement("${DST_ROOT}/${GEN_FOLDER}/${RELATIVE_MODEL_PATH}/${OWN_MODEL_FOLDER}/")
+        ])
+        
+        // resolve variables in variables with max recursion of 10 levels
+        for (var i = 0; i<10; i++) {
+            var done = true
+            for (Entry<String,String> entry : variables.entrySet) {
+                if (entry.value.indexOf("${")>=0) {
+                    variables.put(entry.key, variableReplacement(entry.value))
+                    done = false
+                }
+            }
+            if (done) i = 10
+        }
+        
+        
+        // ############### CREATE FOLDER ###############
+        val relativeModelPath =
+            Paths.get(variables.get("DST_ROOT"))
+            .relativize(Paths.get(variables.get("DST")))
+            .normalize
+        modelRootRelative = relativeModelPath.toString
+        variables.computeIfAbsent("DST_ROOT_RELATIVE", [modelRootRelative])
+        
+        if (dstFolder !== null) {
             if (hasProject) {
-                // root folder
                 var gen = project.getFolder(dstFolder.name)
-                if (!gen.exists) {
-                    gen.create(true, true, null)
-                }
-                variables.put("ROOT", gen.rawLocation.toFile.path)
-                if (environment.getProperty(USE_GENERATED_FOLDER)) {
-                    gen = gen.getFolder(environment.getProperty(GENERATED_NAME))
-                    if (!gen.exists) {
-                        gen.create(true, true, null)
-                    }
-                }
                 generatedCodeRootFolder = gen.rawLocation.toFile
                 
                 // gen folder
@@ -257,12 +301,7 @@ class ProjectInfrastructure {
                 }
                 generatedCodeFolder = genSub.rawLocation.toFile
             } else {
-                variables.put("ROOT", dstFolder.path)
-                if (environment.getProperty(USE_GENERATED_FOLDER)) {
-                    generatedCodeRootFolder = new File(dstFolder, environment.getProperty(GENERATED_NAME))
-                } else {
-                    generatedCodeRootFolder = dstFolder
-                }
+                generatedCodeRootFolder = dstFolder
                 generatedCodeFolder = new File(generatedCodeRootFolder, modelRootRelative)
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
@@ -305,7 +344,11 @@ class ProjectInfrastructure {
         return WorkspaceSynchronizer.getFile(resource)?.rawLocation?.toFile
     }
     
-    static def String variableReplacement(Map<String,String> vars, String input) {
+    
+    def String variableReplacement(String input) {
+        return variableReplacement(null, input)
+    }
+    def String variableReplacement(Map<String,String> vars, String input) {
         val sb = new StringBuilder
         var lastIndex = 0
         var index = 0
@@ -319,7 +362,8 @@ class ProjectInfrastructure {
             
             if ((index = input.indexOf("}", lastIndex)) !== -1) {
                 // get value of variable
-                val variableValue = vars.get(input.substring(lastIndex, index))
+                val variableName = input.substring(lastIndex, index)
+                val variableValue = vars?.get(variableName) ?: variables.get(variableName)
                 if (variableValue !== null) {
                     sb.append(variableValue)
                 } // if variable not found: skip entry

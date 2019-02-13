@@ -71,13 +71,12 @@ class MakefileDependencieAdder extends InplaceProcessor<CodeContainer>{
             }
             
             val vars = new HashMap<String,String>()
-            vars.putAll(infra.variables)
             vars.put("NAME", name)
             
             // get file to write dependencies into
             val dependencieFile = Paths
-                .get(infra.generatedCodeRootFolder.path)
-                .resolve(vars.getDependenciePath(dependencieFilePath))
+                .get(infra.generatedCodeFolder.path)
+                .resolve(vars.getDependenciePath(infra, dependencieFilePath))
             val dependencieLines = new ArrayList(dependencies.size)
             
             // add all dependency lines to the list
@@ -85,11 +84,11 @@ class MakefileDependencieAdder extends InplaceProcessor<CodeContainer>{
                 if (entry.value !== null && entry.value.size > 0) {
                     val line = new StringBuilder
                     
-                    line.append(vars.getDependenciePath(entry.key))
+                    line.append(vars.getDependenciePath(infra, entry.key))
                     line.append(":")
                     for (String dependent : entry.value) {
                         line.append(" ")
-                        line.append(vars.getDependenciePath(dependent))
+                        line.append(vars.getDependenciePath(infra, dependent))
                     }
                     dependencieLines += line
                     logger.println(line)
@@ -109,9 +108,9 @@ class MakefileDependencieAdder extends InplaceProcessor<CodeContainer>{
      * This method resolves a path with given variables which may be used in path with
      * "${VARIABLE}" and resolves it to a path for a makefile
      */
-    private def String getDependenciePath(Map<String,String> vars, String path) {
+    private def String getDependenciePath(Map<String,String> vars, ProjectInfrastructure infra, String path) {
         return Paths
-            .get(ProjectInfrastructure::variableReplacement(vars, path))
+            .get(infra.variableReplacement(vars, path))
             .normalize
             .toString
             .replace("\\", "/")

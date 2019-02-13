@@ -68,6 +68,9 @@ class TestsuiteCompilationData {
         val cc = Compile.createCompilationContext(system, compileModel)
         val env = cc.startEnvironment
         
+        val path_variables = env.getPropertyComputeIfAbsent(
+            ProjectInfrastructure.PATH_VARIABLES, [newHashMap]
+        )
         
         if (localCompilation) {
             val targetFolder = targetFolder(modelFile)
@@ -88,10 +91,10 @@ class TestsuiteCompilationData {
             env.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, modelFile.toString)
             env.setProperty(ProjectInfrastructure.OWN_MODEL_FOLDER, true)
             if (root !== null) {
-                env.setProperty(ProjectInfrastructure.MODEL_SRC_PATH,  root)
+                path_variables.put("SRC_ROOT", root)
             }
             if (destination !== null) {
-                env.setProperty(ProjectInfrastructure.MODEL_DST_PATH,  destination)
+                path_variables.put("DST_ROOT", destination)
             }
         }
         

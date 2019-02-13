@@ -3,22 +3,22 @@ public system de.cau.cs.kieler.^simulation.testsuite.single
 
 de.cau.cs.kieler.^simulation.testsuite.makefile config {
     // DEPENDENCIES
-    "de.cau.cs.kieler.simulation.testsuite.makefile.dependencie.file": "${ROOT}/deps.d",
+    "de.cau.cs.kieler.simulation.testsuite.makefile.dependencie.file": "${DST_ROOT}/deps.d",
     "de.cau.cs.kieler.simulation.testsuite.makefile.dependencies": {
         "results.csv": [
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.exe"
+            "${DST_ROOT_RELATIVE}/main.exe"
         ],
-        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.exe": [
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.o",
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.o"
+        "${DST_ROOT_RELATIVE}/main.exe": [
+            "${DST_ROOT_RELATIVE}/main.o",
+            "${DST_ROOT_RELATIVE}/${NAME}.o"
         ],
-        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.o": [
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.c",
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.h"
+        "${DST_ROOT_RELATIVE}/main.o": [
+            "${DST_ROOT_RELATIVE}/main.c",
+            "${DST_ROOT_RELATIVE}/${NAME}.h"
         ],
-        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.o": [
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.c",
-            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.h"
+        "${DST_ROOT_RELATIVE}/${NAME}.o": [
+            "${DST_ROOT_RELATIVE}/${NAME}.c",
+            "${DST_ROOT_RELATIVE}/${NAME}.h"
         ]
     }
 }
