@@ -42,6 +42,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.testsuite.single.statebased.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.trace.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">
@@ -77,6 +80,9 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.simulation.testsuite.MakefileDependencieAdder">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.simulation.testsuite.TestsuiteTraceConverter">
       </Processor>
    </extension>
 
