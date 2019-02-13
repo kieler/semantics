@@ -34,7 +34,7 @@
       <unit id="de.cau.cs.kieler.klighd.freehep.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
-      <repository location="file:/\${project.baseUri}/../pragmatics-repository/"/>
+      <repository location="file:/../pragmatics-repository/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.elk.graphviz.feature.feature.group" version="0.0.0"/>
