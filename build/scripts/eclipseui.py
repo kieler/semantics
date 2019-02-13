@@ -26,7 +26,8 @@ PROJECT_PREFIX = 'de.cau.cs.kieler'
 DEP_FILE = 'dependencies.txt'
 UI_PROPERTY = 'Eclipse-UI'
 UI_REGEX = '.*\\.ui'
-BAN_REGEX = '.*\\.ui'
+BANNED_REGEX = '.*\\.ui'
+BANNED = []
 
 def main(args):
     print('-- Checking plugin dependencies --')
@@ -37,6 +38,7 @@ def main(args):
         stop('%s is not a directory' % plugins)
 
     isUI = re.compile(UI_REGEX)
+    deps = {}
     for plugin in sorted(os.listdir(plugins)):
         base = join(plugins, plugin)
         if plugin.startswith(PROJECT_PREFIX) and isdir(base) and isfile(join(base, '.project')):
@@ -62,9 +64,10 @@ def main(args):
             if ui:
                 print('- Eclipse UI plugin. No constraints.')
             else:
-                xml = checkPluginXml(base, args)
-                deps = checkDependencies(base, args)
-                if not (xml and deps):
+                xmlOK = checkPluginXml(base, args)
+                deps[plugin] = readDependencies(base, args)
+                depsOK = checkDependencies(deps[plugin], args)
+                if not (xmlOK and depsOK):
                     failed.append(plugin)
 
     # report
@@ -72,30 +75,36 @@ def main(args):
         print('%s The following non-eclipse-ui plugins do not comply with the defined requirements:' % ('[WARNING]' if args.warn else '[ERROR]'))
         for fail in failed:
             print(' - %s' % fail)
+            for dep in [dep for dep in deps[fail] if dep in failed]:
+                print(' --- possibly transient due to %s' % dep)
 
     # indicate error
     if not args.warn and len(failed):
         sys.exit(1)
 
-def checkDependencies(base, args):
-    isBanned = re.compile(BAN_REGEX)
+def readDependencies(base, args):
+    deps = []
     filepath = join(base, DEP_FILE)
     if isfile(filepath):
         with open(filepath, 'r') as file:
-            success = True
             for line in file.readlines()[1:]:
-                dep = line.split(':')[1]
-                if isBanned.match(dep):
-                    print('Has (possibly transient) dependency to banned plugin: %s' % dep)
-                    success = False
-            return success
+                deps.append(line.split(':')[1])
     else:
-        print('Missing dependencies file (%s)' % DEP_FILE)
-        return False
+        print(' - Missing dependencies file (%s)' % DEP_FILE)
+    return deps
+
+def checkDependencies(deps, args):
+    isBanned = re.compile(BANNED_REGEX)
+    success = True
+    for dep in deps:
+        if isBanned.match(dep) or dep in BANNED:
+            print(' - Has (possibly transient) dependency to banned plugin: %s' % dep)
+            success = False
+    return success
 
 def checkPluginXml(base, args):
     if isfile(join(base, 'plugin.xml')):
-        print('Has plugin.xml')
+        print(' - Has plugin.xml')
         return False
     return True
 
