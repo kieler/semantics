@@ -45,6 +45,9 @@
       <TransformationSystem
             system="system/de.cau.cs.kieler.simulation.testsuite.trace.kico">
       </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.simulation.testsuite.single.kico">
+      </TransformationSystem>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.processor">

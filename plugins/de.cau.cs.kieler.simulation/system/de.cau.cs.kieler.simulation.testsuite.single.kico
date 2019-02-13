@@ -1,0 +1,38 @@
+public system de.cau.cs.kieler.^simulation.testsuite.single
+    label "INTERNAL Testsuite single saving operation"
+
+de.cau.cs.kieler.^simulation.testsuite.makefile config {
+    // DEPENDENCIES
+    "de.cau.cs.kieler.simulation.testsuite.makefile.dependencie.file": "${ROOT}/deps.d",
+    "de.cau.cs.kieler.simulation.testsuite.makefile.dependencies": {
+        "results.csv": [
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.exe"
+        ],
+        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.exe": [
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.o",
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.o"
+        ],
+        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.o": [
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/main.c",
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.h"
+        ],
+        "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.o": [
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.c",
+            "${GEN_FOLDER}/${RELATIVE_PATH}/${OWN_MODEL_FOLDER}/${NAME}.h"
+        ]
+    }
+}
+
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/templates/c-main.ftl": "templates/c-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
+    }
+}
+pre process de.cau.cs.kieler.^simulation.c.ticktime
+pre process de.cau.cs.kieler.^simulation.c.template
+de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.templates": {
+        "templates/c-main.ftl": "main.c"
+    }
+}

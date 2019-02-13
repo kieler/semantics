@@ -2,3 +2,15 @@ public system de.cau.cs.kieler.^simulation.testsuite
     label "INTERNAL Simulation Testsuite"
     
 de.cau.cs.kieler.^simulation.testsuite.deploy
+
+
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.project.use": false,
+    "de.cau.cs.kieler.kicool.deploy.project.generated.use": false,
+    "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.scg/resources/sc": "lib",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/json": "lib",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/ticktime.h": "lib/ticktime.h"
+    }
+}
