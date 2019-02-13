@@ -29,17 +29,11 @@ import com.google.inject.Inject
  */
 class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
     
-    static val RESET_NAME = "reset"
-    
     @Inject CCodeGeneratorStructModule struct
     
     override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
     }    
-    
-    override getName() {
-        RESET_NAME + baseName + suffix
-    }
     
     override generateInit() {
         code.append("void ").append(getName)

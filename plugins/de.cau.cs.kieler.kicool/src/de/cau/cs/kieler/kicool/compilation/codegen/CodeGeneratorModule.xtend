@@ -20,6 +20,9 @@ import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import de.cau.cs.kieler.core.model.properties.IProperty
 import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.annotations.Pragmatable
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * CodeGeneratorModule allows specific configuration for SCG code generators.
@@ -33,6 +36,8 @@ import de.cau.cs.kieler.annotations.Nameable
  */
 abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     
+    @Inject extension PragmaExtensions
+    
     @Accessors var T rootObject
     @Accessors var E moduleObject
     @Accessors var AbstractCodeGenerator<T, E> processorInstance            // Also the instance of the code generator
@@ -41,6 +46,7 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     @Accessors var CodeGeneratorModule<T, E> parent
     
     @Accessors var String name
+    @Accessors(PROTECTED_GETTER) var hasCustomNaming = false
     @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
     
     def CodeGeneratorModule<T, E> configure(String baseName, T rootObject, E moduleObject, AbstractCodeGenerator<T, E> processorInstance, 
@@ -58,12 +64,12 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
             this.commentsEnabled = parent.commentsEnabled
         }
         
-        configure
-        
         this.name = prefix + baseName + suffix
         if (namingProperty !== null) {
             customNaming(namingProperty)
         }
+        
+        configure
         
         return this
     }
@@ -116,11 +122,19 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
         
         if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_PREFIX) {
             naming = moduleName + naming
+            hasCustomNaming = true
         } else if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_SUFFIX) {
             naming = naming + moduleName
+            hasCustomNaming = true
         }
         
         this.name = naming 
+        
+        if (rootObject instanceof Pragmatable) {
+            if (rootObject.hasPragma(AbstractCodeGenerator.PRAGMA_CODE_NAMING)) {
+                hasCustomNaming = true               
+            }
+        }        
     }    
     
 }

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author ssm
@@ -59,14 +60,16 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!dataStructName.nullOrEmpty].toList
+            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!naming.empty].toList
             var structFile = structFiles.findFirst[!header]
             if (structFile === null) {
                 structFile = structFiles.head
             }
             if (structFile !== null) {
-                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, structFile.dataStructName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, structFile.naming.get(CodeGeneratorNames.TICKDATA))
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, structFile.fileName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_RESET_NAME, structFile.naming.get(CodeGeneratorNames.RESET))
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_TICK_NAME, structFile.naming.get(CodeGeneratorNames.TICK))
             }
         }
         

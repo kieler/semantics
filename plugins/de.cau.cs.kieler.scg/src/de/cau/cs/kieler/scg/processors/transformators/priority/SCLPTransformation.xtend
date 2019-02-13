@@ -44,6 +44,10 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
  * @author lpe ssm
@@ -179,8 +183,14 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         header.declareVariables(scg)
         header.append("void reset(TickData* d);\nint tick(TickData* d);")
         
-        code.addCHeader(scg.name + ".h", header.toString, TICK_DATA)
-        code.addCCode(scg.name + ".c", program.toString, TICK_DATA)
+        val naming = <CodeGeneratorNames, String> newHashMap
+        naming.put(TICK, environment.getProperty(TICK_FUNCTION_NAME))
+        naming.put(RESET, environment.getProperty(RESET_FUNCTION_NAME))
+        naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
+        naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))        
+        
+        code.addCHeader(scg.name + ".h", header.toString).naming.putAll(naming)
+        code.addCCode(scg.name + ".c", program.toString).naming.putAll(naming)
     }
     
     

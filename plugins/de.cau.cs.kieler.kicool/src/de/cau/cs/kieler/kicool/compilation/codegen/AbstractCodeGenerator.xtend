@@ -131,7 +131,7 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
         } else if (naming.values.size == 1) {
             if (naming.values.head == PRAGMA_CODE_NAMING_MAGIC_PREFIX) {
                 environment.setProperty(CODE_NAMING_MAGIC, PRAGMA_CODE_NAMING_MAGIC_PREFIX)    
-            } else if (naming.values.head == PRAGMA_CODE_NAMING_MAGIC_PREFIX) {
+            } else if (naming.values.head == PRAGMA_CODE_NAMING_MAGIC_SUFFIX) {
                 environment.setProperty(CODE_NAMING_MAGIC, PRAGMA_CODE_NAMING_MAGIC_SUFFIX)
             }
         }      

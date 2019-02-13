@@ -23,6 +23,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 import static extension de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGeneratorStructModule.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.BoolValue
@@ -47,8 +48,6 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
     
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
     
-    static val LOGIC_NAME = "logic"
-    
     var StatebasedCCodeGeneratorStructModule struct 
     var StatebasedCCodeGeneratorResetModule reset
     var StatebasedCCodeGeneratorTickModule tick 
@@ -57,12 +56,13 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
         reset = (parent as StatebasedCCodeGeneratorModule).reset as StatebasedCCodeGeneratorResetModule
         tick = (parent as StatebasedCCodeGeneratorModule).tick as StatebasedCCodeGeneratorTickModule
+        
+        if (processorInstance.environment.getProperty(LOGIC_FUNCTION_NAME) == LOGIC_FUNCTION_NAME.^default) {
+            name = moduleName
+        }
     }
     
-    override getName() {
-        struct.getStateName(rootState)
-    }
-    
+  
     @Accessors val functions = <StringBuilder> newLinkedList
     @Accessors val objectFunctionMap = <EObject, StringBuilder> newHashMap
     
@@ -138,7 +138,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val isRootState = if (parentCfr instanceof ControlflowRegion) false else true
         val function = if (isRootState) reset.rootStateInit else createNewFunction(state)
         val functionName = struct.getStateName(state)
-        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else struct.getName
         val inRegionCommentString = if (state.eContainer instanceof ControlflowRegion) 
             " in region " + struct.getRegionName(state.eContainer as ControlflowRegion) 
             else ""
@@ -198,7 +198,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val functionName = struct.getStateNameRunning(state)
         val parentCfr = state.eContainer
         val isRootState = !(parentCfr instanceof ControlflowRegion)
-        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else struct.getName
         val regionCount = state.regions.filter(ControlflowRegion).size
         val multiThreaded = regionCount > 1
         val inRegionCommentString = if (state.eContainer instanceof ControlflowRegion) 
@@ -370,7 +370,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         val functionName = struct.getStateName(state)
         val parentCfr = state.eContainer as ControlflowRegion
         val parentCfrName = struct.getRegionName(parentCfr)
-        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else struct.getName
 
                             
         function.add(
@@ -465,7 +465,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         extension StatebasedCCodeSerializeHRExtensions serializer
     ) {
         val parentCfr = state.eContainer
-        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else STRUCT_NAME
+        val contextDataName = if (parentCfr instanceof ControlflowRegion) struct.getContextTypeName(parentCfr) else struct.getName
              
         val transitionCount = state.outgoingTransitions.size             
                 
@@ -486,7 +486,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
                 } 
             }            
 
-            valuedObjectPrefix = CONTEXT_DATA_NAME + "->" + REGION_INTERFACE_NAME + "->"              
+            valuedObjectPrefix = CONTEXT_DATA_NAME + "->" + struct.getRegionIfaceName + "->"              
             val isImmediate = transition.immediate
             val isSelfLoop = transition.sourceState == transition.targetState
             val hasTrigger = transition.trigger !== null

@@ -78,14 +78,12 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         
         cFile.append("}\n")
 
-        codeContainer.addJavaCode(cFilename, cFile.toString)        
-        
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
-        
-        codeContainer.naming.add(naming)        
+
+        codeContainer.addJavaCode(cFilename, cFile.toString).naming.putAll(naming)        
     }    
     
     override def void addHeader(StringBuilder sb) {

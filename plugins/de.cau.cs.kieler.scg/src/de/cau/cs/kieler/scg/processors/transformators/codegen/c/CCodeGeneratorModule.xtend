@@ -107,15 +107,13 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
 
-        codeContainer.addCCode(cFilename, cFile.toString, struct.name)         
-        codeContainer.addCHeader(hFilename, hFile.toString, struct.name)
-        
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.naming.add(naming)        
+        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)        
+        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
     }    
     
     /**

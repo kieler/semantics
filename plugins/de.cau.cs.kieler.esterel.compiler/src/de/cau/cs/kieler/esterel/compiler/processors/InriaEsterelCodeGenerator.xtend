@@ -26,6 +26,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
@@ -164,7 +165,8 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
         model = new CodeContainer
         for (targetCode : targetCodes) {
             targetModel.addProxyCCodeFile(targetCode) => [
-                dataStructName = modelName
+//                dataStructName = modelName
+                naming.put(CodeGeneratorNames.TICKDATA, modelName)
             ]
             infra.sourceCodeFiles += targetCode
         }

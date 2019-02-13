@@ -41,10 +41,9 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     @Inject extension SCChartsStateExtensions
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
     
-    public static val STRUCT_NAME = "TickData"
     public static val STRUCT_CONTEXT_NAME = "context"
     public static val STRUCT_PRE_PREFIX = "_p"
-    public static val STRUCT_INTERFACE_NAME = "Iface"
+    public static val STRUCT_INTERFACE_NAME_DEFAULT = "Iface"
     
     public static val FUNCTION_INLINE_VOID = "static inline void"
     public static val FUNCTION_INLINE_VOID_SP = "static inline void "
@@ -53,7 +52,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     public static val ENUM_STATES_RUNNING = "RUNNING"
     public static val ENUM_STATES_TRANSIENT = "STATE" 
     
-    public static val THREAD_STATUS_ENUM = "ThreadStatus"
+    public static val THREAD_STATUS_ENUM_NAME = "ThreadStatus"
     public static val THREAD_STATUS_TERMINATED = "TERMINATED"       // was EMPTY
     public static val THREAD_STATUS_RUNNING = "RUNNING"
     public static val THREAD_STATUS_WAITING = "READY"         // was DISPATCHED
@@ -61,7 +60,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     
     public static val CONTEXT_DATA_NAME = "context"
     public static val CONTEXT_TYPE_NAME = "Context"
-    public static val REGION_INTERFACE_NAME = "iface"
+    public static val REGION_INTERFACE_NAME_DEFAULT = "iface"
     public static val REGION_ROOT_TERMINATED = "terminated"
     public static val REGION_THREADSTATUS = "threadStatus"
 //    public static val REGION_DATA_TYPE_SUFFIX = "Data"
@@ -126,7 +125,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             LEC("thread is paused for this tick instance"), NL,
             
             "} ",
-            THREAD_STATUS_ENUM,
+            getThreadStatusName,
             ";", NL, NL
         )
         
@@ -184,9 +183,9 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     override generateDone() {
         tickData.add(
             NL, 
-            "  ", STRUCT_INTERFACE_NAME, " ", REGION_INTERFACE_NAME, ";", NL, 
+            "  ", getIfaceName, " ", getRegionIfaceName, ";", NL, 
             IFC(!leanMode, "  int ", REGION_ACTIVE_PRIORITY, ";", NL),
-            "  ThreadStatus ", REGION_THREADSTATUS, ";", NL
+            "  ", getThreadStatusName, " ", REGION_THREADSTATUS, ";", NL
         )
         
         for (cfr : rootRegions) {
@@ -200,7 +199,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         )
         
         code.add(
-            "} ", STRUCT_INTERFACE_NAME, ";", NL
+            "} ", getIfaceName, ";", NL
         )
         
         if (threadData.length > 0) code.nl
@@ -268,7 +267,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             SLC("The thread data of " + name),
             
             "typedef struct {", NL,
-            indentation, THREAD_STATUS_ENUM, " threadStatus;", 
+            indentation, getThreadStatusName, " threadStatus;", 
             LEC("status of the thread (see ThreadStatus enum)"), NL,
             
             indentation, regionName, ENUM_STATES_SUFFIX, " ", REGION_ACTIVE_STATE, ";", 
@@ -280,7 +279,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             indentation, "char ", REGION_DELAYED_ENABLED, ";", 
             LEC("active state at the beginning of the tick"), NL,
             
-            indentation, STRUCT_INTERFACE_NAME, "* ", REGION_INTERFACE_NAME, ";", 
+            indentation, getIfaceName, "* ", getRegionIfaceName, ";", 
             LEC("pointer to the program interface for communication"), NL
         )
         
@@ -308,6 +307,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             while (regionNames.values.contains(name)) {
                 name = "region" + if (cfr.name.nullOrEmpty) cfr.hashCode else cfr.name.hostcodeSafeName + counter++    
             }
+            name = getLogicRootStateNameAsPrefix + name
             regionNames.put(cfr, name)
             return name
         }
@@ -321,7 +321,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             var counter = 2
             while (stateNames.values.contains(name)) {
                 name = cfr.regionName + "_state" +s.name.hostcodeSafeName + counter++
-            }            
+            }           
+            name = getLogicRootStateNameAsPrefix + name 
             stateNames.put(s, name)
             return name
         }
@@ -335,7 +336,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             if (cfr instanceof ControlflowRegion) {
                 return s.getStateName(cfr)
             }
-            val name = "state" + s.name.hostcodeSafeName
+            var name = "state" + s.name.hostcodeSafeName
+            name = getLogicRootStateNameAsPrefix + name
             stateNames.put(s, name)
             return name
         }
@@ -350,6 +352,7 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
             while (stateEnumNames.values.contains(name)) {
                 name = s.name.toUpperCase + counter++
             }
+            name = getLogicRootStateNameAsPrefix + name
             stateEnumNames.put(s, name)
             return name
         }
@@ -367,7 +370,8 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
         if (contextNames.keySet.contains(cfr)) {
             return contextNames.get(cfr)
         } else {
-            val name = cfr.name.hostcodeSafeName + CONTEXT_TYPE_NAME
+            var name = cfr.name.hostcodeSafeName + CONTEXT_TYPE_NAME
+            name = getLogicRootStateNameAsPrefix + name
             var upperCaseName = name.substring(0, 1).toUpperCase + name.substring(1)
             var counter = 2
             while (contextNames.values.contains(upperCaseName)) {
@@ -381,6 +385,26 @@ class StatebasedCCodeGeneratorStructModule extends SCChartsCodeGeneratorModule {
     def getContextVariableName(ControlflowRegion cfr) {
         cfr.getContextTypeName.toLowerCase
     }  
+    
+    protected def getLogicRootStateNameAsPrefix() {
+        if (hasCustomNaming) {
+            return (parent as StatebasedCCodeGeneratorModule).logic.getName
+        }
+        
+        return ""
+    }
+    
+    def getThreadStatusName() {
+        getLogicRootStateNameAsPrefix + THREAD_STATUS_ENUM_NAME
+    }
+    
+    def getIfaceName() {
+        getLogicRootStateNameAsPrefix + STRUCT_INTERFACE_NAME_DEFAULT
+    }
+    
+    def getRegionIfaceName() {
+        getLogicRootStateNameAsPrefix + REGION_INTERFACE_NAME_DEFAULT
+    }
     
 //    private val ANNOTATION_PRIORITY = "optPrioIDs"
     val ANNOTATION_PRIORITY = "nodePrios"
