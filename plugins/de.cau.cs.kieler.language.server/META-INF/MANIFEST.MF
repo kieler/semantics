@@ -22,7 +22,6 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.scg,
- de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.ide,
  de.cau.cs.kieler.lustre.ide,
@@ -36,4 +35,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: de.cau.cs.kieler.language.server
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.language.server
 

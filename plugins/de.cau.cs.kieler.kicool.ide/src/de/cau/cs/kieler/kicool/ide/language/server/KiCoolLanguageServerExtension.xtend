@@ -53,7 +53,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     @Inject
     Injector injector
 
-    public extension KGraphLanguageServerExtension kgraphLSEx
+    @Inject
+    extension KGraphLanguageServerExtension
     
     extension IdeCompilerView compilerView = new IdeCompilerView
     protected extension ILanguageServerAccess languageServerAccess

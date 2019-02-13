@@ -15,11 +15,11 @@ package de.cau.cs.kieler.language.server
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
+import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function
@@ -72,10 +72,12 @@ class LanguageServerLauncher extends ServerLauncher {
         val languageServer = injector.getInstance(LanguageServerImpl)
         languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
         val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
-        val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
-        kicoolExtension.kgraphLSEx = kgtExt
+        var iLanguageServerExtensions = <Object>newArrayList(languageServer, regExtension)
+        for (lse : ServiceLoader.load(ILanguageServerContribution)) {
+            iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
+        }
         val launcher = new Builder<LanguageClient>()
-                .setLocalServices(#[languageServer, regExtension, kicoolExtension])
+                .setLocalServices(iLanguageServerExtensions)
                 .setRemoteInterface(LanguageClient)
                 .setInput(args.in)
                 .setOutput(args.out)

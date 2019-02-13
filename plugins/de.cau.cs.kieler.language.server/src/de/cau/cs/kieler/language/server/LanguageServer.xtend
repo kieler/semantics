@@ -15,13 +15,13 @@ package de.cau.cs.kieler.language.server
 import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
+import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import org.apache.log4j.Logger
@@ -33,6 +33,9 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import com.google.inject.Provider
+import org.osgi.framework.Bundle
+import org.eclipse.core.runtime.Platform
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -82,8 +85,13 @@ class LanguageServer implements IApplication {
             
             val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+                bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
+                    override get() {
+                        kgraphExt
+                    }
+                })
             ]))
-            this.run(injector, host, port, kgraphExt)
+            this.run(injector, host, port)
             return EXIT_OK 
         } else {
             LanguageServerLauncher.main(#[])
@@ -98,7 +106,7 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, String host,  int port, KGraphLanguageServerExtension kgraphExt) {
+    def run(Injector injector, String host,  int port) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
@@ -111,10 +119,13 @@ class LanguageServer implements IApplication {
             val languageServer = injector.getInstance(LanguageServerImpl)
             languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
             val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
-            val kicoolExtension = injector.getInstance(KiCoolLanguageServerExtension)
-            kicoolExtension.kgraphLSEx = kgraphExt
+            var iLanguageServerExtensions = <Object>newArrayList(languageServer, regExtension)
+//            for (lse : ServiceLoader.load(ILanguageServerContribution, Platform.getBundle("de.cau.cs.kieler.kicool.ide").bundleContext.class.classLoader)) {
+//                iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
+//            }
+            iLanguageServerExtensions.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.kicool.ide").loadClass("de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerContribution") as Class<ILanguageServerContribution>).getLanguageServerExtension(injector))
             val launcher = new Builder<LanguageClient>()
-                .setLocalServices(#[languageServer, regExtension, kicoolExtension])
+                .setLocalServices(iLanguageServerExtensions)
                 .setRemoteInterface(LanguageClient)
                 .setInput(in)
                 .setOutput(out)
