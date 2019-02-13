@@ -35,7 +35,7 @@
       <unit id="de.cau.cs.kieler.klighd.view.feature.feature.group" version="0.0.0"/>
       <unit id="de.cau.cs.kieler.klighd.sdk.feature.feature.group" version="0.0.0"/>
       <repository>
-	<location>file:/${project.baseUri}/../pragmatics-repository/
+	<location>../pragmatics-repository/
 	</location>
       </repository>
     </location>
