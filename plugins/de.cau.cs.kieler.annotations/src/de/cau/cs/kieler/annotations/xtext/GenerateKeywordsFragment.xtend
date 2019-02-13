@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -22,20 +22,19 @@ import java.util.regex.Pattern
 import org.eclipse.xtext.Grammar
 import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.xbase.lib.Functions.Function1
-import org.eclipse.xtext.xtext.generator.AbstractInheritingFragment
+import org.eclipse.xtext.xtext.generator.AbstractStubGeneratingFragment
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming
+import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
 import org.eclipse.xtext.xtext.generator.model.GuiceModuleAccess
 import org.eclipse.xtext.xtext.generator.model.TypeReference
-import org.eclipse.xtext.xtext.generator.AbstractStubGeneratingFragment
-import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
-import org.eclipse.xtext.xtext.generator.util.GeneratorOption
 
 /** 
+ * Generates a class implementing {@link de.cau.cs.kieler.annotations.xtext.IHighlighting IHighlighting} with getters for 
+ * id, name, and keywords of this language.
+ * 
  * @author sdo
- * TODO add name and id
+ * 
  */
 class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
 
@@ -116,6 +115,9 @@ class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
         return xtendFile
     }
 
+    /**
+     * Gets list of keywords and returns them in form of a xtend list e.g. #["foo","bar"]
+     */
     private def prettyPrintKeywords(List<String> keywords) {
         val StringBuilder string = new StringBuilder()
         string.append("#[")

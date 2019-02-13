@@ -28,6 +28,7 @@ import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
 import de.cau.cs.kieler.annotations.services.AnnotationsGrammarAccess
 
 /**
+ * This class is no longer in use.
  * Generates syntax highlighting for Monaco editor via a highlighting file.
  * The highlighting file handles everything but the keywords in a standardized way defined by the SCCharts use-case.
  * The recognized keywords are specified by the Xtext grammar.

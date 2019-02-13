@@ -3,7 +3,7 @@
  *
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2019 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,6 +15,8 @@ package de.cau.cs.kieler.annotations.xtext
 import java.util.List
 
 /**
+ * Interface to generate highlighting file.
+ * 
  * @author sdo
  *
  */
