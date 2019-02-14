@@ -36,6 +36,7 @@ import com.google.inject.Provider
 import org.osgi.framework.Bundle
 import org.eclipse.core.runtime.Platform
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
+import org.eclipse.xtext.ide.server.WorkspaceManager
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -90,6 +91,7 @@ class LanguageServer implements IApplication {
                         kgraphExt
                     }
                 })
+                bind(WorkspaceManager).toInstance(new DisableBaseDirWorkspaceManager)
             ]))
             this.run(injector, host, port)
             return EXIT_OK 
@@ -117,7 +119,6 @@ class LanguageServer implements IApplication {
                 KGraphTypeAdapterUtil.configureGson(gsonBuilder)
             ]
             val languageServer = injector.getInstance(LanguageServerImpl)
-            languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
             var iLanguageServerExtensions = <Object>newArrayList(languageServer)
             for (lse : ServiceLoader.load(ILanguageServerContribution, this.class.classLoader)) {
                 iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
