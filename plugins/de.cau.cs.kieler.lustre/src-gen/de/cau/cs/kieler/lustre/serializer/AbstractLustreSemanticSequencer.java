@@ -187,8 +187,20 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				}
 				else break;
 			case KEffectsPackage.EMISSION:
-				sequence_Emission(context, (Emission) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedEmissionRule()) {
+					sequence_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
 			case KEffectsPackage.FUNCTION_CALL_EFFECT:
 				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
 				return; 
