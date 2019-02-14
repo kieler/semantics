@@ -1,0 +1,99 @@
+CC=gcc
+CFLAGS= -Os -I. -I$(LIB_FOLDER) -I$(MAKEFILE_FOLDER) -Ilib -std=gnu99
+# -Wall -Wextra -Wno-unused-parameter -Wno-parentheses 
+DEPS = 
+
+MAKEFILE_FILE   := $(lastword $(MAKEFILE_LIST))
+MAKEFILE_FOLDER := $(dir $(MAKEFILE_FILE))
+LIB_FOLDER      := $(dir $(MAKEFILE_FILE))lib/
+
+OUTPUT_CSV    := $(MAKEFILE_FOLDER)results.csv
+SIMULATOR_EXE := $(MAKEFILE_FOLDER)simulator.exe
+
+#ALL_TEST_MODELS := $(shell find . -name '*.test.json' -exec bash -c 'TESTFILE="{}";/usr/bin/test -f $${TESTFILE/%.test.json/.exe}' \; -print)
+MODELS    := $(shell test -f deps.d && find . -name main.c)
+#DEP_FILES := $(shell find . -name deps.d)
+
+$(LIB_FOLDER)cJSON.o: $(LIB_FOLDER)cJSON.c $(LIB_FOLDER)cJSON.h
+-include deps_custom.d
+-include deps.d
+
+
+all: $(OUTPUT_CSV)
+
+simulator: $(SIMULATOR_EXE)
+
+eco:
+	@echo "\$$(MAKEFILE_LIST)             =>" $(MAKEFILE_LIST)
+	@echo "\$$(word 1,\$$(MAKEFILE_LIST))   =>" $(word 1,$(MAKEFILE_LIST))
+	@echo "\$$(lastword \$$(MAKEFILE_LIST)) =>" $(lastword $(MAKEFILE_LIST))
+	@echo "MAKEFILE_FILE:   " $(MAKEFILE_FILE)
+	@echo "MAKEFILE_FOLDER: " $(MAKEFILE_FOLDER)
+	@echo "LIB_FOLDER:      " $(LIB_FOLDER)
+	@echo "LIB_FOLDER:      " $(dir $(LIB_FOLDER))
+	@echo "ALL_TEST_MODELS  " $(ALL_TEST_MODELS)
+
+
+$(OUTPUT_CSV): $(SIMULATOR_EXE) models
+	echo "Model;Ticks;Time;AvgTime;MinTime;MaxTime;num output errors;terminated Early;fileSize;diskUsage" > $(OUTPUT_CSV)
+	@find . \
+		-name '*.test.json' \
+		-exec \
+			/bin/bash -c ' \
+				TESTFILE="{}" ; \
+				MODEL="$${TESTFILE/%.test.json/.exe}" ; \
+				LOG="$${TESTFILE/%.test.json/.log.csv}" ; \
+				test -x $$MODEL && \
+				(echo "\"$$MODEL\";"$$(cat "$$TESTFILE" | $(SIMULATOR_EXE) "$$MODEL" | tee "$$LOG" | tail --lines=1)";"$$(du -b "$$MODEL"|cut -f1)";"$$(du --block-size=1 "$$MODEL"|cut -f1) \
+				>> $(OUTPUT_CSV)) ; \
+			' \;
+
+
+local_models: $(patsubst %.c,%.exe,$(MODELS))
+	@echo $(MODELS)
+
+models:
+	@find . \
+		-name 'deps.d' \
+		-exec \
+			/bin/bash -c '\
+				MKFILE="$$PWD/$(MAKEFILE_FILE)"; \
+				cd $$(dirname {}) ; \
+				make -f $$MKFILE local_models ; \
+			' \;
+
+
+%.o: %.c $(DEPS)
+	@echo "Createing object file $@"
+	@$(CC) -c -o $@ $< $(CFLAGS)
+
+%.exe: %.o $(LIB_FOLDER)cJSON.o
+	@echo "Createing executeable $@"
+	@$(CC) -o $@ $^ $(CFLAGS)
+
+suite.zip:
+	zip -R $@ '*.sctx' '*.eso' '*.esi' '*.ktrace' '*.c' '*.h' '*.test.json' '*deps.d' 'deps_custom.d' 'Makefile' 'main.test.json.base' 'dumbtick.bash'
+
+min_suite.zip:
+	zip -R $@ '*.c' '*.h' '*.test.json' '*deps.d' 'deps_custom.d' 'Makefile'
+
+logs.zip: $(wildcard logs/*.csv) $(wildcard logs/*.zip)
+	zip -r $@ logs -i "*.csv" "*.zip"
+
+log: $(OUTPUT_CSV) archive
+log_all: $(OUTPUT_CSV) archive_all
+
+archive:
+	mv $(OUTPUT_CSV) logs/`date +%Y_%m_%d_%H_%M`.csv
+
+archive_all:
+	zip -R logs/`date +%Y_%m_%d_%H_%M`.zip '*.csv'
+
+.PHONY: clean reset all simulator local_models models log archive log_all archive_all
+
+reset: clean $(OUTPUT_CSV)
+
+clean:
+	find -P . -name "*.o"   -delete
+	find -P . -name "*.exe" -delete
+	find -P . -name "*.csv" -delete

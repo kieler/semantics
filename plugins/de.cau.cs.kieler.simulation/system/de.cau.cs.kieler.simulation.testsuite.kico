@@ -10,6 +10,10 @@ de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
         "platform:/plugin/de.cau.cs.kieler.scg/resources/sc": "lib",
         "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/json": "lib",
-        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/ticktime.h": "lib/ticktime.h"
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/c/libs/ticktime.h": "lib/ticktime.h",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/testsuite/dumbtick.bash": "dumbtick.bash",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/testsuite/main.test.json.base": "main.test.json.base",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/testsuite/simulator.c": "simulator.c",
+        "platform:/plugin/de.cau.cs.kieler.simulation/resources/testsuite/Makefile.file": "Makefile"
     }
 }
