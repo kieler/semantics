@@ -1,0 +1,179 @@
+/*
+* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://rtsys.informatik.uni-kiel.de/kieler
+ * 
+ * Copyright 2018 by
+ * + Kiel University
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ */
+package de.cau.cs.kieler.lustre.compiler.processors
+
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
+import de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup
+import de.cau.cs.kieler.lustre.LustreStandaloneSetup
+import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
+import java.io.File
+import java.nio.file.Files
+import java.util.List
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.xmi.XMLResource
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+
+/**
+ * @author lgr
+ */
+class LucioleSimulation extends AbstractSystemCompilerProcessor<LustreProgram, ExecutableContainer> {
+
+    public static val ID = "de.cau.cs.kieler.lustre.compiler.lv6.luciole"
+
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
+    
+    override getId() {
+        return ID
+    }
+    
+    override getName() {
+        "Luciole Simulation"
+    }
+    
+    override process() {
+        // Setup project infrastructure
+        val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
+        if (infra.generatedCodeFolder === null) {
+            return
+        } else {
+            infra.log(logger)
+        }
+        
+        // setup
+        logger.println
+        logger.println("== Setting up Lustre source file ==")
+        
+        var resource = sourceModel.eResource
+        val modelName = sourceModel.packBody.nodes.head.valuedObjects.head.name
+        var File sourceFile
+        
+        if (resource !== null) {
+            sourceFile = infra.findResourceLocation(resource)
+        }
+        
+        if (sourceFile === null) {
+            sourceFile = new File(infra.generatedCodeFolder, modelName + LustreV6Compiler.LUSTRE_EXTENSION)
+            logger.println("Serializing Lustre program to " + sourceFile.toString)
+            
+            // Serialize
+            val uri = URI.createURI(sourceFile.toURI.toString)
+            val resourceSet = LustreStandaloneSetup.doSetup().getInstance(XtextResourceSet)
+                    
+            // create model resource
+            val xresource = resourceSet.createResource(uri) as XtextResource
+            xresource.getContents().add(sourceModel)
+    
+            // save
+            val saveOptions = <String, String>newHashMap
+            saveOptions.put(XMLResource.OPTION_ENCODING, "UTF-8")
+            xresource.save(saveOptions)
+        } else {
+            if (!sourceFile.name.endsWith(LustreV6Compiler.LUSTRE_EXTENSION)) {
+                environment.errors.add("Resource containing the input model has not the file extension " + LustreV6Compiler.LUSTRE_EXTENSION)
+                logger.println("ERROR: Resource containing the input model has not the file extension " + LustreV6Compiler.LUSTRE_EXTENSION)
+            }
+            if (sourceFile.parentFile.equals(infra.generatedCodeFolder)) {
+                logger.println("Lustre source file already located at the right position")
+            } else {
+                val src = sourceFile
+                val dest = new File(infra.generatedCodeFolder, sourceFile.name)
+                logger.println("Copying Lustre source file to " + dest)
+                ProjectSetup.copyFile(src, dest, logger, true)
+                sourceFile = dest
+            }
+        }
+        
+        // lustre
+        logger.println
+        logger.println("== Compiling Lustre ==")
+        
+        val sources = newArrayList(sourceFile)
+        
+        for (addSource : environment.getProperty(SOURCES)?:emptyList) {
+            val addSourceFile = new File(infra.generatedCodeFolder, addSource)
+            if (addSourceFile.file) {
+                sources += infra.generatedCodeFolder.toPath.relativize(addSourceFile.toPath).toFile
+            } else if (addSourceFile.directory) {
+                for (path : Files.find(addSourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
+                    return fileAttr.regularFile && filePath.fileName.toString.endsWith(LustreV6Compiler.LUSTRE_EXTENSION)
+                ]).iterator.toIterable) {
+                    sources += infra.generatedCodeFolder.toPath.relativize(path).toFile
+                }
+            } else {
+                environment.errors.add("Source location does not exist: " + addSourceFile)
+                logger.println("ERROR: Source location does not exist: " + addSourceFile)
+            }
+        }
+        
+        sources.removeIf[!it.name.endsWith(LustreV6Compiler.LUSTRE_EXTENSION)]
+        
+        logger.println("Files:")
+        sources.forEach[logger.println("  " + it)]
+        
+        val compiler = new LustreV6Compiler(environment)
+        if (compiler === null || !compiler.available) {
+            environment.errors.add("The " + compiler?.name  + " Lustre compiler is not supported on this operating system!")
+            logger.println("ERROR: The " + compiler?.name  + " Lustre compiler is not supported on this operating system!")
+        }
+                
+        for (File source : sources ) {
+            if (source.name.endsWith(".lus"))
+                model = new LucioleExecutableContainer(source, compiler)
+        }
+        
+        // report
+        logger.closeLog("lustre-compiler-report.log").snapshot
+        infra.refresh
+    }
+    
+    override createProcessBuilder(List<String> command, File directory) {
+        val pb = super.createProcessBuilder(command, directory)
+        
+        val compiler = new LustreV6Compiler(environment)
+        if (compiler !== null) compiler.configureEnvironment(pb.environment) 
+        
+        return pb        
+    }
+    
+}
+
+class LucioleExecutableContainer extends ExecutableContainer {
+    
+    val LustreV6Compiler compiler
+    
+    new (File file, LustreV6Compiler compiler) {
+        super(file)
+        this.compiler = compiler
+    }
+    
+    override getProcessBuilder() {
+        val command = compiler.compileLucioleCommand(file)
+        val pb = new ProcessBuilder(command.map[if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""return it].toList)
+        pb.environment.putAll(environment)
+        pb.redirectErrorStream(true)
+        return pb
+    }
+    
+    override getEnvironment() {
+        val env = <String, String>newHashMap
+        compiler.configureEnvironment(env)
+        return env
+        
+    }
+}

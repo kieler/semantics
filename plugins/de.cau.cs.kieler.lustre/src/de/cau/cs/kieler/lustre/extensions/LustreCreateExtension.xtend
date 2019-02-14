@@ -17,6 +17,9 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.lustre.lustre.LustreFactory
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.lustre.lustre.LustreValuedObject
 
 /**
  * @author lgr
@@ -28,6 +31,14 @@ class LustreCreateExtension {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions   
+    
+    def getTypeForValuedObject(ValuedObject valuedObject) {
+        if ((valuedObject.eContainer as VariableDeclaration).valuedObjects.size == 1) {
+            return (valuedObject as LustreValuedObject).type
+        } else {
+            return (valuedObject.eContainer as VariableDeclaration).type
+        }
+    }
     
     /*
      * -----------------------------------------------------------------

@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: External Lustre Compilers
+Bundle-SymbolicName: de.cau.cs.kieler.lustre.compiler;singleton:=true
+Bundle-Version: 0.14.0.qualifier
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-Activator: de.cau.cs.kieler.lustre.compiler.LustreCompilerActivator
+Require-Bundle: org.eclipse.osgi;bundle-version="3.11.3",
+ org.eclipse.core.runtime;bundle-version="3.12.0",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.core.resources;bundle-version="3.11.1",
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.lustre,
+ org.eclipse.xtext;bundle-version="2.12.0"
+Bundle-ActivationPolicy: lazy
+Eclipse-BundleShape: dir
+Export-Package: de.cau.cs.kieler.lustre.compiler,
+ de.cau.cs.kieler.lustre.compiler.processors
+

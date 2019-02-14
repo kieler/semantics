@@ -1,0 +1,17 @@
+#!/bin/sh
+# Call simec and kills its calling process (second arguments) on termination
+
+dro_file=$1
+ppid=$2
+
+
+cleanup() {
+    # Luciole (simec) terminates; we inform its caller
+    echo "#quit\n"
+    # kill -9 $ppid 
+}
+
+trap "cleanup"   0 1 2 3 6 9 15
+
+simec $dro_file 
+
