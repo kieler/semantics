@@ -281,18 +281,20 @@ class ProjectInfrastructure {
         if (dstFolder !== null) {
             if (hasProject) {
                 var gen = project.getFolder(dstFolder.name)
+                if (!gen.exists) {
+                    gen.create(true, true, null)
+                }
                 
-                // gen folder
-                var genSub = gen
+                // generate folders
                 if (relativeModelPath !== null) {
                     for (var i = 0; i<relativeModelPath.getNameCount; i++) {
-                        genSub = genSub.getFolder(relativeModelPath.getName(i).toString)
-                        if (!genSub.exists) {
-                            genSub.create(true, true, null)
+                        gen = gen.getFolder(relativeModelPath.getName(i).toString)
+                        if (!gen.exists) {
+                            gen.create(true, true, null)
                         }
                     }
                 }
-                generatedCodeFolder = genSub.rawLocation.toFile
+                generatedCodeFolder = gen.rawLocation.toFile
             } else {
                 generatedCodeFolder = new File(dstFolder, relativeModelPath.toString)
                 if (!generatedCodeFolder.exists) {
