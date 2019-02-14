@@ -15,6 +15,7 @@ package de.cau.cs.kieler.language.server
 import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
+import com.google.inject.Provider
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import java.net.InetSocketAddress
@@ -24,19 +25,16 @@ import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import org.apache.log4j.Logger
+import org.eclipse.core.runtime.Platform
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerModule
+import org.eclipse.xtext.ide.server.WorkspaceManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import com.google.inject.Provider
-import org.osgi.framework.Bundle
-import org.eclipse.core.runtime.Platform
-import org.eclipse.xtext.ide.server.ILanguageServerExtension
-import org.eclipse.xtext.ide.server.WorkspaceManager
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>

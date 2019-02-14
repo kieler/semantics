@@ -12,11 +12,8 @@
  */
 package de.cau.cs.kieler.language.server
 
-import de.cau.cs.kieler.annotations.xtext.IHighlighting
 import de.cau.cs.kieler.kgraph.text.ide.KGraphLSSetup
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import java.util.ArrayList
-import java.util.List
 import org.eclipse.core.runtime.Platform
 
 /**

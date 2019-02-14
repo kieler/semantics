@@ -15,10 +15,10 @@ package de.cau.cs.kieler.language.server
 import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import com.google.inject.Injector
+import com.google.inject.Provider
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
-import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
@@ -28,6 +28,7 @@ import org.apache.log4j.AsyncAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.spi.LoggingEvent
+import org.eclipse.core.runtime.Platform
 import org.eclipse.lsp4j.MessageParams
 import org.eclipse.lsp4j.MessageType
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
@@ -38,6 +39,7 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.ide.server.ServerModule
+import org.eclipse.xtext.ide.server.WorkspaceManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 
@@ -53,14 +55,18 @@ class LanguageServerLauncher extends ServerLauncher {
     
     @Inject Injector injector
     
-    static KGraphLanguageServerExtension kgtExt = null
-    
     def static void main(String[] args) {       
         // Launch the server
-        kgtExt = registration.bindAndRegisterLanguages()        
+        val kgraphExt = bindAndRegisterLanguages()        
         launch(ServerLauncher.name, args, Modules2.mixin(new ServerModule, [
             bind(ServerLauncher).to(LanguageServerLauncher)
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+                bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
+                    override get() {
+                        kgraphExt
+                    }
+                })
+                bind(WorkspaceManager).toInstance(new DisableBaseDirWorkspaceManager)
         ]))
     }
     
@@ -70,12 +76,11 @@ class LanguageServerLauncher extends ServerLauncher {
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
         val languageServer = injector.getInstance(LanguageServerImpl)
-        languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
-        val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
-        var iLanguageServerExtensions = <Object>newArrayList(languageServer, regExtension)
-        for (lse : ServiceLoader.load(ILanguageServerContribution)) {
+        var iLanguageServerExtensions = <Object>newArrayList(languageServer)
+        for (lse : ServiceLoader.load(ILanguageServerContribution, this.class.classLoader)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
+        iLanguageServerExtensions.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.kicool.ide").loadClass("de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerContribution") as Class<ILanguageServerContribution>).getLanguageServerExtension(injector))
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(iLanguageServerExtensions)
                 .setRemoteInterface(LanguageClient)
