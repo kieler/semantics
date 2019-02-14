@@ -32,6 +32,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, KEffectsGrammarAccess grammarAccess) {
 			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
+			builder.put(grammarAccess.getPureOrValuedEmissionAccess().getAlternatives(), "rule__PureOrValuedEmission__Alternatives");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_2(), "rule__ReferenceCallEffect__Alternatives_2");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 			builder.put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
@@ -79,9 +80,10 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 			builder.put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
-			builder.put(grammarAccess.getEmissionAccess().getGroup(), "rule__Emission__Group__0");
-			builder.put(grammarAccess.getEmissionAccess().getGroup_2(), "rule__Emission__Group_2__0");
-			builder.put(grammarAccess.getEmissionAccess().getGroup_3(), "rule__Emission__Group_3__0");
+			builder.put(grammarAccess.getPureEmissionAccess().getGroup(), "rule__PureEmission__Group__0");
+			builder.put(grammarAccess.getPureEmissionAccess().getGroup_2(), "rule__PureEmission__Group_2__0");
+			builder.put(grammarAccess.getValuedEmissionAccess().getGroup(), "rule__ValuedEmission__Group__0");
+			builder.put(grammarAccess.getValuedEmissionAccess().getGroup_5(), "rule__ValuedEmission__Group_5__0");
 			builder.put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 			builder.put(grammarAccess.getAssignmentAccess().getGroup_4(), "rule__Assignment__Group_4__0");
 			builder.put(grammarAccess.getPostfixEffectAccess().getGroup(), "rule__PostfixEffect__Group__0");
@@ -284,10 +286,13 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
 			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
-			builder.put(grammarAccess.getEmissionAccess().getAnnotationsAssignment_0(), "rule__Emission__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getEmissionAccess().getReferenceAssignment_1(), "rule__Emission__ReferenceAssignment_1");
-			builder.put(grammarAccess.getEmissionAccess().getNewValueAssignment_2_1(), "rule__Emission__NewValueAssignment_2_1");
-			builder.put(grammarAccess.getEmissionAccess().getScheduleAssignment_3_1(), "rule__Emission__ScheduleAssignment_3_1");
+			builder.put(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0(), "rule__PureEmission__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getPureEmissionAccess().getReferenceAssignment_1(), "rule__PureEmission__ReferenceAssignment_1");
+			builder.put(grammarAccess.getPureEmissionAccess().getScheduleAssignment_2_1(), "rule__PureEmission__ScheduleAssignment_2_1");
+			builder.put(grammarAccess.getValuedEmissionAccess().getAnnotationsAssignment_0(), "rule__ValuedEmission__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getValuedEmissionAccess().getReferenceAssignment_1(), "rule__ValuedEmission__ReferenceAssignment_1");
+			builder.put(grammarAccess.getValuedEmissionAccess().getNewValueAssignment_3(), "rule__ValuedEmission__NewValueAssignment_3");
+			builder.put(grammarAccess.getValuedEmissionAccess().getScheduleAssignment_5_1(), "rule__ValuedEmission__ScheduleAssignment_5_1");
 			builder.put(grammarAccess.getAssignmentAccess().getAnnotationsAssignment_0(), "rule__Assignment__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getAssignmentAccess().getReferenceAssignment_1(), "rule__Assignment__ReferenceAssignment_1");
 			builder.put(grammarAccess.getAssignmentAccess().getOperatorAssignment_2(), "rule__Assignment__OperatorAssignment_2");

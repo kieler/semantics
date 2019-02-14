@@ -450,12 +450,25 @@
             id="de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.category"
             name="SCT Generator Category">
       </category>
+      <category
+            id="de.cau.cs.kieler.sccharts.ui.text.annotations.category"
+            name="SCTX Annotations Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.ui.text.annotations.category"
+            id="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies"
+            name="Annotate Dependencies">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.sccharts.ui.text.sctgenerator.SCTGeneratorDialogHandler"
             commandId="de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.openDialog">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.text.annotations.SCTXAnnotateDependenciesHandler"
+            commandId="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies">
       </handler>
    </extension>
    <extension
@@ -482,6 +495,19 @@
                         value="1">
                   </count>
                </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.SCTX.Editor.opened">
+               </reference>
             </visibleWhen>
          </command>
       </menuContribution>

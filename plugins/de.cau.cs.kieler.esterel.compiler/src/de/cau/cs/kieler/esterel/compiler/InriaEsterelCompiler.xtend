@@ -59,6 +59,11 @@ class InriaEsterelCompiler extends EsterelCompiler {
         } else {
             version.resolveRoot
         }
+        if (!available) {
+            if (System.getenv().containsKey('ESTEREL')) {
+                root = new File(System.getenv().get('ESTEREL'))
+            }
+        }
         checkExecutableFlags()
     }
     

@@ -126,7 +126,7 @@ class SCChartsTransitionExtensions {
     
     def isImplicitlyImmediate(Transition transition) {
         (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
-        (transition.preemption == PreemptionType::TERMINATION && transition.trigger === null)
+        (transition.preemption == PreemptionType::TERMINATION && transition.trigger === null && transition.delay !== DelayType.DELAYED)
     }    
     
     def getPriority(Transition transition) {

@@ -177,8 +177,20 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 				}
 				else break;
 			case KEffectsPackage.EMISSION:
-				sequence_Emission(context, (Emission) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedEmissionRule()) {
+					sequence_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
 			case KEffectsPackage.FUNCTION_CALL_EFFECT:
 				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
 				return; 
@@ -1642,8 +1654,8 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *                 schedule+=ScheduleObjectReference* 
 	 *                 (
-	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*) | 
-	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+))
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+)) | 
+	 *                     (declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*)
 	 *                 )
 	 *             )
 	 *         )
@@ -1686,8 +1698,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         once?='once'? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         equations+=Assignment*
+	 *         ((declarations+=DeclarationWOSemicolon* equations+=Assignment*) | (declarations+=DeclarationWOSemicolon* equations+=Assignment*))
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {
@@ -1911,7 +1922,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *         annotations+=RestrictedTypeAnnotation* 
 	 *         (
 	 *             (
-	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 preemption=PreemptionType 
 	 *                 targetState=[State|ID] 
 	 *                 delay=DelayType? 
 	 *                 deferred?='deferred'? 
@@ -1923,7 +1934,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 delay=DelayType? 
 	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=Double? nondeterministic?='nondeterministic'?)? 
 	 *                 (effects+=Effect effects+=Effect*)? 
-	 *                 (preemption=PreemptionType | preemption=PreemptionTypeLegacy) 
+	 *                 preemption=PreemptionType 
 	 *                 targetState=[State|ID] 
 	 *                 deferred?='deferred'? 
 	 *                 history=HistoryType?
