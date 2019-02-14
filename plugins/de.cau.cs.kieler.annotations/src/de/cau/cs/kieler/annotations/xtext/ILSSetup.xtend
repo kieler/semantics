@@ -10,16 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.lustre.ide
+package de.cau.cs.kieler.annotations.xtext
 
 import com.google.inject.Injector
 
-/**
+/** 
  * @author sdo
  *
  */
-class LustreLSSetup {
-    def static Injector doLSSetup() {
-        return LustreIdeSetup.doSetup()
-    }
+interface ILSSetup {
+    def Injector doLSSetup()
 }

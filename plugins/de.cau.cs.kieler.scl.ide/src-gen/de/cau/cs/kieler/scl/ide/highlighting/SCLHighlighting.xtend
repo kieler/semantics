@@ -17,7 +17,6 @@ class SCLHighlighting implements IHighlighting {
     override List<String> getKeywords() {
         return #["_",
         "bool",
-        "call",
         "combine",
         "conflict",
         "confluent",
@@ -59,7 +58,6 @@ class SCLHighlighting implements IHighlighting {
         "struct",
         "then",
         "to",
-        "unsigned",
         "val"
         ]
     }

@@ -20,7 +20,6 @@ class SCTXHighlighting implements IHighlighting {
         "abort",
         "auto",
         "bool",
-        "call",
         "clock",
         "combine",
         "conflict",
@@ -85,7 +84,6 @@ class SCTXHighlighting implements IHighlighting {
         "suspend",
         "to",
         "undefined",
-        "unsigned",
         "val",
         "violation",
         "weak"
