@@ -13,7 +13,8 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
- de.cau.cs.kieler.annotations;bundle-version="0.14.0"
+ de.cau.cs.kieler.annotations;bundle-version="0.14.0",
+ de.cau.cs.kieler.language.server
 Export-Package: de.cau.cs.kieler.lustre.ide,
  de.cau.cs.kieler.lustre.ide.contentassist.antlr,
  de.cau.cs.kieler.lustre.ide.contentassist.antlr.internal,

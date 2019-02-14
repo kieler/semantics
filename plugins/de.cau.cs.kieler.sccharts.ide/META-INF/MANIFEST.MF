@@ -12,9 +12,9 @@ Require-Bundle: org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtend.lib.macro,
  org.eclipse.xtext.ide;bundle-version="2.12.0",
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.kexpressions.ide;bundle-version="0.14.0"
+ de.cau.cs.kieler.kexpressions.ide;bundle-version="0.14.0",
+ de.cau.cs.kieler.language.server
 Export-Package: de.cau.cs.kieler.sccharts.ide.text,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr,
  de.cau.cs.kieler.sccharts.ide.text.contentassist.antlr.internal,
  de.cau.cs.kieler.sccharts.ide.text.highlighting
-
