@@ -83,8 +83,6 @@ class ProjectInfrastructure {
     @Accessors(AccessorType.PUBLIC_GETTER)
     var File generatedCodeFolder = null
     @Accessors(AccessorType.PUBLIC_GETTER)
-    var File generatedCodeRootFolder = null
-    @Accessors(AccessorType.PUBLIC_GETTER)
     var List<File> sourceCodeFiles = newArrayList
     @Accessors
     var CodeContainer sourceCode = null
@@ -286,7 +284,6 @@ class ProjectInfrastructure {
         if (dstFolder !== null) {
             if (hasProject) {
                 var gen = project.getFolder(dstFolder.name)
-                generatedCodeRootFolder = gen.rawLocation.toFile
                 
                 // gen folder
                 var genSub = gen
@@ -300,8 +297,7 @@ class ProjectInfrastructure {
                 }
                 generatedCodeFolder = genSub.rawLocation.toFile
             } else {
-                generatedCodeRootFolder = dstFolder
-                generatedCodeFolder = new File(generatedCodeRootFolder, relativeModelPath.toString)
+                generatedCodeFolder = new File(dstFolder, relativeModelPath.toString)
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
                 }
@@ -334,7 +330,6 @@ class ProjectInfrastructure {
         logger.println("== Project Infrastructure ==")
         logger.println("Model file: " + modelFile)
         logger.println("Base folder: " + modelFolder)
-        logger.println("Generated code folder root: " + generatedCodeRootFolder)
         logger.println("Generated code folder: " + generatedCodeFolder)
         logger.println
     }
