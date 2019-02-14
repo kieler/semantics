@@ -41,7 +41,7 @@ class LSSetupFragment extends AbstractStubGeneratingFragment {
      */
     override void generate() {
 //        new GuiceModuleAccess.BindingFactory()
-//            .addTypeToType(new TypeReference('de.cau.cs.kieler.annotations.xtext.<TODO use interface>'),
+//            .addTypeToType(new TypeReference('de.cau.cs.kieler.annotations.xtext.ILSSetup'),
 //                    getHighlightingClass(grammar))
 //            .contributeTo(language.ideGenModule)        
         
@@ -62,10 +62,10 @@ class LSSetupFragment extends AbstractStubGeneratingFragment {
         var xtendFile = this.fileAccessFactory.createXtendFile(this.getHighlightingClass(this.grammar));
         xtendFile.resourceSet = language.resourceSet
         xtendFile.content = '''
-    import com.google.inject.Injector
+    import de.cau.cs.kieler.annotations.xtext.ILSSetup
     
-    class «className» /* implements <TODO interface> */ {
-        def static Injector doLSSetup() {
+    class «className» implements ILSSetup {
+        override doLSSetup() {
             return «GrammarUtil.getSimpleName(grammar)»IdeSetup.doSetup()
         }
     }
