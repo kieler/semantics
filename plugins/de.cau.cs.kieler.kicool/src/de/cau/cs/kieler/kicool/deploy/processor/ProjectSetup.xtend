@@ -87,15 +87,10 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
     protected def saveCode(ProjectInfrastructure infra, PrintStream logger) {
         logger.println("== Save Generated Code ==")
         
-        var targetBase = infra.generatedCodeFolder
         for (file : model.files) {
             logger.println("Saving " + file.fileName)
             try {
-                val target = new File(targetBase, file.fileName)
-                // create directory if it doesn't exist
-                val targetDir = target.parentFile
-                if (!targetDir.exists) targetDir.mkdirs
-
+                val target = new File(infra.generatedCodeFolder, file.fileName)
                 val writer = new FileWriter(target)
                 writer.write(file.code)
                 writer.close

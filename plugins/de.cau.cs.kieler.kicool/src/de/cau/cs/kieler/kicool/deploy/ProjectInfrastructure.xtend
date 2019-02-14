@@ -213,9 +213,6 @@ class ProjectInfrastructure {
             
             // Create Folder
             val folder = project.getFolder(name)
-            //if (!folder.exists) {
-            //    folder.create(true, true, null)
-            //}
             modelFolder = folder.rawLocation.toFile
         } else if (srcFolder !== null && srcFolder.exists) {
             // set default destination to source folder
