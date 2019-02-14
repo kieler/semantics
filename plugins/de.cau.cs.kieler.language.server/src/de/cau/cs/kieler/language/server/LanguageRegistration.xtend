@@ -33,11 +33,11 @@ class LanguageRegistration {
     def bindAndRegisterLanguages() {
         // Since Esterel depends on scl, scl has to be registered after strl
         // TODO register concrete LSSetup classes via ServiceLoader and bind their implementations here to avoid dependencies
-        iHighlightings.add(EsterelLSSetup.doLSSetup.getInstance(IHighlighting))
-        iHighlightings.add(SCLLSSetup.doLSSetup.getInstance(IHighlighting))
-        iHighlightings.add(SCTXLSSetup.doLSSetup.getInstance(IHighlighting))
+        iHighlightings.add(new EsterelLSSetup().doLSSetup().getInstance(IHighlighting))
+        iHighlightings.add(new SCLLSSetup().doLSSetup().getInstance(IHighlighting))
+        iHighlightings.add(new SCTXLSSetup().doLSSetup.getInstance(IHighlighting))
         val injectorKGraph = KGraphLSSetup.doLSSetup()
-        iHighlightings.add(LustreLSSetup.doLSSetup().getInstance(IHighlighting))
+        iHighlightings.add(new LustreLSSetup().doLSSetup().getInstance(IHighlighting))
         return injectorKGraph.getInstance(KGraphLanguageServerExtension)
     }
 }

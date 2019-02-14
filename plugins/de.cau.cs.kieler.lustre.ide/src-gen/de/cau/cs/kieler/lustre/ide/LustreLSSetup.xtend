@@ -4,10 +4,10 @@
 package de.cau.cs.kieler.lustre.ide
 
 
-import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.xtext.ILSSetup
 
-class LustreLSSetup /* implements <TODO interface> */ {
-    def static Injector doLSSetup() {
+class LustreLSSetup implements ILSSetup {
+    override doLSSetup() {
         return LustreIdeSetup.doSetup()
     }
 }

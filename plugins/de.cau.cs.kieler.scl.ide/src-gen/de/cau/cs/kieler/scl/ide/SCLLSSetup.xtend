@@ -4,10 +4,10 @@
 package de.cau.cs.kieler.scl.ide
 
 
-import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.xtext.ILSSetup
 
-class SCLLSSetup /* implements <TODO interface> */ {
-    def static Injector doLSSetup() {
+class SCLLSSetup implements ILSSetup {
+    override doLSSetup() {
         return SCLIdeSetup.doSetup()
     }
 }

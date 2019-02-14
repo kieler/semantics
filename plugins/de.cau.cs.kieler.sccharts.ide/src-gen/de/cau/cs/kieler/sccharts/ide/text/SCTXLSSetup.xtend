@@ -4,10 +4,10 @@
 package de.cau.cs.kieler.sccharts.ide.text
 
 
-import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.xtext.ILSSetup
 
-class SCTXLSSetup /* implements <TODO interface> */ {
-    def static Injector doLSSetup() {
+class SCTXLSSetup implements ILSSetup {
+    override doLSSetup() {
         return SCTXIdeSetup.doSetup()
     }
 }

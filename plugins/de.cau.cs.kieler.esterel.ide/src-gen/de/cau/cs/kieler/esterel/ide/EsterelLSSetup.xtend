@@ -4,10 +4,10 @@
 package de.cau.cs.kieler.esterel.ide
 
 
-import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.xtext.ILSSetup
 
-class EsterelLSSetup /* implements <TODO interface> */ {
-    def static Injector doLSSetup() {
+class EsterelLSSetup implements ILSSetup {
+    override doLSSetup() {
         return EsterelIdeSetup.doSetup()
     }
 }
