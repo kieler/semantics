@@ -17,7 +17,6 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
-import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
@@ -36,6 +35,7 @@ import org.eclipse.xtext.util.Modules2
 import com.google.inject.Provider
 import org.osgi.framework.Bundle
 import org.eclipse.core.runtime.Platform
+import org.eclipse.xtext.ide.server.ILanguageServerExtension
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -118,11 +118,10 @@ class LanguageServer implements IApplication {
             ]
             val languageServer = injector.getInstance(LanguageServerImpl)
             languageServer.workspaceManager = injector.createChildInjector([new DisableBaseDirWorkspaceManager()]).getInstance(DisableBaseDirWorkspaceManager)
-            val regExtension = injector.getInstance(RegistrationLanguageServerExtension)
-            var iLanguageServerExtensions = <Object>newArrayList(languageServer, regExtension)
-//            for (lse : ServiceLoader.load(ILanguageServerContribution, Platform.getBundle("de.cau.cs.kieler.kicool.ide").bundleContext.class.classLoader)) {
-//                iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
-//            }
+            var iLanguageServerExtensions = <Object>newArrayList(languageServer)
+            for (lse : ServiceLoader.load(ILanguageServerContribution, this.class.classLoader)) {
+                iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
+            }
             iLanguageServerExtensions.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.kicool.ide").loadClass("de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerContribution") as Class<ILanguageServerContribution>).getLanguageServerExtension(injector))
             val launcher = new Builder<LanguageClient>()
                 .setLocalServices(iLanguageServerExtensions)
