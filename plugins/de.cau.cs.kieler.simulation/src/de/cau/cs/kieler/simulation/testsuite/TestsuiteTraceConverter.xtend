@@ -57,11 +57,13 @@ class TestsuiteTraceConverter extends AbstractDeploymentProcessor<TraceFile> {
             if (provider.signalSemantics) {
                 val outputPool = new DataPool
                 for (var i = 0; i<max; i++) {
+                    // get inputs to set
                     provider.applyTraceInputs(i)
                     provider.passInputs(pool)
                     out.print(pool.rawData)
                     out.print(" => ")
                     
+                    // get outputs to check
                     provider.applyTraceOutputs(i)
                     val mm = provider.mismatches(outputPool)
                     for (DataPoolEntry e : mm.entries.map[value]) {
@@ -72,11 +74,13 @@ class TestsuiteTraceConverter extends AbstractDeploymentProcessor<TraceFile> {
             } else {
                 val emptyPool = new DataPool
                 for (var i = 0; i<max; i++) {
+                    // get inputs to set
                     provider.applyTraceInputs(i)
                     provider.passInputs(pool)
                     out.print(pool.rawData)
                     out.print(" => ")
                     
+                    // get outputs to check
                     provider.applyTraceOutputs(i)
                     val mm = provider.mismatches(emptyPool)
                     val JsonObject js = new JsonObject

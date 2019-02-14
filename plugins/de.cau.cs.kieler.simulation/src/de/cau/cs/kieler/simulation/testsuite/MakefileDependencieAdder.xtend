@@ -80,7 +80,7 @@ class MakefileDependencieAdder extends InplaceProcessor<CodeContainer>{
             val dependencieLines = new ArrayList(dependencies.size)
             
             // add all dependency lines to the list
-            for(Map.Entry<String, List<String>> entry : dependencies.entrySet) {
+            for (Map.Entry<String, List<String>> entry : dependencies.entrySet) {
                 if (entry.value !== null && entry.value.size > 0) {
                     val line = new StringBuilder
                     

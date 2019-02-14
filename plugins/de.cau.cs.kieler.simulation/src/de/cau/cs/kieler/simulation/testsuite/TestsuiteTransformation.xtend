@@ -46,12 +46,17 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
     override process() {
         val value = model
         
-        val TestsuiteCompilationData data = new TestsuiteCompilationData
-        data.logger = logger
+        val TestsuiteCompilationData config = new TestsuiteCompilationData
+        config.logger = logger
         
+        // interpret config file line-by-line
         var String[] code = {}
         if (value.files.size == 1) {
             code = value.files.get(0).code.split("\\r\\n|\\r|\\n")
+        } else if (value.files.size > 1) {
+            environment.errors.add("Testsuite Creation allows only one Config-File.")
+        } else {
+            environment.errors.add("Testsuite Creation needs a Config-File.")
         }
         
         for (String codeLine : code) {
@@ -64,50 +69,45 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             } else if (lowerLine.startsWith("system:")) {
                 val systemID = line.substring(7).trim
                 logger.println("Loading System: " + systemID)
-                data.system = KiCoolRegistration.getSystemById(systemID)
+                config.system = KiCoolRegistration.getSystemById(systemID)
             
             // extension: <fileExtension>
             } else if (lowerLine.startsWith("extension:")) {
-                data.fileEndsWithFilter = line.substring(10).trim
-                logger.println("Filtering for Extension: " + data.fileEndsWithFilter)
+                config.fileEndsWithFilter = line.substring(10).trim
+                logger.println("Filtering for Extension: " + config.fileEndsWithFilter)
             
             // destination: <destinationFolder>
             } else if (lowerLine.startsWith("destination:")) {
-                if (data.destination === null) {
-                    data.destination = line.substring(12).trim
+                if (config.destination === null) {
+                    config.destination = line.substring(12).trim
                     environment.getPropertyComputeIfAbsent(
                         ProjectInfrastructure.PATH_VARIABLES, [newHashMap]
-                    ).put("DST_ROOT", data.destination)
-                    logger.println("Set Destination to: " + data.destination)
+                    ).put("DST_ROOT", config.destination)
+                    logger.println("Set Destination to: " + config.destination)
                 } else {
-                    logger.println("ERROR destination already set to " + data.destination +
+                    logger.println("ERROR destination already set to " + config.destination +
                                     " (" + line.substring(12).trim + ")"
                                     )
                 }
             
             // src-root: <srcRootFolder>
             } else if (lowerLine.startsWith("src-root:")) {
-                data.root = line.substring(9).trim
-                logger.println("Set src-root to: " + data.root)
+                config.root = line.substring(9).trim
+                logger.println("Set src-root to: " + config.root)
             
             // binfolder: <binFolder>
             } else if (lowerLine.startsWith("binfolder:")) {
-                data.generatedFolder = line.substring(10).trim
-                logger.println("Set binaries-folder to: " + data.generatedFolder)
+                config.generatedFolder = line.substring(10).trim
+                logger.println("Set binaries-folder to: " + config.generatedFolder)
             
             // <Folder>
             } else {
-                compilePath(Paths.get(line), data)
+                compilePath(Paths.get(line), config)
                 System.gc()
             }
         }
         
-        // compile and extract result
-        //val resultEnv = cc.compile
-        //var resModel = resultEnv.model
         
-        
-        logger.println(value.files.size+" Files read")
         logger.println
         environment.allProperties.forEach[k, v, i|
             logger.print(k.id)
@@ -119,8 +119,11 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         model = result
     }
     
-    private def compilePath(Path path, TestsuiteCompilationData data) {
-        if (data.system === null) {
+    /**
+     * compiles all valid files under given path according to the config
+     */
+    private def compilePath(Path path, TestsuiteCompilationData config) {
+        if (config.system === null) {
             environment.errors.add(new NullPointerException("System is null"))
             logger.println("<< No compilation system selected. use: \"system:<systemID>\"")
             return;
@@ -129,9 +132,9 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         try {
             Files
                 .walk(path)
-                .filter  [file| file.toFile.isFile && data.validFile(file)]
+                .filter  [file| file.toFile.isFile && config.validFile(file)]
                 .forEach [file|
-                    compile(data, file)
+                    compile(config, file)
                 ]
         } catch (NoSuchFileException e) {
             environment.errors.add(e)
@@ -139,7 +142,10 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         }
     }
     
-    private def compile(TestsuiteCompilationData data, Path file) {
+    /**
+     * This method tries to compile a given file with specified config.
+     */
+    private def compile(TestsuiteCompilationData config, Path file) {
         logger.println(" - "+file.toString)
         try {
             val provider = file.getResourceServiceProvider
@@ -151,7 +157,7 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
             val compileModel = resource.getContents().head
             try {
                 // get a compilation context
-                val cc = data.getCompilationContext(compileModel, file)
+                val cc = config.getCompilationContext(compileModel, file)
                 
                 // run the compiler
                 cc?.compile
@@ -180,6 +186,9 @@ class TestsuiteTransformation extends ExogenousProcessor<CodeContainer, CodeCont
         
     }
     
+    /**
+     * This method gets a new ResourceServiceProvider to load models.
+     */
     private def getResourceServiceProvider(Path file) {
         val registry = Guice.createInjector().getInstance(IResourceServiceProvider.Registry)
         val abspath = file.toAbsolutePath.normalize.toString

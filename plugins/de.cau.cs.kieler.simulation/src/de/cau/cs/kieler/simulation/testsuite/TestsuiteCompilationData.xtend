@@ -35,10 +35,16 @@ class TestsuiteCompilationData {
     public System system             = null
     public boolean localCompilation  = true
     
+    /**
+     * Checks whether a file should be compiled or not.
+     */
     def validFile(Path file) {
         return file.fileName.toString.endsWith(fileEndsWithFilter)
     }
     
+    /**
+     * Gets the relative path from root if given otherwise the empty path.
+     */
     def relativePath(Path path) {
         if (root !== null) {
             return Paths.get(root).relativize(path)
@@ -47,6 +53,9 @@ class TestsuiteCompilationData {
         }
     }
     
+    /**
+     * Resolves a path from destination if given.
+     */
     def destinationPath(Path path) {
         if (destination !== null) {
             return Paths.get(destination).resolve(path)
@@ -55,23 +64,33 @@ class TestsuiteCompilationData {
         }
     }
     
+    /**
+     * Gets the destination folder for a model.
+     */
     def targetFolder(Path modelFile) {
         return destinationPath(relativePath(modelFile.parent))
                 .resolve(modelFile.fileName.toString.split("\\.", 2).get(0).replace(' ', '_'))
     }
     
+    /**
+     * Returns a compilation context if a valid path is supplied with destination data already
+     * set in the environment.
+     */
     def getCompilationContext(EObject compileModel, Path modelFile) {
         if (!Files.exists(modelFile)) {
             return null
         }
         
+        // create compilation context
         val cc = Compile.createCompilationContext(system, compileModel)
         val env = cc.startEnvironment
         
+        // get path_variable map
         val path_variables = env.getPropertyComputeIfAbsent(
             ProjectInfrastructure.PATH_VARIABLES, [newHashMap]
         )
         
+        // fill environment with path specific informations
         if (localCompilation) {
             val targetFolder = targetFolder(modelFile)
             Files.createDirectories(targetFolder)
@@ -98,8 +117,10 @@ class TestsuiteCompilationData {
             }
         }
         
+        // never use a temporary project
         env.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
         
+        // set the generated folder acording to the current config
         if (generatedFolder !== null && generatedFolder != "") {
             env.setProperty(ProjectInfrastructure.USE_GENERATED_FOLDER, true)
             env.setProperty(ProjectInfrastructure.GENERATED_NAME, generatedFolder)
