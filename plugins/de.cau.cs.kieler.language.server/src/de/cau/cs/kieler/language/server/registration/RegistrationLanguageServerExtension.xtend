@@ -15,10 +15,10 @@ package de.cau.cs.kieler.language.server.registration
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
-import de.cau.cs.kieler.language.server.LanguageRegistration
-import java.util.ArrayList
+import de.cau.cs.kieler.language.server.IHighlightingContribution
 import java.util.List
 import org.apache.log4j.Logger
+import org.eclipse.core.runtime.Platform
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.Data
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
@@ -63,15 +63,18 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
-        val iHighlightings = LanguageRegistration.iHighlightings
+        val iHighlightings = newArrayList()
+        iHighlightings.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.esterel.ide").loadClass("de.cau.cs.kieler.esterel.ide.highlighting.EsterelHighlightingContribution") as Class<IHighlightingContribution>).highlighting)
+        iHighlightings.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.scl.ide").loadClass("de.cau.cs.kieler.scl.ide.highlighting.SCLHighlightingContribution") as Class<IHighlightingContribution>).highlighting)
+        iHighlightings.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.lustre.ide").loadClass("de.cau.cs.kieler.lustre.ide.highlighting.LustreHighlightingContribution") as Class<IHighlightingContribution>).highlighting)
+        iHighlightings.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.sccharts.ide").loadClass("de.cau.cs.kieler.sccharts.ide.text.highlighting.SCTXHighlightingContribution") as Class<IHighlightingContribution>).highlighting)
         
-        val list = new ArrayList()
+        val languages = newArrayList(new Language("kgt", "KGraph", kgtKeywords))
         for (iHighlighting : iHighlightings) {
-        	list.add(new Language(iHighlighting.getId, iHighlighting.name, iHighlighting.keywords))
+        	languages.add(new Language(iHighlighting.getId, iHighlighting.name, iHighlighting.keywords))
         }
-        list.add(new Language("kgt", "KGraph", kgtKeywords))
         return requestManager.runRead[ cancelIndicator |
-            list
+            languages
         ]
     }
 }

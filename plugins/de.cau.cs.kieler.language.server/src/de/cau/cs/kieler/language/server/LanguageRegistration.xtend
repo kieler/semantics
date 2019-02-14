@@ -25,17 +25,15 @@ import org.eclipse.core.runtime.Platform
  */
 class LanguageRegistration {
     
-    public static var List<IHighlighting> iHighlightings = new ArrayList
-    
     def bindAndRegisterLanguages() {
         val injectorKGraph = KGraphLSSetup.doLSSetup()
         val lsSetups = newArrayList
         lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.esterel.ide").loadClass("de.cau.cs.kieler.esterel.ide.EsterelLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
         lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.scl.ide").loadClass("de.cau.cs.kieler.scl.ide.SCLLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
         lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.lustre.ide").loadClass("de.cau.cs.kieler.lustre.ide.LustreLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
-        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.sccharts.ide").loadClass("de.cau.cs.kieler.sccharts.ide.SCTXLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
+        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.sccharts.ide").loadClass("de.cau.cs.kieler.sccharts.ide.text.SCTXLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
         for (lsSetup: lsSetups) {
-            iHighlightings.add(lsSetup.doLSSetup().getInstance(IHighlighting))
+            lsSetup.doLSSetup()
         }
         return injectorKGraph.getInstance(KGraphLanguageServerExtension)
     }

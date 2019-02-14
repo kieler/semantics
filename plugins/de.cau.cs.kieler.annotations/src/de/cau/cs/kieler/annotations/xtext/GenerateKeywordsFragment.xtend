@@ -19,18 +19,18 @@ import java.util.List
 import java.util.Set
 import java.util.function.Consumer
 import java.util.regex.Pattern
-import org.eclipse.xtext.Grammar
+import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.GrammarUtil
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtext.xtext.generator.AbstractStubGeneratingFragment
 import org.eclipse.xtext.xtext.generator.XtextGeneratorNaming
 import org.eclipse.xtext.xtext.generator.grammarAccess.GrammarAccessExtensions
 import org.eclipse.xtext.xtext.generator.model.FileAccessFactory
-import org.eclipse.xtext.xtext.generator.model.GuiceModuleAccess
 import org.eclipse.xtext.xtext.generator.model.TypeReference
+import org.eclipse.xtext.xtext.generator.util.BooleanGeneratorOption
 
 /** 
- * Generates a class implementing {@link de.cau.cs.kieler.annotations.xtext.IHighlighting IHighlighting} with getters for 
+ * Generates a class implementing {@link IHighlighting IHighlighting} with getters for 
  * id, name, and keywords of this language.
  * 
  * @author sdo
@@ -38,34 +38,56 @@ import org.eclipse.xtext.xtext.generator.model.TypeReference
  */
 class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
 
+    @Accessors(PUBLIC_GETTER)
+    val generateServiceLoader = new BooleanGeneratorOption(true)
+
     @Inject
     extension XtextGeneratorNaming
     @Inject extension GrammarAccessExtensions
-    
+
     @Inject
     FileAccessFactory fileAccessFactory
-    
+
     package String keywordsFilter = "\\w+"
 
     /** 
      * {@inheritDoc}
      */
     override void generate() {
-        new GuiceModuleAccess.BindingFactory()
-            .addTypeToType(new TypeReference('de.cau.cs.kieler.annotations.xtext.IHighlighting'),
-                    getHighlightingClass(grammar))
-            .contributeTo(language.ideGenModule)        
-        
+        var className = GrammarUtil.getSimpleName(grammar) + "Highlighting"
+        if (generateServiceLoader.get) {
+            // register service
+            this.projectConfig.genericIde.metaInf.generateFile(
+                "services/de.cau.cs.kieler.language.server.IHighlightingContribution",
+                grammar.genericIdeBasePackage + ".highlighting." + className + "Contribution"
+            )
+        }
+        // add destination package to exported packages, add langauge.server to dependencies
         if (projectConfig.genericIde.manifest !== null) {
             projectConfig.genericIde.manifest.exportedPackages += grammar.genericIdeBasePackage + '.highlighting'
+            if (generateServiceLoader.get) {
+                projectConfig.genericIde.manifest.requiredBundles += "de.cau.cs.kieler.language.server"
+            }
         }
-        var xtendFile = doGetXtendStubFile(GrammarUtil.getSimpleName(grammar) + "Highlighting")
+        // generate and write highlighting file
+        var xtendFile = doGetXtendStubFile(className)
         xtendFile?.writeTo(this.getProjectConfig().genericIde.srcGen);
+        if (generateServiceLoader.get) {
+            // generate and write HighlightingContribution file
+            var contribution = doGetXtendStubFileContribution(className)
+            contribution?.writeTo(this.getProjectConfig().genericIde.srcGen);
+        }
     }
 
-    protected def TypeReference getHighlightingClass(Grammar grammar) {
+    protected def TypeReference getHighlightingClass(String className) {
         return new TypeReference(
-            grammar.genericIdeBasePackage + ".highlighting." + GrammarUtil.getSimpleName(grammar) + "Highlighting"
+            grammar.genericIdeBasePackage + ".highlighting." + className
+        )
+    }
+
+    protected def TypeReference getHighlightingContributionClass(String className) {
+        return new TypeReference(
+            grammar.genericIdeBasePackage + ".highlighting." + className + "Contribution"
         )
     }
 
@@ -93,24 +115,24 @@ class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
     }
 
     protected def doGetXtendStubFile(String className) {
-        var xtendFile = this.fileAccessFactory.createXtendFile(this.getHighlightingClass(this.grammar));
+        var xtendFile = this.fileAccessFactory.createXtendFile(this.getHighlightingClass(className));
         xtendFile.resourceSet = language.resourceSet
         val List<String> keywords = getKeywords()
         xtendFile.content = '''
-    import java.util.List
-    import de.cau.cs.kieler.annotations.xtext.IHighlighting
-    
-    class «className» implements IHighlighting {
-        override String getId() {
-            return "«language.fileExtensions.head»" // assume that only one extension is present
-        }
-        override String getName() {
-            return "«GrammarUtil.getSimpleName(grammar)»"
-        }
-        override List<String> getKeywords() {
-            return «prettyPrintKeywords(keywords)»
-        }
-    }
+            import java.util.List
+            import de.cau.cs.kieler.annotations.xtext.IHighlighting
+            
+            class «className» implements IHighlighting {
+                override String getId() {
+                    return "«language.fileExtensions.head»" // assume that only one extension is present
+                }
+                override String getName() {
+                    return "«GrammarUtil.getSimpleName(grammar)»"
+                }
+                override List<String> getKeywords() {
+                    return «prettyPrintKeywords(keywords)»
+                }
+            }
         '''
         return xtendFile
     }
@@ -132,5 +154,20 @@ class GenerateKeywordsFragment extends AbstractStubGeneratingFragment {
         ]
         string.append("]")
         return string
+    }
+
+    def doGetXtendStubFileContribution(String className) {
+        var xtendFile = this.fileAccessFactory.createXtendFile(this.getHighlightingContributionClass(className));
+        xtendFile.resourceSet = language.resourceSet
+        xtendFile.content = '''
+            import de.cau.cs.kieler.language.server.IHighlightingContribution
+            
+            class «className»Contribution implements IHighlightingContribution {
+                override getHighlighting() {
+                    return new «className»()
+                }
+            }
+        '''
+        return xtendFile
     }
 }
