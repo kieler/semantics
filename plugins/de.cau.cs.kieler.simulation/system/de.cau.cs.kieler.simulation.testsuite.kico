@@ -1,8 +1,7 @@
 public system de.cau.cs.kieler.^simulation.testsuite
-    label "INTERNAL Simulation Testsuite"
-    
-de.cau.cs.kieler.^simulation.testsuite.deploy
+    label "Testsuite Creation"
 
+de.cau.cs.kieler.^simulation.testsuite.deploy
 
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.project.use": false,

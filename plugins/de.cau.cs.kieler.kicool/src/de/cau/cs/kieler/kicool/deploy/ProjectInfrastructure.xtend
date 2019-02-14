@@ -281,8 +281,7 @@ class ProjectInfrastructure {
             Paths.get(variables.get("DST_ROOT"))
             .relativize(Paths.get(variables.get("DST")))
             .normalize
-        modelRootRelative = relativeModelPath.toString
-        variables.computeIfAbsent("DST_ROOT_RELATIVE", [modelRootRelative])
+        variables.computeIfAbsent("DST_ROOT_RELATIVE", [relativeModelPath.toString])
         
         if (dstFolder !== null) {
             if (hasProject) {
@@ -302,7 +301,7 @@ class ProjectInfrastructure {
                 generatedCodeFolder = genSub.rawLocation.toFile
             } else {
                 generatedCodeRootFolder = dstFolder
-                generatedCodeFolder = new File(generatedCodeRootFolder, modelRootRelative)
+                generatedCodeFolder = new File(generatedCodeRootFolder, relativeModelPath.toString)
                 if (!generatedCodeFolder.exists) {
                     generatedCodeFolder.mkdirs
                 }

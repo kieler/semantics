@@ -1,5 +1,5 @@
-public system de.cau.cs.kieler.^simulation.testsuite.single.netlist
-    label "INTERNAL Testsuite single with netlist (C)"
+system de.cau.cs.kieler.^simulation.testsuite.single.netlist
+    label "Testsuite: element compilation netlist (C)"
 
 system de.cau.cs.kieler.sccharts.netlist
 system de.cau.cs.kieler.^simulation.testsuite.single

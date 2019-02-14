@@ -1,5 +1,5 @@
-public system de.cau.cs.kieler.^simulation.testsuite.single.prio
-    label "INTERNAL Testsuite single with priority"
+system de.cau.cs.kieler.^simulation.testsuite.single.prio
+    label "Testsuite: element compilation priority (C)"
 
 system de.cau.cs.kieler.sccharts.priority
 system de.cau.cs.kieler.^simulation.testsuite.single

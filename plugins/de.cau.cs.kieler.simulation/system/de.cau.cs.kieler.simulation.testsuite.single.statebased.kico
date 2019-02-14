@@ -1,5 +1,5 @@
-public system de.cau.cs.kieler.^simulation.testsuite.single.statebased
-    label "INTERNAL Testsuite single with netlist (C)"
+system de.cau.cs.kieler.^simulation.testsuite.single.statebased
+    label "Testsuite: element compilation statebased (C)"
 
 system de.cau.cs.kieler.sccharts.statebased
 system de.cau.cs.kieler.^simulation.testsuite.single

@@ -1,5 +1,5 @@
-public system de.cau.cs.kieler.^simulation.testsuite.single
-    label "INTERNAL Testsuite single saving operation"
+system de.cau.cs.kieler.^simulation.testsuite.single
+    label "Testsuite: element saving C-Code with Makefile and Templates"
 
 de.cau.cs.kieler.^simulation.testsuite.makefile config {
     // DEPENDENCIES
