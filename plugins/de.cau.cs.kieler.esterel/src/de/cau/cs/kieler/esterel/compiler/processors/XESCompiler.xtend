@@ -92,32 +92,37 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         if (compiler === null || !compiler.available) {
             environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
             logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
-        }
-        
-        val options = <String>newArrayList
-        if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
-            val args = environment.getProperty(ADDITIONAL_OPTIONS)
-            if (args.contains(" ")) {
-                options += args.split(" ")
-            } else {
-                options += args
+        } else {  
+            if (!compiler.supportsXES) {
+                environment.errors.add("This dirtribution of the " + compiler?.name  + " Esterel compiler does not support simulation with the XES")
+                logger.println("ERROR: This dirtribution of the " + compiler?.name  + " Esterel compiler does not support simulation with the XES")
+            } else {  
+                val options = <String>newArrayList
+                if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
+                    val args = environment.getProperty(ADDITIONAL_OPTIONS)
+                    if (args.contains(" ")) {
+                        options += args.split(" ")
+                    } else {
+                        options += args
+                    }
+                }
+                
+                val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
+                val targetExePath = infra.generatedCodeFolder.toPath.relativize(targetExe.toPath).toString
+                logger.println("Target exe file: " + targetExe)
+                
+                // Run esterel compiler
+                val command = compiler.compileXESCommand(sources, options, targetExePath)
+                var success = command.invoke(infra.generatedCodeFolder)?:-1 == 0
+                if (!success) {
+                    environment.errors.add("Compiler did not return success (exit value != 0)")
+                    logger.println("Compilation failed")
+                }
+                
+                // Create model
+                model = new XESExecutableContainer(targetExe, compiler)
             }
         }
-        
-        val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
-        val targetExePath = infra.generatedCodeFolder.toPath.relativize(targetExe.toPath).toString
-        logger.println("Target exe file: " + targetExe)
-        
-        // Run esterel compiler
-        val command = compiler.compileXESCommand(sources, options, targetExePath)
-        var success = command.invoke(infra.generatedCodeFolder)?:-1 == 0
-        if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
-            logger.println("Compilation failed")
-        }
-        
-        // Create model
-        model = new XESExecutableContainer(targetExe, compiler)
         
         // report
         logger.closeLog("xes-compiler-report.log").snapshot

@@ -132,43 +132,44 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
         if (compiler === null || !compiler.available) {
             environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
             logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
-        }
-        
-        val options = <String>newArrayList
-        if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
-            val args = environment.getProperty(ADDITIONAL_OPTIONS)
-            if (args.contains(" ")) {
-                options += args.split(" ")
-            } else {
-                options += args
+        } else {
+            
+            val options = <String>newArrayList
+            if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
+                val args = environment.getProperty(ADDITIONAL_OPTIONS)
+                if (args.contains(" ")) {
+                    options += args.split(" ")
+                } else {
+                    options += args
+                }
             }
-        }
-        
-        // Run esterel compiler
-        var success = compiler.generateCodeCommand(sources, options).invoke(infra.generatedCodeFolder)?:-1 == 0
-        if (!success) {
-            environment.errors.add("Compiler did not return success (exit value != 0)")
-            logger.println("Compilation failed")
-        }
-        
-        // Find result
-        val targetCodes = compiler.getExpectedResults(sources)
-        for (targetCode : targetCodes) {
-            if (!targetCode.exists || !targetCode.file) {
-                environment.errors.add("Cannot find generated code at " + targetCode.toString)
-                logger.println("ERROR: Cannot find generated code at " + targetCode.toString)
+            
+            // Run esterel compiler
+            var success = compiler.generateCodeCommand(sources, options).invoke(infra.generatedCodeFolder)?:-1 == 0
+            if (!success) {
+                environment.errors.add("Compiler did not return success (exit value != 0)")
+                logger.println("Compilation failed")
             }
+            
+            // Find result
+            val targetCodes = compiler.getExpectedResults(sources)
+            for (targetCode : targetCodes) {
+                if (!targetCode.exists || !targetCode.file) {
+                    environment.errors.add("Cannot find generated code at " + targetCode.toString)
+                    logger.println("ERROR: Cannot find generated code at " + targetCode.toString)
+                }
+            }
+            
+            // Create model
+            model = new CodeContainer
+            for (targetCode : targetCodes) {
+                targetModel.addProxyCCodeFile(targetCode) => [
+                    dataStructName = modelName
+                ]
+                infra.sourceCodeFiles += targetCode
+            }
+            infra.sourceCode = targetModel
         }
-        
-        // Create model
-        model = new CodeContainer
-        for (targetCode : targetCodes) {
-            targetModel.addProxyCCodeFile(targetCode) => [
-                dataStructName = modelName
-            ]
-            infra.sourceCodeFiles += targetCode
-        }
-        infra.sourceCode = targetModel
         
         // report
         logger.closeLog("esterel-compiler-report.log").snapshot

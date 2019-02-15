@@ -26,7 +26,7 @@
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.perspectives</module> 
     <module>de.cau.cs.kieler.core.product</module>
-    <module>de.cau.cs.kieler.esterel.compiler</module>
+    <module>org.esterel.compiler</module>
     <module>de.cau.cs.kieler.esterel.ide</module>
     <module>de.cau.cs.kieler.esterel.ui</module>
     <module>de.cau.cs.kieler.esterel</module>

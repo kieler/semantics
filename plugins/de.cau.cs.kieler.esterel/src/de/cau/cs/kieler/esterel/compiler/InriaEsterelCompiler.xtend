@@ -19,47 +19,37 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
-import static extension java.nio.file.Files.*
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class InriaEsterelCompiler extends EsterelCompiler {
+class InriaEsterelCompiler extends AbstractEsterelCompiler {
 
     public static val ESTEREL_EXTENSION = ".strl"
 
     public static val IProperty<Boolean> XES_CODE = 
         new Property<Boolean>("de.cau.cs.kieler.esterel.compiler.inria.xes", false)
         
-    public static val IProperty<String> VERSION = 
-        new Property<String>("de.cau.cs.kieler.esterel.compiler.inria.version", null)
+    public static val IProperty<Boolean> PREFER_ENV = 
+        new Property<Boolean>("de.cau.cs.kieler.esterel.compiler.inria.env", false)
 
-    public static val VERSIONS = #["iec_v5_100"]
-        
+    public static val ID = "BerryEsterelV5_100"
+    
     val Environment environment
-    var String version = null
     
     new(Environment environment) {
         this.environment = environment
-        this.version = environment.getProperty(VERSION)
         
-        if (version === null) {
-            version = VERSIONS.head
-            version.resolveRoot
-            if (!available) {
-                for (v : VERSIONS) {
-                    v.resolveRoot
-                    if (available) {
-                        version = v
-                    }
-                }
+        if (environment.getProperty(PREFER_ENV)) {
+            if (System.getenv().containsKey('ESTEREL')) {
+                root = new File(System.getenv().get('ESTEREL'))
             }
-        } else {
-            version.resolveRoot
+        } else if (PROVIDERS.containsKey(ID)) {
+            root = PROVIDERS.get(ID).rootDir
         }
-        if (!available) {
+        if (!available) { // Try ENV
             if (System.getenv().containsKey('ESTEREL')) {
                 root = new File(System.getenv().get('ESTEREL'))
             }
@@ -68,7 +58,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
     }
     
     override getName() {
-        return version
+        return ID
     }
     
     override configureEnvironment(Map<String, String> map) {
@@ -102,7 +92,7 @@ class InriaEsterelCompiler extends EsterelCompiler {
         return files.filter[it.name.endsWith(ESTEREL_EXTENSION)].map[new File(it.parent, it.name.replace(ESTEREL_EXTENSION, ".c"))].toList
     }
     
-    def compileXESCommand(List<java.io.File> files, List<String> options, String target) {
+    def compileXESCommand(List<File> files, List<String> options, String target) {
         val command = <String>newArrayList
         
         command += XESPath.absolutePath
@@ -116,6 +106,10 @@ class InriaEsterelCompiler extends EsterelCompiler {
     
     def getXESPath() {
         return new File(new File(root, "bin"), "xes")
+    }
+    
+    def supportsXES() {
+        return XESPath.exists
     }
     
     protected def checkExecutableFlags() {
