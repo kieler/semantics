@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Core Utilities
+Bundle-SymbolicName: de.cau.cs.kieler.core;singleton:=true
+Bundle-Version: 0.14.0.qualifier
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.core.resources;bundle-version="3.5.0",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Export-Package: de.cau.cs.kieler.core.services
+Bundle-Vendor: Kiel University
+Import-Package: com.google.inject;version="1.3.0"
+Bundle-Activator: de.cau.cs.kieler.core.CoreActivator

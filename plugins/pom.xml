@@ -22,6 +22,7 @@
     <module>de.cau.cs.kieler.annotations.ide</module>
     <module>de.cau.cs.kieler.annotations.ui</module>
     <module>de.cau.cs.kieler.annotations</module>
+    <module>de.cau.cs.kieler.core</module>
     <module>de.cau.cs.kieler.core.model</module>
     <module>de.cau.cs.kieler.core.perspectives</module> 
     <module>de.cau.cs.kieler.core.product</module>
