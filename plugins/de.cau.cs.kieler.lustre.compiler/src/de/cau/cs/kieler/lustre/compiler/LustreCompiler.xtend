@@ -21,11 +21,11 @@ import org.eclipse.core.runtime.Platform
 import static de.cau.cs.kieler.lustre.compiler.LustreCompilerActivator.*
 
 /**
- * @author als
+ * @author lgr
  * 
  */
 abstract class LustreCompiler {
-    
+        
     protected var File root
     
     protected def resolveRoot(String compiler) {
@@ -52,6 +52,10 @@ abstract class LustreCompiler {
     
     def isAvailable() {
         return if (root !== null) root.directory else false
+    }
+    
+    def getRoot() {
+        return root
     }
     
     abstract def String getName()

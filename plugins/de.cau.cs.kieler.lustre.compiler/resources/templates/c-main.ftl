@@ -1,6 +1,7 @@
 <#include "/templates/injection.ftl">
 
-<@inject position="header" />
+<@inject position="header" /> 
+#include "${tickdata_name}.h"
 
 <@inject position="global-decl" /><#nt>
 
@@ -8,9 +9,9 @@
 
 int main(int argc, const char* argv[]) {
     <@inject position="local-decl" /><#nt>
-    
+        
     // Init lustre
-    ${tickdata_name}_reset();
+    ${tickdata_name}_ctx_type* ctx = ${tickdata_name}_ctx_new_ctx(NULL);
     
     <@inject position="init" /><#nt>
     
@@ -23,9 +24,9 @@ int main(int argc, const char* argv[]) {
         <@inject position="input" /><#nt>
         
         <@inject position="pre-tick" /><#nt>
-  
+        
         // Reaction of model
-        run = ${tickdata_name}();
+        ${tickdata_name}_step(<@inject position="step-parameter"/><#nt>);
         
         <@inject position="post-tick" /><#nt>
          

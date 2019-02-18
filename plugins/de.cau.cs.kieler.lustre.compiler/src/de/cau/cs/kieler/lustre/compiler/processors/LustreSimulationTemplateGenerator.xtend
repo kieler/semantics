@@ -19,8 +19,10 @@ import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
@@ -33,13 +35,10 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
 
     public static val FILE_NAME = "c-simulation.ftl"
     
-    static val SIM_SIG_PREFIX = "_SIM_SIG_"
-    static val SIM_VAL_PREFIX = "_SIM_VAL_"
-    static val SIM_SIG_RESET_FUNC = "_SIM_resetOutput"
-    
+    static val SIM_VAR_PREFIX = "_SIM_VAR_"
 
     override getId() {
-        "de.cau.cs.kieler.lustre.compiler.v6.simulation.template"
+        "de.cau.cs.kieler.lustre.compiler.lv6.simulation.template"
     }
     
     override getName() {
@@ -52,6 +51,10 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         val generalTemplateEnvironment = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
+        if (environment.propertyExists(LustreV6Compiler.NODE_NAME)) {
+            var nodeName = environment.getProperty(LustreV6Compiler.NODE_NAME)
+            environment.setProperty(AbstractSystemCompilerProcessor.ADDITIONAL_OPTIONS, nodeName + "_" + nodeName + ".h")
+        }        
         if (infra.sourceCode !== null) {
             val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!dataStructName.nullOrEmpty].toList
             var structFile = structFiles.findFirst[header]
@@ -73,13 +76,16 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
         }
         
+        var inputs = store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map[LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
+        var outputReferences = store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map["&" + LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
+        
         val cc = new CodeContainer
+        
         val code = 
             '''
             <#macro simulation_imports position>
-            #include <string.h>
-            #include <stdlib.h>
             #include <stdio.h>
+            #include <unistd.h>
             
             #include "lib/cJSON.h"
             </#macro>
@@ -87,34 +93,15 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             <#macro simulation_output_decl position>
             // Output variable declaration
             «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
-            char «SIM_SIG_PREFIX + v.key»;
-                «IF v.value.type != ValueType.PURE»
-                 «v.value.cType» «SIM_VAL_PREFIX + v.key»;
-                «ENDIF»
+                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + v.key»;
             «ENDFOR» 
             </#macro>
-            
-            <#macro simulation_output position>
-            // Reset function for output signals
-            void «SIM_SIG_RESET_FUNC»() {
-                «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
-                «SIM_SIG_PREFIX + v.key» = 0;
-                «ENDFOR» 
-            }
-            
-            // Esterel output callbacks
-            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
-            void ${tickdata_name}_O_«v.key»(«if (v.value.type != ValueType.PURE) v.value.cType + " value" else ""») {
-                «SIM_SIG_PREFIX + v.key» = 1;
-                «IF v.value.type != ValueType.PURE»
-                «SIM_VAL_PREFIX + v.key» = value;
-                «ENDIF»
-            }
-            «ENDFOR»
-            </#macro>
-            
-            <#macro simulation_output_reset position>
-            «SIM_SIG_RESET_FUNC»();
+                        
+            <#macro simulation_input_decl position>            
+            // Input variable declaration
+            «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
+                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + v.key»;
+            «ENDFOR» 
             </#macro>
             
             <#macro simulation_init position>
@@ -136,13 +123,16 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
                 int i = 0;
                 char c;
                 // read next line
-                for (i = 0; (c = getchar()) != '\n'; i++) {
+                c = getchar();
+                for (i = 0; (c != EOF) && (c != '\n'); i++) {
                     buffer[i] = c;
+                    c = getchar();
                 }
                 buffer[i] = 0;
             
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
+
                 if(root != NULL) {
                     «FOR v : store.orderedVariables.filter[value.isExternal || value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
                         // Receive «v.key»
@@ -197,16 +187,19 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
                 sendVariables();
             }
             </#macro>
+            
+            <#macro step_parameter position>«(inputs + outputReferences).join(", ")», ctx</#macro>
         '''
+            
         
         cc.add(FILE_NAME, code)
         
         environment.addIncludeInjection(FILE_NAME.relativeTemplatePath)
         environment.addMacroInjection(HEADER, "simulation_imports")
         environment.addMacroInjection(GLOBAL_DECLARATION, "simulation_output_decl")
-        environment.addMacroInjection(BODY, "simulation_output")
-        environment.addMacroInjection(END_LOOP, "simulation_output_reset")
+        environment.addMacroInjection(GLOBAL_DECLARATION, "simulation_input_decl")
         environment.addMacroInjection(BODY, "simulation_communication")
+        environment.addMacroInjection(PARAMETER, "step_parameter")
         environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
@@ -224,12 +217,9 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             val type = info.type
             if (info.isExternal) {
                 return '''cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else info.externalName)»);'''
-            } else if (type == ValueType.PURE) {
-                return '''cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«if (notify) "0" else SIM_SIG_PREFIX + varName»));'''
             } else {
                 return '''
-                cJSON_AddItemToObject(«json», "«varName»", cJSON_CreateBool(«if (notify) "0" else SIM_SIG_PREFIX + varName»));
-                cJSON_AddItemToObject(«json», "«varName»_val", «type.getCreator(if (notify) "0" else SIM_VAL_PREFIX + varName)»);
+                cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName)»);
                 '''
             }
         }
@@ -255,18 +245,15 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             throw new UnsupportedOperationException("Cannot handle arrays.")
         } else if (info.isExternal) {
             return '''«info.externalName» = «json»«info.jsonTypeGetter»;'''
-        } else if (variable.value.type == ValueType.PURE) {
-            return '''if («json»->valueint) ${tickdata_name}_I_«varName»();'''
         } else {
             return '''
-            if («json»->valueint) {
-                cJSON *val_item = cJSON_GetObjectItemCaseSensitive(root, "«variable.key»_val");
+                cJSON *val_item = cJSON_GetObjectItemCaseSensitive(root, "«variable.key»");
                 if(val_item != NULL) {
-                    ${tickdata_name}_I_«varName»(val_item«info.jsonTypeGetter»);
+                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName» = val_item«info.jsonTypeGetter»;
                 } else {
-                    ${tickdata_name}_I_«varName»(0);
+                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName» = 0;
                 }
-            }'''
+            '''
         }
     }
     

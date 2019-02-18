@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.lustre.compiler.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -39,7 +38,7 @@ class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
     @Inject extension LustreCreateExtension
     
     override getId() {
-        "de.cau.cs.kieler.lustre.compiler.v6.simulation.preparation"
+        "de.cau.cs.kieler.lustre.compiler.lv6.simulation.preparation"
     }
 
     override getName() {
@@ -50,24 +49,28 @@ class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
                
         // Model name
         var templateEnv = environment.getProperty(TemplateEngine.GENRAL_ENVIRONMENT)?:newHashMap
-        templateEnv.put(CommonTemplateVariables.MODEL_DATA_NAME, model.packBody.nodes.head.valuedObjects.head.name)
+        templateEnv.put(CommonTemplateVariables.MODEL_DATA_NAME, model.packBody.nodes.head.valuedObjects.head.name + "_" + model.packBody.nodes.head.valuedObjects.head.name)
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, templateEnv)
 
         // Init store
         if (model.packBody !== null) {
             val nodes = model.packBody.nodes
             
-            for (Declaration node : nodes) {
-                if (node instanceof NodeDeclaration) {
-                    
-                    for (VariableDeclaration varDecl : node.input.parameter) {
-                        for (ValuedObject valObj : varDecl.valuedObjects) {
-                            processValuedObject(valObj, INPUT)
-                        }
+            var node = nodes.head
+            if (node instanceof NodeDeclaration) {
+                
+                for (VariableDeclaration varDecl : node.input.parameter) {
+                    for (ValuedObject valObj : varDecl.valuedObjects) {
+                        processValuedObject(valObj, INPUT)
+                    }
+                }
+                
+                for (VariableDeclaration varDecl : node.output.parameter) {
+                    for (ValuedObject valObj : varDecl.valuedObjects) {
+                        processValuedObject(valObj, OUTPUT)
                     }
                 }
             }
-            
         }
     }
     

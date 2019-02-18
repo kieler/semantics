@@ -13,7 +13,7 @@
             class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationTemplateGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationTemplateGenerator">
+            class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationPreparation">
       </Processor>
    </extension>
    <extension

@@ -34,7 +34,11 @@ class LustreCreateExtension {
     
     def getTypeForValuedObject(ValuedObject valuedObject) {
         if ((valuedObject.eContainer as VariableDeclaration).valuedObjects.size == 1) {
-            return (valuedObject as LustreValuedObject).type
+            if (valuedObject instanceof LustreValuedObject) {
+                return (valuedObject as LustreValuedObject).type
+            } else {
+                return (valuedObject.eContainer as VariableDeclaration).type
+            }
         } else {
             return (valuedObject.eContainer as VariableDeclaration).type
         }

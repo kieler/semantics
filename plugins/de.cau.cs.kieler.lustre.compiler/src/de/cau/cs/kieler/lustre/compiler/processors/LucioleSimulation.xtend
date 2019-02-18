@@ -133,8 +133,25 @@ class LucioleSimulation extends AbstractSystemCompilerProcessor<LustreProgram, E
         }
                 
         for (File source : sources ) {
-            if (source.name.endsWith(".lus"))
+            if (source.name.endsWith(".lus")) {
                 model = new LucioleExecutableContainer(source, compiler)
+            }
+        }
+        
+        // TODO: cannot find the needed lus2ec command
+        val command = newArrayList
+        command += "bash"
+        command += compiler.shellScriptPath
+        command += compiler.lv4Root.absolutePath
+        command += compiler.root.absolutePath
+        command += "luciole"
+        command += "equations.lus"
+        command += "equations"
+        
+        var success = command.invoke(infra.generatedCodeFolder)?:-1 == 0
+        if (!success) {
+            environment.errors.add("Compiler did not return success (exit value != 0)")
+            logger.println("Compilation failed")
         }
         
         // report
@@ -164,9 +181,15 @@ class LucioleExecutableContainer extends ExecutableContainer {
     
     override getProcessBuilder() {
         val command = compiler.compileLucioleCommand(file)
-        val pb = new ProcessBuilder(command.map[if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""return it].toList)
+        
+        // TODO: Invoking sh on click on the executable container does not work 
+        val pb = new ProcessBuilder("sh " + compiler.shellScriptPath, compiler.lv4Root.absolutePath, compiler.root.absolutePath)
+        pb.command += command.map[if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""return it].toList
+        
         pb.environment.putAll(environment)
+        pb.environment.put("PATH", compiler.lv4Root + "/bin:" + pb.environment.get("PATH"));
         pb.redirectErrorStream(true)
+        
         return pb
     }
     
@@ -174,6 +197,5 @@ class LucioleExecutableContainer extends ExecutableContainer {
         val env = <String, String>newHashMap
         compiler.configureEnvironment(env)
         return env
-        
     }
 }
