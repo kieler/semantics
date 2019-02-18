@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
 import de.cau.cs.kieler.kicool.ui.view.actions.AbstractAction
 import de.cau.cs.kieler.kicool.ui.view.actions.AutoCompileToggle
@@ -29,6 +30,7 @@ import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
 import de.cau.cs.kieler.klighd.ZoomStyle
 import de.cau.cs.kieler.klighd.ui.DiagramViewManager
 import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
+import de.cau.cs.kieler.klighd.ui.viewers.PiccoloViewerUI
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties.ZoomConfigButtonsHandling
 import java.util.List
@@ -44,7 +46,6 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -208,6 +209,7 @@ class CompilerView extends DiagramViewPart {
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
             KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object)
         })
+        properties.useViewer(PiccoloViewerUI.ID)
                                 
         updateDiagram(editPartSystemManager.activeSystem, properties)
     }

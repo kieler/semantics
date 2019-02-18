@@ -21,12 +21,13 @@ import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
 import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
-import de.cau.cs.kieler.klighd.ui.view.controllers.EditorUtil
 import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
+import de.cau.cs.kieler.klighd.ui.viewers.PiccoloViewerUI
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.IOException
 import java.util.Collections
+import java.util.List
 import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
@@ -40,7 +41,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
-import org.eclipse.emf.edit.domain.IEditingDomainProvider
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
@@ -67,7 +67,6 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
-import java.util.List
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -730,6 +729,7 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
 
             // Create properties with default values
             val properties = new KlighdSynthesisProperties()
+                .useViewer(PiccoloViewerUI.ID)
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
                     "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy")
             // Give model synthesis access to the compilation result
