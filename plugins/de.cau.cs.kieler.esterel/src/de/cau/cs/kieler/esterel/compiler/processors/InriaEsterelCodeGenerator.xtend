@@ -18,7 +18,6 @@ import de.cau.cs.kieler.esterel.compiler.InriaEsterelCompiler
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
-import de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup
 import java.io.File
 import java.nio.file.Files
 import java.util.List
@@ -26,6 +25,8 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
+
+import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
  * @author als
@@ -35,6 +36,8 @@ import org.eclipse.xtext.resource.XtextResourceSet
 class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelProgram, CodeContainer> {
     
     public static val ID = "de.cau.cs.kieler.esterel.compiler.inria.c"
+
+    var InriaEsterelCompiler compiler
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -96,7 +99,7 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
                 val src = sourceFile
                 val dest = new File(infra.generatedCodeFolder, sourceFile.name)
                 logger.println("Copying Esterel source file to " + dest)
-                ProjectSetup.copyFile(src, dest, logger, true)
+                src.copyFile(dest, logger, true)
                 sourceFile = dest
             }
         }
@@ -128,12 +131,19 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
         logger.println("Files:")
         sources.forEach[logger.println("  " + it)]
         
-        val compiler = new InriaEsterelCompiler(environment)
+        logger.println("Setup Esterel compiler")
+        compiler = new InriaEsterelCompiler(environment)
         if (compiler === null || !compiler.available) {
             environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
             logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported on this operating system!")
         } else {
+            compiler.setup(infra, logger)
+            if (!compiler.isProperlySetUp) {
+                environment.errors.add("The " + compiler?.name  + " could not be initialized properly.")
+                logger.println("ERROR: The " + compiler?.name  + " could not be initialized properly.")
+            }
             
+            logger.println("Running compilation")      
             val options = <String>newArrayList
             if (!environment.getProperty(ADDITIONAL_OPTIONS).nullOrEmpty) {
                 val args = environment.getProperty(ADDITIONAL_OPTIONS)
@@ -179,7 +189,6 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
     override createProcessBuilder(List<String> command, File directory) {
         val pb = super.createProcessBuilder(command, directory)
         
-        val compiler = new InriaEsterelCompiler(environment)
         if (compiler !== null) compiler.configureEnvironment(pb.environment) 
         
         return pb        

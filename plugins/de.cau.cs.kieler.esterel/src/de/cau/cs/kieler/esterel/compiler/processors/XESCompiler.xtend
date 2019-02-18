@@ -35,6 +35,8 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
     
     public static val IProperty<String> EXE_NAME = 
         new Property<String>("de.cau.cs.kieler.esterel.compiler.xes.result", "simulation.exe")
+        
+    var InriaEsterelCompiler compiler
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -88,11 +90,19 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         logger.println("Files:")
         sources.forEach[logger.println("  " + it)]
         
-        val compiler = new InriaEsterelCompiler(environment)
+        logger.println("Setup Esterel compiler")
+        compiler = new InriaEsterelCompiler(environment)
         if (compiler === null || !compiler.available) {
             environment.errors.add("The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
             logger.println("ERROR: The " + compiler?.name  + " Esterel compiler is not supported for this operating system")
-        } else {  
+        } else {
+            compiler.setup(infra, logger)
+            if (!compiler.isProperlySetUp) {
+                environment.errors.add("The " + compiler?.name  + " could not be initialized properly.")
+                logger.println("ERROR: The " + compiler?.name  + " could not be initialized properly.")
+            }
+            
+            logger.println("Running compilation")  
             if (!compiler.supportsXES) {
                 environment.errors.add("This dirtribution of the " + compiler?.name  + " Esterel compiler does not support simulation with the XES")
                 logger.println("ERROR: This dirtribution of the " + compiler?.name  + " Esterel compiler does not support simulation with the XES")
@@ -132,7 +142,6 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
     override createProcessBuilder(List<String> command, File directory) {
         val pb = super.createProcessBuilder(command, directory)
         
-        val compiler = new InriaEsterelCompiler(environment)
         if (compiler !== null) compiler.configureEnvironment(pb.environment) 
         
         return pb        

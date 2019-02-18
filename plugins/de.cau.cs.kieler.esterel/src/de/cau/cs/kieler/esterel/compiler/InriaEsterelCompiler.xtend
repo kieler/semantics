@@ -19,13 +19,18 @@ import java.io.File
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
+import org.eclipse.core.runtime.Platform
+import de.cau.cs.kieler.kicool.external.AbstractExternalCompiler
+import org.eclipse.emf.common.util.URI
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import java.io.PrintStream
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class InriaEsterelCompiler extends AbstractEsterelCompiler {
+class InriaEsterelCompiler extends AbstractExternalCompiler {
 
     public static val ESTEREL_EXTENSION = ".strl"
 
@@ -37,38 +42,47 @@ class InriaEsterelCompiler extends AbstractEsterelCompiler {
 
     public static val ID = "BerryEsterelV5_100"
     
-    val Environment environment
-    
     new(Environment environment) {
-        this.environment = environment
+        super(environment)
         
         if (environment.getProperty(PREFER_ENV)) {
             if (System.getenv().containsKey('ESTEREL')) {
-                root = new File(System.getenv().get('ESTEREL'))
+                root = URI.createFileURI(System.getenv().get('ESTEREL'))
+            } else {
+                environment.warnings.add("Missing $ESTEREL evnironment varibale with path to Esterel installation")
             }
-        } else if (PROVIDERS.containsKey(ID)) {
-            root = PROVIDERS.get(ID).rootDir
         }
-        if (!available) { // Try ENV
+        if (root === null && PROVIDERS.containsKey(ID)) {
+            root = PROVIDERS.get(ID).getRootDir(Platform.OS, Platform.OSArch)
+            if (root === null) {
+                environment.warnings.add("There is no Esterel compiler bundled in KIELER for this OS.")
+            }
+        }
+        if (root === null) { // Try ENV
             if (System.getenv().containsKey('ESTEREL')) {
-                root = new File(System.getenv().get('ESTEREL'))
+                root = URI.createFileURI(System.getenv().get('ESTEREL'))
             }
         }
-        checkExecutableFlags()
+        
     }
     
     override getName() {
         return ID
     }
     
+    override setup(ProjectInfrastructure pinf, PrintStream logger) {
+        super.setup(pinf, logger)
+        checkExecutableFlags("bin")
+    }
+    
     override configureEnvironment(Map<String, String> map) {
-        if (root !== null) {
-            map.put("ESTEREL", root.absolutePath)
+        if (rootDir !== null) {
+            map.put("ESTEREL", rootDir.absolutePath)
         }
     }
     
     override generateCodeCommand(List<File> files, ArrayList<String> options) {
-        val bin = new File(root, "bin")
+        val bin = new File(rootDir, "bin")
         val command = <String>newArrayList
         
         command += new File(bin, "esterel").absolutePath
@@ -105,30 +119,11 @@ class InriaEsterelCompiler extends AbstractEsterelCompiler {
     }
     
     def getXESPath() {
-        return new File(new File(root, "bin"), "xes")
+        return new File(new File(rootDir, "bin"), "xes")
     }
     
     def supportsXES() {
         return XESPath.exists
     }
     
-    protected def checkExecutableFlags() {
-        var succeeded = true
-        if (isAvailable) {
-            val bin = new File(root, "bin")
-            for (exe : bin.listFiles) {
-                if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
-                    if (!exe.canExecute) {
-                        val success = exe.executable = true
-                        succeeded = succeeded && success
-                    }
-                }
-            }
-            if (!succeeded) {
-                environment.warnings.add("Failed to set executable flag of the esterel compiler")
-            }
-        }
-    }
-        
-       
 }

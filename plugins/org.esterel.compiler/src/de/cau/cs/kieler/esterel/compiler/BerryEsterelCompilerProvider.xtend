@@ -12,17 +12,28 @@
  */
 package de.cau.cs.kieler.esterel.compiler
 
+import de.cau.cs.kieler.kicool.external.IExternalCompilerProvider
+import org.eclipse.emf.common.util.URI
+
 /**
+ * Locate compiler binaries.
+ * 
  * @author als
  */
-class BerryEsterelCompilerProvider implements IEsterelCompilerProvider {
+class BerryEsterelCompilerProvider implements IExternalCompilerProvider {
+    
+    static val PLUGIN = "org.esterel.compiler"
     
     override getId() {
         return "BerryEsterelV5_100"
     }
     
-    override getRootDir() {
-        return EsterelCompilerActivator.bundlePath.resolve("compiler").resolve("iec_v5_100").toFile.resolveRoot
+    override URI getRootDir(String os, String arch) {
+        switch(os) {
+            case "linux": return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/linux", true)
+            case "macosx": return URI.createPlatformPluginURI(PLUGIN + "/compiler/iec_v5_100/macosx", true)
+            default: return null
+        }
     }
     
 }
