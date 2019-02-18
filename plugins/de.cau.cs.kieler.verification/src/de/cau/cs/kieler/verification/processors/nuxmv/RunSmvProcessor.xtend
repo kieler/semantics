@@ -82,7 +82,15 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
      * @param property The property to be checked
      */
     protected def getInteractiveCommands(IFile smvFile, VerificationProperty property) {
-        val List<String> customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS)
+        var List<String> customInteractiveCommands = null
+        switch(property.type) {
+            case INVARIANT:
+                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS)
+            case LTL:
+                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS)
+            case CTL:
+                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS)
+        }
         val interactiveCommands = if (customInteractiveCommands.isNullOrEmpty)
                                       DEFAULT_INTERACTIVE_COMMANDS 
                                   else

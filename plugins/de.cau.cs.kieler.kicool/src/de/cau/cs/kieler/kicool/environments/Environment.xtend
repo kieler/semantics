@@ -121,8 +121,12 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<Boolean> SMV_USE_IVAR =
         new Property<Boolean>("de.cau.cs.kieler.kicool.useIVARinSmvModels")
          
-    public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_COMMANDS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCommands")
+    public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvInvarCommands")
+    public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvLtlCommands")
+    public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS = 
+        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCtlCommands")
         
     public static val IProperty<List<String>> CUSTOM_SPIN_COMMANDS =
         new Property<List<String>>("de.cau.cs.kieler.kicool.customSpinCommands")

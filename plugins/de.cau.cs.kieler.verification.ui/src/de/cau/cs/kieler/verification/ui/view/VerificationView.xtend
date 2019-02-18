@@ -92,7 +92,9 @@ class VerificationView extends ViewPart {
     private static val REFRESH_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/refresh.png")
     private static val RUN_COUNTEREXAMPLE_ICON = VerificationUiPlugin.imageDescriptorFromPlugin(VerificationUiPlugin.PLUGIN_ID, "icons/rerunFailed.png")
     
-    private static val CUSTOM_SMV_COMMANDS_PREF_STORE_ID = "customSmvCommands"
+    private static val CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID = "customSmvCommandsLTL"
+    private static val CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID = "customSmvCommandsCTL"
+    private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
     private static val CUSTOM_SPIN_COMMANDS_PREF_STORE_ID = "customSpinCommands"
     private static val SMV_USE_IVAR = "SmvModelsWithIVAR"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
@@ -200,24 +202,18 @@ class VerificationView extends ViewPart {
         
         val openEditSmvCommandsDialogAction = new Action("Edit SMV Commands...") {
             override run() {
-                val title = "Commands for NuSMV / nuXmv"
-                val message =
-'''Set custom commands for model checking with NuSMV / nuXmv.
-Commands are separated by newline. The last command must be 'quit'.
-Use «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER» as placeholder for the property to be checked.
-Default commands:
-go
-check_property -P «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER»
-quit'''
-                val initialValue = getCustomSmvCommands
-                val dialog = new EditCommandsDialog(viewer.control.shell, title, message, initialValue, null)
+                val dialog = new EditSmvCommandsDialog(viewer.control.shell)
+                dialog.invarValue = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID)
+                dialog.ltlValue = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID)
+                dialog.ctlValue = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID)
                 val result = dialog.open()
                 if (result == Window.OK) {
-                    storeCustomSmvCommands(dialog.getValue())
+                    storeCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID, dialog.getInvarValue)
+                    storeCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID, dialog.getLtlValue)
+                    storeCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID, dialog.getCtlValue)
                 }
             }
         }
-        
         
         val openEditSpinCommandsDialogAction = new Action("Edit Spin Commands...") {
             override run() {
@@ -228,11 +224,11 @@ The commands will be added after the -run option, and before the file name.
 Example commands:
 -bfs : use breadth-first-search
 -m100000 : use max search depth of 100000 (default is 10000)'''
-                val initialValue = getCustomSpinCommands
+                val initialValue = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID)
                 val dialog = new EditCommandsDialog(viewer.control.shell, title, message, initialValue, null)
                 val result = dialog.open()
                 if (result == Window.OK) {
-                    storeCustomSpinCommands(dialog.getValue())
+                    storeCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID, dialog.getValue())
                 }
             }
         }
@@ -590,12 +586,23 @@ Example commands:
         // Add options
         val createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
         verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamplesWithOutputs)
+        
+        // Add nuXmv options
         val useIVARinSmvModels = getBooleanOption(SMV_USE_IVAR, true)
         verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, useIVARinSmvModels)
-        val customSmvCommandsList = customSmvCommands.split("\n").toList
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_COMMANDS, customSmvCommandsList)
-        val customSpinCommands = getCustomSpinCommands.split("\n").toList
+        
+        val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
+        val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
+        val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS, customSmvInvarCommandsList)
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS, customSmvLtlCommandsList)
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS, customSmvCtlCommandsList)
+        
+        // Add spin options
+        val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_SPIN_COMMANDS, customSpinCommands)
+        
+        // Add observer for changed properties
         verificationContext.addObserver[ Observable o, Object arg |
             if(arg instanceof VerificationPropertyChanged) {
                 val property = arg.changedProperty
@@ -639,24 +646,14 @@ Example commands:
         return preferenceStore.getBoolean(prefStoreId)
     }
     
-    private def String getCustomSpinCommands() {
-        preferenceStore.setDefault(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID, "")
-        return preferenceStore.getString(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID)
+    private def String getCustomCommands(String prefStoreId) {
+        preferenceStore.setDefault(prefStoreId, "")
+        return preferenceStore.getString(prefStoreId)
     }
     
-    private def void storeCustomSpinCommands(String customSmvCommands) {
-        preferenceStore.putValue(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID, customSmvCommands)
-    }
-    
-    private def String getCustomSmvCommands() {
-        val defaultCommands = RunNusmvProcessor.DEFAULT_INTERACTIVE_COMMANDS.join("\n")
-        preferenceStore.setDefault(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, defaultCommands)
-        return preferenceStore.getString(CUSTOM_SMV_COMMANDS_PREF_STORE_ID)
-    }
-    
-    private def void storeCustomSmvCommands(String customSmvCommands) {
+    private def void storeCustomCommands(String prefStoreId, String customSmvCommands) {
         val store = VerificationUiPlugin.instance.preferenceStore
-        store.putValue(CUSTOM_SMV_COMMANDS_PREF_STORE_ID, customSmvCommands)
+        store.putValue(prefStoreId, customSmvCommands)
     }
     
     private def void showInDialog(Exception e) {
