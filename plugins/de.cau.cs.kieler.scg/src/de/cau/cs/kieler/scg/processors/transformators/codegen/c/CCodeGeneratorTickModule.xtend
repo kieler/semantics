@@ -27,18 +27,12 @@ import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpres
  */
 class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     
-    protected static val TICK_NAME = "tick"
-    
     var CCodeGeneratorStructModule struct
     var CCodeGeneratorLogicModule logic
     
     override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
         logic = (parent as CCodeGeneratorModule).logic as CCodeGeneratorLogicModule
-    }
-    
-    override getName() {
-        TICK_NAME + baseName + suffix
     }
     
     override generateInit() {

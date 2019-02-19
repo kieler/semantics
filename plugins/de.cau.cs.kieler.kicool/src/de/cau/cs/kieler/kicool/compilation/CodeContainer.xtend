@@ -19,6 +19,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
 import static com.google.common.base.Preconditions.*
+import java.util.Map
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * A CodeContainer contains a map of files. Each file is represented by a string.
@@ -56,12 +58,12 @@ class CodeContainer {
         return new CodeFile(file, code) => [files += it]
     }
     
-    def addCHeader(String fileName, String code, String dataStructName) {
-        return new CCodeFile(fileName, code, true, dataStructName) => [files += it]
+    def addCHeader(String fileName, String code) {
+        return new CCodeFile(fileName, code, true) => [files += it]
     }
     
-    def addCCode(String fileName, String code, String dataStructName) {
-        return new CCodeFile(fileName, code, false, dataStructName) => [files += it]
+    def addCCode(String fileName, String code) {
+        return new CCodeFile(fileName, code, false) => [files += it]
     }
     
     def addJavaCode(String fileName, String code) {
@@ -84,6 +86,7 @@ class CodeFile {
     @Accessors val String fileName
     @Accessors val String code
     @Accessors var File underlyingFile = null
+    @Accessors val Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap 
     
     new(File underlyingFile) {
         this(underlyingFile, null)
@@ -120,21 +123,19 @@ class CodeFile {
 class CCodeFile extends CodeFile {
     
     @Accessors var boolean header
-    @Accessors var String dataStructName
     
     new(File underlyingFile) {
         this(underlyingFile, null)
     }
     
     new(File underlyingFile, String content) {
-        this(underlyingFile.name, content, underlyingFile.name.endsWith(".h"), null)
+        this(underlyingFile.name, content, underlyingFile.name.endsWith(".h"))
         this.underlyingFile = underlyingFile
     }
     
-    new(String fileName, String code, boolean header, String dataStructName) {
+    new(String fileName, String code, boolean header) {
         super(fileName, code)
         this.header = header
-        this.dataStructName = dataStructName
     }
 }
 

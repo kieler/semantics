@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
+import org.eclipse.xtext.xbase.lib.Pair;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.HashMultimap;
@@ -32,7 +33,6 @@ import com.google.common.collect.Lists;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;
 import de.cau.cs.kieler.kicool.kitt.KiTTConfig;
-import de.cau.cs.kieler.core.model.Pair;
 
 /**
  * Tracing API for transformations.
@@ -110,7 +110,7 @@ public class TransformationTracing {
                 // If element is added which was removed earlier then restore mappings
                 if (removedEntries.containsKey(element)) {
                     for (Pair<Object, Object> entry : removedEntries.get(element)) {
-                        mapping.put(entry.getFirst(), entry.getSecond());
+                        mapping.put(entry.getKey(), entry.getValue());
                     }
                     removedEntries.remove(element);
                 } else if (!mapping.contains(element)) {

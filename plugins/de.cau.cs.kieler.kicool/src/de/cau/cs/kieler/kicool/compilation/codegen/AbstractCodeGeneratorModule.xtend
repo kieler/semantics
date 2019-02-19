@@ -44,7 +44,9 @@ abstract class AbstractCodeGeneratorModule {
     /**
      * The name of the generated code part.
      */
-    def String getName()
+    def String getName() {
+        prefix + baseName + suffix
+    }
     
     /**
      * Indent adds the indentation to the builder.

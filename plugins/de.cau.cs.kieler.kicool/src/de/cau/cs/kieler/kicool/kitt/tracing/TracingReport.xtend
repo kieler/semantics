@@ -45,7 +45,7 @@ class TracingReport {
 
         //find correct source and target models due to inplace transformation delegation
         if (mapping.inPlace) {
-            val realSource = tracing.getTracingChain().getModels(mapping).first as EObject;
+            val realSource = tracing.getTracingChain().getModels(mapping).key as EObject;
             if (realSource instanceof EObject) {
                 source = realSource as EObject;
             } else {

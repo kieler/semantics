@@ -1,0 +1,5 @@
+#!/bin/sh
+SIS=$ESTEREL/lib/sis1_3; export SIS
+SIS_LIB=$SIS/sis_lib; export SIS_LIB
+PATH=$SIS:$PATH; export PATH
+$SIS/sis $*

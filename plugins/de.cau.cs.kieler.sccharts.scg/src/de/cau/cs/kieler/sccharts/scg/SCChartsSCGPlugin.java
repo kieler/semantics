@@ -1,4 +1,3 @@
-package de.cau.cs.kieler.sccharts.scg;
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
@@ -12,11 +11,13 @@ package de.cau.cs.kieler.sccharts.scg;
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-import de.cau.cs.kieler.core.model.AbstractUIPluginLog;
+package de.cau.cs.kieler.sccharts.scg;
+
+import org.eclipse.core.runtime.Plugin;
 
 /**
  * The Class SCChartsSCGPlugin.
  */
-public class SCChartsSCGPlugin extends AbstractUIPluginLog {
+public class SCChartsSCGPlugin extends Plugin {
 
 }

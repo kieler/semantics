@@ -20,13 +20,16 @@ import os
 import sys
 import re
 import argparse
+import xml.etree.ElementTree as ET
 from os.path import isfile, isdir, join, abspath, relpath, normpath
 
 PROJECT_PREFIX = 'de.cau.cs.kieler'
 DEP_FILE = 'dependencies.txt'
 UI_PROPERTY = 'Eclipse-UI'
 UI_REGEX = '.*\\.ui'
-BAN_REGEX = '.*\\.ui'
+BANNED_REGEX = '.*\\.ui'
+BANNED = []
+TOLERATED_EXTENSIONS = ['org.eclipse.emf.ecore.generated_package']
 
 def main(args):
     print('-- Checking plugin dependencies --')
@@ -37,6 +40,7 @@ def main(args):
         stop('%s is not a directory' % plugins)
 
     isUI = re.compile(UI_REGEX)
+    deps = {}
     for plugin in sorted(os.listdir(plugins)):
         base = join(plugins, plugin)
         if plugin.startswith(PROJECT_PREFIX) and isdir(base) and isfile(join(base, '.project')):
@@ -60,44 +64,65 @@ def main(args):
 
             # Perform checks
             if ui:
-                print('- Eclipse UI plugin. No constraints.')
+                print(' - Eclipse UI plugin. No constraints.')
             else:
-                xml = checkPluginXml(base, args)
-                deps = checkDependencies(base, args)
-                if not (xml and deps):
+                xmlOK = checkPluginXml(base, args)
+                deps[plugin] = readDependencies(base, args)
+                depsOK = checkDependencies(deps[plugin], base, args)
+                if not (xmlOK and depsOK):
                     failed.append(plugin)
+                else:
+                    print(' - OK')
 
     # report
     if len(failed):
         print('%s The following non-eclipse-ui plugins do not comply with the defined requirements:' % ('[WARNING]' if args.warn else '[ERROR]'))
         for fail in failed:
             print(' - %s' % fail)
+            for dep in [dep for dep in deps[fail] if dep in failed]:
+                print(' --- possibly transient due to %s' % dep)
 
     # indicate error
     if not args.warn and len(failed):
         sys.exit(1)
 
-def checkDependencies(base, args):
-    isBanned = re.compile(BAN_REGEX)
+def readDependencies(base, args):
+    deps = []
     filepath = join(base, DEP_FILE)
     if isfile(filepath):
         with open(filepath, 'r') as file:
-            success = True
             for line in file.readlines()[1:]:
-                dep = line.split(':')[1]
-                if isBanned.match(dep):
-                    print('Has (possibly transient) dependency to banned plugin: %s' % dep)
-                    success = False
-            return success
+                deps.append(line.split(':')[1])
     else:
-        print('Missing dependencies file (%s)' % DEP_FILE)
-        return False
+        print(' - Missing dependencies file (%s)' % DEP_FILE)
+    return deps
+
+def checkDependencies(deps, base, args):
+    isBanned = re.compile(BANNED_REGEX)
+    success = isfile(join(base, DEP_FILE))
+    for dep in deps:
+        if isBanned.match(dep) or dep in BANNED:
+            print(' - Has (possibly transient) dependency to banned plugin: %s' % dep)
+            success = False
+    return success
 
 def checkPluginXml(base, args):
-    if isfile(join(base, 'plugin.xml')):
-        print('Has plugin.xml')
-        return False
-    return True
+    success = True
+    path = join(base, 'plugin.xml')
+    if isfile(path):
+        root = ET.parse(path).getroot()
+        for elem in root:
+            if elem.tag == 'extension':
+                if not 'point' in elem.attrib or elem.attrib['point'] not in TOLERATED_EXTENSIONS:
+                    print(' - Uses banned extension point: %s' % (elem.attrib['point'] if 'point' in elem.attrib else 'unknown'))
+                    success = False
+            elif elem.tag == 'extension-point':
+                print(' - Provides banned eclipse extension-point: %s' % (elem.attrib['id'] if 'id' in elem.attrib else 'unknown'))
+                success = False
+            else:
+                print(' - Uses plugin.xml for unknown but banned registration in eclipse (%s).' % elem.tag)
+                success = False
+    return success
 
 def stop(msg):
     errPrint('[ERROR] ' + msg)

@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.kicool.kitt.tracing.internal;
 
 import com.google.inject.Module
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.IntermediateProcessor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
@@ -142,7 +141,7 @@ public class TracingIntegration extends IntermediateProcessor<EObject, EObject> 
         
         tracing.startTransformationTracing(model, null, "kicool.internal.copy", false)
         val copy = TransformationTracing.tracedCopyAndReturnCopier(model)
-        tracing.finishTransformationTracing(model, copy.first)
+        tracing.finishTransformationTracing(model, copy.key)
         
         return copy
     }    

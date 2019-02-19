@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.srtg
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -113,9 +112,8 @@ class SRTGSynthesis extends AbstractDiagramSynthesis<Scope> {
         rootNode.children.forEach[eAdapters.add(trackingAdapter)]
         
         // Log elapsed time
-        Log.log(
-            "SCCharts synthesis transformed model " + (root.label ?: root.name) + " in " +
-                ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
+//        println("SCCharts synthesis transformed model " + (root.label ?: root.name) + " in " +
+//                ((System.currentTimeMillis - startTime) as float / 1000) + "s.");
 		
         return rootNode;
     }

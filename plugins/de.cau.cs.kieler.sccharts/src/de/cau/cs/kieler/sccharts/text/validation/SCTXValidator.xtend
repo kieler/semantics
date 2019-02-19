@@ -869,7 +869,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkForRegion(ControlflowRegion region) {
         if (region.forStart !== null && region.forStart instanceof ValuedObjectReference) {
             val forRange = For.getForRegionRange(region)
-            if (forRange.second == -1) {
+            if (forRange.value == -1) {
                 error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
                     region, SCChartsPackage.eINSTANCE.state_Regions
                 )
