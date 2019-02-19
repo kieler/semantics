@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.esterel.compiler.inria.xes
+public system de.cau.cs.kieler.esterel.compiler.inria.xes
 	label "Inria Esterel XES Simulation"
 
 de.cau.cs.kieler.esterel.compiler.inria.c config {
