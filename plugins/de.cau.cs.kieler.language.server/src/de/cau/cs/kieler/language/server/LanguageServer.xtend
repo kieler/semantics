@@ -30,9 +30,8 @@ import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.services.LanguageClient
+import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
 import org.eclipse.xtext.ide.server.LanguageServerImpl
-import org.eclipse.xtext.ide.server.ServerModule
-import org.eclipse.xtext.ide.server.WorkspaceManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 
@@ -82,14 +81,14 @@ class LanguageServer implements IApplication {
             println("Starting language server socket")
             val kgraphExt = bindAndRegisterLanguages()
             
-            val injector = Guice.createInjector(Modules2.mixin(new ServerModule, [
+            val injector = Guice.createInjector(Modules2.mixin(new KeithServerModule, [
                 bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
                 bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
                     override get() {
                         kgraphExt
                     }
                 })
-                bind(WorkspaceManager).toInstance(new DisableBaseDirWorkspaceManager)
+                bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
             ]))
             this.run(injector, host, port)
             return EXIT_OK 
