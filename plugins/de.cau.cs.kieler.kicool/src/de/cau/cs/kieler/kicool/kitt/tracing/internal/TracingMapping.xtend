@@ -17,7 +17,6 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import java.util.Collection
 import java.util.List
-import de.cau.cs.kieler.core.model.Pair
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 

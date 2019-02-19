@@ -15,7 +15,6 @@ package de.cau.cs.kieler.kicool.processors
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
@@ -265,14 +264,14 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     ) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
-        for (priority : 0..accessPair.first) {
-            val prioAccesses = accessPair.second.get(priority) 
+        for (priority : 0..accessPair.key) {
+            val prioAccesses = accessPair.value.get(priority) 
             for (access : prioAccesses) {
-                for (compPriority : priority..accessPair.first) {
-                    val compAccesses = accessPair.second.get(compPriority) 
+                for (compPriority : priority..accessPair.key) {
+                    val compAccesses = accessPair.value.get(compPriority) 
                     for (compAccess : compAccesses) {
                         if (exclude === null || 
-                            !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
+                            !exclude.exists[ key.node == access.node && value.node == compAccess.node ] 
                         ) {
                             if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
                                 valuedObjectIdentifier.processDependency(access, compAccess)
@@ -367,7 +366,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     protected def boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
         val entries = getLeastCommonAncestorEntries(source, target)
         if (entries !== null) {
-            return entries.first != entries.second
+            return entries.key != entries.value
         }
         return false
     }

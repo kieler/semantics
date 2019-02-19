@@ -12,7 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis
 
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kicool.environments.MessageObjectList
 
 /**
@@ -20,10 +19,29 @@ import de.cau.cs.kieler.kicool.environments.MessageObjectList
  * @kieler.design 2017-07-10 proposed
  * @kieler.rating 2017-07-10 proposed yellow  
  */
-class MessageObjectListPair extends Pair<MessageObjectList, Object> {
+class MessageObjectListPair {
+
+    val Pair<MessageObjectList, Object> pair
    
     new(MessageObjectList list, Object object) {
-        super(list, object)    
+        pair = new Pair(list, object)
+    }
+    
+    def getKey() {
+        return pair.key
+    }
+    def getValue() {
+        return pair.value
+    }
+    
+    override equals(Object obj) {
+        return pair.equals(obj)
+    }
+    override hashCode() {
+        return pair.hashCode
+    }
+    override toString() {
+        return pair.toString
     }
     
 }

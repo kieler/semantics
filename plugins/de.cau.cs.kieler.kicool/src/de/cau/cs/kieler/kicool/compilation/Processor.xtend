@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.core.model.Pair
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
@@ -167,8 +166,8 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         var Copier copier = null 
         if (model instanceof EObject) {
             val snapshotModelPair = model.copyEObjectAndReturnCopier
-            snapshotModel = snapshotModelPair.first
-            copier = snapshotModelPair.second
+            snapshotModel = snapshotModelPair.key
+            copier = snapshotModelPair.value
         }
 
         // Store the copy in the snapshot object and create a notification.      
@@ -254,7 +253,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      */
     def <T extends EObject> AnnotationModel<T> createAnnotationModel(T model) {
         val c = model.copyEObjectAndReturnCopier
-        return new AnnotationModel(c.first, c.second, this)
+        return new AnnotationModel(c.key, c.value, this)
     }
     
     /** 
