@@ -16,8 +16,8 @@ package de.cau.cs.kieler.kicool.processors
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions

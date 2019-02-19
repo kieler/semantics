@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.kicool.ui.deploy
 
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IProgressMonitor

@@ -16,8 +16,8 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.SCGraph
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import java.util.Map

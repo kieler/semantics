@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.kicool.deploy
 
 import de.cau.cs.kieler.annotations.Nameable
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.io.File

@@ -13,8 +13,8 @@
 package de.cau.cs.kieler.kicool.compilation.internal
 
 import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.kexpressions.JsonArrayValue
 import de.cau.cs.kieler.kexpressions.JsonObjectValue
 import de.cau.cs.kieler.kexpressions.NullValue

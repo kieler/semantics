@@ -11,7 +11,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib.macro
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: de.cau.cs.kieler.core.services
+Export-Package: de.cau.cs.kieler.core,
+ de.cau.cs.kieler.core.definitions,
+ de.cau.cs.kieler.core.properties,
+ de.cau.cs.kieler.core.services
 Bundle-Vendor: Kiel University
 Import-Package: com.google.inject;version="1.3.0"
 Bundle-Activator: de.cau.cs.kieler.core.CoreActivator
