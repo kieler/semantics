@@ -53,7 +53,7 @@ import static extension java.lang.String.format
 class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
     
     /** Compiler configuration */
-    val compilationSystemID = "de.cau.cs.kieler.lustre.sccharts.dataflow"
+    val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
     
     /** Sct Parser Injector */
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration

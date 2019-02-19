@@ -9,9 +9,6 @@
 
 int main(int argc, const char* argv[]) {
     <@inject position="local-decl" /><#nt>
-        
-    // Init lustre
-    ${tickdata_name}_ctx_type* ctx = ${tickdata_name}_ctx_new_ctx(NULL);
     
     <@inject position="init" /><#nt>
     

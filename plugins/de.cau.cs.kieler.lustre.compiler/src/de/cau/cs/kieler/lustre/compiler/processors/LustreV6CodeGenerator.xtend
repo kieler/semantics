@@ -27,11 +27,18 @@ import org.eclipse.emf.ecore.xmi.XMLResource
 import org.eclipse.xtext.resource.XtextResource
 import org.eclipse.xtext.resource.XtextResourceSet
 
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
+
 /**
  * @author lgr
  */
 class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgram, CodeContainer> {
 
+        
+    public static val IProperty<Boolean> HAS_STATE = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.compiler.lv6.hasState", true)
 
     public static val ID = "de.cau.cs.kieler.lustre.compiler.lv6.c"
 
@@ -62,6 +69,8 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         
         var resource = sourceModel.eResource
         val modelName = sourceModel.packBody.nodes.head.valuedObjects.head.name
+        environment.setProperty(HAS_STATE, (sourceModel.packBody.nodes.head as NodeDeclaration).hasState)
+        
         var File sourceFile
         
         if (resource !== null) {
@@ -174,7 +183,11 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         infra.sourceCode = targetModel
         
         // report
-        logger.closeLog("lustre-compiler-report.log").snapshot
+        var cclogger = logger.closeLog("lustre-compiler-report.log")
+        if (cclogger.head.code.contains("is declared as a node, but it uses no memory (i.e., it is a function)")) {
+            environment.setProperty(HAS_STATE, false)
+        }
+        cclogger.snapshot
         infra.refresh
     }
     

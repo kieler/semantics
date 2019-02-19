@@ -118,6 +118,7 @@ class LustreV6Compiler extends LustreCompiler {
         command += "-n"
         command += fileName.split("\\.").head
         command += "-2c"
+        command += "-v"
         
         command += options
         

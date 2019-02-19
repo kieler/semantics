@@ -7,9 +7,6 @@
             class="de.cau.cs.kieler.lustre.compiler.processors.LustreV6CodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.lustre.compiler.processors.LucioleSimulation">
-      </Processor>
-      <Processor
             class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationTemplateGenerator">
       </Processor>
       <Processor
@@ -18,9 +15,6 @@
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.compiler.lv6.luciole.kico">
-      </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.compiler.lv6.simulation.kico">
       </TransformationSystem>

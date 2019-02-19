@@ -33,13 +33,13 @@
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.netlist.c.kico">
+            system="system/de.cau.cs.kieler.lustre.scc.netlist.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.controlflow.kico">
+            system="system/de.cau.cs.kieler.lustre.scc.controlflow.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.kico">
+            system="system/de.cau.cs.kieler.lustre.scc.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.c.controlflow.kico">

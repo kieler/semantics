@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.lustre.sccharts.controlflow
+public system de.cau.cs.kieler.lustre.scc.controlflow
 	label "Lustre to SCC (controlflow approach)"
 
 de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow

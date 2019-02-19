@@ -54,7 +54,8 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         if (environment.propertyExists(LustreV6Compiler.NODE_NAME)) {
             var nodeName = environment.getProperty(LustreV6Compiler.NODE_NAME)
             environment.setProperty(AbstractSystemCompilerProcessor.ADDITIONAL_OPTIONS, nodeName + "_" + nodeName + ".h")
-        }        
+        }
+        
         if (infra.sourceCode !== null) {
             val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!dataStructName.nullOrEmpty].toList
             var structFile = structFiles.findFirst[header]
@@ -78,6 +79,8 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         
         var inputs = store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map[LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
         var outputReferences = store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map["&" + LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
+        
+        var hasState = if (environment.propertyExists(LustreV6CodeGenerator.HAS_STATE)) environment.getProperty(LustreV6CodeGenerator.HAS_STATE) else false;
         
         val cc = new CodeContainer
         
@@ -188,7 +191,15 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             }
             </#macro>
             
-            <#macro step_parameter position>«(inputs + outputReferences).join(", ")», ctx</#macro>
+            <#macro step_parameter position>«(inputs + outputReferences).join(", ")»«IF hasState», ctx«ENDIF»</#macro>
+            
+            
+            <#macro simulation_local_decl position>
+            «IF hasState»
+            // Init lustre
+                ${tickdata_name}_ctx_type* ctx = ${tickdata_name}_ctx_new_ctx(NULL);
+            «ENDIF»
+            </#macro>            
         '''
             
         
@@ -204,6 +215,7 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         environment.addMacroInjection(END_MAIN, "simulation_loop")
+        environment.addMacroInjection(LOCAL_DECLARATION, "simulation_local_decl");
         
         return cc
     }
@@ -277,6 +289,8 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             return "char"
         } else if (valueType == ValueType.STRING) {
             return "char*"
+        } else if (valueType == ValueType.FLOAT) {
+            return "double"
         } else {
             return valueType.literal
         }
