@@ -25,6 +25,8 @@ import java.util.List
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+
 /** 
  * @author aas
  */
@@ -96,7 +98,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     
     private def Optional<VerificationProperty> getVerificationProperty(StringAnnotation anno) {
         val propertyFormula = anno.values.getIfExists(0)
-        val propertyName = anno.values.getIfExists(1)
+        var propertyName = anno.values.getIfExists(1)
         val propertyType = 
             switch(anno.name) {
                 case INVARIANT_ANNOTATION_NAME : VerificationPropertyType.INVARIANT
@@ -112,7 +114,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
             throw new Exception("Property formula missing ("+propertyType+" property)")
         }
         if(propertyName.isNullOrEmpty) {
-            throw new Exception("Property is missing a unique name ("+propertyType+" '"+propertyFormula+"')")
+            propertyName = propertyFormula.toIdentifier
         }
         return Optional.of(new VerificationProperty(propertyName, propertyFormula, propertyType))
     }
