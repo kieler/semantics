@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.core.model.ui.console
+package de.cau.cs.kieler.kicool.ui.console
 
 import java.util.Map
 import org.eclipse.swt.graphics.Color
