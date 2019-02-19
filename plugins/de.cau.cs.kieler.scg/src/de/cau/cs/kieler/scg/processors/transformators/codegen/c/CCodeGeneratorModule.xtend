@@ -21,6 +21,8 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 /**
  * Root C Code Generator Module
@@ -54,10 +56,14 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         tick = injector.getInstance(CCodeGeneratorTickModule)
         logic = injector.getInstance(CCodeGeneratorLogicModule)
             
-        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + H_EXTENSION, this)
-        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + H_EXTENSION, this, TICKDATA_STRUCT_NAME)
+        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, RESET_FUNCTION_NAME)
+        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, TICK_FUNCTION_NAME)
+        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, LOGIC_FUNCTION_NAME)
     }
     
     override generateInit() {
@@ -101,8 +107,13 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
 
-        codeContainer.addCCode(cFilename, cFile.toString, struct.name)         
-        codeContainer.addCHeader(hFilename, hFile.toString, struct.name)
+        naming.put(TICK, tick.getName)
+        naming.put(RESET, reset.getName)
+        naming.put(LOGIC, logic.getName)
+        naming.put(TICKDATA, struct.getName)
+        
+        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)        
+        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
     }    
     
     /**

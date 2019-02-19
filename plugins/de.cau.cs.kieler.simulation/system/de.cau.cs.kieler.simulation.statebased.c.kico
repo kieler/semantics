@@ -16,8 +16,7 @@ pre process de.cau.cs.kieler.^simulation.c.template
 de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.templates": {
         "templates/c-main.ftl": "main.c"
-    },
-    "de.cau.cs.kieler.simulation.c.struct.access": ".iface."
+    }
 }
 de.cau.cs.kieler.kicool.deploy.compiler.c config {
     "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["main.c", "lib"],

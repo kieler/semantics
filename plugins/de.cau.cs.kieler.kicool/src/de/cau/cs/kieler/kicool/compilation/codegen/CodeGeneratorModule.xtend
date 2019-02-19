@@ -13,12 +13,16 @@
 package de.cau.cs.kieler.kicool.compilation.codegen
 
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
-import de.cau.cs.kieler.kicool.compilation.Processor
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.annotations.NamedObject
+
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.annotations.Pragmatable
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * CodeGeneratorModule allows specific configuration for SCG code generators.
@@ -32,15 +36,22 @@ import de.cau.cs.kieler.annotations.Nameable
  */
 abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     
+    @Inject extension PragmaExtensions
+    
     @Accessors var T rootObject
     @Accessors var E moduleObject
-    @Accessors var Processor<T, CodeContainer> processorInstance
+    @Accessors var AbstractCodeGenerator<T, E> processorInstance            // Also the instance of the code generator
     @Accessors var Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap
     @Accessors var String codeFilename
     @Accessors var CodeGeneratorModule<T, E> parent
     
-    def CodeGeneratorModule<T, E> configure(String baseName, T rootObject, E moduleObject, Processor<T, CodeContainer> processorInstance, 
-        Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap, String codeFilename, CodeGeneratorModule<T, E> parent
+    @Accessors var String name
+    @Accessors(PROTECTED_GETTER) var hasCustomNaming = false
+    @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
+    
+    def CodeGeneratorModule<T, E> configure(String baseName, T rootObject, E moduleObject, AbstractCodeGenerator<T, E> processorInstance, 
+        Map<E, CodeGeneratorModule<T, E>> codeGeneratorModuleMap, String codeFilename, CodeGeneratorModule<T, E> parent,
+        IProperty<String> namingProperty
     ) {
         this.baseName = baseName
         this.rootObject = rootObject
@@ -53,6 +64,11 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
             this.commentsEnabled = parent.commentsEnabled
         }
         
+        this.name = prefix + baseName + suffix
+        if (namingProperty !== null) {
+            customNaming(namingProperty)
+        }
+        
         configure
         
         return this
@@ -63,6 +79,10 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     }
     
     override getName() {
+        return this.name
+    }
+    
+    protected def getModuleName() {
         if (moduleObject instanceof Nameable) {
             return moduleObject.name
         } else if (moduleObject !== null) {
@@ -94,6 +114,27 @@ abstract class CodeGeneratorModule<T, E> extends AbstractCodeGeneratorModule {
     protected def hostcodeSafeName(String string) {
         if (string === null) return ""
         string.replaceAll("[\\s-]","_")
+    }    
+    
+    protected def customNaming(IProperty<String> namingProperty) {
+        var naming = processorInstance.environment.getProperty(namingProperty)
+        val namingMagic = processorInstance.environment.getProperty(CODE_NAMING_MAGIC)
+        
+        if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_PREFIX) {
+            naming = moduleName + naming
+            hasCustomNaming = true
+        } else if (namingMagic == PRAGMA_CODE_NAMING_MAGIC_SUFFIX) {
+            naming = naming + moduleName
+            hasCustomNaming = true
+        }
+        
+        this.name = naming 
+        
+        if (rootObject instanceof Pragmatable) {
+            if (rootObject.hasPragma(AbstractCodeGenerator.PRAGMA_CODE_NAMING)) {
+                hasCustomNaming = true               
+            }
+        }        
     }    
     
 }

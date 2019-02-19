@@ -5,6 +5,7 @@ Bundle-SymbolicName: de.cau.cs.kieler.simulation.ui;singleton:=true
 Bundle-Version: 0.14.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 Bundle-Vendor: Kiel University
+Eclipse-UI: True
 Require-Bundle: de.cau.cs.kieler.simulation;visibility:=reexport,
  de.cau.cs.kieler.kexpressions,
  de.cau.cs.kieler.kexpressions.ui,

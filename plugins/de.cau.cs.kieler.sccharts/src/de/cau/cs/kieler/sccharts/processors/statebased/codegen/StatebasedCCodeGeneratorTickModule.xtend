@@ -33,8 +33,6 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     
     @Inject extension SCChartsStateExtensions
     
-    protected static val TICK_NAME = "tick"
-    
     var StatebasedCCodeGeneratorStructModule struct
     var StatebasedCCodeGeneratorLogicModule logic
     @Accessors @Inject StatebasedCCodeSerializeHRExtensions serializer
@@ -42,10 +40,6 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
     override configure() {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
         logic = (parent as StatebasedCCodeGeneratorModule).logic as StatebasedCCodeGeneratorLogicModule
-    }
-    
-    override getName() {
-        TICK_NAME + baseName + suffix
     }
     
     override generateInit() {
@@ -78,7 +72,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
                     indentation, 
                     STRUCT_CONTEXT_NAME,
                     "->", 
-                    REGION_INTERFACE_NAME,
+                    struct.getRegionIfaceName,
                     ".",
                     valuedObject.name,
                     " = ",
@@ -106,7 +100,7 @@ class StatebasedCCodeGeneratorTickModule extends SCChartsCodeGeneratorModule {
                     " = ",
                     STRUCT_CONTEXT_NAME,
                     "->",
-                    REGION_INTERFACE_NAME,
+                    struct.getRegionIfaceName,
                     ".",
                     valuedObject.name,
                     ";", NL

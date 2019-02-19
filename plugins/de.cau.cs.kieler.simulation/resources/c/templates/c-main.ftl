@@ -15,7 +15,7 @@ int main(int argc, const char* argv[]) {
     <@inject position="local-decl" /><#nt>
 
     // Initialize 
-    reset(&${tickdata_name});
+    ${reset_name}(&${tickdata_name});
     
     <@inject position="init" /><#nt>
     
@@ -29,7 +29,7 @@ int main(int argc, const char* argv[]) {
         <@inject position="pre-tick" /><#nt>
   
         // Reaction of model
-        tick(&${tickdata_name});
+        ${tick_name}(&${tickdata_name});
         
         <@inject position="post-tick" /><#nt>
          

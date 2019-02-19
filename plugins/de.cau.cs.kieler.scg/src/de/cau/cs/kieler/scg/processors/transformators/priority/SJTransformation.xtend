@@ -43,6 +43,9 @@ import java.util.HashSet
 import java.util.LinkedList
 import java.util.Stack
 import de.cau.cs.kieler.kexpressions.ValueType
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -173,7 +176,15 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         program.appendInd("}\n")
         program.toString
         
-        code.addJavaCode(programName + ".java", program.toString)
+        val naming = <CodeGeneratorNames, String> newHashMap
+        naming.put(TICK, environment.getProperty(TICK_FUNCTION_NAME))
+        naming.put(RESET, environment.getProperty(RESET_FUNCTION_NAME))
+        naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
+        naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))          
+        
+        val javaFile = code.addJavaCode(programName + ".java", program.toString)
+        javaFile.naming.putAll(naming)
+        javaFile
     }
     
     /** 
