@@ -60,7 +60,7 @@ import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency

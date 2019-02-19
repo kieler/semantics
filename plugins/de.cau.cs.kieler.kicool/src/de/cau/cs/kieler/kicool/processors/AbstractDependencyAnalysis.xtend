@@ -15,9 +15,8 @@ package de.cau.cs.kieler.kicool.processors
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -64,6 +63,13 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     public static val IProperty<Boolean> SAVE_ONLY_CONFLICTING_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.saveOnlyConflicting", false)
+
+    public static val IProperty<Boolean> ALLOW_OLD_SC_SYNTAX = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.oldSCSyntax", true)
+
+    public static val IProperty<Boolean> ALLOW_MULTIPLE_RELATIVE_READERS = 
+        new Property<Boolean>("de.cau.cs.kieler.kexpressions.keffects.dependencies.multipleRelativeReaders", false)
+
         
     public static val IProperty<ValuedObjectAccessors> VALUED_OBJECT_ACCESSORS = 
         new Property<ValuedObjectAccessors>("de.cau.cs.kieler.kexpressions.keffects.dependencies.valuedObjectAccessors", null)
@@ -132,6 +138,13 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         
         val writeVOI = new ValuedObjectIdentifier(assignment)
         
+        // If a writer was detected, remove previously registered read accesses,
+        // because the access is recognized as write and we don't want another write-read
+        // dependency to be created.
+        for (readAccess : valuedObjectAccessors.getAccesses(writeVOI).filter[ node == assignment ].toList) {
+            valuedObjectAccessors.removeAccess(writeVOI, readAccess)
+        }        
+        
         for(index : assignment.indices) {
             val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
             if (indexReaderVOIs.contains(writeVOI)) {
@@ -146,8 +159,28 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             var ValuedObject scheduleObject = null       
             var priority = GLOBAL_WRITE
             
-            if (readVOIs.contains(writeVOI)) priority = GLOBAL_RELATIVE_WRITE
-            if (assignment.operator != AssignOperator.ASSIGN) priority = GLOBAL_RELATIVE_WRITE
+            // Detect relative writes.
+            if (environment.getProperty(ALLOW_OLD_SC_SYNTAX)) {
+                if (readVOIs.contains(writeVOI)) {
+                    if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
+                        priority = GLOBAL_RELATIVE_WRITE
+                    } else {
+                        if (readVOIs.filter[it == writeVOI].size == 1 && assignment.operator == AssignOperator.ASSIGN) {
+                            priority = GLOBAL_RELATIVE_WRITE    
+                        }
+                    }
+                }
+            }
+            
+            if (assignment.operator != AssignOperator.ASSIGN) {
+                if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
+                    priority = GLOBAL_RELATIVE_WRITE
+                } else {
+                    if (!readVOIs.contains(writeVOI)) {
+                        priority = GLOBAL_RELATIVE_WRITE    
+                    }
+                }
+             }
             
             if (sched instanceof ScheduleObjectReference) {
                 schedule = sched.valuedObject.declaration as ScheduleDeclaration
@@ -231,14 +264,14 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     ) {
         val processed = <Pair<ValuedObjectAccess, ValuedObjectAccess>> newHashSet
         val accessPair = accesses.sortAccessesAccordingToPriority
-        for (priority : 0..accessPair.first) {
-            val prioAccesses = accessPair.second.get(priority) 
+        for (priority : 0..accessPair.key) {
+            val prioAccesses = accessPair.value.get(priority) 
             for (access : prioAccesses) {
-                for (compPriority : priority..accessPair.first) {
-                    val compAccesses = accessPair.second.get(compPriority) 
+                for (compPriority : priority..accessPair.key) {
+                    val compAccesses = accessPair.value.get(compPriority) 
                     for (compAccess : compAccesses) {
                         if (exclude === null || 
-                            !exclude.exists[ first.node == access.node && second.node == compAccess.node ] 
+                            !exclude.exists[ key.node == access.node && value.node == compAccess.node ] 
                         ) {
                             if (!access.isSpecific || !compAccess.isSpecific || isSpecific) {
                                 valuedObjectIdentifier.processDependency(access, compAccess)
@@ -272,7 +305,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         if (!concurrent && saveOnlyConflicting) return
         val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
         if (confluent && saveOnlyConflicting) return
-
+        
         val dependency = source.node.createDependency(target.node) => [
             it.reference = valuedObjectIdentifier.valuedObject
             it.type = type
@@ -333,7 +366,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     protected def boolean isConcurrentTo(ValuedObjectAccess source, ValuedObjectAccess target) {
         val entries = getLeastCommonAncestorEntries(source, target)
         if (entries !== null) {
-            return entries.first != entries.second
+            return entries.key != entries.value
         }
         return false
     }

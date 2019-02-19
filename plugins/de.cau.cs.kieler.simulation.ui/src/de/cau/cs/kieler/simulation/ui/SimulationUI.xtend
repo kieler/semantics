@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import de.cau.cs.kieler.core.model.ui.console.Consoles
+import de.cau.cs.kieler.kicool.ui.console.Consoles
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.Compile

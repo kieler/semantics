@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.BufferedReader
@@ -23,8 +23,9 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.List
 import java.util.concurrent.TimeUnit
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import org.eclipse.xtend.lib.annotations.Accessors
+
+import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
  * @author als
@@ -66,7 +67,7 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         if (binFolder.exists) {
             if (environment.getProperty(BIN_CLEAN)) {
                 logger.println("\n== Clearing Binary Output Folder ==")
-                ProjectSetup.deleteRecursively(binFolder, logger)
+                binFolder.deleteRecursively(logger)
                 logger.println()
                 
                 binFolder.mkdirs

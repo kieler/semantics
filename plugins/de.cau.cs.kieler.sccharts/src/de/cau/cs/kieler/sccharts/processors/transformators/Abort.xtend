@@ -460,7 +460,6 @@ class Abort extends SCChartsProcessor implements Traceable {
 // NO: THIS gets wrong e.g. for delayed self-loops (as a last wish)
     def boolean canBeDelayed(State initialState) {
         if (initialState.isInitial) {
-//        if (initialState.incomingTransitions.filter[immediate2].nullOrEmpty) {
             if (initialState.incomingTransitions.nullOrEmpty) {
                 return true
             }

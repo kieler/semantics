@@ -33,8 +33,6 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     
     @Inject extension SCChartsStateExtensions
     
-    static val RESET_NAME = "reset"
-    
     @Inject StatebasedCCodeGeneratorStructModule struct
     
     @Accessors(PUBLIC_GETTER) var StringBuilder rootStateInit
@@ -43,10 +41,6 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
     override configure() {
         struct = (parent as StatebasedCCodeGeneratorModule).struct as StatebasedCCodeGeneratorStructModule
     }    
-    
-    override getName() {
-        RESET_NAME + baseName + suffix
-    }
     
     override generateInit() {
         rootStateInit = new StringBuilder
@@ -93,11 +87,11 @@ class StatebasedCCodeGeneratorResetModule extends SCChartsCodeGeneratorModule {
         code.add(
             "  ",
             prefix,
-            REGION_INTERFACE_NAME,
+            struct.getRegionIfaceName,
             " = &(",
             STRUCT_CONTEXT_NAME,
             "->",
-            REGION_INTERFACE_NAME,
+            struct.getRegionIfaceName,
             ");", NL
         )
         

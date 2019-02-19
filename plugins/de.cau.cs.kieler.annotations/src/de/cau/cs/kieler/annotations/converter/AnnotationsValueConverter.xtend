@@ -128,20 +128,20 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      */
     @ValueConverter(rule = "EString")
     def IValueConverter<String> convertEString() {
-        return genericStringValueConverter();
+        return genericStringValueConverter(false, false);
     }
 
     @ValueConverter(rule = "EStringBoolean")
     def IValueConverter<String> convertEStringBoolean() {
-        return genericStringValueConverter();
+        return genericStringValueConverter(true, false);
     }
 
     @ValueConverter(rule = "EStringAllTypes")
     def IValueConverter<String> convertEStringAllTypes() {
-        return genericStringValueConverter();
+        return genericStringValueConverter(true, true);
     }
     
-    def IValueConverter<String> genericStringValueConverter() {
+    def IValueConverter<String> genericStringValueConverter(boolean unquotedBooleans, boolean unqoutedNumbers) {
         return new IValueConverter<String>() {
 
             override String toValue(String string, INode node) {
@@ -156,15 +156,20 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
             }
 
             override String toString(String value) {
-                var String res = "\"\"";
                 if (!Strings.isEmpty(value)) {
                     try {
-                        res = AnnotationsValueConverter.this.getConverter("ID").toString(value);
+                        if (unquotedBooleans && ("true".equals(value) || "false".equals(value))) {
+                            return value
+                        }
+                        if (unqoutedNumbers && value.matches("-?\\d+(\\.\\d+)?")) {
+                            return value
+                        }
+                        return AnnotationsValueConverter.this.getConverter("ID").toString(value);
                     } catch (ValueConverterException e) {
-                        res = AnnotationsValueConverter.this.getConverter("STRING").toString(value);
+                        return AnnotationsValueConverter.this.getConverter("STRING").toString(value);
                     }
                 }
-                return res;
+                return "\"\"";
             }
         };
 

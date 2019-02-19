@@ -53,6 +53,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 //import org.eclipse.xtext.validation.Check
 
@@ -868,7 +869,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     def void checkForRegion(ControlflowRegion region) {
         if (region.forStart !== null && region.forStart instanceof ValuedObjectReference) {
             val forRange = For.getForRegionRange(region)
-            if (forRange.second == -1) {
+            if (forRange.value == -1) {
                 error("The range of the counter variable of the for region is not determinable. The array cardinalities of you array must be an int or a const int.",
                     region, SCChartsPackage.eINSTANCE.state_Regions
                 )
@@ -914,6 +915,22 @@ class SCTXValidator extends AbstractSCTXValidator {
             }
         }
     }
+
+    @Check(CheckType.NORMAL) 
+    def void checkOldStyleRelativeWriteSyntax(Action action) {
+        for (assignment : action.effects.filter(Assignment).filter[ reference !== null && operator == AssignOperator.ASSIGN ]) {
+            val readVOs = assignment.expression.eAllContents.filter(ValuedObjectReference).
+                filter[ it.eContainer instanceof OperatorExpression && 
+                    (it.eContainer as OperatorExpression).subExpressions.size > 1
+                ].map[valuedObject].toSet
+            if (readVOs.contains(assignment.reference.valuedObject)) {
+                warning("This assignment looks like old relative write SC syntax and is considered deprecated.\n" + 
+                    "If you want to create a relative write in new syntax, please use an infix assignment operator.", assignment, null
+                )
+            }
+        }
+    }
+
         
     // ENFORCER SPECIFIC
     

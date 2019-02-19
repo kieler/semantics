@@ -219,6 +219,25 @@
           </environments>
         </configuration>
       </plugin>
+
+      <!-- Produces a list of all direct and transient dependencies for each module -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>3.1.1</version>
+        <executions>
+          <execution>
+            <id>tree</id>
+            <phase>initialize</phase>
+            <goals>
+              <goal>tree</goal>
+            </goals>
+            <configuration>
+              <outputFile>dependencies.txt</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   
     <pluginManagement>

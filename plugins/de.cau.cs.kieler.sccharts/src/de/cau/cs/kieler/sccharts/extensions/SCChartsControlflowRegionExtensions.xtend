@@ -18,7 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.core.model.Pair
 
 /**
  * @author ssm

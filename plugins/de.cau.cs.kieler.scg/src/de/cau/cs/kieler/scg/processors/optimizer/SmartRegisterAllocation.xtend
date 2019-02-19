@@ -16,8 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.scg.Assignment
 import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions

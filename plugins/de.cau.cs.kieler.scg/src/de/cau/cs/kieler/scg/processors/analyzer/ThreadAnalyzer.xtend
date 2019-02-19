@@ -14,8 +14,8 @@
  package de.cau.cs.kieler.scg.processors.analyzer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraphs

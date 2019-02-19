@@ -12,27 +12,18 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
-import java.io.FileOutputStream
 import java.io.FileWriter
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
 import java.io.PrintStream
-import java.net.URL
-import java.nio.file.Files
+import java.util.List
 import java.util.Map
-import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 
-import static com.google.common.base.Preconditions.*
-import java.util.List
-import java.util.Comparator
-import java.nio.file.Path
+import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
  * @author als
@@ -181,185 +172,5 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
             logger.println
         }
     }
-    
-    /**
-     * Copy the contents of a folder recursively.
-     * 
-     * @param src The source folder
-     * @param dest The destination folder
-     */
-    static def boolean copyFolder(File src, File dest, PrintStream logger, boolean overrideFile) {
-        // Checks
-        checkNotNull(src, "Source is null")
-        checkNotNull(dest, "Target is null")
-        checkArgument(src.isDirectory, "Source is not an existing directory")
-        checkArgument(!dest.exists || dest.isDirectory, "Destination exists and is not a directory")
 
-        if (!dest.exists){
-            dest.mkdirs;
-        }
-        
-        logger?.println("Copying folder: " + src)
-        if (src.listFiles === null || src.listFiles.length == 0) {
-            logger?.println("No files to copy")
-            return true
-        } else {
-            for (File file : src.listFiles) {
-                val fileDest = new File(dest, file.name)
-                if (file.isDirectory){
-                    return copyFolder(file, fileDest, logger, overrideFile)
-                } else if (!fileDest.exists) {
-                    return file.copyFile(fileDest, logger, overrideFile)
-                }
-            }
-        }
-    }
-    
-    
-    static def boolean copyFolder(URI src, File dest, PrintStream logger, boolean overrideFile) {
-        checkNotNull(src, "Source is null")
-        checkNotNull(dest, "Target is null")
-        checkArgument(src.platformPlugin, "Source is not a plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
-        checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
-        checkArgument(src.fileExtension.nullOrEmpty, "Source is not a directory")
-
-        val bundle = Platform.getBundle(src.segment(1))
-        val path = src.segments.drop(2).join("/")
-
-        // Copy files from bundle which are in the directory.
-        val entries = bundle.findEntries(path, "*.*", true)
-        if (entries !== null) {
-            for (var e = entries; e.hasMoreElements;) {
-                val fileUrl = e.nextElement
-                val fileUrlPath = fileUrl.toString
-                val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
-                val destFile = new File(dest, relativePath)
-
-                logger?.println("Copying file: " + fileUrlPath)
-                
-                destFile.parentFile.mkdirs
-                if (destFile.isDirectory) {
-                    logger?.println("Destination already exists and is directory (" + destFile + ")")
-                    return false
-                } else if (!destFile.exists || overrideFile) {
-                    fileUrl.copyUrlToFile(destFile)
-                } else {
-                    logger?.println("Skip - destination already exists")
-                }
-            }
-            return true
-        } else {
-            logger.println("No files in directory " + src.toString)
-            return false
-        }
-    }
-    
-    static def boolean copyFile(File src, File dest, PrintStream logger, boolean overrideFile) {
-        // Checks
-        checkNotNull(src, "Source is null")
-        checkNotNull(dest, "Target is null")
-        checkArgument(src.file, "Source is not an existing file")
-        checkArgument(!dest.exists || dest.file, "Destination exists and is not a file")
-        
-        if (!dest.exists || overrideFile) {
-            logger?.println("Copying file: " + src)
-            try {
-                Files.copy(src.toPath, dest.toPath)
-                return true
-            } catch (IOException e) {
-                if (logger !== null)
-                e.printStackTrace(logger)
-                return false
-            }
-        } else {
-            logger?.println("Skip - destination already exists")
-            return true
-        }
-    }
-    
-    static def boolean copyFile(URI src, File dest, PrintStream logger, boolean overrideFile) {
-        checkNotNull(src, "Source is null")
-        checkNotNull(dest, "Target is null")
-        checkArgument(src.platformPlugin, "Source is not a plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
-        checkArgument(src.segmentCount > 2, "Source is not a valid plugin platform URI (i.e. 'platform:/plugin/org.myplugin/path/to/directory')")
-        checkArgument(!src.fileExtension.nullOrEmpty, "Source is not a file")
-
-        val bundle = Platform.getBundle(src.segment(1))
-        val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
-
-        // Copy files from bundle which are in the directory.
-        val entries = bundle.findEntries(path, src.lastSegment, true)
-        if (entries !== null) {
-            val fileUrl = entries.nextElement
-            val fileUrlPath = fileUrl.toString
-
-            logger?.println("Copying file: " + fileUrlPath)
-            
-            dest.parentFile.mkdirs
-            if (dest.isDirectory) {
-                logger?.println("Destination already exists and is directory (" + dest + ")")
-                return false
-            } else if (!dest.exists || overrideFile) {
-                fileUrl.copyUrlToFile(dest)
-            } else {
-                logger?.println("Skip - destination already exists")
-            }
-            return true
-        } else {
-            logger.println("File not found in directory " + src.toString)
-            return false
-        }
-    }
-    
-    static def void copyUrlToFile(URL src, File dest) {
-        checkNotNull(src, "Source is null")
-        checkNotNull(dest, "Target is null")
-        
-        val InputStream input = src.openStream
-        var OutputStream output = null
-        try {
-            output = new FileOutputStream(dest)
-            val byte[] buf = newByteArrayOfSize(2048)
-            var int bytesRead;
-            while ((bytesRead = input.read(buf)) > 0) {
-                output.write(buf, 0, bytesRead)
-            }
-        } finally {
-            input.close();
-            output?.close();
-        }
-                
-    }
-    
-    /**
-     * Deletes a file/folder recursively.
-     * 
-     * @param src The source folder
-     * @param dest The destination folder
-     */
-    static def boolean deleteRecursively(File target, PrintStream logger) {
-        // Checks
-        checkNotNull(target, "Target is null")
-
-        try {
-            if (target.file) {
-                logger.println("Deleting file: " + target)
-                target.delete
-            } else if (target.directory) {
-                Files.walk(target.toPath).sorted(Comparator.reverseOrder).map[toFile].forEach[
-                    if (isDirectory) {
-                        logger.println("Deleting folder: " + it)
-                    } else if (isFile) {
-                        logger.println("Deleting file: " + it)
-                    }
-                    delete
-                ]
-            }
-            return true
-        } catch (Exception e) {
-            logger.print("ERROR: Exception while clearing file(s)")
-            e.printStackTrace(logger)
-            return false
-        }
-    }
 }

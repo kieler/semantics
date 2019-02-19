@@ -60,8 +60,6 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension SCGControlFlowExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
-    static val LOGIC_NAME = "logic"
-    
     @Accessors var CCodeGeneratorStructModule struct 
     @Accessors var CCodeGeneratorResetModule reset
     @Accessors var CCodeGeneratorTickModule tick 
@@ -75,10 +73,6 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
         reset = (parent as CCodeGeneratorModule).reset as CCodeGeneratorResetModule
         tick = (parent as CCodeGeneratorModule).tick as CCodeGeneratorTickModule
-    }
-    
-    override getName() {
-        LOGIC_NAME + baseName + suffix
     }
     
     override generateInit() {

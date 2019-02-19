@@ -47,14 +47,14 @@ class MessageObjectListSynthesis extends AbstractDiagramSynthesis<MessageObjectL
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
         properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
         
-        val subDiagramViewContext = LightDiagramServices::translateModel2(model.second, usedContext, properties)
+        val subDiagramViewContext = LightDiagramServices::translateModel2(model.value, usedContext, properties)
         usedContext.addChildViewContext(subDiagramViewContext)
         
         val subDiagramNode = subDiagramViewContext.viewModel
         subDiagramNode.addRectangle => [invisible = true]
         
         rootNode.children.add(subDiagramNode)
-        annotateModelNodes(model.first, rootNode)
+        annotateModelNodes(model.key, rootNode)
         
         rootNode
     }
