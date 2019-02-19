@@ -18,7 +18,6 @@ import java.util.Set;
 
 import org.eclipse.xtext.validation.Check;
 
-import de.cau.cs.kieler.core.model.validation.CustomEValidator;
 import de.cau.cs.kieler.sccharts.legacy.kexpressions.Declaration;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.legacy.sccharts.Transition;
@@ -32,8 +31,7 @@ import de.cau.cs.kieler.sccharts.legacy.sccharts.extensions.SCChartsExtension;
  * @kieler.rating 2014-01-20 proposed yellow
  */
 // Don't add new checks to this class. Use the xtend file instead!
-public class SctJavaValidator extends AbstractSctJavaValidator implements
-        CustomEValidator {
+public class SctJavaValidator extends AbstractSctJavaValidator {
 
     public static final String BAD_ID = "bad_id";
 
