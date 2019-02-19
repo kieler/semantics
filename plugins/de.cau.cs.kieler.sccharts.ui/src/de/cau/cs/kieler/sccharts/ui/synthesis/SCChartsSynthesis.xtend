@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Log
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -169,9 +168,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         }
         
         // Log elapsed time
-        Log.log(
-            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
-                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
+//        println(
+//            "SCCharts synthesis transformed model " + (scc.rootStates.head.label ?: scc.hash) + " in " +
+//                ((System.currentTimeMillis - startTime) as float / 1000) + "s.")
 		
         return rootNode
     }
