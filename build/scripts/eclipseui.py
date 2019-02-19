@@ -20,6 +20,7 @@ import os
 import sys
 import re
 import argparse
+import xml.etree.ElementTree as ET
 from os.path import isfile, isdir, join, abspath, relpath, normpath
 
 PROJECT_PREFIX = 'de.cau.cs.kieler'
@@ -28,6 +29,7 @@ UI_PROPERTY = 'Eclipse-UI'
 UI_REGEX = '.*\\.ui'
 BANNED_REGEX = '.*\\.ui'
 BANNED = []
+TOLERATED_EXTENSIONS = ['org.eclipse.emf.ecore.generated_package']
 
 def main(args):
     print('-- Checking plugin dependencies --')
@@ -62,13 +64,15 @@ def main(args):
 
             # Perform checks
             if ui:
-                print('- Eclipse UI plugin. No constraints.')
+                print(' - Eclipse UI plugin. No constraints.')
             else:
                 xmlOK = checkPluginXml(base, args)
                 deps[plugin] = readDependencies(base, args)
-                depsOK = checkDependencies(deps[plugin], args)
+                depsOK = checkDependencies(deps[plugin], base, args)
                 if not (xmlOK and depsOK):
                     failed.append(plugin)
+                else:
+                    print(' - OK')
 
     # report
     if len(failed):
@@ -93,9 +97,9 @@ def readDependencies(base, args):
         print(' - Missing dependencies file (%s)' % DEP_FILE)
     return deps
 
-def checkDependencies(deps, args):
+def checkDependencies(deps, base, args):
     isBanned = re.compile(BANNED_REGEX)
-    success = True
+    success = isfile(join(base, DEP_FILE))
     for dep in deps:
         if isBanned.match(dep) or dep in BANNED:
             print(' - Has (possibly transient) dependency to banned plugin: %s' % dep)
@@ -103,10 +107,22 @@ def checkDependencies(deps, args):
     return success
 
 def checkPluginXml(base, args):
-    if isfile(join(base, 'plugin.xml')):
-        print(' - Has plugin.xml')
-        return False
-    return True
+    success = True
+    path = join(base, 'plugin.xml')
+    if isfile(path):
+        root = ET.parse(path).getroot()
+        for elem in root:
+            if elem.tag == 'extension':
+                if not 'point' in elem.attrib or elem.attrib['point'] not in TOLERATED_EXTENSIONS:
+                    print(' - Uses banned extension point: %s' % (elem.attrib['point'] if 'point' in elem.attrib else 'unknown'))
+                    success = False
+            elif elem.tag == 'extension-point':
+                print(' - Provides banned eclipse extension-point: %s' % (elem.attrib['id'] if 'id' in elem.attrib else 'unknown'))
+                success = False
+            else:
+                print(' - Uses plugin.xml for unknown but banned registration in eclipse (%s).' % elem.tag)
+                success = False
+    return success
 
 def stop(msg):
     errPrint('[ERROR] ' + msg)
