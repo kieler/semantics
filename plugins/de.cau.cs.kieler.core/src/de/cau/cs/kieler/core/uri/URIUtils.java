@@ -10,7 +10,7 @@
  * Technische Universitaet Muenchen - Major refactoring and extension
  * Johannes Faltermeier - Extension
  *******************************************************************************/
-package de.cau.cs.kieler.core.model.util;
+package de.cau.cs.kieler.core.uri;
 
 import java.io.File;
 import java.io.IOException;
