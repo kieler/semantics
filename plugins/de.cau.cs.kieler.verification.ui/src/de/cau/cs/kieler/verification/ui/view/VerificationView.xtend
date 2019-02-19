@@ -32,8 +32,6 @@ import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
-import de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor
-import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 import de.cau.cs.kieler.verification.ui.VerificationUiPlugin
 import java.io.File
 import java.util.List
@@ -46,8 +44,10 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.ControlContribution
 import org.eclipse.jface.action.IAction
+import org.eclipse.jface.action.MenuManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.dialogs.MessageDialog
+import org.eclipse.jface.preference.IPreferenceStore
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.ComboViewer
 import org.eclipse.jface.viewers.LabelProvider
@@ -70,8 +70,6 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import org.eclipse.jface.preference.IPreferenceStore
-import org.eclipse.jface.action.MenuManager
 
 /** 
  * @author aas

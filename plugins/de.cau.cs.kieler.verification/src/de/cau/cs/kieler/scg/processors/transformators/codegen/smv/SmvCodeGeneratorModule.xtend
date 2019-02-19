@@ -91,7 +91,8 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     
     protected def SCGCodeGeneratorModule createAndConfigureModule(Class<? extends SCGCodeGeneratorModule> clazz) {
         val module = injector.getInstance(clazz)
-        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + SMV_EXTENSION, this)
+        val namingProperty = null
+        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + SMV_EXTENSION, this, namingProperty)
         return module
     }
     

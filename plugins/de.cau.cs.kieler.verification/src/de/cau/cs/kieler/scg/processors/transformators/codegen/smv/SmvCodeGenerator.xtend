@@ -15,8 +15,8 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.scg.SCGraph
@@ -47,7 +47,9 @@ class SmvCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
         for (scg : rootModel.scgs) {
-            val generatorModule = createCodeGenetatorModule.configure("", rootModel, scg, this, moduleMap, scg.name, null)
+            val namingProperty = null
+            val parent = null
+            val generatorModule = createCodeGenetatorModule.configure("", rootModel, scg, this, moduleMap, scg.name, parent, namingProperty)
             moduleMap.put(scg, generatorModule)
             generatorModule.suffix = hostcodeSafeName(scg.name)
         }

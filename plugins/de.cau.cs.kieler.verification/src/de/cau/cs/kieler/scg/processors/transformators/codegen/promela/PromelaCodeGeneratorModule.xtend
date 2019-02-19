@@ -93,7 +93,8 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
     
     protected def SCGCodeGeneratorModule createAndConfigureModule(Class<? extends SCGCodeGeneratorModule> clazz) {
         val module = injector.getInstance(clazz)
-        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this)
+        val namingProperty = null
+        module.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + PROMELA_EXTENSION, this, namingProperty)
         return module
     }
     
