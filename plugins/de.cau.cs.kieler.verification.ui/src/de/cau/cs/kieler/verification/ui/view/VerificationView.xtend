@@ -436,7 +436,7 @@ Example commands:
         if(currentModel instanceof SCCharts) {
             try {
                 val processorId = MODEL_CLASS_TO_PROPERTY_ANALYZER.get(typeof(SCCharts))
-                runPropertyAnalyzer(processorId, currentModel)
+                propertyAnalyzerContext = runPropertyAnalyzer(processorId, currentModel)
                 val properties = propertyAnalyzerContext.getVerificationProperties
                 setVerificationPropertiesInUi(properties)
             } catch (Exception e) {
@@ -445,14 +445,15 @@ Example commands:
         }
     }
     
-    private def void runPropertyAnalyzer(String processorId, EObject model) {
+    private def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
-        propertyAnalyzerContext = Compile.createCompilationContext(compilationSystem, model)
-        propertyAnalyzerContext.compile
-        if(propertyAnalyzerContext.hasErrors) {
-            val exception = propertyAnalyzerContext.allErrors.get(0).exception
+        val context = Compile.createCompilationContext(compilationSystem, model)
+        context.compile
+        if(context.hasErrors) {
+            val exception = context.allErrors.get(0).exception
             throw exception
         }
+        return context
     }
     
     private def void setVerificationPropertiesInUi(List<VerificationProperty> properties) {
