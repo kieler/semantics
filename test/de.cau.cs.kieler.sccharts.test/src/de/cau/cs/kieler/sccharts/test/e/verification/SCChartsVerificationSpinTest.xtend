@@ -51,7 +51,6 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
 
     @Test
     def void testSpinVerification(SCCharts scc, TestModelData modelData) {
-        verificationSystemId = "de.cau.cs.kieler.sccharts.verification.spin"
         initializeVerification(scc, modelData)
         
         println('''>>>>> testSpinVerification «modelData.modelFile» <<<<<''')
@@ -60,8 +59,7 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
         for(property : verificationProperties) {
             if(property.type !== VerificationPropertyType.CTL) {
                 println('''Testing VerificationProperty "«property.name»"''')
-                val modelFile = getFileHandle(scc, modelData)
-                startVerification(verificationSystemId, scc, modelFile, #[property], verificationAssumptions)    
+                startVerification(#[property], verificationAssumptions)    
                 println()
             }
         }
@@ -79,6 +77,10 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
     
     override getPropertyAnalyzerProcessorId() {
         return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer" 
+    }
+    
+    override protected getVerificationSystemId() {
+        return "de.cau.cs.kieler.sccharts.verification.spin"
     }
     
     protected def List<String> getCustomSpinCommands() {

@@ -35,7 +35,7 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
 
     // General verification options
     private val createCounterexampleWithOutputs = false
-        
+    
     new() {
         super(scchartsInjector)
     }
@@ -50,20 +50,15 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
 
     @Test
     def void testNuxmvVerification(SCCharts scc, TestModelData modelData) {
-        verificationSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
         initializeVerification(scc, modelData)
         
         println('''>>>>> testNuxmvVerification «modelData.modelFile» <<<<<''')
         println()
         
-        for(property : verificationProperties) {
-            if(property.type !== VerificationPropertyType.CTL) {
-                println('''Testing VerificationProperty "«property.name»"''')
-                val modelFile = getFileHandle(scc, modelData)
-                startVerification(verificationSystemId, scc, modelFile, #[property], verificationAssumptions)    
-                println()
-            }
-        }
+        
+        println('''Testing VerificationProperties "«verificationProperties.map[ it.name ]»"''')
+        startVerification(verificationProperties, verificationAssumptions)    
+        println()
     }
     
     override configureContext(CompilationContext verificationContext) {
@@ -74,8 +69,11 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
         
         // Add SMV options
         verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, smvUseIVAR)
+        val customSmvInvarCommands = getCustomSmvInvarCommands()
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS, customSmvInvarCommands)
+        val customSmvLtlCommands = getCustomSmvLtlCommands()
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS, customSmvLtlCommands)
+        val customSmvCtlCommands = getCustomSmvCtlCommands()
         verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS, customSmvCtlCommands)
     }
     
@@ -83,19 +81,35 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
         return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer" 
     }
     
+    override protected getVerificationSystemId() {
+        return "de.cau.cs.kieler.sccharts.verification.nuxmv"
+    }
+    
     protected def boolean getSmvUseIVAR() {
         // IVAR does not work when there are input variables in CTL properties
-        return false
+        if(verificationProperties.exists[ it.type == VerificationPropertyType.CTL ]) {
+            return false
+        } else {
+            return true
+        }
     }
     
     protected def List<String> getCustomSmvInvarCommands() {
-        // Use algorithm that can handle infinite domains
-        return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}", "quit"]
+        if(verificationModelData.modelProperties.contains("unbound-int")) {
+            // Use algorithm that can handle infinite domains
+            return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}", "quit"]    
+        } else {
+            return #[]
+        }
     }
     
     protected def List<String> getCustomSmvLtlCommands() {
-        // Use algorithm that can handle infinite domains
-        return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}", "quit"]
+        if(verificationModelData.modelProperties.contains("unbound-int")) {
+            // Use algorithm that can handle infinite domains
+            return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}", "quit"]
+        } else {
+            return #[]
+        }
     }
     
     protected def List<String> getCustomSmvCtlCommands() {
