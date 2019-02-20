@@ -12,47 +12,32 @@
  */
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.core.model.Pair
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.DelayType
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.VectorValue
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Linkable
-import de.cau.cs.kieler.sccharts.Region
-import java.util.List
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import java.util.Map
-import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
 import de.cau.cs.kieler.kicool.processors.LinkableInterfaceData
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsFactory
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 /**
  * @author ssm
@@ -103,8 +88,8 @@ class ToHybridDataflow extends SCChartsProcessor {
             val Multimap<Region, Dependency> lrTargetMap =  HashMultimap.create
             for (d : dependencies) {
                 val lr = lcafMap.levelRegions(d)
-                lrSourceMap.put(lr.first, d)
-                lrTargetMap.put(lr.second, d)
+                lrSourceMap.put(lr.key, d)
+                lrTargetMap.put(lr.value, d)
             }
             
             subModel.processSuperState(model, lid, lrSourceMap, lrTargetMap)  

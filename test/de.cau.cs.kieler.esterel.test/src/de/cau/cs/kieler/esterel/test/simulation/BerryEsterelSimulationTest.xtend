@@ -39,8 +39,6 @@ class BerryEsterelSimulationTest extends AbstractSimulationTest<EsterelProgram> 
     @Inject
     extension EsterelExtensions
     
-    val available = (new InriaEsterelCompiler(new Environment)).available
-    
     new() {
         super(esterelInjector)
     }
@@ -58,7 +56,6 @@ class BerryEsterelSimulationTest extends AbstractSimulationTest<EsterelProgram> 
     
     @Test
     def void testSimulationInriaEsterel(EsterelProgram esterel, TestModelData modelData) {
-        assumeTrue("Inria Esterel Compiler not available", available)
         assumeTrue("Program contains unsupported data types", esterel.hasUnsupportedType) // skip if program includes esterel type
         
         startSimulationTest(INRIA_ESTEREL_SYSTEM, esterel, modelData, "EsterelSimulationSLICNetlistC")

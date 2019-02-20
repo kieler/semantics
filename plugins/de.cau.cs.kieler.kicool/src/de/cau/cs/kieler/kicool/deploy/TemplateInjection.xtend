@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import java.util.List
 import java.util.Map
 import de.cau.cs.kieler.kicool.environments.Environment

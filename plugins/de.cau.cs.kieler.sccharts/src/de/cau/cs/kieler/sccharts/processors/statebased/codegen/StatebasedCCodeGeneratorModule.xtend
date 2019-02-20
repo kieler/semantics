@@ -23,6 +23,10 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 /**
  * Root C Code Generator Module
@@ -42,7 +46,11 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
     
     @Inject Injector injector
     
-    protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+    public static val IProperty<String> SIMULTATION_C_STRUCT_ACCESS = 
+       new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")    
+    
+    protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).") 
+    
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     
@@ -59,10 +67,14 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         tick = injector.getInstance(StatebasedCCodeGeneratorTickModule)
         logic = injector.getInstance(StatebasedCCodeGeneratorLogicModule)
             
-        struct.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, codeFilename + H_EXTENSION, this)
-        reset.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        tick.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
-        logic.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, codeFilename + C_EXTENSION, this)
+        struct.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + H_EXTENSION, this, TICKDATA_STRUCT_NAME)
+        reset.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, RESET_FUNCTION_NAME)
+        tick.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, TICK_FUNCTION_NAME)
+        logic.configure(baseName, SCCharts, rootState, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + C_EXTENSION, this, LOGIC_FUNCTION_NAME)
     }
     
     override generateInit() {
@@ -122,8 +134,16 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         cFile.append(logic.code).append("\n")
         cFile.append(tick.code)
 
-        codeContainer.addCCode(cFilename, cFile.toString, StatebasedCCodeGeneratorStructModule.STRUCT_NAME)         
-        codeContainer.addCHeader(hFilename, hFile.toString, StatebasedCCodeGeneratorStructModule.STRUCT_NAME)
+        naming.put(TICK, tick.getName)
+        naming.put(RESET, reset.getName)
+        naming.put(LOGIC, logic.getName)
+        naming.put(TICKDATA, struct.getName)
+        
+        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)       
+        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
+        
+        processorInstance.environment.setProperty(SIMULTATION_C_STRUCT_ACCESS, 
+            "." + (struct as StatebasedCCodeGeneratorStructModule).getRegionIfaceName + ".")
     }    
     
     /**

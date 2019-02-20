@@ -13,9 +13,9 @@
 package de.cau.cs.kieler.simulation.internal.processor
 
 import com.google.gson.JsonPrimitive
-import de.cau.cs.kieler.core.model.DynamicTicks
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.definitions.DynamicTicks
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.mode.TimedSimulationModeCountDown
 
 /**

@@ -23,6 +23,12 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import com.google.inject.Injector
+import java.util.Map
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 /**
  * C Code Generator for the Statebased code generation using templates.
@@ -37,12 +43,16 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     @Inject extension PragmaExtensions
     @Inject protected Injector injector
     
+    public static val IProperty<String> SIMULTATION_C_STRUCT_ACCESS = 
+       new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")       
+    
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")    
 
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     public static val INCLUDES = "includes"
     
+    @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
     @Accessors val Multimap<String, String> modifications = HashMultimap.create
     
     override getId() {
@@ -82,8 +92,16 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
         cFile.append("#include \"" + hFilename + "\"\n\n")        
         cFile.append(template.source)
 
-        codeContainer.addCCode(cFilename, cFile.toString, "TickData")         
-        codeContainer.addCHeader(hFilename, hFile.toString, "TickData")
+        naming.put(TICK, environment.getProperty(TICK_FUNCTION_NAME))
+        naming.put(RESET, environment.getProperty(RESET_FUNCTION_NAME))
+        naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
+        naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))   
+        
+        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)       
+        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
+        
+        environment.setProperty(SIMULTATION_C_STRUCT_ACCESS, 
+            ".iface.")
     }      
     
     protected def addHeader() {

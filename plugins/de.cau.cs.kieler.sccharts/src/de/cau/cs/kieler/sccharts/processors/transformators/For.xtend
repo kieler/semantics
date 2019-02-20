@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
@@ -64,7 +63,7 @@ class For extends SCChartsProcessor implements Traceable {
     
     protected def transformForRegion(Region region) {
         val range = region.forRegionRange
-        region.transformForRegionRange(range.first, range.second)
+        region.transformForRegionRange(range.key, range.value)
     }
     
     static def Pair<Integer, Integer> getForRegionRange(Region region) {

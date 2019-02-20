@@ -42,7 +42,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
-import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
+import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.

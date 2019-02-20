@@ -15,8 +15,8 @@ package de.cau.cs.kieler.scg.processors.ssa.optimizer
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
 import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Call
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FunctionCall

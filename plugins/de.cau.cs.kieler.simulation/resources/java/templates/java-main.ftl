@@ -14,7 +14,7 @@ public class ${target_basename} {
         <@inject position="local-decl" /><#nt>
         
         // Initialize 
-        ${tickdata_name}.reset();
+        ${tickdata_name}.${reset_name}();
         
         <@inject position="init" /><#nt>
         
@@ -27,7 +27,7 @@ public class ${target_basename} {
            <@inject position="pre-tick" /><#nt>
         
            // Reaction of model
-           ${tickdata_name}.tick();
+           ${tickdata_name}.${tick_name}();
            
            <@inject position="post-tick" /><#nt>
            

@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.sccharts.ui.application
 
-import de.cau.cs.kieler.core.model.util.ModelUtil
+import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
