@@ -74,6 +74,11 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         }
     }
     
+    private static class FullyQualifiedConditionWithComment {
+        @Accessors var String condition
+        @Accessors var String comment
+    }
+    
     override getName() {
         return class.simpleName;
     }
@@ -189,32 +194,54 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         incIndentationLevel
         for(assignment : assignments) {
             val parentConditional = nodeToParentConditional.get(assignment)
-            val fullyQualifiedCondition = getFullyQualifiedCondition(parentConditional)
+            val fullyQualifiedConditionWithComment = getFullyQualifiedConditionWithComment(parentConditional)
+            
             val expression = assignment.expression.serializeHR
                 .toSmvExpression
                 .useBooleanInsteadIntegerIfNeeded(valuedObject)
-            appendIndentedLine('''«fullyQualifiedCondition» : «expression»;''')    
+            
+            val comment = if(fullyQualifiedConditionWithComment.comment.isNullOrEmpty)
+                              ""
+                          else
+                              ''' -- «fullyQualifiedConditionWithComment.comment»'''
+            
+            appendIndentedLine('''«fullyQualifiedConditionWithComment.condition» : «expression»;«comment»''')    
         }
         decIndentationLevel
         appendIndentedLine('''esac;''')
         decIndentationLevel
     }
     
-    private def String getFullyQualifiedCondition(ConditionalTree parentConditional) {
+    private def FullyQualifiedConditionWithComment getFullyQualifiedConditionWithComment(ConditionalTree parentConditional) {
+        val result = new FullyQualifiedConditionWithComment => [
+            condition = "TRUE"
+            comment = ""
+        ]
+        
         if(parentConditional === null) {
-            return "TRUE"
+            return result
         }
         val conditionForTrueBranch = parentConditional.conditional.condition.serializeHR
             .toSmvExpression
-        val condition = if (parentConditional.branchOfConditional)
-                            conditionForTrueBranch
-                        else
-                            '''!(«conditionForTrueBranch»)'''
-        if(parentConditional.parent === null) {
-            return condition.toString            
+        
+        // Select condition or the inverted condition,
+        // depending on the control-flow branch this condition is for.
+        // For the inverted condition, the SMV switch-case-default TRUE is returned.
+        if (parentConditional.branchOfConditional) {
+            result.condition = conditionForTrueBranch
         } else {
-            return getFullyQualifiedCondition(parentConditional.parent) + " & " + condition
+//          result.condition = '''!(«conditionForTrueBranch»)'''
+            result.condition = '''TRUE'''
+            result.comment = '''default case for !(«conditionForTrueBranch»)'''    
         }
+        
+        // Recursively concatenate conditions of parents if needed
+        if(parentConditional.parent !== null) {
+            val parentResult = getFullyQualifiedConditionWithComment(parentConditional.parent)
+            result.condition = parentResult.condition + " & " + result.condition
+            result. comment = parentResult.comment + ". " + parentResult.comment
+        }
+        return result
     }
     
     override generateDone() {
