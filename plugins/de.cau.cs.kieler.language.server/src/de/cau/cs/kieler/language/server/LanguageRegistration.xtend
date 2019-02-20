@@ -12,9 +12,9 @@
  */
 package de.cau.cs.kieler.language.server
 
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.kgraph.text.ide.KGraphLSSetup
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import org.eclipse.core.runtime.Platform
 
 /**
  * @author sdo
@@ -23,14 +23,9 @@ import org.eclipse.core.runtime.Platform
 class LanguageRegistration {
     
     def bindAndRegisterLanguages() {
-        val injectorKGraph = KGraphLSSetup.doLSSetup()
-        val lsSetups = newArrayList
-        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.esterel.ide").loadClass("de.cau.cs.kieler.esterel.ide.EsterelLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
-        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.scl.ide").loadClass("de.cau.cs.kieler.scl.ide.SCLLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
-        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.lustre.ide").loadClass("de.cau.cs.kieler.lustre.ide.LustreLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
-        lsSetups.add(injectorKGraph.getInstance(Platform.getBundle("de.cau.cs.kieler.sccharts.ide").loadClass("de.cau.cs.kieler.sccharts.ide.text.SCTXLSSetupContribution") as Class<ILSSetupContribution>).getLSSetup())
-        for (lsSetup: lsSetups) {
-            lsSetup.doLSSetup()
+        val injectorKGraph = KGraphLSSetup.doLSSetup()        
+        for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
+            contribution.LSSetup.doLSSetup()
         }
         return injectorKGraph.getInstance(KGraphLanguageServerExtension)
     }

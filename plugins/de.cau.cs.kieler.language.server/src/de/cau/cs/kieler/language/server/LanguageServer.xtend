@@ -16,16 +16,15 @@ import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
 import com.google.inject.Provider
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
-import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import org.apache.log4j.Logger
-import org.eclipse.core.runtime.Platform
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
@@ -117,10 +116,9 @@ class LanguageServer implements IApplication {
             ]
             val languageServer = injector.getInstance(LanguageServerImpl)
             var iLanguageServerExtensions = <Object>newArrayList(languageServer)
-            for (lse : ServiceLoader.load(ILanguageServerContribution, this.class.classLoader)) {
+            for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
                 iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
             }
-            iLanguageServerExtensions.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.kicool.ide").loadClass("de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerContribution") as Class<ILanguageServerContribution>).getLanguageServerExtension(injector))
             val launcher = new Builder<LanguageClient>()
                 .setLocalServices(iLanguageServerExtensions)
                 .setRemoteInterface(LanguageClient)
@@ -131,7 +129,6 @@ class LanguageServer implements IApplication {
                 .configureGson(configureGson)
                 .setClassLoader(this.getClass.classLoader)
                 .create();
-//            val launcher = Launcher.createIoLauncher(languageServer, LanguageClient, in, out, threadPool, [it], configureGson)
             languageServer.connect(launcher.remoteProxy)
             launcher.startListening
             LOG.info("Started language server for client " + socketChannel.remoteAddress)

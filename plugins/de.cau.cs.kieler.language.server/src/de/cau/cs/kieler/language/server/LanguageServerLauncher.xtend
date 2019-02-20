@@ -16,10 +16,10 @@ import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Provider
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
-import java.util.ServiceLoader
 import java.util.concurrent.Executors
 import java.util.function.Consumer
 import java.util.function.Function
@@ -28,7 +28,6 @@ import org.apache.log4j.AsyncAppender
 import org.apache.log4j.Level
 import org.apache.log4j.Logger
 import org.apache.log4j.spi.LoggingEvent
-import org.eclipse.core.runtime.Platform
 import org.eclipse.lsp4j.MessageParams
 import org.eclipse.lsp4j.MessageType
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
@@ -39,7 +38,6 @@ import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
-import org.eclipse.xtext.ide.server.WorkspaceManager
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 
@@ -77,10 +75,9 @@ class LanguageServerLauncher extends ServerLauncher {
         ]
         val languageServer = injector.getInstance(LanguageServerImpl)
         var iLanguageServerExtensions = <Object>newArrayList(languageServer)
-        for (lse : ServiceLoader.load(ILanguageServerContribution, this.class.classLoader)) {
+        for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
-        iLanguageServerExtensions.add(injector.getInstance(Platform.getBundle("de.cau.cs.kieler.kicool.ide").loadClass("de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerContribution") as Class<ILanguageServerContribution>).getLanguageServerExtension(injector))
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(iLanguageServerExtensions)
                 .setRemoteInterface(LanguageClient)
