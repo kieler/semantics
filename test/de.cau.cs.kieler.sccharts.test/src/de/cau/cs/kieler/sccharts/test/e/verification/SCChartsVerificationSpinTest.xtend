@@ -16,6 +16,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
@@ -26,8 +27,10 @@ import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import java.util.Observable
+import org.eclipse.core.runtime.Path
 import org.eclipse.emf.ecore.EObject
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,20 +38,18 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 /**
- * @author aas, als
+ * @author aas
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
+class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
     
-    public static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
+    public static val scchartsInjector = SCTXStandaloneSetup.doSetup
     
-    public static val MUST_FAIL_PATTERN_KEY = "verification-must-fail"
+    public static val MUST_FAIL_PATTERN_KEY = "verification-must-fail-pattern"
     
     protected var String propertyAnalyzerProcessorId = "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer";
     protected var CompilationContext propertyAnalyzerContext
-    
-    protected var String verificationMustFailPattern
     
     new() {
         super(scchartsInjector)
@@ -56,8 +57,9 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
     
     override filter(TestModelData modelData) {
         return modelData.hasVerificationProperties
-            && modelData.modelProperties.contains("ao-model")
+            && modelData.modelProperties.contains("verification-test")
             && modelData.modelProperties.contains("sccharts")
+            && !modelData.modelProperties.contains("spin-known-to-fail")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
     }
@@ -66,20 +68,31 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
     def void testSpinVerification(SCCharts scc, TestModelData modelData) {
         verificationSystemId = "de.cau.cs.kieler.sccharts.verification.spin"
         initialize(scc, modelData)
+        
+        println('''>>>>> testSpinVerification «modelData.modelFile» <<<<<''')
+        println()
+        
+        for(property : verificationProperties) {
+            if(property.type !== VerificationPropertyType.CTL) {
+                println('''Testing VerificationProperty "«property.name»"''')
+                startVerification(verificationSystemId, scc, verificationModelFile, #[property], verificationAssumptions)    
+                println()
+            }
+        }
     }
     
-//    @Test
-//    def void testNuxmvVerification(SCCharts scc, TestModelData modelData) {
-//        verificationSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
-//        initialize(scc, modelData)
-//    }
-    
     private def void initialize(SCCharts scc, TestModelData modelData) {
+        verificationModel = scc
         verificationMustFailPattern = modelData.additionalProperties.get(MUST_FAIL_PATTERN_KEY)
         // Get verification properties
         propertyAnalyzerContext = runPropertyAnalyzer(propertyAnalyzerProcessorId, scc)
         verificationProperties = propertyAnalyzerContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
-        verificationAssumptions= propertyAnalyzerContext.startEnvironment.getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
+        verificationAssumptions = propertyAnalyzerContext.startEnvironment.getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
+        // Create a file handle for the model
+        val path = new Path(modelData.modelPath.toString)
+        val tmpProject = ProjectInfrastructure.getTemporaryProject()
+        val file = tmpProject.getFile(path)
+        verificationModelFile = file
     }
     
     private def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
@@ -121,18 +134,18 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
         val property = event.changedProperty
         switch(property.status) {
             case VerificationPropertyStatus.PASSED : {
-                println('''Property '«property.name»' PASSED''')
+                if (property.shouldFail) {
+                    fail('''Verification Property "«property.name»" PASSED but should not''')
+                } else {
+                    println('''Property '«property.name»' PASSED''')
+                }
             }
             
             case VerificationPropertyStatus.FAILED : {
-                var shouldFail = false
-                if(verificationMustFailPattern !== null) {
-                    shouldFail = property.name.matches(verificationMustFailPattern)
-                }
-                if (!shouldFail) {
-                    fail('''Verification Property "«property.name»" FAILED''')
-                } else {
+                if (property.shouldFail) {
                     println('''Verification Property "«property.name»" failed as intended''')
+                } else {
+                    fail('''Verification Property "«property.name»" FAILED''')
                 }
             }
             
@@ -142,6 +155,7 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
             
             case VerificationPropertyStatus.EXCEPTION : {
                 println('''VerificationProperty "«property.name»" had issues''')
+                property.cause.printStackTrace
                 fail(property.cause.toString)
             }
             default : {
@@ -150,7 +164,7 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
         }
     }
     
-    def void onVerificationFinished(CompilationFinished event) {
+    protected def void onVerificationFinished(CompilationFinished event) {
         verificationContext = null
     }
  
@@ -167,7 +181,8 @@ class SCChartsVerificationTest extends AbstractVerificationTest<SCCharts> {
     }
     
     protected def List<String> getCustomSpinCommandsList() {
-        #[]
+        // Increased search depth
+        #["-m100000"]
     }
     
     protected def boolean getCreateCounterexampleWithOutputs() {

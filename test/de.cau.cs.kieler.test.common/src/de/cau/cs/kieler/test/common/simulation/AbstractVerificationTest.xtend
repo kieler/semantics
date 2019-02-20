@@ -45,6 +45,8 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
     protected var EObject verificationModel 
     protected var IFile verificationModelFile 
     
+    protected var String verificationMustFailPattern
+    
     /**
      * Constructor
      */
@@ -59,32 +61,35 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         return modelData.modelProperties.contains("verification")
     }
     
-    /**
-     * Starts a simulation test of the model and the model data.
-     */
-    protected def void startVerificationTest(String system, EObject model, TestModelData modelData, String testID) {
-        val ccontext = Compile.createCompilationContext(system, model)
-        ccontext.startEnvironment.setProperty(Environment.INPLACE, true)
-        ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, this.class.simpleName + "-" + testID)
-        
+    protected def boolean shouldFail(VerificationProperty property) {
+        var result = false
+        if(verificationMustFailPattern !== null) {
+            result = property.name.matches(verificationMustFailPattern)
+        }
+        return result
     }
     
-    private def void stopVerification() {
+    protected def void stopVerification() {
         if(verificationContext !== null) {
             verificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
             verificationContext = null
         }
     }
     
-    private def void startVerification() {
+    protected def void startVerification(String systemId, EObject model, IFile modelFile,
+        List<VerificationProperty> properties,
+        List<VerificationAssumption> assumptions) {
         // Stop last verification if not done yet
         stopVerification()
        
         // Create new context for verification and compile
-        verificationContext = Compile.createCompilationContext(verificationSystemId, verificationModel)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, verificationModelFile)
+        verificationContext = Compile.createCompilationContext(systemId, model)
+        verificationContext.startEnvironment.setProperty(Environment.INPLACE, true)
+        verificationContext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, this.class.simpleName)
+        
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, properties)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, assumptions)
+        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
         
         configureContext(verificationContext)
         
@@ -95,6 +100,6 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         }
         
         // Compile and verify
-        verificationContext.compileAsynchronously
+        verificationContext.compile
     }
 }
