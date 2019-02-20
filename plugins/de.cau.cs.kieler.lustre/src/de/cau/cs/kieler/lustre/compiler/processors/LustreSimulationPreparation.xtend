@@ -13,9 +13,10 @@
 package de.cau.cs.kieler.lustre.compiler.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -26,12 +27,17 @@ import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 
 import static de.cau.cs.kieler.kicool.compilation.VariableStore.*
+import java.util.HashMap
 
 /**
  * @author lgr
  */
 class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
     
+        
+    public static val IProperty<HashMap<String,String>> VARIABLE_PARAMETER_POSITION_MAP = 
+        new Property<HashMap<String,String>>("de.cau.cs.kieler.lustre.compiler.v6.variableParameterPositionMap", newHashMap)
+        
     public static val LUSTRE_ORIG = "lustre-orig"
     public static val LUSTRE_VIRTUAL = "lustre-virtual"
 
@@ -59,24 +65,36 @@ class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
             var node = nodes.head
             if (node instanceof NodeDeclaration) {
                 
-                for (VariableDeclaration varDecl : node.input.parameter) {
+                var inputCountFormat = "%0" + (node.input.parameter.size.toString.length) + "d";
+                for (var i = 0; i < node.input.parameter.size; i++) {
+                    var varDecl = node.input.parameter.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
-                        processValuedObject(valObj, INPUT)
+                        processValuedObject(valObj, INPUT, String.format(inputCountFormat, i))
                     }
                 }
                 
-                for (VariableDeclaration varDecl : node.output.parameter) {
+                var outputCountFormat = "%0" + (node.output.parameter.size.toString.length) + "d";
+                for (var i = 0; i < node.output.parameter.size; i++) {
+                    var varDecl = node.output.parameter.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
-                        processValuedObject(valObj, OUTPUT)
+                        processValuedObject(valObj, OUTPUT, String.format(outputCountFormat, i))
                     }
                 }
             }
         }
     }
     
-    private def processValuedObject(ValuedObject valObj, String preDefString) {
+    private def processValuedObject(ValuedObject valObj, String preDefString, String position) {
         var props = newArrayList(LUSTRE_ORIG)
         if (preDefString !== null) props += preDefString
+        
+        if (!environment.propertyExists(VARIABLE_PARAMETER_POSITION_MAP)) {
+            environment.setProperty(VARIABLE_PARAMETER_POSITION_MAP, newHashMap)
+        } 
+        
+        var varPositionMap = environment.getProperty(VARIABLE_PARAMETER_POSITION_MAP);
+        varPositionMap.put(valObj.name, position)
+        environment.setProperty(VARIABLE_PARAMETER_POSITION_MAP, varPositionMap)
         
         val store = VariableStore.getVariableStore(environment)
         store.update(valObj, props).type = valObj.typeForValuedObject

@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.lustre.compiler.processors
 
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -80,8 +82,11 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
         }
         
-        var inputs = store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map[LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
-        var outputReferences = store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map["&" + LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + it]
+        val variableParameterPositionMap = environment.getProperty(LustreSimulationPreparation.VARIABLE_PARAMETER_POSITION_MAP) 
+        
+        var inputs = store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map[LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(it) + it].sort
+        var outputs = store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)].map[key].map[LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(it) + it].sort
+        var outputReferences = outputs.map["&" + it]
         var hasState = if (environment.propertyExists(LustreV6CodeGenerator.HAS_STATE)) environment.getProperty(LustreV6CodeGenerator.HAS_STATE) else false;
         
         val cc = new CodeContainer
@@ -98,14 +103,14 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             <#macro simulation_output_decl position>
             // Output variable declaration
             «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.OUTPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
-                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + v.key»;
+                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(v.key) + v.key»;
             «ENDFOR» 
             </#macro>
                         
             <#macro simulation_input_decl position>            
             // Input variable declaration
             «FOR v : store.orderedVariables.filter[value.properties.contains(VariableStore.INPUT) && value.properties.contains(LustreSimulationPreparation.LUSTRE_ORIG)]»
-                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + v.key»;
+                «v.value.cType» «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(v.key) + v.key»;
             «ENDFOR» 
             </#macro>
             
@@ -223,6 +228,8 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
     }
     
     def serialize(Pair<String, VariableInformation> variable, String json, boolean notify) {
+        val variableParameterPositionMap = environment.getProperty(LustreSimulationPreparation.VARIABLE_PARAMETER_POSITION_MAP) 
+        
         val varName = variable.key
         val info = variable.value
         if (info.array) {
@@ -233,7 +240,7 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
                 return '''cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else info.externalName)»);'''
             } else {
                 return '''
-                cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName)»);
+                cJSON_AddItemToObject(«json», "«varName»", «type.getCreator(if (notify) "0" else LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(varName) + varName)»);
                 '''
             }
         }
@@ -253,6 +260,8 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
     }
     
     def parse(Pair<String, VariableInformation> variable, String json) {
+        val variableParameterPositionMap = environment.getProperty(LustreSimulationPreparation.VARIABLE_PARAMETER_POSITION_MAP)
+        
         val varName = variable.key
         val info = variable.value
         if (info.array) {
@@ -263,9 +272,9 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             return '''
                 cJSON *val_item = cJSON_GetObjectItemCaseSensitive(root, "«variable.key»");
                 if(val_item != NULL) {
-                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName» = val_item«info.jsonTypeGetter»;
+                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(varName) + varName» = val_item«info.jsonTypeGetter»;
                 } else {
-                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + varName» = 0;
+                    «LustreSimulationTemplateGenerator.SIM_VAR_PREFIX + variableParameterPositionMap.get(varName) + varName» = 0;
                 }
             '''
         }
