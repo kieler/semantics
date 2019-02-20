@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.URI
  * 
  * @author als
  */
-class LustreLv6CompilerProvider implements IExternalCompilerProvider {
+class LustreV6CompilerProvider implements IExternalCompilerProvider {
     
     static val PLUGIN = "org.lustre.compiler"
     

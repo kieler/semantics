@@ -198,7 +198,7 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             }
             </#macro>
             
-            <#macro step_parameter position>«(inputs + outputReferences).join(", ")»«IF hasState», ctx«ENDIF»</#macro>
+            <#macro step_parameter position>«(inputs + outputReferences).join(", \n")»«IF hasState», ctx«ENDIF»</#macro>
             
             
             <#macro simulation_local_decl position>
@@ -207,6 +207,21 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
                 ${tickdata_name}_ctx_type* ctx = ${tickdata_name}_ctx_new_ctx(NULL);
             «ENDIF»
             </#macro>            
+            
+            <#macro simulation_pre_tick position>
+            printf("\nINPUTS :");
+            «FOR i : inputs»
+            printf("%s %d\n", "«i»", «i»);
+            «ENDFOR»
+            </#macro>
+            
+            
+            <#macro simulation_post_tick position>
+            printf("OUTPUTS :");
+            «FOR i : outputs»
+            printf("%s %d\n", "«i»", «i»);
+            «ENDFOR»
+            </#macro>
         '''
             
         
@@ -223,6 +238,9 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         environment.addMacroInjection(END_MAIN, "simulation_loop")
+        
+        environment.addMacroInjection("post-tick", "simulation_post_tick")
+        environment.addMacroInjection("pre-tick", "simulation_pre_tick")
         
         return cc
     }
@@ -297,8 +315,9 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
     def cType(VariableInformation info) {
         val valueType = info.type
         if (valueType == ValueType.BOOL) {
-            return "char"
-        } else if (valueType == ValueType.STRING) {
+            return "int"
+        } else 
+        if (valueType == ValueType.STRING) {
             return "char*"
         } else if (valueType == ValueType.FLOAT) {
             return "double"

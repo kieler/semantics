@@ -19,19 +19,22 @@ import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import org.junit.Test
 
 import static org.junit.Assume.*
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 
 /**
  * @author lgr
  *
  */
-class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
-    
-    public static val String NETLIST_C_SYSTEM = "de.cau.cs.kieler.lustre.c.dataflow";
+class LustreV6SimulationTest extends AbstractSimulationTest<LustreProgram> {
+    public static val String LUSTRE_V6_SYSTEM = "de.cau.cs.kieler.lustre.compiler.v6.simulation"
     
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
     
+    val available = (new LustreV6Compiler(new Environment)).available
+    
     new() {
-        super(lustreInjector)
+        super(LustreV6SimulationTest.lustreInjector)
     }
     
     override filter(TestModelData modelData) {
@@ -42,11 +45,10 @@ class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
     }
     
     @Test
-    def void testSimulationSLICNetlistC(LustreProgram lustre, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
-        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
+    def void testSimulationLustreV6(LustreProgram lustreProgram, TestModelData modelData) {
+        assumeTrue("Lustre V6 Compiler not available", available)
         
-        startSimulationTest(NETLIST_C_SYSTEM, lustre, modelData, "EsterelSimulationSLICNetlistC")
+        startSimulationTest(LUSTRE_V6_SYSTEM, lustreProgram, modelData, "LustreSimulationSLICNetlistC")
     }
     
 }
