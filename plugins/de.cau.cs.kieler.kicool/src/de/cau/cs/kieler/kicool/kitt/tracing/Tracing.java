@@ -23,8 +23,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Multimap;
 import com.google.inject.Guice;
 
-import de.cau.cs.kieler.core.model.properties.IProperty;
-import de.cau.cs.kieler.core.model.properties.Property;
+import de.cau.cs.kieler.core.properties.IProperty;
+import de.cau.cs.kieler.core.properties.Property;
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingChain;
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingMapping;

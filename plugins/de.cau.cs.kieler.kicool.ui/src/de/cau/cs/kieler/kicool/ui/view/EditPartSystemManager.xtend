@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kicool.ui.view
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import org.eclipse.ui.IEditorPart
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.Property
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.IntermediateSelection

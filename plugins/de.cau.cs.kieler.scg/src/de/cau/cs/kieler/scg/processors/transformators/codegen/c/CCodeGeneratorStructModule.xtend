@@ -34,16 +34,11 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     @Inject extension KExpressionsValuedObjectExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
-    public static val STRUCT_NAME = "TickData"
     public static val STRUCT_VARIABLE_NAME = "d"
     public static val STRUCT_PRE_PREFIX = "_p"
     
     @Accessors StringBuilder forwardDeclarations = new StringBuilder
   
-    override getName() {
-        STRUCT_NAME + baseName + suffix
-    }
-    
     def getVariableName() {
         STRUCT_VARIABLE_NAME
     }

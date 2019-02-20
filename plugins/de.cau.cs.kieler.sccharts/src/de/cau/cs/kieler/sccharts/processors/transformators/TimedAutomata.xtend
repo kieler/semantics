@@ -39,7 +39,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.core.model.DynamicTicks
+import de.cau.cs.kieler.core.definitions.DynamicTicks
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.annotations.StringAnnotation

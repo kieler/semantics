@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
@@ -53,6 +54,8 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             if (javaClassFile !== null && !javaClassFile.className.nullOrEmpty) {
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, javaClassFile.className)
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, javaClassFile.fileName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_RESET_NAME, javaClassFile.naming.get(CodeGeneratorNames.RESET))
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_TICK_NAME, javaClassFile.naming.get(CodeGeneratorNames.TICK))                
             }
         }
         

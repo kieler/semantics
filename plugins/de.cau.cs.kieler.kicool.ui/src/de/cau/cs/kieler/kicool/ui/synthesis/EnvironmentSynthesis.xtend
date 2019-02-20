@@ -25,7 +25,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.properties.IProperty
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.alg.layered.options.FixedAlignment

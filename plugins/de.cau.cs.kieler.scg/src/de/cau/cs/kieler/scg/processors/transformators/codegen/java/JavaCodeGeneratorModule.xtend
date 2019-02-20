@@ -21,6 +21,9 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
+import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
+import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+
 /**
  * Root C Code Generator Module
  * 
@@ -48,10 +51,14 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         tick = injector.getInstance(JavaCodeGeneratorTickModule)
         logic = injector.getInstance(JavaCodeGeneratorLogicModule)
             
-        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
-        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, codeFilename + JAVA_EXTENSION, this)
+        struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + JAVA_EXTENSION, this, TICKDATA_STRUCT_NAME)
+        reset.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + JAVA_EXTENSION, this, RESET_FUNCTION_NAME)
+        tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + JAVA_EXTENSION, this, TICK_FUNCTION_NAME)
+        logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
+            codeFilename + JAVA_EXTENSION, this, LOGIC_FUNCTION_NAME)
     }
     
     override generateWrite(CodeContainer codeContainer) {
@@ -71,7 +78,12 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         
         cFile.append("}\n")
 
-        codeContainer.addJavaCode(cFilename, cFile.toString)        
+        naming.put(TICK, tick.getName)
+        naming.put(RESET, reset.getName)
+        naming.put(LOGIC, logic.getName)
+        naming.put(TICKDATA, struct.getName)
+
+        codeContainer.addJavaCode(cFilename, cFile.toString).naming.putAll(naming)        
     }    
     
     override def void addHeader(StringBuilder sb) {

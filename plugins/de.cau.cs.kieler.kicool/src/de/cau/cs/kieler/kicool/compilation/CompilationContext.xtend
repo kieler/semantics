@@ -31,7 +31,7 @@ import java.util.Observable
 import java.util.Observer
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.properties.IProperty
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
 

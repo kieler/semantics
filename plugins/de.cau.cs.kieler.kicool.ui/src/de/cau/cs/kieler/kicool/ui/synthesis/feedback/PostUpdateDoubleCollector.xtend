@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.kicool.ui.synthesis.feedback
 
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.properties.IProperty
 
 /**
  * @author ssm

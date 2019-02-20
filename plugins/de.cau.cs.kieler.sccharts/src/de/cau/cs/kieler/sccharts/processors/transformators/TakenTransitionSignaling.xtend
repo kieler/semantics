@@ -13,7 +13,7 @@
 package de.cau.cs.kieler.sccharts.processors.transformators
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
