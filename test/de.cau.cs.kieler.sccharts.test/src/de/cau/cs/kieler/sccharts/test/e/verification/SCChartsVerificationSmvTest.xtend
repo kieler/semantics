@@ -29,13 +29,13 @@ import org.junit.runner.RunWith
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
+class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
     
     public static val scchartsInjector = SCTXStandaloneSetup.doSetup
-    
+
     // General verification options
     private val createCounterexampleWithOutputs = false
-    
+        
     new() {
         super(scchartsInjector)
     }
@@ -44,17 +44,16 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
         return modelData.hasVerificationProperties
             && modelData.modelProperties.contains("verification-test")
             && modelData.modelProperties.contains("sccharts")
-            && !modelData.modelProperties.contains("spin-known-to-fail")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
     }
 
     @Test
-    def void testSpinVerification(SCCharts scc, TestModelData modelData) {
-        verificationSystemId = "de.cau.cs.kieler.sccharts.verification.spin"
+    def void testNuxmvVerification(SCCharts scc, TestModelData modelData) {
+        verificationSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
         initializeVerification(scc, modelData)
         
-        println('''>>>>> testSpinVerification «modelData.modelFile» <<<<<''')
+        println('''>>>>> testNuxmvVerification «modelData.modelFile» <<<<<''')
         println()
         
         for(property : verificationProperties) {
@@ -73,16 +72,32 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
         // Add options
         verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexampleWithOutputs)
         
-        // Add spin options
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_SPIN_COMMANDS, customSpinCommands)
+        // Add SMV options
+        verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, smvUseIVAR)
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS, customSmvInvarCommands)
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS, customSmvLtlCommands)
+        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS, customSmvCtlCommands)
     }
     
     override getPropertyAnalyzerProcessorId() {
         return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer" 
     }
     
-    protected def List<String> getCustomSpinCommands() {
-        // Increased max search depth
-         return #["-m100000"]
+    protected def boolean getSmvUseIVAR() {
+        // IVAR does not work when there are input variables in CTL properties
+        return false
+    }
+    
+    protected def List<String> getCustomSmvInvarCommands() {
+        // Use algorithm that can handle infinite domains
+        return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}", "quit"]
+    }
+    
+    protected def List<String> getCustomSmvLtlCommands() {
+        // Use algorithm that can handle infinite domains
+        return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}", "quit"]
+    }
+    
+    protected def List<String> getCustomSmvCtlCommands() {
     }
 }
