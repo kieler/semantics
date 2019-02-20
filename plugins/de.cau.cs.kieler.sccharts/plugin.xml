@@ -274,6 +274,9 @@
             system="system/de.cau.cs.kieler.sccharts.simulation.statebased.c.kico">
         </TransformationSystem>
         <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.statebased.lean.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico">
         </TransformationSystem>
      </extension>

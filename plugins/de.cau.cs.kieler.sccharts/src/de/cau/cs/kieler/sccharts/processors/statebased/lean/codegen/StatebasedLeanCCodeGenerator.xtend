@@ -89,6 +89,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
         
         cFile.append(addHeader)
         cFile.hostcodeAdditions(scc)
+        cFile.append("#include <stdio.h>\n")
         cFile.append("#include \"" + hFilename + "\"\n\n")        
         cFile.append(template.source)
 
@@ -112,7 +113,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
              * KIELER SCCharts - The Key to Efficient Modeling
              *
              * http://rtsys.informatik.uni-kiel.de/kieler
-             
+             */
             '''
     }      
     

@@ -26,6 +26,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
  * @author ssm
@@ -38,6 +42,7 @@ class StatebasedLeanCTemplate {
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsActionExtensions
     @Inject extension StatebasedCCodeSerializeHRExtensions
     
     @Accessors val header = new StringBuilder
@@ -100,7 +105,7 @@ class StatebasedLeanCTemplate {
     protected def void createHeader() {
         val code = 
             '''
-            // The chosen scheduling regime (IUR) uses four states to maintain the status of threads."),
+            // The chosen scheduling regime (IUR) uses four states to maintain the statuses of threads."),
             typedef enum {
               TERMINATED,
               RUNNING,
@@ -113,22 +118,23 @@ class StatebasedLeanCTemplate {
               « rootState.createDeclarations »
             } Iface;
             
-            « FOR r : scopes.filter(ControlflowRegion) »
+            « FOR r : scopes.filter(ControlflowRegion).toList.reverse »
+             
             // This enum contains all states of the « r.name » region
             typedef enum {
                 « FOR s : r.states.indexed »« s.value.uniqueEnumName 
                 »« IF s.value.isHierarchical », « s.value.uniqueEnumName»RUNNING« ENDIF 
                 »« IF s.key < r.states.size-1 », « ENDIF»« ENDFOR »
-            } « r.uniqueName »State;
+            } « r.uniqueName »States;
             
             // The thread data of « r.name »
             typedef struct {
               ThreadStatus threadStatus; 
-              « r.uniqueName »State activeState; 
+              « r.uniqueName »States activeState; 
               char delayedEnabled; 
               Iface* iface; 
               « FOR c : r.states.map[ regions ].flatten.filter(ControlflowRegion) »
-              « c.uniqueName.capitalize »  « c.uniqueName »;
+              « c.uniqueName.capitalize »Context « c.uniqueContextName »;
               « ENDFOR »
             } « r.uniqueName.capitalize »Context;
             « ENDFOR »
@@ -139,14 +145,17 @@ class StatebasedLeanCTemplate {
               ThreadStatus threadStatus;
               
               « FOR r : rootState.regions.filter(ControlflowRegion) »
-              « r.uniqueName.capitalize » « r.uniqueName.lowerCapital »;
+              « r.uniqueContextMemberName » « r.uniqueName »;
               « ENDFOR »
             } TickData;
             
             
-            « FOR s : scopes »
-                static inline void « s.uniqueName »(« s.contextName.capitalize » *context);
-            « ENDFOR »
+«««            « FOR s : scopes »
+«««                static inline void « s.uniqueName »(« s.uniqueContextMemberName » *context);
+«««                « IF (s instanceof State && (s as State).isHierarchical) && s !== rootState »
+«««                static inline void « s.uniqueName »_running(« s.uniqueContextMemberName » *context);
+«««                « ENDIF »
+«««            « ENDFOR »
             
             void reset(TickData *context);
             void tick(TickData *context);
@@ -157,62 +166,201 @@ class StatebasedLeanCTemplate {
     
     protected def void createSource() {
         
-        createSourceReset
-        createSourceTick
-        
-        for (s : scopes) {
+        for (s : scopes.reverse) {
             switch (s) {
-                State: createSourceState(s)
-                ControlflowRegion: createSourceControlflowRegion(s)
+                State: source.append(createSourceState(s))
+                ControlflowRegion: source.append(createSourceControlflowRegion(s))
             }
-        }   
+        }
+           
+        source.append(createSourceReset)
+        source.append(createSourceTick)
     }
     
-    protected def void createSourceReset() {
-        val code = 
-            '''
-            void reset(TickData *context) {
-              «FOR r : rootState.regions.filter(ControlflowRegion) »
-              « setInterface("context->" + r.uniqueName.lowerCapital, r) »
-              « ENDFOR »
-            }
-            
-            '''
-            
-       source.append(code) 
+    protected def CharSequence createSourceReset() {
+        '''
+        void reset(TickData *context) {
+          «FOR r : rootState.regions.filter(ControlflowRegion) »
+          « setInterface("context->" + r.uniqueContextName + ".", r) »
+          context->« r.uniqueContextName ».activeState = « r.states.filter[ initial ].head.uniqueEnumName »;
+          « ENDFOR »
+          
+          context->threadStatus = READY;
+        }
+        
+        '''
     }
     
-    protected def void createSourceTick() {
-        val code = 
-            '''
-            void tick(TickData *context) {
-              if (!context->threadStatus) return;
-              
-              « FOR r : scopes.filter(ControlflowRegion) »
-              if (context->« contextStructNames.get(r) ».threadStatus == PAUSING) {
-                context->« contextStructNames.get(r) ».threadStatus = READY;
-                context->« contextStructNames.get(r) ».delayedEnabled = 1;
+    protected def CharSequence createSourceTick() {
+        '''
+        void tick(TickData *context) {
+          if (context->threadStatus == TERMINATED) return;
+          
+          « FOR r : rootState.regions.filter(ControlflowRegion) »
+          if (context->« r.uniqueContextName ».threadStatus != TERMINATED) {
+            context->« r.uniqueContextName ».threadStatus = RUNNING;
+            context->« r.uniqueContextName ».delayedEnabled = 1;
+          }
+          « ENDFOR »
+          
+          « rootState.uniqueName »(context);
+        }
+        
+        '''
+    }
+    
+    protected def CharSequence createSourceState(State state) {
+        '''
+        static inline void « state.uniqueName »(« state.uniqueContextMemberName » *context) {
+«««          printf("« state.uniqueName »\n"); fflush(stdout);
+        « IF state.isHierarchical »
+          « IF state !== rootState »
+            « FOR r : state.regions.filter(ControlflowRegion) »
+            
+              context->« r.uniqueContextName ».activeState = « r.states.filter[ initial ].head.uniqueEnumName »;
+              context->« r.uniqueContextName ».delayedEnabled = 0;
+              context->« r.uniqueContextName ».threadStatus = READY;
+            « ENDFOR »
+            
+              context->activeState = « state.uniqueEnumName »RUNNING;
+            }
+            
+            static inline void « state.uniqueName »_running(« state.uniqueContextMemberName » *context) {
+          « ENDIF »
+          « addSuperstateCode(state) »
+        « ENDIF »
+        
+        « addSimpleStateCode(state)»
+        }
+        
+        '''
+    }
+    
+    protected def CharSequence addSuperstateCode(State state) {
+        '''
+        « FOR r : state.regions.filter(ControlflowRegion) »
+        
+          if (context->« r.uniqueName ».threadStatus != TERMINATED) {
+            context->« r.uniqueName ».threadStatus = RUNNING;
+            context->« r.uniqueName ».delayedEnabled = 1;
+          }
+        « ENDFOR »« FOR r : state.regions.filter(ControlflowRegion) »
+        
+          « r.uniqueName »(&context->« r.uniqueContextName »);
+        « ENDFOR »        
+        '''
+    }
+    
+    protected def CharSequence addSimpleStateCode(State state) {
+        val hasDefaultTransition = state.outgoingTransitions.exists[ trigger === null && delay == DelayType.IMMEDIATE ]
+        
+        if (state.isFinal) {
+        '''  context->threadStatus = TERMINATED;''' 
+        } else {
+        '''
+        « IF state.outgoingTransitions.size == 1 && 
+             state.outgoingTransitions.head.delay == DelayType.IMMEDIATE && 
+             state.outgoingTransitions.head.trigger === null »
+        « addTransitionEffectCode(state.outgoingTransitions.head, "  ") »
+        « ELSE »
+          « FOR t : state.outgoingTransitions.indexed »
+          « addTransitionConditionCode(t.key, state.outgoingTransitions.size, t.value, hasDefaultTransition) » 
+          « ENDFOR »
+            « IF !hasDefaultTransition »
+              « IF state.outgoingTransitions.size == 0 »
+              context->threadStatus = READY;
+              « ELSE »
+              } else {
+                context->threadStatus = READY;
               }
+              « ENDIF »
+          « ENDIF »
+        « ENDIF »
+        '''
+        }
+    }
+    
+    protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
+        boolean hasDefaultTransition
+    ) {
+        valuedObjectPrefix = "context->iface->"
+        val defaultTransition = transition.trigger === null && transition.delay == DelayType.IMMEDIATE;
+        var CharSequence condition = ""
+        if (transition.preemption == PreemptionType.TERMINATION) {
+            val termRegions = transition.sourceState.regions.filter(ControlflowRegion).indexed
+            for (r : termRegions) {
+                condition = condition + "context->" + r.value.uniqueContextName + ".threadStatus == TERMINATED"
+                if (r.key != termRegions.size - 1) condition = condition + " && \n    " 
+            }                
+        } else {
+            if (transition.immediate) {
+                if (transition.trigger !== null) condition = transition.trigger.serializeHR
+            } else {
+                if (transition.trigger === null) condition = "context->delayedEnabled" 
+                    else condition = "context->delayedEnabled && " + transition.trigger.serializeHR
+            }  
+        }
+        
+        valuedObjectPrefix = ""
+        
+        '''
+          « IF index == 0 »
+          if (« condition ») {
+        « ELSE »
+          } else «IF !(defaultTransition) »if (« condition ») {« ENDIF »
+        « ENDIF » 
+        « addTransitionEffectCode(transition, "    ") »
+          « IF index == count-1 && defaultTransition »
+          }
+        « ENDIF »
+        '''
+    }
+    
+    protected def CharSequence addTransitionEffectCode(Transition transition, CharSequence indentation) {
+        valuedObjectPrefix = "context->iface->"     
+        '''
+          « FOR e : transition.effects »
+          « indentation »« e.serializeHR »;
+          « ENDFOR »
+          « indentation »context->delayedEnabled = 0;
+          « IF transition.sourceState != transition.targetState »
+          « indentation »context->activeState = « transition.targetState.uniqueEnumName »;
+          « ENDIF »
+          « valuedObjectPrefix = "" »
+        '''    
+    }
+    
+    protected def CharSequence createSourceControlflowRegion(ControlflowRegion region) {
+        '''
+        static void « region.uniqueName »(« region.uniqueContextMemberName » *context) {
+          while (context->threadStatus == RUNNING) {
+            switch (context->activeState) {
+              « FOR s : region.states »
+              case « s.uniqueEnumName »:
+                « s.uniqueName »(context);
+                « IF s.isHierarchical »
+                      // Superstate: intended fall-through 
+              
+                    case « s.uniqueEnumName »RUNNING:
+                      « s.uniqueName »_running(context);
+                      break;
+                « ELSE »
+                break;
+                « ENDIF »
+              
               « ENDFOR »
             }
-            
-            '''
+          }
+        }
         
-        source.append(code)
+        '''        
     }
     
-    protected def void createSourceState(State state) {
-        
-    }
-    
-    protected def void createSourceControlflowRegion(ControlflowRegion region) {
-        
-    }
+  
     
     
     
-    
-    protected def createDeclarations(State state) {
+    protected def CharSequence createDeclarations(State state) {
         val sb = new StringBuilder
         for (declaration : rootState.declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects) {
@@ -235,13 +383,13 @@ class StatebasedLeanCTemplate {
     }
     
     protected def String setInterface(String prefix, ControlflowRegion r) {
-        val code = 
+        var code = 
             '''
-              « prefix ».iface = &(context->iface);
+              « prefix »iface = &(context->iface);
             '''
         
         for (r2 : r.states.filter[ isHierarchical ].map[ regions ].flatten.filter(ControlflowRegion)) {
-            setInterface(prefix + r2.uniqueName.lowerCapital + ".", r2)
+            code = code + setInterface(prefix + r2.uniqueName + ".", r2)
         }
         
         return code
@@ -267,7 +415,7 @@ class StatebasedLeanCTemplate {
         scopeEnumNames.get(state)
     }
     
-    protected def String contextName(Scope scope) {
+    protected def String uniqueContextName(Scope scope) {
         if (scope instanceof State) {
             if (scope == rootState) {
                 '''TickData'''            
@@ -279,4 +427,16 @@ class StatebasedLeanCTemplate {
         }
     }
     
+    protected def String uniqueContextMemberName(Scope scope) {
+        if (scope instanceof State) {
+            if (scope == rootState) {
+                '''TickData'''            
+            } else {
+                scope.parentRegion.uniqueName + "Context"
+            }
+        } else if (scope instanceof ControlflowRegion) {
+            scope.uniqueName.capitalize + "Context"       
+        }
+    }
+        
 }
