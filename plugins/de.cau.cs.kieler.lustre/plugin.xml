@@ -29,6 +29,15 @@
       <Processor
             class="de.cau.cs.kieler.lustre.processors.lustreToScc.LustreToSCCharts">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationPreparation">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.compiler.processors.LustreSimulationTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.lustre.compiler.processors.LustreV6CodeGenerator">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -46,6 +55,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.c.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.lustre.compiler.v6.simulation.kico">
       </TransformationSystem>
    </extension>
 

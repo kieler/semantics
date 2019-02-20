@@ -1,3 +1,0 @@
-#!/usr/bin/env wish
-load $::env(LUSTRE_INSTALL)/tcl/simec.so
-run_simec

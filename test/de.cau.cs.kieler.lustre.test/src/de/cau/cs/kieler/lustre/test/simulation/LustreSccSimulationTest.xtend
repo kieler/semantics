@@ -27,7 +27,7 @@ import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
  *
  */
 class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
-    public static val String LUSTRE_LV6_SYSTEM = "de.cau.cs.kieler.lustre.compiler.lv6.simulation"
+    public static val String LUSTRE_LV6_SYSTEM = "de.cau.cs.kieler.lustre.compiler.v6.simulation"
     
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
     
@@ -45,7 +45,7 @@ class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
     }
     
     @Test
-    def void testSimulationInriaEsterel(LustreProgram lustreProgram, TestModelData modelData) {
+    def void testSimulationLustreLv6(LustreProgram lustreProgram, TestModelData modelData) {
         assumeTrue("Lustre Lv6 Compiler not available", available)
         assumeTrue("Program contains unsupported data types", lustreProgram.hasUnsupportedType)
         
@@ -53,7 +53,7 @@ class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
     }
     
     /**
-     * An EsterelProgram with an interface other than signals/valued signals with simple types or any hostcode is not yet supported
+     * An LustreProgram with an interface other than signals/valued signals with simple types or any hostcode is not yet supported
      */
     def boolean hasUnsupportedType(LustreProgram lus) {
 //        val signals = est.eAllContents.filter(Signal).toList
