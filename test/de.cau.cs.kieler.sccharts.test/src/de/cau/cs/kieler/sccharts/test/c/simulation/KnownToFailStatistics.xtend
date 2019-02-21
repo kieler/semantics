@@ -31,8 +31,9 @@ import org.junit.runner.RunWith
 @RunWith(ModelsRepositoryTestRunner)
 class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
 
+    private static val Thread shutdownHook = createAndRegisterShutdownHookToPrintStatistics
+
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
-    private static var boolean isShutdownHookAdded
     
     private val knownToFailProperties = #["known-to-fail",
                                           "simulation-fails-netlist-c",
@@ -79,22 +80,6 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
         knownToFailTests.put(property, knownToFailList)
     }
     
-    /**
-     * Adds a shutdown hook to the JVM (if not done yet)
-     * to print the statistics after all tests have been finished.
-     */
-    @BeforeClass
-    public def static void addShutdownHookToPrintStatistics() {
-        if(!isShutdownHookAdded) {
-            isShutdownHookAdded = true
-            val shutdownHook = new Thread{
-                override run(){
-                    printStatistics
-                }
-            }
-            Runtime.getRuntime().addShutdownHook(shutdownHook);
-        }
-    }
     
     public def static void printStatistics() {
         //This should be called after ALL tests are finished
@@ -107,5 +92,21 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
                 println("\t'"+modelData.modelPath+"'")
             }
         }
+    }
+    
+    /**
+     * Adds a shutdown hook to the JVM (if not done yet)
+     * to print the statistics after all tests have been finished.
+     * 
+     * This should be executed in a static initializer, such that it is executed only once.
+     */
+    public def static Thread createAndRegisterShutdownHookToPrintStatistics() {
+        val shutdownHook = new Thread{
+            override run(){
+                printStatistics
+            }
+        }
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        return shutdownHook
     }
 }
