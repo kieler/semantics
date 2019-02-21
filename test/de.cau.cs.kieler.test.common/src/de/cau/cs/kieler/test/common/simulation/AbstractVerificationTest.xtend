@@ -36,6 +36,8 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 import org.junit.After
 
+import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
+
 /**
  * @author aas
  *
@@ -104,8 +106,7 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         val process = currentVerificationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROCESS)
         if(process !== null && process.isAlive) {
             System.err.println("Killing verification process after test run")
-            process.destroy
-            
+            process.kill
         }
         
         currentVerificationContext = null
