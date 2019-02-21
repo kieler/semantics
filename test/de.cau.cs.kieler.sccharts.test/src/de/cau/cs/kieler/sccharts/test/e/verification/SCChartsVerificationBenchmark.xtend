@@ -28,6 +28,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestName
+import org.junit.rules.TestRule
+import org.junit.rules.Timeout
 import org.junit.runner.RunWith
 
 /**
@@ -45,6 +47,13 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
      */
     @Rule
     public TestName testName = new TestName();
+    
+    /**
+     * Timeout for tests.
+     * The verification is canceled in an @AfterClass method to kill the model checking process if needed.
+     */
+    @Rule
+    public final TestRule globalTimeout = Timeout.seconds(20);
     
     /**
      * Pattern to separate the test-method name and the model of the test-method.
@@ -102,11 +111,12 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         
         currentVerificationSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
         
-        for(property : verificationProperties) {
-            if(!property.isIgnoredInBenchmark) {
+        for (property : verificationProperties) {
+            if (!property.isIgnoredInBenchmark) {
                 println('''Testing VerificationProperty "«property.name»"''')
                 currentVerificationProperty = property
-                startVerification(#[currentVerificationProperty], verificationAssumptions)    
+                startVerification(#[currentVerificationProperty], verificationAssumptions)
+                recordStatistics()
                 println()
             }
         }
@@ -168,6 +178,10 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         println('''////////// «testName.methodName» ''')
         println('''////////////////////''')
         println()
+    }
+    
+    private def void recordStatistics() {
+        
     }
     
     private def String getTestMethodName() {

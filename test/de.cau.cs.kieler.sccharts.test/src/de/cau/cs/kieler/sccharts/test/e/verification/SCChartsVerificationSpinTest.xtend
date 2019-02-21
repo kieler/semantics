@@ -21,7 +21,10 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
+import org.junit.rules.Timeout
 import org.junit.runner.RunWith
 
 /**
@@ -32,6 +35,13 @@ import org.junit.runner.RunWith
 class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
     
     public static val scchartsInjector = SCTXStandaloneSetup.doSetup
+    
+    /**
+     * Timeout for tests.
+     * The verification is canceled in an @After method to kill the model checking process if needed.
+     */
+    @Rule
+    public final TestRule globalTimeout = Timeout.seconds(60);
     
     // General verification options
     private val createCounterexampleWithOutputs = false
