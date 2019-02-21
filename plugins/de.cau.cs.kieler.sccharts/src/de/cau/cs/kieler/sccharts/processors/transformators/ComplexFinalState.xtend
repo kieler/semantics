@@ -35,6 +35,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.ArrayList
+import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.model.properties.Property
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension de.cau.cs.kieler.sccharts.processors.transformators.Termination.*
@@ -48,6 +50,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
  * @kieler.rating 2013-09-05 proposed yellow
  */
 class ComplexFinalState extends SCChartsProcessor implements Traceable {
+
+    public static val IProperty<Boolean> CREATE_FINAL_REGIONS = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.complexFinalState.createFinalRegions", false)  
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -115,11 +120,24 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
     // only a single term signal 
     // (TODO)                
     def State transform(State rootState) {
+        val createFinalRegions = environment.getProperty(CREATE_FINAL_REGIONS)
+        
         // Traverse all parent states that contain at least one region that directly contains a complex final state                    
-        val parentSatesContainingComplexFinalStates = rootState.allStates.filter [
+        val parentStatesContainingComplexFinalStates = rootState.allStates.filter [
             isParentContainingComplexFinalState
-        ]
-        for (targetParentState : parentSatesContainingComplexFinalStates.toList) {
+        ].toList
+        
+        if (createFinalRegions) {
+            for (parentState : parentStatesContainingComplexFinalStates.immutableCopy) {
+                val regionsWithCFS = parentState.regions.filter(ControlflowRegion).filter[ containsComplexFinalState ].toList
+                if (regionsWithCFS.forall[ states.forall[ isComplexFinalState ] ]) {
+                    regionsWithCFS.forEach[ final = true ; states.forEach[ final = false ]]
+                    parentStatesContainingComplexFinalStates.remove(parentState)
+                }
+            }
+        }
+        
+        for (targetParentState : parentStatesContainingComplexFinalStates) {
             // val parentState = targetRegion.parentState
             targetParentState.transformComplexFinalState(rootState);
         }

@@ -369,9 +369,9 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
         
         // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
-        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new de.cau.cs.kieler.core.model.Pair<EObject, EObject>(dependency.eContainer, dependency.target)
-        val sourceNode = cfrs.first.node
-        val targetNode = cfrs.second.node
+        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
+        val sourceNode = cfrs.key.node
+        val targetNode = cfrs.value.node
 
 
         println(dependency.eContainer + " " + dependency.target)
@@ -379,8 +379,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (regionDependency) {
             dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
         } else {
-            val source = cfrs.first.getEdgeableParent
-            val target = cfrs.second.getEdgeableParent
+            val source = cfrs.key.getEdgeableParent
+            val target = cfrs.value.getEdgeableParent
             val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
 //            edge.source = source.node
 //            edge.target = target.node

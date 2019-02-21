@@ -41,7 +41,6 @@ import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.core.model.Pair
 import java.util.Map
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.klighd.util.KlighdProperties
@@ -149,12 +148,12 @@ class ShowStateDependencyHook extends SynthesisHook {
         
         // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
         val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
-        val sourceNode = cfrs.first.node
-        val targetNode = cfrs.second.node
+        val sourceNode = cfrs.key.node
+        val targetNode = cfrs.value.node
 
         if (!regionDependency) {
-            val source = cfrs.first.getEdgeableParent
-            val target = cfrs.second.getEdgeableParent
+            val source = cfrs.key.getEdgeableParent
+            val target = cfrs.value.getEdgeableParent
             val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
             edge.source = source.node
             edge.target = target.node

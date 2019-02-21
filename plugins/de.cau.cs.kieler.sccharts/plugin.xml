@@ -184,6 +184,9 @@
               class="de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencySort">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.DeLoopRegions">
         </Processor>
         <Processor
@@ -278,6 +281,9 @@
         </TransformationSystem>
         <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico">
         </TransformationSystem>
      </extension>
 
