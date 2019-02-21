@@ -13,9 +13,10 @@
  */
  package de.cau.cs.kieler.verification.processors
 
+import java.util.List
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 import java.util.function.Function
-import java.util.Locale
 
 /**
  * @author aas
@@ -61,13 +62,15 @@ class ProcessExtensions {
     }
     
     /**
-     * Kills the given process.
+     * Kills the given process. On Linux / Unix also all child processes are killed.
+     * This differs from destroyForcibly(), where child processes will remain as orphans
+     * and further use system resources.
      */
     public static def void kill(Process process) {
         // Process.destroyForcibly does not kill child processes (at least on Linux).
-        // For instance when using "/usr/bin/time OTHERCOMMAND",
-        // the time command gets killen but OTHERCOMMAND remains.
-        // Therefore we issue a system command of the 
+        // For instance when using "/usr/bin/time sleep 60",
+        // the time command can be killed but sleep remains as an orphan.
+        // Therefore we issue system commands to find all child processes and kill them manually.
         try {
             // Check if on unix taken from StackOverflow
             // https://stackoverflow.com/questions/228477/how-do-i-programmatically-determine-operating-system-in-java
@@ -75,22 +78,26 @@ class ProcessExtensions {
             val isUnix = osName.indexOf("nux") >= 0
             if(isUnix) {
                 val pid = process.getPID
-                // Kill process and child on unix taken from StackOverflow
-                // https://stackoverflow.com/questions/392022/whats-the-best-way-to-send-a-signal-to-all-members-of-a-process-group/33556110#33556110
-                
-                // Note that pkill -P does not kill child processes recursively, only the direct children
-                Runtime.getRuntime.exec('''pkill -P «pid»'''.toString)
-            } else {
-                // Try the Java API to kill the process
-                process.destroyForcibly
+                val childrenPIDs = getChildrenPIDs(pid, true)
+                for(childPID : childrenPIDs) {
+                    Runtime.getRuntime.exec('''kill «childPID»'''.toString)    
+                }            
             }
         } catch(Exception e) {
             e.printStackTrace
-            // Try the Java API to kill the process
-            process.destroyForcibly
         }
+        
+        // Kill parent process
+        process.destroyForcibly
     }
     
+    /**
+     * This is a linux / unix only command.
+     * Return the PID of the process.
+     * 
+     * @return The process ID if it is an instance of UNIXProcess,
+     *         or null if something went wrong.
+     */
     public static def Integer getPID(Process process) {
         // PID is only available on linux / unix in the private class UNIXProcess in the private field pid.
         try {
@@ -102,5 +109,61 @@ class ProcessExtensions {
             e.printStackTrace
             return null
         }
+    }
+    
+    /**
+     * This is a linux / unix only command.
+     * Returns a list of process IDs that are the child processes of the process with the given PID.
+     * Further child process IDs are collected recusively when the corresponding parameter is true.
+     * 
+     * @return The list of process IDs, or null if something went wrong
+     */
+    private static def List<Integer> getChildrenPIDs(Integer parentPID, boolean recursive) {
+        try {
+            // Find child processes using pgrep command
+            val pgrepProcess = Runtime.runtime.exec('''pgrep -P «parentPID»''')
+            pgrepProcess.waitForTermination([return false])
+            val pgrepOutput = pgrepProcess.readInputStream
+            if(pgrepOutput.isNullOrEmpty) {
+                return newArrayList
+            } else {
+                // Find further child processes recursively, or return findings
+                val childPIDsAsStringList = pgrepOutput.split('''\n''')
+                val directChildPIDs = childPIDsAsStringList.map[ Integer.valueOf(it) ]
+                if(recursive && !directChildPIDs.isNullOrEmpty) {
+                    val allChildPIDs = newArrayList
+                    allChildPIDs.addAll(directChildPIDs)
+                    for(childPID : directChildPIDs) {
+                        allChildPIDs.addAll(getChildrenPIDs(childPID, true))
+                    }
+                    return allChildPIDs
+                } else {
+                    return directChildPIDs                
+                }
+            }
+        } catch(Exception e) {
+            return null
+        }
+    }
+    
+    /**
+     * For manual testing of the kill implementation
+     */
+    private static class KillProcessTestMain { 
+        public static def void main(String[] args) {
+            val timeCommand = "/usr/bin/time"
+            val sleepCommand = "sleep 60"
+            val process = Runtime.getRuntime.exec('''«timeCommand» «timeCommand» «timeCommand» «sleepCommand»''')
+            
+            // Killing the process should destoy all time commands and the sleep command
+            Thread.sleep(4000)
+            
+            // Process.destroy only kills this very process,
+            // its children will remain as orphans and further use system resources.
+//            process.destroyForcibly
+            
+            // ProcessExtensions.kill also kills all child processes (on linux / unix)
+            process.kill
+        }    
     }
 }
