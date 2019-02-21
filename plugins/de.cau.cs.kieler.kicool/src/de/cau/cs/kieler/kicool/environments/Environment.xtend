@@ -14,7 +14,6 @@ package de.cau.cs.kieler.kicool.environments
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
@@ -108,30 +107,36 @@ class Environment extends EnvironmentPropertyHolder {
         new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
         
     public static val IProperty<Object> VERIFICATION_PROPERTIES = 
-        new Property<Object>("de.cau.cs.kieler.kicool.verificationProperties")
+        new Property<Object>("de.cau.cs.kieler.verification.verificationProperties")
         
     public static val IProperty<Object> VERIFICATION_ASSUMPTIONS = 
-        new Property<Object>("de.cau.cs.kieler.kicool.verificationAssumptions")
+        new Property<Object>("de.cau.cs.kieler.verification.verificationAssumptions")
+    
+    ////////////////////
+    // For verification (model checking)
+    ////////////////////
     
     public static val IProperty<IFile> VERIFICATION_MODEL_FILE = 
-        new Property<IFile>("de.cau.cs.kieler.kicool.verificationModelFile")
+        new Property<IFile>("de.cau.cs.kieler.verification.verificationModelFile")
     
     public static val IProperty<Boolean> CREATE_COUNTEREXAMPLES_WITH_OUTPUTS =
-        new Property<Boolean>("de.cau.cs.kieler.kicool.createCounterexamplesWithOutputs")
+        new Property<Boolean>("de.cau.cs.kieler.verification.createCounterexamplesWithOutputs")
        
     public static val IProperty<Boolean> SMV_USE_IVAR =
-        new Property<Boolean>("de.cau.cs.kieler.kicool.useIVARinSmvModels")
+        new Property<Boolean>("de.cau.cs.kieler.verification.useIVARinSmvModels")
          
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvInvarCommands")
+        new Property<List<String>>("de.cau.cs.kieler.verification.customInteractiveSmvInvarCommands")
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvLtlCommands")
+        new Property<List<String>>("de.cau.cs.kieler.verification.customInteractiveSmvLtlCommands")
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS = 
-        new Property<List<String>>("de.cau.cs.kieler.kicool.customInteractiveSmvCtlCommands")
+        new Property<List<String>>("de.cau.cs.kieler.verification.customInteractiveSmvCtlCommands")
         
     public static val IProperty<List<String>> CUSTOM_SPIN_COMMANDS =
-        new Property<List<String>>("de.cau.cs.kieler.kicool.customSpinCommands")
+        new Property<List<String>>("de.cau.cs.kieler.verification.customSpinCommands")
     
+    public static val IProperty<Process> VERIFICATION_PROCESS =
+        new Property<Process>("de.cau.cs.kieler.verification.verificationProcess")
     
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
     

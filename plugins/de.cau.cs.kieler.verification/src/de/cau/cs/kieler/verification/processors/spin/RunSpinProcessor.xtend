@@ -105,6 +105,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
         val process = processBuilder.start
+        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
