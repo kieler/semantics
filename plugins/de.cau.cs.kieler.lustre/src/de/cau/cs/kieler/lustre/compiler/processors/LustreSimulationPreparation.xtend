@@ -66,18 +66,22 @@ class LustreSimulationPreparation extends InplaceProcessor<LustreProgram> {
             if (node instanceof NodeDeclaration) {
                 
                 var inputCountFormat = "%0" + (node.input.parameter.size.toString.length) + "d";
+                var valObjCounter = 0
                 for (var i = 0; i < node.input.parameter.size; i++) {
                     var varDecl = node.input.parameter.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
-                        processValuedObject(valObj, INPUT, String.format(inputCountFormat, i))
+                        processValuedObject(valObj, INPUT, String.format(inputCountFormat, valObjCounter))
+                        valObjCounter++
                     }
                 }
                 
                 var outputCountFormat = "%0" + (node.output.parameter.size.toString.length) + "d";
+                valObjCounter = 0
                 for (var i = 0; i < node.output.parameter.size; i++) {
                     var varDecl = node.output.parameter.get(i)
                     for (ValuedObject valObj : varDecl.valuedObjects) {
-                        processValuedObject(valObj, OUTPUT, String.format(outputCountFormat, i))
+                        processValuedObject(valObj, OUTPUT, String.format(outputCountFormat, valObjCounter))
+                        valObjCounter++
                     }
                 }
             }

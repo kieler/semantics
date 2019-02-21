@@ -1,4 +1,4 @@
-public system de.cau.cs.kieler.lustre.compiler.v6.^simulation
+public system de.cau.cs.kieler.lustre.v6.^simulation
 	label "Lustre V6 Simulation"
 	
 pre process de.cau.cs.kieler.lustre.compiler.v6.^simulation.preparation

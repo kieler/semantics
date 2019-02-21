@@ -27,7 +27,7 @@ import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
  *
  */
 class LustreV6SimulationTest extends AbstractSimulationTest<LustreProgram> {
-    public static val String LUSTRE_V6_SYSTEM = "de.cau.cs.kieler.lustre.compiler.v6.simulation"
+    public static val String LUSTRE_V6_SYSTEM = "de.cau.cs.kieler.lustre.v6.simulation"
     
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
     

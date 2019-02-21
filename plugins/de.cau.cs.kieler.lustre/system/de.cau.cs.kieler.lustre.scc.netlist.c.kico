@@ -1,5 +1,0 @@
-public system de.cau.cs.kieler.lustre.scc.netlist.c
-	label "Lustre SCCharts Netlist-based"
-
-de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow
-system de.cau.cs.kieler.sccharts.netlist

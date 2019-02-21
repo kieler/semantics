@@ -149,15 +149,51 @@ class LustreTransformationExtension {
         }
     }
 
-    def createNorExpression(Stack<Expression> subExpressionList) {
-        // nor(A, B, C) <=> !and(A, B, C)
-        var aExpression = subExpressionList.pop
+    def createNoneOfExpression(Stack<Expression> subExpressionList) {
+        var listcopy = newArrayList
+        listcopy.addAll(subExpressionList)
 
+        // noneOf(A, B, C) <=> !or(A, B, C) || A & !or(B,C) || B & !or(A,C) || C & !or(A,B)
+        var aExpression = subExpressionList.pop
         while (!subExpressionList.isEmpty) {
             var bExpression = subExpressionList.pop
-            aExpression = createLogicalAndExpression(aExpression, bExpression)
+            aExpression = createLogicalOrExpression(aExpression, bExpression)
         }
+        var completeExpression = createNotExpression(aExpression)
+        
+        for (var i = 0; i < listcopy.size; i++) {
+            var frontVariable = listcopy.get(i).copy
+            var Expression orExpression = null
+            for (var j = 0; j < listcopy.size; j++) {
+                if (j != i) {
+                    var subExpression = listcopy.get(j).copy
+                    if (orExpression !== null) {
+                        orExpression = createLogicalOrExpression(orExpression, subExpression)
+                    } else {
+                        orExpression = subExpression
+                    }
+                }
+            }
+            var andExpression = createLogicalAndExpression(frontVariable, createNotExpression(orExpression))
+            completeExpression = createLogicalOrExpression(completeExpression, andExpression)
+        }
+        
+        return completeExpression
 
+    }
+    
+    def createNorExpression(Stack<Expression> subExpressionList) {
+        var listcopy = newArrayList
+        listcopy.addAll(subExpressionList)
+
+        // nor(A, B, C) <=> !or(A, B, C)
+        // !or(A,B,C)
+        var aExpression = subExpressionList.pop
+        while (!subExpressionList.isEmpty) {
+            var bExpression = subExpressionList.pop
+            aExpression = createLogicalOrExpression(aExpression, bExpression)
+        }
+        
         return createNotExpression(aExpression)
     }
 

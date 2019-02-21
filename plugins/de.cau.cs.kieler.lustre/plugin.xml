@@ -42,9 +42,6 @@
    <extension
          point="de.cau.cs.kieler.kicool.system">
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.scc.netlist.c.kico">
-      </TransformationSystem>
-      <TransformationSystem
             system="system/de.cau.cs.kieler.lustre.scc.controlflow.kico">
       </TransformationSystem>
       <TransformationSystem
@@ -57,7 +54,7 @@
             system="system/de.cau.cs.kieler.lustre.c.kico">
       </TransformationSystem>
       <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.compiler.v6.simulation.kico">
+            system="system/de.cau.cs.kieler.lustre.v6.simulation.kico">
       </TransformationSystem>
    </extension>
 

@@ -26,7 +26,7 @@ import static org.junit.Assume.*
  */
 class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
     
-    public static val String NETLIST_C_SYSTEM = "de.cau.cs.kieler.lustre.c.dataflow";
+    public static val String LUSTRE_DATAFLOW_NETLIST_C_SYSTEM = "de.cau.cs.kieler.lustre.c.dataflow";
     
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
     
@@ -46,7 +46,7 @@ class LustreSccSimulationTest extends AbstractSimulationTest<LustreProgram> {
         assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
         assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
         
-        startSimulationTest(NETLIST_C_SYSTEM, lustre, modelData, "EsterelSimulationSLICNetlistC")
+        startSimulationTest(LUSTRE_DATAFLOW_NETLIST_C_SYSTEM, lustre, modelData, "LustreSimulationSCCDFNetlistC")
     }
     
 }

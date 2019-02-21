@@ -12,10 +12,41 @@
  */
 package de.cau.cs.kieler.lustre.test.simulation
 
+import de.cau.cs.kieler.lustre.LustreStandaloneSetup
+import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
+import de.cau.cs.kieler.test.common.repository.TestModelData
+import org.junit.Test
+
+import static org.junit.Assume.*
+
 /**
- * @author stu115342
+ * @author lgr
  *
  */
-class LustreSccControlFlowApproachSimulationTest {
+class LustreSccControlFlowApproachSimulationTest extends AbstractSimulationTest<LustreProgram> {
+    
+    public static val String LUSTRE_CONTROLFLOW_NETLIST_C_SYSTEM = "de.cau.cs.kieler.lustre.c.controlflow";
+    
+    static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
+    
+    new() {
+        super(lustreInjector)
+    }
+    
+    override filter(TestModelData modelData) {
+        return modelData.hasSimulationTrace
+            && modelData.modelProperties.contains("lustre")
+            && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+            && !modelData.modelProperties.contains("must-fail-validation")
+    }
+    
+    @Test
+    def void testSimulationSLICNetlistC(LustreProgram lustre, TestModelData modelData) {
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-netlist-c") || modelData.modelProperties.contains("simulation-fails-c"))
+        assumeFalse("Has 'netlist-fails' property", modelData.modelProperties.contains("netlist-fails"))
+        
+        startSimulationTest(LUSTRE_CONTROLFLOW_NETLIST_C_SYSTEM, lustre, modelData, "LustreSimulationSCCCFNetlistC")
+    }
     
 }

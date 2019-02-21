@@ -75,6 +75,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         
         var equationExpression = equation.expression
         
+        
         // If it is a simple expression, a during action can be used, otherwise special constructs
         // simple: this and all subs are constants, references, or/and/mod/div/plus/minus/mul/eq/comp/pre/uminus/not
         if (equationExpression instanceof OperatorExpression && (equationExpression as OperatorExpression).operator == OperatorType.CONDITIONAL) {
@@ -118,6 +119,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 ]
             }
         }
+        
         // Create a region
         // Create initial and next
         // Compute each subexpression in its own subregion if it 'cannot be transformed into a single ScCharts affectation'

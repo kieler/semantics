@@ -75,6 +75,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     public static final String DATAFLOW_REGION_PREFIX = "df"
     public static final String CONTROLFLOW_REGION_PREFIX = "cf"
+    public static final String ALIBI = "alibi_"
 
     // TODO: This should be configurable for the user.    
     public static boolean USE_SIGNALS_FOR_CLOCKED_VARIABLES = true
@@ -279,6 +280,12 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         for (assertion : node.assertions) {
             assertion.processAssertion(rootState)
         }
+        
+        if (rootState.regions.isEmpty) {
+            // If there is no region yet, create one otherwise the model is terminated
+            var cfRegion = rootState.createControlflowRegion(ALIBI +  "region")
+            cfRegion.createInitialState(ALIBI + "state")
+        }
     }
 
     protected def createConstantDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
@@ -382,7 +389,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case LOGICAL_XOR: {
                         convertedExpression = createXorExpression(subExpressionList)
                     }
-                    case NONEOF,
+                    case NONEOF: {
+                        convertedExpression = createNoneOfExpression(subExpressionList)
+                    }
                     case NOR: {
                         convertedExpression = createNorExpression(subExpressionList)
                     }
