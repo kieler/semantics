@@ -48,6 +48,8 @@ class StatebasedLeanCTemplate {
     @Accessors val header = new StringBuilder
     @Accessors val source = new StringBuilder
     
+    @Accessors var boolean debug = false;
+    
     protected State rootState
     protected List<Scope> scopes
     protected Map<Scope, String> scopeNames
@@ -183,6 +185,7 @@ class StatebasedLeanCTemplate {
           «FOR r : rootState.regions.filter(ControlflowRegion) »
           « setInterface("context->" + r.uniqueContextName + ".", r) »
           context->« r.uniqueContextName ».activeState = « r.states.filter[ initial ].head.uniqueEnumName »;
+          context->« r.uniqueContextName ».threadStatus = READY;
           « ENDFOR »
           
           context->threadStatus = READY;
@@ -194,6 +197,7 @@ class StatebasedLeanCTemplate {
     protected def CharSequence createSourceTick() {
         '''
         void tick(TickData *context) {
+          « IF debug »printf("TICK\n"); fflush(stdout);« ENDIF »
           if (context->threadStatus == TERMINATED) return;
           
           « FOR r : rootState.regions.filter(ControlflowRegion) »
@@ -212,7 +216,7 @@ class StatebasedLeanCTemplate {
     protected def CharSequence createSourceState(State state) {
         '''
         static inline void « state.uniqueName »(« state.uniqueContextMemberName » *context) {
-«««          printf("« state.uniqueName »\n"); fflush(stdout);
+          « IF debug »printf("« state.uniqueName »\n"); fflush(stdout);« ENDIF »
         « IF state.isHierarchical »
           « IF state !== rootState »
             « FOR r : state.regions.filter(ControlflowRegion) »
@@ -252,7 +256,9 @@ class StatebasedLeanCTemplate {
     }
     
     protected def CharSequence addSimpleStateCode(State state) {
-        val hasDefaultTransition = state.outgoingTransitions.exists[ trigger === null && delay == DelayType.IMMEDIATE ]
+        val hasDefaultTransition = state.outgoingTransitions.exists[ trigger === null && 
+            delay == DelayType.IMMEDIATE && preemption != PreemptionType.TERMINATION
+        ]
         
         if (state.isFinal) {
         '''  context->threadStatus = TERMINATED;''' 
@@ -260,7 +266,8 @@ class StatebasedLeanCTemplate {
         '''
         « IF state.outgoingTransitions.size == 1 && 
              state.outgoingTransitions.head.delay == DelayType.IMMEDIATE && 
-             state.outgoingTransitions.head.trigger === null »
+             state.outgoingTransitions.head.trigger === null &&
+             state.outgoingTransitions.head.preemption != PreemptionType.TERMINATION »
         « addTransitionEffectCode(state.outgoingTransitions.head, "  ") »
         « ELSE »
           « FOR t : state.outgoingTransitions.indexed »
@@ -294,7 +301,8 @@ class StatebasedLeanCTemplate {
             }                
         } else {
             if (transition.immediate) {
-                if (transition.trigger !== null) condition = transition.trigger.serializeHR
+                if (transition.trigger !== null) condition = transition.trigger.serializeHR 
+                    else condition = "1"
             } else {
                 if (transition.trigger === null) condition = "context->delayedEnabled" 
                     else condition = "context->delayedEnabled && " + transition.trigger.serializeHR
@@ -310,7 +318,7 @@ class StatebasedLeanCTemplate {
           } else «IF !(defaultTransition) »if (« condition ») {« ENDIF »
         « ENDIF » 
         « addTransitionEffectCode(transition, "    ") »
-          « IF index == count-1 && defaultTransition »
+          « IF index == count-1 && hasDefaultTransition »
           }
         « ENDIF »
         '''
