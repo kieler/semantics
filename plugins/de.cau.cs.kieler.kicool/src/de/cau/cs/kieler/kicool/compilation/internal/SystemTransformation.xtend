@@ -57,6 +57,14 @@ class SystemTransformation {
             }
             first.preconfig.members.addAll(0, system.config.members.map[copy])
          }
+         
+         if (processorSystem !== cc.system && system.startConfig !== null) {
+             if (cc.system.startConfig === null) {
+                 cc.system.startConfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
+             }
+             cc.system.startConfig.members.addAll(0, system.startConfig.members.map[copy])
+         }
+         
          return system.processors
     }
     

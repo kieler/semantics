@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kicool.System#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#getConfig <em>Config</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.System#getStartConfig <em>Start Config</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isPublic <em>Public</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isDeveloper <em>Developer</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.System#isSimulation <em>Simulation</em>}</li>
@@ -150,6 +151,32 @@ public interface System extends Pragmatable, Annotatable {
      * @generated
      */
     void setConfig(JsonObjectValue value);
+
+    /**
+     * Returns the value of the '<em><b>Start Config</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Start Config</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Start Config</em>' containment reference.
+     * @see #setStartConfig(JsonObjectValue)
+     * @see de.cau.cs.kieler.kicool.KiCoolPackage#getSystem_StartConfig()
+     * @model containment="true"
+     * @generated
+     */
+    JsonObjectValue getStartConfig();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kicool.System#getStartConfig <em>Start Config</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Start Config</em>' containment reference.
+     * @see #getStartConfig()
+     * @generated
+     */
+    void setStartConfig(JsonObjectValue value);
 
     /**
      * Returns the value of the '<em><b>Public</b></em>' attribute.

@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getProcessors <em>Processors</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getIntermediates <em>Intermediates</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getConfig <em>Config</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#getStartConfig <em>Start Config</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isPublic <em>Public</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isDeveloper <em>Developer</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kicool.impl.SystemImpl#isSimulation <em>Simulation</em>}</li>
@@ -126,6 +127,16 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
     protected JsonObjectValue config;
 
     /**
+     * The cached value of the '{@link #getStartConfig() <em>Start Config</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getStartConfig()
+     * @generated
+     * @ordered
+     */
+    protected JsonObjectValue startConfig;
+
+    /**
      * The default value of the '{@link #isPublic() <em>Public</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -209,6 +220,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KiCoolPackage.SYSTEM__ANNOTATIONS);
@@ -221,6 +233,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getId() {
         return id;
     }
@@ -230,6 +243,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setId(String newId) {
         String oldId = id;
         id = newId;
@@ -242,6 +256,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -251,6 +266,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
@@ -263,6 +279,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcessorEntry getProcessors() {
         return processors;
     }
@@ -287,6 +304,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProcessors(ProcessorEntry newProcessors) {
         if (newProcessors != processors) {
             NotificationChain msgs = null;
@@ -306,6 +324,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<IntermediateReference> getIntermediates() {
         if (intermediates == null) {
             intermediates = new EObjectContainmentEList<IntermediateReference>(IntermediateReference.class, this, KiCoolPackage.SYSTEM__INTERMEDIATES);
@@ -318,6 +337,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue getConfig() {
         return config;
     }
@@ -342,6 +362,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConfig(JsonObjectValue newConfig) {
         if (newConfig != config) {
             NotificationChain msgs = null;
@@ -361,6 +382,52 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public JsonObjectValue getStartConfig() {
+        return startConfig;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetStartConfig(JsonObjectValue newStartConfig, NotificationChain msgs) {
+        JsonObjectValue oldStartConfig = startConfig;
+        startConfig = newStartConfig;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__START_CONFIG, oldStartConfig, newStartConfig);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setStartConfig(JsonObjectValue newStartConfig) {
+        if (newStartConfig != startConfig) {
+            NotificationChain msgs = null;
+            if (startConfig != null)
+                msgs = ((InternalEObject)startConfig).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.SYSTEM__START_CONFIG, null, msgs);
+            if (newStartConfig != null)
+                msgs = ((InternalEObject)newStartConfig).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KiCoolPackage.SYSTEM__START_CONFIG, null, msgs);
+            msgs = basicSetStartConfig(newStartConfig, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KiCoolPackage.SYSTEM__START_CONFIG, newStartConfig, newStartConfig));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public boolean isPublic() {
         return public_;
     }
@@ -370,6 +437,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPublic(boolean newPublic) {
         boolean oldPublic = public_;
         public_ = newPublic;
@@ -382,6 +450,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDeveloper() {
         return developer;
     }
@@ -391,6 +460,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeveloper(boolean newDeveloper) {
         boolean oldDeveloper = developer;
         developer = newDeveloper;
@@ -403,6 +473,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSimulation() {
         return simulation;
     }
@@ -412,6 +483,7 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSimulation(boolean newSimulation) {
         boolean oldSimulation = simulation;
         simulation = newSimulation;
@@ -435,6 +507,8 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
                 return ((InternalEList<?>)getIntermediates()).basicRemove(otherEnd, msgs);
             case KiCoolPackage.SYSTEM__CONFIG:
                 return basicSetConfig(null, msgs);
+            case KiCoolPackage.SYSTEM__START_CONFIG:
+                return basicSetStartConfig(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -459,6 +533,8 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
                 return getIntermediates();
             case KiCoolPackage.SYSTEM__CONFIG:
                 return getConfig();
+            case KiCoolPackage.SYSTEM__START_CONFIG:
+                return getStartConfig();
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return isPublic();
             case KiCoolPackage.SYSTEM__DEVELOPER:
@@ -497,6 +573,9 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
                 return;
             case KiCoolPackage.SYSTEM__CONFIG:
                 setConfig((JsonObjectValue)newValue);
+                return;
+            case KiCoolPackage.SYSTEM__START_CONFIG:
+                setStartConfig((JsonObjectValue)newValue);
                 return;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic((Boolean)newValue);
@@ -537,6 +616,9 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
             case KiCoolPackage.SYSTEM__CONFIG:
                 setConfig((JsonObjectValue)null);
                 return;
+            case KiCoolPackage.SYSTEM__START_CONFIG:
+                setStartConfig((JsonObjectValue)null);
+                return;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 setPublic(PUBLIC_EDEFAULT);
                 return;
@@ -570,6 +652,8 @@ public class SystemImpl extends PragmatableImpl implements de.cau.cs.kieler.kico
                 return intermediates != null && !intermediates.isEmpty();
             case KiCoolPackage.SYSTEM__CONFIG:
                 return config != null;
+            case KiCoolPackage.SYSTEM__START_CONFIG:
+                return startConfig != null;
             case KiCoolPackage.SYSTEM__PUBLIC:
                 return public_ != PUBLIC_EDEFAULT;
             case KiCoolPackage.SYSTEM__DEVELOPER:
