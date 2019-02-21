@@ -66,7 +66,7 @@ class StatebasedLeanCTemplate {
         scopeEnumNames = <Scope, String> newHashMap
         contextStructNames = <Scope, String> newHashMap
         regionCounter = 0
-        stateEnumCounter = 0
+        stateEnumCounter = 1
         enumerateScopes(rootState, "", "")
      
         createHeader
@@ -80,9 +80,13 @@ class StatebasedLeanCTemplate {
                 val name = if (namePrefix.nullOrEmpty) scope.name.hostcodeSafeName else namePrefix + '''_state''' + scope.name.hostcodeSafeName
                 scopeNames.put(scope, name)
             }
-            val enumName = 
-                (if (scopeEnumNames.containsKey(scope)) '''S''' + (stateEnumCounter++) else scope.name.hostcodeSafeName).
-                toUpperCase
+            
+            var enumName = scope.name.hostcodeSafeName.toUpperCase
+            
+            while (scopeEnumNames.containsValue(enumName)) {
+                enumName = scope.name.hostcodeSafeName.toUpperCase + (stateEnumCounter++)
+            }
+            
             scopeEnumNames.put(scope, enumName)
             for (region : scope.regions.filter(ControlflowRegion)) {
                 val newContextPrefix = if (scope.parentRegion === null) contextPrefix  
