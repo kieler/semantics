@@ -131,21 +131,26 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         property.updateTaskDescriptionAndNotify("Parsing model checker output...")
         val spinOutputInterpreter = new SpinOutputInterpreter(processOutput)
         if(spinOutputInterpreter.wroteTrail) {
-            val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
-            val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
-            property.spinTrailFile = trailFile
-            property.updateTaskDescriptionAndNotify("Parsing model checker counterexample...")
-            val trailInterpreter = new SpinTrailInterpreter(trailOutput)
-            val counterexample = trailInterpreter.counterexample
-            if(counterexample !== null) {
-                val store = VariableStore.get(compilationContext.startEnvironment)
-                property.updateTaskDescriptionAndNotify("Saving KTrace...")
-                val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
-                val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
-                val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
-                property.fail(ktraceFile)
-            } else {
-                property.fail(new Exception("Could not create counterexample from spin trail"))
+            property.status = VerificationPropertyStatus.FAILED
+            
+            // Create counterexample from spin trail
+            if(isCreateCounterexamples) {
+                val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
+                val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
+                property.spinTrailFile = trailFile
+                property.updateTaskDescriptionAndNotify("Parsing model checker counterexample...")
+                val trailInterpreter = new SpinTrailInterpreter(trailOutput)
+                val counterexample = trailInterpreter.counterexample
+                if(counterexample !== null) {
+                    val store = VariableStore.get(compilationContext.startEnvironment)
+                    property.updateTaskDescriptionAndNotify("Saving KTrace...")
+                    val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
+                    val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
+                    val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
+                    property.fail(ktraceFile)
+                } else {
+                    property.fail(new Exception("Could not create counterexample from spin trail"))
+                }    
             }
         } else {
             property.status = VerificationPropertyStatus.PASSED

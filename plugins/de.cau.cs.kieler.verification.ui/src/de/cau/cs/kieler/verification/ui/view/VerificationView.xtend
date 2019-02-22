@@ -95,6 +95,7 @@ class VerificationView extends ViewPart {
     private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
     private static val CUSTOM_SPIN_COMMANDS_PREF_STORE_ID = "customSpinCommands"
     private static val SMV_USE_IVAR = "SmvModelsWithIVAR"
+    private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
     
     private var CompilationContext propertyAnalyzerContext
@@ -186,6 +187,13 @@ class VerificationView extends ViewPart {
         }
         
         // Options
+        val createCounterexampleAction = new Action("Create Counterexamples", IAction.AS_CHECK_BOX) {
+            override run() {
+                setBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, isChecked)
+            }
+        }
+        createCounterexampleAction.checked = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
+        
         val writeOutputsToCounterexampleAction = new Action("Create Counterexamples With Outputs", IAction.AS_CHECK_BOX) {
             override run() {
                 setBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, isChecked)
@@ -237,6 +245,7 @@ Example commands:
         // Pupulate options submenu
         val optionsSubmenu = new MenuManager("Options")
         optionsSubmenu => [
+            add(createCounterexampleAction)
             add(writeOutputsToCounterexampleAction)
             add(useIVARinSmvModels)
             add(openEditSmvCommandsDialogAction)
@@ -586,6 +595,8 @@ Example commands:
         verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
         
         // Add options
+        val createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
+        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES, createCounterexamples)
         val createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
         verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamplesWithOutputs)
         

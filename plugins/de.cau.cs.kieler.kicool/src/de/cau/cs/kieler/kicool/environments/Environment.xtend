@@ -123,11 +123,13 @@ class Environment extends EnvironmentPropertyHolder {
         new Property<IFile>("de.cau.cs.kieler.verification.verificationModelFile")
     
     public static val IProperty<Boolean> CREATE_COUNTEREXAMPLES_WITH_OUTPUTS =
-        new Property<Boolean>("de.cau.cs.kieler.verification.createCounterexamplesWithOutputs")
-       
+        new Property<Boolean>("de.cau.cs.kieler.verification.createCounterexamplesWithOutputs", true)
+   public static val IProperty<Boolean> CREATE_COUNTEREXAMPLES =
+        new Property<Boolean>("de.cau.cs.kieler.verification.createCounterexamples", true)
+        
     public static val IProperty<Boolean> SMV_USE_IVAR =
-        new Property<Boolean>("de.cau.cs.kieler.verification.useIVARinSmvModels")
-         
+        new Property<Boolean>("de.cau.cs.kieler.verification.useIVARinSmvModels", false)
+    
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS = 
         new Property<List<String>>("de.cau.cs.kieler.verification.customInteractiveSmvInvarCommands")
     public static val IProperty<List<String>> CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS = 

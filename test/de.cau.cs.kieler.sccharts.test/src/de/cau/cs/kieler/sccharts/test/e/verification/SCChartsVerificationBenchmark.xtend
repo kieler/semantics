@@ -88,7 +88,8 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     protected var String currentVerificationSystemId
     
     // General verification options
-    protected var createCounterexampleWithOutputs = false
+    protected var createCounterexamples = false
+    protected var createCounterexamplesWithOutputs = false
     
     // NuSMV / nuXmv verification options
     protected var boolean smvUseIVAR = false
@@ -168,7 +169,8 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         super.configureContext(verificationContext)
         
         // Add options
-        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexampleWithOutputs)
+        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamplesWithOutputs)
+        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamples)
         
         // Add SMV options
         verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, smvUseIVAR)

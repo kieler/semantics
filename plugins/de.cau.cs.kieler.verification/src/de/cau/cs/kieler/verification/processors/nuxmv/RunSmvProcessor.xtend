@@ -138,7 +138,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
         property.updateTaskDescriptionAndNotify("Parsing model checker output...")
-        val interpreter = new NuxmvOutputInterpreter(processOutput)
+        val interpreter = new NuxmvOutputInterpreter(processOutput, isCreateCounterexamples)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
         if(counterexample !== null && property.matches(counterexample.spec)) {

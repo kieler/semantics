@@ -121,4 +121,8 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
         compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
         return process
     }
+    
+    protected def boolean isCreateCounterexamples() {
+        return compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES)
+    }
 }

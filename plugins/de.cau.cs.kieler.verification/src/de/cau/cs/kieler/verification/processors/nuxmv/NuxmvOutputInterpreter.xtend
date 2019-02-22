@@ -38,15 +38,18 @@ class NuxmvOutputInterpreter extends LineBasedParser {
     private static val ISSUE_IN_FILE_PATTERN = Pattern.compile('''(.*)file(.*): line (\d+):(.*)''')
     private static val TERMINATED_BY_SIGNAL_PATTERN = Pattern.compile('''.*nuXmv terminated by a signal''')
     
+    private var boolean parseCounterexamples = true
+    
     private enum ParseTarget {
         SPEC_RESULT,
         COUNTEREXAMPLE
     }
     
-    new(String processOutput) {
+    new(String processOutput, boolean parseCounterexamples) {
         if(processOutput.isNullOrEmpty) {
             throw new Exception("nuXmv output is empty")
         }
+        this.parseCounterexamples = parseCounterexamples
         parse(processOutput)
     }
     
@@ -77,7 +80,7 @@ class NuxmvOutputInterpreter extends LineBasedParser {
                 // This should never happen
                 throw new Exception('''Inconsistent specification result state (expected true or false, but got line: «line»)''')
             }
-        } else if (parseTarget == ParseTarget.COUNTEREXAMPLE) {
+        } else if (parseCounterexamples && parseTarget == ParseTarget.COUNTEREXAMPLE) {
             // Find the start of the next state
             val stateMatcher = STATE_PATTERN.matcher(trimmedLine)
             if(stateMatcher.matches) {
