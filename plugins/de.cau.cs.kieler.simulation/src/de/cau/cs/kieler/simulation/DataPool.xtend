@@ -19,7 +19,9 @@ import com.google.gson.JsonNull
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
@@ -27,10 +29,9 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import java.util.Map
 import java.util.Set
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.xbase.lib.util.ToStringBuilder
 
 import static extension de.cau.cs.kieler.simulation.util.JsonUtil.*
-import org.eclipse.xtend.lib.annotations.ToString
-import org.eclipse.xtext.xbase.lib.util.ToStringBuilder
 
 /**
  * @author als
@@ -241,12 +242,12 @@ class DataPoolEntry {
     /**
      * Convenance getter that will choose the data form the first associates VariableInformation assuming that there are only non ambigous data.
      */
-    def Value getTypedKValue() {
+    def Expression getTypedKValue() {
         return getTypedKValue(null)
     }
     
-    def Value getTypedKValue(Simulatable sim) {
-        return getTypedValue(sim, rawValue, OUTPUT_TYPE.KEX) as Value
+    def Expression getTypedKValue(Simulatable sim) {
+        return getTypedValue(sim, rawValue, OUTPUT_TYPE.KEX) as Expression
     }
     
     /**
@@ -327,7 +328,14 @@ class DataPoolEntry {
                                 throw new IllegalArgumentException("Cannot convert from type string")
                             }
                             switch (output) {
-                                case KEX: return createFloatValue => [value = number]
+                                case KEX: return if (number < 0) {
+                                    createOperatorExpression => [
+                                        operator = OperatorType.SUB
+                                        subExpressions += createFloatValue => [value = Math.abs(number)]
+                                    ]
+                                } else {
+                                    createFloatValue => [value = number]
+                                }
                                 case JSON: return new JsonPrimitive(number)
                                 case JAVA: return number
                             }
@@ -341,7 +349,14 @@ class DataPoolEntry {
                                 throw new IllegalArgumentException("Cannot convert from type string")
                             }
                             switch (output) {
-                                case KEX: return createIntValue => [value = number]
+                                case KEX: return if (number < 0) {
+                                    createOperatorExpression => [
+                                        operator = OperatorType.SUB
+                                        subExpressions += createIntValue => [value = Math.abs(number)]
+                                    ]
+                                } else {
+                                    createIntValue => [value = number]
+                                }
                                 case JSON: return new JsonPrimitive(number)
                                 case JAVA: return number
                             }
