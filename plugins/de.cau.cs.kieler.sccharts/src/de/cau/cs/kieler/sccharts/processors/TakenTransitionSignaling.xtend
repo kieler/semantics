@@ -16,7 +16,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
@@ -26,14 +25,10 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.List
-import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author aas
@@ -43,28 +38,16 @@ class TakenTransitionSignaling extends SCChartsProcessor {
     
     public static val transitionArrayName = "_taken_transitions"
     
-    @Inject
-    extension KExpressionsDeclarationExtensions
-    @Inject
-    extension KExpressionsCreateExtensions
-    @Inject
-    extension KExtDeclarationExtensions
-    @Inject
-    extension SCChartsStateExtensions
-    @Inject
-    extension SCChartsControlflowRegionExtensions
-    @Inject
-    extension SCChartsTransitionExtensions
-    @Inject 
-    extension SCChartsScopeExtensions
-    @Inject
-    extension SCChartsActionExtensions
-    @Inject
-    extension KEffectsExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExtDeclarationExtensions
+    @Inject extension SCChartsScopeExtensions
+    @Inject extension SCChartsActionExtensions
+    @Inject extension KEffectsExtensions
     
     public static val ARRAY_SIZE = new Property<Integer>("takenTransitionSignaling.arraySize", 0)
     
-    public static def List<Transition> getTransitions(State rootState) {
+    static def List<Transition> getTransitions(State rootState) {
         // Get all transitions in the model
         val transitions = <Transition> newArrayList
         for(state : StateIterator.sccAllContainedStates(rootState).toIterable) {

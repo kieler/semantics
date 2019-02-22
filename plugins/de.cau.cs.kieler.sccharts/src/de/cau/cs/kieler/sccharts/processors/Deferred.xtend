@@ -13,15 +13,12 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -125,7 +122,7 @@ class Deferred extends SCChartsProcessor implements Traceable {
             // Only do this for outgoing immediate transitions!
             for (transition : state.outgoingTransitions) {
                 if (transition.immediate) {
-                    if (transition.trigger == null) {
+                    if (transition.trigger === null) {
                         val deferTest = not(deferVariable.reference)
                         transition.setTrigger(deferTest)
                     } else {

@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -32,7 +30,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
@@ -218,7 +215,7 @@ class Exit extends SCChartsProcessor implements Traceable {
                 for (effect : exitAction.effects) {
                     transition.addEffect(effect.copy)
                 }
-                if (exitAction.trigger != null) {
+                if (exitAction.trigger !== null) {
                     transition.setTrigger(exitAction.trigger)
 
                     // add default transition

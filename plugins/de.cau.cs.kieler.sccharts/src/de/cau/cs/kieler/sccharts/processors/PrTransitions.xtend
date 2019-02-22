@@ -50,7 +50,7 @@ class PrTransitions extends SCChartsProcessor {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
     
-    private static val GENERATE_PREFIX = "__prT_"
+    static val GENERATE_PREFIX = "__prT_"
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.prTransitions"
@@ -96,7 +96,7 @@ class PrTransitions extends SCChartsProcessor {
         val randomState = prRegion.createState(statePrefix + "_Random", "Random").uniqueName
         val delayInitState = prRegion.createState(statePrefix + "_RandomDelay", "DInit").uniqueName
         val delayState = prRegion.createState(statePrefix + "_RandomDelay", "DRandom").uniqueName
-        val initTransition = initialState.createImmediateTransitionTo(randomState) => [
+        initialState.createImmediateTransitionTo(randomState) => [
             effects += rVar.createAssignment(createRandomCall)
         ]
         randomState.createTransitionTo(delayInitState) 

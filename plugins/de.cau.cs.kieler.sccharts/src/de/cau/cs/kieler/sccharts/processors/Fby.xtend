@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
 
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -29,11 +28,9 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsReplacementExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.Expression
@@ -53,14 +50,12 @@ class Fby extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsTypeExtensions
-    @Inject extension KExpressionsReplacementExtensions
     
     
-    private static val GENERATED_PREFIX = "__fby_"
+    static val GENERATED_PREFIX = "__fby_"
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.fby"

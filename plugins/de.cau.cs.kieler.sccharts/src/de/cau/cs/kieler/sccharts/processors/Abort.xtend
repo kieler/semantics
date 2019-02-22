@@ -137,7 +137,7 @@ class Abort extends SCChartsProcessor implements Traceable {
         // if a termination is mixed with strong aborts it does not matter because we do not
         // have a last wish to consider!
         val singleTermination = targetState.outgoingTransitions.filter [e|
-            e.isTermination && e.implicitlyImmediate && e.trigger == null
+            e.isTermination && e.implicitlyImmediate && e.trigger === null
         ].size == 1 && targetState.outgoingTransitions.filter[e|e.isTermination].size == 1
         val noWeakAborts = targetState.outgoingTransitions.filter[e|e.isWeakAbort].size == 0
         
@@ -163,7 +163,7 @@ class Abort extends SCChartsProcessor implements Traceable {
         // + not a termination self loop?
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) ||
             ((state.outgoingTransitions.size == 1) && (!(state.outgoingTransitions.filter[isTermination].filter [
-                trigger == null
+                trigger === null
             ].size == 1))))
 
         if ((state.controlflowRegionsContainStates) && stateHasUntransformedTransitions) {
@@ -205,7 +205,7 @@ class Abort extends SCChartsProcessor implements Traceable {
             // ]
             // val terminationHandlingNeeded = (notCoreTerminations.size > 0)
             val delayedAbortHandlingNeeded = (delayedWeakAborts.size > 0) || mixedDelayedStrongAborts
-            val termination = outgoingTransitions.filter[e|e.isTermination && e.trigger == null].size > 0
+            val termination = outgoingTransitions.filter[e|e.isTermination && e.trigger === null].size > 0
             val anyFinalStateInEveryRegionButNoTermination = aFinalStateInEveryRegion && !termination &&
                 !state.isRootState
             // !!!CHANGED
@@ -381,7 +381,7 @@ class Abort extends SCChartsProcessor implements Traceable {
 
                         // Do the following also in case of mixed delayed/immediate STRONG aborts!
                         val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                        if (transitionTriggerVariable != null) {
+                        if (transitionTriggerVariable !== null) {
                             ctrlTransition.addEffect(transitionTriggerVariable.createAssignment(TRUE))
                         }
 
@@ -410,7 +410,7 @@ class Abort extends SCChartsProcessor implements Traceable {
                     // Get the _transitionTrigger that was created earlier
                     // if (transition.typeWeakAbort && !transition.immediate2) {
                     val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                    if (transitionTriggerVariable != null) {
+                    if (transitionTriggerVariable !== null) {
                         // This case for delayed termination transitions only
                         transition.setTrigger(transitionTriggerVariable.reference)
                     } else {

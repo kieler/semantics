@@ -36,8 +36,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.core.definitions.DynamicTicks
 import de.cau.cs.kieler.annotations.Annotation
@@ -71,9 +69,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsTransitionExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions

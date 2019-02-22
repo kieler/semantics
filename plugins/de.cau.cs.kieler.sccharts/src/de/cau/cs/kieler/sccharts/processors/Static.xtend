@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -65,7 +64,6 @@ class Static extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension ValuedObjectRise
     
     // This prefix is used for naming of all generated signals, states and regions
     static val String GENERATED_PREFIX = "_"

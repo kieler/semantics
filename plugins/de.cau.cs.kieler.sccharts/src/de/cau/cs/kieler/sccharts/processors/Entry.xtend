@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -29,7 +27,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts Entry Transformation.
@@ -143,7 +140,7 @@ class Entry extends SCChartsProcessor implements Traceable {
                 for (effect : entryAction.effects) {
                     transition.addEffect(effect.copy)
                 }
-                if (entryAction.trigger != null) {
+                if (entryAction.trigger !== null) {
                     transition.setTrigger(entryAction.trigger)
 
                     // add default transition

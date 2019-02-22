@@ -29,10 +29,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.HashMap
 import java.util.List
@@ -71,14 +68,11 @@ class Pre extends SCChartsProcessor implements Traceable {
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension SCChartsControlflowRegionExtensions
-    @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsTransformationExtension
     @Inject extension KExpressionsArrayExtensions
     
-    private val nameCache = new UniqueNameCache
+    val nameCache = new UniqueNameCache
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"

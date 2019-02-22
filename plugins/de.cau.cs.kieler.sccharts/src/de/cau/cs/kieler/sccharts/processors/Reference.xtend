@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -43,7 +42,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
-import de.cau.cs.kieler.sccharts.text.SCTXResource
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
@@ -64,7 +62,6 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension PragmaExtensions
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null

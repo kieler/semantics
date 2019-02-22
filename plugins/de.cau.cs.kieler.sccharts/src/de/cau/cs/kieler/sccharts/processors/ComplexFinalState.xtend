@@ -14,13 +14,10 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -85,9 +82,7 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
 
     // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension AnnotationsExtensions

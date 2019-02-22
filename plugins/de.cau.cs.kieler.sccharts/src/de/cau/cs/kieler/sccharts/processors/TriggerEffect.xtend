@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
@@ -27,7 +25,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 
 /**
  * SCCharts TriggerEffect Transformation.
@@ -59,7 +56,6 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "__te_"
@@ -84,7 +80,7 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
     def void transformTriggerEffect(Transition transition, State targetRootState) {
 
         // Only apply this to transition that have both, a trigger (or is a termination) and one or more effects 
-        if (((transition.trigger != null || !transition.immediate || transition.isTermination) &&
+        if (((transition.trigger !== null || !transition.immediate || transition.isTermination) &&
             !transition.effects.nullOrEmpty) || transition.effects.size > 1) {
             val targetState = transition.targetState
             val parentRegion = targetState.parentRegion

@@ -180,7 +180,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
                 return
             }
             val immediate0 = state.outgoingTransitions.get(0).implicitlyImmediate
-            val noTrigger0 = state.outgoingTransitions.get(0).trigger == null
+            val noTrigger0 = state.outgoingTransitions.get(0).trigger === null
             val noEffects0 = state.outgoingTransitions.get(0).effects.nullOrEmpty
             if (numTransition == 1 && noTrigger0) {
                 // pause
@@ -194,7 +194,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
             }
             if (numTransition > 1) {
                 val immediate1 = state.outgoingTransitions.get(1).implicitlyImmediate
-                val noTrigger1 = state.outgoingTransitions.get(1).trigger == null
+                val noTrigger1 = state.outgoingTransitions.get(1).trigger === null
                 val noEffects1 = state.outgoingTransitions.get(1).effects.nullOrEmpty
                 // conditional
                 if (immediate0 && !noTrigger0 && noEffects0 && immediate1 && noTrigger1 && noEffects1) {
@@ -270,7 +270,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
             // System.out.println("Connect pause 2:" + depthState.id + " -> " + pauseState.id);
             }
 
-            if (currentState == null) {
+            if (currentState === null) {
                 // Create a new state
                 currentState = parentRegion.createState(GENERATED_PREFIX + "S").uniqueName
                 // System.out.println("New currentState := " + currentState.id)

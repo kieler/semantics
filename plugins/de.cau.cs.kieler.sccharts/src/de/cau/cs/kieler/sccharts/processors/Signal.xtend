@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsArrayExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -37,7 +36,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -83,7 +81,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     // -------------------------------------------------------------------------
 
     @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
@@ -92,8 +89,6 @@ class Signal extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsTransitionExtensions
-    @Inject extension ValuedObjectRise
     @Inject extension KExpressionsArrayExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
@@ -105,7 +100,7 @@ class Signal extends SCChartsProcessor implements Traceable {
     // TODO: for inputs no during action!
     // TODO: relative writes!!
     public static val String variableValueExtension = GENERATED_PREFIX + "val";
-    private static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
+    static val String variableCurrentValueExtension = GENERATED_PREFIX + "curval";
 
     // @requires: during actions
     // For all states do the following:
@@ -213,7 +208,7 @@ class Signal extends SCChartsProcessor implements Traceable {
                     // Wherever an emission is, create a new assignment right behind
                     val allSignalEmissions = action.getAllContainedEmissions.filter[e|e.valuedObject == signal].toList
                     for (Emission signalEmission : allSignalEmissions.immutableCopy) {
-                        if (signalEmission.newValue != null) {
+                        if (signalEmission.newValue !== null) {
 
                             // Assign the emitted valued and combine!
                             val variableAssignment = currentValueVariable.createAssignment(signalEmission.newValue, combineOperator)
@@ -296,7 +291,7 @@ class Signal extends SCChartsProcessor implements Traceable {
             // Do not do this for only-input-variables.
             if (!presentVariable.isInput) {
 
-                if (absentDuringAction == null) {
+                if (absentDuringAction === null) {
                     absentDuringAction = state.createDuringAction
                     absentDuringAction.setImmediate(true);
                 }
@@ -317,7 +312,7 @@ class Signal extends SCChartsProcessor implements Traceable {
 
     // ------------------------------------
     // Gets the correct neutral element as an Expression 
-    def public neutralElement(ValuedObject signal) {
+    def neutralElement(ValuedObject signal) {
         if (signal.type == ValueType::BOOL) {
             if (signal.combineOperator == CombineOperator::OR) {
                 // OR

@@ -54,7 +54,7 @@ class For extends SCChartsProcessor implements Traceable {
     }
     
     protected def transformFor(State state) {
-        val forRegions = state.getAllStates.map[regions.filter[ counterVariable != null ]].toList.flatten.toList
+        val forRegions = state.getAllStates.map[regions.filter[ counterVariable !== null ]].toList.flatten.toList
         
         for (r : forRegions) {
             r.transformForRegion

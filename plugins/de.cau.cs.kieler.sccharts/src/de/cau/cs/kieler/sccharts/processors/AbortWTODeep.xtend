@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -25,7 +24,6 @@ import java.util.HashMap
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
@@ -33,7 +31,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
@@ -84,7 +81,6 @@ class AbortWTODeep extends SCChartsProcessor {
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsComplexCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions    
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
@@ -122,7 +118,7 @@ class AbortWTODeep extends SCChartsProcessor {
         // this for example could be several terminations, in this case we do not need the FULL abort transformation
         // and can only combine the terminations (using one termination and a connector node)
         val stateHasUntransformedTransitions = ((state.outgoingTransitions.size > 1) || ( (state.outgoingTransitions.
-            size == 1) && ((!(state.outgoingTransitions.filter[ isTermination ].filter[trigger == null].size == 1))
+            size == 1) && ((!(state.outgoingTransitions.filter[ isTermination ].filter[trigger === null].size == 1))
 //                  ||
 //                  !state.hasInnerActions && !state.hasInnerStatesOrRegions 
               ))
@@ -178,7 +174,7 @@ class AbortWTODeep extends SCChartsProcessor {
                         val termState = mainRegion.createFinalState(GENERATED_PREFIX + "Term").uniqueName
                         val termVariable = state.createVariable(GENERATED_PREFIX + "term").setTypeBool.uniqueName
                         mainState.createTransitionTo(termState).setTypeTermination.addEffect(termVariable.createAssignment(TRUE))
-                        if (terminationTrigger != null) {
+                        if (terminationTrigger !== null) {
                             terminationTrigger = terminationTrigger.and(termVariable.reference)
                         } else {
                             terminationTrigger = termVariable.reference
@@ -190,7 +186,7 @@ class AbortWTODeep extends SCChartsProcessor {
                     val abortedState = region.getOrCreateSimpleFinalState(GENERATED_PREFIX + "Aborted").uniqueName
                     for (innerState : region.states.filter[!final]) {
                         if (innerState != abortedState) {
-                            if (strongAbortTrigger != null) {
+                            if (strongAbortTrigger !== null) {
                                 val strongAbort = innerState.createTransitionTo(abortedState, 0)
                                 if (innerState.controlflowRegionsContainStates || innerState.containsInnerActions) {
 
@@ -220,7 +216,7 @@ class AbortWTODeep extends SCChartsProcessor {
                                 strongAbort.setHighestPriority
                                 strongAbort.setTrigger(strongAbortTrigger.copy)
                             }
-                            if (weakAbortTrigger != null) {
+                            if (weakAbortTrigger !== null) {
 
                                 // The following line is responsible for KISEMA 925 to fail                                 
                                 //                                val weakAbort = innerState.createTransitionTo(abortedState) 
@@ -231,7 +227,7 @@ class AbortWTODeep extends SCChartsProcessor {
                     }
                 }
 
-                if (terminationTrigger == null) {
+                if (terminationTrigger === null) {
                     terminationTrigger = TRUE;
                 }
 
@@ -243,7 +239,7 @@ class AbortWTODeep extends SCChartsProcessor {
                     // Create a ctrlTransition in the ctrlRegion
                     val ctrlTransition = runState.createTransitionTo(doneState)
                     if (transition.isTermination) {
-                        if (transition.trigger != null) {
+                        if (transition.trigger !== null) {
                             ctrlTransition.setTrigger(terminationTrigger.copy.and(transition.trigger))
                         } else {
                             ctrlTransition.setTrigger(terminationTrigger.copy)
@@ -274,7 +270,7 @@ class AbortWTODeep extends SCChartsProcessor {
 
                 // Get the _transitionTrigger that was created earlier
                 val transitionTriggerVariable = transitionTriggerVariableMapping.get(transition)
-                if (transitionTriggerVariable != null) {
+                if (transitionTriggerVariable !== null) {
                     transition.setTrigger(transitionTriggerVariable.reference)
                 } else {
 

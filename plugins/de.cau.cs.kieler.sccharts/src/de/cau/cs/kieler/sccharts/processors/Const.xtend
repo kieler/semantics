@@ -75,12 +75,11 @@ class Const extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
-    @Inject extension ValuedObjectRise
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    static private final String HOSTCODE_ANNOTATION = "alterHostcode"
+    static final String HOSTCODE_ANNOTATION = "alterHostcode"
 
     // -------------------------------------------------------------------------
     // --                           C O N S T                                 --

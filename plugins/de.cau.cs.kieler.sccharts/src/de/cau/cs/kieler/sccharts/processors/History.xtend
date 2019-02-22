@@ -14,9 +14,7 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.common.collect.ImmutableList
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -34,7 +32,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
@@ -100,14 +97,14 @@ class History extends SCChartsProcessor implements Traceable {
         val nonHistoryTransitions = ImmutableList::copyOf(state.incomingTransitions.filter[!isHistory])
         historyTransitions.setDefaultTrace
 
-        if (historyTransitions != null && historyTransitions.size > 0 && state.regions != null && state.regions.size > 0) {
+        if (historyTransitions !== null && historyTransitions.size > 0 && state.regions !== null && state.regions.size > 0) {
             var int initialValue
             val List<ValuedObject> stateEnumsAll = new ArrayList
             val List<ValuedObject> stateEnumsDeep = new ArrayList
 
             val regions = state.regions.filter(ControlflowRegion).toList
             var regionsDeep = state.regions.filter(ControlflowRegion).toList 
-            if (historyTransitions.findFirst[isDeepHistory] != null) { // if state has any deep history transition
+            if (historyTransitions.findFirst[isDeepHistory] !== null) { // if state has any deep history transition
                 regionsDeep = state.allContainedControlflowRegions.toList
             }
 

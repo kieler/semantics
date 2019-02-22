@@ -13,11 +13,9 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -82,7 +80,7 @@ class Initialization extends SCChartsProcessor implements Traceable {
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformInitialization(Scope scope, State targetRootState) {
-        for (valuedObject : scope.valuedObjects.filter[initialValue != null].toList.reverseView) {
+        for (valuedObject : scope.valuedObjects.filter[initialValue !== null].toList.reverseView) {
             setDefaultTrace(valuedObject, valuedObject.declaration)
             
             // Initialization combined with existing entry action: The order in which new, 
