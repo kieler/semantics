@@ -1714,7 +1714,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 * Constraint:
 	 *     (
 	 *         delay=DelayType? 
-	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=Double?)? 
+	 *         (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? 
 	 *         (effects+=Effect effects+=Effect*)? 
 	 *         label=STRING?
 	 *     )
@@ -1730,7 +1730,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     EntryAction returns EntryAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_EntryAction(ISerializationContext context, EntryAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1743,7 +1743,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     ExitAction returns ExitAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_ExitAction(ISerializationContext context, ExitAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1793,7 +1793,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     PrecedingAction returns PrecedingAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_PrecedingAction(ISerializationContext context, PrecedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1893,7 +1893,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SucceedingAction returns SucceedingAction
 	 *
 	 * Constraint:
-	 *     ((trigger=BoolScheduleExpression triggerProbability=Double?)? (effects+=Effect effects+=Effect*)? label=STRING?)
+	 *     ((trigger=BoolScheduleExpression triggerProbability=FLOAT?)? (effects+=Effect effects+=Effect*)? label=STRING?)
 	 */
 	protected void sequence_SucceedingAction(ISerializationContext context, SucceedingAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1906,7 +1906,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *     SuspendAction returns SuspendAction
 	 *
 	 * Constraint:
-	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=Double?)? label=STRING?)
+	 *     (delay=DelayType? weak?='weak'? (triggerDelay=INT? trigger=BoolScheduleExpression triggerProbability=FLOAT?)? label=STRING?)
 	 */
 	protected void sequence_SuspendAction(ISerializationContext context, SuspendAction semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1927,12 +1927,12 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 delay=DelayType? 
 	 *                 deferred?='deferred'? 
 	 *                 history=HistoryType? 
-	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=Double? nondeterministic?='nondeterministic'?)? 
+	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=FLOAT? nondeterministic?='nondeterministic'?)? 
 	 *                 (effects+=Effect effects+=Effect*)?
 	 *             ) | 
 	 *             (
 	 *                 delay=DelayType? 
-	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=Double? nondeterministic?='nondeterministic'?)? 
+	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=FLOAT? nondeterministic?='nondeterministic'?)? 
 	 *                 (effects+=Effect effects+=Effect*)? 
 	 *                 preemption=PreemptionType 
 	 *                 targetState=[State|ID] 

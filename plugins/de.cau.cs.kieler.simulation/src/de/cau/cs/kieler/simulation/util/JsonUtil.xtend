@@ -17,7 +17,6 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonNull
 import com.google.gson.JsonPrimitive
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
@@ -81,7 +80,6 @@ class JsonUtil {
                 BoolValue: return new JsonPrimitive(e.value)
                 IntValue: return new JsonPrimitive(e.value)
                 FloatValue: return new JsonPrimitive(e.value)
-                DoubleValue: return new JsonPrimitive(e.value)
                 StringValue: return new JsonPrimitive(e.value)
                 VectorValue: {
                     return new JsonArray => [

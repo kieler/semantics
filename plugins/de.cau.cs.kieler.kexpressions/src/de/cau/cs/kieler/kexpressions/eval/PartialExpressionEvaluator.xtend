@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
@@ -100,7 +99,7 @@ class PartialExpressionEvaluator {
             BoolValue: value.value
             IntValue: value.value != 0
             FloatValue: value.value != 0
-            DoubleValue: value.value != 0
+            //DoubleValue: value.value != 0
             StringValue: !value.value.nullOrEmpty
             default: throw new UnsupportedOperationException("Cannot determine truth value for value type " + value.class.simpleName)
         }
@@ -324,9 +323,9 @@ class PartialExpressionEvaluator {
             }
         } else if (oexp.subExpressions.forall[it instanceof IntValue || it instanceof FloatValue]) {
             val sub0 = oexp.subExpressions.get(0) as Value
-            val float op0 = if (sub0 instanceof IntValue) sub0.value else (sub0 as FloatValue).value 
+            val double op0 = if (sub0 instanceof IntValue) sub0.value else (sub0 as FloatValue).value 
             val sub1 = oexp.subExpressions.get(1) as Value
-            val float op1 = if (sub1 instanceof IntValue) sub1.value else (sub1 as FloatValue).value
+            val double op1 = if (sub1 instanceof IntValue) sub1.value else (sub1 as FloatValue).value
             return switch (oexp.operator) {
                 // COMPARISON
                 case EQ: createBoolValue(op0 == op1)

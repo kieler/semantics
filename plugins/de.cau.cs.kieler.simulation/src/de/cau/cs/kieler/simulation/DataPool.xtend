@@ -320,7 +320,7 @@ class DataPoolEntry {
                         }
                         case FLOAT: {
                             val number = if (valueElem.isNumber) {
-                                valueElem.asNumber.floatValue
+                                valueElem.asNumber.doubleValue
                             } else if (valueElem.isBoolean) {
                                 if (valueElem.asBoolean) 1 else 0
                             } else {
