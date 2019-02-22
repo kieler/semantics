@@ -204,13 +204,6 @@ class StatebasedLeanCTemplate {
           « IF debug »printf("TICK\n"); fflush(stdout);« ENDIF »
           if (context->threadStatus == TERMINATED) return;
           
-          « FOR r : rootState.regions.filter(ControlflowRegion) »
-          if (context->« r.uniqueContextName ».threadStatus != TERMINATED) {
-            context->« r.uniqueContextName ».threadStatus = RUNNING;
-            context->« r.uniqueContextName ».delayedEnabled = 1;
-          }
-          « ENDFOR »
-          
           « rootState.uniqueName »(context);
         }
         
@@ -250,7 +243,6 @@ class StatebasedLeanCTemplate {
         
           if (context->« r.uniqueName ».threadStatus != TERMINATED) {
             context->« r.uniqueName ».threadStatus = RUNNING;
-            context->« r.uniqueName ».delayedEnabled = 1;
           }
         « ENDFOR »« FOR r : state.regions.filter(ControlflowRegion) »
         
@@ -279,9 +271,10 @@ class StatebasedLeanCTemplate {
           « ENDFOR »
             « IF !hasDefaultTransition »
               « IF state.outgoingTransitions.size == 0 »
+            « if (state.isHierarchical) addDelayedEnabledCode(state, "") »
               context->threadStatus = READY;
               « ELSE »
-              } else {
+            } else {« if (state.isHierarchical) addDelayedEnabledCode(state, "  ") »
                 context->threadStatus = READY;
               }
               « ENDIF »
@@ -289,6 +282,15 @@ class StatebasedLeanCTemplate {
         « ENDIF »
         '''
         }
+    }
+    
+    protected def CharSequence addDelayedEnabledCode(State state, CharSequence indentation) {
+        '''
+        
+        « FOR r : state.regions.filter(ControlflowRegion) »
+        « indentation »  context->« r.uniqueName ».delayedEnabled = 1;
+        « ENDFOR » 
+        '''        
     }
     
     protected def CharSequence addTransitionConditionCode(int index, int count, Transition transition, 
@@ -319,7 +321,7 @@ class StatebasedLeanCTemplate {
           « IF index == 0 »
           if (« condition ») {
         « ELSE »
-          } else «IF !(defaultTransition) »if (« condition ») {« ENDIF »
+          } else «IF !(defaultTransition) »if (« condition ») « ENDIF»{
         « ENDIF » 
         « addTransitionEffectCode(transition, "    ") »
           « IF index == count-1 && hasDefaultTransition »
@@ -335,7 +337,7 @@ class StatebasedLeanCTemplate {
           « indentation »« e.serializeHR »;
           « ENDFOR »
           « indentation »context->delayedEnabled = 0;
-          « IF transition.sourceState != transition.targetState »
+          « IF transition.sourceState != transition.targetState || transition.targetState.isHierarchical »
           « indentation »context->activeState = « transition.targetState.uniqueEnumName »;
           « ENDIF »
           « valuedObjectPrefix = "" »
