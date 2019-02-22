@@ -52,106 +52,106 @@
      <extension
            point="de.cau.cs.kieler.kicool.processor">
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.SurfaceDepth">
+              class="de.cau.cs.kieler.sccharts.processors.SurfaceDepth">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.TriggerEffect">
+              class="de.cau.cs.kieler.sccharts.processors.TriggerEffect">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Abort">
+              class="de.cau.cs.kieler.sccharts.processors.Abort">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.ComplexFinalState">
+              class="de.cau.cs.kieler.sccharts.processors.ComplexFinalState">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Connector">
+              class="de.cau.cs.kieler.sccharts.processors.Connector">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.WeakSuspend">
+              class="de.cau.cs.kieler.sccharts.processors.WeakSuspend">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Suspend">
+              class="de.cau.cs.kieler.sccharts.processors.Suspend">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Static">
+              class="de.cau.cs.kieler.sccharts.processors.Static">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Signal">
+              class="de.cau.cs.kieler.sccharts.processors.Signal">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Reference">
+              class="de.cau.cs.kieler.sccharts.processors.Reference">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Pre">
+              class="de.cau.cs.kieler.sccharts.processors.Pre">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Map">
+              class="de.cau.cs.kieler.sccharts.processors.Map">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Initialization">
+              class="de.cau.cs.kieler.sccharts.processors.Initialization">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.History">
+              class="de.cau.cs.kieler.sccharts.processors.History">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.For">
+              class="de.cau.cs.kieler.sccharts.processors.For">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Exit">
+              class="de.cau.cs.kieler.sccharts.processors.Exit">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Entry">
+              class="de.cau.cs.kieler.sccharts.processors.Entry">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.During">
+              class="de.cau.cs.kieler.sccharts.processors.During">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Deferred">
+              class="de.cau.cs.kieler.sccharts.processors.Deferred">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.CountDelay">
+              class="de.cau.cs.kieler.sccharts.processors.CountDelay">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Const">
+              class="de.cau.cs.kieler.sccharts.processors.Const">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Reference">
+              class="de.cau.cs.kieler.sccharts.processors.Reference">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.For">
+              class="de.cau.cs.kieler.sccharts.processors.For">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling">
+              class="de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.PrTransitions">
+              class="de.cau.cs.kieler.sccharts.processors.PrTransitions">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.UserSchedule">
+              class="de.cau.cs.kieler.sccharts.processors.UserSchedule">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Fby">
+              class="de.cau.cs.kieler.sccharts.processors.Fby">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.FinalRegion">
+              class="de.cau.cs.kieler.sccharts.processors.FinalRegion">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.ValuedObjectRise">
+              class="de.cau.cs.kieler.sccharts.processors.ValuedObjectRise">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Period">
+              class="de.cau.cs.kieler.sccharts.processors.Period">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.TimedAutomata">
+              class="de.cau.cs.kieler.sccharts.processors.TimedAutomata">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.RegionActionsAndDeclarations">
+              class="de.cau.cs.kieler.sccharts.processors.RegionActionsAndDeclarations">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.Inheritance">
+              class="de.cau.cs.kieler.sccharts.processors.Inheritance">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth">
@@ -199,7 +199,7 @@
               class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.transformators.ValuedObjectRise">
+              class="de.cau.cs.kieler.sccharts.processors.ValuedObjectRise">
         </Processor>
      </extension>
      <extension
