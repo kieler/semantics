@@ -37,11 +37,31 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * @author cpa, lgr
  */
 class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
+        
+    /**
+     * Determines how hierarchy is used during the transformation.
+     * 
+     * 0 : Use no hierarchy, generated SCCharts will be fully flat.
+     * 1 : Partial hierarchy, don't generate unnessesary hierarchy but use it occasionally when readability is improved. 
+     * 2 : Full hierarchy, every expression generates a new parallel region that computes the result. 
+     */
+    public static val IProperty<Integer> HIERARCHY_LEVEL = 
+        new Property<Integer>("de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow.hierarchyLevel", 0)   
+        
+    /**
+     * Determines whether during actions shall be used in the transformation. If true, all expressions including subs 
+     * that are constants, references, or/and/mod/div/plus/minus/mul/eq/comp/pre/uminus/not are transformed into a 
+     * during action.
+     */
+    public static val IProperty<Boolean> USE_DURING_ACTIONS = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.controlFlow.useDuringActions", true) 
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -74,11 +94,16 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     override protected processEquation(Equation equation, State state) {
         
         var equationExpression = equation.expression
+        var useDuringActions = true
         
+        if (environment.getProperty(USE_DURING_ACTIONS) !== null) {
+            useDuringActions = false //environment.getProperty(USE_DURING_ACTIONS)
+        }
         
         // If it is a simple expression, a during action can be used, otherwise special constructs
         // simple: this and all subs are constants, references, or/and/mod/div/plus/minus/mul/eq/comp/pre/uminus/not
         if (equationExpression instanceof OperatorExpression && (equationExpression as OperatorExpression).operator == OperatorType.CONDITIONAL) {
+            
             val equationRegion = state.createControlflowRegion(equation.toString)
             var initialState = createState => [
                 equationRegion.states += it
@@ -105,6 +130,27 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
             immediateUnguardedTransition.effects += createAssignment => [
                 reference = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject).reference
                 expression = elseExpression.transformExpression(state)
+            ]
+            
+        
+        } else if (!useDuringActions) {
+            
+            val equationRegion = state.createControlflowRegion(equation.toString)
+            var initialState = createState => [
+                equationRegion.states += it
+                initial = true                
+            ]
+            var nextState = createState => [
+                equationRegion.states += it
+            ]
+            var immediateTransition = createImmediateTransitionTo(initialState, nextState)
+            createTransitionTo(nextState, initialState)
+            
+            val action = equationExpression
+
+            immediateTransition.effects += createAssignment => [
+                reference = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject).reference
+                expression = action.transformExpression(state)
             ]
             
         } else if (equation.reference !== null) {
