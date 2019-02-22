@@ -12,30 +12,15 @@
  */
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.sccharts.Region
 import java.util.Set
 import java.util.LinkedHashSet
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * @author ssm
@@ -46,13 +31,6 @@ class RegionDependencySort extends SCChartsProcessor {
     
     public static val IProperty<Boolean> ERROR_ON_FAILURE = 
        new Property<Boolean>("de.cau.cs.kieler.sccharts.processors.regionDependencySort.errorOnFailure", true)          
-    
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension SCChartsActionExtensions
-    @Inject extension SCChartsDataflowRegionExtensions
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.regionDependencySort"
