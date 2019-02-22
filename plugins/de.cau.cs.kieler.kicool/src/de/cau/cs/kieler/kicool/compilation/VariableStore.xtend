@@ -15,8 +15,8 @@ package de.cau.cs.kieler.kicool.compilation
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Sets
 import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject

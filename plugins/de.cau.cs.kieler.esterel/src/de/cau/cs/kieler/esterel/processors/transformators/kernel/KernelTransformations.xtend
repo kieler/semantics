@@ -20,7 +20,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
  * @kieler.rating proposed yellow
  */
 class KernelTransformations {
-    static val STRICT = new de.cau.cs.kieler.core.model.properties.Property<Boolean>("de.cau.cs.kieler.esterel.processors.transformators.kernel.strict", true)
+    static val STRICT = new de.cau.cs.kieler.core.properties.Property<Boolean>("de.cau.cs.kieler.esterel.processors.transformators.kernel.strict", true)
 
     static def isStrict(Processor p) {
         return p.environment.getProperty(STRICT)

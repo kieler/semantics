@@ -19,8 +19,8 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * C Code Generator  Processor for the State-based pattern

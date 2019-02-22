@@ -12,9 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.kexpressions.JsonArrayValue
 import de.cau.cs.kieler.kexpressions.JsonObjectValue
 import de.cau.cs.kieler.kexpressions.NullValue
@@ -65,13 +64,13 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             if (endogenous && !inplace) {
                 if (ongoingWorkingCopy) {
                     val copyResult = model.copyAndReturnCopier(source)
-                    modelCopier = copyResult.second
-                    source.propertyMap.put(MODEL, copyResult.first)
+                    modelCopier = copyResult.value
+                    source.propertyMap.put(MODEL, copyResult.key)
                     target.propertyMap.put(MODEL, model)
                 } else {
                     val copyResult = model.copyAndReturnCopier(source)
-                    modelCopier = copyResult.second
-                    target.propertyMap.put(MODEL, copyResult.first)
+                    modelCopier = copyResult.value
+                    target.propertyMap.put(MODEL, copyResult.key)
                 }
             } else {
                 target.propertyMap.put(MODEL, model)

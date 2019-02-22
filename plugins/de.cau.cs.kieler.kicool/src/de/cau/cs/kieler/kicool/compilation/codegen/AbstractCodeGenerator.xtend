@@ -20,8 +20,8 @@ import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions

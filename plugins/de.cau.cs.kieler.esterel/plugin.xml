@@ -170,6 +170,12 @@
      <TransformationSystem
            system="system/de.cau.cs.kieler.esterel.kernel.scc.kico">
      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.compiler.inria.xes.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.esterel.compiler.inria.simulation.kico">
+      </TransformationSystem>
   </extension>
   <extension
         point="de.cau.cs.kieler.kicool.resource.extension">
@@ -190,6 +196,18 @@
   </extension>
   <extension
         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.InriaEsterelCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.XESCompiler">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.InriaSimulationTemplateGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.esterel.compiler.processors.InriaSimulationPreparation">
+      </Processor>
      <Processor
            class="de.cau.cs.kieler.esterel.processors.ssa.SCEstToSSCSCLTransformation">
      </Processor>
@@ -199,9 +217,6 @@
      <Processor
            class="de.cau.cs.kieler.esterel.processors.ssa.SSCEsterelReconstruction">
      </Processor>
-  </extension>
-  <extension
-        point="de.cau.cs.kieler.kicool.processor">
      <Processor
            class="de.cau.cs.kieler.esterel.processors.transformators.kernel.AwaitKernelTransformation">
      </Processor>

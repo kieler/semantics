@@ -28,7 +28,6 @@ Require-Bundle: com.google.guava,
  org.apache.commons.logging;bundle-version="1.1.1",
  de.cau.cs.kieler.kicool,
  org.eclipse.emf.common,
- de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sccharts
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j

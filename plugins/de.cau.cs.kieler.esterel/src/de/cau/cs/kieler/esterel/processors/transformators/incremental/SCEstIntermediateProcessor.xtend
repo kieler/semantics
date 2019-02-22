@@ -59,8 +59,8 @@ import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import de.cau.cs.kieler.esterel.EsterelThread
 

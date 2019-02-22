@@ -21,7 +21,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration

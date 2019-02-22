@@ -14,8 +14,8 @@
  package de.cau.cs.kieler.scg.processors.analyzer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
@@ -88,19 +88,19 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
                 environment.errors.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.errors.add(strippedModel.first, 
+                environment.errors.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
             if (environment.getProperty(WARNING_ON_INSTANTANEOUS_LOOP)) {
                 environment.warnings.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.warnings.add(strippedModel.first, 
+                environment.warnings.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
             if (environment.getProperty(INFO_ON_INSTANTANEOUS_LOOP)) {
                 environment.infos.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.infos.add(strippedModel.first, 
+                environment.infos.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
         }
@@ -108,7 +108,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
     protected def extractLoopModel(LoopData loopData) {
         val modelCopy = getModel.copyEObjectAndReturnCopier
-        val copier = modelCopy.second
+        val copier = modelCopy.value
         val maxStrippedNodes = environment.getProperty(LOOP_ANALYZER_MAX_STRIPPED_NODES)
         
         val reverseMap = <Node, Node> newLinkedHashMap
@@ -118,7 +118,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         
         val adjacentDepth = environment.getProperty(LOOP_ANALYZER_ADJACENT_DEPTH)
         var i = 0
-        for (scg : modelCopy.first.scgs) {
+        for (scg : modelCopy.key.scgs) {
             for (node : scg.nodes.immutableCopy) {
                 
                 if (i > maxStrippedNodes) {

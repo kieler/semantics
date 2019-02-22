@@ -23,7 +23,7 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
-import de.cau.cs.kieler.core.model.DynamicTicks
+import de.cau.cs.kieler.core.definitions.DynamicTicks
 
 /**
  * @author als

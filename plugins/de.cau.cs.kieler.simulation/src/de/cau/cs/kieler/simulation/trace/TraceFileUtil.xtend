@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.trace
 
-import de.cau.cs.kieler.core.model.util.ModelUtil
+import de.cau.cs.kieler.core.model.ModelUtil
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.trace.ktrace.KTraceFactory

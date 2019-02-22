@@ -18,7 +18,7 @@ import java.util.Map
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
-import de.cau.cs.kieler.core.model.properties.IProperty
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.annotations.Pragmatable
 import com.google.inject.Inject

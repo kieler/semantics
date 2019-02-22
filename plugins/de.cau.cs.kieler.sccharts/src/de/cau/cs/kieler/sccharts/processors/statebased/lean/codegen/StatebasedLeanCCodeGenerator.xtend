@@ -24,8 +24,8 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import com.google.inject.Injector
 import java.util.Map
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
