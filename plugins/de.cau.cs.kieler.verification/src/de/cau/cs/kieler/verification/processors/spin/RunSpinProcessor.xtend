@@ -104,8 +104,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         
         processBuilder.command(timeCommand + spinCommand)
         processBuilder.redirectErrorStream(true)
-        val process = processBuilder.start
-        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
+        val process = processBuilder.startVerificationProcess
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
@@ -134,7 +133,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         if(spinOutputInterpreter.wroteTrail) {
             val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
             val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
-            property.processOutputFile = trailFile
+            property.spinTrailFile = trailFile
             property.updateTaskDescriptionAndNotify("Parsing model checker counterexample...")
             val trailInterpreter = new SpinTrailInterpreter(trailOutput)
             val counterexample = trailInterpreter.counterexample

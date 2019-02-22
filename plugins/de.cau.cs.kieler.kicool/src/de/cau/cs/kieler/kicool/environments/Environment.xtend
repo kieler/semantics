@@ -81,7 +81,10 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Long> OVERALL_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
-        
+    
+    public static val IProperty<Long> OVERALL_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.overallTime", new Long(0))
+    
     public static val IProperty<Long> PTIME = 
         new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
 

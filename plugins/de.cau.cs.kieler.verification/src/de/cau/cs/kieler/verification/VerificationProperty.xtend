@@ -40,6 +40,10 @@ class VerificationProperty {
      */
     @Accessors IFile processOutputFile = null
     /**
+     * Pointer to a file with the output of the SPIN trail command. This is only set when using SPIN.
+     */
+    @Accessors IFile spinTrailFile = null
+    /**
      * Pointer to a file with the model in the model checker input language (e.g. SMV or Promela).
      */
     @Accessors IFile modelCheckerModelFile = null

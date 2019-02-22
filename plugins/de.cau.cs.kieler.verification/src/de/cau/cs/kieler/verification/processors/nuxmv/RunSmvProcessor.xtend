@@ -107,8 +107,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         processBuilder.directory(new File(smvFile.parent.location.toOSString))
         processBuilder.command(timeCommand + processCommand)
         processBuilder.redirectErrorStream(true)
-        val process = processBuilder.start()
-        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
+        val process = processBuilder.startVerificationProcess
         // Send the interactive commands sequentially to the process and
         // wait for new output from the process before the next command is sent. 
         val outputBuffer = new StringBuffer

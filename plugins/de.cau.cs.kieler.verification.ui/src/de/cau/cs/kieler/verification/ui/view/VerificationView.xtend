@@ -149,7 +149,10 @@ class VerificationView extends ViewPart {
         
         val openLogAction = new Action("Open Process Output") {
             override run() {
-                val file = selectedProperty?.processOutputFile
+                var file = selectedProperty?.spinTrailFile
+                if(file === null) {
+                    file = selectedProperty?.processOutputFile
+                }
                 if(file !== null && file.exists) {
                     val page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
                     IDE.openEditor(page, file, true);

@@ -206,6 +206,7 @@ class CompilationContext extends Observable implements IKiCoolCloneable {
         
         val overallTimestamp = System.nanoTime
         environmentPrime.setProperty(OVERALL_TIMESTAMP, overallTimestamp)
+        environmentPrime.setProperty(OVERALL_TIME, (overallTimestamp - startTimestamp))
         environmentPrime.setProperty(OVERALL_PTIME, (overallTimestamp - startTimestamp) / 1000_000)
         
         // Set post data that come from the outside, e.g. the system.

@@ -207,6 +207,5 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
     }
     
     protected def void onVerificationFinished(CompilationFinished event) {
-        currentVerificationContext = null
     }
 }

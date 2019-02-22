@@ -115,4 +115,10 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
             res.create(false, false, null)
         }
     }
+    
+    protected def Process startVerificationProcess(ProcessBuilder processBuilder) {
+        val process = processBuilder.start
+        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
+        return process
+    }
 }
