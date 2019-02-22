@@ -28,8 +28,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import java.util.List
 import org.eclipse.emf.ecore.EObject
 
@@ -61,18 +59,6 @@ class Deferred extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::DEFERRED_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::INITIALIZATION_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
-//    }
 
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions

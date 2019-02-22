@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.processors
 
-import com.google.common.collect.Sets
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -26,9 +24,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -56,19 +51,6 @@ class During extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::DURING_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::COMPLEXFINALSTATE_ID, SCChartsFeature::INITIALIZATION_ID,
-//            SCChartsFeature::CONNECTOR_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::HISTORY_ID, SCChartsFeatureGroup::EXPANSION_ID)
-//    }
 
     //-------------------------------------------------------------------------
 

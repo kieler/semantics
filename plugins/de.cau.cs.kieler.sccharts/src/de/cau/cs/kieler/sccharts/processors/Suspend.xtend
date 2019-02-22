@@ -20,8 +20,6 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SuspendAction
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -62,18 +60,6 @@ class Suspend extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::SUSPEND_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::INITIALIZATION_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::HISTORY_ID, SCChartsFeatureGroup::EXPANSION_ID)
-//    }
 
     // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions

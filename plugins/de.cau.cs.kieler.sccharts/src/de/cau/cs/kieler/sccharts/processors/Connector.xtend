@@ -19,8 +19,7 @@ import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeatureimport de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
@@ -49,18 +48,6 @@ class Connector extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::CONNECTOR_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeatureGroup::CORE_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeatureGroup::EXPANSION_ID)
-//    }
 
     //-------------------------------------------------------------------------
     @Inject extension SCChartsScopeExtensions

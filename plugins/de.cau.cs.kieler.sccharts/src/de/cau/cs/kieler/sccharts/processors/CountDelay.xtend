@@ -31,8 +31,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
@@ -69,18 +67,6 @@ class CountDelay extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::COUNTDELAY_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::DURING_ID, SCChartsFeature::ENTRY_ID, SCChartsFeature::PRE_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::SUSPEND_ID, SCChartsFeatureGroup::EXPANSION_ID)
-//    }
 
     //-------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions

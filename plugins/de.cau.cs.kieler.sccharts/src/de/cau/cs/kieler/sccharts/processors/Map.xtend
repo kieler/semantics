@@ -18,7 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
@@ -47,18 +46,6 @@ class Map extends SCChartsProcessor {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::MAP_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID) //TODO check FOR dependency
-//    }
 
     //-------------------------------------------------------------------------
     @Inject extension SCChartsScopeExtensions

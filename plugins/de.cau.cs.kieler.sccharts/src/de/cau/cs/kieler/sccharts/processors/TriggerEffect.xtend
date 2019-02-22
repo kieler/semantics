@@ -20,7 +20,6 @@ import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.features.SCChartsFeature
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -54,24 +53,6 @@ class TriggerEffect extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::TRIGGEREFFECT_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::SURFACEDEPTH_ID)
-//    }
-//
-//    // THIS IS NOW DONE INDIRECTLY BY DECLARING META DEPENDENCIES ON FEATURE GROUPS
-//    override getNotHandlesFeatureIds() {
-////        return Sets.newHashSet(SCChartsFeatureGroup::EXTENDED_ID)
-//        return Sets.newHashSet()
-//    }
-    
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet()
-//    }
 
     //-------------------------------------------------------------------------    
     @Inject extension SCChartsScopeExtensions
