@@ -12,9 +12,14 @@
  */
 package de.cau.cs.kieler.language.server
 
+import com.google.inject.Guice
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.kgraph.text.ide.KGraphLSSetup
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import org.eclipse.elk.graph.text.ElkGraphRuntimeModule
+import org.eclipse.elk.graph.text.ElkGraphStandaloneSetup
+import org.eclipse.elk.graph.text.ide.ElkGraphIdeModule
+import org.eclipse.xtext.util.Modules2
 
 /**
  * @author sdo
@@ -23,7 +28,14 @@ import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 class LanguageRegistration {
     
     def bindAndRegisterLanguages() {
-        val injectorKGraph = KGraphLSSetup.doLSSetup()        
+        val injectorKGraph = KGraphLSSetup.doLSSetup()
+        new ElkGraphStandaloneSetup {
+            
+            override createInjector() {
+                Guice.createInjector(Modules2.mixin(new ElkGraphRuntimeModule, new ElkGraphIdeModule))
+            }
+            
+        }.createInjectorAndDoEMFRegistration
         for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
             contribution.LSSetup.doLSSetup()
         }

@@ -60,7 +60,9 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         'selection','shadow','single','singleClick','singleOrMultiClick','size','solid','square','squiggle','styles',
         'top','topLeftAnchor','underline','vAlign','verticalAlignment','verticalMargin','width','x','xoffset','y',
         'yoffset']
-        val languages = newArrayList(new Language("kgt", "KGraph", kgtKeywords))
+        val elkKeywords = #["bends","edge","end","false","graph","incoming","label","layout","node","null","outgoing",
+        "port","position","section","size","start","true"]
+        val languages = newArrayList(new Language("kgt", "KGraph", kgtKeywords), new Language("elkt", "Elk Graph", elkKeywords))
         for (contribution : KielerServiceLoader.load(IHighlightingContribution)) {
             val highlighting = contribution.highlighting
         	languages.add(new Language(highlighting.getId, highlighting.name, highlighting.keywords))
