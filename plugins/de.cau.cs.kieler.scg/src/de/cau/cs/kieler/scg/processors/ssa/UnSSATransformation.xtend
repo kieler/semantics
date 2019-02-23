@@ -20,9 +20,9 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import javax.inject.Inject
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
 
 /**
  * The SSA transformation for SCGs

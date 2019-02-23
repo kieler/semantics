@@ -33,11 +33,10 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
-import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
 /**
  * Copy Propagation
@@ -83,8 +82,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
     
     def performCopyPropagation(SCGraph scg) {
         val replacements = new Replacements
-        val GO = scg.findValuedObjectByName(AbstractGuardExpressions.GO_GUARD_NAME) 
-        replacements.push(AbstractGuardExpressions.GO_GUARD_NAME, GO.reference)
+        val GO = scg.findValuedObjectByName(SimpleGuardExpressions.GO_GUARD_NAME) 
+        replacements.push(SimpleGuardExpressions.GO_GUARD_NAME, GO.reference)
         
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val visited = <Node> newHashSet
@@ -98,8 +97,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
             
             if (node instanceof Assignment) {
                 if (node.expression instanceof ValuedObjectReference) {
-                    if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
-                        !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                    if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                        !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
                         node.expression.replaceExpression(replacements, node)
@@ -121,7 +120,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         
                     if (environment.getProperty(COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS)) {
                         val serializedExpression = node.expression.serializeHR.toString
-                        if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                        if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
                             (registerExpressions.keySet.contains(serializedExpression))) {
                             val originalNode = registerExpressions.get(serializedExpression)
                             replacements.push(node.reference.valuedObject.name, originalNode.asAssignment.reference)

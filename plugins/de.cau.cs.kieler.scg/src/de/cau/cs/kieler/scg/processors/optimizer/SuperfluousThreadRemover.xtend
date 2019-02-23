@@ -34,12 +34,12 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
  * @kieler.rating 2017-05-15 proposed yellow
  *
  */
-class SuperfluousThreadRemover extends AbstractOptimizer {
+class SuperfluousThreadRemover {
 
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
 
-    override optimize(SCGraph scg) {
+    def optimize(SCGraph scg) {
         
         // Initialize a cache for control flows that must be removed afterwards.
         

@@ -22,7 +22,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
+import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
 /**
  * @author ssm
@@ -53,7 +53,7 @@ class IneffectiveGuardRemover extends InplaceProcessor<SCGraphs> implements Trac
         val ineffectiveNodes = scg.nodes.filter(Assignment).filter[ 
             dependencies.empty && 
             incomingLinks.filter(GuardDependency).empty &&
-            ((reference === null) || (!reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)))
+            ((reference === null) || (!reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)))
         ].toList
         
         for (n : ineffectiveNodes) {
