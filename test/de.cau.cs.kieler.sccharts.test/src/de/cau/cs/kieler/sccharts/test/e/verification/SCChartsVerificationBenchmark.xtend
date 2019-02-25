@@ -99,6 +99,7 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     
     // Options to skip certain properties in the verification
     protected var List<String> mustHaveModelProperties = #[]
+    protected var List<String> mustNotHaveModelProperties = #[]
     protected var boolean ignoreInvar = false
     protected var boolean ignoreLtl = false
     protected var boolean ignoreCtl = false
@@ -122,15 +123,13 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     }
 
     @Test
-    public def void nuxmv_defaultConfig_IVAR(SCCharts scc, TestModelData modelData) {
-        smvUseIVAR = true
-        
-        startNuxmvVerification(scc, modelData)
+    public def void spin_defaultConfig(SCCharts scc, TestModelData modelData) {
+        mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
+        startSpinVerification(scc, modelData)
     }
     
     protected def void startNuxmvVerification(SCCharts scc, TestModelData modelData) {
         initializeVerification(scc, modelData)
-        
         currentVerificationSystemId = "de.cau.cs.kieler.sccharts.verification.nuxmv"
         startVerificationOfCurrentProperties()
     }
@@ -143,7 +142,9 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     
     protected def void startVerificationOfCurrentProperties() {
         for (property : verificationProperties) {
-            if (!property.isIgnoredInBenchmark) {
+            if (property.isIgnoredInBenchmark) {
+                println('''Skipping VerificationProperty "«property.name»"''')
+            } else {
                 println('''Testing VerificationProperty "«property.name»"''')
                 currentVerificationProperty = property
                 startVerification(#[currentVerificationProperty], verificationAssumptions)
@@ -191,6 +192,12 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         // Check must have modelProperties
         for(p : mustHaveModelProperties) {
             if(!verificationModelData.modelProperties.contains(p)) {
+                return false
+            }
+        }
+        // Check must NOT have modelProperties
+        for(p : mustNotHaveModelProperties) {
+            if(verificationModelData.modelProperties.contains(p)) {
                 return false
             }
         }

@@ -104,7 +104,7 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
     }
     
     protected def List<String> getCustomSmvInvarCommands() {
-        if(verificationModelData.modelProperties.contains("unbound-int")) {
+        if(verificationModelData.modelProperties.contains("unbounded-int")) {
             // Use algorithm that can handle infinite domains
             return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}", "quit"]    
         } else {
@@ -113,7 +113,7 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
     }
     
     protected def List<String> getCustomSmvLtlCommands() {
-        if(verificationModelData.modelProperties.contains("unbound-int")) {
+        if(verificationModelData.modelProperties.contains("unbounded-int")) {
             // Use algorithm that can handle infinite domains
             return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}", "quit"]
         } else {
