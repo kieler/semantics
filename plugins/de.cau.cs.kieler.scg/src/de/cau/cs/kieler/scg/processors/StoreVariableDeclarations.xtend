@@ -12,9 +12,13 @@
  */
 package de.cau.cs.kieler.scg.processors
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 
 /**
  * @author aas
@@ -22,6 +26,9 @@ import de.cau.cs.kieler.scg.SCGraphs
  */
 class StoreVariableDeclarations extends InplaceProcessor<SCGraphs> {
     
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         "de.cau.cs.kieler.scg.processors.storeVariableDeclarations"
     }
@@ -30,11 +37,19 @@ class StoreVariableDeclarations extends InplaceProcessor<SCGraphs> {
         "Add VariableDeclarations to VariableStore"
     }
     
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    @Inject extension SSACoreExtensions
+    @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension IOPreserverExtensions    
+    
+    // -------------------------------------------------------------------------
+    
     override process() {
         val model = getModel
         val store = VariableStore.get(compilationContext.startEnvironment)
         for(scg : model.scgs) {
-            for(decl : scg.declarations) {
+            for(decl : scg.variableDeclarations) {
                 for(vo : decl.valuedObjects) {
                     store.update(vo)
                 }
