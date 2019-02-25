@@ -469,7 +469,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getLustreProgramAccess().getIncludesAssignment_0_1_0(), "rule__LustreProgram__IncludesAssignment_0_1_0");
 			builder.put(grammarAccess.getLustreProgramAccess().getIncludesAssignment_0_1_1(), "rule__LustreProgram__IncludesAssignment_0_1_1");
 			builder.put(grammarAccess.getLustreProgramAccess().getPackBodyAssignment_1_0(), "rule__LustreProgram__PackBodyAssignment_1_0");

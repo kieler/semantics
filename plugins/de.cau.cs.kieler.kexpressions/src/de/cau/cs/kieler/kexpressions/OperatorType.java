@@ -343,7 +343,71 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    FBY(25, "FBY", "FBY");
+    FBY(25, "FBY", "FBY"), /**
+     * The '<em><b>CURRENT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CURRENT_VALUE
+     * @generated
+     * @ordered
+     */
+    CURRENT(26, "CURRENT", "CURRENT"), /**
+     * The '<em><b>WHEN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #WHEN_VALUE
+     * @generated
+     * @ordered
+     */
+    WHEN(27, "WHEN", "WHEN"), /**
+     * The '<em><b>INIT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INIT_VALUE
+     * @generated
+     * @ordered
+     */
+    INIT(28, "INIT", "INIT"), /**
+     * The '<em><b>INTDIV</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INTDIV_VALUE
+     * @generated
+     * @ordered
+     */
+    INTDIV(29, "INTDIV", "INTDIV"), /**
+     * The '<em><b>LOGICAL XOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #LOGICAL_XOR_VALUE
+     * @generated
+     * @ordered
+     */
+    LOGICAL_XOR(30, "LOGICAL_XOR", "LOGICAL_XOR"), /**
+     * The '<em><b>IMPLIES</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #IMPLIES_VALUE
+     * @generated
+     * @ordered
+     */
+    IMPLIES(31, "IMPLIES", "IMPLIES"), /**
+     * The '<em><b>NONEOF</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NONEOF_VALUE
+     * @generated
+     * @ordered
+     */
+    NONEOF(32, "NONEOF", "NONEOF"), /**
+     * The '<em><b>NOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NOR_VALUE
+     * @generated
+     * @ordered
+     */
+    NOR(33, "NOR", "NOR");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.

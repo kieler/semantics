@@ -105,6 +105,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Double getValue() {
         return value;
     }
@@ -114,6 +115,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(Double newValue) {
         Double oldValue = value;
         value = newValue;
