@@ -206,7 +206,7 @@ class VerificationView extends ViewPart {
                 setBooleanOption(SMV_USE_IVAR, isChecked)
             }
         }
-        useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR, true)
+        useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR, false)
         useIVARinSmvModels.toolTipText = "IVAR variables cannot be used everywhere, e.g., not in CTL"
         
         val openEditSmvCommandsDialogAction = new Action("Edit SMV Commands...") {
@@ -601,7 +601,7 @@ Example commands:
         verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamplesWithOutputs)
         
         // Add nuXmv options
-        val useIVARinSmvModels = getBooleanOption(SMV_USE_IVAR, true)
+        val useIVARinSmvModels = getBooleanOption(SMV_USE_IVAR, false)
         verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, useIVARinSmvModels)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
