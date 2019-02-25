@@ -77,7 +77,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 
                 // Propability
                 if (transition.triggerProbability > 0) {
-                    feeder.accept(tg.triggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0, transition.triggerProbability)
+                    feeder.accept(tg.triggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0, transition.triggerProbability)
                 }
                 if (transition.nondeterministic) {
                     feeder.accept(tg.nondeterministicNondeterministicKeyword_2_0_5_4_0)
@@ -111,7 +111,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 
                 // Propability
                 if (transition.triggerProbability > 0) {
-                    feeder.accept(tg.triggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0, transition.triggerProbability)
+                    feeder.accept(tg.triggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0, transition.triggerProbability)
                 }
                 if (transition.nondeterministic) {
                     feeder.accept(tg.nondeterministicNondeterministicKeyword_2_1_1_4_0)

@@ -44,7 +44,7 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
      * @generated
      * @ordered
      */
-    protected static final float VALUE_EDEFAULT = 0.0F;
+    protected static final double VALUE_EDEFAULT = 0.0;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -54,7 +54,7 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
      * @generated
      * @ordered
      */
-    protected float value = VALUE_EDEFAULT;
+    protected double value = VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -80,7 +80,7 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
      * <!-- end-user-doc -->
      * @generated
      */
-    public float getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -89,8 +89,8 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(float newValue) {
-        float oldValue = value;
+    public void setValue(double newValue) {
+        double oldValue = value;
         value = newValue;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, AnnotationsPackage.FLOAT_ANNOTATION__VALUE, oldValue, value));
@@ -119,7 +119,7 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case AnnotationsPackage.FLOAT_ANNOTATION__VALUE:
-                setValue((Float)newValue);
+                setValue((Double)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -163,7 +163,7 @@ public class FloatAnnotationImpl extends AnnotationImpl implements FloatAnnotati
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (value: ");
         result.append(value);
         result.append(')');

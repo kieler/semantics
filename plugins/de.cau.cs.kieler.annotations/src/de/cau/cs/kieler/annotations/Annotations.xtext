@@ -156,13 +156,7 @@ Integer returns ecore::EInt:
 
 // Floateger
 // The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-Floateger returns ecore::EFloat:
-    '-'? FLOAT;
-    
-Double returns ecore::EDouble:
-    FLOAT;
-
-Doubleger returns ecore::EDouble:
+Floateger returns ecore::EDouble:
     '-'? FLOAT;
 
 
@@ -202,9 +196,9 @@ terminal INT returns ecore::EInt:
     NUMBER+;
 
 
-// Float Terminal    
+// Float Terminal (internal precision: double!)  
 // Make sure the Float rule does not shadow the INT rule
-terminal FLOAT returns ecore::EFloat:
+terminal FLOAT returns ecore::EDouble:
     NUMBER+ ('.' NUMBER*) (("e"|"E") ("+"|"-")? NUMBER+)? 'f'? |
     NUMBER+ 'f';
 

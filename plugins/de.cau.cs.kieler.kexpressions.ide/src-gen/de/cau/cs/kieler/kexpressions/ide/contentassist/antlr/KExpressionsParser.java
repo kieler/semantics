@@ -256,7 +256,6 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalOrExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1");

@@ -1,10 +1,9 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
+ * generated with EMF ecore
  */
 package de.cau.cs.kieler.kexpressions.impl;
+
+import de.cau.cs.kieler.kexpressions.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -14,8 +13,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import de.cau.cs.kieler.kexpressions.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -195,139 +192,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
-    public OperatorExpression createOperatorExpression() {
-        OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-        return operatorExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public TextExpression createTextExpression() {
-        TextExpressionImpl textExpression = new TextExpressionImpl();
-        return textExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public VariableDeclaration createVariableDeclaration() {
-        VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
-        return variableDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ReferenceDeclaration createReferenceDeclaration() {
-        ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
-        return referenceDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ScheduleDeclaration createScheduleDeclaration() {
-        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
-        return scheduleDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ScheduleObjectReference createScheduleObjectReference() {
-        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
-        return scheduleObjectReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public FunctionCall createFunctionCall() {
-        FunctionCallImpl functionCall = new FunctionCallImpl();
-        return functionCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public PrintCall createPrintCall() {
-        PrintCallImpl printCall = new PrintCallImpl();
-        return printCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public RandomCall createRandomCall() {
-        RandomCallImpl randomCall = new RandomCallImpl();
-        return randomCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public RandomizeCall createRandomizeCall() {
-        RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
-        return randomizeCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public ExternString createExternString() {
-        ExternStringImpl externString = new ExternStringImpl();
-        return externString;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public Parameter createParameter() {
-        ParameterImpl parameter = new ParameterImpl();
-        return parameter;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public StringValue createStringValue() {
         StringValueImpl stringValue = new StringValueImpl();
         return stringValue;
@@ -338,7 +202,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public VectorValue createVectorValue() {
         VectorValueImpl vectorValue = new VectorValueImpl();
         return vectorValue;
@@ -349,7 +212,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public IgnoreValue createIgnoreValue() {
         IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
         return ignoreValue;
@@ -360,7 +222,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public JsonPragma createJsonPragma() {
         JsonPragmaImpl jsonPragma = new JsonPragmaImpl();
         return jsonPragma;
@@ -371,7 +232,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public JsonAnnotation createJsonAnnotation() {
         JsonAnnotationImpl jsonAnnotation = new JsonAnnotationImpl();
         return jsonAnnotation;
@@ -382,7 +242,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public JsonObjectValue createJsonObjectValue() {
         JsonObjectValueImpl jsonObjectValue = new JsonObjectValueImpl();
         return jsonObjectValue;
@@ -393,7 +252,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public JsonObjectMember createJsonObjectMember() {
         JsonObjectMemberImpl jsonObjectMember = new JsonObjectMemberImpl();
         return jsonObjectMember;
@@ -404,7 +262,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public JsonArrayValue createJsonArrayValue() {
         JsonArrayValueImpl jsonArrayValue = new JsonArrayValueImpl();
         return jsonArrayValue;
@@ -415,7 +272,6 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
     public NullValue createNullValue() {
         NullValueImpl nullValue = new NullValueImpl();
         return nullValue;
@@ -426,10 +282,129 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    @Override
+    public OperatorExpression createOperatorExpression() {
+        OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
+        return operatorExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TextExpression createTextExpression() {
+        TextExpressionImpl textExpression = new TextExpressionImpl();
+        return textExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public VariableDeclaration createVariableDeclaration() {
+        VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
+        return variableDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ReferenceDeclaration createReferenceDeclaration() {
+        ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
+        return referenceDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ScheduleDeclaration createScheduleDeclaration() {
+        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
+        return scheduleDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ScheduleObjectReference createScheduleObjectReference() {
+        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
+        return scheduleObjectReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Parameter createParameter() {
+        ParameterImpl parameter = new ParameterImpl();
+        return parameter;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public ReferenceCall createReferenceCall() {
         ReferenceCallImpl referenceCall = new ReferenceCallImpl();
         return referenceCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public FunctionCall createFunctionCall() {
+        FunctionCallImpl functionCall = new FunctionCallImpl();
+        return functionCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public PrintCall createPrintCall() {
+        PrintCallImpl printCall = new PrintCallImpl();
+        return printCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public RandomCall createRandomCall() {
+        RandomCallImpl randomCall = new RandomCallImpl();
+        return randomCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public RandomizeCall createRandomizeCall() {
+        RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
+        return randomizeCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public ExternString createExternString() {
+        ExternStringImpl externString = new ExternStringImpl();
+        return externString;
     }
 
     /**

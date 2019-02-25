@@ -2,9 +2,9 @@
  */
 package de.cau.cs.kieler.kexpressions;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.annotations.Annotatable;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->

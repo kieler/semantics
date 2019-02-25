@@ -13,22 +13,22 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ExternString
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.emf.ecore.EObject
-import java.util.List
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
-import de.cau.cs.kieler.kexpressions.ExternString
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import com.google.inject.Inject
+import java.util.List
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -84,8 +84,8 @@ class KExpressionsDeclarationExtensions {
         createVariableDeclaration(ValueType::BOOL)
     }    
 
-    def VariableDeclaration createDoubleDeclaration() {
-        createVariableDeclaration(ValueType::DOUBLE)
+    def VariableDeclaration createFloatDeclaration() {
+        createVariableDeclaration(ValueType::FLOAT)
     }    
 
     def VariableDeclaration createStringDeclaration() {
@@ -109,7 +109,7 @@ class KExpressionsDeclarationExtensions {
     def dispatch Declaration createDeclaration(Value value) {
         if (value instanceof IntValue) createIntDeclaration
         else if (value instanceof BoolValue) createBoolDeclaration
-        else if (value instanceof DoubleValue) createDoubleDeclaration
+        else if (value instanceof FloatValue) createFloatDeclaration
         else if (value instanceof StringValue) createStringDeclaration
         else createDeclaration
     }
