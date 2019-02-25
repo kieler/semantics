@@ -78,7 +78,7 @@ class SimplifyNamesOfSSA extends InplaceProcessor<SCGraphs> implements Traceable
             if (decl.valuedObjects.size > 1) {
                 if(decl.input || decl.output) {
                     // Create separate declaration for last valued object
-                    val declCopy = createDeclaration
+                    val declCopy = createVariableDeclaration
                     declCopy.applyAttributes(decl)
                     declCopy.valuedObjects.add(decl.valuedObjects.last)
                     scg.declarations.add(declCopy)

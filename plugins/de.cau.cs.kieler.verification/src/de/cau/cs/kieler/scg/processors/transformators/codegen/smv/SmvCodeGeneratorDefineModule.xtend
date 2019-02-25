@@ -160,10 +160,8 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         // Define valued objects that are no pre-guard and no input to the model
         for (declaration : scg.declarations) {
             if (declaration instanceof VariableDeclaration) {
-                if(!declaration.isInput || declaration.isOutput) {
-                    for (valuedObject : declaration.valuedObjects) {
-                        valuedObject.generateAssignment
-                    }
+                for (valuedObject : declaration.valuedObjects) {
+                    valuedObject.generateAssignment
                 }
             }
         }
