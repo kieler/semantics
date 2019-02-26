@@ -32,7 +32,6 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
@@ -44,7 +43,6 @@ import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import de.cau.cs.kieler.scg.processors.SCGFeatures
 import java.util.HashMap
 import java.util.List
-import java.util.logging.Level
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -118,10 +116,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         basicBlockGuardCache.clear
         guardCache.clear
         
-        // Timestamp for performance information. Should be moved to the KiCo interface globally.
-//        SCGPlugin.log("Nodes: " + scg.nodes.size)  
-        val timestamp = System.currentTimeMillis  
-
         // Create the basic blocks beginning with the first node in the node list.
         // It is expected that this node is an entry node.
         if (!(scg.nodes.head instanceof Entry)) throw new UnsupportedSCGException("The basic block analysis expects an entry node as first node!")
@@ -138,7 +132,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
          * Remove the dead block flag if the block is a go block or if it has at least one predecessor
          *  that is not dead. In the case of join blocks, all predecessors have to be active.
          */
-        val timestamp2 = System.currentTimeMillis  
         for(bb : basicBlockCache) {
             if (bb.goBlock) {
                 bb.deadBlock = false
@@ -158,8 +151,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         scg.declarations += createBoolDeclaration => [ declaration | 
         	guardCache.forEach[ guard | declaration.valuedObjects += guard.valuedObject ]
         ]
-        val time2 = (System.currentTimeMillis - timestamp2) as float
-        SCGPlugin.log("Dead block processing finished (time elapsed: "+(time2 / 1000)+"s).", Level.FINE)            
         
         //KITT
         if (isTracingActive()) {
@@ -179,9 +170,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
         basicBlockGuardCache.keySet.forEach[voStore.update(it, "guard")]
         
         scg.createStringAnnotation(SCGFeatures.BASICBLOCK_ID, SCGFeatures.BASICBLOCK_NAME)
-        
-        val time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Basic Block transformation finished (time elapsed: "+(time / 1000)+"s).", Level.FINE)    
         
         // Return the SCG with basic block data.
         scg
@@ -261,10 +249,6 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
             return newIndex;
         }
 
-        if (basicBlockCache.size % 10000 == 0) {
-            SCGPlugin.log("Basic Blocks: " + basicBlockCache.size + " with " + processedNodes.size + " nodes", Level.FINE)
-        }
-        
         // Create a new ValuedObject for the guards of the upcoming basic block.
         // Each guard is identified by its unique name and is of boolean type.
         val guardValuedObject = KExpressionsFactory::eINSTANCE.createValuedObject

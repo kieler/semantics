@@ -33,7 +33,6 @@ import java.util.HashSet
 import java.util.Stack
 import javax.inject.Inject
 
-import static extension de.cau.cs.kieler.core.model.codegeneration.HostcodeUtil.*
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
@@ -892,4 +891,8 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         return s.toString
     }
     
+    
+    private def static removeEscapeChars(String string) {
+        string.replaceAll("\\\\\\\"", "\"").replaceAll("\\\\\\\\", "\\\\")
+    }    
 }

@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.Guard
@@ -37,8 +36,6 @@ import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
-import java.util.logging.Level
-import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
@@ -81,9 +78,6 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
     
     @Inject
     extension AnnotationsExtensions
-    
-    @Inject
-    extension KEffectsSerializeExtensions
     
     @Inject extension KEffectsExtensions
    
@@ -150,8 +144,6 @@ class SurfaceSynchronizer extends AbstractSynchronizer {
             scg.guards += newGuard
             newGuards += newGuard
             emptyDeclaration.valuedObjects += newGuard.valuedObject
-            
-            SCGPlugin.log("Generated NEW guard " + newGuard.valuedObject.name + " with expression " + newGuard.expression.serialize, Level.FINE)
 		}
     }
     

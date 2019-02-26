@@ -23,7 +23,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.BranchType
@@ -32,7 +31,6 @@ import de.cau.cs.kieler.scg.Guard
 import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Predecessor
-import de.cau.cs.kieler.scg.SCGPlugin
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
@@ -42,7 +40,6 @@ import de.cau.cs.kieler.scg.extensions.SCGDeclarationExtensions
 import de.cau.cs.kieler.scg.extensions.UnsupportedSCGException
 import java.util.HashMap
 import java.util.List
-import java.util.logging.Level
 
 import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
@@ -99,7 +96,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension SynchronizerSelector
-    @Inject extension KEffectsSerializeExtensions
     @Inject extension KEffectsExtensions
 
     protected val schedulingBlocks = <SchedulingBlock>newArrayList
@@ -123,7 +119,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     
     protected def SCGraph process(SCGraph scg) {
         val voStore = VariableStore.getVariableStore(environment)
-        val timestamp = System.currentTimeMillis
         
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
@@ -150,20 +145,15 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
         schedulingBlockCache.clear
         schedulingBlockGuardCache.clear
         for (basicBlock : scg.basicBlocks) {
-//            if (basicBlock.isDeadBlock) {
-                predecessorList += basicBlock.predecessors
-                for (schedulingBlock : basicBlock.schedulingBlocks) {
-                    schedulingBlocks += schedulingBlock
-                    for (node : schedulingBlock.nodes) {
-                        schedulingBlockCache.put(node, schedulingBlock)
-                        schedulingBlockGuardCache.put(schedulingBlock.guards.head, schedulingBlock)
-                    }
+            predecessorList += basicBlock.predecessors
+            for (schedulingBlock : basicBlock.schedulingBlocks) {
+                schedulingBlocks += schedulingBlock
+                for (node : schedulingBlock.nodes) {
+                    schedulingBlockCache.put(node, schedulingBlock)
+                    schedulingBlockGuardCache.put(schedulingBlock.guards.head, schedulingBlock)
                 }
-//            }
+            }
         }
-
-        var time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Preparation for guard creation: caches finished (time elapsed: " + (time / 1000) + "s).", Level.FINE)
 
         // Create the predecessor caches for each predecessor.
         predecessorList.forEach [ p |
@@ -185,19 +175,13 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                 conditionalGuards.put(conditional, newGuard)
                 conditionalDeclaration.valuedObjects += newVO
                 voStore.update(newVO, "guard", "conditionalGuard")
-                SCGPlugin.log(
-                    "Generated NEW conditional guard " + newGuard.valuedObject.name + " with expression " +
-                        newGuard.expression.serialize + ", " + newGuard.valuedObject, Level.FINE)
-                        
+                
                 ScgFactory::eINSTANCE.createControlDependency => [
 	                conditional.dependencies += it
 	                it.target = newGuard
                 ] 
             }
         ]
-
-        time = (System.currentTimeMillis - timestamp) as float
-        SCGPlugin.log("Preparation for guard creation finished (time elapsed: " + (time / 1000) + "s).", Level.FINE)
 
         for (schedulingBlock : schedulingBlocks) {
             schedulingBlock.guards.head.createGuardEquation(schedulingBlock, scg)
@@ -292,8 +276,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             guard.createSubsequentSchedulingBlockGuardExpression(schedulingBlock, scg)
         }
 
-        SCGPlugin.log("Generated guard " + guard.valuedObject.name + " with expression " + guard.expression.serialize, 
-            Level.FINE)       
     }
 
     // --- CREATE GUARDS: GO BLOCK 
@@ -364,7 +346,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             sync.annotate(join)
         }
         val synchronizer = join.getSynchronizer
-        SCGPlugin.log("Creating join guard " + guard.valuedObject.name + " with " + synchronizer.id, Level.FINE)
 
         synchronizer.synchronize(schedulingBlock.nodes.head as Join, guard, schedulingBlock, scg, schedulingBlockCache)
                 
@@ -450,7 +431,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference
-            SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, Level.FINE)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
@@ -472,7 +452,6 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
             expression.setOperator(OperatorType::LOGICAL_AND)
             expression.subExpressions += predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference
             expression.subExpressions += conditionalGuards.get(predecessor.conditional).valuedObject.reference.negate
-			SCGPlugin.log("Referencing " + conditionalGuards.get(predecessor.conditional).valuedObject, Level.FINE)
 
             // Conditional branches are mutual exclusive. Since the other branch may modify the condition 
             // make sure the subsequent branch will not evaluate to true if the first one was already taken.
