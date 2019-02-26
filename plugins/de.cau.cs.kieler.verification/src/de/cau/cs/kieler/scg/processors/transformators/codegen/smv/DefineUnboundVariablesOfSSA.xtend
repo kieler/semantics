@@ -68,7 +68,10 @@ class DefineUnboundVariablesOfSSA extends InplaceProcessor<SCGraphs> implements 
                 // Check if the valued object is assigned a value somewhere in the scg
                 val valuedObject = decl.valuedObjects.filter[!isRegister && !isTerm && !isGO].head
                 val origValuedObject = decl.ssaOrigVO
-                if(valuedObject !== null && origValuedObject !== null && !valuedObject.isLeftOfAssignment(scg)) {
+                // TODO: The check for "!valuedObject.isGuard" is not really needed,
+                // but when there are undefined guards then defining them via pre moves
+                // the focus away from the original problem. There should be no undefined guards in the first place.
+                if(valuedObject !== null && origValuedObject !== null && !valuedObject.isLeftOfAssignment(scg) && !valuedObject.isGuard) {
                     // This value represents the value of the original valued object in the last tick.
                     // Define it at beginning of control flow.
                     scg.prependAssignmentToPreOperator(valuedObject, origValuedObject)
@@ -110,5 +113,9 @@ class DefineUnboundVariablesOfSSA extends InplaceProcessor<SCGraphs> implements 
     
     private def boolean isGO(ValuedObject valuedObject) {
         return valuedObject.name == "_GO"
+    }
+    
+    private def boolean isGuard(ValuedObject valuedObject) {
+        return valuedObject.name.startsWith("_g")
     }
 }
