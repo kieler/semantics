@@ -194,7 +194,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link AnnotationsPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -208,7 +208,8 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         if (isInited) return (AnnotationsPackage)EPackage.Registry.INSTANCE.getEPackage(AnnotationsPackage.eNS_URI);
 
         // Obtain or create and register package
-        AnnotationsPackageImpl theAnnotationsPackage = (AnnotationsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof AnnotationsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new AnnotationsPackageImpl());
+        Object registeredAnnotationsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        AnnotationsPackageImpl theAnnotationsPackage = registeredAnnotationsPackage instanceof AnnotationsPackageImpl ? (AnnotationsPackageImpl)registeredAnnotationsPackage : new AnnotationsPackageImpl();
 
         isInited = true;
 
@@ -221,7 +222,6 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         // Mark meta-data to indicate it can't be changed
         theAnnotationsPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(AnnotationsPackage.eNS_URI, theAnnotationsPackage);
         return theAnnotationsPackage;
@@ -636,7 +636,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         initEAttribute(getIntAnnotation_Value(), ecorePackage.getEInt(), "value", null, 1, 1, IntAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(floatAnnotationEClass, FloatAnnotation.class, "FloatAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFloatAnnotation_Value(), ecorePackage.getEFloat(), "value", null, 1, 1, FloatAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFloatAnnotation_Value(), ecorePackage.getEDouble(), "value", null, 1, 1, FloatAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(containmentAnnotationEClass, ContainmentAnnotation.class, "ContainmentAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getContainmentAnnotation_Object(), ecorePackage.getEObject(), null, "object", null, 1, 1, ContainmentAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

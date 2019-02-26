@@ -56,7 +56,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected static final Float VALUE_EDEFAULT = null;
+    protected static final Double VALUE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -66,7 +66,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected Float value = VALUE_EDEFAULT;
+    protected Double value = VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -104,7 +104,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Float getValue() {
+    public Double getValue() {
         return value;
     }
 
@@ -113,8 +113,8 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(Float newValue) {
-        Float oldValue = value;
+    public void setValue(Double newValue) {
+        Double oldValue = value;
         value = newValue;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.FLOAT_VALUE__VALUE, oldValue, value));
@@ -164,7 +164,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
             case KExpressionsPackage.FLOAT_VALUE__VALUE:
-                setValue((Float)newValue);
+                setValue((Double)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

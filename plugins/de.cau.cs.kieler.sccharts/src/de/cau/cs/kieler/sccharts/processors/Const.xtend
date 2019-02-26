@@ -16,7 +16,6 @@ package de.cau.cs.kieler.sccharts.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.TextExpression
@@ -116,8 +115,6 @@ class Const extends SCChartsProcessor implements Traceable {
                         replacementString = (replacement as BoolValue).value.toString
                     else if (replacement instanceof FloatValue)
                         replacementString = (replacement as FloatValue).value.toString
-                    else if (replacement instanceof DoubleValue)
-                        replacementString = (replacement as DoubleValue).value.toString
                     else if (replacement instanceof TextExpression)
                         replacementString = (replacement as TextExpression).text
                     text = text.replaceAll(const.name, replacementString)

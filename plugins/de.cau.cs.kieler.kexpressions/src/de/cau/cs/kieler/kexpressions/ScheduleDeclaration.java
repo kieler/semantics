@@ -4,7 +4,6 @@ package de.cau.cs.kieler.kexpressions;
 
 import org.eclipse.emf.common.util.EList;
 
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Schedule Declaration</b></em>'.
@@ -51,24 +50,6 @@ public interface ScheduleDeclaration extends Declaration {
     void setName(String value);
 
     /**
-     * Returns the value of the '<em><b>Priorities</b></em>' attribute list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
-     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Priorities</em>' reference isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Priorities</em>' attribute list.
-     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Priorities()
-     * @model
-     * @generated
-     */
-    EList<PriorityProtocol> getPriorities();
-
-    /**
      * Returns the value of the '<em><b>Global</b></em>' attribute.
      * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
      * <!-- begin-user-doc -->
@@ -96,5 +77,23 @@ public interface ScheduleDeclaration extends Declaration {
      * @generated
      */
     void setGlobal(PriorityProtocol value);
+
+    /**
+     * Returns the value of the '<em><b>Priorities</b></em>' attribute list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.PriorityProtocol}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Priorities</em>' attribute list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Priorities</em>' attribute list.
+     * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Priorities()
+     * @model
+     * @generated
+     */
+    EList<PriorityProtocol> getPriorities();
 
 } // ScheduleDeclaration

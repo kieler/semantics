@@ -1272,20 +1272,19 @@ ruleTransition returns [EObject current=null]
 						}
 						(
 							(
+								lv_triggerProbability_12_0=RULE_FLOAT
 								{
-									newCompositeNode(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0());
+									newLeafNode(lv_triggerProbability_12_0, grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0());
 								}
-								lv_triggerProbability_12_0=ruleDouble
 								{
 									if ($current==null) {
-										$current = createModelElementForParent(grammarAccess.getTransitionRule());
+										$current = createModelElement(grammarAccess.getTransitionRule());
 									}
-									set(
+									setWithLastConsumed(
 										$current,
 										"triggerProbability",
 										lv_triggerProbability_12_0,
-										"de.cau.cs.kieler.annotations.Annotations.Double");
-									afterParserOrEnumRuleCall();
+										"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 								}
 							)
 						)
@@ -1448,20 +1447,19 @@ ruleTransition returns [EObject current=null]
 						}
 						(
 							(
+								lv_triggerProbability_24_0=RULE_FLOAT
 								{
-									newCompositeNode(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0());
+									newLeafNode(lv_triggerProbability_24_0, grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0());
 								}
-								lv_triggerProbability_24_0=ruleDouble
 								{
 									if ($current==null) {
-										$current = createModelElementForParent(grammarAccess.getTransitionRule());
+										$current = createModelElement(grammarAccess.getTransitionRule());
 									}
-									set(
+									setWithLastConsumed(
 										$current,
 										"triggerProbability",
 										lv_triggerProbability_24_0,
-										"de.cau.cs.kieler.annotations.Annotations.Double");
-									afterParserOrEnumRuleCall();
+										"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 								}
 							)
 						)
@@ -2767,20 +2765,19 @@ ruleEntryAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_5_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getEntryActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0());
+							newLeafNode(lv_triggerProbability_5_0, grammarAccess.getEntryActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0());
 						}
-						lv_triggerProbability_5_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getEntryActionRule());
+								$current = createModelElement(grammarAccess.getEntryActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_5_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -2961,20 +2958,19 @@ ruleDuringAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_7_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getDuringActionAccess().getTriggerProbabilityDoubleParserRuleCall_3_3_1_0());
+							newLeafNode(lv_triggerProbability_7_0, grammarAccess.getDuringActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0());
 						}
-						lv_triggerProbability_7_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getDuringActionRule());
+								$current = createModelElement(grammarAccess.getDuringActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_7_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -3118,20 +3114,19 @@ ruleExitAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_5_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getExitActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0());
+							newLeafNode(lv_triggerProbability_5_0, grammarAccess.getExitActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0());
 						}
-						lv_triggerProbability_5_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getExitActionRule());
+								$current = createModelElement(grammarAccess.getExitActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_5_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -3326,20 +3321,19 @@ ruleSuspendAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_8_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getSuspendActionAccess().getTriggerProbabilityDoubleParserRuleCall_4_3_1_0());
+							newLeafNode(lv_triggerProbability_8_0, grammarAccess.getSuspendActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0());
 						}
-						lv_triggerProbability_8_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getSuspendActionRule());
+								$current = createModelElement(grammarAccess.getSuspendActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_8_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -3433,20 +3427,19 @@ rulePrecedingAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_5_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getPrecedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0());
+							newLeafNode(lv_triggerProbability_5_0, grammarAccess.getPrecedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0());
 						}
-						lv_triggerProbability_5_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getPrecedingActionRule());
+								$current = createModelElement(grammarAccess.getPrecedingActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_5_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -3590,20 +3583,19 @@ ruleSucceedingAction returns [EObject current=null]
 				}
 				(
 					(
+						lv_triggerProbability_5_0=RULE_FLOAT
 						{
-							newCompositeNode(grammarAccess.getSucceedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0());
+							newLeafNode(lv_triggerProbability_5_0, grammarAccess.getSucceedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0());
 						}
-						lv_triggerProbability_5_0=ruleDouble
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getSucceedingActionRule());
+								$current = createModelElement(grammarAccess.getSucceedingActionRule());
 							}
-							set(
+							setWithLastConsumed(
 								$current,
 								"triggerProbability",
 								lv_triggerProbability_5_0,
-								"de.cau.cs.kieler.annotations.Annotations.Double");
-							afterParserOrEnumRuleCall();
+								"de.cau.cs.kieler.annotations.Annotations.FLOAT");
 						}
 					)
 				)
@@ -14195,30 +14187,6 @@ ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
 			newLeafNode(this_FLOAT_1, grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1());
 		}
 	)
-;
-
-// Entry rule entryRuleDouble
-entryRuleDouble returns [String current=null]:
-	{ newCompositeNode(grammarAccess.getDoubleRule()); }
-	iv_ruleDouble=ruleDouble
-	{ $current=$iv_ruleDouble.current.getText(); }
-	EOF;
-
-// Rule Double
-ruleDouble returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	this_FLOAT_0=RULE_FLOAT
-	{
-		$current.merge(this_FLOAT_0);
-	}
-	{
-		newLeafNode(this_FLOAT_0, grammarAccess.getDoubleAccess().getFLOATTerminalRuleCall());
-	}
 ;
 
 // Rule PreemptionType

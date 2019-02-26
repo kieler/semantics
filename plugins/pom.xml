@@ -55,6 +55,7 @@
     <module>de.cau.cs.kieler.scl.ui</module>
     <module>de.cau.cs.kieler.scl</module>
     <module>de.cau.cs.kieler.simulation.ui</module>
+    <module>de.cau.cs.kieler.simulation.ide</module>
     <module>de.cau.cs.kieler.simulation</module>
   </modules>
 

@@ -714,7 +714,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_0_5_3 = (Group)cGroup_2_0_5.eContents().get(3);
 		private final Keyword cPrKeyword_2_0_5_3_0 = (Keyword)cGroup_2_0_5_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_0_5_3_1 = (Assignment)cGroup_2_0_5_3.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_0_5_3_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_0_5_3_1.eContents().get(0);
 		private final Assignment cNondeterministicAssignment_2_0_5_4 = (Assignment)cGroup_2_0_5.eContents().get(4);
 		private final Keyword cNondeterministicNondeterministicKeyword_2_0_5_4_0 = (Keyword)cNondeterministicAssignment_2_0_5_4.eContents().get(0);
 		private final Group cGroup_2_0_6 = (Group)cGroup_2_0.eContents().get(6);
@@ -740,7 +740,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_1_1_3 = (Group)cGroup_2_1_1.eContents().get(3);
 		private final Keyword cPrKeyword_2_1_1_3_0 = (Keyword)cGroup_2_1_1_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_1_1_3_1 = (Assignment)cGroup_2_1_1_3.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_1_1_3_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_1_1_3_1.eContents().get(0);
 		private final Assignment cNondeterministicAssignment_2_1_1_4 = (Assignment)cGroup_2_1_1.eContents().get(4);
 		private final Keyword cNondeterministicNondeterministicKeyword_2_1_1_4_0 = (Keyword)cNondeterministicAssignment_2_1_1_4.eContents().get(0);
 		private final Group cGroup_2_1_2 = (Group)cGroup_2_1.eContents().get(2);
@@ -770,9 +770,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	targetState=[sccharts::State] delay=DelayType?
 		//	deferred?='deferred'?
 		//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//	preemption=PreemptionType
 		//	targetState=[sccharts::State] deferred?='deferred'?
 		//	history=HistoryType?) ('label' label=STRING)?;
@@ -780,9 +780,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//{sccharts::Transition} annotations+=RestrictedTypeAnnotation* (preemption=PreemptionType targetState=[sccharts::State]
 		//delay=DelayType? deferred?='deferred'? history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression |
-		//trigger=AtomicExpression) ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do'
+		//trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression |
-		//trigger=AtomicExpression) ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do'
+		//trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? preemption=PreemptionType targetState=[sccharts::State] deferred?='deferred'?
 		//history=HistoryType?) ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
@@ -797,15 +797,15 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0() { return cAnnotationsRestrictedTypeAnnotationParserRuleCall_1_0; }
 		
 		//preemption=PreemptionType targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType?
-		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? | delay=DelayType? ('if'
-		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)? preemption=PreemptionType
 		//targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//preemption=PreemptionType targetState=[sccharts::State] delay=DelayType? deferred?='deferred'? history=HistoryType?
-		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)?
 		//nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_2_0() { return cGroup_2_0; }
 		
@@ -842,7 +842,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//HistoryType
 		public RuleCall getHistoryHistoryTypeEnumRuleCall_2_0_4_0() { return cHistoryHistoryTypeEnumRuleCall_2_0_4_0; }
 		
-		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)?
 		//nondeterministic?='nondeterministic'?)?
 		public Group getGroup_2_0_5() { return cGroup_2_0_5; }
 		
@@ -870,17 +870,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicExpression
 		public RuleCall getTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_2_0_5_2_1_0; }
 		
-		//('Pr=' triggerProbability=Double)?
+		//('Pr=' triggerProbability=FLOAT)?
 		public Group getGroup_2_0_5_3() { return cGroup_2_0_5_3; }
 		
 		//'Pr='
 		public Keyword getPrKeyword_2_0_5_3_0() { return cPrKeyword_2_0_5_3_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_0_5_3_1() { return cTriggerProbabilityAssignment_2_0_5_3_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0; }
 		
 		//nondeterministic?='nondeterministic'?
 		public Assignment getNondeterministicAssignment_2_0_5_4() { return cNondeterministicAssignment_2_0_5_4; }
@@ -913,7 +913,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getEffectsEffectParserRuleCall_2_0_6_2_1_0() { return cEffectsEffectParserRuleCall_2_0_6_2_1_0; }
 		
 		//delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-		//triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+		//triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 		//preemption=PreemptionType targetState=[sccharts::State] deferred?='deferred'? history=HistoryType?
 		public Group getGroup_2_1() { return cGroup_2_1; }
 		
@@ -923,7 +923,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//DelayType
 		public RuleCall getDelayDelayTypeEnumRuleCall_2_1_0_0() { return cDelayDelayTypeEnumRuleCall_2_1_0_0; }
 		
-		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=Double)?
+		//('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr=' triggerProbability=FLOAT)?
 		//nondeterministic?='nondeterministic'?)?
 		public Group getGroup_2_1_1() { return cGroup_2_1_1; }
 		
@@ -951,17 +951,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicExpression
 		public RuleCall getTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0() { return cTriggerAtomicExpressionParserRuleCall_2_1_1_2_1_0; }
 		
-		//('Pr=' triggerProbability=Double)?
+		//('Pr=' triggerProbability=FLOAT)?
 		public Group getGroup_2_1_1_3() { return cGroup_2_1_1_3; }
 		
 		//'Pr='
 		public Keyword getPrKeyword_2_1_1_3_0() { return cPrKeyword_2_1_1_3_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_1_1_3_1() { return cTriggerProbabilityAssignment_2_1_1_3_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0; }
 		
 		//nondeterministic?='nondeterministic'?
 		public Assignment getNondeterministicAssignment_2_1_1_4() { return cNondeterministicAssignment_2_1_1_4; }
@@ -1671,7 +1671,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1687,11 +1687,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//EntryAction sccharts::EntryAction:
 		//	{sccharts::EntryAction}
-		//	'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//{sccharts::EntryAction} 'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
@@ -1701,7 +1701,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'entry'
 		public Keyword getEntryKeyword_1() { return cEntryKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)?
+		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'if'
@@ -1713,17 +1713,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=Double)?
+		//('Pr' triggerProbability=FLOAT)?
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//'Pr'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1777,7 +1777,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_3_3 = (Group)cGroup_3.eContents().get(3);
 		private final Keyword cPrKeyword_3_3_0 = (Keyword)cGroup_3_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_3_3_1 = (Assignment)cGroup_3_3.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_3_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_3_3_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_3_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cDoKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -1793,11 +1793,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//DuringAction sccharts::DuringAction:
 		//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr='
-		//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+		//	triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr='
-		//triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
+		//triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//{sccharts::DuringAction}
@@ -1812,7 +1812,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'during'
 		public Keyword getDuringKeyword_2() { return cDuringKeyword_2; }
 		
-		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'if'
@@ -1830,17 +1830,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_3_2_0() { return cTriggerBoolScheduleExpressionParserRuleCall_3_2_0; }
 		
-		//('Pr=' triggerProbability=Double)?
+		//('Pr=' triggerProbability=FLOAT)?
 		public Group getGroup_3_3() { return cGroup_3_3; }
 		
 		//'Pr='
 		public Keyword getPrKeyword_3_3_0() { return cPrKeyword_3_3_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_3_3_1() { return cTriggerProbabilityAssignment_3_3_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_3_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_3_3_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0; }
 		
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_4() { return cGroup_4; }
@@ -1890,7 +1890,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -1906,11 +1906,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//ExitAction sccharts::ExitAction:
 		//	{sccharts::ExitAction}
-		//	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//{sccharts::ExitAction} 'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
@@ -1920,7 +1920,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'exit'
 		public Keyword getExitKeyword_1() { return cExitKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)?
+		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'if'
@@ -1932,17 +1932,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=Double)?
+		//('Pr' triggerProbability=FLOAT)?
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//'Pr'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1998,7 +1998,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
 		private final Keyword cPrKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_4_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_4_3_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0 = (RuleCall)cTriggerProbabilityAssignment_4_3_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cLabelKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
 		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
@@ -2006,11 +2006,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SuspendAction sccharts::SuspendAction:
 		//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT?
-		//	trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
+		//	trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT?
-		//trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?
+		//trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//{sccharts::SuspendAction}
@@ -2031,7 +2031,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'suspend'
 		public Keyword getSuspendKeyword_3() { return cSuspendKeyword_3; }
 		
-		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)?
+		//('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
 		public Group getGroup_4() { return cGroup_4; }
 		
 		//'if'
@@ -2049,17 +2049,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_4_2_0() { return cTriggerBoolScheduleExpressionParserRuleCall_4_2_0; }
 		
-		//('Pr=' triggerProbability=Double)?
+		//('Pr=' triggerProbability=FLOAT)?
 		public Group getGroup_4_3() { return cGroup_4_3; }
 		
 		//'Pr='
 		public Keyword getPrKeyword_4_3_0() { return cPrKeyword_4_3_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_4_3_1() { return cTriggerProbabilityAssignment_4_3_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_4_3_1_0() { return cTriggerProbabilityDoubleParserRuleCall_4_3_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0; }
 		
 		//('label' label=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
@@ -2085,7 +2085,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -2101,11 +2101,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PrecedingAction sccharts::PrecedingAction:
 		//	{sccharts::PrecedingAction}
-		//	'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//{sccharts::PrecedingAction} 'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
@@ -2115,7 +2115,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'preceding'
 		public Keyword getPrecedingKeyword_1() { return cPrecedingKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)?
+		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'if'
@@ -2127,17 +2127,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=Double)?
+		//('Pr' triggerProbability=FLOAT)?
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//'Pr'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -2187,7 +2187,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
 		private final Keyword cPrKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
 		private final Assignment cTriggerProbabilityAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
-		private final RuleCall cTriggerProbabilityDoubleParserRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
+		private final RuleCall cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0 = (RuleCall)cTriggerProbabilityAssignment_2_2_1.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cDoKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cEffectsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -2203,11 +2203,11 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//SucceedingAction sccharts::SucceedingAction:
 		//	{sccharts::SucceedingAction}
-		//	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+		//	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 		//	effects+=Effect)*)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do'
+		//{sccharts::SucceedingAction} 'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do'
 		//effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
@@ -2217,7 +2217,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//'succeeding'
 		public Keyword getSucceedingKeyword_1() { return cSucceedingKeyword_1; }
 		
-		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)?
+		//('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'if'
@@ -2229,17 +2229,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//BoolScheduleExpression
 		public RuleCall getTriggerBoolScheduleExpressionParserRuleCall_2_1_0() { return cTriggerBoolScheduleExpressionParserRuleCall_2_1_0; }
 		
-		//('Pr' triggerProbability=Double)?
+		//('Pr' triggerProbability=FLOAT)?
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//'Pr'
 		public Keyword getPrKeyword_2_2_0() { return cPrKeyword_2_2_0; }
 		
-		//triggerProbability=Double
+		//triggerProbability=FLOAT
 		public Assignment getTriggerProbabilityAssignment_2_2_1() { return cTriggerProbabilityAssignment_2_2_1; }
 		
-		//Double
-		public RuleCall getTriggerProbabilityDoubleParserRuleCall_2_2_1_0() { return cTriggerProbabilityDoubleParserRuleCall_2_2_1_0; }
+		//FLOAT
+		public RuleCall getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0() { return cTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0; }
 		
 		//('do' effects+=Effect (';' effects+=Effect)*)?
 		public Group getGroup_3() { return cGroup_3; }
@@ -2782,9 +2782,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	targetState=[sccharts::State] delay=DelayType?
 	//	deferred?='deferred'?
 	//	history=HistoryType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	| delay=DelayType? ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) ('Pr='
-	//	triggerProbability=Double)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	//	triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	//	preemption=PreemptionType
 	//	targetState=[sccharts::State] deferred?='deferred'?
 	//	history=HistoryType?) ('label' label=STRING)?;
@@ -2900,7 +2900,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//EntryAction sccharts::EntryAction:
 	//	{sccharts::EntryAction}
-	//	'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public EntryActionElements getEntryActionAccess() {
 		return pEntryAction;
@@ -2912,7 +2912,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DuringAction sccharts::DuringAction:
 	//	{sccharts::DuringAction} delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr='
-	//	triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
+	//	triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)? ('label' label=STRING)?;
 	public DuringActionElements getDuringActionAccess() {
 		return pDuringAction;
 	}
@@ -2923,7 +2923,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ExitAction sccharts::ExitAction:
 	//	{sccharts::ExitAction}
-	//	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public ExitActionElements getExitActionAccess() {
 		return pExitAction;
@@ -2935,7 +2935,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//SuspendAction sccharts::SuspendAction:
 	//	{sccharts::SuspendAction} delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT?
-	//	trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('label' label=STRING)?;
+	//	trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('label' label=STRING)?;
 	public SuspendActionElements getSuspendActionAccess() {
 		return pSuspendAction;
 	}
@@ -2946,7 +2946,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//PrecedingAction sccharts::PrecedingAction:
 	//	{sccharts::PrecedingAction}
-	//	'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public PrecedingActionElements getPrecedingActionAccess() {
 		return pPrecedingAction;
@@ -2958,7 +2958,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//SucceedingAction sccharts::SucceedingAction:
 	//	{sccharts::SucceedingAction}
-	//	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';'
+	//	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';'
 	//	effects+=Effect)*)? ('label' label=STRING)?;
 	public SucceedingActionElements getSucceedingActionAccess() {
 		return pSucceedingAction;
@@ -4906,7 +4906,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-	//Floateger ecore::EFloat:
+	//Floateger ecore::EDouble:
 	//	'-'? FLOAT;
 	public AnnotationsGrammarAccess.FloategerElements getFloategerAccess() {
 		return gaAnnotations.getFloategerAccess();
@@ -4914,26 +4914,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFloategerRule() {
 		return getFloategerAccess().getRule();
-	}
-	
-	//Double ecore::EDouble:
-	//	FLOAT;
-	public AnnotationsGrammarAccess.DoubleElements getDoubleAccess() {
-		return gaAnnotations.getDoubleAccess();
-	}
-	
-	public ParserRule getDoubleRule() {
-		return getDoubleAccess().getRule();
-	}
-	
-	//Doubleger ecore::EDouble:
-	//	'-'? FLOAT;
-	public AnnotationsGrammarAccess.DoublegerElements getDoublegerAccess() {
-		return gaAnnotations.getDoublegerAccess();
-	}
-	
-	public ParserRule getDoublegerRule() {
-		return getDoublegerAccess().getRule();
 	}
 	
 	//terminal COMMENT_ANNOTATION:
@@ -4975,7 +4955,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return gaAnnotations.getINTRule();
 	}
 	
-	//terminal FLOAT returns ecore::EFloat:
+	//terminal FLOAT returns ecore::EDouble:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return gaAnnotations.getFLOATRule();

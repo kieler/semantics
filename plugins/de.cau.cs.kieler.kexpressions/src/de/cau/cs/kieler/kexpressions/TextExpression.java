@@ -1,13 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +27,6 @@ import de.cau.cs.kieler.annotations.Annotatable;
  * @generated
  */
 public interface TextExpression extends Expression, Annotatable {
-
     /**
      * Returns the value of the '<em><b>Text</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -58,4 +52,5 @@ public interface TextExpression extends Expression, Annotatable {
      * @generated
      */
     void setText(String value);
+
 } // TextExpression

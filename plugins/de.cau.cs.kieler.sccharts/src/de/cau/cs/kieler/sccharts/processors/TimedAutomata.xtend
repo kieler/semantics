@@ -105,7 +105,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     def void transform(State rootState) {
         val allAnnotations = rootState.eAllContents.filter(Annotation).toList
         val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equals(name)]
-        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Float.parseFloat(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
+        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Double.parseDouble(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
         val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
         val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
         val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equals(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equals(name)].values.head else TIME_FORMAT_DEFAULT
@@ -270,9 +270,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                             }
                             
                             // easy case
-                            var thresholds = <Float>newLinkedList
+                            var thresholds = <Double>newLinkedList
                             if (constraints.keys.size == 1 && constraints.values.size == 1) {
-                                var float lower = 0
+                                var double lower = 0
                                 val op = constraints.values.head.operator
                                 if (op == OperatorType.GEQ || op == OperatorType.GT) {
                                     val value = constraints.values.head.subExpressions.filter(Value).head
@@ -290,12 +290,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 if (!constraints.isInsignificant) {
                                     for (trans : constraints.keySet) {
                                         val constrs = constraints.get(trans)
-                                        val bounds = <Float>newLinkedList
+                                        val bounds = <Double>newLinkedList
 
                                         for (constraint : constrs) {
                                             val op = constraint.operator
                                             val value = constraint.subExpressions.filter(Value).head
-                                            val float fvalue = switch(value) {
+                                            val double fvalue = switch(value) {
                                                 IntValue: value.value
                                                 FloatValue: value.value
                                                 default: {environment.errors.add("Unsupported value type.", value); 0.0f}
@@ -364,14 +364,14 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                         val gB = oB.subExpressions.filter[it != cB].head
                         val valueA = cA.subExpressions.filter(Value).head
                         if (valueA === null) return false
-                        val float fvalueA = switch(valueA) {
+                        val double fvalueA = switch(valueA) {
                             IntValue: valueA.value
                             FloatValue: valueA.value
                             default: {environment.errors.add("Unsupported value type.", valueA); return false}
                         }
                         val valueB = cB.subExpressions.filter(Value).head
                         if (valueB === null) return false
-                        val float fvalueB = switch(valueB) {
+                        val double fvalueB = switch(valueB) {
                             IntValue: valueB.value
                             FloatValue: valueB.value
                             default: {environment.errors.add("Unsupported value type.", valueB); return false}

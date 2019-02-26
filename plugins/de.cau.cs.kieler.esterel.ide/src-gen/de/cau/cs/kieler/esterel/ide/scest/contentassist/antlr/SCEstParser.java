@@ -646,7 +646,6 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getEsterelProgramAccess().getPragmasAssignment_0(), "rule__EsterelProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getEsterelProgramAccess().getModulesAssignment_1(), "rule__EsterelProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getEsterelModuleAccess().getAnnotationsAssignment_0(), "rule__EsterelModule__AnnotationsAssignment_0");
