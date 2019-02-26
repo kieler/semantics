@@ -16,9 +16,6 @@ package de.cau.cs.kieler.scg.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
@@ -27,10 +24,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import java.util.LinkedHashSet
-import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
@@ -64,11 +59,13 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
             scg.schedule
         }
     }    
+    
+    
 
 	/**
 	 * {@inherited}
 	 */
-    public def void schedule(SCGraph scg) {
+    def void schedule(SCGraph scg) {
     	/** 
     	 * The {@code nodesToSchedule} {@link Set} contains the nodes that are still
     	 * not scheduled. The topological sort should remove nodes after they have been placed.
@@ -99,7 +96,9 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     	    environment.errors.add("The SCG is NOT asc-schedulable!")
     		System.out.println("The SCG is NOT asc-schedulable!")
     		if (unschedulableNodes.size > 0) {
-    		    createAnnotatedUnschedulableNodesModel(unschedulableNodes)
+    		    if (annotationModelCreatorDelegate !== null) {
+    		      annotationModelCreatorDelegate.create(unschedulableNodes, environment)
+    		    }
     		}
     	} else {
     		System.out.println("The SCG is asc-schedulable.")
@@ -165,50 +164,5 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
 		]
 	}
 	
-	@Inject extension SCChartsScopeExtensions
-	
-	protected def void createAnnotatedUnschedulableNodesModel(Set<Node> unschedulableNodes) {
-	    val originalModel = environment.getProperty(Environment.ORIGINAL_MODEL)
-	    if (originalModel instanceof SCCharts) {
-    	    val guardedNodes = unschedulableNodes.map[ dependencies ].flatten.filter(GuardDependency).map[ target ].filter(Assignment).toList
-    	    
-    	    val states = originalModel.rootStates.head.getAllContainedStates.toIterable.
-    	       filter[ !actions.empty || !outgoingTransitions.empty || regions.exists[ it instanceof DataflowRegion ] ].toList
-    	    for (state : states) {
-    	        val actions = state.actions + state.outgoingTransitions
-    	        
-    	        val equations = if (state.regions.exists[ it instanceof DataflowRegion ]) 
-    	           state.regions.filter(DataflowRegion).map[ equations ].flatten
-    	           else (<Assignment> newArrayList)
-    	        
-    	        val assignments = actions.map[ effects ].flatten.filter(Assignment)
-    	        
-    	        for (assignment : assignments) {
-    	            if (assignment.heuristicallyTheSameTo(guardedNodes)) {
-    	                environment.errors.add(originalModel, 
-    	                   "Causal loop!", 
-    	                   assignment.eContainer, assignment.valuedObject.name)
-    	            }
-    	        }
-                for (assignment : equations) {
-                    if (assignment.heuristicallyTheSameTo(guardedNodes)) {
-                        environment.errors.add(originalModel, 
-                           "Causal loop!", 
-                           assignment.reference, assignment.valuedObject.name)
-                    }
-                }
-    	    } 
-	    }
-	}
-    
-    def boolean heuristicallyTheSameTo(Assignment assignment, List<Assignment> assignments) {
-        for (compAss : assignments) {
-            if (assignment.valuedObject.name == compAss.valuedObject.name) {
-                // TODO: This is a PROTOTYPE. Use compare extension to get a better match.
-                return true
-            }
-        }
-        return false
-    }
-	
+	public static IAnnotationModelCreator annotationModelCreatorDelegate = null
 }
