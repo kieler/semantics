@@ -99,4 +99,17 @@ class PromelaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
     override dispatch CharSequence serialize(ValueType valueType) {
         return valueType.literal
     }
+    
+    override serializeHROperatorExpressionConditional(OperatorExpression expression) {
+        // In PROMELA the ternary operator is written as "(p -> q : r)" instead "p ? q : r"
+        // The round braces are important (see cond_expr manual of PROMELA).
+        if (expression.subExpressions.size == 3) {
+            return "(" + expression.subExpressions.head.serializeHR + " -> " +
+                expression.subExpressions.get(1).serializeHR + " : " + 
+                expression.subExpressions.get(2).serializeHR + ")" 
+        } else {
+            throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
+                expression.subExpressions.size + " arguments.")
+        }
+    }
 }
