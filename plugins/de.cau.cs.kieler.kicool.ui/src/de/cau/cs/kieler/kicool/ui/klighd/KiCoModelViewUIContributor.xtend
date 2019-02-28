@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.ui.klighd
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import org.eclipse.ui.IMemento
 
 /**
  * @author als
@@ -32,5 +33,15 @@ interface KiCoModelViewUIContributor {
      * Contributions to diagram warnings (post synthesis).
      */    
     abstract def String[] contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties)
+    
+    /**
+     * Notifies this contribution that the given view update controller is saving its state in the given memento.
+     */
+    abstract def void saveState(KiCoModelUpdateController muc, IMemento memento)
+        
+    /**
+     * Notifies this contribution that the given view update controller is loading its state from the given memento.
+     */
+    abstract def void loadState(KiCoModelUpdateController muc, IMemento memento)
     
 }
