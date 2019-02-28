@@ -100,6 +100,9 @@ class AdaptiveZoom {
     }
     
     def boolean isActivated() {
-        return synthesis.getBooleanValue(USE_ADAPTIVEZOOM)
+        if (synthesis.usedContext !== null) {
+            return synthesis.getBooleanValue(USE_ADAPTIVEZOOM)
+        }
+        return false
     }
 }
