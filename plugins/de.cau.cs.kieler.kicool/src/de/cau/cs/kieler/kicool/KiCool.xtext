@@ -34,6 +34,7 @@ System returns kicool::System:
     simulation?='simulation'?
     'system' id = QualifiedID
     'label' label = EString
+    ('start' 'config' startConfig=JsonObjectValue)?
     ('config' config=JsonObjectValue)?
     (intermediates += IntermediateReference)*
     processors = ProcessorGroup

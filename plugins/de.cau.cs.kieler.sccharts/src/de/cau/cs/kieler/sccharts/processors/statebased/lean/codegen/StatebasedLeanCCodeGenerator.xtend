@@ -44,7 +44,10 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     @Inject protected Injector injector
     
     public static val IProperty<String> SIMULTATION_C_STRUCT_ACCESS = 
-       new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")       
+       new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")
+              
+    public static val IProperty<Boolean> PRINT_DEBUG = 
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.lean.printDebug", false)      
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")    
 
@@ -65,6 +68,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     
     override process() {
         val template = injector.getInstance(StatebasedLeanCTemplate) as StatebasedLeanCTemplate
+        template.debug = environment.getProperty(PRINT_DEBUG)
         template.create(model.rootStates.head)
         
         val cc = new CodeContainer
@@ -89,6 +93,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
         
         cFile.append(addHeader)
         cFile.hostcodeAdditions(scc)
+        cFile.append("#include <stdio.h>\n")
         cFile.append("#include \"" + hFilename + "\"\n\n")        
         cFile.append(template.source)
 
@@ -112,7 +117,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
              * KIELER SCCharts - The Key to Efficient Modeling
              *
              * http://rtsys.informatik.uni-kiel.de/kieler
-             
+             */
             '''
     }      
     

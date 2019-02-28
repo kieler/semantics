@@ -1,15 +1,14 @@
 package de.cau.cs.kieler.scg;
 
+import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 
-import de.cau.cs.kieler.core.model.PluginLog;
+public class SCGPlugin extends Plugin implements BundleActivator {
 
-public class SCGPlugin extends PluginLog implements BundleActivator {
+    public static String EDITOR_ID = "de.cau.cs.kieler.scg.presentation.SCGEditorID";
 
-        public static String EDITOR_ID = "de.cau.cs.kieler.scg.presentation.SCGEditorID";
-
-        private static BundleContext context;
+    private static BundleContext context;
 
 	static BundleContext getContext() {
 		return context;

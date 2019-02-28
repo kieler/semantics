@@ -44,7 +44,7 @@ import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**

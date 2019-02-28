@@ -14,10 +14,26 @@
 package de.cau.cs.kieler.sccharts.scg;
 
 import org.eclipse.core.runtime.Plugin;
+import org.osgi.framework.BundleContext;
+
+import com.google.inject.Injector;
+
+import de.cau.cs.kieler.sccharts.scg.processors.SCChartsAnnotationModelCreatorForUnschedulableNodes;
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup;
+import de.cau.cs.kieler.scg.processors.SimpleGuardScheduler;
 
 /**
  * The Class SCChartsSCGPlugin.
  */
 public class SCChartsSCGPlugin extends Plugin {
 
+    @Override
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        
+        Injector injector = SCTXStandaloneSetup.doSetup();
+        SimpleGuardScheduler.annotationModelCreatorDelegate = 
+                injector.getInstance(SCChartsAnnotationModelCreatorForUnschedulableNodes.class);
+    }
+    
 }

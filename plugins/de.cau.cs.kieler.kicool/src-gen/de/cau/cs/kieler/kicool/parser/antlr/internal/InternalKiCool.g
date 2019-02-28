@@ -210,16 +210,45 @@ ruleSystem returns [EObject current=null]
 			)
 		)
 		(
-			otherlv_9='config'
+			otherlv_9='start'
 			{
-				newLeafNode(otherlv_9, grammarAccess.getSystemAccess().getConfigKeyword_9_0());
+				newLeafNode(otherlv_9, grammarAccess.getSystemAccess().getStartKeyword_9_0());
+			}
+			otherlv_10='config'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getSystemAccess().getConfigKeyword_9_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getSystemAccess().getStartConfigJsonObjectValueParserRuleCall_9_2_0());
 					}
-					lv_config_10_0=ruleJsonObjectValue
+					lv_startConfig_11_0=ruleJsonObjectValue
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getSystemRule());
+						}
+						set(
+							$current,
+							"startConfig",
+							lv_startConfig_11_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)?
+		(
+			otherlv_12='config'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getSystemAccess().getConfigKeyword_10_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_10_1_0());
+					}
+					lv_config_13_0=ruleJsonObjectValue
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getSystemRule());
@@ -227,7 +256,7 @@ ruleSystem returns [EObject current=null]
 						set(
 							$current,
 							"config",
-							lv_config_10_0,
+							lv_config_13_0,
 							"de.cau.cs.kieler.kexpressions.KExpressions.JsonObjectValue");
 						afterParserOrEnumRuleCall();
 					}
@@ -237,9 +266,9 @@ ruleSystem returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_10_0());
+					newCompositeNode(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_11_0());
 				}
-				lv_intermediates_11_0=ruleIntermediateReference
+				lv_intermediates_14_0=ruleIntermediateReference
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSystemRule());
@@ -247,7 +276,7 @@ ruleSystem returns [EObject current=null]
 					add(
 						$current,
 						"intermediates",
-						lv_intermediates_11_0,
+						lv_intermediates_14_0,
 						"de.cau.cs.kieler.kicool.KiCool.IntermediateReference");
 					afterParserOrEnumRuleCall();
 				}
@@ -256,9 +285,9 @@ ruleSystem returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_11_0());
+					newCompositeNode(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_12_0());
 				}
-				lv_processors_12_0=ruleProcessorGroup
+				lv_processors_15_0=ruleProcessorGroup
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSystemRule());
@@ -266,7 +295,7 @@ ruleSystem returns [EObject current=null]
 					set(
 						$current,
 						"processors",
-						lv_processors_12_0,
+						lv_processors_15_0,
 						"de.cau.cs.kieler.kicool.KiCool.ProcessorGroup");
 					afterParserOrEnumRuleCall();
 				}
