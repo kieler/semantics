@@ -64,11 +64,13 @@ class CommentSynthesis extends SubSynthesis<CommentAnnotation, KNode> {
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
     @Inject extension CommentStyles
+    @Inject extension AdaptiveZoom
 
     override List<KNode> performTranformation(CommentAnnotation commentAnnotation) {
         val node = commentAnnotation.createNode().associateWith(commentAnnotation)
         
         node.setLayoutOption(CoreOptions.COMMENT_BOX, true)
+        node.configureNodeLOD(commentAnnotation)
         
         node.addCommentFigure
         node.addCommentText(commentAnnotation.values.head)

@@ -64,6 +64,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject extension EquationSynthesis 
     @Inject extension AnnotationsExtensions
     @Inject extension CommentSynthesis
+    @Inject extension AdaptiveZoom
     
     override getDisplayedSynthesisOptions() {
         return newArrayList(CIRCUIT, AUTOMATIC_INLINE)
@@ -92,6 +93,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         }
             
         node.setLayoutOption(KlighdProperties::EXPAND, true)
+        
+        node.configureNodeLOD(region)
         
         // User schedules
         val sLabel = new StringBuilder
