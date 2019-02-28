@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import java.util.List
 import de.cau.cs.kieler.kexpressions.VectorValue
@@ -44,7 +43,7 @@ class KExpressionsValueExtensions {
 		if (expression1 instanceof IntValue) return expression1.value == expression2.asIntValue.value
 		if (expression1 instanceof BoolValue) return expression1.value == expression2.asBoolValue.value
 		if (expression1 instanceof StringValue) return expression1.value == expression2.asStringValue.value
-		if (expression1 instanceof DoubleValue) return expression1.value == expression2.asDoubleValue.value
+		//if (expression1 instanceof DoubleValue) return expression1.value == expression2.asDoubleValue.value
 		if (expression1 instanceof FloatValue) return expression1.value == expression2.asFloatValue.value
 		if (expression1 instanceof VectorValue) {
 		    for (subValue : expression1.values.indexed) {
@@ -66,10 +65,6 @@ class KExpressionsValueExtensions {
 	
 	def StringValue asStringValue(Expression expression) {
 		expression as StringValue
-	}
-	
-	def DoubleValue asDoubleValue(Expression expression) {
-		expression as DoubleValue
 	}
 
 	def FloatValue asFloatValue(Expression expression) {

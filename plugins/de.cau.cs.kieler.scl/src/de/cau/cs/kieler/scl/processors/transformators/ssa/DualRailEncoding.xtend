@@ -27,7 +27,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.scg.ssa.SSAFunction
+import de.cau.cs.kieler.scg.processors.ssa.SSAFunction
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Module

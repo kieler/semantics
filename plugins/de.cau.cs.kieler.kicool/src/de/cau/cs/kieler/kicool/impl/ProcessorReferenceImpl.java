@@ -134,6 +134,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue getPreconfig() {
         return preconfig;
     }
@@ -158,6 +159,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPreconfig(JsonObjectValue newPreconfig) {
         if (newPreconfig != preconfig) {
             NotificationChain msgs = null;
@@ -177,6 +179,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue getPostconfig() {
         return postconfig;
     }
@@ -201,6 +204,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPostconfig(JsonObjectValue newPostconfig) {
         if (newPostconfig != postconfig) {
             NotificationChain msgs = null;
@@ -220,6 +224,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateReference getMetric() {
         if (metric != null && metric.eIsProxy()) {
             InternalEObject oldMetric = (InternalEObject)metric;
@@ -246,6 +251,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setMetric(IntermediateReference newMetric) {
         IntermediateReference oldMetric = metric;
         metric = newMetric;
@@ -258,6 +264,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProcessorReference> getPreprocesses() {
         if (preprocesses == null) {
             preprocesses = new EObjectContainmentEList<ProcessorReference>(ProcessorReference.class, this, KiCoolPackage.PROCESSOR_REFERENCE__PREPROCESSES);
@@ -270,6 +277,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProcessorReference> getPostprocesses() {
         if (postprocesses == null) {
             postprocesses = new EObjectContainmentEList<ProcessorReference>(ProcessorReference.class, this, KiCoolPackage.PROCESSOR_REFERENCE__POSTPROCESSES);
@@ -282,6 +290,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSilent() {
         return silent;
     }
@@ -291,6 +300,7 @@ public class ProcessorReferenceImpl extends ProcessorEntryImpl implements Proces
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSilent(boolean newSilent) {
         boolean oldSilent = silent;
         silent = newSilent;

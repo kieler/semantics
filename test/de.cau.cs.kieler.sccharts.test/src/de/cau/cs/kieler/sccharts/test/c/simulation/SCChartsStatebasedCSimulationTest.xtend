@@ -49,26 +49,32 @@ class SCChartsStatebasedCSimulationTest extends AbstractSimulationTest<SCCharts>
     
     @Test
     def void testSimulationStatebasedC(SCCharts scc, TestModelData modelData) {
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-c"))
+        
         startSimulationTest(STATEBASED_SIMULATION_SYSTEM, scc, modelData, "State-based Simulation Test (C)")
     }
     
     @Test
     def void testSimulationStatebasedCTTS(SCCharts scc, TestModelData modelData) {
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-c"))
+        
         startSimulationTest(STATEBASED_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Simulation Test (C, TTS)")
     }
 
-//    @Test
-//    def void testSimulationStatebasedLeanC(SCCharts scc, TestModelData modelData) {
-//        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
-//        
-//        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM, scc, modelData, "State-based Lean Simulation Test (C)")
-//    }
+    @Test
+    def void testSimulationStatebasedLeanC(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        
+        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM, scc, modelData, "State-based Lean Simulation Test (C)")
+    }
     
-//    @Test
-//    def void testSimulationStatebasedLeanCTTS(SCCharts scc, TestModelData modelData) {
-//        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
-//        
-//        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean Simulation Test (C, TTS)")
-//    }
+    @Test
+    def void testSimulationStatebasedLeanCTTS(SCCharts scc, TestModelData modelData) {
+        assumeTrue("Missing property lean", modelData.modelProperties.contains("lean"))
+        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-statebased-lean-c"))
+        
+        startSimulationTest(STATEBASED_LEAN_SIMULATION_SYSTEM_TTS, scc, modelData, "State-based Lean Simulation Test (C, TTS)")
+    }
     
 }

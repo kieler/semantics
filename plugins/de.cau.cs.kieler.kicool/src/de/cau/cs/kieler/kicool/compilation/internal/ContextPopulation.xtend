@@ -36,6 +36,7 @@ class ContextPopulation {
         cc.processorInstancesSequence.clear
         cc.system.processors.populate(cc)     
         cc.system.intermediates.forEach[ it.populate(cc) ]
+        EnvironmentPropertyHolder.processEnvironmentConfig(cc.startEnvironment, cc.system.startConfig)
         EnvironmentPropertyHolder.processEnvironmentConfig(cc.startEnvironment, cc.system.config)
     }
     

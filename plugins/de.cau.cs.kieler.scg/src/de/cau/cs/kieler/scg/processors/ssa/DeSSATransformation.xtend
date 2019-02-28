@@ -20,12 +20,12 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
 import javax.inject.Inject
 
-import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
-import static de.cau.cs.kieler.scg.ssa.SSAParameterProperty.*
+import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
+import static de.cau.cs.kieler.scg.processors.ssa.SSAParameterProperty.*
 
 /**
  * The SSA transformation for SCGs

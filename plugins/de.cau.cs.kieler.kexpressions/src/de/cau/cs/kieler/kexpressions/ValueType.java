@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -56,7 +52,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    BOOL(1, "BOOL", "bool"), /**
+    BOOL(1, "BOOL", "bool"),
+
+    /**
      * The '<em><b>UNSIGNED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -78,7 +76,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    INT(3, "INT", "int"), /**
+    INT(3, "INT", "int"),
+
+    /**
      * The '<em><b>FLOAT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -125,7 +125,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRING(6, "STRING", "string"), /**
+    STRING(6, "STRING", "string"),
+
+    /**
      * The '<em><b>REFERENCE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -133,7 +135,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    REFERENCE(8, "REFERENCE", "reference"), /**
+    REFERENCE(8, "REFERENCE", "reference"),
+
+    /**
      * The '<em><b>SCHEDULE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -141,7 +145,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    SCHEDULE(9, "SCHEDULE", "SCHEDULE"), /**
+    SCHEDULE(9, "SCHEDULE", "SCHEDULE"),
+
+    /**
      * The '<em><b>UNKNOWN</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -149,7 +155,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    UNKNOWN(10, "UNKNOWN", "UNKNOWN"), /**
+    UNKNOWN(10, "UNKNOWN", "UNKNOWN"),
+
+    /**
      * The '<em><b>CLOCK</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -157,7 +165,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    CLOCK(11, "CLOCK", "CLOCK"), /**
+    CLOCK(11, "CLOCK", "CLOCK"),
+
+    /**
      * The '<em><b>JSON</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -165,7 +175,9 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    JSON(12, "JSON", "JSON"), /**
+    JSON(12, "JSON", "JSON"),
+
+    /**
      * The '<em><b>STRUCT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -209,10 +221,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>UNSIGNED</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>UNSIGNED</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * @deprecated No longer used in grammars
@@ -274,10 +282,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>DOUBLE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>DOUBLE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * <!-- begin-model-doc -->
      * @deprecated No longer used in grammars

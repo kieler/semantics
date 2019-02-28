@@ -52,22 +52,6 @@ public interface ReferenceDeclaration extends Declaration {
     void setReference(EObject value);
 
     /**
-     * Returns the value of the '<em><b>Extern</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ExternString}.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Extern</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Extern</em>' containment reference list.
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Extern()
-     * @model containment="true"
-     * @generated
-     */
-    EList<ExternString> getExtern();
-
-    /**
      * Returns the value of the '<em><b>Parameters</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Parameter}.
      * <!-- begin-user-doc -->
@@ -82,5 +66,21 @@ public interface ReferenceDeclaration extends Declaration {
      * @generated
      */
     EList<Parameter> getParameters();
+
+    /**
+     * Returns the value of the '<em><b>Extern</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ExternString}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Extern</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Extern</em>' containment reference list.
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getReferenceDeclaration_Extern()
+     * @model containment="true"
+     * @generated
+     */
+    EList<ExternString> getExtern();
 
 } // ReferenceDeclaration
