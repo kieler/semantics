@@ -113,7 +113,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             new CompilationResults(this.snapshotMap.get(uri))
         ]
         result.thenRun [
-            didCompile(uri, clientId, command, null)
+            didCompile(uri, clientId, command, CancelIndicator.NullImpl)
         ].exceptionally [ throwable |
             LOG.error('Error while running additional compilation effects.', throwable)
             return null
