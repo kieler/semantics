@@ -356,6 +356,15 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         return varDeclaration
     }
 
+    protected def createVariableDeclaration(String name, ValueType type, State state) {
+        var varDecl = createVariableDeclaration(type)
+        var valuedObj = createValuedObject(varDecl, name)
+        
+        state.declarations += varDecl    
+        
+        return valuedObj    
+    }
+        
     protected def Expression transformExpression(Expression kExpression, State state) {
         if (kExpression !== null) {
             if (kExpression instanceof OperatorExpression) {
@@ -415,6 +424,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 if (lustreToScchartsValuedObjectMap.containsKey(kExpression.valuedObject)) {
                     return lustreToScchartsValuedObjectMap.get(kExpression.valuedObject).reference
                 }
+                else return kExpression
                 
             } else if (kExpression instanceof Value) {
                 return kExpression.copy
