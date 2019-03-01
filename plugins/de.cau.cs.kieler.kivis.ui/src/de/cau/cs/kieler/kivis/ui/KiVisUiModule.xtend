@@ -4,6 +4,8 @@
 package de.cau.cs.kieler.kivis.ui
 
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import org.eclipse.xtext.ui.editor.IXtextEditorCallback
+import org.eclipse.xtext.ui.editor.validation.ValidatingEditorCallback
 
 /**
  * Use this class to register components to be used within the Eclipse IDE.
@@ -16,4 +18,7 @@ class KiVisUiModule extends AbstractKiVisUiModule {
     
     public static final String LAST_KIVIS_FILE = "last_used_kivis_file";
     
+    def Class<? extends IXtextEditorCallback> bindIXtextEditorCallback() {
+        return ValidatingEditorCallback
+    }
 }
