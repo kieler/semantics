@@ -475,7 +475,7 @@ class SCChartsLegacyConverter {
         
     def dispatch convert(FloatValue v) {
         return createFloatValue => [
-            value = v.value
+            value = v.value as double
         ]
     }  
         

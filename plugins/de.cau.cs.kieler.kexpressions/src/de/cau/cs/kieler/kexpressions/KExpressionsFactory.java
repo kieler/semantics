@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -69,114 +65,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     BoolValue createBoolValue();
-
-    /**
-     * Returns a new object of class '<em>Operator Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Operator Expression</em>'.
-     * @generated
-     */
-    OperatorExpression createOperatorExpression();
-
-    /**
-     * Returns a new object of class '<em>Text Expression</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Text Expression</em>'.
-     * @generated
-     */
-    TextExpression createTextExpression();
-
-    /**
-     * Returns a new object of class '<em>Variable Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Variable Declaration</em>'.
-     * @generated
-     */
-    VariableDeclaration createVariableDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Reference Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Reference Declaration</em>'.
-     * @generated
-     */
-    ReferenceDeclaration createReferenceDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Schedule Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule Declaration</em>'.
-     * @generated
-     */
-    ScheduleDeclaration createScheduleDeclaration();
-
-    /**
-     * Returns a new object of class '<em>Schedule Object Reference</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Schedule Object Reference</em>'.
-     * @generated
-     */
-    ScheduleObjectReference createScheduleObjectReference();
-
-    /**
-     * Returns a new object of class '<em>Function Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Function Call</em>'.
-     * @generated
-     */
-    FunctionCall createFunctionCall();
-
-    /**
-     * Returns a new object of class '<em>Print Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Print Call</em>'.
-     * @generated
-     */
-    PrintCall createPrintCall();
-
-    /**
-     * Returns a new object of class '<em>Random Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Random Call</em>'.
-     * @generated
-     */
-    RandomCall createRandomCall();
-
-    /**
-     * Returns a new object of class '<em>Randomize Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Randomize Call</em>'.
-     * @generated
-     */
-    RandomizeCall createRandomizeCall();
-
-    /**
-     * Returns a new object of class '<em>Extern String</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Extern String</em>'.
-     * @generated
-     */
-    ExternString createExternString();
-
-    /**
-     * Returns a new object of class '<em>Parameter</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Parameter</em>'.
-     * @generated
-     */
-    Parameter createParameter();
 
     /**
      * Returns a new object of class '<em>String Value</em>'.
@@ -260,6 +148,69 @@ public interface KExpressionsFactory extends EFactory {
     NullValue createNullValue();
 
     /**
+     * Returns a new object of class '<em>Operator Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Operator Expression</em>'.
+     * @generated
+     */
+    OperatorExpression createOperatorExpression();
+
+    /**
+     * Returns a new object of class '<em>Text Expression</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Text Expression</em>'.
+     * @generated
+     */
+    TextExpression createTextExpression();
+
+    /**
+     * Returns a new object of class '<em>Variable Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Variable Declaration</em>'.
+     * @generated
+     */
+    VariableDeclaration createVariableDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Reference Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Declaration</em>'.
+     * @generated
+     */
+    ReferenceDeclaration createReferenceDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Schedule Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Declaration</em>'.
+     * @generated
+     */
+    ScheduleDeclaration createScheduleDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Schedule Object Reference</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Schedule Object Reference</em>'.
+     * @generated
+     */
+    ScheduleObjectReference createScheduleObjectReference();
+
+    /**
+     * Returns a new object of class '<em>Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Parameter</em>'.
+     * @generated
+     */
+    Parameter createParameter();
+
+    /**
      * Returns a new object of class '<em>Reference Call</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -267,6 +218,51 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ReferenceCall createReferenceCall();
+
+    /**
+     * Returns a new object of class '<em>Function Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Function Call</em>'.
+     * @generated
+     */
+    FunctionCall createFunctionCall();
+
+    /**
+     * Returns a new object of class '<em>Print Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Print Call</em>'.
+     * @generated
+     */
+    PrintCall createPrintCall();
+
+    /**
+     * Returns a new object of class '<em>Random Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Random Call</em>'.
+     * @generated
+     */
+    RandomCall createRandomCall();
+
+    /**
+     * Returns a new object of class '<em>Randomize Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Randomize Call</em>'.
+     * @generated
+     */
+    RandomizeCall createRandomizeCall();
+
+    /**
+     * Returns a new object of class '<em>Extern String</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Extern String</em>'.
+     * @generated
+     */
+    ExternString createExternString();
 
     /**
      * Returns the package supported by this factory.

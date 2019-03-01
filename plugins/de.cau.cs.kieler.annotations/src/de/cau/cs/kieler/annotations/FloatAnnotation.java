@@ -44,12 +44,12 @@ public interface FloatAnnotation extends Annotation {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' attribute.
-     * @see #setValue(float)
+     * @see #setValue(double)
      * @see de.cau.cs.kieler.annotations.AnnotationsPackage#getFloatAnnotation_Value()
      * @model required="true"
      * @generated
      */
-    float getValue();
+    double getValue();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.annotations.FloatAnnotation#getValue <em>Value</em>}' attribute.
@@ -59,6 +59,6 @@ public interface FloatAnnotation extends Annotation {
      * @see #getValue()
      * @generated
      */
-    void setValue(float value);
+    void setValue(double value);
 
 } // FloatAnnotation

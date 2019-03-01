@@ -447,7 +447,6 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getSCChartsAccess().getPragmasAssignment_0_0(), "rule__SCCharts__PragmasAssignment_0_0");
 			builder.put(grammarAccess.getSCChartsAccess().getImportsAssignment_0_1_1(), "rule__SCCharts__ImportsAssignment_0_1_1");
 			builder.put(grammarAccess.getSCChartsAccess().getRootStatesAssignment_1(), "rule__SCCharts__RootStatesAssignment_1");

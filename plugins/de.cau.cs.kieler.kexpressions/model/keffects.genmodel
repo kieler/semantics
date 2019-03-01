@@ -2,8 +2,8 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.kexpressions/src" modelPluginID="de.cau.cs.kieler.kexpressions"
     modelName="KEffects" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
-    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations kexpressions.genmodel#//kexpressions"
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="7.0"
+    copyrightFields="false" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations kexpressions.genmodel#//kexpressions"
     importOrganizing="true">
   <foreignModel>keffects.ecore</foreignModel>
   <genPackages prefix="KEffects" basePackage="de.cau.cs.kieler.kexpressions" disposableProviderFactory="true"
@@ -26,6 +26,13 @@
       <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNSHIFTRIGHT"/>
       <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//AssignOperator/ASSIGNSHIFTRIGHTUNSIGNED"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="keffects.ecore#//DataDependencyType">
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//DataDependencyType/IGNORE"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//DataDependencyType/UNKNOWN"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//DataDependencyType/WRITE_WRITE"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//DataDependencyType/WRITE_RELATIVEWRITE"/>
+      <genEnumLiterals ecoreEnumLiteral="keffects.ecore#//DataDependencyType/WRITE_READ"/>
+    </genEnums>
     <genClasses ecoreClass="keffects.ecore#//Effect"/>
     <genClasses ecoreClass="keffects.ecore#//Assignment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Assignment/reference"/>
@@ -42,5 +49,20 @@
     <genClasses ecoreClass="keffects.ecore#//FunctionCallEffect"/>
     <genClasses ecoreClass="keffects.ecore#//PrintCallEffect"/>
     <genClasses ecoreClass="keffects.ecore#//RandomizeCallEffect"/>
+    <genClasses image="false" ecoreClass="keffects.ecore#//Linkable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference keffects.ecore#//Linkable/outgoingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Linkable/incomingLinks"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="keffects.ecore#//Link">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//Link/tag"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/reference"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="keffects.ecore#//Dependency"/>
+    <genClasses ecoreClass="keffects.ecore#//DataDependency">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/concurrent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/confluent"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

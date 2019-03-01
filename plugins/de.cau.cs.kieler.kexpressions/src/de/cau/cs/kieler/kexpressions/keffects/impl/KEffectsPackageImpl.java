@@ -164,7 +164,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KEffectsPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -178,7 +178,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         if (isInited) return (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
 
         // Obtain or create and register package
-        KEffectsPackageImpl theKEffectsPackage = (KEffectsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KEffectsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KEffectsPackageImpl());
+        Object registeredKEffectsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KEffectsPackageImpl theKEffectsPackage = registeredKEffectsPackage instanceof KEffectsPackageImpl ? (KEffectsPackageImpl)registeredKEffectsPackage : new KEffectsPackageImpl();
 
         isInited = true;
 
@@ -195,7 +196,6 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         // Mark meta-data to indicate it can't be changed
         theKEffectsPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KEffectsPackage.eNS_URI, theKEffectsPackage);
         return theKEffectsPackage;

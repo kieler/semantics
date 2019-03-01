@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -37,12 +33,12 @@ public interface FloatValue extends Value {
      * </p>
      * <!-- end-user-doc -->
      * @return the value of the '<em>Value</em>' attribute.
-     * @see #setValue(Float)
+     * @see #setValue(Double)
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getFloatValue_Value()
      * @model required="true"
      * @generated
      */
-    Float getValue();
+    Double getValue();
 
     /**
      * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.FloatValue#getValue <em>Value</em>}' attribute.
@@ -52,6 +48,6 @@ public interface FloatValue extends Value {
      * @see #getValue()
      * @generated
      */
-    void setValue(Float value);
+    void setValue(Double value);
 
 } // FloatValue

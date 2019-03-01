@@ -3275,31 +3275,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Entry rule entryRuleDouble
-entryRuleDouble
-:
-{ before(grammarAccess.getDoubleRule()); }
-	 ruleDouble
-{ after(grammarAccess.getDoubleRule()); } 
-	 EOF 
-;
-
-// Rule Double
-ruleDouble 
-	@init {
-		int stackSize = keepStackSize();
-	}
-	:
-	(
-		{ before(grammarAccess.getDoubleAccess().getFLOATTerminalRuleCall()); }
-		RULE_FLOAT
-		{ after(grammarAccess.getDoubleAccess().getFLOATTerminalRuleCall()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 // Rule PreemptionType
 rulePreemptionType
 	@init {
@@ -32607,9 +32582,9 @@ rule__Transition__TriggerProbabilityAssignment_2_0_5_3_1
 	}
 :
 	(
-		{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_0_5_3_1_0()); }
+		{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_0_5_3_1_0()); }
 	)
 ;
 finally {
@@ -32731,9 +32706,9 @@ rule__Transition__TriggerProbabilityAssignment_2_1_1_3_1
 	}
 :
 	(
-		{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityDoubleParserRuleCall_2_1_1_3_1_0()); }
+		{ before(grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getTransitionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_1_1_3_1_0()); }
 	)
 ;
 finally {
@@ -33449,9 +33424,9 @@ rule__EntryAction__TriggerProbabilityAssignment_2_2_1
 	}
 :
 	(
-		{ before(grammarAccess.getEntryActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getEntryActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
+		{ before(grammarAccess.getEntryActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getEntryActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
 	)
 ;
 finally {
@@ -33554,9 +33529,9 @@ rule__DuringAction__TriggerProbabilityAssignment_3_3_1
 	}
 :
 	(
-		{ before(grammarAccess.getDuringActionAccess().getTriggerProbabilityDoubleParserRuleCall_3_3_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getDuringActionAccess().getTriggerProbabilityDoubleParserRuleCall_3_3_1_0()); }
+		{ before(grammarAccess.getDuringActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getDuringActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_3_3_1_0()); }
 	)
 ;
 finally {
@@ -33629,9 +33604,9 @@ rule__ExitAction__TriggerProbabilityAssignment_2_2_1
 	}
 :
 	(
-		{ before(grammarAccess.getExitActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getExitActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
+		{ before(grammarAccess.getExitActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getExitActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
 	)
 ;
 finally {
@@ -33753,9 +33728,9 @@ rule__SuspendAction__TriggerProbabilityAssignment_4_3_1
 	}
 :
 	(
-		{ before(grammarAccess.getSuspendActionAccess().getTriggerProbabilityDoubleParserRuleCall_4_3_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getSuspendActionAccess().getTriggerProbabilityDoubleParserRuleCall_4_3_1_0()); }
+		{ before(grammarAccess.getSuspendActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getSuspendActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_4_3_1_0()); }
 	)
 ;
 finally {
@@ -33798,9 +33773,9 @@ rule__PrecedingAction__TriggerProbabilityAssignment_2_2_1
 	}
 :
 	(
-		{ before(grammarAccess.getPrecedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getPrecedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
+		{ before(grammarAccess.getPrecedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getPrecedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
 	)
 ;
 finally {
@@ -33873,9 +33848,9 @@ rule__SucceedingAction__TriggerProbabilityAssignment_2_2_1
 	}
 :
 	(
-		{ before(grammarAccess.getSucceedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
-		ruleDouble
-		{ after(grammarAccess.getSucceedingActionAccess().getTriggerProbabilityDoubleParserRuleCall_2_2_1_0()); }
+		{ before(grammarAccess.getSucceedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
+		RULE_FLOAT
+		{ after(grammarAccess.getSucceedingActionAccess().getTriggerProbabilityFLOATTerminalRuleCall_2_2_1_0()); }
 	)
 ;
 finally {
