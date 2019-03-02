@@ -22,6 +22,7 @@ import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
+import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
@@ -33,12 +34,11 @@ import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
 import org.junit.Before
 import org.junit.Rule
-import org.junit.Test
 import org.junit.rules.TestName
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
-import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
+import org.junit.Test
 
 /**
  * @author aas
@@ -97,7 +97,7 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     protected var List<String> customSmvLtlCommands = #[]
     protected var List<String> customSmvCtlCommands = #[]
     
-    protected var int maxSmvIterations = 100
+    protected var int maxSmvIterations = 150
     
     // Spin verification options
     protected var List<String> customSpinCommands = #["-m100000"]
@@ -116,13 +116,12 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go (invar)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_go_check_invar(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go''', '''check_invar -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
 //    public def void nuxmv_go_check_invar_guided(SCCharts scc, TestModelData modelData) {
 //        customSmvInvarCommands =  #['''go''', '''check_invar_guided -P «smvPropertyPlaceholder»''']
 //        ignoreLtl = true
@@ -130,13 +129,12 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
 //        startNuxmvVerification(scc, modelData)
 //    }
 
-//    @Test
+    @Test
     public def void nuxmv_go_check_invar_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go''', '''check_invar_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
 //    public def void nuxmv_go_check_invar_inc_local(SCCharts scc, TestModelData modelData) {
 //        prepareNuxmvInvarTest( #['''go''', '''check_invar_local -P «smvPropertyPlaceholder»'''] )
 //        startNuxmvVerification(scc, modelData)
@@ -145,25 +143,24 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go (ltl)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_go_check_ltlspec(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_go_check_ltlspec_simplify(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec_simplify -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_go_check_ltlspec_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
 //    public def void nuxmv_go_check_ltlspec_compositional(SCCharts scc, TestModelData modelData) {
 //        prepareNuxmvLtlTest( #['''go''', '''check_ltlspec_compositional -t bdd -P «smvPropertyPlaceholder»'''] )
 //        startNuxmvVerification(scc, modelData)
@@ -172,32 +169,32 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go_bmc (invar)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_invar_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_bmc -P «smvPropertyPlaceholder»'''] )
         prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_bmc -a een-sorensson -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_invar_bmc_inc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_bmc_inc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_invar_inc_coi_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_inc_coi_bmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
-    public def void nuxmv_gobmc_check_invar_bmc_itp(SCCharts scc, TestModelData modelData) {
-        prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_bmc_itp -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
-        startNuxmvVerification(scc, modelData)
-    }
+    // Gives counterexample claiming that (o==false||o==true) is false although o is a boolean
+//    public def void nuxmv_gobmc_check_invar_bmc_itp(SCCharts scc, TestModelData modelData) {
+//        prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_bmc_itp -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
+//        startNuxmvVerification(scc, modelData)
+//    }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_invar_ic3(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_bmc''', '''check_invar_ic3 -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
@@ -206,112 +203,112 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go_bmc (ltl)
     //////////////////////////////////////////////////////////////////////
-//    @Test    
+    @Test    
     // Failed already in aas-traffic-light
     public def void nuxmv_gobmc_check_ltlspec_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_bmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gobmc_check_ltlspec_bmc_inc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_bmc_inc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
 //    public def void nuxmv_gobmc_check_ltlspec_bmc_onepb(SCCharts scc, TestModelData modelData) {
 //        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_bmc_onepb -P «smvPropertyPlaceholder»'''] )
 //        startNuxmvVerification(scc, modelData)
 //    }
     
-//    @Test
+    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gobmc_check_ltlspec_sbmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_sbmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_ltlspec_sbmc_inc(SCCharts scc, TestModelData modelData) {
-        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_sbmc_inc -k 300 -P «smvPropertyPlaceholder»'''] )
+        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_sbmc_inc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_ltlspec_klive(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_klive -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gobmc_check_ltlspec_inc_coi_bmc(SCCharts scc, TestModelData modelData) {
-        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_inc_coi_bmc -k 300 -P «smvPropertyPlaceholder»'''] )
+        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_inc_coi_bmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go_msat (invar)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_invar_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_invar_bmc_implabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc_implabs -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_invar_bmc_cegar_implabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc_cegar_implabs -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
+    // Gives the answer for a property where o is replaced by its definition (in ao.smv)
     public def void nuxmv_gomsat_check_invar_cegar_predabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''check_invar_cegar_predabs -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_invar_inc_coi(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_inc_coi -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_invar_ic3(SCCharts scc, TestModelData modelData) {
-        prepareNuxmvInvarTest( #['''go_msat''', '''check_invar_ic3 -P «smvPropertyPlaceholder»'''] )
+        prepareNuxmvInvarTest( #['''go_msat''', '''build_boolean_model''', '''check_invar_ic3 -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go_msat (ltl)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_ltlspec_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''msat_check_ltlspec_bmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_ltlspec_inc_coi(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''msat_check_ltlspec_inc_coi -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_msat_check_ltlspec_sbmc_inc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''msat_check_ltlspec_sbmc_inc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void nuxmv_gomsat_check_ltlspec_klive(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''build_boolean_model''', '''check_ltlspec_klive -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
@@ -320,13 +317,13 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     //////////////////////////////////////////////////////////////////////
     // SPIN
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void spin_default(SCCharts scc, TestModelData modelData) {
         mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
         startSpinVerification(scc, modelData)
     }
     
-//    @Test
+    @Test
     public def void spin_bfs(SCCharts scc, TestModelData modelData) {
         mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
         customSpinCommands = #["-bfs"]
