@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.verification.InvariantAssumption
 import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
 import de.cau.cs.kieler.verification.VerificationProperty
@@ -35,6 +36,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
     public static val RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRange"
+    public static val INVARIANT_ASSUMPTION_ANNOTATION_NAME = "Assume"
     
     @Accessors(PUBLIC_GETTER) private val verificationProperties = <VerificationProperty>newArrayList
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
@@ -66,13 +68,27 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
             getVerificationProperty(anno).ifPresent [ property | 
                 verificationProperties.add(property)
             ]
-            getRangeAssumptions(anno).forEach[ assumption | 
+            verificationAssumptions.addAll(getRangeAssumptions(anno))
+            getInvariantAssumption(anno).ifPresent [ assumption |
                 verificationAssumptions.add(assumption)
             ]
         ]
     }
     
-    private def List<VerificationAssumption> getRangeAssumptions(StringAnnotation anno) {
+    private def Optional<InvariantAssumption> getInvariantAssumption(StringAnnotation anno) {
+        if(anno.name != INVARIANT_ASSUMPTION_ANNOTATION_NAME) {
+            return Optional.empty
+        }
+        val formula = anno.values.getIfExists(0)
+        val name = anno.values.getIfExists(1)
+        if(formula === null) {
+            throw new Exception("Assumption is missing formula")
+        }
+        val assumption = new InvariantAssumption(formula, name)
+        return Optional.of(assumption)
+    }
+    
+    private def List<RangeAssumption> getRangeAssumptions(StringAnnotation anno) {
         if(anno.name != RANGE_ASSUMPTION_ANNOTATION_NAME) {
             return #[]
         }

@@ -48,10 +48,11 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
     
     override configure() {
         val declarations = createAndConfigureModule(SmvCodeGeneratorDeclarationsModule)
+        val invar = createAndConfigureModule(SmvCodeGeneratorInvarModule)
         val tick = createAndConfigureModule(SmvCodeGeneratorAssignModule)
         val specifications = createAndConfigureModule(SmvCodeGeneratorSpecificationsModule)
         val define = createAndConfigureModule(SmvCodeGeneratorDefineModule)
-        codeGeneratorModules = #[declarations, define, tick, specifications]
+        codeGeneratorModules = #[declarations, define, tick, invar, specifications]
         
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
@@ -104,12 +105,16 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
                     val predValuedObject = preOp.valuedObject
-                    val preVariableName = preOp.serializeHR
-                    val variableInformation = store.add(preVariableName, PROPERTY_GUARD, PROPERTY_PREGUARD)
-                    variableInformation.valuedObject = predValuedObject
-                    variableInformation.type = predValuedObject.variableDeclaration.type
-                    val originalVariableName = predValuedObject.serializeHR
-                    preVariableToOriginalVariable.put(preVariableName.toString, originalVariableName.toString)
+                    if(predValuedObject.variableDeclaration !== null) {
+                        val preVariableName = preOp.serializeHR
+                        val variableInformation = store.add(preVariableName, PROPERTY_GUARD, PROPERTY_PREGUARD)
+                        variableInformation.valuedObject = predValuedObject
+                        variableInformation.type = predValuedObject.variableDeclaration.type
+                        val originalVariableName = predValuedObject.serializeHR
+                        preVariableToOriginalVariable.put(preVariableName.toString, originalVariableName.toString)    
+                    } else {
+                        System.err.println('''variableDeclaration is null of «predValuedObject»''')
+                    }
                 }
             }
         }
