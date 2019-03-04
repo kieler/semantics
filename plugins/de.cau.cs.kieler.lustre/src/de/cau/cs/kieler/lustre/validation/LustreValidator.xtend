@@ -89,7 +89,7 @@ class LustreValidator extends AbstractLustreValidator {
     
     @Check
     def checkAssertion(Assertion assertion) {
-        featureNotSupported(assertion);
+//        featureNotSupported(assertion);
     }
     
     /*

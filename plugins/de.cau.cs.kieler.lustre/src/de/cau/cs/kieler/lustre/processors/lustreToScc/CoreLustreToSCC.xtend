@@ -59,6 +59,11 @@ import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.lustre.lustre.Assertion
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -133,7 +138,38 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     }
     
     protected def processAssertion(Expression assertion, State state) {
-        // TODO: Add assertion as model checker property
+        val transformedAssertion = transformExpression((assertion as Assertion).expr, state)
+        val assertionAnnotation = AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            name = "Assume"
+            values += transformedAssertion.getStringRepresentation
+        ]
+        
+        state.annotations += assertionAnnotation
+    }
+    
+    def String getStringRepresentation(Expression expression) {
+        var String result = ""
+        if (expression instanceof OperatorExpression) {
+            if (expression.subExpressions.length == 1) {
+                result = expression.operator.toString + "(" + getStringRepresentation(expression.subExpressions.get(0)) + ")"
+            } else {
+                for (Expression expr : expression.subExpressions) {
+                    result += getStringRepresentation(expr)
+                    if (expression.subExpressions.indexOf(expr) < expression.subExpressions.length - 1) {
+                        result += " " + expression.operator.toString + " "
+                    }
+                }
+            }
+        } else if (expression instanceof ValuedObjectReference) {
+            result = expression.valuedObject.name
+        } else if (expression instanceof IntValue) {
+            result = expression.value.toString
+        } else if (expression instanceof BoolValue) {
+            result = expression.value.toString
+        } else if (expression instanceof FloatValue) {
+            result = expression.value.toString
+        }
+        return result
     }
 
     protected def void processAutomaton(Automaton automaton, State state) {
