@@ -89,6 +89,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     protected String lastUri
     
+    /**
+     * Indicates if the last compilation was done inplace.
+     */
+    protected boolean lastInplace
+    
     override compile(String uri, String clientId, String command, boolean inplace) {
         var fileUri = URLDecoder.decode( uri, "UTF-8" );
         
@@ -113,7 +118,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             new CompilationResults(this.snapshotMap.get(uri))
         ]
         result.thenRun [
-            didCompile(uri, clientId, command, CancelIndicator.NullImpl)
+            didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
         ].exceptionally [ throwable |
             LOG.error('Error while running additional compilation effects.', throwable)
             return null
@@ -125,8 +130,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
      */
-    protected def didCompile(String uri, String clientId, String command, CancelIndicator cancelIndicator) {
-        if (command.equals(lastCommand) && uri.equals(lastUri)) {
+    protected def didCompile(String uri, String clientId, String command, boolean inplace, CancelIndicator cancelIndicator) {
+        if (command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace) {
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
             val newIndex = this.objectMap.get(uri).size - 1
@@ -135,6 +140,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         }
         lastUri = uri
         lastCommand = command
+        lastInplace = inplace
     }
     
     /**
