@@ -72,6 +72,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
       case KivisPackage.HANDLER: return createHandler();
       case KivisPackage.ACTION: return createAction();
       case KivisPackage.CODE: return createCode();
+      case KivisPackage.SETTER: return createSetter();
       case KivisPackage.INTERFACE: return createInterface();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -176,6 +177,17 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     CodeImpl code = new CodeImpl();
     return code;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Setter createSetter()
+  {
+    SetterImpl setter = new SetterImpl();
+    return setter;
   }
 
   /**

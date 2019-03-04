@@ -325,22 +325,40 @@ public interface KivisPackage extends EPackage
   int ACTION__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Deferred</b></em>' attribute.
+   * The feature id for the '<em><b>Deferred Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__DEFERRED = CONTENT_FEATURE_COUNT + 3;
+  int ACTION__DEFERRED_INTERFACE = CONTENT_FEATURE_COUNT + 3;
 
   /**
-   * The feature id for the '<em><b>Variable</b></em>' attribute.
+   * The feature id for the '<em><b>Deferred Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__VARIABLE = CONTENT_FEATURE_COUNT + 4;
+  int ACTION__DEFERRED_SCRIPT = CONTENT_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Setter</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__SETTER = CONTENT_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Signal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__SIGNAL = CONTENT_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Control</b></em>' attribute.
@@ -349,7 +367,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION__CONTROL = CONTENT_FEATURE_COUNT + 5;
+  int ACTION__CONTROL = CONTENT_FEATURE_COUNT + 7;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -358,7 +376,7 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 6;
+  int ACTION_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 8;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.CodeImpl <em>Code</em>}' class.
@@ -398,6 +416,52 @@ public interface KivisPackage extends EPackage
   int CODE_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl <em>Setter</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kivis.kivis.impl.SetterImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSetter()
+   * @generated
+   */
+  int SETTER = 6;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETTER__VARIABLE = 0;
+
+  /**
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETTER__INTERFACE = 1;
+
+  /**
+   * The feature id for the '<em><b>Script</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETTER__SCRIPT = 2;
+
+  /**
+   * The number of structural features of the '<em>Setter</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SETTER_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl <em>Interface</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -405,7 +469,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterface()
    * @generated
    */
-  int INTERFACE = 6;
+  int INTERFACE = 7;
 
   /**
    * The feature id for the '<em><b>Element</b></em>' attribute.
@@ -451,7 +515,7 @@ public interface KivisPackage extends EPackage
    * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationCorntrol()
    * @generated
    */
-  int SIMULATION_CORNTROL = 7;
+  int SIMULATION_CORNTROL = 8;
 
 
   /**
@@ -659,26 +723,48 @@ public interface KivisPackage extends EPackage
   EAttribute getAction_DomElement();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface <em>Deferred Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Deferred</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#isDeferred()
+   * @return the meta object for the containment reference '<em>Deferred Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_Deferred();
+  EReference getAction_DeferredInterface();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript <em>Deferred Script</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#getVariable()
+   * @return the meta object for the attribute '<em>Deferred Script</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_Variable();
+  EAttribute getAction_DeferredScript();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Action#getSetter <em>Setter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Setter</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getSetter()
+   * @see #getAction()
+   * @generated
+   */
+  EReference getAction_Setter();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getSignal <em>Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Signal</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getSignal()
+   * @see #getAction()
+   * @generated
+   */
+  EAttribute getAction_Signal();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getControl <em>Control</em>}'.
@@ -700,6 +786,49 @@ public interface KivisPackage extends EPackage
    * @generated
    */
   EClass getCode();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Setter <em>Setter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Setter</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter
+   * @generated
+   */
+  EClass getSetter();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Setter#getVariable <em>Variable</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getVariable()
+   * @see #getSetter()
+   * @generated
+   */
+  EAttribute getSetter_Variable();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Setter#getInterface <em>Interface</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getInterface()
+   * @see #getSetter()
+   * @generated
+   */
+  EReference getSetter_Interface();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Setter#getScript <em>Script</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Script</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getScript()
+   * @see #getSetter()
+   * @generated
+   */
+  EAttribute getSetter_Script();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interface <em>Interface</em>}'.
@@ -940,20 +1069,36 @@ public interface KivisPackage extends EPackage
     EAttribute ACTION__DOM_ELEMENT = eINSTANCE.getAction_DomElement();
 
     /**
-     * The meta object literal for the '<em><b>Deferred</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Deferred Interface</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__DEFERRED = eINSTANCE.getAction_Deferred();
+    EReference ACTION__DEFERRED_INTERFACE = eINSTANCE.getAction_DeferredInterface();
 
     /**
-     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Deferred Script</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__VARIABLE = eINSTANCE.getAction_Variable();
+    EAttribute ACTION__DEFERRED_SCRIPT = eINSTANCE.getAction_DeferredScript();
+
+    /**
+     * The meta object literal for the '<em><b>Setter</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ACTION__SETTER = eINSTANCE.getAction_Setter();
+
+    /**
+     * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ACTION__SIGNAL = eINSTANCE.getAction_Signal();
 
     /**
      * The meta object literal for the '<em><b>Control</b></em>' attribute feature.
@@ -972,6 +1117,40 @@ public interface KivisPackage extends EPackage
      * @generated
      */
     EClass CODE = eINSTANCE.getCode();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl <em>Setter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.SetterImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSetter()
+     * @generated
+     */
+    EClass SETTER = eINSTANCE.getSetter();
+
+    /**
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SETTER__VARIABLE = eINSTANCE.getSetter_Variable();
+
+    /**
+     * The meta object literal for the '<em><b>Interface</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SETTER__INTERFACE = eINSTANCE.getSetter_Interface();
+
+    /**
+     * The meta object literal for the '<em><b>Script</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SETTER__SCRIPT = eINSTANCE.getSetter_Script();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl <em>Interface</em>}' class.

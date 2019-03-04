@@ -221,7 +221,7 @@ public class BindingImpl extends ContentImpl implements Binding
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (variable: ");
     result.append(variable);
     result.append(", domElement: ");

@@ -3,9 +3,9 @@
  */
 package de.cau.cs.kieler.kivis.kivis.impl;
 
-import de.cau.cs.kieler.kivis.kivis.Content;
 import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
+import de.cau.cs.kieler.kivis.kivis.Setter;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -18,20 +18,41 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Content</b></em>'.
+ * An implementation of the model object '<em><b>Setter</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ContentImpl#getInterface <em>Interface</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ContentImpl#getScript <em>Script</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl#getInterface <em>Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl#getScript <em>Script</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ContentImpl extends MinimalEObjectImpl.Container implements Content
+public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
 {
+  /**
+   * The default value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariable()
+   * @generated
+   * @ordered
+   */
+  protected static final String VARIABLE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVariable()
+   * @generated
+   * @ordered
+   */
+  protected String variable = VARIABLE_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getInterface() <em>Interface</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -67,7 +88,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ContentImpl()
+  protected SetterImpl()
   {
     super();
   }
@@ -80,7 +101,30 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   @Override
   protected EClass eStaticClass()
   {
-    return KivisPackage.Literals.CONTENT;
+    return KivisPackage.Literals.SETTER;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getVariable()
+  {
+    return variable;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVariable(String newVariable)
+  {
+    String oldVariable = variable;
+    variable = newVariable;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.SETTER__VARIABLE, oldVariable, variable));
   }
 
   /**
@@ -104,7 +148,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
     interface_ = newInterface;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.CONTENT__INTERFACE, oldInterface, newInterface);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.SETTER__INTERFACE, oldInterface, newInterface);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -121,14 +165,14 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
     {
       NotificationChain msgs = null;
       if (interface_ != null)
-        msgs = ((InternalEObject)interface_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.CONTENT__INTERFACE, null, msgs);
+        msgs = ((InternalEObject)interface_).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.SETTER__INTERFACE, null, msgs);
       if (newInterface != null)
-        msgs = ((InternalEObject)newInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.CONTENT__INTERFACE, null, msgs);
+        msgs = ((InternalEObject)newInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.SETTER__INTERFACE, null, msgs);
       msgs = basicSetInterface(newInterface, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.CONTENT__INTERFACE, newInterface, newInterface));
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.SETTER__INTERFACE, newInterface, newInterface));
   }
 
   /**
@@ -151,7 +195,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
     String oldScript = script;
     script = newScript;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.CONTENT__SCRIPT, oldScript, script));
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.SETTER__SCRIPT, oldScript, script));
   }
 
   /**
@@ -164,7 +208,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   {
     switch (featureID)
     {
-      case KivisPackage.CONTENT__INTERFACE:
+      case KivisPackage.SETTER__INTERFACE:
         return basicSetInterface(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -180,9 +224,11 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   {
     switch (featureID)
     {
-      case KivisPackage.CONTENT__INTERFACE:
+      case KivisPackage.SETTER__VARIABLE:
+        return getVariable();
+      case KivisPackage.SETTER__INTERFACE:
         return getInterface();
-      case KivisPackage.CONTENT__SCRIPT:
+      case KivisPackage.SETTER__SCRIPT:
         return getScript();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -198,10 +244,13 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   {
     switch (featureID)
     {
-      case KivisPackage.CONTENT__INTERFACE:
+      case KivisPackage.SETTER__VARIABLE:
+        setVariable((String)newValue);
+        return;
+      case KivisPackage.SETTER__INTERFACE:
         setInterface((Interface)newValue);
         return;
-      case KivisPackage.CONTENT__SCRIPT:
+      case KivisPackage.SETTER__SCRIPT:
         setScript((String)newValue);
         return;
     }
@@ -218,10 +267,13 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   {
     switch (featureID)
     {
-      case KivisPackage.CONTENT__INTERFACE:
+      case KivisPackage.SETTER__VARIABLE:
+        setVariable(VARIABLE_EDEFAULT);
+        return;
+      case KivisPackage.SETTER__INTERFACE:
         setInterface((Interface)null);
         return;
-      case KivisPackage.CONTENT__SCRIPT:
+      case KivisPackage.SETTER__SCRIPT:
         setScript(SCRIPT_EDEFAULT);
         return;
     }
@@ -238,9 +290,11 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
   {
     switch (featureID)
     {
-      case KivisPackage.CONTENT__INTERFACE:
+      case KivisPackage.SETTER__VARIABLE:
+        return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
+      case KivisPackage.SETTER__INTERFACE:
         return interface_ != null;
-      case KivisPackage.CONTENT__SCRIPT:
+      case KivisPackage.SETTER__SCRIPT:
         return SCRIPT_EDEFAULT == null ? script != null : !SCRIPT_EDEFAULT.equals(script);
     }
     return super.eIsSet(featureID);
@@ -257,10 +311,12 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (script: ");
+    result.append(" (variable: ");
+    result.append(variable);
+    result.append(", script: ");
     result.append(script);
     result.append(')');
     return result.toString();
   }
 
-} //ContentImpl
+} //SetterImpl

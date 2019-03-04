@@ -53,7 +53,7 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
     
     def translate(Visualization viz) {
         return '''
-            «IF viz.content.filter(Action).exists[deferred]»
+            «IF viz.content.filter(Action).exists[!deferredScript.nullOrEmpty]»
                 var _kivis_deferred_actions = [];
             «ENDIF»
             function «VISUALIZATION_FUNCTION»(_dataPool) { // Visualize State
@@ -61,7 +61,7 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
                     «content.translateContent»
                 «ENDFOR»
                 
-                «IF viz.content.filter(Action).exists[deferred]»
+                «IF viz.content.filter(Action).exists[!deferredScript.nullOrEmpty]»
                     // Deferred actions
                     var _i;
                     for (_i = 0; _i < _kivis_deferred_actions.length; _i++) {
@@ -69,9 +69,9 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
                     }
                     _kivis_deferred_actions = [];
                 «ENDIF»
-                «IF viz.content.filter(Action).exists[!variable.nullOrEmpty]»
-                    // Actions indicators reset
-                    «FOR variable : viz.content.filter(Action).filter[!variable.nullOrEmpty].map[variable].toSet»
+                «IF viz.content.filter(Action).exists[!signal.nullOrEmpty]»
+                    // Actions signal reset
+                    «FOR variable : viz.content.filter(Action).filter[!signal.nullOrEmpty].map[signal].toSet»
                         _dataPool["«variable»"] = false;
                     «ENDFOR»
                 «ENDIF»
@@ -164,20 +164,27 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
         return '''
             function() {
                 «IF !action.script.nullOrEmpty»
-                    «IF action.deferred»
-                        _kivis_deferred_actions.push(
-                            function(«action.interface.createParameters(INTERFACE__POOL)») {
-                                «action.script»
-                            }
-                        );
-                    «ELSE»
-                        (function() {
-                            «action.script»
-                        })();
-                    «ENDIF»
+                    (function() {
+                        «action.script»
+                    })();
                 «ENDIF»
-                «IF !action.variable.nullOrEmpty»
-                    «ACTION_INDICATOR_CALLBACK»("«action.variable»");
+                «IF !action.deferredScript.nullOrEmpty»
+                    _kivis_deferred_actions.push(
+                        function(«action.deferredInterface.createParameters(INTERFACE__POOL)») {
+                            «action.deferredScript»
+                        }
+                    );
+                «ENDIF»
+                «IF !action.setter.nullOrEmpty»
+                    «FOR setter : action.setter»
+                        _val = JSON.stringify((function() {
+                            «setter.script»
+                        })());
+                        «ACTION_SETTER_CALLBACK»("«setter.variable»", _val);
+                    «ENDFOR»
+                «ENDIF»
+                «IF !action.signal.nullOrEmpty»
+                    «ACTION_SETTER_CALLBACK»("«action.signal»", "true");
                 «ENDIF»
                 «IF action.control !== null && action.control !== SimulationCorntrol.NONE»
                     «SIMULATION_CONTROL_CALLBACK»("«action.control.literal»");

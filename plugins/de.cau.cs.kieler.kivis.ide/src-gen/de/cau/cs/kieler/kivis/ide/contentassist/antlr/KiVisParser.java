@@ -3,20 +3,139 @@
  */
 package de.cau.cs.kieler.kivis.ide.contentassist.antlr;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal.InternalKiVisParser;
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess;
-import java.util.HashMap;
 import java.util.Map;
 import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.ide.editor.contentassist.antlr.AbstractContentAssistParser;
 
 public class KiVisParser extends AbstractContentAssistParser {
 
+	@Singleton
+	public static final class NameMappings {
+		
+		private final Map<AbstractElement, String> mappings;
+		
+		@Inject
+		public NameMappings(KiVisGrammarAccess grammarAccess) {
+			ImmutableMap.Builder<AbstractElement, String> builder = ImmutableMap.builder();
+			init(builder, grammarAccess);
+			this.mappings = builder.build();
+		}
+		
+		public String getRuleName(AbstractElement element) {
+			return mappings.get(element);
+		}
+		
+		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, KiVisGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getContentAccess().getAlternatives(), "rule__Content__Alternatives");
+			builder.put(grammarAccess.getBindingAccess().getAlternatives_2(), "rule__Binding__Alternatives_2");
+			builder.put(grammarAccess.getHandlerAccess().getAlternatives_2(), "rule__Handler__Alternatives_2");
+			builder.put(grammarAccess.getBindingInterface1Access().getAlternatives_3(), "rule__BindingInterface1__Alternatives_3");
+			builder.put(grammarAccess.getSimpleKeyAccess().getAlternatives_0(), "rule__SimpleKey__Alternatives_0");
+			builder.put(grammarAccess.getComplexKeyAccess().getAlternatives_0(), "rule__ComplexKey__Alternatives_0");
+			builder.put(grammarAccess.getComplexKeyAccess().getAlternatives_1(), "rule__ComplexKey__Alternatives_1");
+			builder.put(grammarAccess.getComplexKeyAccess().getAlternatives_1_1_1(), "rule__ComplexKey__Alternatives_1_1_1");
+			builder.put(grammarAccess.getSimulationCorntrolAccess().getAlternatives(), "rule__SimulationCorntrol__Alternatives");
+			builder.put(grammarAccess.getVisualizationAccess().getGroup(), "rule__Visualization__Group__0");
+			builder.put(grammarAccess.getVisualizationAccess().getGroup_0(), "rule__Visualization__Group_0__0");
+			builder.put(grammarAccess.getVisualizationAccess().getGroup_1(), "rule__Visualization__Group_1__0");
+			builder.put(grammarAccess.getVisualizationAccess().getGroup_2(), "rule__Visualization__Group_2__0");
+			builder.put(grammarAccess.getBindingAccess().getGroup(), "rule__Binding__Group__0");
+			builder.put(grammarAccess.getBindingAccess().getGroup_2_0(), "rule__Binding__Group_2_0__0");
+			builder.put(grammarAccess.getBindingAccess().getGroup_2_1(), "rule__Binding__Group_2_1__0");
+			builder.put(grammarAccess.getHandlerAccess().getGroup(), "rule__Handler__Group__0");
+			builder.put(grammarAccess.getHandlerAccess().getGroup_2_0(), "rule__Handler__Group_2_0__0");
+			builder.put(grammarAccess.getHandlerAccess().getGroup_2_1(), "rule__Handler__Group_2_1__0");
+			builder.put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
+			builder.put(grammarAccess.getActionAccess().getGroup_5(), "rule__Action__Group_5__0");
+			builder.put(grammarAccess.getActionAccess().getGroup_6(), "rule__Action__Group_6__0");
+			builder.put(grammarAccess.getActionAccess().getGroup_7(), "rule__Action__Group_7__0");
+			builder.put(grammarAccess.getActionAccess().getGroup_8(), "rule__Action__Group_8__0");
+			builder.put(grammarAccess.getActionAccess().getGroup_9(), "rule__Action__Group_9__0");
+			builder.put(grammarAccess.getCodeAccess().getGroup(), "rule__Code__Group__0");
+			builder.put(grammarAccess.getSetterAccess().getGroup(), "rule__Setter__Group__0");
+			builder.put(grammarAccess.getBindingInterface1Access().getGroup(), "rule__BindingInterface1__Group__0");
+			builder.put(grammarAccess.getBindingInterface1Access().getGroup_3_0(), "rule__BindingInterface1__Group_3_0__0");
+			builder.put(grammarAccess.getBindingInterface1Access().getGroup_3_1(), "rule__BindingInterface1__Group_3_1__0");
+			builder.put(grammarAccess.getBindingInterface2Access().getGroup(), "rule__BindingInterface2__Group__0");
+			builder.put(grammarAccess.getBindingInterface2Access().getGroup_2(), "rule__BindingInterface2__Group_2__0");
+			builder.put(grammarAccess.getBindingInterface2Access().getGroup_2_1(), "rule__BindingInterface2__Group_2_1__0");
+			builder.put(grammarAccess.getHandlerInterface1Access().getGroup(), "rule__HandlerInterface1__Group__0");
+			builder.put(grammarAccess.getHandlerInterface1Access().getGroup_5(), "rule__HandlerInterface1__Group_5__0");
+			builder.put(grammarAccess.getHandlerInterface2Access().getGroup(), "rule__HandlerInterface2__Group__0");
+			builder.put(grammarAccess.getHandlerInterface2Access().getGroup_3(), "rule__HandlerInterface2__Group_3__0");
+			builder.put(grammarAccess.getActionInterface1Access().getGroup(), "rule__ActionInterface1__Group__0");
+			builder.put(grammarAccess.getActionInterface1Access().getGroup_1(), "rule__ActionInterface1__Group_1__0");
+			builder.put(grammarAccess.getActionInterface2Access().getGroup(), "rule__ActionInterface2__Group__0");
+			builder.put(grammarAccess.getActionInterface2Access().getGroup_1(), "rule__ActionInterface2__Group_1__0");
+			builder.put(grammarAccess.getCodeInterfaceAccess().getGroup(), "rule__CodeInterface__Group__0");
+			builder.put(grammarAccess.getCodeInterfaceAccess().getGroup_1(), "rule__CodeInterface__Group_1__0");
+			builder.put(grammarAccess.getSetterInterfaceAccess().getGroup(), "rule__SetterInterface__Group__0");
+			builder.put(grammarAccess.getSetterInterfaceAccess().getGroup_1(), "rule__SetterInterface__Group_1__0");
+			builder.put(grammarAccess.getSimpleKeyAccess().getGroup(), "rule__SimpleKey__Group__0");
+			builder.put(grammarAccess.getSimpleKeyAccess().getGroup_0_1(), "rule__SimpleKey__Group_0_1__0");
+			builder.put(grammarAccess.getSimpleKeyAccess().getGroup_1(), "rule__SimpleKey__Group_1__0");
+			builder.put(grammarAccess.getComplexKeyAccess().getGroup(), "rule__ComplexKey__Group__0");
+			builder.put(grammarAccess.getComplexKeyAccess().getGroup_0_1(), "rule__ComplexKey__Group_0_1__0");
+			builder.put(grammarAccess.getComplexKeyAccess().getGroup_1_0(), "rule__ComplexKey__Group_1_0__0");
+			builder.put(grammarAccess.getComplexKeyAccess().getGroup_1_1(), "rule__ComplexKey__Group_1_1__0");
+			builder.put(grammarAccess.getVisualizationAccess().getImagesAssignment_0_1(), "rule__Visualization__ImagesAssignment_0_1");
+			builder.put(grammarAccess.getVisualizationAccess().getLoadsAssignment_1_1(), "rule__Visualization__LoadsAssignment_1_1");
+			builder.put(grammarAccess.getVisualizationAccess().getInitAssignment_2_1(), "rule__Visualization__InitAssignment_2_1");
+			builder.put(grammarAccess.getVisualizationAccess().getContentAssignment_3(), "rule__Visualization__ContentAssignment_3");
+			builder.put(grammarAccess.getBindingAccess().getVariableAssignment_1(), "rule__Binding__VariableAssignment_1");
+			builder.put(grammarAccess.getBindingAccess().getDomElementAssignment_2_0_1(), "rule__Binding__DomElementAssignment_2_0_1");
+			builder.put(grammarAccess.getBindingAccess().getInterfaceAssignment_2_0_3(), "rule__Binding__InterfaceAssignment_2_0_3");
+			builder.put(grammarAccess.getBindingAccess().getScriptAssignment_2_0_4(), "rule__Binding__ScriptAssignment_2_0_4");
+			builder.put(grammarAccess.getBindingAccess().getInterfaceAssignment_2_1_1(), "rule__Binding__InterfaceAssignment_2_1_1");
+			builder.put(grammarAccess.getBindingAccess().getScriptAssignment_2_1_2(), "rule__Binding__ScriptAssignment_2_1_2");
+			builder.put(grammarAccess.getHandlerAccess().getVariableAssignment_1(), "rule__Handler__VariableAssignment_1");
+			builder.put(grammarAccess.getHandlerAccess().getMultimatchAssignment_2_0_1(), "rule__Handler__MultimatchAssignment_2_0_1");
+			builder.put(grammarAccess.getHandlerAccess().getDomElementAssignment_2_0_2(), "rule__Handler__DomElementAssignment_2_0_2");
+			builder.put(grammarAccess.getHandlerAccess().getInterfaceAssignment_2_0_4(), "rule__Handler__InterfaceAssignment_2_0_4");
+			builder.put(grammarAccess.getHandlerAccess().getScriptAssignment_2_0_5(), "rule__Handler__ScriptAssignment_2_0_5");
+			builder.put(grammarAccess.getHandlerAccess().getInterfaceAssignment_2_1_1(), "rule__Handler__InterfaceAssignment_2_1_1");
+			builder.put(grammarAccess.getHandlerAccess().getScriptAssignment_2_1_2(), "rule__Handler__ScriptAssignment_2_1_2");
+			builder.put(grammarAccess.getActionAccess().getDomEventAssignment_1(), "rule__Action__DomEventAssignment_1");
+			builder.put(grammarAccess.getActionAccess().getMultimatchAssignment_3(), "rule__Action__MultimatchAssignment_3");
+			builder.put(grammarAccess.getActionAccess().getDomElementAssignment_4(), "rule__Action__DomElementAssignment_4");
+			builder.put(grammarAccess.getActionAccess().getInterfaceAssignment_5_1(), "rule__Action__InterfaceAssignment_5_1");
+			builder.put(grammarAccess.getActionAccess().getScriptAssignment_5_2(), "rule__Action__ScriptAssignment_5_2");
+			builder.put(grammarAccess.getActionAccess().getDeferredInterfaceAssignment_6_1(), "rule__Action__DeferredInterfaceAssignment_6_1");
+			builder.put(grammarAccess.getActionAccess().getDeferredScriptAssignment_6_2(), "rule__Action__DeferredScriptAssignment_6_2");
+			builder.put(grammarAccess.getActionAccess().getSetterAssignment_7_1(), "rule__Action__SetterAssignment_7_1");
+			builder.put(grammarAccess.getActionAccess().getSignalAssignment_8_1(), "rule__Action__SignalAssignment_8_1");
+			builder.put(grammarAccess.getActionAccess().getControlAssignment_9_1(), "rule__Action__ControlAssignment_9_1");
+			builder.put(grammarAccess.getCodeAccess().getInterfaceAssignment_1(), "rule__Code__InterfaceAssignment_1");
+			builder.put(grammarAccess.getCodeAccess().getScriptAssignment_2(), "rule__Code__ScriptAssignment_2");
+			builder.put(grammarAccess.getSetterAccess().getVariableAssignment_0(), "rule__Setter__VariableAssignment_0");
+			builder.put(grammarAccess.getSetterAccess().getInterfaceAssignment_1(), "rule__Setter__InterfaceAssignment_1");
+			builder.put(grammarAccess.getSetterAccess().getScriptAssignment_2(), "rule__Setter__ScriptAssignment_2");
+			builder.put(grammarAccess.getBindingInterface1Access().getElementAssignment_2(), "rule__BindingInterface1__ElementAssignment_2");
+			builder.put(grammarAccess.getBindingInterface1Access().getVariableAssignment_3_0_1(), "rule__BindingInterface1__VariableAssignment_3_0_1");
+			builder.put(grammarAccess.getBindingInterface1Access().getVariableAssignment_3_1_1(), "rule__BindingInterface1__VariableAssignment_3_1_1");
+			builder.put(grammarAccess.getBindingInterface1Access().getPoolAssignment_3_1_3(), "rule__BindingInterface1__PoolAssignment_3_1_3");
+			builder.put(grammarAccess.getBindingInterface2Access().getVariableAssignment_2_0(), "rule__BindingInterface2__VariableAssignment_2_0");
+			builder.put(grammarAccess.getBindingInterface2Access().getPoolAssignment_2_1_1(), "rule__BindingInterface2__PoolAssignment_2_1_1");
+			builder.put(grammarAccess.getHandlerInterface1Access().getElementAssignment_2(), "rule__HandlerInterface1__ElementAssignment_2");
+			builder.put(grammarAccess.getHandlerInterface1Access().getVariableAssignment_4(), "rule__HandlerInterface1__VariableAssignment_4");
+			builder.put(grammarAccess.getHandlerInterface1Access().getPoolAssignment_5_1(), "rule__HandlerInterface1__PoolAssignment_5_1");
+			builder.put(grammarAccess.getHandlerInterface2Access().getVariableAssignment_2(), "rule__HandlerInterface2__VariableAssignment_2");
+			builder.put(grammarAccess.getHandlerInterface2Access().getPoolAssignment_3_1(), "rule__HandlerInterface2__PoolAssignment_3_1");
+			builder.put(grammarAccess.getActionInterface2Access().getPoolAssignment_1_1(), "rule__ActionInterface2__PoolAssignment_1_1");
+			builder.put(grammarAccess.getCodeInterfaceAccess().getPoolAssignment_1_1(), "rule__CodeInterface__PoolAssignment_1_1");
+		}
+	}
+	
+	@Inject
+	private NameMappings nameMappings;
+
 	@Inject
 	private KiVisGrammarAccess grammarAccess;
-
-	private Map<AbstractElement, String> nameMappings;
 
 	@Override
 	protected InternalKiVisParser createParser() {
@@ -27,102 +146,9 @@ public class KiVisParser extends AbstractContentAssistParser {
 
 	@Override
 	protected String getRuleName(AbstractElement element) {
-		if (nameMappings == null) {
-			nameMappings = new HashMap<AbstractElement, String>() {
-				private static final long serialVersionUID = 1L;
-				{
-					put(grammarAccess.getContentAccess().getAlternatives(), "rule__Content__Alternatives");
-					put(grammarAccess.getBindingAccess().getAlternatives_2(), "rule__Binding__Alternatives_2");
-					put(grammarAccess.getHandlerAccess().getAlternatives_2(), "rule__Handler__Alternatives_2");
-					put(grammarAccess.getActionAccess().getAlternatives_5_1(), "rule__Action__Alternatives_5_1");
-					put(grammarAccess.getBindingInterface1Access().getAlternatives_3(), "rule__BindingInterface1__Alternatives_3");
-					put(grammarAccess.getKeyAccess().getAlternatives_0(), "rule__Key__Alternatives_0");
-					put(grammarAccess.getKeyAccess().getAlternatives_1_0(), "rule__Key__Alternatives_1_0");
-					put(grammarAccess.getSimulationCorntrolAccess().getAlternatives(), "rule__SimulationCorntrol__Alternatives");
-					put(grammarAccess.getVisualizationAccess().getGroup(), "rule__Visualization__Group__0");
-					put(grammarAccess.getVisualizationAccess().getGroup_0(), "rule__Visualization__Group_0__0");
-					put(grammarAccess.getVisualizationAccess().getGroup_1(), "rule__Visualization__Group_1__0");
-					put(grammarAccess.getVisualizationAccess().getGroup_2(), "rule__Visualization__Group_2__0");
-					put(grammarAccess.getBindingAccess().getGroup(), "rule__Binding__Group__0");
-					put(grammarAccess.getBindingAccess().getGroup_2_0(), "rule__Binding__Group_2_0__0");
-					put(grammarAccess.getBindingAccess().getGroup_2_1(), "rule__Binding__Group_2_1__0");
-					put(grammarAccess.getHandlerAccess().getGroup(), "rule__Handler__Group__0");
-					put(grammarAccess.getHandlerAccess().getGroup_2_0(), "rule__Handler__Group_2_0__0");
-					put(grammarAccess.getHandlerAccess().getGroup_2_1(), "rule__Handler__Group_2_1__0");
-					put(grammarAccess.getActionAccess().getGroup(), "rule__Action__Group__0");
-					put(grammarAccess.getActionAccess().getGroup_5(), "rule__Action__Group_5__0");
-					put(grammarAccess.getActionAccess().getGroup_5_1_0(), "rule__Action__Group_5_1_0__0");
-					put(grammarAccess.getActionAccess().getGroup_5_1_1(), "rule__Action__Group_5_1_1__0");
-					put(grammarAccess.getActionAccess().getGroup_6(), "rule__Action__Group_6__0");
-					put(grammarAccess.getActionAccess().getGroup_7(), "rule__Action__Group_7__0");
-					put(grammarAccess.getCodeAccess().getGroup(), "rule__Code__Group__0");
-					put(grammarAccess.getBindingInterface1Access().getGroup(), "rule__BindingInterface1__Group__0");
-					put(grammarAccess.getBindingInterface1Access().getGroup_3_0(), "rule__BindingInterface1__Group_3_0__0");
-					put(grammarAccess.getBindingInterface1Access().getGroup_3_1(), "rule__BindingInterface1__Group_3_1__0");
-					put(grammarAccess.getBindingInterface2Access().getGroup(), "rule__BindingInterface2__Group__0");
-					put(grammarAccess.getBindingInterface2Access().getGroup_2(), "rule__BindingInterface2__Group_2__0");
-					put(grammarAccess.getBindingInterface2Access().getGroup_2_1(), "rule__BindingInterface2__Group_2_1__0");
-					put(grammarAccess.getHandlerInterface1Access().getGroup(), "rule__HandlerInterface1__Group__0");
-					put(grammarAccess.getHandlerInterface1Access().getGroup_5(), "rule__HandlerInterface1__Group_5__0");
-					put(grammarAccess.getHandlerInterface2Access().getGroup(), "rule__HandlerInterface2__Group__0");
-					put(grammarAccess.getHandlerInterface2Access().getGroup_3(), "rule__HandlerInterface2__Group_3__0");
-					put(grammarAccess.getActionInterface1Access().getGroup(), "rule__ActionInterface1__Group__0");
-					put(grammarAccess.getActionInterface1Access().getGroup_1(), "rule__ActionInterface1__Group_1__0");
-					put(grammarAccess.getActionInterface2Access().getGroup(), "rule__ActionInterface2__Group__0");
-					put(grammarAccess.getActionInterface2Access().getGroup_1(), "rule__ActionInterface2__Group_1__0");
-					put(grammarAccess.getCodeInterfaceAccess().getGroup(), "rule__CodeInterface__Group__0");
-					put(grammarAccess.getCodeInterfaceAccess().getGroup_1(), "rule__CodeInterface__Group_1__0");
-					put(grammarAccess.getKeyAccess().getGroup(), "rule__Key__Group__0");
-					put(grammarAccess.getKeyAccess().getGroup_0_1(), "rule__Key__Group_0_1__0");
-					put(grammarAccess.getKeyAccess().getGroup_1(), "rule__Key__Group_1__0");
-					put(grammarAccess.getVisualizationAccess().getImagesAssignment_0_1(), "rule__Visualization__ImagesAssignment_0_1");
-					put(grammarAccess.getVisualizationAccess().getLoadsAssignment_1_1(), "rule__Visualization__LoadsAssignment_1_1");
-					put(grammarAccess.getVisualizationAccess().getInitAssignment_2_1(), "rule__Visualization__InitAssignment_2_1");
-					put(grammarAccess.getVisualizationAccess().getContentAssignment_3(), "rule__Visualization__ContentAssignment_3");
-					put(grammarAccess.getBindingAccess().getVariableAssignment_1(), "rule__Binding__VariableAssignment_1");
-					put(grammarAccess.getBindingAccess().getDomElementAssignment_2_0_1(), "rule__Binding__DomElementAssignment_2_0_1");
-					put(grammarAccess.getBindingAccess().getInterfaceAssignment_2_0_3(), "rule__Binding__InterfaceAssignment_2_0_3");
-					put(grammarAccess.getBindingAccess().getScriptAssignment_2_0_4(), "rule__Binding__ScriptAssignment_2_0_4");
-					put(grammarAccess.getBindingAccess().getInterfaceAssignment_2_1_1(), "rule__Binding__InterfaceAssignment_2_1_1");
-					put(grammarAccess.getBindingAccess().getScriptAssignment_2_1_2(), "rule__Binding__ScriptAssignment_2_1_2");
-					put(grammarAccess.getHandlerAccess().getVariableAssignment_1(), "rule__Handler__VariableAssignment_1");
-					put(grammarAccess.getHandlerAccess().getMultimatchAssignment_2_0_1(), "rule__Handler__MultimatchAssignment_2_0_1");
-					put(grammarAccess.getHandlerAccess().getDomElementAssignment_2_0_2(), "rule__Handler__DomElementAssignment_2_0_2");
-					put(grammarAccess.getHandlerAccess().getInterfaceAssignment_2_0_4(), "rule__Handler__InterfaceAssignment_2_0_4");
-					put(grammarAccess.getHandlerAccess().getScriptAssignment_2_0_5(), "rule__Handler__ScriptAssignment_2_0_5");
-					put(grammarAccess.getHandlerAccess().getInterfaceAssignment_2_1_1(), "rule__Handler__InterfaceAssignment_2_1_1");
-					put(grammarAccess.getHandlerAccess().getScriptAssignment_2_1_2(), "rule__Handler__ScriptAssignment_2_1_2");
-					put(grammarAccess.getActionAccess().getDomEventAssignment_1(), "rule__Action__DomEventAssignment_1");
-					put(grammarAccess.getActionAccess().getMultimatchAssignment_3(), "rule__Action__MultimatchAssignment_3");
-					put(grammarAccess.getActionAccess().getDomElementAssignment_4(), "rule__Action__DomElementAssignment_4");
-					put(grammarAccess.getActionAccess().getDeferredAssignment_5_1_0_0(), "rule__Action__DeferredAssignment_5_1_0_0");
-					put(grammarAccess.getActionAccess().getInterfaceAssignment_5_1_0_1(), "rule__Action__InterfaceAssignment_5_1_0_1");
-					put(grammarAccess.getActionAccess().getScriptAssignment_5_1_0_2(), "rule__Action__ScriptAssignment_5_1_0_2");
-					put(grammarAccess.getActionAccess().getInterfaceAssignment_5_1_1_0(), "rule__Action__InterfaceAssignment_5_1_1_0");
-					put(grammarAccess.getActionAccess().getScriptAssignment_5_1_1_1(), "rule__Action__ScriptAssignment_5_1_1_1");
-					put(grammarAccess.getActionAccess().getVariableAssignment_6_1(), "rule__Action__VariableAssignment_6_1");
-					put(grammarAccess.getActionAccess().getControlAssignment_7_1(), "rule__Action__ControlAssignment_7_1");
-					put(grammarAccess.getCodeAccess().getInterfaceAssignment_1(), "rule__Code__InterfaceAssignment_1");
-					put(grammarAccess.getCodeAccess().getScriptAssignment_2(), "rule__Code__ScriptAssignment_2");
-					put(grammarAccess.getBindingInterface1Access().getElementAssignment_2(), "rule__BindingInterface1__ElementAssignment_2");
-					put(grammarAccess.getBindingInterface1Access().getVariableAssignment_3_0_1(), "rule__BindingInterface1__VariableAssignment_3_0_1");
-					put(grammarAccess.getBindingInterface1Access().getVariableAssignment_3_1_1(), "rule__BindingInterface1__VariableAssignment_3_1_1");
-					put(grammarAccess.getBindingInterface1Access().getPoolAssignment_3_1_3(), "rule__BindingInterface1__PoolAssignment_3_1_3");
-					put(grammarAccess.getBindingInterface2Access().getVariableAssignment_2_0(), "rule__BindingInterface2__VariableAssignment_2_0");
-					put(grammarAccess.getBindingInterface2Access().getPoolAssignment_2_1_1(), "rule__BindingInterface2__PoolAssignment_2_1_1");
-					put(grammarAccess.getHandlerInterface1Access().getElementAssignment_2(), "rule__HandlerInterface1__ElementAssignment_2");
-					put(grammarAccess.getHandlerInterface1Access().getVariableAssignment_4(), "rule__HandlerInterface1__VariableAssignment_4");
-					put(grammarAccess.getHandlerInterface1Access().getPoolAssignment_5_1(), "rule__HandlerInterface1__PoolAssignment_5_1");
-					put(grammarAccess.getHandlerInterface2Access().getVariableAssignment_2(), "rule__HandlerInterface2__VariableAssignment_2");
-					put(grammarAccess.getHandlerInterface2Access().getPoolAssignment_3_1(), "rule__HandlerInterface2__PoolAssignment_3_1");
-					put(grammarAccess.getActionInterface1Access().getPoolAssignment_1_1(), "rule__ActionInterface1__PoolAssignment_1_1");
-					put(grammarAccess.getCodeInterfaceAccess().getPoolAssignment_1_1(), "rule__CodeInterface__PoolAssignment_1_1");
-				}
-			};
-		}
-		return nameMappings.get(element);
+		return nameMappings.getRuleName(element);
 	}
-			
+
 	@Override
 	protected String[] getInitialHiddenTokens() {
 		return new String[] { "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT" };
@@ -134,5 +160,13 @@ public class KiVisParser extends AbstractContentAssistParser {
 
 	public void setGrammarAccess(KiVisGrammarAccess grammarAccess) {
 		this.grammarAccess = grammarAccess;
+	}
+	
+	public NameMappings getNameMappings() {
+		return nameMappings;
+	}
+	
+	public void setNameMappings(NameMappings nameMappings) {
+		this.nameMappings = nameMappings;
 	}
 }

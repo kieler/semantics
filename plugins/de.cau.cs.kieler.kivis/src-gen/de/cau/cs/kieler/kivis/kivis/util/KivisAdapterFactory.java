@@ -106,6 +106,11 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
         return createCodeAdapter();
       }
       @Override
+      public Adapter caseSetter(Setter object)
+      {
+        return createSetterAdapter();
+      }
+      @Override
       public Adapter caseInterface(Interface object)
       {
         return createInterfaceAdapter();
@@ -218,6 +223,21 @@ public class KivisAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCodeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kivis.kivis.Setter <em>Setter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter
+   * @generated
+   */
+  public Adapter createSetterAdapter()
   {
     return null;
   }

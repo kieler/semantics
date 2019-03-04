@@ -126,7 +126,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cBindKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVariableKeyParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableComplexKeyParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
 		private final Keyword cToKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
@@ -145,24 +145,24 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScriptSCRIPTTerminalRuleCall_2_1_2_0 = (RuleCall)cScriptAssignment_2_1_2.eContents().get(0);
 		
 		//Binding:
-		//	'bind' variable=Key ('to' domElement=STRING
+		//	'bind' variable=ComplexKey ('to' domElement=STRING
 		//	'with' interface=BindingInterface1 script=SCRIPT
 		//	|
 		//	'with' interface=BindingInterface2 script=SCRIPT);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'bind' variable=Key ('to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT | 'with'
+		//'bind' variable=ComplexKey ('to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT | 'with'
 		//interface=BindingInterface2 script=SCRIPT)
 		public Group getGroup() { return cGroup; }
 		
 		//'bind'
 		public Keyword getBindKeyword_0() { return cBindKeyword_0; }
 		
-		//variable=Key
+		//variable=ComplexKey
 		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
 		
-		//Key
-		public RuleCall getVariableKeyParserRuleCall_1_0() { return cVariableKeyParserRuleCall_1_0; }
+		//ComplexKey
+		public RuleCall getVariableComplexKeyParserRuleCall_1_0() { return cVariableComplexKeyParserRuleCall_1_0; }
 		
 		//'to' domElement=STRING 'with' interface=BindingInterface1 script=SCRIPT | 'with' interface=BindingInterface2
 		//script=SCRIPT
@@ -218,7 +218,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cHandleKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cVariableAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVariableKeyParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
+		private final RuleCall cVariableSimpleKeyParserRuleCall_1_0 = (RuleCall)cVariableAssignment_1.eContents().get(0);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
 		private final Keyword cInKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
@@ -239,24 +239,24 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cScriptSCRIPTTerminalRuleCall_2_1_2_0 = (RuleCall)cScriptAssignment_2_1_2.eContents().get(0);
 		
 		//Handler:
-		//	'handle' variable=Key ('in' multimatch?='all'? domElement=STRING
+		//	'handle' variable=SimpleKey ('in' multimatch?='all'? domElement=STRING
 		//	'with' interface=HandlerInterface1 script=SCRIPT
 		//	|
 		//	'with' interface=HandlerInterface2 script=SCRIPT);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'handle' variable=Key ('in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT |
-		//'with' interface=HandlerInterface2 script=SCRIPT)
+		//'handle' variable=SimpleKey ('in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT
+		//| 'with' interface=HandlerInterface2 script=SCRIPT)
 		public Group getGroup() { return cGroup; }
 		
 		//'handle'
 		public Keyword getHandleKeyword_0() { return cHandleKeyword_0; }
 		
-		//variable=Key
+		//variable=SimpleKey
 		public Assignment getVariableAssignment_1() { return cVariableAssignment_1; }
 		
-		//Key
-		public RuleCall getVariableKeyParserRuleCall_1_0() { return cVariableKeyParserRuleCall_1_0; }
+		//SimpleKey
+		public RuleCall getVariableSimpleKeyParserRuleCall_1_0() { return cVariableSimpleKeyParserRuleCall_1_0; }
 		
 		//'in' multimatch?='all'? domElement=STRING 'with' interface=HandlerInterface1 script=SCRIPT | 'with'
 		//interface=HandlerInterface2 script=SCRIPT
@@ -326,37 +326,39 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDomElementSTRINGTerminalRuleCall_4_0 = (RuleCall)cDomElementAssignment_4.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
 		private final Keyword cDoKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Alternatives cAlternatives_5_1 = (Alternatives)cGroup_5.eContents().get(1);
-		private final Group cGroup_5_1_0 = (Group)cAlternatives_5_1.eContents().get(0);
-		private final Assignment cDeferredAssignment_5_1_0_0 = (Assignment)cGroup_5_1_0.eContents().get(0);
-		private final Keyword cDeferredDeferredKeyword_5_1_0_0_0 = (Keyword)cDeferredAssignment_5_1_0_0.eContents().get(0);
-		private final Assignment cInterfaceAssignment_5_1_0_1 = (Assignment)cGroup_5_1_0.eContents().get(1);
-		private final RuleCall cInterfaceActionInterface1ParserRuleCall_5_1_0_1_0 = (RuleCall)cInterfaceAssignment_5_1_0_1.eContents().get(0);
-		private final Assignment cScriptAssignment_5_1_0_2 = (Assignment)cGroup_5_1_0.eContents().get(2);
-		private final RuleCall cScriptSCRIPTTerminalRuleCall_5_1_0_2_0 = (RuleCall)cScriptAssignment_5_1_0_2.eContents().get(0);
-		private final Group cGroup_5_1_1 = (Group)cAlternatives_5_1.eContents().get(1);
-		private final Assignment cInterfaceAssignment_5_1_1_0 = (Assignment)cGroup_5_1_1.eContents().get(0);
-		private final RuleCall cInterfaceActionInterface2ParserRuleCall_5_1_1_0_0 = (RuleCall)cInterfaceAssignment_5_1_1_0.eContents().get(0);
-		private final Assignment cScriptAssignment_5_1_1_1 = (Assignment)cGroup_5_1_1.eContents().get(1);
-		private final RuleCall cScriptSCRIPTTerminalRuleCall_5_1_1_1_0 = (RuleCall)cScriptAssignment_5_1_1_1.eContents().get(0);
+		private final Assignment cInterfaceAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cInterfaceActionInterface1ParserRuleCall_5_1_0 = (RuleCall)cInterfaceAssignment_5_1.eContents().get(0);
+		private final Assignment cScriptAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cScriptSCRIPTTerminalRuleCall_5_2_0 = (RuleCall)cScriptAssignment_5_2.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cSetKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cVariableAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cVariableKeyParserRuleCall_6_1_0 = (RuleCall)cVariableAssignment_6_1.eContents().get(0);
+		private final Keyword cDeferredKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cDeferredInterfaceAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cDeferredInterfaceActionInterface2ParserRuleCall_6_1_0 = (RuleCall)cDeferredInterfaceAssignment_6_1.eContents().get(0);
+		private final Assignment cDeferredScriptAssignment_6_2 = (Assignment)cGroup_6.eContents().get(2);
+		private final RuleCall cDeferredScriptSCRIPTTerminalRuleCall_6_2_0 = (RuleCall)cDeferredScriptAssignment_6_2.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cSimulationKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cControlAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cControlSimulationCorntrolEnumRuleCall_7_1_0 = (RuleCall)cControlAssignment_7_1.eContents().get(0);
+		private final Keyword cSetKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cSetterAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cSetterSetterParserRuleCall_7_1_0 = (RuleCall)cSetterAssignment_7_1.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cSignalKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cSignalAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cSignalComplexKeyParserRuleCall_8_1_0 = (RuleCall)cSignalAssignment_8_1.eContents().get(0);
+		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
+		private final Keyword cSimulationKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cControlAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cControlSimulationCorntrolEnumRuleCall_9_1_0 = (RuleCall)cControlAssignment_9_1.eContents().get(0);
 		
 		//Action:
 		//	'event' domEvent=STRING
-		//	'on' multimatch?='all'? domElement=STRING ('do' (deferred?='deferred' interface=ActionInterface1 script=SCRIPT
-		//	| interface=ActionInterface2 script=SCRIPT))? ('set' variable=Key)? ('simulation' control=SimulationCorntrol)?;
+		//	'on' multimatch?='all'? domElement=STRING ('do' interface=ActionInterface1 script=SCRIPT)? ('deferred'
+		//	deferredInterface=ActionInterface2 deferredScript=SCRIPT)? ('set' setter+=Setter)* ('signal' signal=ComplexKey)?
+		//	('simulation' control=SimulationCorntrol)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'event' domEvent=STRING 'on' multimatch?='all'? domElement=STRING ('do' (deferred?='deferred' interface=ActionInterface1
-		//script=SCRIPT | interface=ActionInterface2 script=SCRIPT))? ('set' variable=Key)? ('simulation'
-		//control=SimulationCorntrol)?
+		//'event' domEvent=STRING 'on' multimatch?='all'? domElement=STRING ('do' interface=ActionInterface1 script=SCRIPT)?
+		//('deferred' deferredInterface=ActionInterface2 deferredScript=SCRIPT)? ('set' setter+=Setter)* ('signal'
+		//signal=ComplexKey)? ('simulation' control=SimulationCorntrol)?
 		public Group getGroup() { return cGroup; }
 		
 		//'event'
@@ -383,74 +385,77 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getDomElementSTRINGTerminalRuleCall_4_0() { return cDomElementSTRINGTerminalRuleCall_4_0; }
 		
-		//('do' (deferred?='deferred' interface=ActionInterface1 script=SCRIPT | interface=ActionInterface2 script=SCRIPT))?
+		//('do' interface=ActionInterface1 script=SCRIPT)?
 		public Group getGroup_5() { return cGroup_5; }
 		
 		//'do'
 		public Keyword getDoKeyword_5_0() { return cDoKeyword_5_0; }
 		
-		//deferred?='deferred' interface=ActionInterface1 script=SCRIPT | interface=ActionInterface2 script=SCRIPT
-		public Alternatives getAlternatives_5_1() { return cAlternatives_5_1; }
-		
-		//deferred?='deferred' interface=ActionInterface1 script=SCRIPT
-		public Group getGroup_5_1_0() { return cGroup_5_1_0; }
-		
-		//deferred?='deferred'
-		public Assignment getDeferredAssignment_5_1_0_0() { return cDeferredAssignment_5_1_0_0; }
-		
-		//'deferred'
-		public Keyword getDeferredDeferredKeyword_5_1_0_0_0() { return cDeferredDeferredKeyword_5_1_0_0_0; }
-		
 		//interface=ActionInterface1
-		public Assignment getInterfaceAssignment_5_1_0_1() { return cInterfaceAssignment_5_1_0_1; }
+		public Assignment getInterfaceAssignment_5_1() { return cInterfaceAssignment_5_1; }
 		
 		//ActionInterface1
-		public RuleCall getInterfaceActionInterface1ParserRuleCall_5_1_0_1_0() { return cInterfaceActionInterface1ParserRuleCall_5_1_0_1_0; }
+		public RuleCall getInterfaceActionInterface1ParserRuleCall_5_1_0() { return cInterfaceActionInterface1ParserRuleCall_5_1_0; }
 		
 		//script=SCRIPT
-		public Assignment getScriptAssignment_5_1_0_2() { return cScriptAssignment_5_1_0_2; }
+		public Assignment getScriptAssignment_5_2() { return cScriptAssignment_5_2; }
 		
 		//SCRIPT
-		public RuleCall getScriptSCRIPTTerminalRuleCall_5_1_0_2_0() { return cScriptSCRIPTTerminalRuleCall_5_1_0_2_0; }
+		public RuleCall getScriptSCRIPTTerminalRuleCall_5_2_0() { return cScriptSCRIPTTerminalRuleCall_5_2_0; }
 		
-		//interface=ActionInterface2 script=SCRIPT
-		public Group getGroup_5_1_1() { return cGroup_5_1_1; }
-		
-		//interface=ActionInterface2
-		public Assignment getInterfaceAssignment_5_1_1_0() { return cInterfaceAssignment_5_1_1_0; }
-		
-		//ActionInterface2
-		public RuleCall getInterfaceActionInterface2ParserRuleCall_5_1_1_0_0() { return cInterfaceActionInterface2ParserRuleCall_5_1_1_0_0; }
-		
-		//script=SCRIPT
-		public Assignment getScriptAssignment_5_1_1_1() { return cScriptAssignment_5_1_1_1; }
-		
-		//SCRIPT
-		public RuleCall getScriptSCRIPTTerminalRuleCall_5_1_1_1_0() { return cScriptSCRIPTTerminalRuleCall_5_1_1_1_0; }
-		
-		//('set' variable=Key)?
+		//('deferred' deferredInterface=ActionInterface2 deferredScript=SCRIPT)?
 		public Group getGroup_6() { return cGroup_6; }
 		
-		//'set'
-		public Keyword getSetKeyword_6_0() { return cSetKeyword_6_0; }
+		//'deferred'
+		public Keyword getDeferredKeyword_6_0() { return cDeferredKeyword_6_0; }
 		
-		//variable=Key
-		public Assignment getVariableAssignment_6_1() { return cVariableAssignment_6_1; }
+		//deferredInterface=ActionInterface2
+		public Assignment getDeferredInterfaceAssignment_6_1() { return cDeferredInterfaceAssignment_6_1; }
 		
-		//Key
-		public RuleCall getVariableKeyParserRuleCall_6_1_0() { return cVariableKeyParserRuleCall_6_1_0; }
+		//ActionInterface2
+		public RuleCall getDeferredInterfaceActionInterface2ParserRuleCall_6_1_0() { return cDeferredInterfaceActionInterface2ParserRuleCall_6_1_0; }
 		
-		//('simulation' control=SimulationCorntrol)?
+		//deferredScript=SCRIPT
+		public Assignment getDeferredScriptAssignment_6_2() { return cDeferredScriptAssignment_6_2; }
+		
+		//SCRIPT
+		public RuleCall getDeferredScriptSCRIPTTerminalRuleCall_6_2_0() { return cDeferredScriptSCRIPTTerminalRuleCall_6_2_0; }
+		
+		//('set' setter+=Setter)*
 		public Group getGroup_7() { return cGroup_7; }
 		
+		//'set'
+		public Keyword getSetKeyword_7_0() { return cSetKeyword_7_0; }
+		
+		//setter+=Setter
+		public Assignment getSetterAssignment_7_1() { return cSetterAssignment_7_1; }
+		
+		//Setter
+		public RuleCall getSetterSetterParserRuleCall_7_1_0() { return cSetterSetterParserRuleCall_7_1_0; }
+		
+		//('signal' signal=ComplexKey)?
+		public Group getGroup_8() { return cGroup_8; }
+		
+		//'signal'
+		public Keyword getSignalKeyword_8_0() { return cSignalKeyword_8_0; }
+		
+		//signal=ComplexKey
+		public Assignment getSignalAssignment_8_1() { return cSignalAssignment_8_1; }
+		
+		//ComplexKey
+		public RuleCall getSignalComplexKeyParserRuleCall_8_1_0() { return cSignalComplexKeyParserRuleCall_8_1_0; }
+		
+		//('simulation' control=SimulationCorntrol)?
+		public Group getGroup_9() { return cGroup_9; }
+		
 		//'simulation'
-		public Keyword getSimulationKeyword_7_0() { return cSimulationKeyword_7_0; }
+		public Keyword getSimulationKeyword_9_0() { return cSimulationKeyword_9_0; }
 		
 		//control=SimulationCorntrol
-		public Assignment getControlAssignment_7_1() { return cControlAssignment_7_1; }
+		public Assignment getControlAssignment_9_1() { return cControlAssignment_9_1; }
 		
 		//SimulationCorntrol
-		public RuleCall getControlSimulationCorntrolEnumRuleCall_7_1_0() { return cControlSimulationCorntrolEnumRuleCall_7_1_0; }
+		public RuleCall getControlSimulationCorntrolEnumRuleCall_9_1_0() { return cControlSimulationCorntrolEnumRuleCall_9_1_0; }
 	}
 	public class CodeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Code");
@@ -476,6 +481,43 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CodeInterface
 		public RuleCall getInterfaceCodeInterfaceParserRuleCall_1_0() { return cInterfaceCodeInterfaceParserRuleCall_1_0; }
+		
+		//script=SCRIPT
+		public Assignment getScriptAssignment_2() { return cScriptAssignment_2; }
+		
+		//SCRIPT
+		public RuleCall getScriptSCRIPTTerminalRuleCall_2_0() { return cScriptSCRIPTTerminalRuleCall_2_0; }
+	}
+	public class SetterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Setter");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cVariableAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cVariableComplexKeyParserRuleCall_0_0 = (RuleCall)cVariableAssignment_0.eContents().get(0);
+		private final Assignment cInterfaceAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cInterfaceSetterInterfaceParserRuleCall_1_0 = (RuleCall)cInterfaceAssignment_1.eContents().get(0);
+		private final Assignment cScriptAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cScriptSCRIPTTerminalRuleCall_2_0 = (RuleCall)cScriptAssignment_2.eContents().get(0);
+		
+		//Setter:
+		//	variable=ComplexKey
+		//	interface=SetterInterface
+		//	script=SCRIPT;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//variable=ComplexKey interface=SetterInterface script=SCRIPT
+		public Group getGroup() { return cGroup; }
+		
+		//variable=ComplexKey
+		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
+		
+		//ComplexKey
+		public RuleCall getVariableComplexKeyParserRuleCall_0_0() { return cVariableComplexKeyParserRuleCall_0_0; }
+		
+		//interface=SetterInterface
+		public Assignment getInterfaceAssignment_1() { return cInterfaceAssignment_1; }
+		
+		//SetterInterface
+		public RuleCall getInterfaceSetterInterfaceParserRuleCall_1_0() { return cInterfaceSetterInterfaceParserRuleCall_1_0; }
 		
 		//script=SCRIPT
 		public Assignment getScriptAssignment_2() { return cScriptAssignment_2; }
@@ -756,12 +798,44 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cInterfaceAction_0 = (Action)cGroup.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//ActionInterface1 Interface:
+		//	{Interface} ('('
+		//	')' '=>'?)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Interface} ('(' ')' '=>'?)?
+		public Group getGroup() { return cGroup; }
+		
+		//{Interface}
+		public Action getInterfaceAction_0() { return cInterfaceAction_0; }
+		
+		//('(' ')' '=>'?)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_1() { return cRightParenthesisKeyword_1_1; }
+		
+		//'=>'?
+		public Keyword getEqualsSignGreaterThanSignKeyword_1_2() { return cEqualsSignGreaterThanSignKeyword_1_2; }
+	}
+	public class ActionInterface2Elements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.ActionInterface2");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfaceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cPoolAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cPoolIDTerminalRuleCall_1_1_0 = (RuleCall)cPoolAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Keyword cEqualsSignGreaterThanSignKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
-		//ActionInterface1 Interface:
+		//ActionInterface2 Interface:
 		//	{Interface} ('('
 		//	pool=ID?
 		//	')' '=>'?)?;
@@ -790,38 +864,6 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'=>'?
 		public Keyword getEqualsSignGreaterThanSignKeyword_1_3() { return cEqualsSignGreaterThanSignKeyword_1_3; }
-	}
-	public class ActionInterface2Elements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.ActionInterface2");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cInterfaceAction_0 = (Action)cGroup.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cEqualsSignGreaterThanSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		
-		//ActionInterface2 Interface:
-		//	{Interface} ('('
-		//	')' '=>'?)?;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//{Interface} ('(' ')' '=>'?)?
-		public Group getGroup() { return cGroup; }
-		
-		//{Interface}
-		public Action getInterfaceAction_0() { return cInterfaceAction_0; }
-		
-		//('(' ')' '=>'?)?
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_1_1() { return cRightParenthesisKeyword_1_1; }
-		
-		//'=>'?
-		public Keyword getEqualsSignGreaterThanSignKeyword_1_2() { return cEqualsSignGreaterThanSignKeyword_1_2; }
 	}
 	public class CodeInterfaceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.CodeInterface");
@@ -864,8 +906,40 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//'=>'?
 		public Keyword getEqualsSignGreaterThanSignKeyword_1_3() { return cEqualsSignGreaterThanSignKeyword_1_3; }
 	}
-	public class KeyElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.Key");
+	public class SetterInterfaceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.SetterInterface");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInterfaceAction_0 = (Action)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Keyword cEqualsSignGreaterThanSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		
+		//SetterInterface Interface:
+		//	{Interface} ('('
+		//	')' '=>'?)?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{Interface} ('(' ')' '=>'?)?
+		public Group getGroup() { return cGroup; }
+		
+		//{Interface}
+		public Action getInterfaceAction_0() { return cInterfaceAction_0; }
+		
+		//('(' ')' '=>'?)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_1_1() { return cRightParenthesisKeyword_1_1; }
+		
+		//'=>'?
+		public Keyword getEqualsSignGreaterThanSignKeyword_1_2() { return cEqualsSignGreaterThanSignKeyword_1_2; }
+	}
+	public class SimpleKeyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.SimpleKey");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
@@ -873,17 +947,15 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNumberSignKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_0_1_1 = (RuleCall)cGroup_0_1.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Alternatives cAlternatives_1_0 = (Alternatives)cGroup_1.eContents().get(0);
-		private final Keyword cFullStopKeyword_1_0_0 = (Keyword)cAlternatives_1_0.eContents().get(0);
-		private final Keyword cHyphenMinusKeyword_1_0_1 = (Keyword)cAlternatives_1_0.eContents().get(1);
+		private final Keyword cHyphenMinusKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//// Json object member key
-		//Key:
-		//	(ID | '#' ID) (('.' | '-')? ID)*;
+		//SimpleKey:
+		//	(ID | '#' ID) ('-' ID)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//(ID | '#' ID) (('.' | '-')? ID)*
+		//(ID | '#' ID) ('-' ID)*
 		public Group getGroup() { return cGroup; }
 		
 		//ID | '#' ID
@@ -901,20 +973,82 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_0_1_1() { return cIDTerminalRuleCall_0_1_1; }
 		
-		//(('.' | '-')? ID)*
+		//('-' ID)*
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//('.' | '-')?
-		public Alternatives getAlternatives_1_0() { return cAlternatives_1_0; }
-		
-		//'.'
-		public Keyword getFullStopKeyword_1_0_0() { return cFullStopKeyword_1_0_0; }
-		
 		//'-'
-		public Keyword getHyphenMinusKeyword_1_0_1() { return cHyphenMinusKeyword_1_0_1; }
+		public Keyword getHyphenMinusKeyword_1_0() { return cHyphenMinusKeyword_1_0; }
 		
 		//ID
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
+	}
+	public class ComplexKeyElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.ComplexKey");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_0_0 = (RuleCall)cAlternatives_0.eContents().get(0);
+		private final Group cGroup_0_1 = (Group)cAlternatives_0.eContents().get(1);
+		private final Keyword cNumberSignKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_0_1_1 = (RuleCall)cGroup_0_1.eContents().get(1);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
+		private final Keyword cHyphenMinusKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_0_1 = (RuleCall)cGroup_1_0.eContents().get(1);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_1_1_1 = (Alternatives)cGroup_1_1.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_1_1_1_0 = (RuleCall)cAlternatives_1_1_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_1_1_1 = (RuleCall)cAlternatives_1_1_1.eContents().get(1);
+		
+		//// Json object member key with member access via '.'
+		//ComplexKey:
+		//	(ID | '#' ID) ('-' ID | '.' (INT | ID))*;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//(ID | '#' ID) ('-' ID | '.' (INT | ID))*
+		public Group getGroup() { return cGroup; }
+		
+		//ID | '#' ID
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_0_0() { return cIDTerminalRuleCall_0_0; }
+		
+		//'#' ID
+		public Group getGroup_0_1() { return cGroup_0_1; }
+		
+		//'#'
+		public Keyword getNumberSignKeyword_0_1_0() { return cNumberSignKeyword_0_1_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_0_1_1() { return cIDTerminalRuleCall_0_1_1; }
+		
+		//('-' ID | '.' (INT | ID))*
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//'-' ID
+		public Group getGroup_1_0() { return cGroup_1_0; }
+		
+		//'-'
+		public Keyword getHyphenMinusKeyword_1_0_0() { return cHyphenMinusKeyword_1_0_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_0_1() { return cIDTerminalRuleCall_1_0_1; }
+		
+		//'.' (INT | ID)
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1_1_0() { return cFullStopKeyword_1_1_0; }
+		
+		//INT | ID
+		public Alternatives getAlternatives_1_1_1() { return cAlternatives_1_1_1; }
+		
+		//INT
+		public RuleCall getINTTerminalRuleCall_1_1_1_0() { return cINTTerminalRuleCall_1_1_1_0; }
+		
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1_1_1() { return cIDTerminalRuleCall_1_1_1_1; }
 	}
 	
 	public class SimulationCorntrolElements extends AbstractEnumRuleElementFinder {
@@ -975,6 +1109,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final HandlerElements pHandler;
 	private final ActionElements pAction;
 	private final CodeElements pCode;
+	private final SetterElements pSetter;
 	private final BindingInterface1Elements pBindingInterface1;
 	private final BindingInterface2Elements pBindingInterface2;
 	private final HandlerInterface1Elements pHandlerInterface1;
@@ -982,7 +1117,9 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	private final ActionInterface1Elements pActionInterface1;
 	private final ActionInterface2Elements pActionInterface2;
 	private final CodeInterfaceElements pCodeInterface;
-	private final KeyElements pKey;
+	private final SetterInterfaceElements pSetterInterface;
+	private final SimpleKeyElements pSimpleKey;
+	private final ComplexKeyElements pComplexKey;
 	private final SimulationCorntrolElements eSimulationCorntrol;
 	private final TerminalRule tBOOL;
 	private final TerminalRule tESCAPED_CHAR;
@@ -1004,6 +1141,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pHandler = new HandlerElements();
 		this.pAction = new ActionElements();
 		this.pCode = new CodeElements();
+		this.pSetter = new SetterElements();
 		this.pBindingInterface1 = new BindingInterface1Elements();
 		this.pBindingInterface2 = new BindingInterface2Elements();
 		this.pHandlerInterface1 = new HandlerInterface1Elements();
@@ -1011,7 +1149,9 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		this.pActionInterface1 = new ActionInterface1Elements();
 		this.pActionInterface2 = new ActionInterface2Elements();
 		this.pCodeInterface = new CodeInterfaceElements();
-		this.pKey = new KeyElements();
+		this.pSetterInterface = new SetterInterfaceElements();
+		this.pSimpleKey = new SimpleKeyElements();
+		this.pComplexKey = new ComplexKeyElements();
 		this.eSimulationCorntrol = new SimulationCorntrolElements();
 		this.tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.BOOL");
 		this.tESCAPED_CHAR = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kivis.KiVis.ESCAPED_CHAR");
@@ -1068,7 +1208,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Binding:
-	//	'bind' variable=Key ('to' domElement=STRING
+	//	'bind' variable=ComplexKey ('to' domElement=STRING
 	//	'with' interface=BindingInterface1 script=SCRIPT
 	//	|
 	//	'with' interface=BindingInterface2 script=SCRIPT);
@@ -1081,7 +1221,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Handler:
-	//	'handle' variable=Key ('in' multimatch?='all'? domElement=STRING
+	//	'handle' variable=SimpleKey ('in' multimatch?='all'? domElement=STRING
 	//	'with' interface=HandlerInterface1 script=SCRIPT
 	//	|
 	//	'with' interface=HandlerInterface2 script=SCRIPT);
@@ -1095,8 +1235,9 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Action:
 	//	'event' domEvent=STRING
-	//	'on' multimatch?='all'? domElement=STRING ('do' (deferred?='deferred' interface=ActionInterface1 script=SCRIPT
-	//	| interface=ActionInterface2 script=SCRIPT))? ('set' variable=Key)? ('simulation' control=SimulationCorntrol)?;
+	//	'on' multimatch?='all'? domElement=STRING ('do' interface=ActionInterface1 script=SCRIPT)? ('deferred'
+	//	deferredInterface=ActionInterface2 deferredScript=SCRIPT)? ('set' setter+=Setter)* ('signal' signal=ComplexKey)?
+	//	('simulation' control=SimulationCorntrol)?;
 	public ActionElements getActionAccess() {
 		return pAction;
 	}
@@ -1113,6 +1254,18 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getCodeRule() {
 		return getCodeAccess().getRule();
+	}
+	
+	//Setter:
+	//	variable=ComplexKey
+	//	interface=SetterInterface
+	//	script=SCRIPT;
+	public SetterElements getSetterAccess() {
+		return pSetter;
+	}
+	
+	public ParserRule getSetterRule() {
+		return getSetterAccess().getRule();
 	}
 	
 	//BindingInterface1 Interface:
@@ -1172,7 +1325,6 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ActionInterface1 Interface:
 	//	{Interface} ('('
-	//	pool=ID?
 	//	')' '=>'?)?;
 	public ActionInterface1Elements getActionInterface1Access() {
 		return pActionInterface1;
@@ -1184,6 +1336,7 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ActionInterface2 Interface:
 	//	{Interface} ('('
+	//	pool=ID?
 	//	')' '=>'?)?;
 	public ActionInterface2Elements getActionInterface2Access() {
 		return pActionInterface2;
@@ -1205,15 +1358,37 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		return getCodeInterfaceAccess().getRule();
 	}
 	
-	//// Json object member key
-	//Key:
-	//	(ID | '#' ID) (('.' | '-')? ID)*;
-	public KeyElements getKeyAccess() {
-		return pKey;
+	//SetterInterface Interface:
+	//	{Interface} ('('
+	//	')' '=>'?)?;
+	public SetterInterfaceElements getSetterInterfaceAccess() {
+		return pSetterInterface;
 	}
 	
-	public ParserRule getKeyRule() {
-		return getKeyAccess().getRule();
+	public ParserRule getSetterInterfaceRule() {
+		return getSetterInterfaceAccess().getRule();
+	}
+	
+	//// Json object member key
+	//SimpleKey:
+	//	(ID | '#' ID) ('-' ID)*;
+	public SimpleKeyElements getSimpleKeyAccess() {
+		return pSimpleKey;
+	}
+	
+	public ParserRule getSimpleKeyRule() {
+		return getSimpleKeyAccess().getRule();
+	}
+	
+	//// Json object member key with member access via '.'
+	//ComplexKey:
+	//	(ID | '#' ID) ('-' ID | '.' (INT | ID))*;
+	public ComplexKeyElements getComplexKeyAccess() {
+		return pComplexKey;
+	}
+	
+	public ParserRule getComplexKeyRule() {
+		return getComplexKeyAccess().getRule();
 	}
 	
 	//enum SimulationCorntrol:
@@ -1244,7 +1419,8 @@ public class KiVisGrammarAccess extends AbstractGrammarElementFinder {
 		return tSCRIPT;
 	}
 	
-	//@ Override terminal STRING:
+	//@Override
+	//terminal STRING:
 	//	'"' (ESCAPED_CHAR | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
