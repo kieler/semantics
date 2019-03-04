@@ -172,7 +172,7 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
         return file
     }
     
-    protected def onVerificationPropertyChanged(VerificationPropertyChanged event) {
+    protected def void onVerificationPropertyChanged(VerificationPropertyChanged event) {
         val property = event.changedProperty
         switch(property.status) {
             case VerificationPropertyStatus.PASSED : {

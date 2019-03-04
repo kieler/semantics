@@ -20,6 +20,8 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import de.cau.cs.kieler.verification.VerificationProperty
+import de.cau.cs.kieler.verification.VerificationPropertyChanged
+import de.cau.cs.kieler.verification.VerificationPropertyStatus
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
@@ -29,16 +31,21 @@ import java.nio.file.Files
 import java.nio.file.StandardOpenOption
 import java.util.List
 import java.util.Locale
+import java.util.concurrent.TimeoutException
 import java.util.regex.Pattern
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.Path
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.rules.TestName
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
-import org.junit.Test
+
+import static org.junit.Assert.*
+import org.junit.runners.model.TestTimedOutException
 
 /**
  * @author aas
@@ -60,7 +67,7 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     
     /**
      * Timeout for tests.
-     * The verification is canceled in an @AfterClass method to kill the model checking process if needed.
+     * The verification is canceled in an @After method to kill the model checking process if needed.
      */
     @Rule
     public final TestRule globalTimeout = Timeout.seconds(120);
@@ -77,8 +84,14 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
     private val TIME_RESULT_PATTERN = Pattern.compile('''elapsed time: (\d*.\d*) seconds, max memory in RAM: (\d+) KB''')
     private var String timeCommandResultLine
     private var Double timeCommandElapsedTime
-    private var Integer timeCommandMaxMemoryInRAM
-        
+    private var Integer timeCommandMaxMemoryInRamKB
+    private var Double timeCommandMaxMemoryInRamMB
+    
+    private var Double codeGenTimeSecs
+    
+    private var Boolean failedToProof
+    private var Boolean timedOut
+    
     /**
      * The currently checked property.
      * For the benchmark the properties are checked one after the other.
@@ -410,12 +423,8 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
             } else {
                 println('''Testing VerificationProperty "«property.name»"''')
                 currentVerificationProperty = property
-//                try {
-                    startVerification( #[currentVerificationProperty], verificationAssumptions)    
-//                } catch (Exception e) {
-//                 e.printStackTrace   
-//                }
-                recordStatistics()
+                startVerification( #[currentVerificationProperty], verificationAssumptions)    
+//                recordStatistics()
                 println()
             }
         }
@@ -449,6 +458,18 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         }
     }
     
+    override onVerificationPropertyChanged(VerificationPropertyChanged event) {
+        val property = event.changedProperty
+        if(property.status == VerificationPropertyStatus.EXCEPTION) {
+            failedToProof = true
+            if(property.cause instanceof TestTimedOutException) {
+                failedToProof = false
+                timedOut = true
+            }
+        }
+        super.onVerificationPropertyChanged(event)
+    }
+    
     private def String getFullyQualifiedTestPath(VerificationProperty property) {
         val path = '''«testMethodName»/«verificationModelData.modelFile»/«property.name»'''
         return path
@@ -469,41 +490,20 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         return RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER
     }
     
-    private def void recordStatistics() {
+    @After
+    public def void recordStatistics() {
         val propertyName = currentVerificationProperty.name
         val modelFile = verificationModelData.modelFile
         
-        // TODO: record partial results after exception
-        
         // Get results of time command
-        val processOutputFile = currentVerificationProperty.processOutputFile
-        val lineBasedParser = new LineBasedParser() {
-            override parseLine(String line) {
-                val timeCommandMatcher = TIME_RESULT_PATTERN.matcher(line)
-                if(timeCommandMatcher.matches) {
-                    stopParsing = true
-                    timeCommandResultLine = line
-                    timeCommandElapsedTime = Double.valueOf( timeCommandMatcher.group(1) )
-                    timeCommandMaxMemoryInRAM = Integer.valueOf( timeCommandMatcher.group(2) )
-                }
-            }
-        }
-        lineBasedParser.parse(processOutputFile)
-        val maxMemInRamMB = timeCommandMaxMemoryInRAM / 1000.0
+        fetchStatisticsOfTimeCommand
         
         // Get time needed to translate SCChart to model checker input.
         // The last processor is for running the model checker. The ones before are creating the code.
-        var overallTimeNanons = 0l
-        for(processor : currentVerificationContext.processorInstances) {
-            if(!(processor instanceof RunModelCheckerProcessorBase)) {
-                val env = processor.environment
-                overallTimeNanons += env.getProperty(Environment.OVERALL_TIME)                
-            }
-        }
-        val codeGenTimeSecs = overallTimeNanons / 1000_000_000.0
+        fetchStatisticsOfCodeGeneration
         
         // Create combined statistics in CSV format
-        val newStats = '''"«testMethodName»", "«modelFile»", "«propertyName»", "«codeGenTimeSecs.twoDigitsAfterComma»", "«timeCommandElapsedTime.twoDigitsAfterComma»", "«maxMemInRamMB.twoDigitsAfterComma»"'''
+        val newStats = '''"«testMethodName»", "«modelFile»", "«propertyName»", "«codeGenTimeSecs.twoDigitsAfterComma»", "«timeCommandElapsedTime.twoDigitsAfterComma»", "«timeCommandMaxMemoryInRamMB.twoDigitsAfterComma»", "«failedToProof.toCsvMarker»", "«timedOut.toCsvMarker»"'''
         
         // Append information to statistics file
         if(statisticsFile === null) {
@@ -517,10 +517,46 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
             }
             statisticsFile.createNewFile
             // Add header line
-            val statsHeader = '''"Test", "Model", "Property", "Code Gen Time (sec)", "Model Checking Time (sec)", "Model Checking Memory (MB)"'''
+            val statsHeader = '''"Test", "Model", "Property", "Code Gen Time (sec)", "Model Checking Time (sec)", "Model Checking Memory (MB)", "Failed to Proof", "Timed Out"'''
             appendToFile(statisticsFile, statsHeader+"\n")
         }
         appendToFile(statisticsFile, newStats+"\n")
+    }
+    
+    private def void fetchStatisticsOfTimeCommand() {
+        timeCommandResultLine = null
+        timeCommandElapsedTime = null
+        timeCommandMaxMemoryInRamKB = null
+        timeCommandMaxMemoryInRamMB = null
+        val processOutputFile = currentVerificationProperty.processOutputFile
+        if(processOutputFile === null || !processOutputFile.exists) {
+            return
+        }
+        
+        val lineBasedParser = new LineBasedParser() {
+            override parseLine(String line) {
+                val timeCommandMatcher = TIME_RESULT_PATTERN.matcher(line)
+                if(timeCommandMatcher.matches) {
+                    stopParsing = true
+                    timeCommandResultLine = line
+                    timeCommandElapsedTime = Double.valueOf( timeCommandMatcher.group(1) )
+                    timeCommandMaxMemoryInRamKB = Integer.valueOf( timeCommandMatcher.group(2) )
+                    timeCommandMaxMemoryInRamMB = timeCommandMaxMemoryInRamKB / 1000.0
+                }
+            }
+        }
+        lineBasedParser.parse(processOutputFile)
+    }
+    
+    private def void fetchStatisticsOfCodeGeneration() {
+        var overallTimeNanons = 0l
+        for(processor : currentVerificationContext.processorInstances) {
+            if(!(processor instanceof RunModelCheckerProcessorBase)) {
+                val env = processor.environment
+                overallTimeNanons += env.getProperty(Environment.OVERALL_TIME)                
+            }
+        }
+        codeGenTimeSecs = overallTimeNanons / 1000_000_000.0
     }
     
     private def void appendToFile(File file, String text) {
@@ -531,7 +567,17 @@ class SCChartsVerificationBenchmark extends AbstractVerificationTest<SCCharts> {
         }
     }
     
+    private def String toCsvMarker(Boolean b) {
+        if(b === null){
+            return ""
+        }
+        return if(b) { "x" } else { "" }
+    }
+    
     private def String twoDigitsAfterComma(Double x) {
+        if(x === null) {
+            return ""
+        }
         return String.format(Locale.US, "%.2f", x)
     }
     
