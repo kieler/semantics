@@ -35,10 +35,11 @@ class LustreSccControlFlowApproachSimulationTest extends AbstractSimulationTest<
     }
     
     override filter(TestModelData modelData) {
-        return false //modelData.hasSimulationTrace
-//            && modelData.modelProperties.contains("lustre")
-//            && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
-//            && !modelData.modelProperties.contains("must-fail-validation")
+        return modelData.hasSimulationTrace
+            && modelData.modelProperties.contains("lustre")
+            && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+            && !modelData.modelProperties.contains("must-fail-validation")
+            && !modelData.modelProperties.contains("not-for-cf-approach")
     }
     
     @Test

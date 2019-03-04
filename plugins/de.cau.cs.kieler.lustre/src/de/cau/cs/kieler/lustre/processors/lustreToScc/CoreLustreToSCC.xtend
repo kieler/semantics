@@ -283,7 +283,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         
         if (rootState.regions.isEmpty) {
             // If there is no region yet, create one otherwise the model is terminated
-            var cfRegion = rootState.createControlflowRegion(ALIBI +  "region")
+            var cfRegion = rootState.createControlflowRegion(ALIBI +  "region") => [label = it.ID]
             cfRegion.createInitialState(ALIBI + "state")
         }
     }
@@ -550,7 +550,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected def linkRefernceInput(ReferenceCall kExpression, State state, ArrayList<ValuedObject> inputValuedObjects) {
         
         if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
-            state.regions += createDataflowRegion(DATAFLOW_REGION_PREFIX).uniqueName
+            state.regions += createDataflowRegion(DATAFLOW_REGION_PREFIX).uniqueName => [label = it.ID]
         }
         var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
         

@@ -45,7 +45,11 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 
 /**
  * @author cpa, lgr
@@ -71,6 +75,8 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
+    
+    extension SCChartsFactory = SCChartsFactory.eINSTANCE
 
     private var regionNameIdx = 0;
     private var stateNameIdx = 0;
@@ -93,7 +99,34 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     }
 
     override protected processReferenceCall(ReferenceCall kExpression, State state) {
-        // Do nothing, not supported
+        val cfRegion = createControlflowRegion(state, "r_" + regionNameIdx++) => [label = it.ID]
+        val referenceState = createInitialState(cfRegion, "_s" + stateNameIdx++)
+        
+        val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
+        val outputsOfCalledState = newArrayList
+        for (Declaration decl : calledState.declarations) {
+            if (decl instanceof VariableDeclaration) {
+                if (decl.output) {
+                    outputsOfCalledState.add(decl)
+                }
+            }
+        }
+        
+        
+        val outputVariable = createVariableDeclaration("_v" + varNameIdx++, inferType(outputsOfCalledState.head.valuedObjects.head.reference), state)
+        val scopeCall = createScopeCall => [scope = calledState]
+        calledState.reference = scopeCall
+        
+        for (Parameter param : kExpression.parameters) {
+            val transformedParam = param.expression.transformExpression(state)
+            val parameter = createParameter => [expression = transformedParam]
+            scopeCall.parameters += parameter
+        }
+        
+        scopeCall.parameters += createParameter => [expression = outputVariable.reference]
+        
+        referenceState.reference = scopeCall
+        return outputVariable.reference
     }
 
     override protected processEquation(Equation equation, State state) {
@@ -119,18 +152,24 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 }
             }
         } else {
-            if (equationExpression instanceof OperatorExpression) {
+            if (equation.reference !== null) {
                 val transformedValObj = equation.reference.transformExpression(state)
-                val cfRegion = createControlflowRegion(state, "_r" + regionNameIdx++)
-                transformExpressionToSimple((transformedValObj as ValuedObjectReference).valuedObject,
-                    equationExpression, state, state, cfRegion)
-                val initalStates = cfRegion.states.filter[initial]
-                val finalStates = cfRegion.states.filter[final]
-
-                for (State initial : initalStates) {
-                    for (State final : finalStates) {
-                        createTransitionTo(final, initial)
-                        final.final = false
+                val cfRegion = createControlflowRegion(state, "_r" + regionNameIdx++) => [label = it.ID]
+                if (equationExpression instanceof OperatorExpression) {
+                    transformExpressionToSimple((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
+                } else if (equationExpression.isValuedObjectReferenceOrValue) {
+                    transformPlainExpression((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
+                }
+            } else {
+                if (equation.references !== null) {
+                    for (ValuedObjectReference valObjRef : equation.references) {
+                        val transformedValObj = valObjRef.transformExpression(state)
+                        val cfRegion = createControlflowRegion(state, "_r" + regionNameIdx++) => [label = it.ID]
+                        if (equationExpression instanceof OperatorExpression) {
+                            transformExpressionToSimple((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
+                        } else if (equationExpression.isValuedObjectReferenceOrValue) {
+                            transformPlainExpression((transformedValObj as ValuedObjectReference).valuedObject, equationExpression, state, state, cfRegion)
+                        }
                     }
                 }
             }
@@ -138,29 +177,35 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
 
     }
 
-    private def Expression transformExpressionToSimple(ValuedObject valObj, Expression expression, State state,
-        State varState, ControlflowRegion controlflowRegion) {
+    private def Expression transformExpressionToSimple(ValuedObject valObj, Expression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         if (expression.isValuedObjectReferenceOrValue) {
-            return transformExpression(expression, state)
+            return transformExpression(expression, varState)
         } else if (expression instanceof OperatorExpression) {
             switch (expression.operator) {
                 case WHEN: {
-                    // TODO                    
+                    return transformWhen(valObj, expression as OperatorExpression, state, varState, controlflowRegion)                   
                 }
                 case CURRENT: {
-                    return expression.subExpressions.get(0).transformExpression(state)
+                    return transformCurrent(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
                 case FBY: {
-                    // TODO
+                    return transformFby(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
                 case INIT: {
-                    // TODO
+                    return transformInit(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
                 case CONDITIONAL: {
-                    return transformConditional(valObj, expression as OperatorExpression, state, varState, null)
+                    return transformConditional(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
+                }
+                case IMPLIES,
+                case INTDIV,
+                case LOGICAL_XOR,
+                case NONEOF, 
+                case NOR: {
+                    return transformPlainExpression(valObj, expression, state, varState, controlflowRegion)
                 }
                 default: {
-                    return transformDefault(valObj, expression as OperatorExpression, state, varState, null)                    
+                    return transformDefault(valObj, expression as OperatorExpression, state, varState, controlflowRegion)                    
                 }
             }
         }
@@ -168,30 +213,122 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     }
     
     private def Expression transformWhen(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val subExpressionState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val ifRef = transformExpressionToSimple(null, expression.subExpressions.get(1), initalState, varState, null)
+        val thenRef = transformExpressionToSimple(null, expression.subExpressions.get(0), subExpressionState, varState, null)
+
+        val thenTransition = createImmediateTransitionTo(initalState, subExpressionState)
+        thenTransition.trigger = ifRef
+        if (initalState.isHierarchical) {
+            thenTransition.preemption = PreemptionType.TERMINATION
+        }
+        var thenAssignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = thenRef
+        ]
+        thenTransition.addAssignment(thenAssignment)
+
+        if (state.eContainer !== null) {
+            subExpressionState.final = true
+        }
+        
+        createTransitionTo(subExpressionState, initalState)
+
+        return newValObj.reference
         
     }
     
     private def Expression transformFby(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val delayState = cfRegion.createState("_s" + stateNameIdx++)
+        val nextState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val initExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
+        val thenExpression = transformExpressionToSimple(null, expression.subExpressions.get(1), nextState, varState, null)
         
+        val firstTransition = createImmediateTransitionTo(initalState, delayState)
+        var initAssignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = initExpression
+        ]
+        firstTransition.addAssignment(initAssignment)
+        
+        createTransitionTo(delayState, nextState)
+        
+        val immediateTransition = createImmediateTransitionTo(nextState, delayState)
+        var thenAssignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = createPreExpression(thenExpression)
+        ]
+        immediateTransition.addAssignment(thenAssignment)
+        
+        if (nextState.isHierarchical) {
+            immediateTransition.preemption = PreemptionType.TERMINATION
+        } 
+        
+        if (state.eContainer !== null) {
+            initalState.final = true
+            delayState.final = true
+        }
+        
+        return newValObj.reference
     }
     
     private def Expression transformInit(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
-        
-    }
-
-    private def Expression transformDefault(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state,
-                "_r" + regionNameIdx++) else controlflowRegion
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val delayState = cfRegion.createState("_s" + stateNameIdx++)
+        val nextState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val initExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
+        val thenExpression = transformExpressionToSimple(null, expression.subExpressions.get(1), nextState, varState, null)
+        
+        val firstTransition = createImmediateTransitionTo(initalState, delayState)
+        var initAssignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = initExpression
+        ]
+        firstTransition.addAssignment(initAssignment)
+        
+        createTransitionTo(delayState, nextState)
+        
+        val immediateTransition = createImmediateTransitionTo(nextState, delayState)
+        var thenAssignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = thenExpression
+        ]
+        immediateTransition.addAssignment(thenAssignment)
+        
+        if (nextState.isHierarchical) {
+            immediateTransition.preemption = PreemptionType.TERMINATION
+        } 
+        
+        if (state.eContainer !== null) {
+            initalState.final = true
+            nextState.final = true
+        }
+        
+        return newValObj.reference
+    }
+
+    private def Expression transformCurrent(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++) => [label = it.ID]) else controlflowRegion
         val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
         val subExpressionState = cfRegion.createState("_s" + stateNameIdx++)
 
-        val transformedExpression = createOperatorExpression(expression.operator)
-        for (Expression subExpression : expression.subExpressions) {
-            transformedExpression.subExpressions +=
-                transformExpressionToSimple(null, subExpression, subExpressionState, varState, null)
-        }
+        val transformedExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), subExpressionState, varState, null)
 
         val firstTransition = createImmediateTransitionTo(initalState, subExpressionState)
         var assignment = createAssignment => [
@@ -205,23 +342,29 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
             transition.preemption = PreemptionType.TERMINATION
             transition.addAssignment(assignment)
         } else {
-            subExpressionState.final = true
+            if (state.eContainer !== null) {
+                subExpressionState.final = true
+            }
             firstTransition.addAssignment(assignment)
         }
+        
+        createTransitionTo(subExpressionState, initalState)
 
         return newValObj.reference
     }
-    
     
     private def Expression transformConditional(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
         val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++,
                 inferType(expression), varState)
 
-        val cfRegion = if(controlflowRegion === null) createControlflowRegion(state,
-                "_r" + regionNameIdx++) else controlflowRegion
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
         val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
-        val subExpressionState1 = cfRegion.createFinalState("_s" + stateNameIdx++)
-        val subExpressionState2 = cfRegion.createFinalState("_s" + stateNameIdx++)
+        val subExpressionState1 = cfRegion.createState("_s" + stateNameIdx++)
+        val subExpressionState2 = cfRegion.createState("_s" + stateNameIdx++)
+        if (state.eContainer !== null) {
+            subExpressionState1.final = true
+            subExpressionState2.final = true
+        }
 
         val ifRef = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
         val thenRef = transformExpressionToSimple(null, expression.subExpressions.get(1), subExpressionState1, varState,
@@ -250,7 +393,67 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         ]
         elseTransition.addAssignment(elseAssignment)
 
+        createTransitionTo(subExpressionState1, initalState)
+        createTransitionTo(subExpressionState2, initalState)
+        
         return newValObj.reference
+    }
+
+    private def Expression transformDefault(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val subExpressionState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val transformedExpression = createOperatorExpression(expression.operator)
+        for (Expression subExpression : expression.subExpressions) {
+            transformedExpression.subExpressions +=
+                transformExpressionToSimple(null, subExpression, subExpressionState, varState, null)
+        }
+
+        val firstTransition = createImmediateTransitionTo(initalState, subExpressionState)
+        var assignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = transformedExpression
+        ]
+
+        if (subExpressionState.isHierarchical) {
+            val lastState = cfRegion.createFinalState("_s" + stateNameIdx++)
+            var transition = createImmediateTransitionTo(subExpressionState, lastState)
+            transition.preemption = PreemptionType.TERMINATION
+            transition.addAssignment(assignment)
+        } else {
+            if (state.eContainer !== null) {
+                subExpressionState.final = true
+            }
+            firstTransition.addAssignment(assignment)
+        
+            createTransitionTo(subExpressionState, initalState)
+        }
+
+        return newValObj.reference
+    }
+
+    private def Expression transformPlainExpression(ValuedObject valObj, Expression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val subExpressionState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val transformedExpression = transformExpression(expression, state)
+
+        val firstTransition = createImmediateTransitionTo(initalState, subExpressionState)
+        var assignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = transformedExpression
+        ]
+        firstTransition.addAssignment(assignment)
+        
+        createTransitionTo(subExpressionState, initalState)
+
+        return transformedExpression
     }
 
     private def boolean isSimpleExpression(Expression expr) {
