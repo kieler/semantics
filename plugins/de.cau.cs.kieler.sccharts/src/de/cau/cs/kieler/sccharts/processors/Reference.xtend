@@ -42,8 +42,12 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import java.util.Stack
+import java.util.Set
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -62,6 +66,13 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
+    
+    public static val IProperty<Boolean> RENAME_SHADOWED_VARIABLES = 
+       new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
+    public static val IProperty<String> VARIABLE_RENAME_PREFIX =
+       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenamePrefix", "_")      
+    public static val IProperty<String> VARIABLE_RENAME_SUFFIX =
+       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenameSuffix", "_")      
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null
@@ -122,7 +133,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Expands one referenced state and keeps track of the replacement stack. */
     protected def void expandReferencedScope(Scope scopeWithReference, Replacements replacements) {
-        // Create the new cope via copy. All internal references are ok. However, you must correct the bindings now.
+        // Create the new scope via copy. All internal references are ok. However, you must correct the bindings now.
         val newScope = scopeWithReference.reference.scope.copy as Scope => [ 
             name = scopeWithReference.name 
             label = scopeWithReference.label
@@ -167,6 +178,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         if (newScope instanceof State) {
             // Correct all valued object references in the new state.
+            newScope.resolveNameClashes(scopeWithReference, replacements)
             newScope.replaceValuedObjectReferencesInState(replacements)        
     
             // Add the new state to the parent region, correct all transitions, and finally remove the original 
@@ -182,6 +194,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             scopeWithReference.remove
         } else if (newScope instanceof Region) {
             // Correct all valued object references in the new state.
+            newScope.resolveNameClashes(scopeWithReference, replacements)
             newScope.replaceValuedObjectReferences(replacements)        
     
             // Add the new state to the parent region, correct all transitions, and finally remove the original 
@@ -194,6 +207,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // Remove the input/output declarations from the new state. They should be bound by now.
         newScope.declarations.removeIf[ if (it instanceof VariableDeclaration) { input || output } else false ]
+        // Add the new variables names to the name set.
         
         snapshot
 
@@ -218,7 +232,6 @@ class Reference extends SCChartsProcessor implements Traceable {
         }
         
         // For each type, call the appropriate method.
-        // TODO: Resolve name clash
         switch(scope) {
             Region: scope.replaceValuedObjectReferencesInRegion(replacements)
             State: scope.replaceValuedObjectReferencesInState(replacements)
@@ -440,6 +453,40 @@ class Reference extends SCChartsProcessor implements Traceable {
         for (parameter : referenceCall.parameters) {
             parameter.replaceReferences(replacements)
         }        
+    }
+    
+    
+    protected def void resolveNameClashes(Scope scope, Scope oldScope, Replacements replacements) {
+        if (!environment.getProperty(RENAME_SHADOWED_VARIABLES))
+            return;
+            
+        val VOs = scope.eAllContents.filter(VariableDeclaration).filter[ !input && !output ].map[ valuedObjects ].toIterable.flatten.toList
+//        val replacementVONames = replacements.values.filter(Stack).map[ it.head ].
+//            filter(ValuedObjectReference).map[ valuedObject ].map[ name ].toSet
+        
+        val replacementVONames = (oldScope.eContainer as Scope).getAllReservedVariableNames
+        
+        for (vo : VOs) {
+            if (replacementVONames.contains(vo.name)) {
+                val newNameBase = environment.getProperty(VARIABLE_RENAME_PREFIX) + vo.name +  
+                    environment.getProperty(VARIABLE_RENAME_SUFFIX)
+                var newName = newNameBase
+                var index = 2
+                while(replacementVONames.contains(newName)) {
+                    newName = newNameBase + index
+                    index++
+                }
+                vo.name = newName    
+            }
+        }        
+    }
+    
+    private def Set<String> getAllReservedVariableNames(Scope scope) {
+        val reserved = scope.declarations.map[ valuedObjects ].flatten.map[ name ].toSet
+        if (scope.eContainer !== null && scope.eContainer instanceof Scope) {
+            reserved.addAll((scope.eContainer as Scope).getAllReservedVariableNames)
+        }
+        return reserved
     }
     
     /** Validate if all referenced valued object are contained in the resource.*/
