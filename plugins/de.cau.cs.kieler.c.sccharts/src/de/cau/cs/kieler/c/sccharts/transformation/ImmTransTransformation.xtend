@@ -12,39 +12,38 @@
  */
 package de.cau.cs.kieler.c.sccharts.transformation
 
-import de.cau.cs.kieler.kico.KielerCompilerContext
-import de.cau.cs.kieler.kico.transformation.AbstractExpansionTransformation
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.featuregroups.SCChartsFeatureGroup
 import java.util.LinkedList
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.sccharts.DelayType
 
 /**
  * @author sle
  * 
  */
-class ImmTransTransformation extends AbstractExpansionTransformation {
+class ImmTransTransformation extends InplaceProcessor<SCCharts> {
 
     LinkedList<State> nextStates = new LinkedList<State>();
     LinkedList<State> tmpList = new LinkedList<State>();
 
-    override getProducesFeatureIds() {
-        return newHashSet(SCChartsFeatureGroup.EXPANSION_ID)
-    }
-
-    override getExpandsFeatureId() {
-        return CbasedSCChartFeature.ID
-    }
-
     override getId() {
-        val String id = "immediateTrans"
-        return id
+        "de.cau.cs.kieler.c.sccharts.immediateTransitions"
     }
     
+    override getName() {
+        "Immediate Transitions"
+    }
+    
+    override process() {
+        for(rootState : model.rootStates) {
+            rootState.transform
+        }
+    }    
+    
     // It is required, that a state contains only one ControlflowRegion
-    def Scope transform(Scope rootSCChart, KielerCompilerContext context) {
+    def State transform(State rootSCChart) {
         if (rootSCChart instanceof SCCharts) {
             for (rootState : rootSCChart.rootStates) {
 
@@ -73,9 +72,9 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
 //                            }
 //                        }
                         for (t : s.incomingTransitions) {
-                            if (t.annotations.head != null) {
+                            if (t.annotations.head !== null) {
                                 if (t.annotations.head.name.contains("notImmediate")) {
-                                    t.immediate = false
+                                    t.delay = DelayType.DELAYED;
                                 }
                             }
                         }
@@ -102,4 +101,7 @@ class ImmTransTransformation extends AbstractExpansionTransformation {
 
         rootSCChart
     }
+    
+
+    
 }
