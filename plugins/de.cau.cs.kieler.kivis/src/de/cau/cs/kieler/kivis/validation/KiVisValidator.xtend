@@ -3,6 +3,10 @@
  */
 package de.cau.cs.kieler.kivis.validation
 
+import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kivis.kivis.Setter
+import de.cau.cs.kieler.kivis.kivis.KivisPackage
+import de.cau.cs.kieler.kivis.kivis.Binding
 
 /**
  * This class contains custom validation rules. 
@@ -10,16 +14,23 @@ package de.cau.cs.kieler.kivis.validation
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class KiVisValidator extends AbstractKiVisValidator {
+    
+    static val pkg = KivisPackage.eINSTANCE
+    
+	static val MISSING_RETURN = 'The javascript function must return a value but there is no return statement in the given code'
+
+	@Check
+	def checkReturnStatement(Setter setter) {
+	    if (!setter.script.nullOrEmpty && !setter.script.contains("return")) {
+			error(MISSING_RETURN, pkg.setter_Script)
+		}
+	}
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					KiVisPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+    @Check
+    def checkReturnStatement(Binding binding) {
+        if (!binding.script.nullOrEmpty && !binding.script.contains("return")) {
+            error(MISSING_RETURN, pkg.setter_Script)
+        }
+    }
 	
 }

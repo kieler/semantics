@@ -26,7 +26,7 @@ class KiVisConstants {
     
     public static val FILE_EXTENSION = ".kviz"
     public static val SIMULATION_CONTROL_CALLBACK = "java_callback_kivis_simulation_control"
-    public static val ACTION_INDICATOR_CALLBACK = "java_callback_kivis_action_indicator"
+    public static val ACTION_SETTER_CALLBACK = "java_callback_kivis_action_setter"
     public static val VISUALIZATION_FUNCTION = "js_function_kivis_visualize"
     
     public static val IProperty<String> VISUALIZATION = 

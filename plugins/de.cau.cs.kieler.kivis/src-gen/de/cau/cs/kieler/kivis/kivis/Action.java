@@ -3,6 +3,7 @@
  */
 package de.cau.cs.kieler.kivis.kivis;
 
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -16,8 +17,10 @@ package de.cau.cs.kieler.kivis.kivis;
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomEvent <em>Dom Event</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface <em>Deferred Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript <em>Deferred Script</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getSetter <em>Setter</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.Action#getControl <em>Control</em>}</li>
  * </ul>
  *
@@ -106,56 +109,98 @@ public interface Action extends Content
   void setDomElement(String value);
 
   /**
-   * Returns the value of the '<em><b>Deferred</b></em>' attribute.
+   * Returns the value of the '<em><b>Deferred Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Deferred</em>' attribute isn't clear,
+   * If the meaning of the '<em>Deferred Interface</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Deferred</em>' attribute.
-   * @see #setDeferred(boolean)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Deferred()
-   * @model
+   * @return the value of the '<em>Deferred Interface</em>' containment reference.
+   * @see #setDeferredInterface(Interface)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_DeferredInterface()
+   * @model containment="true"
    * @generated
    */
-  boolean isDeferred();
+  Interface getDeferredInterface();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#isDeferred <em>Deferred</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface <em>Deferred Interface</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Deferred</em>' attribute.
-   * @see #isDeferred()
+   * @param value the new value of the '<em>Deferred Interface</em>' containment reference.
+   * @see #getDeferredInterface()
    * @generated
    */
-  void setDeferred(boolean value);
+  void setDeferredInterface(Interface value);
 
   /**
-   * Returns the value of the '<em><b>Variable</b></em>' attribute.
+   * Returns the value of the '<em><b>Deferred Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
+   * If the meaning of the '<em>Deferred Script</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Variable</em>' attribute.
-   * @see #setVariable(String)
-   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Variable()
+   * @return the value of the '<em>Deferred Script</em>' attribute.
+   * @see #setDeferredScript(String)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_DeferredScript()
    * @model
    * @generated
    */
-  String getVariable();
+  String getDeferredScript();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript <em>Deferred Script</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Variable</em>' attribute.
-   * @see #getVariable()
+   * @param value the new value of the '<em>Deferred Script</em>' attribute.
+   * @see #getDeferredScript()
    * @generated
    */
-  void setVariable(String value);
+  void setDeferredScript(String value);
+
+  /**
+   * Returns the value of the '<em><b>Setter</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kivis.kivis.Setter}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Setter</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Setter</em>' containment reference list.
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Setter()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Setter> getSetter();
+
+  /**
+   * Returns the value of the '<em><b>Signal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Signal</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Signal</em>' attribute.
+   * @see #setSignal(String)
+   * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Signal()
+   * @model
+   * @generated
+   */
+  String getSignal();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kivis.kivis.Action#getSignal <em>Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Signal</em>' attribute.
+   * @see #getSignal()
+   * @generated
+   */
+  void setSignal(String value);
 
   /**
    * Returns the value of the '<em><b>Control</b></em>' attribute.

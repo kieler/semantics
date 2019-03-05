@@ -132,40 +132,72 @@ class DataPool implements IKiCoolCloneable {
         entryCache.unmodifiableView
     }
     
-    def setValues(Map<String, JsonElement> values) {
+    def void setValues(Map<String, JsonElement> values) {
         for (entry : values.entrySet) {
             setValue(entry.key, entry.value)
         }
     }
      
-    def setValue(String name, JsonElement value) {
+    def void setValue(String name, JsonElement value) {
         if (entryCache.empty) {
             pool.createEntries(null)
         }
+        var modified = false
         val entry = entryCache.get(name)
         if (entry !== null) {
             entry.rawValue = value
-            if (entry.jsonParent == pool) {
-                pool.add(name, value)
-            } else {
-                entry.jsonParent.add(name.substring(name.lastIndexOf(".")), value)
-            }
-        } else if (name.contains(".")) {
-            throw new UnsupportedOperationException("Setting new Object values not yet supported")
-        } else {
             pool.add(name, value)
-            entryCache.put(name, new DataPoolEntry(this, name, value, pool))
+            modified = true
+        } else if (name.contains(".")) { // Set in object or array
+            val parts = name.split("\\.")
+            var JsonElement elem = pool
+            var failed = false
+            for (var idx = 0; idx < parts.length && !failed; idx++) {
+                val part = parts.get(idx)
+                val last = idx == parts.length - 1
+                if (elem !== null && elem.isJsonObject) {
+                    val obj = elem.asJsonObject
+                    if (last) {
+                        obj.add(part, value)
+                        modified = true
+                    } else if (obj.has(part)) {
+                        elem = obj.get(part)
+                    } else {
+                        elem = new JsonObject
+                        obj.add(part, elem)
+                    }
+                } else if (elem !== null && elem.jsonArray && part.matches("\\d+")) {
+                    val arr = elem.asJsonArray
+                    try {
+                        val partNum = Integer.parseInt(part)
+                        if (partNum < arr.size) {
+                            if (last) {
+                                arr.set(partNum, value)
+                                modified = true
+                            } else {
+                                elem = arr.get(partNum)
+                            }
+                        } else {
+                            failed = true
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace
+                        failed = true
+                    }
+                } else {
+                    failed = true
+                }
+            }
+        }
+        if (!modified) {
+            pool.add(name, value)
+            entryCache.put(name, new DataPoolEntry(this, name, value))
         }
     }
-         
+    
     protected def void createEntries(JsonObject obj, String prefix) {
         for (entry : pool.entrySet) {
-            if (entry.value.isJsonObject) {
-                entry.value.asJsonObject.createEntries((if (prefix.nullOrEmpty) "" else prefix) + entry.key + ".")
-            } else {
-                val key = (if (prefix.nullOrEmpty) "" else prefix) + entry.key
-                entryCache.put(key, new DataPoolEntry(this, key, entry.value, obj))
-            }
+            entryCache.put(entry.key, new DataPoolEntry(this, entry.key, entry.value))
         }
     }
     
@@ -221,8 +253,6 @@ class DataPoolEntry {
     val String name
     @Accessors(PUBLIC_GETTER, PACKAGE_SETTER)
     var JsonElement rawValue
-    @Accessors(PACKAGE_GETTER)
-    val JsonObject jsonParent
     @Accessors
     val Set<Simulatable> relatedSimulatables
     @Accessors
@@ -230,11 +260,10 @@ class DataPoolEntry {
     
     extension KExpressionsFactory = KExpressionsFactory.eINSTANCE
         
-    new(DataPool pool, String name, JsonElement element, JsonObject parent) {
+    new(DataPool pool, String name, JsonElement element) {
         this.pool = pool
         this.name = name
         this.rawValue = element
-        this.jsonParent = parent
         this.relatedSimulatables = pool.outputs.keySet.filter[it.variableInformation.variables.containsKey(name)].toSet.unmodifiableView
         this.variableInformation = relatedSimulatables.map[it.variableInformation.variables.get(name)].flatten.toSet.unmodifiableView
     }

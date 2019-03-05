@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kivis.kivis.Code;
 import de.cau.cs.kieler.kivis.kivis.Handler;
 import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
+import de.cau.cs.kieler.kivis.kivis.Setter;
 import de.cau.cs.kieler.kivis.kivis.Visualization;
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess;
 import java.util.Set;
@@ -49,8 +50,9 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 				sequence_Handler(context, (Handler) semanticObject); 
 				return; 
 			case KivisPackage.INTERFACE:
-				if (rule == grammarAccess.getActionInterface1Rule()) {
-					sequence_ActionInterface1(context, (Interface) semanticObject); 
+				if (rule == grammarAccess.getActionInterface1Rule()
+						|| rule == grammarAccess.getSetterInterfaceRule()) {
+					sequence_ActionInterface1_SetterInterface(context, (Interface) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getActionInterface2Rule()) {
@@ -78,6 +80,9 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 					return; 
 				}
 				else break;
+			case KivisPackage.SETTER:
+				sequence_Setter(context, (Setter) semanticObject); 
+				return; 
 			case KivisPackage.VISUALIZATION:
 				sequence_Visualization(context, (Visualization) semanticObject); 
 				return; 
@@ -89,11 +94,12 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	/**
 	 * Contexts:
 	 *     ActionInterface1 returns Interface
+	 *     SetterInterface returns Interface
 	 *
 	 * Constraint:
-	 *     pool=ID?
+	 *     {Interface}
 	 */
-	protected void sequence_ActionInterface1(ISerializationContext context, Interface semanticObject) {
+	protected void sequence_ActionInterface1_SetterInterface(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -103,7 +109,7 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *     ActionInterface2 returns Interface
 	 *
 	 * Constraint:
-	 *     {Interface}
+	 *     pool=ID?
 	 */
 	protected void sequence_ActionInterface2(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -120,8 +126,10 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *         domEvent=STRING 
 	 *         multimatch?='all'? 
 	 *         domElement=STRING 
-	 *         ((deferred?='deferred' interface=ActionInterface1 script=SCRIPT) | (interface=ActionInterface2 script=SCRIPT))? 
-	 *         variable=Key? 
+	 *         (interface=ActionInterface1 script=SCRIPT)? 
+	 *         (deferredInterface=ActionInterface2 deferredScript=SCRIPT)? 
+	 *         setter+=Setter* 
+	 *         signal=ComplexKey? 
 	 *         control=SimulationCorntrol?
 	 *     )
 	 */
@@ -160,7 +168,7 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *     Binding returns Binding
 	 *
 	 * Constraint:
-	 *     (variable=Key ((domElement=STRING interface=BindingInterface1 script=SCRIPT) | (interface=BindingInterface2 script=SCRIPT)))
+	 *     (variable=ComplexKey ((domElement=STRING interface=BindingInterface1 script=SCRIPT) | (interface=BindingInterface2 script=SCRIPT)))
 	 */
 	protected void sequence_Binding(ISerializationContext context, Binding semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -231,10 +239,37 @@ public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingS
 	 *     Handler returns Handler
 	 *
 	 * Constraint:
-	 *     (variable=Key ((multimatch?='all'? domElement=STRING interface=HandlerInterface1 script=SCRIPT) | (interface=HandlerInterface2 script=SCRIPT)))
+	 *     (
+	 *         variable=SimpleKey 
+	 *         ((multimatch?='all'? domElement=STRING interface=HandlerInterface1 script=SCRIPT) | (interface=HandlerInterface2 script=SCRIPT))
+	 *     )
 	 */
 	protected void sequence_Handler(ISerializationContext context, Handler semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Setter returns Setter
+	 *
+	 * Constraint:
+	 *     (variable=ComplexKey interface=SetterInterface script=SCRIPT)
+	 */
+	protected void sequence_Setter(ISerializationContext context, Setter semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__INTERFACE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__INTERFACE));
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__SCRIPT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__SCRIPT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSetterAccess().getVariableComplexKeyParserRuleCall_0_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getSetterAccess().getInterfaceSetterInterfaceParserRuleCall_1_0(), semanticObject.getInterface());
+		feeder.accept(grammarAccess.getSetterAccess().getScriptSCRIPTTerminalRuleCall_2_0(), semanticObject.getScript());
+		feeder.finish();
 	}
 	
 	
