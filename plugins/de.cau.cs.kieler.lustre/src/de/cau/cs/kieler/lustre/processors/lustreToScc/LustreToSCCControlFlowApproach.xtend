@@ -248,11 +248,10 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
 
         val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
         val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
-        val delayState = cfRegion.createState("_s" + stateNameIdx++)
+        var delayState = cfRegion.createState("_s" + stateNameIdx++)
         val nextState = cfRegion.createState("_s" + stateNameIdx++)
 
         val initExpression = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
-        val thenExpression = transformExpressionToSimple(null, expression.subExpressions.get(1), nextState, varState, null)
         
         val firstTransition = createImmediateTransitionTo(initalState, delayState)
         var initAssignment = createAssignment => [
@@ -261,14 +260,38 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         ]
         firstTransition.addAssignment(initAssignment)
         
-        createTransitionTo(delayState, nextState)
+        for (var i = 1; i < expression.subExpressions.length; i++) {
+            var subExpr = expression.subExpressions.get(i)
+            
+            if (expression.subExpressions.indexOf(subExpr) < expression.subExpressions.length - 1) {
+                val newState = cfRegion.createState("_s" + stateNameIdx++)
+                val thenExpression = transformExpressionToSimple(null, subExpr, newState, varState, null)
+                
+                var delayTransition = createTransitionTo(delayState, newState)
+                val newAssignment = createAssignment => [
+                    reference = newValObj.reference 
+                ]
+                newAssignment.expression = createPreExpression(thenExpression)
+                for (var index = i; index > 1; index--) {
+                    newAssignment.expression = createPreExpression(newAssignment.expression)
+                }
+                delayTransition.addAssignment(newAssignment)
+                
+                delayState = newState
+            }
+        }
         
+        var thenExpression = transformExpressionToSimple(null, expression.subExpressions.get(expression.subExpressions.length - 1), nextState, varState, null)
         val immediateTransition = createImmediateTransitionTo(nextState, delayState)
         var thenAssignment = createAssignment => [
-            reference = newValObj.reference
-            it.expression = createPreExpression(thenExpression)
+            reference = newValObj.reference 
         ]
+        thenAssignment.expression = createPreExpression(thenExpression)
+        for (var index = expression.subExpressions.length - 1; index > 1; index--) {
+            thenAssignment.expression = createPreExpression(thenAssignment.expression)
+        }
         immediateTransition.addAssignment(thenAssignment)
+        createTransitionTo(delayState, nextState)
         
         if (nextState.isHierarchical) {
             immediateTransition.preemption = PreemptionType.TERMINATION

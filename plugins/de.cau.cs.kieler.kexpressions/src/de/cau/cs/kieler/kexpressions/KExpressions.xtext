@@ -403,7 +403,7 @@ AtomicValuedExpression returns Expression:
 // valued object reference.
 // Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 ValuedObjectTestExpression returns Expression:
-	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
+	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 	| ValuedObjectReference;
 
 // ID with primes

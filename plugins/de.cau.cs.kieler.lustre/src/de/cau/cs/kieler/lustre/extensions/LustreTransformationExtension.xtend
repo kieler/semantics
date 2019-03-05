@@ -25,6 +25,7 @@ import java.util.ArrayList
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 
 /**
  * @author lgr
@@ -143,6 +144,11 @@ class LustreTransformationExtension {
             var preExpression = createPreExpression
             var valObj = kExpression.valuedObject
             preExpression.subExpressions += valObj.reference
+            
+            val clockedVarDecl = valObj.variableDeclaration.eContainer
+            if (clockedVarDecl instanceof ClockedVariableDeclaration) {
+                preExpression.subExpressions += clockedVarDecl.clockExpr
+            }
             return preExpression
         } else {
             return kExpression

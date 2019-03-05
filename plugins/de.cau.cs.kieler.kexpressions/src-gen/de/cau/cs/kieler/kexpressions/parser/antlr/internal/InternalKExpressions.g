@@ -3894,9 +3894,34 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 					}
 				)
 			)
-			otherlv_4=')'
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0());
+						}
+						lv_subExpressions_5_0=ruleValuedObjectReference
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getValuedObjectTestExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)?
+			otherlv_6=')'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4());
+				newLeafNode(otherlv_6, grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5());
 			}
 		)
 		    |
@@ -3906,9 +3931,9 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 		{
 			newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getValuedObjectReferenceParserRuleCall_1());
 		}
-		this_ValuedObjectReference_5=ruleValuedObjectReference
+		this_ValuedObjectReference_7=ruleValuedObjectReference
 		{
-			$current = $this_ValuedObjectReference_5.current;
+			$current = $this_ValuedObjectReference_7.current;
 			afterParserOrEnumRuleCall();
 		}
 	)

@@ -294,8 +294,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//annotations+=Annotation* initial?='initial'? final?='final'? violation?='violation'? connector?='connector'? => 'state'
 		//name=ID label=STRING? ('is' reference=ScopeCall ('schedule' schedule+=ScheduleObjectReference+)? | ('extends'
 		//baseStates+=[sccharts::State] (',' baseStates+=[sccharts::State])*)? ('schedule' schedule+=ScheduleObjectReference+)?
-		//'{' declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion | regions+=Region*)
-		//'}')? outgoingTransitions+=Transition*
+		//'{' declarations+=DeclarationWOSemicolon* actions+=LocalAction* (regions+=ImplicitControlflowRegion |
+		//regions+=Region*) '}')? outgoingTransitions+=Transition*
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -1155,8 +1155,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//	override?='override'?
 		//	final?='final'?
 		//	'region' name=ExtendedID? label=STRING? ('is'
-		//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
-		//	('schedule' schedule+=ScheduleObjectReference+)?
+		//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
+		//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
 		//	| ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
 		//	schedule+=ScheduleObjectReference+)? ('{'
 		//	declarations+=DeclarationWOSemicolon*
@@ -1171,8 +1171,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//{sccharts::ControlflowRegion} annotations+=Annotation* override?='override'? final?='final'? 'region' name=ExtendedID?
 		//label=STRING? ('is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable ':'
-		//forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
+		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
+		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+) '}' | ':'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*))
 		public Group getGroup() { return cGroup; }
@@ -1214,8 +1214,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getLabelSTRINGTerminalRuleCall_6_0() { return cLabelSTRINGTerminalRuleCall_6_0; }
 		
 		//'is' reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
-		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable ':'
-		//forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
+		//forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? | ('for' counterVariable=CounterVariable
+		//':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)? ('{'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+) '}' | ':'
 		//declarations+=DeclarationWOSemicolon* actions+=LocalAction* states+=State*)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
@@ -2824,8 +2824,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	override?='override'?
 	//	final?='final'?
 	//	'region' name=ExtendedID? label=STRING? ('is'
-	//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
-	//	('schedule' schedule+=ScheduleObjectReference+)?
+	//	reference=ScopeCall ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to'
+	//	forEnd=IntOrReference)?)? ('schedule' schedule+=ScheduleObjectReference+)?
 	//	| ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? ('schedule'
 	//	schedule+=ScheduleObjectReference+)? ('{'
 	//	declarations+=DeclarationWOSemicolon*
@@ -3451,7 +3451,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
+	//	'()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -3918,8 +3919,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -4040,7 +4041,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued object reference.
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+	//	subExpressions+=ValuedObjectReference)? ')'
 	//	| ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();

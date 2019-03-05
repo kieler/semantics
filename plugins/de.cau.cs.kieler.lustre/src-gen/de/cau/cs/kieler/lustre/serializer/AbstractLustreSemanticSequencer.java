@@ -684,7 +684,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_AddExpression_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -812,7 +812,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -905,7 +905,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -992,7 +992,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1073,7 +1073,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1165,7 +1165,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_DivModExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1246,7 +1246,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1338,7 +1338,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultDivExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1419,7 +1419,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1511,7 +1511,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultModExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1609,7 +1609,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1695,7 +1695,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1787,7 +1787,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1879,7 +1879,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1965,7 +1965,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2057,7 +2057,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2143,7 +2143,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2224,7 +2224,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -2364,7 +2364,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
 	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
 	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {

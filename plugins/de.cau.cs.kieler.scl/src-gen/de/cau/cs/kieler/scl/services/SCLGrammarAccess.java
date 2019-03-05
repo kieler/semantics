@@ -2142,8 +2142,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -2264,7 +2264,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued object reference.
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+	//	subExpressions+=ValuedObjectReference)? ')'
 	//	| ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();

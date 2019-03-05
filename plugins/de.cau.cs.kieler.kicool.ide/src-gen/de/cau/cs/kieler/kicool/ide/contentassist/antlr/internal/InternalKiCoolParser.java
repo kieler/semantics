@@ -11880,11 +11880,11 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                 {
                 int LA6_1 = input.LA(2);
 
-                if ( (LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||LA6_1==102) ) {
-                    alt6=2;
-                }
-                else if ( ((LA6_1>=64 && LA6_1<=68)) ) {
+                if ( ((LA6_1>=64 && LA6_1<=68)) ) {
                     alt6=1;
+                }
+                else if ( (LA6_1==RULE_ID||LA6_1==RULE_COMMENT_ANNOTATION||LA6_1==102) ) {
+                    alt6=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -16299,11 +16299,11 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                 {
                 int LA47_4 = input.LA(2);
 
-                if ( (LA47_4==RULE_FLOAT) ) {
-                    alt47=5;
-                }
-                else if ( (LA47_4==RULE_INT) ) {
+                if ( (LA47_4==RULE_INT) ) {
                     alt47=4;
+                }
+                else if ( (LA47_4==RULE_FLOAT) ) {
+                    alt47=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
@@ -69783,7 +69783,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20679:1: ( rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4 )
             // InternalKiCool.g:20680:2: rule__ValuedObjectTestExpression__Group_0__3__Impl rule__ValuedObjectTestExpression__Group_0__4
             {
-            pushFollow(FollowSets000.FOLLOW_61);
+            pushFollow(FollowSets000.FOLLOW_67);
             rule__ValuedObjectTestExpression__Group_0__3__Impl();
 
             state._fsp--;
@@ -69863,17 +69863,22 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__4"
-    // InternalKiCool.g:20702:1: rule__ValuedObjectTestExpression__Group_0__4 : rule__ValuedObjectTestExpression__Group_0__4__Impl ;
+    // InternalKiCool.g:20702:1: rule__ValuedObjectTestExpression__Group_0__4 : rule__ValuedObjectTestExpression__Group_0__4__Impl rule__ValuedObjectTestExpression__Group_0__5 ;
     public final void rule__ValuedObjectTestExpression__Group_0__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20706:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl )
-            // InternalKiCool.g:20707:2: rule__ValuedObjectTestExpression__Group_0__4__Impl
+            // InternalKiCool.g:20706:1: ( rule__ValuedObjectTestExpression__Group_0__4__Impl rule__ValuedObjectTestExpression__Group_0__5 )
+            // InternalKiCool.g:20707:2: rule__ValuedObjectTestExpression__Group_0__4__Impl rule__ValuedObjectTestExpression__Group_0__5
             {
-            pushFollow(FollowSets000.FOLLOW_2);
+            pushFollow(FollowSets000.FOLLOW_67);
             rule__ValuedObjectTestExpression__Group_0__4__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectTestExpression__Group_0__5();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69896,24 +69901,45 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__4__Impl"
-    // InternalKiCool.g:20713:1: rule__ValuedObjectTestExpression__Group_0__4__Impl : ( ')' ) ;
+    // InternalKiCool.g:20714:1: rule__ValuedObjectTestExpression__Group_0__4__Impl : ( ( rule__ValuedObjectTestExpression__Group_0_4__0 )? ) ;
     public final void rule__ValuedObjectTestExpression__Group_0__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20717:1: ( ( ')' ) )
-            // InternalKiCool.g:20718:1: ( ')' )
+            // InternalKiCool.g:20718:1: ( ( ( rule__ValuedObjectTestExpression__Group_0_4__0 )? ) )
+            // InternalKiCool.g:20719:1: ( ( rule__ValuedObjectTestExpression__Group_0_4__0 )? )
             {
-            // InternalKiCool.g:20718:1: ( ')' )
-            // InternalKiCool.g:20719:2: ')'
+            // InternalKiCool.g:20719:1: ( ( rule__ValuedObjectTestExpression__Group_0_4__0 )? )
+            // InternalKiCool.g:20720:2: ( rule__ValuedObjectTestExpression__Group_0_4__0 )?
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4()); 
             }
-            match(input,94,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            // InternalKiCool.g:20721:2: ( rule__ValuedObjectTestExpression__Group_0_4__0 )?
+            int alt228=2;
+            int LA228_0 = input.LA(1);
+
+            if ( (LA228_0==86) ) {
+                alt228=1;
+            }
+            switch (alt228) {
+                case 1 :
+                    // InternalKiCool.g:20721:3: rule__ValuedObjectTestExpression__Group_0_4__0
+                    {
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    rule__ValuedObjectTestExpression__Group_0_4__0();
+
+                    state._fsp--;
+                    if (state.failed) return ;
+
+                    }
+                    break;
+
+            }
+
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4()); 
             }
 
             }
@@ -69936,15 +69962,252 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ValuedObjectTestExpression__Group_0__4__Impl"
 
 
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__5"
+    // InternalKiCool.g:20729:1: rule__ValuedObjectTestExpression__Group_0__5 : rule__ValuedObjectTestExpression__Group_0__5__Impl ;
+    public final void rule__ValuedObjectTestExpression__Group_0__5() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20733:1: ( rule__ValuedObjectTestExpression__Group_0__5__Impl )
+            // InternalKiCool.g:20734:2: rule__ValuedObjectTestExpression__Group_0__5__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectTestExpression__Group_0__5__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0__5"
+
+
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0__5__Impl"
+    // InternalKiCool.g:20740:1: rule__ValuedObjectTestExpression__Group_0__5__Impl : ( ')' ) ;
+    public final void rule__ValuedObjectTestExpression__Group_0__5__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20744:1: ( ( ')' ) )
+            // InternalKiCool.g:20745:1: ( ')' )
+            {
+            // InternalKiCool.g:20745:1: ( ')' )
+            // InternalKiCool.g:20746:2: ')'
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5()); 
+            }
+            match(input,94,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0__5__Impl"
+
+
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0_4__0"
+    // InternalKiCool.g:20756:1: rule__ValuedObjectTestExpression__Group_0_4__0 : rule__ValuedObjectTestExpression__Group_0_4__0__Impl rule__ValuedObjectTestExpression__Group_0_4__1 ;
+    public final void rule__ValuedObjectTestExpression__Group_0_4__0() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20760:1: ( rule__ValuedObjectTestExpression__Group_0_4__0__Impl rule__ValuedObjectTestExpression__Group_0_4__1 )
+            // InternalKiCool.g:20761:2: rule__ValuedObjectTestExpression__Group_0_4__0__Impl rule__ValuedObjectTestExpression__Group_0_4__1
+            {
+            pushFollow(FollowSets000.FOLLOW_34);
+            rule__ValuedObjectTestExpression__Group_0_4__0__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectTestExpression__Group_0_4__1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0_4__0"
+
+
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0_4__0__Impl"
+    // InternalKiCool.g:20768:1: rule__ValuedObjectTestExpression__Group_0_4__0__Impl : ( ',' ) ;
+    public final void rule__ValuedObjectTestExpression__Group_0_4__0__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20772:1: ( ( ',' ) )
+            // InternalKiCool.g:20773:1: ( ',' )
+            {
+            // InternalKiCool.g:20773:1: ( ',' )
+            // InternalKiCool.g:20774:2: ','
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0()); 
+            }
+            match(input,86,FollowSets000.FOLLOW_2); if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0_4__0__Impl"
+
+
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0_4__1"
+    // InternalKiCool.g:20783:1: rule__ValuedObjectTestExpression__Group_0_4__1 : rule__ValuedObjectTestExpression__Group_0_4__1__Impl ;
+    public final void rule__ValuedObjectTestExpression__Group_0_4__1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20787:1: ( rule__ValuedObjectTestExpression__Group_0_4__1__Impl )
+            // InternalKiCool.g:20788:2: rule__ValuedObjectTestExpression__Group_0_4__1__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectTestExpression__Group_0_4__1__Impl();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0_4__1"
+
+
+    // $ANTLR start "rule__ValuedObjectTestExpression__Group_0_4__1__Impl"
+    // InternalKiCool.g:20794:1: rule__ValuedObjectTestExpression__Group_0_4__1__Impl : ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 ) ) ;
+    public final void rule__ValuedObjectTestExpression__Group_0_4__1__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:20798:1: ( ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 ) ) )
+            // InternalKiCool.g:20799:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 ) )
+            {
+            // InternalKiCool.g:20799:1: ( ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 ) )
+            // InternalKiCool.g:20800:2: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 )
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1()); 
+            }
+            // InternalKiCool.g:20801:2: ( rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 )
+            // InternalKiCool.g:20801:3: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1
+            {
+            pushFollow(FollowSets000.FOLLOW_2);
+            rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1();
+
+            state._fsp--;
+            if (state.failed) return ;
+
+            }
+
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__Group_0_4__1__Impl"
+
+
     // $ANTLR start "rule__PrimeID__Group__0"
-    // InternalKiCool.g:20729:1: rule__PrimeID__Group__0 : rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 ;
+    // InternalKiCool.g:20810:1: rule__PrimeID__Group__0 : rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 ;
     public final void rule__PrimeID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20733:1: ( rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 )
-            // InternalKiCool.g:20734:2: rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1
+            // InternalKiCool.g:20814:1: ( rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1 )
+            // InternalKiCool.g:20815:2: rule__PrimeID__Group__0__Impl rule__PrimeID__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_109);
             rule__PrimeID__Group__0__Impl();
@@ -69975,17 +70238,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimeID__Group__0__Impl"
-    // InternalKiCool.g:20741:1: rule__PrimeID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalKiCool.g:20822:1: rule__PrimeID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__PrimeID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20745:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:20746:1: ( RULE_ID )
+            // InternalKiCool.g:20826:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:20827:1: ( RULE_ID )
             {
-            // InternalKiCool.g:20746:1: ( RULE_ID )
-            // InternalKiCool.g:20747:2: RULE_ID
+            // InternalKiCool.g:20827:1: ( RULE_ID )
+            // InternalKiCool.g:20828:2: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimeIDAccess().getIDTerminalRuleCall_0()); 
@@ -70016,14 +70279,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimeID__Group__1"
-    // InternalKiCool.g:20756:1: rule__PrimeID__Group__1 : rule__PrimeID__Group__1__Impl ;
+    // InternalKiCool.g:20837:1: rule__PrimeID__Group__1 : rule__PrimeID__Group__1__Impl ;
     public final void rule__PrimeID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20760:1: ( rule__PrimeID__Group__1__Impl )
-            // InternalKiCool.g:20761:2: rule__PrimeID__Group__1__Impl
+            // InternalKiCool.g:20841:1: ( rule__PrimeID__Group__1__Impl )
+            // InternalKiCool.g:20842:2: rule__PrimeID__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PrimeID__Group__1__Impl();
@@ -70049,35 +70312,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrimeID__Group__1__Impl"
-    // InternalKiCool.g:20767:1: rule__PrimeID__Group__1__Impl : ( ( '\\'' )* ) ;
+    // InternalKiCool.g:20848:1: rule__PrimeID__Group__1__Impl : ( ( '\\'' )* ) ;
     public final void rule__PrimeID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20771:1: ( ( ( '\\'' )* ) )
-            // InternalKiCool.g:20772:1: ( ( '\\'' )* )
+            // InternalKiCool.g:20852:1: ( ( ( '\\'' )* ) )
+            // InternalKiCool.g:20853:1: ( ( '\\'' )* )
             {
-            // InternalKiCool.g:20772:1: ( ( '\\'' )* )
-            // InternalKiCool.g:20773:2: ( '\\'' )*
+            // InternalKiCool.g:20853:1: ( ( '\\'' )* )
+            // InternalKiCool.g:20854:2: ( '\\'' )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrimeIDAccess().getApostropheKeyword_1()); 
             }
-            // InternalKiCool.g:20774:2: ( '\\'' )*
-            loop228:
+            // InternalKiCool.g:20855:2: ( '\\'' )*
+            loop229:
             do {
-                int alt228=2;
-                int LA228_0 = input.LA(1);
+                int alt229=2;
+                int LA229_0 = input.LA(1);
 
-                if ( (LA228_0==97) ) {
-                    alt228=1;
+                if ( (LA229_0==97) ) {
+                    alt229=1;
                 }
 
 
-                switch (alt228) {
+                switch (alt229) {
             	case 1 :
-            	    // InternalKiCool.g:20774:3: '\\''
+            	    // InternalKiCool.g:20855:3: '\\''
             	    {
             	    match(input,97,FollowSets000.FOLLOW_110); if (state.failed) return ;
 
@@ -70085,7 +70348,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop228;
+            	    break loop229;
                 }
             } while (true);
 
@@ -70114,14 +70377,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__0"
-    // InternalKiCool.g:20783:1: rule__ValuedObjectReference__Group__0 : rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 ;
+    // InternalKiCool.g:20864:1: rule__ValuedObjectReference__Group__0 : rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 ;
     public final void rule__ValuedObjectReference__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20787:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
-            // InternalKiCool.g:20788:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
+            // InternalKiCool.g:20868:1: ( rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1 )
+            // InternalKiCool.g:20869:2: rule__ValuedObjectReference__Group__0__Impl rule__ValuedObjectReference__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_111);
             rule__ValuedObjectReference__Group__0__Impl();
@@ -70152,23 +70415,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__0__Impl"
-    // InternalKiCool.g:20795:1: rule__ValuedObjectReference__Group__0__Impl : ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) ;
+    // InternalKiCool.g:20876:1: rule__ValuedObjectReference__Group__0__Impl : ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ValuedObjectReference__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20799:1: ( ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) )
-            // InternalKiCool.g:20800:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:20880:1: ( ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) ) )
+            // InternalKiCool.g:20881:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
             {
-            // InternalKiCool.g:20800:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
-            // InternalKiCool.g:20801:2: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:20881:1: ( ( rule__ValuedObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:20882:2: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKiCool.g:20802:2: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
-            // InternalKiCool.g:20802:3: rule__ValuedObjectReference__ValuedObjectAssignment_0
+            // InternalKiCool.g:20883:2: ( rule__ValuedObjectReference__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:20883:3: rule__ValuedObjectReference__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__ValuedObjectAssignment_0();
@@ -70203,14 +70466,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__1"
-    // InternalKiCool.g:20810:1: rule__ValuedObjectReference__Group__1 : rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 ;
+    // InternalKiCool.g:20891:1: rule__ValuedObjectReference__Group__1 : rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 ;
     public final void rule__ValuedObjectReference__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20814:1: ( rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 )
-            // InternalKiCool.g:20815:2: rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2
+            // InternalKiCool.g:20895:1: ( rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2 )
+            // InternalKiCool.g:20896:2: rule__ValuedObjectReference__Group__1__Impl rule__ValuedObjectReference__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_111);
             rule__ValuedObjectReference__Group__1__Impl();
@@ -70241,35 +70504,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__1__Impl"
-    // InternalKiCool.g:20822:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )* ) ;
+    // InternalKiCool.g:20903:1: rule__ValuedObjectReference__Group__1__Impl : ( ( rule__ValuedObjectReference__Group_1__0 )* ) ;
     public final void rule__ValuedObjectReference__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20826:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )* ) )
-            // InternalKiCool.g:20827:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
+            // InternalKiCool.g:20907:1: ( ( ( rule__ValuedObjectReference__Group_1__0 )* ) )
+            // InternalKiCool.g:20908:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
             {
-            // InternalKiCool.g:20827:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
-            // InternalKiCool.g:20828:2: ( rule__ValuedObjectReference__Group_1__0 )*
+            // InternalKiCool.g:20908:1: ( ( rule__ValuedObjectReference__Group_1__0 )* )
+            // InternalKiCool.g:20909:2: ( rule__ValuedObjectReference__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_1()); 
             }
-            // InternalKiCool.g:20829:2: ( rule__ValuedObjectReference__Group_1__0 )*
-            loop229:
+            // InternalKiCool.g:20910:2: ( rule__ValuedObjectReference__Group_1__0 )*
+            loop230:
             do {
-                int alt229=2;
-                int LA229_0 = input.LA(1);
+                int alt230=2;
+                int LA230_0 = input.LA(1);
 
-                if ( (LA229_0==77) ) {
-                    alt229=1;
+                if ( (LA230_0==77) ) {
+                    alt230=1;
                 }
 
 
-                switch (alt229) {
+                switch (alt230) {
             	case 1 :
-            	    // InternalKiCool.g:20829:3: rule__ValuedObjectReference__Group_1__0
+            	    // InternalKiCool.g:20910:3: rule__ValuedObjectReference__Group_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_55);
             	    rule__ValuedObjectReference__Group_1__0();
@@ -70281,7 +70544,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop229;
+            	    break loop230;
                 }
             } while (true);
 
@@ -70310,14 +70573,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__2"
-    // InternalKiCool.g:20837:1: rule__ValuedObjectReference__Group__2 : rule__ValuedObjectReference__Group__2__Impl ;
+    // InternalKiCool.g:20918:1: rule__ValuedObjectReference__Group__2 : rule__ValuedObjectReference__Group__2__Impl ;
     public final void rule__ValuedObjectReference__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20841:1: ( rule__ValuedObjectReference__Group__2__Impl )
-            // InternalKiCool.g:20842:2: rule__ValuedObjectReference__Group__2__Impl
+            // InternalKiCool.g:20922:1: ( rule__ValuedObjectReference__Group__2__Impl )
+            // InternalKiCool.g:20923:2: rule__ValuedObjectReference__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group__2__Impl();
@@ -70343,31 +70606,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group__2__Impl"
-    // InternalKiCool.g:20848:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )? ) ;
+    // InternalKiCool.g:20929:1: rule__ValuedObjectReference__Group__2__Impl : ( ( rule__ValuedObjectReference__Group_2__0 )? ) ;
     public final void rule__ValuedObjectReference__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20852:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )? ) )
-            // InternalKiCool.g:20853:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
+            // InternalKiCool.g:20933:1: ( ( ( rule__ValuedObjectReference__Group_2__0 )? ) )
+            // InternalKiCool.g:20934:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
             {
-            // InternalKiCool.g:20853:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
-            // InternalKiCool.g:20854:2: ( rule__ValuedObjectReference__Group_2__0 )?
+            // InternalKiCool.g:20934:1: ( ( rule__ValuedObjectReference__Group_2__0 )? )
+            // InternalKiCool.g:20935:2: ( rule__ValuedObjectReference__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getGroup_2()); 
             }
-            // InternalKiCool.g:20855:2: ( rule__ValuedObjectReference__Group_2__0 )?
-            int alt230=2;
-            int LA230_0 = input.LA(1);
+            // InternalKiCool.g:20936:2: ( rule__ValuedObjectReference__Group_2__0 )?
+            int alt231=2;
+            int LA231_0 = input.LA(1);
 
-            if ( (LA230_0==39) ) {
-                alt230=1;
+            if ( (LA231_0==39) ) {
+                alt231=1;
             }
-            switch (alt230) {
+            switch (alt231) {
                 case 1 :
-                    // InternalKiCool.g:20855:3: rule__ValuedObjectReference__Group_2__0
+                    // InternalKiCool.g:20936:3: rule__ValuedObjectReference__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ValuedObjectReference__Group_2__0();
@@ -70405,14 +70668,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__0"
-    // InternalKiCool.g:20864:1: rule__ValuedObjectReference__Group_1__0 : rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 ;
+    // InternalKiCool.g:20945:1: rule__ValuedObjectReference__Group_1__0 : rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 ;
     public final void rule__ValuedObjectReference__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20868:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
-            // InternalKiCool.g:20869:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
+            // InternalKiCool.g:20949:1: ( rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1 )
+            // InternalKiCool.g:20950:2: rule__ValuedObjectReference__Group_1__0__Impl rule__ValuedObjectReference__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_32);
             rule__ValuedObjectReference__Group_1__0__Impl();
@@ -70443,17 +70706,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__0__Impl"
-    // InternalKiCool.g:20876:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '[' ) ;
+    // InternalKiCool.g:20957:1: rule__ValuedObjectReference__Group_1__0__Impl : ( '[' ) ;
     public final void rule__ValuedObjectReference__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20880:1: ( ( '[' ) )
-            // InternalKiCool.g:20881:1: ( '[' )
+            // InternalKiCool.g:20961:1: ( ( '[' ) )
+            // InternalKiCool.g:20962:1: ( '[' )
             {
-            // InternalKiCool.g:20881:1: ( '[' )
-            // InternalKiCool.g:20882:2: '['
+            // InternalKiCool.g:20962:1: ( '[' )
+            // InternalKiCool.g:20963:2: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0()); 
@@ -70484,14 +70747,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1"
-    // InternalKiCool.g:20891:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 ;
+    // InternalKiCool.g:20972:1: rule__ValuedObjectReference__Group_1__1 : rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 ;
     public final void rule__ValuedObjectReference__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20895:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
-            // InternalKiCool.g:20896:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
+            // InternalKiCool.g:20976:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
+            // InternalKiCool.g:20977:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__ValuedObjectReference__Group_1__1__Impl();
@@ -70522,23 +70785,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__1__Impl"
-    // InternalKiCool.g:20903:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
+    // InternalKiCool.g:20984:1: rule__ValuedObjectReference__Group_1__1__Impl : ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20907:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
-            // InternalKiCool.g:20908:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // InternalKiCool.g:20988:1: ( ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) ) )
+            // InternalKiCool.g:20989:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
             {
-            // InternalKiCool.g:20908:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
-            // InternalKiCool.g:20909:2: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // InternalKiCool.g:20989:1: ( ( rule__ValuedObjectReference__IndicesAssignment_1_1 ) )
+            // InternalKiCool.g:20990:2: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1()); 
             }
-            // InternalKiCool.g:20910:2: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
-            // InternalKiCool.g:20910:3: rule__ValuedObjectReference__IndicesAssignment_1_1
+            // InternalKiCool.g:20991:2: ( rule__ValuedObjectReference__IndicesAssignment_1_1 )
+            // InternalKiCool.g:20991:3: rule__ValuedObjectReference__IndicesAssignment_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__IndicesAssignment_1_1();
@@ -70573,14 +70836,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__2"
-    // InternalKiCool.g:20918:1: rule__ValuedObjectReference__Group_1__2 : rule__ValuedObjectReference__Group_1__2__Impl ;
+    // InternalKiCool.g:20999:1: rule__ValuedObjectReference__Group_1__2 : rule__ValuedObjectReference__Group_1__2__Impl ;
     public final void rule__ValuedObjectReference__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20922:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
-            // InternalKiCool.g:20923:2: rule__ValuedObjectReference__Group_1__2__Impl
+            // InternalKiCool.g:21003:1: ( rule__ValuedObjectReference__Group_1__2__Impl )
+            // InternalKiCool.g:21004:2: rule__ValuedObjectReference__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group_1__2__Impl();
@@ -70606,17 +70869,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_1__2__Impl"
-    // InternalKiCool.g:20929:1: rule__ValuedObjectReference__Group_1__2__Impl : ( ']' ) ;
+    // InternalKiCool.g:21010:1: rule__ValuedObjectReference__Group_1__2__Impl : ( ']' ) ;
     public final void rule__ValuedObjectReference__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20933:1: ( ( ']' ) )
-            // InternalKiCool.g:20934:1: ( ']' )
+            // InternalKiCool.g:21014:1: ( ( ']' ) )
+            // InternalKiCool.g:21015:1: ( ']' )
             {
-            // InternalKiCool.g:20934:1: ( ']' )
-            // InternalKiCool.g:20935:2: ']'
+            // InternalKiCool.g:21015:1: ( ']' )
+            // InternalKiCool.g:21016:2: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2()); 
@@ -70647,14 +70910,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0"
-    // InternalKiCool.g:20945:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
+    // InternalKiCool.g:21026:1: rule__ValuedObjectReference__Group_2__0 : rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 ;
     public final void rule__ValuedObjectReference__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20949:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
-            // InternalKiCool.g:20950:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
+            // InternalKiCool.g:21030:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
+            // InternalKiCool.g:21031:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_34);
             rule__ValuedObjectReference__Group_2__0__Impl();
@@ -70685,17 +70948,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__0__Impl"
-    // InternalKiCool.g:20957:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '.' ) ;
+    // InternalKiCool.g:21038:1: rule__ValuedObjectReference__Group_2__0__Impl : ( '.' ) ;
     public final void rule__ValuedObjectReference__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20961:1: ( ( '.' ) )
-            // InternalKiCool.g:20962:1: ( '.' )
+            // InternalKiCool.g:21042:1: ( ( '.' ) )
+            // InternalKiCool.g:21043:1: ( '.' )
             {
-            // InternalKiCool.g:20962:1: ( '.' )
-            // InternalKiCool.g:20963:2: '.'
+            // InternalKiCool.g:21043:1: ( '.' )
+            // InternalKiCool.g:21044:2: '.'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0()); 
@@ -70726,14 +70989,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1"
-    // InternalKiCool.g:20972:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl ;
+    // InternalKiCool.g:21053:1: rule__ValuedObjectReference__Group_2__1 : rule__ValuedObjectReference__Group_2__1__Impl ;
     public final void rule__ValuedObjectReference__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20976:1: ( rule__ValuedObjectReference__Group_2__1__Impl )
-            // InternalKiCool.g:20977:2: rule__ValuedObjectReference__Group_2__1__Impl
+            // InternalKiCool.g:21057:1: ( rule__ValuedObjectReference__Group_2__1__Impl )
+            // InternalKiCool.g:21058:2: rule__ValuedObjectReference__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__Group_2__1__Impl();
@@ -70759,23 +71022,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__Group_2__1__Impl"
-    // InternalKiCool.g:20983:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) ;
+    // InternalKiCool.g:21064:1: rule__ValuedObjectReference__Group_2__1__Impl : ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) ;
     public final void rule__ValuedObjectReference__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20987:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) )
-            // InternalKiCool.g:20988:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
+            // InternalKiCool.g:21068:1: ( ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) ) )
+            // InternalKiCool.g:21069:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
             {
-            // InternalKiCool.g:20988:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
-            // InternalKiCool.g:20989:2: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
+            // InternalKiCool.g:21069:1: ( ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 ) )
+            // InternalKiCool.g:21070:2: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1()); 
             }
-            // InternalKiCool.g:20990:2: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
-            // InternalKiCool.g:20990:3: rule__ValuedObjectReference__SubReferenceAssignment_2_1
+            // InternalKiCool.g:21071:2: ( rule__ValuedObjectReference__SubReferenceAssignment_2_1 )
+            // InternalKiCool.g:21071:3: rule__ValuedObjectReference__SubReferenceAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectReference__SubReferenceAssignment_2_1();
@@ -70810,14 +71073,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__0"
-    // InternalKiCool.g:20999:1: rule__ScheduleObjectReference__Group__0 : rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 ;
+    // InternalKiCool.g:21080:1: rule__ScheduleObjectReference__Group__0 : rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 ;
     public final void rule__ScheduleObjectReference__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21003:1: ( rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 )
-            // InternalKiCool.g:21004:2: rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1
+            // InternalKiCool.g:21084:1: ( rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1 )
+            // InternalKiCool.g:21085:2: rule__ScheduleObjectReference__Group__0__Impl rule__ScheduleObjectReference__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_112);
             rule__ScheduleObjectReference__Group__0__Impl();
@@ -70848,23 +71111,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__0__Impl"
-    // InternalKiCool.g:21011:1: rule__ScheduleObjectReference__Group__0__Impl : ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) ;
+    // InternalKiCool.g:21092:1: rule__ScheduleObjectReference__Group__0__Impl : ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ScheduleObjectReference__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21015:1: ( ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) )
-            // InternalKiCool.g:21016:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:21096:1: ( ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) ) )
+            // InternalKiCool.g:21097:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
             {
-            // InternalKiCool.g:21016:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
-            // InternalKiCool.g:21017:2: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:21097:1: ( ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:21098:2: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKiCool.g:21018:2: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
-            // InternalKiCool.g:21018:3: rule__ScheduleObjectReference__ValuedObjectAssignment_0
+            // InternalKiCool.g:21099:2: ( rule__ScheduleObjectReference__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:21099:3: rule__ScheduleObjectReference__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__ValuedObjectAssignment_0();
@@ -70899,14 +71162,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__1"
-    // InternalKiCool.g:21026:1: rule__ScheduleObjectReference__Group__1 : rule__ScheduleObjectReference__Group__1__Impl ;
+    // InternalKiCool.g:21107:1: rule__ScheduleObjectReference__Group__1 : rule__ScheduleObjectReference__Group__1__Impl ;
     public final void rule__ScheduleObjectReference__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21030:1: ( rule__ScheduleObjectReference__Group__1__Impl )
-            // InternalKiCool.g:21031:2: rule__ScheduleObjectReference__Group__1__Impl
+            // InternalKiCool.g:21111:1: ( rule__ScheduleObjectReference__Group__1__Impl )
+            // InternalKiCool.g:21112:2: rule__ScheduleObjectReference__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__Group__1__Impl();
@@ -70932,23 +71195,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__Group__1__Impl"
-    // InternalKiCool.g:21037:1: rule__ScheduleObjectReference__Group__1__Impl : ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) ;
+    // InternalKiCool.g:21118:1: rule__ScheduleObjectReference__Group__1__Impl : ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) ;
     public final void rule__ScheduleObjectReference__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21041:1: ( ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) )
-            // InternalKiCool.g:21042:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
+            // InternalKiCool.g:21122:1: ( ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) ) )
+            // InternalKiCool.g:21123:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
             {
-            // InternalKiCool.g:21042:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
-            // InternalKiCool.g:21043:2: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
+            // InternalKiCool.g:21123:1: ( ( rule__ScheduleObjectReference__PriorityAssignment_1 ) )
+            // InternalKiCool.g:21124:2: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1()); 
             }
-            // InternalKiCool.g:21044:2: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
-            // InternalKiCool.g:21044:3: rule__ScheduleObjectReference__PriorityAssignment_1
+            // InternalKiCool.g:21125:2: ( rule__ScheduleObjectReference__PriorityAssignment_1 )
+            // InternalKiCool.g:21125:3: rule__ScheduleObjectReference__PriorityAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ScheduleObjectReference__PriorityAssignment_1();
@@ -70983,14 +71246,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group__0"
-    // InternalKiCool.g:21053:1: rule__ReferenceCall__Group__0 : rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 ;
+    // InternalKiCool.g:21134:1: rule__ReferenceCall__Group__0 : rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 ;
     public final void rule__ReferenceCall__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21057:1: ( rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 )
-            // InternalKiCool.g:21058:2: rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1
+            // InternalKiCool.g:21138:1: ( rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1 )
+            // InternalKiCool.g:21139:2: rule__ReferenceCall__Group__0__Impl rule__ReferenceCall__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_65);
             rule__ReferenceCall__Group__0__Impl();
@@ -71021,23 +71284,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group__0__Impl"
-    // InternalKiCool.g:21065:1: rule__ReferenceCall__Group__0__Impl : ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) ;
+    // InternalKiCool.g:21146:1: rule__ReferenceCall__Group__0__Impl : ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) ;
     public final void rule__ReferenceCall__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21069:1: ( ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) )
-            // InternalKiCool.g:21070:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:21150:1: ( ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) ) )
+            // InternalKiCool.g:21151:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
             {
-            // InternalKiCool.g:21070:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
-            // InternalKiCool.g:21071:2: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:21151:1: ( ( rule__ReferenceCall__ValuedObjectAssignment_0 ) )
+            // InternalKiCool.g:21152:2: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0()); 
             }
-            // InternalKiCool.g:21072:2: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
-            // InternalKiCool.g:21072:3: rule__ReferenceCall__ValuedObjectAssignment_0
+            // InternalKiCool.g:21153:2: ( rule__ReferenceCall__ValuedObjectAssignment_0 )
+            // InternalKiCool.g:21153:3: rule__ReferenceCall__ValuedObjectAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ValuedObjectAssignment_0();
@@ -71072,14 +71335,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group__1"
-    // InternalKiCool.g:21080:1: rule__ReferenceCall__Group__1 : rule__ReferenceCall__Group__1__Impl ;
+    // InternalKiCool.g:21161:1: rule__ReferenceCall__Group__1 : rule__ReferenceCall__Group__1__Impl ;
     public final void rule__ReferenceCall__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21084:1: ( rule__ReferenceCall__Group__1__Impl )
-            // InternalKiCool.g:21085:2: rule__ReferenceCall__Group__1__Impl
+            // InternalKiCool.g:21165:1: ( rule__ReferenceCall__Group__1__Impl )
+            // InternalKiCool.g:21166:2: rule__ReferenceCall__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group__1__Impl();
@@ -71105,23 +71368,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group__1__Impl"
-    // InternalKiCool.g:21091:1: rule__ReferenceCall__Group__1__Impl : ( ( rule__ReferenceCall__Alternatives_1 ) ) ;
+    // InternalKiCool.g:21172:1: rule__ReferenceCall__Group__1__Impl : ( ( rule__ReferenceCall__Alternatives_1 ) ) ;
     public final void rule__ReferenceCall__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21095:1: ( ( ( rule__ReferenceCall__Alternatives_1 ) ) )
-            // InternalKiCool.g:21096:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
+            // InternalKiCool.g:21176:1: ( ( ( rule__ReferenceCall__Alternatives_1 ) ) )
+            // InternalKiCool.g:21177:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
             {
-            // InternalKiCool.g:21096:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
-            // InternalKiCool.g:21097:2: ( rule__ReferenceCall__Alternatives_1 )
+            // InternalKiCool.g:21177:1: ( ( rule__ReferenceCall__Alternatives_1 ) )
+            // InternalKiCool.g:21178:2: ( rule__ReferenceCall__Alternatives_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getAlternatives_1()); 
             }
-            // InternalKiCool.g:21098:2: ( rule__ReferenceCall__Alternatives_1 )
-            // InternalKiCool.g:21098:3: rule__ReferenceCall__Alternatives_1
+            // InternalKiCool.g:21179:2: ( rule__ReferenceCall__Alternatives_1 )
+            // InternalKiCool.g:21179:3: rule__ReferenceCall__Alternatives_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Alternatives_1();
@@ -71156,14 +71419,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__0"
-    // InternalKiCool.g:21107:1: rule__ReferenceCall__Group_1_0__0 : rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 ;
+    // InternalKiCool.g:21188:1: rule__ReferenceCall__Group_1_0__0 : rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 ;
     public final void rule__ReferenceCall__Group_1_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21111:1: ( rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 )
-            // InternalKiCool.g:21112:2: rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1
+            // InternalKiCool.g:21192:1: ( rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1 )
+            // InternalKiCool.g:21193:2: rule__ReferenceCall__Group_1_0__0__Impl rule__ReferenceCall__Group_1_0__1
             {
             pushFollow(FollowSets000.FOLLOW_66);
             rule__ReferenceCall__Group_1_0__0__Impl();
@@ -71194,17 +71457,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__0__Impl"
-    // InternalKiCool.g:21119:1: rule__ReferenceCall__Group_1_0__0__Impl : ( '(' ) ;
+    // InternalKiCool.g:21200:1: rule__ReferenceCall__Group_1_0__0__Impl : ( '(' ) ;
     public final void rule__ReferenceCall__Group_1_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21123:1: ( ( '(' ) )
-            // InternalKiCool.g:21124:1: ( '(' )
+            // InternalKiCool.g:21204:1: ( ( '(' ) )
+            // InternalKiCool.g:21205:1: ( '(' )
             {
-            // InternalKiCool.g:21124:1: ( '(' )
-            // InternalKiCool.g:21125:2: '('
+            // InternalKiCool.g:21205:1: ( '(' )
+            // InternalKiCool.g:21206:2: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getLeftParenthesisKeyword_1_0_0()); 
@@ -71235,14 +71498,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__1"
-    // InternalKiCool.g:21134:1: rule__ReferenceCall__Group_1_0__1 : rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 ;
+    // InternalKiCool.g:21215:1: rule__ReferenceCall__Group_1_0__1 : rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 ;
     public final void rule__ReferenceCall__Group_1_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21138:1: ( rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 )
-            // InternalKiCool.g:21139:2: rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2
+            // InternalKiCool.g:21219:1: ( rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2 )
+            // InternalKiCool.g:21220:2: rule__ReferenceCall__Group_1_0__1__Impl rule__ReferenceCall__Group_1_0__2
             {
             pushFollow(FollowSets000.FOLLOW_67);
             rule__ReferenceCall__Group_1_0__1__Impl();
@@ -71273,23 +71536,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__1__Impl"
-    // InternalKiCool.g:21146:1: rule__ReferenceCall__Group_1_0__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) ;
+    // InternalKiCool.g:21227:1: rule__ReferenceCall__Group_1_0__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) ;
     public final void rule__ReferenceCall__Group_1_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21150:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) )
-            // InternalKiCool.g:21151:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
+            // InternalKiCool.g:21231:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) ) )
+            // InternalKiCool.g:21232:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
             {
-            // InternalKiCool.g:21151:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
-            // InternalKiCool.g:21152:2: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
+            // InternalKiCool.g:21232:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_1 ) )
+            // InternalKiCool.g:21233:2: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1()); 
             }
-            // InternalKiCool.g:21153:2: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
-            // InternalKiCool.g:21153:3: rule__ReferenceCall__ParametersAssignment_1_0_1
+            // InternalKiCool.g:21234:2: ( rule__ReferenceCall__ParametersAssignment_1_0_1 )
+            // InternalKiCool.g:21234:3: rule__ReferenceCall__ParametersAssignment_1_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ParametersAssignment_1_0_1();
@@ -71324,14 +71587,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__2"
-    // InternalKiCool.g:21161:1: rule__ReferenceCall__Group_1_0__2 : rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 ;
+    // InternalKiCool.g:21242:1: rule__ReferenceCall__Group_1_0__2 : rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 ;
     public final void rule__ReferenceCall__Group_1_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21165:1: ( rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 )
-            // InternalKiCool.g:21166:2: rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3
+            // InternalKiCool.g:21246:1: ( rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3 )
+            // InternalKiCool.g:21247:2: rule__ReferenceCall__Group_1_0__2__Impl rule__ReferenceCall__Group_1_0__3
             {
             pushFollow(FollowSets000.FOLLOW_67);
             rule__ReferenceCall__Group_1_0__2__Impl();
@@ -71362,35 +71625,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__2__Impl"
-    // InternalKiCool.g:21173:1: rule__ReferenceCall__Group_1_0__2__Impl : ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) ;
+    // InternalKiCool.g:21254:1: rule__ReferenceCall__Group_1_0__2__Impl : ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) ;
     public final void rule__ReferenceCall__Group_1_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21177:1: ( ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) )
-            // InternalKiCool.g:21178:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
+            // InternalKiCool.g:21258:1: ( ( ( rule__ReferenceCall__Group_1_0_2__0 )* ) )
+            // InternalKiCool.g:21259:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
             {
-            // InternalKiCool.g:21178:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
-            // InternalKiCool.g:21179:2: ( rule__ReferenceCall__Group_1_0_2__0 )*
+            // InternalKiCool.g:21259:1: ( ( rule__ReferenceCall__Group_1_0_2__0 )* )
+            // InternalKiCool.g:21260:2: ( rule__ReferenceCall__Group_1_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getGroup_1_0_2()); 
             }
-            // InternalKiCool.g:21180:2: ( rule__ReferenceCall__Group_1_0_2__0 )*
-            loop231:
+            // InternalKiCool.g:21261:2: ( rule__ReferenceCall__Group_1_0_2__0 )*
+            loop232:
             do {
-                int alt231=2;
-                int LA231_0 = input.LA(1);
+                int alt232=2;
+                int LA232_0 = input.LA(1);
 
-                if ( (LA231_0==86) ) {
-                    alt231=1;
+                if ( (LA232_0==86) ) {
+                    alt232=1;
                 }
 
 
-                switch (alt231) {
+                switch (alt232) {
             	case 1 :
-            	    // InternalKiCool.g:21180:3: rule__ReferenceCall__Group_1_0_2__0
+            	    // InternalKiCool.g:21261:3: rule__ReferenceCall__Group_1_0_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__ReferenceCall__Group_1_0_2__0();
@@ -71402,7 +71665,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop231;
+            	    break loop232;
                 }
             } while (true);
 
@@ -71431,14 +71694,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__3"
-    // InternalKiCool.g:21188:1: rule__ReferenceCall__Group_1_0__3 : rule__ReferenceCall__Group_1_0__3__Impl ;
+    // InternalKiCool.g:21269:1: rule__ReferenceCall__Group_1_0__3 : rule__ReferenceCall__Group_1_0__3__Impl ;
     public final void rule__ReferenceCall__Group_1_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21192:1: ( rule__ReferenceCall__Group_1_0__3__Impl )
-            // InternalKiCool.g:21193:2: rule__ReferenceCall__Group_1_0__3__Impl
+            // InternalKiCool.g:21273:1: ( rule__ReferenceCall__Group_1_0__3__Impl )
+            // InternalKiCool.g:21274:2: rule__ReferenceCall__Group_1_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group_1_0__3__Impl();
@@ -71464,17 +71727,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0__3__Impl"
-    // InternalKiCool.g:21199:1: rule__ReferenceCall__Group_1_0__3__Impl : ( ')' ) ;
+    // InternalKiCool.g:21280:1: rule__ReferenceCall__Group_1_0__3__Impl : ( ')' ) ;
     public final void rule__ReferenceCall__Group_1_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21203:1: ( ( ')' ) )
-            // InternalKiCool.g:21204:1: ( ')' )
+            // InternalKiCool.g:21284:1: ( ( ')' ) )
+            // InternalKiCool.g:21285:1: ( ')' )
             {
-            // InternalKiCool.g:21204:1: ( ')' )
-            // InternalKiCool.g:21205:2: ')'
+            // InternalKiCool.g:21285:1: ( ')' )
+            // InternalKiCool.g:21286:2: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getRightParenthesisKeyword_1_0_3()); 
@@ -71505,14 +71768,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__0"
-    // InternalKiCool.g:21215:1: rule__ReferenceCall__Group_1_0_2__0 : rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 ;
+    // InternalKiCool.g:21296:1: rule__ReferenceCall__Group_1_0_2__0 : rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 ;
     public final void rule__ReferenceCall__Group_1_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21219:1: ( rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 )
-            // InternalKiCool.g:21220:2: rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1
+            // InternalKiCool.g:21300:1: ( rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1 )
+            // InternalKiCool.g:21301:2: rule__ReferenceCall__Group_1_0_2__0__Impl rule__ReferenceCall__Group_1_0_2__1
             {
             pushFollow(FollowSets000.FOLLOW_66);
             rule__ReferenceCall__Group_1_0_2__0__Impl();
@@ -71543,17 +71806,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__0__Impl"
-    // InternalKiCool.g:21227:1: rule__ReferenceCall__Group_1_0_2__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:21308:1: rule__ReferenceCall__Group_1_0_2__0__Impl : ( ',' ) ;
     public final void rule__ReferenceCall__Group_1_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21231:1: ( ( ',' ) )
-            // InternalKiCool.g:21232:1: ( ',' )
+            // InternalKiCool.g:21312:1: ( ( ',' ) )
+            // InternalKiCool.g:21313:1: ( ',' )
             {
-            // InternalKiCool.g:21232:1: ( ',' )
-            // InternalKiCool.g:21233:2: ','
+            // InternalKiCool.g:21313:1: ( ',' )
+            // InternalKiCool.g:21314:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getCommaKeyword_1_0_2_0()); 
@@ -71584,14 +71847,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__1"
-    // InternalKiCool.g:21242:1: rule__ReferenceCall__Group_1_0_2__1 : rule__ReferenceCall__Group_1_0_2__1__Impl ;
+    // InternalKiCool.g:21323:1: rule__ReferenceCall__Group_1_0_2__1 : rule__ReferenceCall__Group_1_0_2__1__Impl ;
     public final void rule__ReferenceCall__Group_1_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21246:1: ( rule__ReferenceCall__Group_1_0_2__1__Impl )
-            // InternalKiCool.g:21247:2: rule__ReferenceCall__Group_1_0_2__1__Impl
+            // InternalKiCool.g:21327:1: ( rule__ReferenceCall__Group_1_0_2__1__Impl )
+            // InternalKiCool.g:21328:2: rule__ReferenceCall__Group_1_0_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__Group_1_0_2__1__Impl();
@@ -71617,23 +71880,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__Group_1_0_2__1__Impl"
-    // InternalKiCool.g:21253:1: rule__ReferenceCall__Group_1_0_2__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) ;
+    // InternalKiCool.g:21334:1: rule__ReferenceCall__Group_1_0_2__1__Impl : ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) ;
     public final void rule__ReferenceCall__Group_1_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21257:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) )
-            // InternalKiCool.g:21258:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
+            // InternalKiCool.g:21338:1: ( ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) ) )
+            // InternalKiCool.g:21339:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
             {
-            // InternalKiCool.g:21258:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
-            // InternalKiCool.g:21259:2: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
+            // InternalKiCool.g:21339:1: ( ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 ) )
+            // InternalKiCool.g:21340:2: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1()); 
             }
-            // InternalKiCool.g:21260:2: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
-            // InternalKiCool.g:21260:3: rule__ReferenceCall__ParametersAssignment_1_0_2_1
+            // InternalKiCool.g:21341:2: ( rule__ReferenceCall__ParametersAssignment_1_0_2_1 )
+            // InternalKiCool.g:21341:3: rule__ReferenceCall__ParametersAssignment_1_0_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ReferenceCall__ParametersAssignment_1_0_2_1();
@@ -71668,14 +71931,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__0"
-    // InternalKiCool.g:21269:1: rule__RandomCall__Group__0 : rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1 ;
+    // InternalKiCool.g:21350:1: rule__RandomCall__Group__0 : rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1 ;
     public final void rule__RandomCall__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21273:1: ( rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1 )
-            // InternalKiCool.g:21274:2: rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1
+            // InternalKiCool.g:21354:1: ( rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1 )
+            // InternalKiCool.g:21355:2: rule__RandomCall__Group__0__Impl rule__RandomCall__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_113);
             rule__RandomCall__Group__0__Impl();
@@ -71706,23 +71969,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__0__Impl"
-    // InternalKiCool.g:21281:1: rule__RandomCall__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:21362:1: rule__RandomCall__Group__0__Impl : ( () ) ;
     public final void rule__RandomCall__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21285:1: ( ( () ) )
-            // InternalKiCool.g:21286:1: ( () )
+            // InternalKiCool.g:21366:1: ( ( () ) )
+            // InternalKiCool.g:21367:1: ( () )
             {
-            // InternalKiCool.g:21286:1: ( () )
-            // InternalKiCool.g:21287:2: ()
+            // InternalKiCool.g:21367:1: ( () )
+            // InternalKiCool.g:21368:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomCallAccess().getRandomCallAction_0()); 
             }
-            // InternalKiCool.g:21288:2: ()
-            // InternalKiCool.g:21288:3: 
+            // InternalKiCool.g:21369:2: ()
+            // InternalKiCool.g:21369:3: 
             {
             }
 
@@ -71747,14 +72010,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__1"
-    // InternalKiCool.g:21296:1: rule__RandomCall__Group__1 : rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2 ;
+    // InternalKiCool.g:21377:1: rule__RandomCall__Group__1 : rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2 ;
     public final void rule__RandomCall__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21300:1: ( rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2 )
-            // InternalKiCool.g:21301:2: rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2
+            // InternalKiCool.g:21381:1: ( rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2 )
+            // InternalKiCool.g:21382:2: rule__RandomCall__Group__1__Impl rule__RandomCall__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_114);
             rule__RandomCall__Group__1__Impl();
@@ -71785,17 +72048,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__1__Impl"
-    // InternalKiCool.g:21308:1: rule__RandomCall__Group__1__Impl : ( 'random' ) ;
+    // InternalKiCool.g:21389:1: rule__RandomCall__Group__1__Impl : ( 'random' ) ;
     public final void rule__RandomCall__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21312:1: ( ( 'random' ) )
-            // InternalKiCool.g:21313:1: ( 'random' )
+            // InternalKiCool.g:21393:1: ( ( 'random' ) )
+            // InternalKiCool.g:21394:1: ( 'random' )
             {
-            // InternalKiCool.g:21313:1: ( 'random' )
-            // InternalKiCool.g:21314:2: 'random'
+            // InternalKiCool.g:21394:1: ( 'random' )
+            // InternalKiCool.g:21395:2: 'random'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomCallAccess().getRandomKeyword_1()); 
@@ -71826,14 +72089,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__2"
-    // InternalKiCool.g:21323:1: rule__RandomCall__Group__2 : rule__RandomCall__Group__2__Impl ;
+    // InternalKiCool.g:21404:1: rule__RandomCall__Group__2 : rule__RandomCall__Group__2__Impl ;
     public final void rule__RandomCall__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21327:1: ( rule__RandomCall__Group__2__Impl )
-            // InternalKiCool.g:21328:2: rule__RandomCall__Group__2__Impl
+            // InternalKiCool.g:21408:1: ( rule__RandomCall__Group__2__Impl )
+            // InternalKiCool.g:21409:2: rule__RandomCall__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RandomCall__Group__2__Impl();
@@ -71859,31 +72122,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomCall__Group__2__Impl"
-    // InternalKiCool.g:21334:1: rule__RandomCall__Group__2__Impl : ( ( '()' )? ) ;
+    // InternalKiCool.g:21415:1: rule__RandomCall__Group__2__Impl : ( ( '()' )? ) ;
     public final void rule__RandomCall__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21338:1: ( ( ( '()' )? ) )
-            // InternalKiCool.g:21339:1: ( ( '()' )? )
+            // InternalKiCool.g:21419:1: ( ( ( '()' )? ) )
+            // InternalKiCool.g:21420:1: ( ( '()' )? )
             {
-            // InternalKiCool.g:21339:1: ( ( '()' )? )
-            // InternalKiCool.g:21340:2: ( '()' )?
+            // InternalKiCool.g:21420:1: ( ( '()' )? )
+            // InternalKiCool.g:21421:2: ( '()' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2()); 
             }
-            // InternalKiCool.g:21341:2: ( '()' )?
-            int alt232=2;
-            int LA232_0 = input.LA(1);
+            // InternalKiCool.g:21422:2: ( '()' )?
+            int alt233=2;
+            int LA233_0 = input.LA(1);
 
-            if ( (LA232_0==38) ) {
-                alt232=1;
+            if ( (LA233_0==38) ) {
+                alt233=1;
             }
-            switch (alt232) {
+            switch (alt233) {
                 case 1 :
-                    // InternalKiCool.g:21341:3: '()'
+                    // InternalKiCool.g:21422:3: '()'
                     {
                     match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -71917,14 +72180,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__0"
-    // InternalKiCool.g:21350:1: rule__RandomizeCall__Group__0 : rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1 ;
+    // InternalKiCool.g:21431:1: rule__RandomizeCall__Group__0 : rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1 ;
     public final void rule__RandomizeCall__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21354:1: ( rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1 )
-            // InternalKiCool.g:21355:2: rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1
+            // InternalKiCool.g:21435:1: ( rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1 )
+            // InternalKiCool.g:21436:2: rule__RandomizeCall__Group__0__Impl rule__RandomizeCall__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_115);
             rule__RandomizeCall__Group__0__Impl();
@@ -71955,23 +72218,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__0__Impl"
-    // InternalKiCool.g:21362:1: rule__RandomizeCall__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:21443:1: rule__RandomizeCall__Group__0__Impl : ( () ) ;
     public final void rule__RandomizeCall__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21366:1: ( ( () ) )
-            // InternalKiCool.g:21367:1: ( () )
+            // InternalKiCool.g:21447:1: ( ( () ) )
+            // InternalKiCool.g:21448:1: ( () )
             {
-            // InternalKiCool.g:21367:1: ( () )
-            // InternalKiCool.g:21368:2: ()
+            // InternalKiCool.g:21448:1: ( () )
+            // InternalKiCool.g:21449:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallAccess().getRandomizeCallAction_0()); 
             }
-            // InternalKiCool.g:21369:2: ()
-            // InternalKiCool.g:21369:3: 
+            // InternalKiCool.g:21450:2: ()
+            // InternalKiCool.g:21450:3: 
             {
             }
 
@@ -71996,14 +72259,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__1"
-    // InternalKiCool.g:21377:1: rule__RandomizeCall__Group__1 : rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2 ;
+    // InternalKiCool.g:21458:1: rule__RandomizeCall__Group__1 : rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2 ;
     public final void rule__RandomizeCall__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21381:1: ( rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2 )
-            // InternalKiCool.g:21382:2: rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2
+            // InternalKiCool.g:21462:1: ( rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2 )
+            // InternalKiCool.g:21463:2: rule__RandomizeCall__Group__1__Impl rule__RandomizeCall__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_114);
             rule__RandomizeCall__Group__1__Impl();
@@ -72034,17 +72297,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__1__Impl"
-    // InternalKiCool.g:21389:1: rule__RandomizeCall__Group__1__Impl : ( 'randomize' ) ;
+    // InternalKiCool.g:21470:1: rule__RandomizeCall__Group__1__Impl : ( 'randomize' ) ;
     public final void rule__RandomizeCall__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21393:1: ( ( 'randomize' ) )
-            // InternalKiCool.g:21394:1: ( 'randomize' )
+            // InternalKiCool.g:21474:1: ( ( 'randomize' ) )
+            // InternalKiCool.g:21475:1: ( 'randomize' )
             {
-            // InternalKiCool.g:21394:1: ( 'randomize' )
-            // InternalKiCool.g:21395:2: 'randomize'
+            // InternalKiCool.g:21475:1: ( 'randomize' )
+            // InternalKiCool.g:21476:2: 'randomize'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallAccess().getRandomizeKeyword_1()); 
@@ -72075,14 +72338,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__2"
-    // InternalKiCool.g:21404:1: rule__RandomizeCall__Group__2 : rule__RandomizeCall__Group__2__Impl ;
+    // InternalKiCool.g:21485:1: rule__RandomizeCall__Group__2 : rule__RandomizeCall__Group__2__Impl ;
     public final void rule__RandomizeCall__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21408:1: ( rule__RandomizeCall__Group__2__Impl )
-            // InternalKiCool.g:21409:2: rule__RandomizeCall__Group__2__Impl
+            // InternalKiCool.g:21489:1: ( rule__RandomizeCall__Group__2__Impl )
+            // InternalKiCool.g:21490:2: rule__RandomizeCall__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RandomizeCall__Group__2__Impl();
@@ -72108,31 +72371,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCall__Group__2__Impl"
-    // InternalKiCool.g:21415:1: rule__RandomizeCall__Group__2__Impl : ( ( '()' )? ) ;
+    // InternalKiCool.g:21496:1: rule__RandomizeCall__Group__2__Impl : ( ( '()' )? ) ;
     public final void rule__RandomizeCall__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21419:1: ( ( ( '()' )? ) )
-            // InternalKiCool.g:21420:1: ( ( '()' )? )
+            // InternalKiCool.g:21500:1: ( ( ( '()' )? ) )
+            // InternalKiCool.g:21501:1: ( ( '()' )? )
             {
-            // InternalKiCool.g:21420:1: ( ( '()' )? )
-            // InternalKiCool.g:21421:2: ( '()' )?
+            // InternalKiCool.g:21501:1: ( ( '()' )? )
+            // InternalKiCool.g:21502:2: ( '()' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2()); 
             }
-            // InternalKiCool.g:21422:2: ( '()' )?
-            int alt233=2;
-            int LA233_0 = input.LA(1);
+            // InternalKiCool.g:21503:2: ( '()' )?
+            int alt234=2;
+            int LA234_0 = input.LA(1);
 
-            if ( (LA233_0==38) ) {
-                alt233=1;
+            if ( (LA234_0==38) ) {
+                alt234=1;
             }
-            switch (alt233) {
+            switch (alt234) {
                 case 1 :
-                    // InternalKiCool.g:21422:3: '()'
+                    // InternalKiCool.g:21503:3: '()'
                     {
                     match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -72166,14 +72429,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__0"
-    // InternalKiCool.g:21431:1: rule__FunctionCall__Group__0 : rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1 ;
+    // InternalKiCool.g:21512:1: rule__FunctionCall__Group__0 : rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1 ;
     public final void rule__FunctionCall__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21435:1: ( rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1 )
-            // InternalKiCool.g:21436:2: rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1
+            // InternalKiCool.g:21516:1: ( rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1 )
+            // InternalKiCool.g:21517:2: rule__FunctionCall__Group__0__Impl rule__FunctionCall__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__FunctionCall__Group__0__Impl();
@@ -72204,17 +72467,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__0__Impl"
-    // InternalKiCool.g:21443:1: rule__FunctionCall__Group__0__Impl : ( 'extern' ) ;
+    // InternalKiCool.g:21524:1: rule__FunctionCall__Group__0__Impl : ( 'extern' ) ;
     public final void rule__FunctionCall__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21447:1: ( ( 'extern' ) )
-            // InternalKiCool.g:21448:1: ( 'extern' )
+            // InternalKiCool.g:21528:1: ( ( 'extern' ) )
+            // InternalKiCool.g:21529:1: ( 'extern' )
             {
-            // InternalKiCool.g:21448:1: ( 'extern' )
-            // InternalKiCool.g:21449:2: 'extern'
+            // InternalKiCool.g:21529:1: ( 'extern' )
+            // InternalKiCool.g:21530:2: 'extern'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getExternKeyword_0()); 
@@ -72245,14 +72508,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__1"
-    // InternalKiCool.g:21458:1: rule__FunctionCall__Group__1 : rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 ;
+    // InternalKiCool.g:21539:1: rule__FunctionCall__Group__1 : rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 ;
     public final void rule__FunctionCall__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21462:1: ( rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 )
-            // InternalKiCool.g:21463:2: rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2
+            // InternalKiCool.g:21543:1: ( rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2 )
+            // InternalKiCool.g:21544:2: rule__FunctionCall__Group__1__Impl rule__FunctionCall__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_65);
             rule__FunctionCall__Group__1__Impl();
@@ -72283,23 +72546,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__1__Impl"
-    // InternalKiCool.g:21470:1: rule__FunctionCall__Group__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_1 ) ) ;
+    // InternalKiCool.g:21551:1: rule__FunctionCall__Group__1__Impl : ( ( rule__FunctionCall__FunctionNameAssignment_1 ) ) ;
     public final void rule__FunctionCall__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21474:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_1 ) ) )
-            // InternalKiCool.g:21475:1: ( ( rule__FunctionCall__FunctionNameAssignment_1 ) )
+            // InternalKiCool.g:21555:1: ( ( ( rule__FunctionCall__FunctionNameAssignment_1 ) ) )
+            // InternalKiCool.g:21556:1: ( ( rule__FunctionCall__FunctionNameAssignment_1 ) )
             {
-            // InternalKiCool.g:21475:1: ( ( rule__FunctionCall__FunctionNameAssignment_1 ) )
-            // InternalKiCool.g:21476:2: ( rule__FunctionCall__FunctionNameAssignment_1 )
+            // InternalKiCool.g:21556:1: ( ( rule__FunctionCall__FunctionNameAssignment_1 ) )
+            // InternalKiCool.g:21557:2: ( rule__FunctionCall__FunctionNameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1()); 
             }
-            // InternalKiCool.g:21477:2: ( rule__FunctionCall__FunctionNameAssignment_1 )
-            // InternalKiCool.g:21477:3: rule__FunctionCall__FunctionNameAssignment_1
+            // InternalKiCool.g:21558:2: ( rule__FunctionCall__FunctionNameAssignment_1 )
+            // InternalKiCool.g:21558:3: rule__FunctionCall__FunctionNameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__FunctionNameAssignment_1();
@@ -72334,14 +72597,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__2"
-    // InternalKiCool.g:21485:1: rule__FunctionCall__Group__2 : rule__FunctionCall__Group__2__Impl ;
+    // InternalKiCool.g:21566:1: rule__FunctionCall__Group__2 : rule__FunctionCall__Group__2__Impl ;
     public final void rule__FunctionCall__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21489:1: ( rule__FunctionCall__Group__2__Impl )
-            // InternalKiCool.g:21490:2: rule__FunctionCall__Group__2__Impl
+            // InternalKiCool.g:21570:1: ( rule__FunctionCall__Group__2__Impl )
+            // InternalKiCool.g:21571:2: rule__FunctionCall__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group__2__Impl();
@@ -72367,23 +72630,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group__2__Impl"
-    // InternalKiCool.g:21496:1: rule__FunctionCall__Group__2__Impl : ( ( rule__FunctionCall__Alternatives_2 ) ) ;
+    // InternalKiCool.g:21577:1: rule__FunctionCall__Group__2__Impl : ( ( rule__FunctionCall__Alternatives_2 ) ) ;
     public final void rule__FunctionCall__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21500:1: ( ( ( rule__FunctionCall__Alternatives_2 ) ) )
-            // InternalKiCool.g:21501:1: ( ( rule__FunctionCall__Alternatives_2 ) )
+            // InternalKiCool.g:21581:1: ( ( ( rule__FunctionCall__Alternatives_2 ) ) )
+            // InternalKiCool.g:21582:1: ( ( rule__FunctionCall__Alternatives_2 ) )
             {
-            // InternalKiCool.g:21501:1: ( ( rule__FunctionCall__Alternatives_2 ) )
-            // InternalKiCool.g:21502:2: ( rule__FunctionCall__Alternatives_2 )
+            // InternalKiCool.g:21582:1: ( ( rule__FunctionCall__Alternatives_2 ) )
+            // InternalKiCool.g:21583:2: ( rule__FunctionCall__Alternatives_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getAlternatives_2()); 
             }
-            // InternalKiCool.g:21503:2: ( rule__FunctionCall__Alternatives_2 )
-            // InternalKiCool.g:21503:3: rule__FunctionCall__Alternatives_2
+            // InternalKiCool.g:21584:2: ( rule__FunctionCall__Alternatives_2 )
+            // InternalKiCool.g:21584:3: rule__FunctionCall__Alternatives_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Alternatives_2();
@@ -72418,14 +72681,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__0"
-    // InternalKiCool.g:21512:1: rule__FunctionCall__Group_2_0__0 : rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 ;
+    // InternalKiCool.g:21593:1: rule__FunctionCall__Group_2_0__0 : rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 ;
     public final void rule__FunctionCall__Group_2_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21516:1: ( rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 )
-            // InternalKiCool.g:21517:2: rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1
+            // InternalKiCool.g:21597:1: ( rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1 )
+            // InternalKiCool.g:21598:2: rule__FunctionCall__Group_2_0__0__Impl rule__FunctionCall__Group_2_0__1
             {
             pushFollow(FollowSets000.FOLLOW_66);
             rule__FunctionCall__Group_2_0__0__Impl();
@@ -72456,17 +72719,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__0__Impl"
-    // InternalKiCool.g:21524:1: rule__FunctionCall__Group_2_0__0__Impl : ( '(' ) ;
+    // InternalKiCool.g:21605:1: rule__FunctionCall__Group_2_0__0__Impl : ( '(' ) ;
     public final void rule__FunctionCall__Group_2_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21528:1: ( ( '(' ) )
-            // InternalKiCool.g:21529:1: ( '(' )
+            // InternalKiCool.g:21609:1: ( ( '(' ) )
+            // InternalKiCool.g:21610:1: ( '(' )
             {
-            // InternalKiCool.g:21529:1: ( '(' )
-            // InternalKiCool.g:21530:2: '('
+            // InternalKiCool.g:21610:1: ( '(' )
+            // InternalKiCool.g:21611:2: '('
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getLeftParenthesisKeyword_2_0_0()); 
@@ -72497,14 +72760,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__1"
-    // InternalKiCool.g:21539:1: rule__FunctionCall__Group_2_0__1 : rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 ;
+    // InternalKiCool.g:21620:1: rule__FunctionCall__Group_2_0__1 : rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 ;
     public final void rule__FunctionCall__Group_2_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21543:1: ( rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 )
-            // InternalKiCool.g:21544:2: rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2
+            // InternalKiCool.g:21624:1: ( rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2 )
+            // InternalKiCool.g:21625:2: rule__FunctionCall__Group_2_0__1__Impl rule__FunctionCall__Group_2_0__2
             {
             pushFollow(FollowSets000.FOLLOW_67);
             rule__FunctionCall__Group_2_0__1__Impl();
@@ -72535,23 +72798,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__1__Impl"
-    // InternalKiCool.g:21551:1: rule__FunctionCall__Group_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) ) ;
+    // InternalKiCool.g:21632:1: rule__FunctionCall__Group_2_0__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) ) ;
     public final void rule__FunctionCall__Group_2_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21555:1: ( ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) ) )
-            // InternalKiCool.g:21556:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) )
+            // InternalKiCool.g:21636:1: ( ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) ) )
+            // InternalKiCool.g:21637:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) )
             {
-            // InternalKiCool.g:21556:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) )
-            // InternalKiCool.g:21557:2: ( rule__FunctionCall__ParametersAssignment_2_0_1 )
+            // InternalKiCool.g:21637:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_1 ) )
+            // InternalKiCool.g:21638:2: ( rule__FunctionCall__ParametersAssignment_2_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1()); 
             }
-            // InternalKiCool.g:21558:2: ( rule__FunctionCall__ParametersAssignment_2_0_1 )
-            // InternalKiCool.g:21558:3: rule__FunctionCall__ParametersAssignment_2_0_1
+            // InternalKiCool.g:21639:2: ( rule__FunctionCall__ParametersAssignment_2_0_1 )
+            // InternalKiCool.g:21639:3: rule__FunctionCall__ParametersAssignment_2_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_2_0_1();
@@ -72586,14 +72849,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__2"
-    // InternalKiCool.g:21566:1: rule__FunctionCall__Group_2_0__2 : rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 ;
+    // InternalKiCool.g:21647:1: rule__FunctionCall__Group_2_0__2 : rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 ;
     public final void rule__FunctionCall__Group_2_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21570:1: ( rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 )
-            // InternalKiCool.g:21571:2: rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3
+            // InternalKiCool.g:21651:1: ( rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3 )
+            // InternalKiCool.g:21652:2: rule__FunctionCall__Group_2_0__2__Impl rule__FunctionCall__Group_2_0__3
             {
             pushFollow(FollowSets000.FOLLOW_67);
             rule__FunctionCall__Group_2_0__2__Impl();
@@ -72624,35 +72887,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__2__Impl"
-    // InternalKiCool.g:21578:1: rule__FunctionCall__Group_2_0__2__Impl : ( ( rule__FunctionCall__Group_2_0_2__0 )* ) ;
+    // InternalKiCool.g:21659:1: rule__FunctionCall__Group_2_0__2__Impl : ( ( rule__FunctionCall__Group_2_0_2__0 )* ) ;
     public final void rule__FunctionCall__Group_2_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21582:1: ( ( ( rule__FunctionCall__Group_2_0_2__0 )* ) )
-            // InternalKiCool.g:21583:1: ( ( rule__FunctionCall__Group_2_0_2__0 )* )
+            // InternalKiCool.g:21663:1: ( ( ( rule__FunctionCall__Group_2_0_2__0 )* ) )
+            // InternalKiCool.g:21664:1: ( ( rule__FunctionCall__Group_2_0_2__0 )* )
             {
-            // InternalKiCool.g:21583:1: ( ( rule__FunctionCall__Group_2_0_2__0 )* )
-            // InternalKiCool.g:21584:2: ( rule__FunctionCall__Group_2_0_2__0 )*
+            // InternalKiCool.g:21664:1: ( ( rule__FunctionCall__Group_2_0_2__0 )* )
+            // InternalKiCool.g:21665:2: ( rule__FunctionCall__Group_2_0_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getGroup_2_0_2()); 
             }
-            // InternalKiCool.g:21585:2: ( rule__FunctionCall__Group_2_0_2__0 )*
-            loop234:
+            // InternalKiCool.g:21666:2: ( rule__FunctionCall__Group_2_0_2__0 )*
+            loop235:
             do {
-                int alt234=2;
-                int LA234_0 = input.LA(1);
+                int alt235=2;
+                int LA235_0 = input.LA(1);
 
-                if ( (LA234_0==86) ) {
-                    alt234=1;
+                if ( (LA235_0==86) ) {
+                    alt235=1;
                 }
 
 
-                switch (alt234) {
+                switch (alt235) {
             	case 1 :
-            	    // InternalKiCool.g:21585:3: rule__FunctionCall__Group_2_0_2__0
+            	    // InternalKiCool.g:21666:3: rule__FunctionCall__Group_2_0_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__FunctionCall__Group_2_0_2__0();
@@ -72664,7 +72927,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop234;
+            	    break loop235;
                 }
             } while (true);
 
@@ -72693,14 +72956,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__3"
-    // InternalKiCool.g:21593:1: rule__FunctionCall__Group_2_0__3 : rule__FunctionCall__Group_2_0__3__Impl ;
+    // InternalKiCool.g:21674:1: rule__FunctionCall__Group_2_0__3 : rule__FunctionCall__Group_2_0__3__Impl ;
     public final void rule__FunctionCall__Group_2_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21597:1: ( rule__FunctionCall__Group_2_0__3__Impl )
-            // InternalKiCool.g:21598:2: rule__FunctionCall__Group_2_0__3__Impl
+            // InternalKiCool.g:21678:1: ( rule__FunctionCall__Group_2_0__3__Impl )
+            // InternalKiCool.g:21679:2: rule__FunctionCall__Group_2_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_2_0__3__Impl();
@@ -72726,17 +72989,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0__3__Impl"
-    // InternalKiCool.g:21604:1: rule__FunctionCall__Group_2_0__3__Impl : ( ')' ) ;
+    // InternalKiCool.g:21685:1: rule__FunctionCall__Group_2_0__3__Impl : ( ')' ) ;
     public final void rule__FunctionCall__Group_2_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21608:1: ( ( ')' ) )
-            // InternalKiCool.g:21609:1: ( ')' )
+            // InternalKiCool.g:21689:1: ( ( ')' ) )
+            // InternalKiCool.g:21690:1: ( ')' )
             {
-            // InternalKiCool.g:21609:1: ( ')' )
-            // InternalKiCool.g:21610:2: ')'
+            // InternalKiCool.g:21690:1: ( ')' )
+            // InternalKiCool.g:21691:2: ')'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getRightParenthesisKeyword_2_0_3()); 
@@ -72767,14 +73030,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0_2__0"
-    // InternalKiCool.g:21620:1: rule__FunctionCall__Group_2_0_2__0 : rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 ;
+    // InternalKiCool.g:21701:1: rule__FunctionCall__Group_2_0_2__0 : rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 ;
     public final void rule__FunctionCall__Group_2_0_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21624:1: ( rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 )
-            // InternalKiCool.g:21625:2: rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1
+            // InternalKiCool.g:21705:1: ( rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1 )
+            // InternalKiCool.g:21706:2: rule__FunctionCall__Group_2_0_2__0__Impl rule__FunctionCall__Group_2_0_2__1
             {
             pushFollow(FollowSets000.FOLLOW_66);
             rule__FunctionCall__Group_2_0_2__0__Impl();
@@ -72805,17 +73068,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0_2__0__Impl"
-    // InternalKiCool.g:21632:1: rule__FunctionCall__Group_2_0_2__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:21713:1: rule__FunctionCall__Group_2_0_2__0__Impl : ( ',' ) ;
     public final void rule__FunctionCall__Group_2_0_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21636:1: ( ( ',' ) )
-            // InternalKiCool.g:21637:1: ( ',' )
+            // InternalKiCool.g:21717:1: ( ( ',' ) )
+            // InternalKiCool.g:21718:1: ( ',' )
             {
-            // InternalKiCool.g:21637:1: ( ',' )
-            // InternalKiCool.g:21638:2: ','
+            // InternalKiCool.g:21718:1: ( ',' )
+            // InternalKiCool.g:21719:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getCommaKeyword_2_0_2_0()); 
@@ -72846,14 +73109,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0_2__1"
-    // InternalKiCool.g:21647:1: rule__FunctionCall__Group_2_0_2__1 : rule__FunctionCall__Group_2_0_2__1__Impl ;
+    // InternalKiCool.g:21728:1: rule__FunctionCall__Group_2_0_2__1 : rule__FunctionCall__Group_2_0_2__1__Impl ;
     public final void rule__FunctionCall__Group_2_0_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21651:1: ( rule__FunctionCall__Group_2_0_2__1__Impl )
-            // InternalKiCool.g:21652:2: rule__FunctionCall__Group_2_0_2__1__Impl
+            // InternalKiCool.g:21732:1: ( rule__FunctionCall__Group_2_0_2__1__Impl )
+            // InternalKiCool.g:21733:2: rule__FunctionCall__Group_2_0_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__Group_2_0_2__1__Impl();
@@ -72879,23 +73142,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__Group_2_0_2__1__Impl"
-    // InternalKiCool.g:21658:1: rule__FunctionCall__Group_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) ) ;
+    // InternalKiCool.g:21739:1: rule__FunctionCall__Group_2_0_2__1__Impl : ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) ) ;
     public final void rule__FunctionCall__Group_2_0_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21662:1: ( ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) ) )
-            // InternalKiCool.g:21663:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) )
+            // InternalKiCool.g:21743:1: ( ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) ) )
+            // InternalKiCool.g:21744:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) )
             {
-            // InternalKiCool.g:21663:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) )
-            // InternalKiCool.g:21664:2: ( rule__FunctionCall__ParametersAssignment_2_0_2_1 )
+            // InternalKiCool.g:21744:1: ( ( rule__FunctionCall__ParametersAssignment_2_0_2_1 ) )
+            // InternalKiCool.g:21745:2: ( rule__FunctionCall__ParametersAssignment_2_0_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1()); 
             }
-            // InternalKiCool.g:21665:2: ( rule__FunctionCall__ParametersAssignment_2_0_2_1 )
-            // InternalKiCool.g:21665:3: rule__FunctionCall__ParametersAssignment_2_0_2_1
+            // InternalKiCool.g:21746:2: ( rule__FunctionCall__ParametersAssignment_2_0_2_1 )
+            // InternalKiCool.g:21746:3: rule__FunctionCall__ParametersAssignment_2_0_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__FunctionCall__ParametersAssignment_2_0_2_1();
@@ -72930,14 +73193,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group__0"
-    // InternalKiCool.g:21674:1: rule__Parameter__Group__0 : rule__Parameter__Group__0__Impl rule__Parameter__Group__1 ;
+    // InternalKiCool.g:21755:1: rule__Parameter__Group__0 : rule__Parameter__Group__0__Impl rule__Parameter__Group__1 ;
     public final void rule__Parameter__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21678:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
-            // InternalKiCool.g:21679:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
+            // InternalKiCool.g:21759:1: ( rule__Parameter__Group__0__Impl rule__Parameter__Group__1 )
+            // InternalKiCool.g:21760:2: rule__Parameter__Group__0__Impl rule__Parameter__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_66);
             rule__Parameter__Group__0__Impl();
@@ -72968,38 +73231,38 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group__0__Impl"
-    // InternalKiCool.g:21686:1: rule__Parameter__Group__0__Impl : ( ( rule__Parameter__Group_0__0 )? ) ;
+    // InternalKiCool.g:21767:1: rule__Parameter__Group__0__Impl : ( ( rule__Parameter__Group_0__0 )? ) ;
     public final void rule__Parameter__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21690:1: ( ( ( rule__Parameter__Group_0__0 )? ) )
-            // InternalKiCool.g:21691:1: ( ( rule__Parameter__Group_0__0 )? )
+            // InternalKiCool.g:21771:1: ( ( ( rule__Parameter__Group_0__0 )? ) )
+            // InternalKiCool.g:21772:1: ( ( rule__Parameter__Group_0__0 )? )
             {
-            // InternalKiCool.g:21691:1: ( ( rule__Parameter__Group_0__0 )? )
-            // InternalKiCool.g:21692:2: ( rule__Parameter__Group_0__0 )?
+            // InternalKiCool.g:21772:1: ( ( rule__Parameter__Group_0__0 )? )
+            // InternalKiCool.g:21773:2: ( rule__Parameter__Group_0__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getGroup_0()); 
             }
-            // InternalKiCool.g:21693:2: ( rule__Parameter__Group_0__0 )?
-            int alt235=2;
-            int LA235_0 = input.LA(1);
+            // InternalKiCool.g:21774:2: ( rule__Parameter__Group_0__0 )?
+            int alt236=2;
+            int LA236_0 = input.LA(1);
 
-            if ( (LA235_0==22) ) {
-                int LA235_1 = input.LA(2);
+            if ( (LA236_0==22) ) {
+                int LA236_1 = input.LA(2);
 
-                if ( (LA235_1==21) ) {
-                    alt235=1;
+                if ( (LA236_1==21) ) {
+                    alt236=1;
                 }
             }
-            else if ( (LA235_0==21) ) {
-                alt235=1;
+            else if ( (LA236_0==21) ) {
+                alt236=1;
             }
-            switch (alt235) {
+            switch (alt236) {
                 case 1 :
-                    // InternalKiCool.g:21693:3: rule__Parameter__Group_0__0
+                    // InternalKiCool.g:21774:3: rule__Parameter__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Parameter__Group_0__0();
@@ -73037,14 +73300,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group__1"
-    // InternalKiCool.g:21701:1: rule__Parameter__Group__1 : rule__Parameter__Group__1__Impl ;
+    // InternalKiCool.g:21782:1: rule__Parameter__Group__1 : rule__Parameter__Group__1__Impl ;
     public final void rule__Parameter__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21705:1: ( rule__Parameter__Group__1__Impl )
-            // InternalKiCool.g:21706:2: rule__Parameter__Group__1__Impl
+            // InternalKiCool.g:21786:1: ( rule__Parameter__Group__1__Impl )
+            // InternalKiCool.g:21787:2: rule__Parameter__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__Group__1__Impl();
@@ -73070,23 +73333,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group__1__Impl"
-    // InternalKiCool.g:21712:1: rule__Parameter__Group__1__Impl : ( ( rule__Parameter__ExpressionAssignment_1 ) ) ;
+    // InternalKiCool.g:21793:1: rule__Parameter__Group__1__Impl : ( ( rule__Parameter__ExpressionAssignment_1 ) ) ;
     public final void rule__Parameter__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21716:1: ( ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
-            // InternalKiCool.g:21717:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
+            // InternalKiCool.g:21797:1: ( ( ( rule__Parameter__ExpressionAssignment_1 ) ) )
+            // InternalKiCool.g:21798:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
             {
-            // InternalKiCool.g:21717:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
-            // InternalKiCool.g:21718:2: ( rule__Parameter__ExpressionAssignment_1 )
+            // InternalKiCool.g:21798:1: ( ( rule__Parameter__ExpressionAssignment_1 ) )
+            // InternalKiCool.g:21799:2: ( rule__Parameter__ExpressionAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getExpressionAssignment_1()); 
             }
-            // InternalKiCool.g:21719:2: ( rule__Parameter__ExpressionAssignment_1 )
-            // InternalKiCool.g:21719:3: rule__Parameter__ExpressionAssignment_1
+            // InternalKiCool.g:21800:2: ( rule__Parameter__ExpressionAssignment_1 )
+            // InternalKiCool.g:21800:3: rule__Parameter__ExpressionAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__ExpressionAssignment_1();
@@ -73121,14 +73384,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__0"
-    // InternalKiCool.g:21728:1: rule__Parameter__Group_0__0 : rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 ;
+    // InternalKiCool.g:21809:1: rule__Parameter__Group_0__0 : rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 ;
     public final void rule__Parameter__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21732:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
-            // InternalKiCool.g:21733:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
+            // InternalKiCool.g:21813:1: ( rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1 )
+            // InternalKiCool.g:21814:2: rule__Parameter__Group_0__0__Impl rule__Parameter__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_116);
             rule__Parameter__Group_0__0__Impl();
@@ -73159,31 +73422,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__0__Impl"
-    // InternalKiCool.g:21740:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) ;
+    // InternalKiCool.g:21821:1: rule__Parameter__Group_0__0__Impl : ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) ;
     public final void rule__Parameter__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21744:1: ( ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) )
-            // InternalKiCool.g:21745:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
+            // InternalKiCool.g:21825:1: ( ( ( rule__Parameter__PureOutputAssignment_0_0 )? ) )
+            // InternalKiCool.g:21826:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
             {
-            // InternalKiCool.g:21745:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
-            // InternalKiCool.g:21746:2: ( rule__Parameter__PureOutputAssignment_0_0 )?
+            // InternalKiCool.g:21826:1: ( ( rule__Parameter__PureOutputAssignment_0_0 )? )
+            // InternalKiCool.g:21827:2: ( rule__Parameter__PureOutputAssignment_0_0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputAssignment_0_0()); 
             }
-            // InternalKiCool.g:21747:2: ( rule__Parameter__PureOutputAssignment_0_0 )?
-            int alt236=2;
-            int LA236_0 = input.LA(1);
+            // InternalKiCool.g:21828:2: ( rule__Parameter__PureOutputAssignment_0_0 )?
+            int alt237=2;
+            int LA237_0 = input.LA(1);
 
-            if ( (LA236_0==22) ) {
-                alt236=1;
+            if ( (LA237_0==22) ) {
+                alt237=1;
             }
-            switch (alt236) {
+            switch (alt237) {
                 case 1 :
-                    // InternalKiCool.g:21747:3: rule__Parameter__PureOutputAssignment_0_0
+                    // InternalKiCool.g:21828:3: rule__Parameter__PureOutputAssignment_0_0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__Parameter__PureOutputAssignment_0_0();
@@ -73221,14 +73484,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__1"
-    // InternalKiCool.g:21755:1: rule__Parameter__Group_0__1 : rule__Parameter__Group_0__1__Impl ;
+    // InternalKiCool.g:21836:1: rule__Parameter__Group_0__1 : rule__Parameter__Group_0__1__Impl ;
     public final void rule__Parameter__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21759:1: ( rule__Parameter__Group_0__1__Impl )
-            // InternalKiCool.g:21760:2: rule__Parameter__Group_0__1__Impl
+            // InternalKiCool.g:21840:1: ( rule__Parameter__Group_0__1__Impl )
+            // InternalKiCool.g:21841:2: rule__Parameter__Group_0__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__Group_0__1__Impl();
@@ -73254,23 +73517,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__Group_0__1__Impl"
-    // InternalKiCool.g:21766:1: rule__Parameter__Group_0__1__Impl : ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) ;
+    // InternalKiCool.g:21847:1: rule__Parameter__Group_0__1__Impl : ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) ;
     public final void rule__Parameter__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21770:1: ( ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) )
-            // InternalKiCool.g:21771:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
+            // InternalKiCool.g:21851:1: ( ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) ) )
+            // InternalKiCool.g:21852:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
             {
-            // InternalKiCool.g:21771:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
-            // InternalKiCool.g:21772:2: ( rule__Parameter__CallByReferenceAssignment_0_1 )
+            // InternalKiCool.g:21852:1: ( ( rule__Parameter__CallByReferenceAssignment_0_1 ) )
+            // InternalKiCool.g:21853:2: ( rule__Parameter__CallByReferenceAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAssignment_0_1()); 
             }
-            // InternalKiCool.g:21773:2: ( rule__Parameter__CallByReferenceAssignment_0_1 )
-            // InternalKiCool.g:21773:3: rule__Parameter__CallByReferenceAssignment_0_1
+            // InternalKiCool.g:21854:2: ( rule__Parameter__CallByReferenceAssignment_0_1 )
+            // InternalKiCool.g:21854:3: rule__Parameter__CallByReferenceAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Parameter__CallByReferenceAssignment_0_1();
@@ -73305,14 +73568,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__Group__0"
-    // InternalKiCool.g:21782:1: rule__TextExpression__Group__0 : rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1 ;
+    // InternalKiCool.g:21863:1: rule__TextExpression__Group__0 : rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1 ;
     public final void rule__TextExpression__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21786:1: ( rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1 )
-            // InternalKiCool.g:21787:2: rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1
+            // InternalKiCool.g:21867:1: ( rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1 )
+            // InternalKiCool.g:21868:2: rule__TextExpression__Group__0__Impl rule__TextExpression__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_104);
             rule__TextExpression__Group__0__Impl();
@@ -73343,35 +73606,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__Group__0__Impl"
-    // InternalKiCool.g:21794:1: rule__TextExpression__Group__0__Impl : ( ( rule__TextExpression__AnnotationsAssignment_0 )* ) ;
+    // InternalKiCool.g:21875:1: rule__TextExpression__Group__0__Impl : ( ( rule__TextExpression__AnnotationsAssignment_0 )* ) ;
     public final void rule__TextExpression__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21798:1: ( ( ( rule__TextExpression__AnnotationsAssignment_0 )* ) )
-            // InternalKiCool.g:21799:1: ( ( rule__TextExpression__AnnotationsAssignment_0 )* )
+            // InternalKiCool.g:21879:1: ( ( ( rule__TextExpression__AnnotationsAssignment_0 )* ) )
+            // InternalKiCool.g:21880:1: ( ( rule__TextExpression__AnnotationsAssignment_0 )* )
             {
-            // InternalKiCool.g:21799:1: ( ( rule__TextExpression__AnnotationsAssignment_0 )* )
-            // InternalKiCool.g:21800:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
+            // InternalKiCool.g:21880:1: ( ( rule__TextExpression__AnnotationsAssignment_0 )* )
+            // InternalKiCool.g:21881:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getAnnotationsAssignment_0()); 
             }
-            // InternalKiCool.g:21801:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
-            loop237:
+            // InternalKiCool.g:21882:2: ( rule__TextExpression__AnnotationsAssignment_0 )*
+            loop238:
             do {
-                int alt237=2;
-                int LA237_0 = input.LA(1);
+                int alt238=2;
+                int LA238_0 = input.LA(1);
 
-                if ( (LA237_0==RULE_COMMENT_ANNOTATION||LA237_0==102) ) {
-                    alt237=1;
+                if ( (LA238_0==RULE_COMMENT_ANNOTATION||LA238_0==102) ) {
+                    alt238=1;
                 }
 
 
-                switch (alt237) {
+                switch (alt238) {
             	case 1 :
-            	    // InternalKiCool.g:21801:3: rule__TextExpression__AnnotationsAssignment_0
+            	    // InternalKiCool.g:21882:3: rule__TextExpression__AnnotationsAssignment_0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_5);
             	    rule__TextExpression__AnnotationsAssignment_0();
@@ -73383,7 +73646,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop237;
+            	    break loop238;
                 }
             } while (true);
 
@@ -73412,14 +73675,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__Group__1"
-    // InternalKiCool.g:21809:1: rule__TextExpression__Group__1 : rule__TextExpression__Group__1__Impl ;
+    // InternalKiCool.g:21890:1: rule__TextExpression__Group__1 : rule__TextExpression__Group__1__Impl ;
     public final void rule__TextExpression__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21813:1: ( rule__TextExpression__Group__1__Impl )
-            // InternalKiCool.g:21814:2: rule__TextExpression__Group__1__Impl
+            // InternalKiCool.g:21894:1: ( rule__TextExpression__Group__1__Impl )
+            // InternalKiCool.g:21895:2: rule__TextExpression__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TextExpression__Group__1__Impl();
@@ -73445,23 +73708,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__Group__1__Impl"
-    // InternalKiCool.g:21820:1: rule__TextExpression__Group__1__Impl : ( ( rule__TextExpression__TextAssignment_1 ) ) ;
+    // InternalKiCool.g:21901:1: rule__TextExpression__Group__1__Impl : ( ( rule__TextExpression__TextAssignment_1 ) ) ;
     public final void rule__TextExpression__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21824:1: ( ( ( rule__TextExpression__TextAssignment_1 ) ) )
-            // InternalKiCool.g:21825:1: ( ( rule__TextExpression__TextAssignment_1 ) )
+            // InternalKiCool.g:21905:1: ( ( ( rule__TextExpression__TextAssignment_1 ) ) )
+            // InternalKiCool.g:21906:1: ( ( rule__TextExpression__TextAssignment_1 ) )
             {
-            // InternalKiCool.g:21825:1: ( ( rule__TextExpression__TextAssignment_1 ) )
-            // InternalKiCool.g:21826:2: ( rule__TextExpression__TextAssignment_1 )
+            // InternalKiCool.g:21906:1: ( ( rule__TextExpression__TextAssignment_1 ) )
+            // InternalKiCool.g:21907:2: ( rule__TextExpression__TextAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTextAssignment_1()); 
             }
-            // InternalKiCool.g:21827:2: ( rule__TextExpression__TextAssignment_1 )
-            // InternalKiCool.g:21827:3: rule__TextExpression__TextAssignment_1
+            // InternalKiCool.g:21908:2: ( rule__TextExpression__TextAssignment_1 )
+            // InternalKiCool.g:21908:3: rule__TextExpression__TextAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TextExpression__TextAssignment_1();
@@ -73496,14 +73759,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__0"
-    // InternalKiCool.g:21836:1: rule__VectorValue__Group__0 : rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 ;
+    // InternalKiCool.g:21917:1: rule__VectorValue__Group__0 : rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 ;
     public final void rule__VectorValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21840:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
-            // InternalKiCool.g:21841:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
+            // InternalKiCool.g:21921:1: ( rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1 )
+            // InternalKiCool.g:21922:2: rule__VectorValue__Group__0__Impl rule__VectorValue__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_117);
             rule__VectorValue__Group__0__Impl();
@@ -73534,17 +73797,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__0__Impl"
-    // InternalKiCool.g:21848:1: rule__VectorValue__Group__0__Impl : ( '{' ) ;
+    // InternalKiCool.g:21929:1: rule__VectorValue__Group__0__Impl : ( '{' ) ;
     public final void rule__VectorValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21852:1: ( ( '{' ) )
-            // InternalKiCool.g:21853:1: ( '{' )
+            // InternalKiCool.g:21933:1: ( ( '{' ) )
+            // InternalKiCool.g:21934:1: ( '{' )
             {
-            // InternalKiCool.g:21853:1: ( '{' )
-            // InternalKiCool.g:21854:2: '{'
+            // InternalKiCool.g:21934:1: ( '{' )
+            // InternalKiCool.g:21935:2: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0()); 
@@ -73575,14 +73838,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__1"
-    // InternalKiCool.g:21863:1: rule__VectorValue__Group__1 : rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 ;
+    // InternalKiCool.g:21944:1: rule__VectorValue__Group__1 : rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 ;
     public final void rule__VectorValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21867:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
-            // InternalKiCool.g:21868:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
+            // InternalKiCool.g:21948:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
+            // InternalKiCool.g:21949:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_53);
             rule__VectorValue__Group__1__Impl();
@@ -73613,23 +73876,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__1__Impl"
-    // InternalKiCool.g:21875:1: rule__VectorValue__Group__1__Impl : ( ( rule__VectorValue__ValuesAssignment_1 ) ) ;
+    // InternalKiCool.g:21956:1: rule__VectorValue__Group__1__Impl : ( ( rule__VectorValue__ValuesAssignment_1 ) ) ;
     public final void rule__VectorValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21879:1: ( ( ( rule__VectorValue__ValuesAssignment_1 ) ) )
-            // InternalKiCool.g:21880:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
+            // InternalKiCool.g:21960:1: ( ( ( rule__VectorValue__ValuesAssignment_1 ) ) )
+            // InternalKiCool.g:21961:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
             {
-            // InternalKiCool.g:21880:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
-            // InternalKiCool.g:21881:2: ( rule__VectorValue__ValuesAssignment_1 )
+            // InternalKiCool.g:21961:1: ( ( rule__VectorValue__ValuesAssignment_1 ) )
+            // InternalKiCool.g:21962:2: ( rule__VectorValue__ValuesAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesAssignment_1()); 
             }
-            // InternalKiCool.g:21882:2: ( rule__VectorValue__ValuesAssignment_1 )
-            // InternalKiCool.g:21882:3: rule__VectorValue__ValuesAssignment_1
+            // InternalKiCool.g:21963:2: ( rule__VectorValue__ValuesAssignment_1 )
+            // InternalKiCool.g:21963:3: rule__VectorValue__ValuesAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__ValuesAssignment_1();
@@ -73664,14 +73927,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__2"
-    // InternalKiCool.g:21890:1: rule__VectorValue__Group__2 : rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 ;
+    // InternalKiCool.g:21971:1: rule__VectorValue__Group__2 : rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 ;
     public final void rule__VectorValue__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21894:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
-            // InternalKiCool.g:21895:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
+            // InternalKiCool.g:21975:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
+            // InternalKiCool.g:21976:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_53);
             rule__VectorValue__Group__2__Impl();
@@ -73702,35 +73965,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__2__Impl"
-    // InternalKiCool.g:21902:1: rule__VectorValue__Group__2__Impl : ( ( rule__VectorValue__Group_2__0 )* ) ;
+    // InternalKiCool.g:21983:1: rule__VectorValue__Group__2__Impl : ( ( rule__VectorValue__Group_2__0 )* ) ;
     public final void rule__VectorValue__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21906:1: ( ( ( rule__VectorValue__Group_2__0 )* ) )
-            // InternalKiCool.g:21907:1: ( ( rule__VectorValue__Group_2__0 )* )
+            // InternalKiCool.g:21987:1: ( ( ( rule__VectorValue__Group_2__0 )* ) )
+            // InternalKiCool.g:21988:1: ( ( rule__VectorValue__Group_2__0 )* )
             {
-            // InternalKiCool.g:21907:1: ( ( rule__VectorValue__Group_2__0 )* )
-            // InternalKiCool.g:21908:2: ( rule__VectorValue__Group_2__0 )*
+            // InternalKiCool.g:21988:1: ( ( rule__VectorValue__Group_2__0 )* )
+            // InternalKiCool.g:21989:2: ( rule__VectorValue__Group_2__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getGroup_2()); 
             }
-            // InternalKiCool.g:21909:2: ( rule__VectorValue__Group_2__0 )*
-            loop238:
+            // InternalKiCool.g:21990:2: ( rule__VectorValue__Group_2__0 )*
+            loop239:
             do {
-                int alt238=2;
-                int LA238_0 = input.LA(1);
+                int alt239=2;
+                int LA239_0 = input.LA(1);
 
-                if ( (LA238_0==86) ) {
-                    alt238=1;
+                if ( (LA239_0==86) ) {
+                    alt239=1;
                 }
 
 
-                switch (alt238) {
+                switch (alt239) {
             	case 1 :
-            	    // InternalKiCool.g:21909:3: rule__VectorValue__Group_2__0
+            	    // InternalKiCool.g:21990:3: rule__VectorValue__Group_2__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__VectorValue__Group_2__0();
@@ -73742,7 +74005,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop238;
+            	    break loop239;
                 }
             } while (true);
 
@@ -73771,14 +74034,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__3"
-    // InternalKiCool.g:21917:1: rule__VectorValue__Group__3 : rule__VectorValue__Group__3__Impl ;
+    // InternalKiCool.g:21998:1: rule__VectorValue__Group__3 : rule__VectorValue__Group__3__Impl ;
     public final void rule__VectorValue__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21921:1: ( rule__VectorValue__Group__3__Impl )
-            // InternalKiCool.g:21922:2: rule__VectorValue__Group__3__Impl
+            // InternalKiCool.g:22002:1: ( rule__VectorValue__Group__3__Impl )
+            // InternalKiCool.g:22003:2: rule__VectorValue__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__Group__3__Impl();
@@ -73804,17 +74067,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group__3__Impl"
-    // InternalKiCool.g:21928:1: rule__VectorValue__Group__3__Impl : ( '}' ) ;
+    // InternalKiCool.g:22009:1: rule__VectorValue__Group__3__Impl : ( '}' ) ;
     public final void rule__VectorValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21932:1: ( ( '}' ) )
-            // InternalKiCool.g:21933:1: ( '}' )
+            // InternalKiCool.g:22013:1: ( ( '}' ) )
+            // InternalKiCool.g:22014:1: ( '}' )
             {
-            // InternalKiCool.g:21933:1: ( '}' )
-            // InternalKiCool.g:21934:2: '}'
+            // InternalKiCool.g:22014:1: ( '}' )
+            // InternalKiCool.g:22015:2: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getRightCurlyBracketKeyword_3()); 
@@ -73845,14 +74108,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group_2__0"
-    // InternalKiCool.g:21944:1: rule__VectorValue__Group_2__0 : rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 ;
+    // InternalKiCool.g:22025:1: rule__VectorValue__Group_2__0 : rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 ;
     public final void rule__VectorValue__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21948:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
-            // InternalKiCool.g:21949:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
+            // InternalKiCool.g:22029:1: ( rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1 )
+            // InternalKiCool.g:22030:2: rule__VectorValue__Group_2__0__Impl rule__VectorValue__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_117);
             rule__VectorValue__Group_2__0__Impl();
@@ -73883,17 +74146,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group_2__0__Impl"
-    // InternalKiCool.g:21956:1: rule__VectorValue__Group_2__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:22037:1: rule__VectorValue__Group_2__0__Impl : ( ',' ) ;
     public final void rule__VectorValue__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21960:1: ( ( ',' ) )
-            // InternalKiCool.g:21961:1: ( ',' )
+            // InternalKiCool.g:22041:1: ( ( ',' ) )
+            // InternalKiCool.g:22042:1: ( ',' )
             {
-            // InternalKiCool.g:21961:1: ( ',' )
-            // InternalKiCool.g:21962:2: ','
+            // InternalKiCool.g:22042:1: ( ',' )
+            // InternalKiCool.g:22043:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getCommaKeyword_2_0()); 
@@ -73924,14 +74187,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group_2__1"
-    // InternalKiCool.g:21971:1: rule__VectorValue__Group_2__1 : rule__VectorValue__Group_2__1__Impl ;
+    // InternalKiCool.g:22052:1: rule__VectorValue__Group_2__1 : rule__VectorValue__Group_2__1__Impl ;
     public final void rule__VectorValue__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21975:1: ( rule__VectorValue__Group_2__1__Impl )
-            // InternalKiCool.g:21976:2: rule__VectorValue__Group_2__1__Impl
+            // InternalKiCool.g:22056:1: ( rule__VectorValue__Group_2__1__Impl )
+            // InternalKiCool.g:22057:2: rule__VectorValue__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__Group_2__1__Impl();
@@ -73957,23 +74220,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__Group_2__1__Impl"
-    // InternalKiCool.g:21982:1: rule__VectorValue__Group_2__1__Impl : ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) ;
+    // InternalKiCool.g:22063:1: rule__VectorValue__Group_2__1__Impl : ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) ;
     public final void rule__VectorValue__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:21986:1: ( ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) )
-            // InternalKiCool.g:21987:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
+            // InternalKiCool.g:22067:1: ( ( ( rule__VectorValue__ValuesAssignment_2_1 ) ) )
+            // InternalKiCool.g:22068:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
             {
-            // InternalKiCool.g:21987:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
-            // InternalKiCool.g:21988:2: ( rule__VectorValue__ValuesAssignment_2_1 )
+            // InternalKiCool.g:22068:1: ( ( rule__VectorValue__ValuesAssignment_2_1 ) )
+            // InternalKiCool.g:22069:2: ( rule__VectorValue__ValuesAssignment_2_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesAssignment_2_1()); 
             }
-            // InternalKiCool.g:21989:2: ( rule__VectorValue__ValuesAssignment_2_1 )
-            // InternalKiCool.g:21989:3: rule__VectorValue__ValuesAssignment_2_1
+            // InternalKiCool.g:22070:2: ( rule__VectorValue__ValuesAssignment_2_1 )
+            // InternalKiCool.g:22070:3: rule__VectorValue__ValuesAssignment_2_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__VectorValue__ValuesAssignment_2_1();
@@ -74008,14 +74271,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IgnoreValue__Group__0"
-    // InternalKiCool.g:21998:1: rule__IgnoreValue__Group__0 : rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 ;
+    // InternalKiCool.g:22079:1: rule__IgnoreValue__Group__0 : rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 ;
     public final void rule__IgnoreValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22002:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
-            // InternalKiCool.g:22003:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
+            // InternalKiCool.g:22083:1: ( rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1 )
+            // InternalKiCool.g:22084:2: rule__IgnoreValue__Group__0__Impl rule__IgnoreValue__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_117);
             rule__IgnoreValue__Group__0__Impl();
@@ -74046,23 +74309,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IgnoreValue__Group__0__Impl"
-    // InternalKiCool.g:22010:1: rule__IgnoreValue__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:22091:1: rule__IgnoreValue__Group__0__Impl : ( () ) ;
     public final void rule__IgnoreValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22014:1: ( ( () ) )
-            // InternalKiCool.g:22015:1: ( () )
+            // InternalKiCool.g:22095:1: ( ( () ) )
+            // InternalKiCool.g:22096:1: ( () )
             {
-            // InternalKiCool.g:22015:1: ( () )
-            // InternalKiCool.g:22016:2: ()
+            // InternalKiCool.g:22096:1: ( () )
+            // InternalKiCool.g:22097:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIgnoreValueAccess().getIgnoreValueAction_0()); 
             }
-            // InternalKiCool.g:22017:2: ()
-            // InternalKiCool.g:22017:3: 
+            // InternalKiCool.g:22098:2: ()
+            // InternalKiCool.g:22098:3: 
             {
             }
 
@@ -74087,14 +74350,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IgnoreValue__Group__1"
-    // InternalKiCool.g:22025:1: rule__IgnoreValue__Group__1 : rule__IgnoreValue__Group__1__Impl ;
+    // InternalKiCool.g:22106:1: rule__IgnoreValue__Group__1 : rule__IgnoreValue__Group__1__Impl ;
     public final void rule__IgnoreValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22029:1: ( rule__IgnoreValue__Group__1__Impl )
-            // InternalKiCool.g:22030:2: rule__IgnoreValue__Group__1__Impl
+            // InternalKiCool.g:22110:1: ( rule__IgnoreValue__Group__1__Impl )
+            // InternalKiCool.g:22111:2: rule__IgnoreValue__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__IgnoreValue__Group__1__Impl();
@@ -74120,17 +74383,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IgnoreValue__Group__1__Impl"
-    // InternalKiCool.g:22036:1: rule__IgnoreValue__Group__1__Impl : ( '_' ) ;
+    // InternalKiCool.g:22117:1: rule__IgnoreValue__Group__1__Impl : ( '_' ) ;
     public final void rule__IgnoreValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22040:1: ( ( '_' ) )
-            // InternalKiCool.g:22041:1: ( '_' )
+            // InternalKiCool.g:22121:1: ( ( '_' ) )
+            // InternalKiCool.g:22122:1: ( '_' )
             {
-            // InternalKiCool.g:22041:1: ( '_' )
-            // InternalKiCool.g:22042:2: '_'
+            // InternalKiCool.g:22122:1: ( '_' )
+            // InternalKiCool.g:22123:2: '_'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIgnoreValueAccess().get_Keyword_1()); 
@@ -74161,14 +74424,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__0"
-    // InternalKiCool.g:22052:1: rule__JsonObjectValue__Group__0 : rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1 ;
+    // InternalKiCool.g:22133:1: rule__JsonObjectValue__Group__0 : rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1 ;
     public final void rule__JsonObjectValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22056:1: ( rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1 )
-            // InternalKiCool.g:22057:2: rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1
+            // InternalKiCool.g:22137:1: ( rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1 )
+            // InternalKiCool.g:22138:2: rule__JsonObjectValue__Group__0__Impl rule__JsonObjectValue__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__JsonObjectValue__Group__0__Impl();
@@ -74199,23 +74462,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__0__Impl"
-    // InternalKiCool.g:22064:1: rule__JsonObjectValue__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:22145:1: rule__JsonObjectValue__Group__0__Impl : ( () ) ;
     public final void rule__JsonObjectValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22068:1: ( ( () ) )
-            // InternalKiCool.g:22069:1: ( () )
+            // InternalKiCool.g:22149:1: ( ( () ) )
+            // InternalKiCool.g:22150:1: ( () )
             {
-            // InternalKiCool.g:22069:1: ( () )
-            // InternalKiCool.g:22070:2: ()
+            // InternalKiCool.g:22150:1: ( () )
+            // InternalKiCool.g:22151:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getJsonObjectValueAction_0()); 
             }
-            // InternalKiCool.g:22071:2: ()
-            // InternalKiCool.g:22071:3: 
+            // InternalKiCool.g:22152:2: ()
+            // InternalKiCool.g:22152:3: 
             {
             }
 
@@ -74240,14 +74503,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__1"
-    // InternalKiCool.g:22079:1: rule__JsonObjectValue__Group__1 : rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 ;
+    // InternalKiCool.g:22160:1: rule__JsonObjectValue__Group__1 : rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 ;
     public final void rule__JsonObjectValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22083:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
-            // InternalKiCool.g:22084:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
+            // InternalKiCool.g:22164:1: ( rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2 )
+            // InternalKiCool.g:22165:2: rule__JsonObjectValue__Group__1__Impl rule__JsonObjectValue__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_118);
             rule__JsonObjectValue__Group__1__Impl();
@@ -74278,17 +74541,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__1__Impl"
-    // InternalKiCool.g:22091:1: rule__JsonObjectValue__Group__1__Impl : ( '{' ) ;
+    // InternalKiCool.g:22172:1: rule__JsonObjectValue__Group__1__Impl : ( '{' ) ;
     public final void rule__JsonObjectValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22095:1: ( ( '{' ) )
-            // InternalKiCool.g:22096:1: ( '{' )
+            // InternalKiCool.g:22176:1: ( ( '{' ) )
+            // InternalKiCool.g:22177:1: ( '{' )
             {
-            // InternalKiCool.g:22096:1: ( '{' )
-            // InternalKiCool.g:22097:2: '{'
+            // InternalKiCool.g:22177:1: ( '{' )
+            // InternalKiCool.g:22178:2: '{'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1()); 
@@ -74319,14 +74582,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__2"
-    // InternalKiCool.g:22106:1: rule__JsonObjectValue__Group__2 : rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 ;
+    // InternalKiCool.g:22187:1: rule__JsonObjectValue__Group__2 : rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 ;
     public final void rule__JsonObjectValue__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22110:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
-            // InternalKiCool.g:22111:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
+            // InternalKiCool.g:22191:1: ( rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3 )
+            // InternalKiCool.g:22192:2: rule__JsonObjectValue__Group__2__Impl rule__JsonObjectValue__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_118);
             rule__JsonObjectValue__Group__2__Impl();
@@ -74357,31 +74620,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__2__Impl"
-    // InternalKiCool.g:22118:1: rule__JsonObjectValue__Group__2__Impl : ( ( rule__JsonObjectValue__Group_2__0 )? ) ;
+    // InternalKiCool.g:22199:1: rule__JsonObjectValue__Group__2__Impl : ( ( rule__JsonObjectValue__Group_2__0 )? ) ;
     public final void rule__JsonObjectValue__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22122:1: ( ( ( rule__JsonObjectValue__Group_2__0 )? ) )
-            // InternalKiCool.g:22123:1: ( ( rule__JsonObjectValue__Group_2__0 )? )
+            // InternalKiCool.g:22203:1: ( ( ( rule__JsonObjectValue__Group_2__0 )? ) )
+            // InternalKiCool.g:22204:1: ( ( rule__JsonObjectValue__Group_2__0 )? )
             {
-            // InternalKiCool.g:22123:1: ( ( rule__JsonObjectValue__Group_2__0 )? )
-            // InternalKiCool.g:22124:2: ( rule__JsonObjectValue__Group_2__0 )?
+            // InternalKiCool.g:22204:1: ( ( rule__JsonObjectValue__Group_2__0 )? )
+            // InternalKiCool.g:22205:2: ( rule__JsonObjectValue__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2()); 
             }
-            // InternalKiCool.g:22125:2: ( rule__JsonObjectValue__Group_2__0 )?
-            int alt239=2;
-            int LA239_0 = input.LA(1);
+            // InternalKiCool.g:22206:2: ( rule__JsonObjectValue__Group_2__0 )?
+            int alt240=2;
+            int LA240_0 = input.LA(1);
 
-            if ( (LA239_0==RULE_STRING) ) {
-                alt239=1;
+            if ( (LA240_0==RULE_STRING) ) {
+                alt240=1;
             }
-            switch (alt239) {
+            switch (alt240) {
                 case 1 :
-                    // InternalKiCool.g:22125:3: rule__JsonObjectValue__Group_2__0
+                    // InternalKiCool.g:22206:3: rule__JsonObjectValue__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__JsonObjectValue__Group_2__0();
@@ -74419,14 +74682,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__3"
-    // InternalKiCool.g:22133:1: rule__JsonObjectValue__Group__3 : rule__JsonObjectValue__Group__3__Impl ;
+    // InternalKiCool.g:22214:1: rule__JsonObjectValue__Group__3 : rule__JsonObjectValue__Group__3__Impl ;
     public final void rule__JsonObjectValue__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22137:1: ( rule__JsonObjectValue__Group__3__Impl )
-            // InternalKiCool.g:22138:2: rule__JsonObjectValue__Group__3__Impl
+            // InternalKiCool.g:22218:1: ( rule__JsonObjectValue__Group__3__Impl )
+            // InternalKiCool.g:22219:2: rule__JsonObjectValue__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectValue__Group__3__Impl();
@@ -74452,17 +74715,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group__3__Impl"
-    // InternalKiCool.g:22144:1: rule__JsonObjectValue__Group__3__Impl : ( '}' ) ;
+    // InternalKiCool.g:22225:1: rule__JsonObjectValue__Group__3__Impl : ( '}' ) ;
     public final void rule__JsonObjectValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22148:1: ( ( '}' ) )
-            // InternalKiCool.g:22149:1: ( '}' )
+            // InternalKiCool.g:22229:1: ( ( '}' ) )
+            // InternalKiCool.g:22230:1: ( '}' )
             {
-            // InternalKiCool.g:22149:1: ( '}' )
-            // InternalKiCool.g:22150:2: '}'
+            // InternalKiCool.g:22230:1: ( '}' )
+            // InternalKiCool.g:22231:2: '}'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getRightCurlyBracketKeyword_3()); 
@@ -74493,14 +74756,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2__0"
-    // InternalKiCool.g:22160:1: rule__JsonObjectValue__Group_2__0 : rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 ;
+    // InternalKiCool.g:22241:1: rule__JsonObjectValue__Group_2__0 : rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 ;
     public final void rule__JsonObjectValue__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22164:1: ( rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 )
-            // InternalKiCool.g:22165:2: rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1
+            // InternalKiCool.g:22245:1: ( rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1 )
+            // InternalKiCool.g:22246:2: rule__JsonObjectValue__Group_2__0__Impl rule__JsonObjectValue__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__JsonObjectValue__Group_2__0__Impl();
@@ -74531,23 +74794,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2__0__Impl"
-    // InternalKiCool.g:22172:1: rule__JsonObjectValue__Group_2__0__Impl : ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) ) ;
+    // InternalKiCool.g:22253:1: rule__JsonObjectValue__Group_2__0__Impl : ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) ) ;
     public final void rule__JsonObjectValue__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22176:1: ( ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) ) )
-            // InternalKiCool.g:22177:1: ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) )
+            // InternalKiCool.g:22257:1: ( ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) ) )
+            // InternalKiCool.g:22258:1: ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) )
             {
-            // InternalKiCool.g:22177:1: ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) )
-            // InternalKiCool.g:22178:2: ( rule__JsonObjectValue__MembersAssignment_2_0 )
+            // InternalKiCool.g:22258:1: ( ( rule__JsonObjectValue__MembersAssignment_2_0 ) )
+            // InternalKiCool.g:22259:2: ( rule__JsonObjectValue__MembersAssignment_2_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_0()); 
             }
-            // InternalKiCool.g:22179:2: ( rule__JsonObjectValue__MembersAssignment_2_0 )
-            // InternalKiCool.g:22179:3: rule__JsonObjectValue__MembersAssignment_2_0
+            // InternalKiCool.g:22260:2: ( rule__JsonObjectValue__MembersAssignment_2_0 )
+            // InternalKiCool.g:22260:3: rule__JsonObjectValue__MembersAssignment_2_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectValue__MembersAssignment_2_0();
@@ -74582,14 +74845,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2__1"
-    // InternalKiCool.g:22187:1: rule__JsonObjectValue__Group_2__1 : rule__JsonObjectValue__Group_2__1__Impl ;
+    // InternalKiCool.g:22268:1: rule__JsonObjectValue__Group_2__1 : rule__JsonObjectValue__Group_2__1__Impl ;
     public final void rule__JsonObjectValue__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22191:1: ( rule__JsonObjectValue__Group_2__1__Impl )
-            // InternalKiCool.g:22192:2: rule__JsonObjectValue__Group_2__1__Impl
+            // InternalKiCool.g:22272:1: ( rule__JsonObjectValue__Group_2__1__Impl )
+            // InternalKiCool.g:22273:2: rule__JsonObjectValue__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectValue__Group_2__1__Impl();
@@ -74615,35 +74878,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2__1__Impl"
-    // InternalKiCool.g:22198:1: rule__JsonObjectValue__Group_2__1__Impl : ( ( rule__JsonObjectValue__Group_2_1__0 )* ) ;
+    // InternalKiCool.g:22279:1: rule__JsonObjectValue__Group_2__1__Impl : ( ( rule__JsonObjectValue__Group_2_1__0 )* ) ;
     public final void rule__JsonObjectValue__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22202:1: ( ( ( rule__JsonObjectValue__Group_2_1__0 )* ) )
-            // InternalKiCool.g:22203:1: ( ( rule__JsonObjectValue__Group_2_1__0 )* )
+            // InternalKiCool.g:22283:1: ( ( ( rule__JsonObjectValue__Group_2_1__0 )* ) )
+            // InternalKiCool.g:22284:1: ( ( rule__JsonObjectValue__Group_2_1__0 )* )
             {
-            // InternalKiCool.g:22203:1: ( ( rule__JsonObjectValue__Group_2_1__0 )* )
-            // InternalKiCool.g:22204:2: ( rule__JsonObjectValue__Group_2_1__0 )*
+            // InternalKiCool.g:22284:1: ( ( rule__JsonObjectValue__Group_2_1__0 )* )
+            // InternalKiCool.g:22285:2: ( rule__JsonObjectValue__Group_2_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getGroup_2_1()); 
             }
-            // InternalKiCool.g:22205:2: ( rule__JsonObjectValue__Group_2_1__0 )*
-            loop240:
+            // InternalKiCool.g:22286:2: ( rule__JsonObjectValue__Group_2_1__0 )*
+            loop241:
             do {
-                int alt240=2;
-                int LA240_0 = input.LA(1);
+                int alt241=2;
+                int LA241_0 = input.LA(1);
 
-                if ( (LA240_0==86) ) {
-                    alt240=1;
+                if ( (LA241_0==86) ) {
+                    alt241=1;
                 }
 
 
-                switch (alt240) {
+                switch (alt241) {
             	case 1 :
-            	    // InternalKiCool.g:22205:3: rule__JsonObjectValue__Group_2_1__0
+            	    // InternalKiCool.g:22286:3: rule__JsonObjectValue__Group_2_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__JsonObjectValue__Group_2_1__0();
@@ -74655,7 +74918,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop240;
+            	    break loop241;
                 }
             } while (true);
 
@@ -74684,14 +74947,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2_1__0"
-    // InternalKiCool.g:22214:1: rule__JsonObjectValue__Group_2_1__0 : rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1 ;
+    // InternalKiCool.g:22295:1: rule__JsonObjectValue__Group_2_1__0 : rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1 ;
     public final void rule__JsonObjectValue__Group_2_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22218:1: ( rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1 )
-            // InternalKiCool.g:22219:2: rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1
+            // InternalKiCool.g:22299:1: ( rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1 )
+            // InternalKiCool.g:22300:2: rule__JsonObjectValue__Group_2_1__0__Impl rule__JsonObjectValue__Group_2_1__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__JsonObjectValue__Group_2_1__0__Impl();
@@ -74722,17 +74985,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2_1__0__Impl"
-    // InternalKiCool.g:22226:1: rule__JsonObjectValue__Group_2_1__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:22307:1: rule__JsonObjectValue__Group_2_1__0__Impl : ( ',' ) ;
     public final void rule__JsonObjectValue__Group_2_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22230:1: ( ( ',' ) )
-            // InternalKiCool.g:22231:1: ( ',' )
+            // InternalKiCool.g:22311:1: ( ( ',' ) )
+            // InternalKiCool.g:22312:1: ( ',' )
             {
-            // InternalKiCool.g:22231:1: ( ',' )
-            // InternalKiCool.g:22232:2: ','
+            // InternalKiCool.g:22312:1: ( ',' )
+            // InternalKiCool.g:22313:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getCommaKeyword_2_1_0()); 
@@ -74763,14 +75026,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2_1__1"
-    // InternalKiCool.g:22241:1: rule__JsonObjectValue__Group_2_1__1 : rule__JsonObjectValue__Group_2_1__1__Impl ;
+    // InternalKiCool.g:22322:1: rule__JsonObjectValue__Group_2_1__1 : rule__JsonObjectValue__Group_2_1__1__Impl ;
     public final void rule__JsonObjectValue__Group_2_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22245:1: ( rule__JsonObjectValue__Group_2_1__1__Impl )
-            // InternalKiCool.g:22246:2: rule__JsonObjectValue__Group_2_1__1__Impl
+            // InternalKiCool.g:22326:1: ( rule__JsonObjectValue__Group_2_1__1__Impl )
+            // InternalKiCool.g:22327:2: rule__JsonObjectValue__Group_2_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectValue__Group_2_1__1__Impl();
@@ -74796,23 +75059,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__Group_2_1__1__Impl"
-    // InternalKiCool.g:22252:1: rule__JsonObjectValue__Group_2_1__1__Impl : ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) ) ;
+    // InternalKiCool.g:22333:1: rule__JsonObjectValue__Group_2_1__1__Impl : ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) ) ;
     public final void rule__JsonObjectValue__Group_2_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22256:1: ( ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) ) )
-            // InternalKiCool.g:22257:1: ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) )
+            // InternalKiCool.g:22337:1: ( ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) ) )
+            // InternalKiCool.g:22338:1: ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) )
             {
-            // InternalKiCool.g:22257:1: ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) )
-            // InternalKiCool.g:22258:2: ( rule__JsonObjectValue__MembersAssignment_2_1_1 )
+            // InternalKiCool.g:22338:1: ( ( rule__JsonObjectValue__MembersAssignment_2_1_1 ) )
+            // InternalKiCool.g:22339:2: ( rule__JsonObjectValue__MembersAssignment_2_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getMembersAssignment_2_1_1()); 
             }
-            // InternalKiCool.g:22259:2: ( rule__JsonObjectValue__MembersAssignment_2_1_1 )
-            // InternalKiCool.g:22259:3: rule__JsonObjectValue__MembersAssignment_2_1_1
+            // InternalKiCool.g:22340:2: ( rule__JsonObjectValue__MembersAssignment_2_1_1 )
+            // InternalKiCool.g:22340:3: rule__JsonObjectValue__MembersAssignment_2_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectValue__MembersAssignment_2_1_1();
@@ -74847,14 +75110,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__0"
-    // InternalKiCool.g:22268:1: rule__JsonObjectMember__Group__0 : rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1 ;
+    // InternalKiCool.g:22349:1: rule__JsonObjectMember__Group__0 : rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1 ;
     public final void rule__JsonObjectMember__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22272:1: ( rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1 )
-            // InternalKiCool.g:22273:2: rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1
+            // InternalKiCool.g:22353:1: ( rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1 )
+            // InternalKiCool.g:22354:2: rule__JsonObjectMember__Group__0__Impl rule__JsonObjectMember__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_46);
             rule__JsonObjectMember__Group__0__Impl();
@@ -74885,23 +75148,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__0__Impl"
-    // InternalKiCool.g:22280:1: rule__JsonObjectMember__Group__0__Impl : ( ( rule__JsonObjectMember__KeyAssignment_0 ) ) ;
+    // InternalKiCool.g:22361:1: rule__JsonObjectMember__Group__0__Impl : ( ( rule__JsonObjectMember__KeyAssignment_0 ) ) ;
     public final void rule__JsonObjectMember__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22284:1: ( ( ( rule__JsonObjectMember__KeyAssignment_0 ) ) )
-            // InternalKiCool.g:22285:1: ( ( rule__JsonObjectMember__KeyAssignment_0 ) )
+            // InternalKiCool.g:22365:1: ( ( ( rule__JsonObjectMember__KeyAssignment_0 ) ) )
+            // InternalKiCool.g:22366:1: ( ( rule__JsonObjectMember__KeyAssignment_0 ) )
             {
-            // InternalKiCool.g:22285:1: ( ( rule__JsonObjectMember__KeyAssignment_0 ) )
-            // InternalKiCool.g:22286:2: ( rule__JsonObjectMember__KeyAssignment_0 )
+            // InternalKiCool.g:22366:1: ( ( rule__JsonObjectMember__KeyAssignment_0 ) )
+            // InternalKiCool.g:22367:2: ( rule__JsonObjectMember__KeyAssignment_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectMemberAccess().getKeyAssignment_0()); 
             }
-            // InternalKiCool.g:22287:2: ( rule__JsonObjectMember__KeyAssignment_0 )
-            // InternalKiCool.g:22287:3: rule__JsonObjectMember__KeyAssignment_0
+            // InternalKiCool.g:22368:2: ( rule__JsonObjectMember__KeyAssignment_0 )
+            // InternalKiCool.g:22368:3: rule__JsonObjectMember__KeyAssignment_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectMember__KeyAssignment_0();
@@ -74936,14 +75199,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__1"
-    // InternalKiCool.g:22295:1: rule__JsonObjectMember__Group__1 : rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 ;
+    // InternalKiCool.g:22376:1: rule__JsonObjectMember__Group__1 : rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 ;
     public final void rule__JsonObjectMember__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22299:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
-            // InternalKiCool.g:22300:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
+            // InternalKiCool.g:22380:1: ( rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2 )
+            // InternalKiCool.g:22381:2: rule__JsonObjectMember__Group__1__Impl rule__JsonObjectMember__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_119);
             rule__JsonObjectMember__Group__1__Impl();
@@ -74974,17 +75237,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__1__Impl"
-    // InternalKiCool.g:22307:1: rule__JsonObjectMember__Group__1__Impl : ( ':' ) ;
+    // InternalKiCool.g:22388:1: rule__JsonObjectMember__Group__1__Impl : ( ':' ) ;
     public final void rule__JsonObjectMember__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22311:1: ( ( ':' ) )
-            // InternalKiCool.g:22312:1: ( ':' )
+            // InternalKiCool.g:22392:1: ( ( ':' ) )
+            // InternalKiCool.g:22393:1: ( ':' )
             {
-            // InternalKiCool.g:22312:1: ( ':' )
-            // InternalKiCool.g:22313:2: ':'
+            // InternalKiCool.g:22393:1: ( ':' )
+            // InternalKiCool.g:22394:2: ':'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1()); 
@@ -75015,14 +75278,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__2"
-    // InternalKiCool.g:22322:1: rule__JsonObjectMember__Group__2 : rule__JsonObjectMember__Group__2__Impl ;
+    // InternalKiCool.g:22403:1: rule__JsonObjectMember__Group__2 : rule__JsonObjectMember__Group__2__Impl ;
     public final void rule__JsonObjectMember__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22326:1: ( rule__JsonObjectMember__Group__2__Impl )
-            // InternalKiCool.g:22327:2: rule__JsonObjectMember__Group__2__Impl
+            // InternalKiCool.g:22407:1: ( rule__JsonObjectMember__Group__2__Impl )
+            // InternalKiCool.g:22408:2: rule__JsonObjectMember__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectMember__Group__2__Impl();
@@ -75048,23 +75311,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__Group__2__Impl"
-    // InternalKiCool.g:22333:1: rule__JsonObjectMember__Group__2__Impl : ( ( rule__JsonObjectMember__ValueAssignment_2 ) ) ;
+    // InternalKiCool.g:22414:1: rule__JsonObjectMember__Group__2__Impl : ( ( rule__JsonObjectMember__ValueAssignment_2 ) ) ;
     public final void rule__JsonObjectMember__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22337:1: ( ( ( rule__JsonObjectMember__ValueAssignment_2 ) ) )
-            // InternalKiCool.g:22338:1: ( ( rule__JsonObjectMember__ValueAssignment_2 ) )
+            // InternalKiCool.g:22418:1: ( ( ( rule__JsonObjectMember__ValueAssignment_2 ) ) )
+            // InternalKiCool.g:22419:1: ( ( rule__JsonObjectMember__ValueAssignment_2 ) )
             {
-            // InternalKiCool.g:22338:1: ( ( rule__JsonObjectMember__ValueAssignment_2 ) )
-            // InternalKiCool.g:22339:2: ( rule__JsonObjectMember__ValueAssignment_2 )
+            // InternalKiCool.g:22419:1: ( ( rule__JsonObjectMember__ValueAssignment_2 ) )
+            // InternalKiCool.g:22420:2: ( rule__JsonObjectMember__ValueAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectMemberAccess().getValueAssignment_2()); 
             }
-            // InternalKiCool.g:22340:2: ( rule__JsonObjectMember__ValueAssignment_2 )
-            // InternalKiCool.g:22340:3: rule__JsonObjectMember__ValueAssignment_2
+            // InternalKiCool.g:22421:2: ( rule__JsonObjectMember__ValueAssignment_2 )
+            // InternalKiCool.g:22421:3: rule__JsonObjectMember__ValueAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonObjectMember__ValueAssignment_2();
@@ -75099,14 +75362,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__0"
-    // InternalKiCool.g:22349:1: rule__JsonArrayValue__Group__0 : rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 ;
+    // InternalKiCool.g:22430:1: rule__JsonArrayValue__Group__0 : rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 ;
     public final void rule__JsonArrayValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22353:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
-            // InternalKiCool.g:22354:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
+            // InternalKiCool.g:22434:1: ( rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1 )
+            // InternalKiCool.g:22435:2: rule__JsonArrayValue__Group__0__Impl rule__JsonArrayValue__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_120);
             rule__JsonArrayValue__Group__0__Impl();
@@ -75137,23 +75400,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__0__Impl"
-    // InternalKiCool.g:22361:1: rule__JsonArrayValue__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:22442:1: rule__JsonArrayValue__Group__0__Impl : ( () ) ;
     public final void rule__JsonArrayValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22365:1: ( ( () ) )
-            // InternalKiCool.g:22366:1: ( () )
+            // InternalKiCool.g:22446:1: ( ( () ) )
+            // InternalKiCool.g:22447:1: ( () )
             {
-            // InternalKiCool.g:22366:1: ( () )
-            // InternalKiCool.g:22367:2: ()
+            // InternalKiCool.g:22447:1: ( () )
+            // InternalKiCool.g:22448:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getJsonArrayValueAction_0()); 
             }
-            // InternalKiCool.g:22368:2: ()
-            // InternalKiCool.g:22368:3: 
+            // InternalKiCool.g:22449:2: ()
+            // InternalKiCool.g:22449:3: 
             {
             }
 
@@ -75178,14 +75441,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__1"
-    // InternalKiCool.g:22376:1: rule__JsonArrayValue__Group__1 : rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 ;
+    // InternalKiCool.g:22457:1: rule__JsonArrayValue__Group__1 : rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 ;
     public final void rule__JsonArrayValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22380:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
-            // InternalKiCool.g:22381:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
+            // InternalKiCool.g:22461:1: ( rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2 )
+            // InternalKiCool.g:22462:2: rule__JsonArrayValue__Group__1__Impl rule__JsonArrayValue__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_121);
             rule__JsonArrayValue__Group__1__Impl();
@@ -75216,17 +75479,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__1__Impl"
-    // InternalKiCool.g:22388:1: rule__JsonArrayValue__Group__1__Impl : ( '[' ) ;
+    // InternalKiCool.g:22469:1: rule__JsonArrayValue__Group__1__Impl : ( '[' ) ;
     public final void rule__JsonArrayValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22392:1: ( ( '[' ) )
-            // InternalKiCool.g:22393:1: ( '[' )
+            // InternalKiCool.g:22473:1: ( ( '[' ) )
+            // InternalKiCool.g:22474:1: ( '[' )
             {
-            // InternalKiCool.g:22393:1: ( '[' )
-            // InternalKiCool.g:22394:2: '['
+            // InternalKiCool.g:22474:1: ( '[' )
+            // InternalKiCool.g:22475:2: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1()); 
@@ -75257,14 +75520,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__2"
-    // InternalKiCool.g:22403:1: rule__JsonArrayValue__Group__2 : rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 ;
+    // InternalKiCool.g:22484:1: rule__JsonArrayValue__Group__2 : rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 ;
     public final void rule__JsonArrayValue__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22407:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
-            // InternalKiCool.g:22408:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
+            // InternalKiCool.g:22488:1: ( rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3 )
+            // InternalKiCool.g:22489:2: rule__JsonArrayValue__Group__2__Impl rule__JsonArrayValue__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_121);
             rule__JsonArrayValue__Group__2__Impl();
@@ -75295,31 +75558,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__2__Impl"
-    // InternalKiCool.g:22415:1: rule__JsonArrayValue__Group__2__Impl : ( ( rule__JsonArrayValue__Group_2__0 )? ) ;
+    // InternalKiCool.g:22496:1: rule__JsonArrayValue__Group__2__Impl : ( ( rule__JsonArrayValue__Group_2__0 )? ) ;
     public final void rule__JsonArrayValue__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22419:1: ( ( ( rule__JsonArrayValue__Group_2__0 )? ) )
-            // InternalKiCool.g:22420:1: ( ( rule__JsonArrayValue__Group_2__0 )? )
+            // InternalKiCool.g:22500:1: ( ( ( rule__JsonArrayValue__Group_2__0 )? ) )
+            // InternalKiCool.g:22501:1: ( ( rule__JsonArrayValue__Group_2__0 )? )
             {
-            // InternalKiCool.g:22420:1: ( ( rule__JsonArrayValue__Group_2__0 )? )
-            // InternalKiCool.g:22421:2: ( rule__JsonArrayValue__Group_2__0 )?
+            // InternalKiCool.g:22501:1: ( ( rule__JsonArrayValue__Group_2__0 )? )
+            // InternalKiCool.g:22502:2: ( rule__JsonArrayValue__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2()); 
             }
-            // InternalKiCool.g:22422:2: ( rule__JsonArrayValue__Group_2__0 )?
-            int alt241=2;
-            int LA241_0 = input.LA(1);
+            // InternalKiCool.g:22503:2: ( rule__JsonArrayValue__Group_2__0 )?
+            int alt242=2;
+            int LA242_0 = input.LA(1);
 
-            if ( ((LA241_0>=RULE_STRING && LA241_0<=RULE_BOOLEAN)||(LA241_0>=RULE_INT && LA241_0<=RULE_FLOAT)||LA241_0==77||LA241_0==82||LA241_0==100) ) {
-                alt241=1;
+            if ( ((LA242_0>=RULE_STRING && LA242_0<=RULE_BOOLEAN)||(LA242_0>=RULE_INT && LA242_0<=RULE_FLOAT)||LA242_0==77||LA242_0==82||LA242_0==100) ) {
+                alt242=1;
             }
-            switch (alt241) {
+            switch (alt242) {
                 case 1 :
-                    // InternalKiCool.g:22422:3: rule__JsonArrayValue__Group_2__0
+                    // InternalKiCool.g:22503:3: rule__JsonArrayValue__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__JsonArrayValue__Group_2__0();
@@ -75357,14 +75620,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__3"
-    // InternalKiCool.g:22430:1: rule__JsonArrayValue__Group__3 : rule__JsonArrayValue__Group__3__Impl ;
+    // InternalKiCool.g:22511:1: rule__JsonArrayValue__Group__3 : rule__JsonArrayValue__Group__3__Impl ;
     public final void rule__JsonArrayValue__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22434:1: ( rule__JsonArrayValue__Group__3__Impl )
-            // InternalKiCool.g:22435:2: rule__JsonArrayValue__Group__3__Impl
+            // InternalKiCool.g:22515:1: ( rule__JsonArrayValue__Group__3__Impl )
+            // InternalKiCool.g:22516:2: rule__JsonArrayValue__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonArrayValue__Group__3__Impl();
@@ -75390,17 +75653,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group__3__Impl"
-    // InternalKiCool.g:22441:1: rule__JsonArrayValue__Group__3__Impl : ( ']' ) ;
+    // InternalKiCool.g:22522:1: rule__JsonArrayValue__Group__3__Impl : ( ']' ) ;
     public final void rule__JsonArrayValue__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22445:1: ( ( ']' ) )
-            // InternalKiCool.g:22446:1: ( ']' )
+            // InternalKiCool.g:22526:1: ( ( ']' ) )
+            // InternalKiCool.g:22527:1: ( ']' )
             {
-            // InternalKiCool.g:22446:1: ( ']' )
-            // InternalKiCool.g:22447:2: ']'
+            // InternalKiCool.g:22527:1: ( ']' )
+            // InternalKiCool.g:22528:2: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getRightSquareBracketKeyword_3()); 
@@ -75431,14 +75694,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2__0"
-    // InternalKiCool.g:22457:1: rule__JsonArrayValue__Group_2__0 : rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 ;
+    // InternalKiCool.g:22538:1: rule__JsonArrayValue__Group_2__0 : rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 ;
     public final void rule__JsonArrayValue__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22461:1: ( rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 )
-            // InternalKiCool.g:22462:2: rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1
+            // InternalKiCool.g:22542:1: ( rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1 )
+            // InternalKiCool.g:22543:2: rule__JsonArrayValue__Group_2__0__Impl rule__JsonArrayValue__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__JsonArrayValue__Group_2__0__Impl();
@@ -75469,23 +75732,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2__0__Impl"
-    // InternalKiCool.g:22469:1: rule__JsonArrayValue__Group_2__0__Impl : ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) ) ;
+    // InternalKiCool.g:22550:1: rule__JsonArrayValue__Group_2__0__Impl : ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) ) ;
     public final void rule__JsonArrayValue__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22473:1: ( ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) ) )
-            // InternalKiCool.g:22474:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) )
+            // InternalKiCool.g:22554:1: ( ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) ) )
+            // InternalKiCool.g:22555:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) )
             {
-            // InternalKiCool.g:22474:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) )
-            // InternalKiCool.g:22475:2: ( rule__JsonArrayValue__ElementsAssignment_2_0 )
+            // InternalKiCool.g:22555:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_0 ) )
+            // InternalKiCool.g:22556:2: ( rule__JsonArrayValue__ElementsAssignment_2_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_0()); 
             }
-            // InternalKiCool.g:22476:2: ( rule__JsonArrayValue__ElementsAssignment_2_0 )
-            // InternalKiCool.g:22476:3: rule__JsonArrayValue__ElementsAssignment_2_0
+            // InternalKiCool.g:22557:2: ( rule__JsonArrayValue__ElementsAssignment_2_0 )
+            // InternalKiCool.g:22557:3: rule__JsonArrayValue__ElementsAssignment_2_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonArrayValue__ElementsAssignment_2_0();
@@ -75520,14 +75783,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2__1"
-    // InternalKiCool.g:22484:1: rule__JsonArrayValue__Group_2__1 : rule__JsonArrayValue__Group_2__1__Impl ;
+    // InternalKiCool.g:22565:1: rule__JsonArrayValue__Group_2__1 : rule__JsonArrayValue__Group_2__1__Impl ;
     public final void rule__JsonArrayValue__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22488:1: ( rule__JsonArrayValue__Group_2__1__Impl )
-            // InternalKiCool.g:22489:2: rule__JsonArrayValue__Group_2__1__Impl
+            // InternalKiCool.g:22569:1: ( rule__JsonArrayValue__Group_2__1__Impl )
+            // InternalKiCool.g:22570:2: rule__JsonArrayValue__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonArrayValue__Group_2__1__Impl();
@@ -75553,35 +75816,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2__1__Impl"
-    // InternalKiCool.g:22495:1: rule__JsonArrayValue__Group_2__1__Impl : ( ( rule__JsonArrayValue__Group_2_1__0 )* ) ;
+    // InternalKiCool.g:22576:1: rule__JsonArrayValue__Group_2__1__Impl : ( ( rule__JsonArrayValue__Group_2_1__0 )* ) ;
     public final void rule__JsonArrayValue__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22499:1: ( ( ( rule__JsonArrayValue__Group_2_1__0 )* ) )
-            // InternalKiCool.g:22500:1: ( ( rule__JsonArrayValue__Group_2_1__0 )* )
+            // InternalKiCool.g:22580:1: ( ( ( rule__JsonArrayValue__Group_2_1__0 )* ) )
+            // InternalKiCool.g:22581:1: ( ( rule__JsonArrayValue__Group_2_1__0 )* )
             {
-            // InternalKiCool.g:22500:1: ( ( rule__JsonArrayValue__Group_2_1__0 )* )
-            // InternalKiCool.g:22501:2: ( rule__JsonArrayValue__Group_2_1__0 )*
+            // InternalKiCool.g:22581:1: ( ( rule__JsonArrayValue__Group_2_1__0 )* )
+            // InternalKiCool.g:22582:2: ( rule__JsonArrayValue__Group_2_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getGroup_2_1()); 
             }
-            // InternalKiCool.g:22502:2: ( rule__JsonArrayValue__Group_2_1__0 )*
-            loop242:
+            // InternalKiCool.g:22583:2: ( rule__JsonArrayValue__Group_2_1__0 )*
+            loop243:
             do {
-                int alt242=2;
-                int LA242_0 = input.LA(1);
+                int alt243=2;
+                int LA243_0 = input.LA(1);
 
-                if ( (LA242_0==86) ) {
-                    alt242=1;
+                if ( (LA243_0==86) ) {
+                    alt243=1;
                 }
 
 
-                switch (alt242) {
+                switch (alt243) {
             	case 1 :
-            	    // InternalKiCool.g:22502:3: rule__JsonArrayValue__Group_2_1__0
+            	    // InternalKiCool.g:22583:3: rule__JsonArrayValue__Group_2_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__JsonArrayValue__Group_2_1__0();
@@ -75593,7 +75856,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop242;
+            	    break loop243;
                 }
             } while (true);
 
@@ -75622,14 +75885,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2_1__0"
-    // InternalKiCool.g:22511:1: rule__JsonArrayValue__Group_2_1__0 : rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 ;
+    // InternalKiCool.g:22592:1: rule__JsonArrayValue__Group_2_1__0 : rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 ;
     public final void rule__JsonArrayValue__Group_2_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22515:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
-            // InternalKiCool.g:22516:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
+            // InternalKiCool.g:22596:1: ( rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1 )
+            // InternalKiCool.g:22597:2: rule__JsonArrayValue__Group_2_1__0__Impl rule__JsonArrayValue__Group_2_1__1
             {
             pushFollow(FollowSets000.FOLLOW_119);
             rule__JsonArrayValue__Group_2_1__0__Impl();
@@ -75660,17 +75923,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2_1__0__Impl"
-    // InternalKiCool.g:22523:1: rule__JsonArrayValue__Group_2_1__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:22604:1: rule__JsonArrayValue__Group_2_1__0__Impl : ( ',' ) ;
     public final void rule__JsonArrayValue__Group_2_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22527:1: ( ( ',' ) )
-            // InternalKiCool.g:22528:1: ( ',' )
+            // InternalKiCool.g:22608:1: ( ( ',' ) )
+            // InternalKiCool.g:22609:1: ( ',' )
             {
-            // InternalKiCool.g:22528:1: ( ',' )
-            // InternalKiCool.g:22529:2: ','
+            // InternalKiCool.g:22609:1: ( ',' )
+            // InternalKiCool.g:22610:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0()); 
@@ -75701,14 +75964,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2_1__1"
-    // InternalKiCool.g:22538:1: rule__JsonArrayValue__Group_2_1__1 : rule__JsonArrayValue__Group_2_1__1__Impl ;
+    // InternalKiCool.g:22619:1: rule__JsonArrayValue__Group_2_1__1 : rule__JsonArrayValue__Group_2_1__1__Impl ;
     public final void rule__JsonArrayValue__Group_2_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22542:1: ( rule__JsonArrayValue__Group_2_1__1__Impl )
-            // InternalKiCool.g:22543:2: rule__JsonArrayValue__Group_2_1__1__Impl
+            // InternalKiCool.g:22623:1: ( rule__JsonArrayValue__Group_2_1__1__Impl )
+            // InternalKiCool.g:22624:2: rule__JsonArrayValue__Group_2_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonArrayValue__Group_2_1__1__Impl();
@@ -75734,23 +75997,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__Group_2_1__1__Impl"
-    // InternalKiCool.g:22549:1: rule__JsonArrayValue__Group_2_1__1__Impl : ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) ) ;
+    // InternalKiCool.g:22630:1: rule__JsonArrayValue__Group_2_1__1__Impl : ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) ) ;
     public final void rule__JsonArrayValue__Group_2_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22553:1: ( ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) ) )
-            // InternalKiCool.g:22554:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) )
+            // InternalKiCool.g:22634:1: ( ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) ) )
+            // InternalKiCool.g:22635:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) )
             {
-            // InternalKiCool.g:22554:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) )
-            // InternalKiCool.g:22555:2: ( rule__JsonArrayValue__ElementsAssignment_2_1_1 )
+            // InternalKiCool.g:22635:1: ( ( rule__JsonArrayValue__ElementsAssignment_2_1_1 ) )
+            // InternalKiCool.g:22636:2: ( rule__JsonArrayValue__ElementsAssignment_2_1_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getElementsAssignment_2_1_1()); 
             }
-            // InternalKiCool.g:22556:2: ( rule__JsonArrayValue__ElementsAssignment_2_1_1 )
-            // InternalKiCool.g:22556:3: rule__JsonArrayValue__ElementsAssignment_2_1_1
+            // InternalKiCool.g:22637:2: ( rule__JsonArrayValue__ElementsAssignment_2_1_1 )
+            // InternalKiCool.g:22637:3: rule__JsonArrayValue__ElementsAssignment_2_1_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonArrayValue__ElementsAssignment_2_1_1();
@@ -75785,14 +76048,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NullValue__Group__0"
-    // InternalKiCool.g:22565:1: rule__NullValue__Group__0 : rule__NullValue__Group__0__Impl rule__NullValue__Group__1 ;
+    // InternalKiCool.g:22646:1: rule__NullValue__Group__0 : rule__NullValue__Group__0__Impl rule__NullValue__Group__1 ;
     public final void rule__NullValue__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22569:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
-            // InternalKiCool.g:22570:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
+            // InternalKiCool.g:22650:1: ( rule__NullValue__Group__0__Impl rule__NullValue__Group__1 )
+            // InternalKiCool.g:22651:2: rule__NullValue__Group__0__Impl rule__NullValue__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_122);
             rule__NullValue__Group__0__Impl();
@@ -75823,23 +76086,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NullValue__Group__0__Impl"
-    // InternalKiCool.g:22577:1: rule__NullValue__Group__0__Impl : ( () ) ;
+    // InternalKiCool.g:22658:1: rule__NullValue__Group__0__Impl : ( () ) ;
     public final void rule__NullValue__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22581:1: ( ( () ) )
-            // InternalKiCool.g:22582:1: ( () )
+            // InternalKiCool.g:22662:1: ( ( () ) )
+            // InternalKiCool.g:22663:1: ( () )
             {
-            // InternalKiCool.g:22582:1: ( () )
-            // InternalKiCool.g:22583:2: ()
+            // InternalKiCool.g:22663:1: ( () )
+            // InternalKiCool.g:22664:2: ()
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNullValueAccess().getNullValueAction_0()); 
             }
-            // InternalKiCool.g:22584:2: ()
-            // InternalKiCool.g:22584:3: 
+            // InternalKiCool.g:22665:2: ()
+            // InternalKiCool.g:22665:3: 
             {
             }
 
@@ -75864,14 +76127,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NullValue__Group__1"
-    // InternalKiCool.g:22592:1: rule__NullValue__Group__1 : rule__NullValue__Group__1__Impl ;
+    // InternalKiCool.g:22673:1: rule__NullValue__Group__1 : rule__NullValue__Group__1__Impl ;
     public final void rule__NullValue__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22596:1: ( rule__NullValue__Group__1__Impl )
-            // InternalKiCool.g:22597:2: rule__NullValue__Group__1__Impl
+            // InternalKiCool.g:22677:1: ( rule__NullValue__Group__1__Impl )
+            // InternalKiCool.g:22678:2: rule__NullValue__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__NullValue__Group__1__Impl();
@@ -75897,17 +76160,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NullValue__Group__1__Impl"
-    // InternalKiCool.g:22603:1: rule__NullValue__Group__1__Impl : ( 'null' ) ;
+    // InternalKiCool.g:22684:1: rule__NullValue__Group__1__Impl : ( 'null' ) ;
     public final void rule__NullValue__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22607:1: ( ( 'null' ) )
-            // InternalKiCool.g:22608:1: ( 'null' )
+            // InternalKiCool.g:22688:1: ( ( 'null' ) )
+            // InternalKiCool.g:22689:1: ( 'null' )
             {
-            // InternalKiCool.g:22608:1: ( 'null' )
-            // InternalKiCool.g:22609:2: 'null'
+            // InternalKiCool.g:22689:1: ( 'null' )
+            // InternalKiCool.g:22690:2: 'null'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNullValueAccess().getNullKeyword_1()); 
@@ -75938,14 +76201,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__0"
-    // InternalKiCool.g:22619:1: rule__JsonPragma__Group__0 : rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1 ;
+    // InternalKiCool.g:22700:1: rule__JsonPragma__Group__0 : rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1 ;
     public final void rule__JsonPragma__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22623:1: ( rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1 )
-            // InternalKiCool.g:22624:2: rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1
+            // InternalKiCool.g:22704:1: ( rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1 )
+            // InternalKiCool.g:22705:2: rule__JsonPragma__Group__0__Impl rule__JsonPragma__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__JsonPragma__Group__0__Impl();
@@ -75976,17 +76239,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__0__Impl"
-    // InternalKiCool.g:22631:1: rule__JsonPragma__Group__0__Impl : ( '#' ) ;
+    // InternalKiCool.g:22712:1: rule__JsonPragma__Group__0__Impl : ( '#' ) ;
     public final void rule__JsonPragma__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22635:1: ( ( '#' ) )
-            // InternalKiCool.g:22636:1: ( '#' )
+            // InternalKiCool.g:22716:1: ( ( '#' ) )
+            // InternalKiCool.g:22717:1: ( '#' )
             {
-            // InternalKiCool.g:22636:1: ( '#' )
-            // InternalKiCool.g:22637:2: '#'
+            // InternalKiCool.g:22717:1: ( '#' )
+            // InternalKiCool.g:22718:2: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonPragmaAccess().getNumberSignKeyword_0()); 
@@ -76017,14 +76280,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__1"
-    // InternalKiCool.g:22646:1: rule__JsonPragma__Group__1 : rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2 ;
+    // InternalKiCool.g:22727:1: rule__JsonPragma__Group__1 : rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2 ;
     public final void rule__JsonPragma__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22650:1: ( rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2 )
-            // InternalKiCool.g:22651:2: rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2
+            // InternalKiCool.g:22731:1: ( rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2 )
+            // InternalKiCool.g:22732:2: rule__JsonPragma__Group__1__Impl rule__JsonPragma__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__JsonPragma__Group__1__Impl();
@@ -76055,23 +76318,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__1__Impl"
-    // InternalKiCool.g:22658:1: rule__JsonPragma__Group__1__Impl : ( ( rule__JsonPragma__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:22739:1: rule__JsonPragma__Group__1__Impl : ( ( rule__JsonPragma__NameAssignment_1 ) ) ;
     public final void rule__JsonPragma__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22662:1: ( ( ( rule__JsonPragma__NameAssignment_1 ) ) )
-            // InternalKiCool.g:22663:1: ( ( rule__JsonPragma__NameAssignment_1 ) )
+            // InternalKiCool.g:22743:1: ( ( ( rule__JsonPragma__NameAssignment_1 ) ) )
+            // InternalKiCool.g:22744:1: ( ( rule__JsonPragma__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:22663:1: ( ( rule__JsonPragma__NameAssignment_1 ) )
-            // InternalKiCool.g:22664:2: ( rule__JsonPragma__NameAssignment_1 )
+            // InternalKiCool.g:22744:1: ( ( rule__JsonPragma__NameAssignment_1 ) )
+            // InternalKiCool.g:22745:2: ( rule__JsonPragma__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonPragmaAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:22665:2: ( rule__JsonPragma__NameAssignment_1 )
-            // InternalKiCool.g:22665:3: rule__JsonPragma__NameAssignment_1
+            // InternalKiCool.g:22746:2: ( rule__JsonPragma__NameAssignment_1 )
+            // InternalKiCool.g:22746:3: rule__JsonPragma__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonPragma__NameAssignment_1();
@@ -76106,14 +76369,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__2"
-    // InternalKiCool.g:22673:1: rule__JsonPragma__Group__2 : rule__JsonPragma__Group__2__Impl ;
+    // InternalKiCool.g:22754:1: rule__JsonPragma__Group__2 : rule__JsonPragma__Group__2__Impl ;
     public final void rule__JsonPragma__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22677:1: ( rule__JsonPragma__Group__2__Impl )
-            // InternalKiCool.g:22678:2: rule__JsonPragma__Group__2__Impl
+            // InternalKiCool.g:22758:1: ( rule__JsonPragma__Group__2__Impl )
+            // InternalKiCool.g:22759:2: rule__JsonPragma__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonPragma__Group__2__Impl();
@@ -76139,23 +76402,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__Group__2__Impl"
-    // InternalKiCool.g:22684:1: rule__JsonPragma__Group__2__Impl : ( ( rule__JsonPragma__ValueAssignment_2 ) ) ;
+    // InternalKiCool.g:22765:1: rule__JsonPragma__Group__2__Impl : ( ( rule__JsonPragma__ValueAssignment_2 ) ) ;
     public final void rule__JsonPragma__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22688:1: ( ( ( rule__JsonPragma__ValueAssignment_2 ) ) )
-            // InternalKiCool.g:22689:1: ( ( rule__JsonPragma__ValueAssignment_2 ) )
+            // InternalKiCool.g:22769:1: ( ( ( rule__JsonPragma__ValueAssignment_2 ) ) )
+            // InternalKiCool.g:22770:1: ( ( rule__JsonPragma__ValueAssignment_2 ) )
             {
-            // InternalKiCool.g:22689:1: ( ( rule__JsonPragma__ValueAssignment_2 ) )
-            // InternalKiCool.g:22690:2: ( rule__JsonPragma__ValueAssignment_2 )
+            // InternalKiCool.g:22770:1: ( ( rule__JsonPragma__ValueAssignment_2 ) )
+            // InternalKiCool.g:22771:2: ( rule__JsonPragma__ValueAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonPragmaAccess().getValueAssignment_2()); 
             }
-            // InternalKiCool.g:22691:2: ( rule__JsonPragma__ValueAssignment_2 )
-            // InternalKiCool.g:22691:3: rule__JsonPragma__ValueAssignment_2
+            // InternalKiCool.g:22772:2: ( rule__JsonPragma__ValueAssignment_2 )
+            // InternalKiCool.g:22772:3: rule__JsonPragma__ValueAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonPragma__ValueAssignment_2();
@@ -76190,14 +76453,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__0"
-    // InternalKiCool.g:22700:1: rule__JsonAnnotation__Group__0 : rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1 ;
+    // InternalKiCool.g:22781:1: rule__JsonAnnotation__Group__0 : rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1 ;
     public final void rule__JsonAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22704:1: ( rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1 )
-            // InternalKiCool.g:22705:2: rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1
+            // InternalKiCool.g:22785:1: ( rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1 )
+            // InternalKiCool.g:22786:2: rule__JsonAnnotation__Group__0__Impl rule__JsonAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__JsonAnnotation__Group__0__Impl();
@@ -76228,17 +76491,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__0__Impl"
-    // InternalKiCool.g:22712:1: rule__JsonAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:22793:1: rule__JsonAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__JsonAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22716:1: ( ( '@' ) )
-            // InternalKiCool.g:22717:1: ( '@' )
+            // InternalKiCool.g:22797:1: ( ( '@' ) )
+            // InternalKiCool.g:22798:1: ( '@' )
             {
-            // InternalKiCool.g:22717:1: ( '@' )
-            // InternalKiCool.g:22718:2: '@'
+            // InternalKiCool.g:22798:1: ( '@' )
+            // InternalKiCool.g:22799:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -76269,14 +76532,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__1"
-    // InternalKiCool.g:22727:1: rule__JsonAnnotation__Group__1 : rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2 ;
+    // InternalKiCool.g:22808:1: rule__JsonAnnotation__Group__1 : rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2 ;
     public final void rule__JsonAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22731:1: ( rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2 )
-            // InternalKiCool.g:22732:2: rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2
+            // InternalKiCool.g:22812:1: ( rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2 )
+            // InternalKiCool.g:22813:2: rule__JsonAnnotation__Group__1__Impl rule__JsonAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_11);
             rule__JsonAnnotation__Group__1__Impl();
@@ -76307,23 +76570,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__1__Impl"
-    // InternalKiCool.g:22739:1: rule__JsonAnnotation__Group__1__Impl : ( ( rule__JsonAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:22820:1: rule__JsonAnnotation__Group__1__Impl : ( ( rule__JsonAnnotation__NameAssignment_1 ) ) ;
     public final void rule__JsonAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22743:1: ( ( ( rule__JsonAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:22744:1: ( ( rule__JsonAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:22824:1: ( ( ( rule__JsonAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:22825:1: ( ( rule__JsonAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:22744:1: ( ( rule__JsonAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:22745:2: ( rule__JsonAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:22825:1: ( ( rule__JsonAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:22826:2: ( rule__JsonAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:22746:2: ( rule__JsonAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:22746:3: rule__JsonAnnotation__NameAssignment_1
+            // InternalKiCool.g:22827:2: ( rule__JsonAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:22827:3: rule__JsonAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonAnnotation__NameAssignment_1();
@@ -76358,14 +76621,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__2"
-    // InternalKiCool.g:22754:1: rule__JsonAnnotation__Group__2 : rule__JsonAnnotation__Group__2__Impl ;
+    // InternalKiCool.g:22835:1: rule__JsonAnnotation__Group__2 : rule__JsonAnnotation__Group__2__Impl ;
     public final void rule__JsonAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22758:1: ( rule__JsonAnnotation__Group__2__Impl )
-            // InternalKiCool.g:22759:2: rule__JsonAnnotation__Group__2__Impl
+            // InternalKiCool.g:22839:1: ( rule__JsonAnnotation__Group__2__Impl )
+            // InternalKiCool.g:22840:2: rule__JsonAnnotation__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonAnnotation__Group__2__Impl();
@@ -76391,23 +76654,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__Group__2__Impl"
-    // InternalKiCool.g:22765:1: rule__JsonAnnotation__Group__2__Impl : ( ( rule__JsonAnnotation__ValueAssignment_2 ) ) ;
+    // InternalKiCool.g:22846:1: rule__JsonAnnotation__Group__2__Impl : ( ( rule__JsonAnnotation__ValueAssignment_2 ) ) ;
     public final void rule__JsonAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22769:1: ( ( ( rule__JsonAnnotation__ValueAssignment_2 ) ) )
-            // InternalKiCool.g:22770:1: ( ( rule__JsonAnnotation__ValueAssignment_2 ) )
+            // InternalKiCool.g:22850:1: ( ( ( rule__JsonAnnotation__ValueAssignment_2 ) ) )
+            // InternalKiCool.g:22851:1: ( ( rule__JsonAnnotation__ValueAssignment_2 ) )
             {
-            // InternalKiCool.g:22770:1: ( ( rule__JsonAnnotation__ValueAssignment_2 ) )
-            // InternalKiCool.g:22771:2: ( rule__JsonAnnotation__ValueAssignment_2 )
+            // InternalKiCool.g:22851:1: ( ( rule__JsonAnnotation__ValueAssignment_2 ) )
+            // InternalKiCool.g:22852:2: ( rule__JsonAnnotation__ValueAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonAnnotationAccess().getValueAssignment_2()); 
             }
-            // InternalKiCool.g:22772:2: ( rule__JsonAnnotation__ValueAssignment_2 )
-            // InternalKiCool.g:22772:3: rule__JsonAnnotation__ValueAssignment_2
+            // InternalKiCool.g:22853:2: ( rule__JsonAnnotation__ValueAssignment_2 )
+            // InternalKiCool.g:22853:3: rule__JsonAnnotation__ValueAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__JsonAnnotation__ValueAssignment_2();
@@ -76442,14 +76705,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TagAnnotation__Group__0"
-    // InternalKiCool.g:22781:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
+    // InternalKiCool.g:22862:1: rule__TagAnnotation__Group__0 : rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 ;
     public final void rule__TagAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22785:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
-            // InternalKiCool.g:22786:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
+            // InternalKiCool.g:22866:1: ( rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1 )
+            // InternalKiCool.g:22867:2: rule__TagAnnotation__Group__0__Impl rule__TagAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__TagAnnotation__Group__0__Impl();
@@ -76480,17 +76743,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TagAnnotation__Group__0__Impl"
-    // InternalKiCool.g:22793:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:22874:1: rule__TagAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TagAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22797:1: ( ( '@' ) )
-            // InternalKiCool.g:22798:1: ( '@' )
+            // InternalKiCool.g:22878:1: ( ( '@' ) )
+            // InternalKiCool.g:22879:1: ( '@' )
             {
-            // InternalKiCool.g:22798:1: ( '@' )
-            // InternalKiCool.g:22799:2: '@'
+            // InternalKiCool.g:22879:1: ( '@' )
+            // InternalKiCool.g:22880:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -76521,14 +76784,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1"
-    // InternalKiCool.g:22808:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
+    // InternalKiCool.g:22889:1: rule__TagAnnotation__Group__1 : rule__TagAnnotation__Group__1__Impl ;
     public final void rule__TagAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22812:1: ( rule__TagAnnotation__Group__1__Impl )
-            // InternalKiCool.g:22813:2: rule__TagAnnotation__Group__1__Impl
+            // InternalKiCool.g:22893:1: ( rule__TagAnnotation__Group__1__Impl )
+            // InternalKiCool.g:22894:2: rule__TagAnnotation__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__Group__1__Impl();
@@ -76554,23 +76817,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TagAnnotation__Group__1__Impl"
-    // InternalKiCool.g:22819:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:22900:1: rule__TagAnnotation__Group__1__Impl : ( ( rule__TagAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TagAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22823:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:22824:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:22904:1: ( ( ( rule__TagAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:22905:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:22824:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:22825:2: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:22905:1: ( ( rule__TagAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:22906:2: ( rule__TagAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:22826:2: ( rule__TagAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:22826:3: rule__TagAnnotation__NameAssignment_1
+            // InternalKiCool.g:22907:2: ( rule__TagAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:22907:3: rule__TagAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TagAnnotation__NameAssignment_1();
@@ -76605,14 +76868,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PragmaTag__Group__0"
-    // InternalKiCool.g:22835:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
+    // InternalKiCool.g:22916:1: rule__PragmaTag__Group__0 : rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 ;
     public final void rule__PragmaTag__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22839:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
-            // InternalKiCool.g:22840:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
+            // InternalKiCool.g:22920:1: ( rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1 )
+            // InternalKiCool.g:22921:2: rule__PragmaTag__Group__0__Impl rule__PragmaTag__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__PragmaTag__Group__0__Impl();
@@ -76643,17 +76906,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PragmaTag__Group__0__Impl"
-    // InternalKiCool.g:22847:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
+    // InternalKiCool.g:22928:1: rule__PragmaTag__Group__0__Impl : ( '#' ) ;
     public final void rule__PragmaTag__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22851:1: ( ( '#' ) )
-            // InternalKiCool.g:22852:1: ( '#' )
+            // InternalKiCool.g:22932:1: ( ( '#' ) )
+            // InternalKiCool.g:22933:1: ( '#' )
             {
-            // InternalKiCool.g:22852:1: ( '#' )
-            // InternalKiCool.g:22853:2: '#'
+            // InternalKiCool.g:22933:1: ( '#' )
+            // InternalKiCool.g:22934:2: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0()); 
@@ -76684,14 +76947,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PragmaTag__Group__1"
-    // InternalKiCool.g:22862:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
+    // InternalKiCool.g:22943:1: rule__PragmaTag__Group__1 : rule__PragmaTag__Group__1__Impl ;
     public final void rule__PragmaTag__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22866:1: ( rule__PragmaTag__Group__1__Impl )
-            // InternalKiCool.g:22867:2: rule__PragmaTag__Group__1__Impl
+            // InternalKiCool.g:22947:1: ( rule__PragmaTag__Group__1__Impl )
+            // InternalKiCool.g:22948:2: rule__PragmaTag__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PragmaTag__Group__1__Impl();
@@ -76717,23 +76980,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PragmaTag__Group__1__Impl"
-    // InternalKiCool.g:22873:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:22954:1: rule__PragmaTag__Group__1__Impl : ( ( rule__PragmaTag__NameAssignment_1 ) ) ;
     public final void rule__PragmaTag__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22877:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
-            // InternalKiCool.g:22878:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalKiCool.g:22958:1: ( ( ( rule__PragmaTag__NameAssignment_1 ) ) )
+            // InternalKiCool.g:22959:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:22878:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
-            // InternalKiCool.g:22879:2: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalKiCool.g:22959:1: ( ( rule__PragmaTag__NameAssignment_1 ) )
+            // InternalKiCool.g:22960:2: ( rule__PragmaTag__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:22880:2: ( rule__PragmaTag__NameAssignment_1 )
-            // InternalKiCool.g:22880:3: rule__PragmaTag__NameAssignment_1
+            // InternalKiCool.g:22961:2: ( rule__PragmaTag__NameAssignment_1 )
+            // InternalKiCool.g:22961:3: rule__PragmaTag__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__PragmaTag__NameAssignment_1();
@@ -76768,14 +77031,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:22889:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:22970:1: rule__KeyStringValueAnnotation__Group__0 : rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 ;
     public final void rule__KeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22893:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:22894:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:22974:1: ( rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:22975:2: rule__KeyStringValueAnnotation__Group__0__Impl rule__KeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__KeyStringValueAnnotation__Group__0__Impl();
@@ -76806,17 +77069,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:22901:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:22982:1: rule__KeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__KeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22905:1: ( ( '@' ) )
-            // InternalKiCool.g:22906:1: ( '@' )
+            // InternalKiCool.g:22986:1: ( ( '@' ) )
+            // InternalKiCool.g:22987:1: ( '@' )
             {
-            // InternalKiCool.g:22906:1: ( '@' )
-            // InternalKiCool.g:22907:2: '@'
+            // InternalKiCool.g:22987:1: ( '@' )
+            // InternalKiCool.g:22988:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -76847,14 +77110,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:22916:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:22997:1: rule__KeyStringValueAnnotation__Group__1 : rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 ;
     public final void rule__KeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22920:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:22921:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:23001:1: ( rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:23002:2: rule__KeyStringValueAnnotation__Group__1__Impl rule__KeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__KeyStringValueAnnotation__Group__1__Impl();
@@ -76885,23 +77148,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:22928:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23009:1: rule__KeyStringValueAnnotation__Group__1__Impl : ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22932:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:22933:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23013:1: ( ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23014:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:22933:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:22934:2: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23014:1: ( ( rule__KeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23015:2: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:22935:2: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:22935:3: rule__KeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:23016:2: ( rule__KeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23016:3: rule__KeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__NameAssignment_1();
@@ -76936,14 +77199,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:22943:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:23024:1: rule__KeyStringValueAnnotation__Group__2 : rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 ;
     public final void rule__KeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22947:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:22948:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:23028:1: ( rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:23029:2: rule__KeyStringValueAnnotation__Group__2__Impl rule__KeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__KeyStringValueAnnotation__Group__2__Impl();
@@ -76974,23 +77237,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:22955:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKiCool.g:23036:1: rule__KeyStringValueAnnotation__Group__2__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22959:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKiCool.g:22960:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23040:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKiCool.g:23041:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKiCool.g:22960:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKiCool.g:22961:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:23041:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23042:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKiCool.g:22962:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKiCool.g:22962:3: rule__KeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKiCool.g:23043:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:23043:3: rule__KeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_2();
@@ -77025,14 +77288,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:22970:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKiCool.g:23051:1: rule__KeyStringValueAnnotation__Group__3 : rule__KeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__KeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22974:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
-            // InternalKiCool.g:22975:2: rule__KeyStringValueAnnotation__Group__3__Impl
+            // InternalKiCool.g:23055:1: ( rule__KeyStringValueAnnotation__Group__3__Impl )
+            // InternalKiCool.g:23056:2: rule__KeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group__3__Impl();
@@ -77058,35 +77321,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:22981:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKiCool.g:23062:1: rule__KeyStringValueAnnotation__Group__3__Impl : ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__KeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:22985:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKiCool.g:22986:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:23066:1: ( ( ( rule__KeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKiCool.g:23067:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKiCool.g:22986:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKiCool.g:22987:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            // InternalKiCool.g:23067:1: ( ( rule__KeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:23068:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKiCool.g:22988:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
-            loop243:
+            // InternalKiCool.g:23069:2: ( rule__KeyStringValueAnnotation__Group_3__0 )*
+            loop244:
             do {
-                int alt243=2;
-                int LA243_0 = input.LA(1);
+                int alt244=2;
+                int LA244_0 = input.LA(1);
 
-                if ( (LA243_0==86) ) {
-                    alt243=1;
+                if ( (LA244_0==86) ) {
+                    alt244=1;
                 }
 
 
-                switch (alt243) {
+                switch (alt244) {
             	case 1 :
-            	    // InternalKiCool.g:22988:3: rule__KeyStringValueAnnotation__Group_3__0
+            	    // InternalKiCool.g:23069:3: rule__KeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__KeyStringValueAnnotation__Group_3__0();
@@ -77098,7 +77361,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop243;
+            	    break loop244;
                 }
             } while (true);
 
@@ -77127,14 +77390,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0"
-    // InternalKiCool.g:22997:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
+    // InternalKiCool.g:23078:1: rule__KeyStringValueAnnotation__Group_3__0 : rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 ;
     public final void rule__KeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23001:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
-            // InternalKiCool.g:23002:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
+            // InternalKiCool.g:23082:1: ( rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1 )
+            // InternalKiCool.g:23083:2: rule__KeyStringValueAnnotation__Group_3__0__Impl rule__KeyStringValueAnnotation__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__KeyStringValueAnnotation__Group_3__0__Impl();
@@ -77165,17 +77428,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKiCool.g:23009:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:23090:1: rule__KeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23013:1: ( ( ',' ) )
-            // InternalKiCool.g:23014:1: ( ',' )
+            // InternalKiCool.g:23094:1: ( ( ',' ) )
+            // InternalKiCool.g:23095:1: ( ',' )
             {
-            // InternalKiCool.g:23014:1: ( ',' )
-            // InternalKiCool.g:23015:2: ','
+            // InternalKiCool.g:23095:1: ( ',' )
+            // InternalKiCool.g:23096:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -77206,14 +77469,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1"
-    // InternalKiCool.g:23024:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKiCool.g:23105:1: rule__KeyStringValueAnnotation__Group_3__1 : rule__KeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__KeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23028:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKiCool.g:23029:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKiCool.g:23109:1: ( rule__KeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKiCool.g:23110:2: rule__KeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__Group_3__1__Impl();
@@ -77239,23 +77502,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKiCool.g:23035:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKiCool.g:23116:1: rule__KeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__KeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23039:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKiCool.g:23040:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23120:1: ( ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKiCool.g:23121:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKiCool.g:23040:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKiCool.g:23041:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23121:1: ( ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23122:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKiCool.g:23042:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKiCool.g:23042:3: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKiCool.g:23123:2: ( rule__KeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23123:3: rule__KeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__KeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -77290,14 +77553,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:23051:1: rule__RestrictedKeyStringValueAnnotation__Group__0 : rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:23132:1: rule__RestrictedKeyStringValueAnnotation__Group__0 : rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23055:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:23056:2: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:23136:1: ( rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:23137:2: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__RestrictedKeyStringValueAnnotation__Group__0__Impl();
@@ -77328,17 +77591,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:23063:1: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:23144:1: rule__RestrictedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23067:1: ( ( '@' ) )
-            // InternalKiCool.g:23068:1: ( '@' )
+            // InternalKiCool.g:23148:1: ( ( '@' ) )
+            // InternalKiCool.g:23149:1: ( '@' )
             {
-            // InternalKiCool.g:23068:1: ( '@' )
-            // InternalKiCool.g:23069:2: '@'
+            // InternalKiCool.g:23149:1: ( '@' )
+            // InternalKiCool.g:23150:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -77369,14 +77632,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:23078:1: rule__RestrictedKeyStringValueAnnotation__Group__1 : rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:23159:1: rule__RestrictedKeyStringValueAnnotation__Group__1 : rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23082:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:23083:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:23163:1: ( rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:23164:2: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_124);
             rule__RestrictedKeyStringValueAnnotation__Group__1__Impl();
@@ -77407,23 +77670,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:23090:1: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23171:1: rule__RestrictedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23094:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:23095:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23175:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23176:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:23095:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:23096:2: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23176:1: ( ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23177:2: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:23097:2: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:23097:3: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:23178:2: ( rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23178:3: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__NameAssignment_1();
@@ -77458,14 +77721,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:23105:1: rule__RestrictedKeyStringValueAnnotation__Group__2 : rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:23186:1: rule__RestrictedKeyStringValueAnnotation__Group__2 : rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23109:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:23110:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:23190:1: ( rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:23191:2: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__RestrictedKeyStringValueAnnotation__Group__2__Impl();
@@ -77496,23 +77759,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:23117:1: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKiCool.g:23198:1: rule__RestrictedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23121:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKiCool.g:23122:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23202:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKiCool.g:23203:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKiCool.g:23122:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKiCool.g:23123:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:23203:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23204:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKiCool.g:23124:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKiCool.g:23124:3: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKiCool.g:23205:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:23205:3: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2();
@@ -77547,14 +77810,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:23132:1: rule__RestrictedKeyStringValueAnnotation__Group__3 : rule__RestrictedKeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKiCool.g:23213:1: rule__RestrictedKeyStringValueAnnotation__Group__3 : rule__RestrictedKeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23136:1: ( rule__RestrictedKeyStringValueAnnotation__Group__3__Impl )
-            // InternalKiCool.g:23137:2: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl
+            // InternalKiCool.g:23217:1: ( rule__RestrictedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalKiCool.g:23218:2: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__Group__3__Impl();
@@ -77580,35 +77843,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:23143:1: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKiCool.g:23224:1: rule__RestrictedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23147:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKiCool.g:23148:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:23228:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKiCool.g:23229:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKiCool.g:23148:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKiCool.g:23149:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKiCool.g:23229:1: ( ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:23230:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKiCool.g:23150:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
-            loop244:
+            // InternalKiCool.g:23231:2: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0 )*
+            loop245:
             do {
-                int alt244=2;
-                int LA244_0 = input.LA(1);
+                int alt245=2;
+                int LA245_0 = input.LA(1);
 
-                if ( (LA244_0==86) ) {
-                    alt244=1;
+                if ( (LA245_0==86) ) {
+                    alt245=1;
                 }
 
 
-                switch (alt244) {
+                switch (alt245) {
             	case 1 :
-            	    // InternalKiCool.g:23150:3: rule__RestrictedKeyStringValueAnnotation__Group_3__0
+            	    // InternalKiCool.g:23231:3: rule__RestrictedKeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__RestrictedKeyStringValueAnnotation__Group_3__0();
@@ -77620,7 +77883,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop244;
+            	    break loop245;
                 }
             } while (true);
 
@@ -77649,14 +77912,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0"
-    // InternalKiCool.g:23159:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0 : rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 ;
+    // InternalKiCool.g:23240:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0 : rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23163:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
-            // InternalKiCool.g:23164:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
+            // InternalKiCool.g:23244:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1 )
+            // InternalKiCool.g:23245:2: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl rule__RestrictedKeyStringValueAnnotation__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_124);
             rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl();
@@ -77687,17 +77950,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKiCool.g:23171:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:23252:1: rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23175:1: ( ( ',' ) )
-            // InternalKiCool.g:23176:1: ( ',' )
+            // InternalKiCool.g:23256:1: ( ( ',' ) )
+            // InternalKiCool.g:23257:1: ( ',' )
             {
-            // InternalKiCool.g:23176:1: ( ',' )
-            // InternalKiCool.g:23177:2: ','
+            // InternalKiCool.g:23257:1: ( ',' )
+            // InternalKiCool.g:23258:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -77728,14 +77991,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1"
-    // InternalKiCool.g:23186:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1 : rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKiCool.g:23267:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1 : rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23190:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKiCool.g:23191:2: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKiCool.g:23271:1: ( rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKiCool.g:23272:2: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl();
@@ -77761,23 +78024,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKiCool.g:23197:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKiCool.g:23278:1: rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23201:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKiCool.g:23202:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23282:1: ( ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKiCool.g:23283:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKiCool.g:23202:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKiCool.g:23203:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23283:1: ( ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23284:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKiCool.g:23204:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKiCool.g:23204:3: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKiCool.g:23285:2: ( rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23285:3: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -77812,14 +78075,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__0"
-    // InternalKiCool.g:23213:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
+    // InternalKiCool.g:23294:1: rule__StringPragma__Group__0 : rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 ;
     public final void rule__StringPragma__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23217:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
-            // InternalKiCool.g:23218:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
+            // InternalKiCool.g:23298:1: ( rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1 )
+            // InternalKiCool.g:23299:2: rule__StringPragma__Group__0__Impl rule__StringPragma__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__StringPragma__Group__0__Impl();
@@ -77850,17 +78113,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__0__Impl"
-    // InternalKiCool.g:23225:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
+    // InternalKiCool.g:23306:1: rule__StringPragma__Group__0__Impl : ( '#' ) ;
     public final void rule__StringPragma__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23229:1: ( ( '#' ) )
-            // InternalKiCool.g:23230:1: ( '#' )
+            // InternalKiCool.g:23310:1: ( ( '#' ) )
+            // InternalKiCool.g:23311:1: ( '#' )
             {
-            // InternalKiCool.g:23230:1: ( '#' )
-            // InternalKiCool.g:23231:2: '#'
+            // InternalKiCool.g:23311:1: ( '#' )
+            // InternalKiCool.g:23312:2: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0()); 
@@ -77891,14 +78154,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__1"
-    // InternalKiCool.g:23240:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
+    // InternalKiCool.g:23321:1: rule__StringPragma__Group__1 : rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 ;
     public final void rule__StringPragma__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23244:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
-            // InternalKiCool.g:23245:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
+            // InternalKiCool.g:23325:1: ( rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2 )
+            // InternalKiCool.g:23326:2: rule__StringPragma__Group__1__Impl rule__StringPragma__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__StringPragma__Group__1__Impl();
@@ -77929,23 +78192,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__1__Impl"
-    // InternalKiCool.g:23252:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23333:1: rule__StringPragma__Group__1__Impl : ( ( rule__StringPragma__NameAssignment_1 ) ) ;
     public final void rule__StringPragma__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23256:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
-            // InternalKiCool.g:23257:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalKiCool.g:23337:1: ( ( ( rule__StringPragma__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23338:1: ( ( rule__StringPragma__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:23257:1: ( ( rule__StringPragma__NameAssignment_1 ) )
-            // InternalKiCool.g:23258:2: ( rule__StringPragma__NameAssignment_1 )
+            // InternalKiCool.g:23338:1: ( ( rule__StringPragma__NameAssignment_1 ) )
+            // InternalKiCool.g:23339:2: ( rule__StringPragma__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:23259:2: ( rule__StringPragma__NameAssignment_1 )
-            // InternalKiCool.g:23259:3: rule__StringPragma__NameAssignment_1
+            // InternalKiCool.g:23340:2: ( rule__StringPragma__NameAssignment_1 )
+            // InternalKiCool.g:23340:3: rule__StringPragma__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__NameAssignment_1();
@@ -77980,14 +78243,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__2"
-    // InternalKiCool.g:23267:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
+    // InternalKiCool.g:23348:1: rule__StringPragma__Group__2 : rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 ;
     public final void rule__StringPragma__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23271:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
-            // InternalKiCool.g:23272:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
+            // InternalKiCool.g:23352:1: ( rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3 )
+            // InternalKiCool.g:23353:2: rule__StringPragma__Group__2__Impl rule__StringPragma__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__StringPragma__Group__2__Impl();
@@ -78018,23 +78281,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__2__Impl"
-    // InternalKiCool.g:23279:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
+    // InternalKiCool.g:23360:1: rule__StringPragma__Group__2__Impl : ( ( rule__StringPragma__ValuesAssignment_2 ) ) ;
     public final void rule__StringPragma__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23283:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
-            // InternalKiCool.g:23284:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23364:1: ( ( ( rule__StringPragma__ValuesAssignment_2 ) ) )
+            // InternalKiCool.g:23365:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
             {
-            // InternalKiCool.g:23284:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
-            // InternalKiCool.g:23285:2: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalKiCool.g:23365:1: ( ( rule__StringPragma__ValuesAssignment_2 ) )
+            // InternalKiCool.g:23366:2: ( rule__StringPragma__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesAssignment_2()); 
             }
-            // InternalKiCool.g:23286:2: ( rule__StringPragma__ValuesAssignment_2 )
-            // InternalKiCool.g:23286:3: rule__StringPragma__ValuesAssignment_2
+            // InternalKiCool.g:23367:2: ( rule__StringPragma__ValuesAssignment_2 )
+            // InternalKiCool.g:23367:3: rule__StringPragma__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__ValuesAssignment_2();
@@ -78069,14 +78332,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__3"
-    // InternalKiCool.g:23294:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
+    // InternalKiCool.g:23375:1: rule__StringPragma__Group__3 : rule__StringPragma__Group__3__Impl ;
     public final void rule__StringPragma__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23298:1: ( rule__StringPragma__Group__3__Impl )
-            // InternalKiCool.g:23299:2: rule__StringPragma__Group__3__Impl
+            // InternalKiCool.g:23379:1: ( rule__StringPragma__Group__3__Impl )
+            // InternalKiCool.g:23380:2: rule__StringPragma__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__Group__3__Impl();
@@ -78102,35 +78365,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group__3__Impl"
-    // InternalKiCool.g:23305:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
+    // InternalKiCool.g:23386:1: rule__StringPragma__Group__3__Impl : ( ( rule__StringPragma__Group_3__0 )* ) ;
     public final void rule__StringPragma__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23309:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
-            // InternalKiCool.g:23310:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalKiCool.g:23390:1: ( ( ( rule__StringPragma__Group_3__0 )* ) )
+            // InternalKiCool.g:23391:1: ( ( rule__StringPragma__Group_3__0 )* )
             {
-            // InternalKiCool.g:23310:1: ( ( rule__StringPragma__Group_3__0 )* )
-            // InternalKiCool.g:23311:2: ( rule__StringPragma__Group_3__0 )*
+            // InternalKiCool.g:23391:1: ( ( rule__StringPragma__Group_3__0 )* )
+            // InternalKiCool.g:23392:2: ( rule__StringPragma__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getGroup_3()); 
             }
-            // InternalKiCool.g:23312:2: ( rule__StringPragma__Group_3__0 )*
-            loop245:
+            // InternalKiCool.g:23393:2: ( rule__StringPragma__Group_3__0 )*
+            loop246:
             do {
-                int alt245=2;
-                int LA245_0 = input.LA(1);
+                int alt246=2;
+                int LA246_0 = input.LA(1);
 
-                if ( (LA245_0==86) ) {
-                    alt245=1;
+                if ( (LA246_0==86) ) {
+                    alt246=1;
                 }
 
 
-                switch (alt245) {
+                switch (alt246) {
             	case 1 :
-            	    // InternalKiCool.g:23312:3: rule__StringPragma__Group_3__0
+            	    // InternalKiCool.g:23393:3: rule__StringPragma__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__StringPragma__Group_3__0();
@@ -78142,7 +78405,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop245;
+            	    break loop246;
                 }
             } while (true);
 
@@ -78171,14 +78434,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group_3__0"
-    // InternalKiCool.g:23321:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
+    // InternalKiCool.g:23402:1: rule__StringPragma__Group_3__0 : rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 ;
     public final void rule__StringPragma__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23325:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
-            // InternalKiCool.g:23326:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
+            // InternalKiCool.g:23406:1: ( rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1 )
+            // InternalKiCool.g:23407:2: rule__StringPragma__Group_3__0__Impl rule__StringPragma__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__StringPragma__Group_3__0__Impl();
@@ -78209,17 +78472,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group_3__0__Impl"
-    // InternalKiCool.g:23333:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:23414:1: rule__StringPragma__Group_3__0__Impl : ( ',' ) ;
     public final void rule__StringPragma__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23337:1: ( ( ',' ) )
-            // InternalKiCool.g:23338:1: ( ',' )
+            // InternalKiCool.g:23418:1: ( ( ',' ) )
+            // InternalKiCool.g:23419:1: ( ',' )
             {
-            // InternalKiCool.g:23338:1: ( ',' )
-            // InternalKiCool.g:23339:2: ','
+            // InternalKiCool.g:23419:1: ( ',' )
+            // InternalKiCool.g:23420:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0()); 
@@ -78250,14 +78513,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group_3__1"
-    // InternalKiCool.g:23348:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
+    // InternalKiCool.g:23429:1: rule__StringPragma__Group_3__1 : rule__StringPragma__Group_3__1__Impl ;
     public final void rule__StringPragma__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23352:1: ( rule__StringPragma__Group_3__1__Impl )
-            // InternalKiCool.g:23353:2: rule__StringPragma__Group_3__1__Impl
+            // InternalKiCool.g:23433:1: ( rule__StringPragma__Group_3__1__Impl )
+            // InternalKiCool.g:23434:2: rule__StringPragma__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__Group_3__1__Impl();
@@ -78283,23 +78546,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__Group_3__1__Impl"
-    // InternalKiCool.g:23359:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
+    // InternalKiCool.g:23440:1: rule__StringPragma__Group_3__1__Impl : ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) ;
     public final void rule__StringPragma__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23363:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
-            // InternalKiCool.g:23364:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23444:1: ( ( ( rule__StringPragma__ValuesAssignment_3_1 ) ) )
+            // InternalKiCool.g:23445:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
             {
-            // InternalKiCool.g:23364:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
-            // InternalKiCool.g:23365:2: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23445:1: ( ( rule__StringPragma__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:23446:2: ( rule__StringPragma__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKiCool.g:23366:2: ( rule__StringPragma__ValuesAssignment_3_1 )
-            // InternalKiCool.g:23366:3: rule__StringPragma__ValuesAssignment_3_1
+            // InternalKiCool.g:23447:2: ( rule__StringPragma__ValuesAssignment_3_1 )
+            // InternalKiCool.g:23447:3: rule__StringPragma__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__StringPragma__ValuesAssignment_3_1();
@@ -78334,14 +78597,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:23375:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:23456:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23379:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:23380:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:23460:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:23461:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__TypedKeyStringValueAnnotation__Group__0__Impl();
@@ -78372,17 +78635,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:23387:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:23468:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23391:1: ( ( '@' ) )
-            // InternalKiCool.g:23392:1: ( '@' )
+            // InternalKiCool.g:23472:1: ( ( '@' ) )
+            // InternalKiCool.g:23473:1: ( '@' )
             {
-            // InternalKiCool.g:23392:1: ( '@' )
-            // InternalKiCool.g:23393:2: '@'
+            // InternalKiCool.g:23473:1: ( '@' )
+            // InternalKiCool.g:23474:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -78413,14 +78676,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:23402:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:23483:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23406:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:23407:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:23487:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:23488:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_120);
             rule__TypedKeyStringValueAnnotation__Group__1__Impl();
@@ -78451,23 +78714,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:23414:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23495:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23418:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:23419:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23499:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23500:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:23419:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:23420:2: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23500:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23501:2: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:23421:2: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:23421:3: rule__TypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:23502:2: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23502:3: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__NameAssignment_1();
@@ -78502,14 +78765,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:23429:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:23510:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23433:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:23434:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:23514:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:23515:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__TypedKeyStringValueAnnotation__Group__2__Impl();
@@ -78540,17 +78803,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:23441:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKiCool.g:23522:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23445:1: ( ( '[' ) )
-            // InternalKiCool.g:23446:1: ( '[' )
+            // InternalKiCool.g:23526:1: ( ( '[' ) )
+            // InternalKiCool.g:23527:1: ( '[' )
             {
-            // InternalKiCool.g:23446:1: ( '[' )
-            // InternalKiCool.g:23447:2: '['
+            // InternalKiCool.g:23527:1: ( '[' )
+            // InternalKiCool.g:23528:2: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -78581,14 +78844,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:23456:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKiCool.g:23537:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23460:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
-            // InternalKiCool.g:23461:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
+            // InternalKiCool.g:23541:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
+            // InternalKiCool.g:23542:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
@@ -78619,23 +78882,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:23468:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKiCool.g:23549:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23472:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKiCool.g:23473:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:23553:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKiCool.g:23554:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKiCool.g:23473:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKiCool.g:23474:2: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:23554:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:23555:2: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKiCool.g:23475:2: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKiCool.g:23475:3: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKiCool.g:23556:2: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:23556:3: rule__TypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -78670,14 +78933,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4"
-    // InternalKiCool.g:23483:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKiCool.g:23564:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23487:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
-            // InternalKiCool.g:23488:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
+            // InternalKiCool.g:23568:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5 )
+            // InternalKiCool.g:23569:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl rule__TypedKeyStringValueAnnotation__Group__5
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__TypedKeyStringValueAnnotation__Group__4__Impl();
@@ -78708,17 +78971,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKiCool.g:23495:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKiCool.g:23576:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23499:1: ( ( ']' ) )
-            // InternalKiCool.g:23500:1: ( ']' )
+            // InternalKiCool.g:23580:1: ( ( ']' ) )
+            // InternalKiCool.g:23581:1: ( ']' )
             {
-            // InternalKiCool.g:23500:1: ( ']' )
-            // InternalKiCool.g:23501:2: ']'
+            // InternalKiCool.g:23581:1: ( ']' )
+            // InternalKiCool.g:23582:2: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -78749,14 +79012,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5"
-    // InternalKiCool.g:23510:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKiCool.g:23591:1: rule__TypedKeyStringValueAnnotation__Group__5 : rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23514:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
-            // InternalKiCool.g:23515:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
+            // InternalKiCool.g:23595:1: ( rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6 )
+            // InternalKiCool.g:23596:2: rule__TypedKeyStringValueAnnotation__Group__5__Impl rule__TypedKeyStringValueAnnotation__Group__6
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__TypedKeyStringValueAnnotation__Group__5__Impl();
@@ -78787,23 +79050,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKiCool.g:23522:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKiCool.g:23603:1: rule__TypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23526:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKiCool.g:23527:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:23607:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKiCool.g:23608:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKiCool.g:23527:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKiCool.g:23528:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:23608:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:23609:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKiCool.g:23529:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKiCool.g:23529:3: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKiCool.g:23610:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:23610:3: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -78838,14 +79101,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6"
-    // InternalKiCool.g:23537:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKiCool.g:23618:1: rule__TypedKeyStringValueAnnotation__Group__6 : rule__TypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23541:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKiCool.g:23542:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKiCool.g:23622:1: ( rule__TypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKiCool.g:23623:2: rule__TypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group__6__Impl();
@@ -78871,35 +79134,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKiCool.g:23548:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKiCool.g:23629:1: rule__TypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23552:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKiCool.g:23553:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:23633:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKiCool.g:23634:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKiCool.g:23553:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKiCool.g:23554:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKiCool.g:23634:1: ( ( rule__TypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:23635:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKiCool.g:23555:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
-            loop246:
+            // InternalKiCool.g:23636:2: ( rule__TypedKeyStringValueAnnotation__Group_6__0 )*
+            loop247:
             do {
-                int alt246=2;
-                int LA246_0 = input.LA(1);
+                int alt247=2;
+                int LA247_0 = input.LA(1);
 
-                if ( (LA246_0==86) ) {
-                    alt246=1;
+                if ( (LA247_0==86) ) {
+                    alt247=1;
                 }
 
 
-                switch (alt246) {
+                switch (alt247) {
             	case 1 :
-            	    // InternalKiCool.g:23555:3: rule__TypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKiCool.g:23636:3: rule__TypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__TypedKeyStringValueAnnotation__Group_6__0();
@@ -78911,7 +79174,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop246;
+            	    break loop247;
                 }
             } while (true);
 
@@ -78940,14 +79203,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKiCool.g:23564:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKiCool.g:23645:1: rule__TypedKeyStringValueAnnotation__Group_6__0 : rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23568:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKiCool.g:23569:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
+            // InternalKiCool.g:23649:1: ( rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKiCool.g:23650:2: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl rule__TypedKeyStringValueAnnotation__Group_6__1
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__TypedKeyStringValueAnnotation__Group_6__0__Impl();
@@ -78978,17 +79241,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKiCool.g:23576:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:23657:1: rule__TypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23580:1: ( ( ',' ) )
-            // InternalKiCool.g:23581:1: ( ',' )
+            // InternalKiCool.g:23661:1: ( ( ',' ) )
+            // InternalKiCool.g:23662:1: ( ',' )
             {
-            // InternalKiCool.g:23581:1: ( ',' )
-            // InternalKiCool.g:23582:2: ','
+            // InternalKiCool.g:23662:1: ( ',' )
+            // InternalKiCool.g:23663:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -79019,14 +79282,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKiCool.g:23591:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKiCool.g:23672:1: rule__TypedKeyStringValueAnnotation__Group_6__1 : rule__TypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23595:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKiCool.g:23596:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKiCool.g:23676:1: ( rule__TypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKiCool.g:23677:2: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -79052,23 +79315,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKiCool.g:23602:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKiCool.g:23683:1: rule__TypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__TypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23606:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKiCool.g:23607:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:23687:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKiCool.g:23688:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKiCool.g:23607:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKiCool.g:23608:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:23688:1: ( ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:23689:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKiCool.g:23609:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKiCool.g:23609:3: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKiCool.g:23690:2: ( rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:23690:3: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -79103,14 +79366,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:23618:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:23699:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23622:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:23623:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:23703:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:23704:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl();
@@ -79141,17 +79404,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:23630:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:23711:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23634:1: ( ( '@' ) )
-            // InternalKiCool.g:23635:1: ( '@' )
+            // InternalKiCool.g:23715:1: ( ( '@' ) )
+            // InternalKiCool.g:23716:1: ( '@' )
             {
-            // InternalKiCool.g:23635:1: ( '@' )
-            // InternalKiCool.g:23636:2: '@'
+            // InternalKiCool.g:23716:1: ( '@' )
+            // InternalKiCool.g:23717:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -79182,14 +79445,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:23645:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:23726:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23649:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:23650:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:23730:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:23731:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_120);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl();
@@ -79220,23 +79483,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:23657:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23738:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23661:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:23662:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23742:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23743:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:23662:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:23663:2: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23743:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23744:2: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:23664:2: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:23664:3: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:23745:2: ( rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23745:3: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1();
@@ -79271,14 +79534,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:23672:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2 : rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:23753:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2 : rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23676:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:23677:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:23757:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:23758:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl();
@@ -79309,17 +79572,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:23684:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKiCool.g:23765:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23688:1: ( ( '[' ) )
-            // InternalKiCool.g:23689:1: ( '[' )
+            // InternalKiCool.g:23769:1: ( ( '[' ) )
+            // InternalKiCool.g:23770:1: ( '[' )
             {
-            // InternalKiCool.g:23689:1: ( '[' )
-            // InternalKiCool.g:23690:2: '['
+            // InternalKiCool.g:23770:1: ( '[' )
+            // InternalKiCool.g:23771:2: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -79350,14 +79613,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:23699:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3 : rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKiCool.g:23780:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3 : rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23703:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
-            // InternalKiCool.g:23704:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
+            // InternalKiCool.g:23784:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalKiCool.g:23785:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl();
@@ -79388,23 +79651,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:23711:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKiCool.g:23792:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23715:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKiCool.g:23716:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:23796:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKiCool.g:23797:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKiCool.g:23716:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKiCool.g:23717:2: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:23797:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:23798:2: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKiCool.g:23718:2: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKiCool.g:23718:3: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKiCool.g:23799:2: ( rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:23799:3: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -79439,14 +79702,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4"
-    // InternalKiCool.g:23726:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4 : rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKiCool.g:23807:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4 : rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23730:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
-            // InternalKiCool.g:23731:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
+            // InternalKiCool.g:23811:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalKiCool.g:23812:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__5
             {
             pushFollow(FollowSets000.FOLLOW_124);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl();
@@ -79477,17 +79740,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKiCool.g:23738:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKiCool.g:23819:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23742:1: ( ( ']' ) )
-            // InternalKiCool.g:23743:1: ( ']' )
+            // InternalKiCool.g:23823:1: ( ( ']' ) )
+            // InternalKiCool.g:23824:1: ( ']' )
             {
-            // InternalKiCool.g:23743:1: ( ']' )
-            // InternalKiCool.g:23744:2: ']'
+            // InternalKiCool.g:23824:1: ( ']' )
+            // InternalKiCool.g:23825:2: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -79518,14 +79781,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5"
-    // InternalKiCool.g:23753:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5 : rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKiCool.g:23834:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5 : rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23757:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
-            // InternalKiCool.g:23758:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
+            // InternalKiCool.g:23838:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalKiCool.g:23839:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__6
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl();
@@ -79556,23 +79819,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKiCool.g:23765:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKiCool.g:23846:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23769:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKiCool.g:23770:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:23850:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKiCool.g:23851:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKiCool.g:23770:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKiCool.g:23771:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:23851:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:23852:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKiCool.g:23772:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKiCool.g:23772:3: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKiCool.g:23853:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:23853:3: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -79607,14 +79870,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6"
-    // InternalKiCool.g:23780:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6 : rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKiCool.g:23861:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6 : rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23784:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKiCool.g:23785:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKiCool.g:23865:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKiCool.g:23866:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl();
@@ -79640,35 +79903,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKiCool.g:23791:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKiCool.g:23872:1: rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23795:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKiCool.g:23796:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:23876:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKiCool.g:23877:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKiCool.g:23796:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKiCool.g:23797:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKiCool.g:23877:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:23878:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKiCool.g:23798:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop247:
+            // InternalKiCool.g:23879:2: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop248:
             do {
-                int alt247=2;
-                int LA247_0 = input.LA(1);
+                int alt248=2;
+                int LA248_0 = input.LA(1);
 
-                if ( (LA247_0==86) ) {
-                    alt247=1;
+                if ( (LA248_0==86) ) {
+                    alt248=1;
                 }
 
 
-                switch (alt247) {
+                switch (alt248) {
             	case 1 :
-            	    // InternalKiCool.g:23798:3: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKiCool.g:23879:3: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0();
@@ -79680,7 +79943,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop247;
+            	    break loop248;
                 }
             } while (true);
 
@@ -79709,14 +79972,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKiCool.g:23807:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKiCool.g:23888:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23811:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKiCool.g:23812:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
+            // InternalKiCool.g:23892:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKiCool.g:23893:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1
             {
             pushFollow(FollowSets000.FOLLOW_124);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl();
@@ -79747,17 +80010,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKiCool.g:23819:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:23900:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23823:1: ( ( ',' ) )
-            // InternalKiCool.g:23824:1: ( ',' )
+            // InternalKiCool.g:23904:1: ( ( ',' ) )
+            // InternalKiCool.g:23905:1: ( ',' )
             {
-            // InternalKiCool.g:23824:1: ( ',' )
-            // InternalKiCool.g:23825:2: ','
+            // InternalKiCool.g:23905:1: ( ',' )
+            // InternalKiCool.g:23906:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -79788,14 +80051,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKiCool.g:23834:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKiCool.g:23915:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1 : rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23838:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKiCool.g:23839:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKiCool.g:23919:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKiCool.g:23920:2: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -79821,23 +80084,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKiCool.g:23845:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKiCool.g:23926:1: rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23849:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKiCool.g:23850:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:23930:1: ( ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKiCool.g:23931:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKiCool.g:23850:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKiCool.g:23851:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:23931:1: ( ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:23932:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKiCool.g:23852:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKiCool.g:23852:3: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKiCool.g:23933:2: ( rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:23933:3: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -79872,14 +80135,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:23861:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:23942:1: rule__QuotedKeyStringValueAnnotation__Group__0 : rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23865:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:23866:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:23946:1: ( rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:23947:2: rule__QuotedKeyStringValueAnnotation__Group__0__Impl rule__QuotedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__QuotedKeyStringValueAnnotation__Group__0__Impl();
@@ -79910,17 +80173,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:23873:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:23954:1: rule__QuotedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23877:1: ( ( '@' ) )
-            // InternalKiCool.g:23878:1: ( '@' )
+            // InternalKiCool.g:23958:1: ( ( '@' ) )
+            // InternalKiCool.g:23959:1: ( '@' )
             {
-            // InternalKiCool.g:23878:1: ( '@' )
-            // InternalKiCool.g:23879:2: '@'
+            // InternalKiCool.g:23959:1: ( '@' )
+            // InternalKiCool.g:23960:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -79951,14 +80214,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:23888:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:23969:1: rule__QuotedKeyStringValueAnnotation__Group__1 : rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23892:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:23893:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:23973:1: ( rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:23974:2: rule__QuotedKeyStringValueAnnotation__Group__1__Impl rule__QuotedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__QuotedKeyStringValueAnnotation__Group__1__Impl();
@@ -79989,23 +80252,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:23900:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:23981:1: rule__QuotedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23904:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:23905:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23985:1: ( ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:23986:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:23905:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:23906:2: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23986:1: ( ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:23987:2: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:23907:2: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:23907:3: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:23988:2: ( rule__QuotedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:23988:3: rule__QuotedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__NameAssignment_1();
@@ -80040,14 +80303,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:23915:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:23996:1: rule__QuotedKeyStringValueAnnotation__Group__2 : rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23919:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:23920:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:24000:1: ( rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:24001:2: rule__QuotedKeyStringValueAnnotation__Group__2__Impl rule__QuotedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__QuotedKeyStringValueAnnotation__Group__2__Impl();
@@ -80078,23 +80341,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:23927:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
+    // InternalKiCool.g:24008:1: rule__QuotedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23931:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
-            // InternalKiCool.g:23932:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:24012:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) ) )
+            // InternalKiCool.g:24013:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
             {
-            // InternalKiCool.g:23932:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
-            // InternalKiCool.g:23933:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:24013:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 ) )
+            // InternalKiCool.g:24014:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_2()); 
             }
-            // InternalKiCool.g:23934:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
-            // InternalKiCool.g:23934:3: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
+            // InternalKiCool.g:24015:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 )
+            // InternalKiCool.g:24015:3: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2();
@@ -80129,14 +80392,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:23942:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
+    // InternalKiCool.g:24023:1: rule__QuotedKeyStringValueAnnotation__Group__3 : rule__QuotedKeyStringValueAnnotation__Group__3__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23946:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
-            // InternalKiCool.g:23947:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
+            // InternalKiCool.g:24027:1: ( rule__QuotedKeyStringValueAnnotation__Group__3__Impl )
+            // InternalKiCool.g:24028:2: rule__QuotedKeyStringValueAnnotation__Group__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group__3__Impl();
@@ -80162,35 +80425,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:23953:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
+    // InternalKiCool.g:24034:1: rule__QuotedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23957:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
-            // InternalKiCool.g:23958:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:24038:1: ( ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* ) )
+            // InternalKiCool.g:24039:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
             {
-            // InternalKiCool.g:23958:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
-            // InternalKiCool.g:23959:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            // InternalKiCool.g:24039:1: ( ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )* )
+            // InternalKiCool.g:24040:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getGroup_3()); 
             }
-            // InternalKiCool.g:23960:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
-            loop248:
+            // InternalKiCool.g:24041:2: ( rule__QuotedKeyStringValueAnnotation__Group_3__0 )*
+            loop249:
             do {
-                int alt248=2;
-                int LA248_0 = input.LA(1);
+                int alt249=2;
+                int LA249_0 = input.LA(1);
 
-                if ( (LA248_0==86) ) {
-                    alt248=1;
+                if ( (LA249_0==86) ) {
+                    alt249=1;
                 }
 
 
-                switch (alt248) {
+                switch (alt249) {
             	case 1 :
-            	    // InternalKiCool.g:23960:3: rule__QuotedKeyStringValueAnnotation__Group_3__0
+            	    // InternalKiCool.g:24041:3: rule__QuotedKeyStringValueAnnotation__Group_3__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__QuotedKeyStringValueAnnotation__Group_3__0();
@@ -80202,7 +80465,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop248;
+            	    break loop249;
                 }
             } while (true);
 
@@ -80231,14 +80494,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0"
-    // InternalKiCool.g:23969:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
+    // InternalKiCool.g:24050:1: rule__QuotedKeyStringValueAnnotation__Group_3__0 : rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23973:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
-            // InternalKiCool.g:23974:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
+            // InternalKiCool.g:24054:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1 )
+            // InternalKiCool.g:24055:2: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl rule__QuotedKeyStringValueAnnotation__Group_3__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl();
@@ -80269,17 +80532,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl"
-    // InternalKiCool.g:23981:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:24062:1: rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl : ( ',' ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:23985:1: ( ( ',' ) )
-            // InternalKiCool.g:23986:1: ( ',' )
+            // InternalKiCool.g:24066:1: ( ( ',' ) )
+            // InternalKiCool.g:24067:1: ( ',' )
             {
-            // InternalKiCool.g:23986:1: ( ',' )
-            // InternalKiCool.g:23987:2: ','
+            // InternalKiCool.g:24067:1: ( ',' )
+            // InternalKiCool.g:24068:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0()); 
@@ -80310,14 +80573,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1"
-    // InternalKiCool.g:23996:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
+    // InternalKiCool.g:24077:1: rule__QuotedKeyStringValueAnnotation__Group_3__1 : rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24000:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
-            // InternalKiCool.g:24001:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
+            // InternalKiCool.g:24081:1: ( rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl )
+            // InternalKiCool.g:24082:2: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl();
@@ -80343,23 +80606,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl"
-    // InternalKiCool.g:24007:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
+    // InternalKiCool.g:24088:1: rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl : ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) ;
     public final void rule__QuotedKeyStringValueAnnotation__Group_3__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24011:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
-            // InternalKiCool.g:24012:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:24092:1: ( ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) ) )
+            // InternalKiCool.g:24093:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
             {
-            // InternalKiCool.g:24012:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
-            // InternalKiCool.g:24013:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:24093:1: ( ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 ) )
+            // InternalKiCool.g:24094:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesAssignment_3_1()); 
             }
-            // InternalKiCool.g:24014:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
-            // InternalKiCool.g:24014:3: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
+            // InternalKiCool.g:24095:2: ( rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 )
+            // InternalKiCool.g:24095:3: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1();
@@ -80394,14 +80657,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0"
-    // InternalKiCool.g:24023:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
+    // InternalKiCool.g:24104:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0 : rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24027:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
-            // InternalKiCool.g:24028:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
+            // InternalKiCool.g:24108:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1 )
+            // InternalKiCool.g:24109:2: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl();
@@ -80432,17 +80695,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl"
-    // InternalKiCool.g:24035:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    // InternalKiCool.g:24116:1: rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24039:1: ( ( '@' ) )
-            // InternalKiCool.g:24040:1: ( '@' )
+            // InternalKiCool.g:24120:1: ( ( '@' ) )
+            // InternalKiCool.g:24121:1: ( '@' )
             {
-            // InternalKiCool.g:24040:1: ( '@' )
-            // InternalKiCool.g:24041:2: '@'
+            // InternalKiCool.g:24121:1: ( '@' )
+            // InternalKiCool.g:24122:2: '@'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
@@ -80473,14 +80736,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1"
-    // InternalKiCool.g:24050:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
+    // InternalKiCool.g:24131:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1 : rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24054:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
-            // InternalKiCool.g:24055:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
+            // InternalKiCool.g:24135:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2 )
+            // InternalKiCool.g:24136:2: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_120);
             rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl();
@@ -80511,23 +80774,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl"
-    // InternalKiCool.g:24062:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    // InternalKiCool.g:24143:1: rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24066:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
-            // InternalKiCool.g:24067:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:24147:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // InternalKiCool.g:24148:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            // InternalKiCool.g:24067:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
-            // InternalKiCool.g:24068:2: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:24148:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // InternalKiCool.g:24149:2: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // InternalKiCool.g:24069:2: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
-            // InternalKiCool.g:24069:3: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
+            // InternalKiCool.g:24150:2: ( rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 )
+            // InternalKiCool.g:24150:3: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1();
@@ -80562,14 +80825,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2"
-    // InternalKiCool.g:24077:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
+    // InternalKiCool.g:24158:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2 : rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24081:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
-            // InternalKiCool.g:24082:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
+            // InternalKiCool.g:24162:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3 )
+            // InternalKiCool.g:24163:2: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__3
             {
             pushFollow(FollowSets000.FOLLOW_8);
             rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl();
@@ -80600,17 +80863,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl"
-    // InternalKiCool.g:24089:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
+    // InternalKiCool.g:24170:1: rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl : ( '[' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24093:1: ( ( '[' ) )
-            // InternalKiCool.g:24094:1: ( '[' )
+            // InternalKiCool.g:24174:1: ( ( '[' ) )
+            // InternalKiCool.g:24175:1: ( '[' )
             {
-            // InternalKiCool.g:24094:1: ( '[' )
-            // InternalKiCool.g:24095:2: '['
+            // InternalKiCool.g:24175:1: ( '[' )
+            // InternalKiCool.g:24176:2: '['
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2()); 
@@ -80641,14 +80904,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3"
-    // InternalKiCool.g:24104:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
+    // InternalKiCool.g:24185:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3 : rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24108:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
-            // InternalKiCool.g:24109:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
+            // InternalKiCool.g:24189:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
+            // InternalKiCool.g:24190:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
             {
             pushFollow(FollowSets000.FOLLOW_14);
             rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl();
@@ -80679,23 +80942,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl"
-    // InternalKiCool.g:24116:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
+    // InternalKiCool.g:24197:1: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24120:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
-            // InternalKiCool.g:24121:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:24201:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) ) )
+            // InternalKiCool.g:24202:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
             {
-            // InternalKiCool.g:24121:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
-            // InternalKiCool.g:24122:2: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:24202:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 ) )
+            // InternalKiCool.g:24203:2: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeAssignment_3()); 
             }
-            // InternalKiCool.g:24123:2: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
-            // InternalKiCool.g:24123:3: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
+            // InternalKiCool.g:24204:2: ( rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 )
+            // InternalKiCool.g:24204:3: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3();
@@ -80730,14 +80993,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4"
-    // InternalKiCool.g:24131:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
+    // InternalKiCool.g:24212:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4 : rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24135:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
-            // InternalKiCool.g:24136:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
+            // InternalKiCool.g:24216:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5 )
+            // InternalKiCool.g:24217:2: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__5
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl();
@@ -80768,17 +81031,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl"
-    // InternalKiCool.g:24143:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
+    // InternalKiCool.g:24224:1: rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl : ( ']' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24147:1: ( ( ']' ) )
-            // InternalKiCool.g:24148:1: ( ']' )
+            // InternalKiCool.g:24228:1: ( ( ']' ) )
+            // InternalKiCool.g:24229:1: ( ']' )
             {
-            // InternalKiCool.g:24148:1: ( ']' )
-            // InternalKiCool.g:24149:2: ']'
+            // InternalKiCool.g:24229:1: ( ']' )
+            // InternalKiCool.g:24230:2: ']'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4()); 
@@ -80809,14 +81072,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5"
-    // InternalKiCool.g:24158:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
+    // InternalKiCool.g:24239:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5 : rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24162:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
-            // InternalKiCool.g:24163:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
+            // InternalKiCool.g:24243:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6 )
+            // InternalKiCool.g:24244:2: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__6
             {
             pushFollow(FollowSets000.FOLLOW_44);
             rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl();
@@ -80847,23 +81110,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl"
-    // InternalKiCool.g:24170:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
+    // InternalKiCool.g:24251:1: rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__5__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24174:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
-            // InternalKiCool.g:24175:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:24255:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) ) )
+            // InternalKiCool.g:24256:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
             {
-            // InternalKiCool.g:24175:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
-            // InternalKiCool.g:24176:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:24256:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 ) )
+            // InternalKiCool.g:24257:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_5()); 
             }
-            // InternalKiCool.g:24177:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
-            // InternalKiCool.g:24177:3: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
+            // InternalKiCool.g:24258:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 )
+            // InternalKiCool.g:24258:3: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5();
@@ -80898,14 +81161,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6"
-    // InternalKiCool.g:24185:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
+    // InternalKiCool.g:24266:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6 : rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24189:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
-            // InternalKiCool.g:24190:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
+            // InternalKiCool.g:24270:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl )
+            // InternalKiCool.g:24271:2: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl();
@@ -80931,35 +81194,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl"
-    // InternalKiCool.g:24196:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
+    // InternalKiCool.g:24277:1: rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group__6__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24200:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
-            // InternalKiCool.g:24201:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:24281:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* ) )
+            // InternalKiCool.g:24282:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
             {
-            // InternalKiCool.g:24201:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
-            // InternalKiCool.g:24202:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            // InternalKiCool.g:24282:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )* )
+            // InternalKiCool.g:24283:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getGroup_6()); 
             }
-            // InternalKiCool.g:24203:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
-            loop249:
+            // InternalKiCool.g:24284:2: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 )*
+            loop250:
             do {
-                int alt249=2;
-                int LA249_0 = input.LA(1);
+                int alt250=2;
+                int LA250_0 = input.LA(1);
 
-                if ( (LA249_0==86) ) {
-                    alt249=1;
+                if ( (LA250_0==86) ) {
+                    alt250=1;
                 }
 
 
-                switch (alt249) {
+                switch (alt250) {
             	case 1 :
-            	    // InternalKiCool.g:24203:3: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
+            	    // InternalKiCool.g:24284:3: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_36);
             	    rule__QuotedTypedKeyStringValueAnnotation__Group_6__0();
@@ -80971,7 +81234,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop249;
+            	    break loop250;
                 }
             } while (true);
 
@@ -81000,14 +81263,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0"
-    // InternalKiCool.g:24212:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
+    // InternalKiCool.g:24293:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24216:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
-            // InternalKiCool.g:24217:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
+            // InternalKiCool.g:24297:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 )
+            // InternalKiCool.g:24298:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl rule__QuotedTypedKeyStringValueAnnotation__Group_6__1
             {
             pushFollow(FollowSets000.FOLLOW_39);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl();
@@ -81038,17 +81301,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl"
-    // InternalKiCool.g:24224:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
+    // InternalKiCool.g:24305:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl : ( ',' ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24228:1: ( ( ',' ) )
-            // InternalKiCool.g:24229:1: ( ',' )
+            // InternalKiCool.g:24309:1: ( ( ',' ) )
+            // InternalKiCool.g:24310:1: ( ',' )
             {
-            // InternalKiCool.g:24229:1: ( ',' )
-            // InternalKiCool.g:24230:2: ','
+            // InternalKiCool.g:24310:1: ( ',' )
+            // InternalKiCool.g:24311:2: ','
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0()); 
@@ -81079,14 +81342,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1"
-    // InternalKiCool.g:24239:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
+    // InternalKiCool.g:24320:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1 : rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24243:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
-            // InternalKiCool.g:24244:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
+            // InternalKiCool.g:24324:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl )
+            // InternalKiCool.g:24325:2: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl();
@@ -81112,23 +81375,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl"
-    // InternalKiCool.g:24250:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
+    // InternalKiCool.g:24331:1: rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl : ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__Group_6__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24254:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
-            // InternalKiCool.g:24255:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:24335:1: ( ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) ) )
+            // InternalKiCool.g:24336:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
             {
-            // InternalKiCool.g:24255:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
-            // InternalKiCool.g:24256:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:24336:1: ( ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 ) )
+            // InternalKiCool.g:24337:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesAssignment_6_1()); 
             }
-            // InternalKiCool.g:24257:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
-            // InternalKiCool.g:24257:3: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
+            // InternalKiCool.g:24338:2: ( rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 )
+            // InternalKiCool.g:24338:3: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1();
@@ -81163,14 +81426,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__0"
-    // InternalKiCool.g:24266:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
+    // InternalKiCool.g:24347:1: rule__ExtendedID__Group__0 : rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 ;
     public final void rule__ExtendedID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24270:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
-            // InternalKiCool.g:24271:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
+            // InternalKiCool.g:24351:1: ( rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1 )
+            // InternalKiCool.g:24352:2: rule__ExtendedID__Group__0__Impl rule__ExtendedID__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_125);
             rule__ExtendedID__Group__0__Impl();
@@ -81201,17 +81464,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__0__Impl"
-    // InternalKiCool.g:24278:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalKiCool.g:24359:1: rule__ExtendedID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24282:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:24283:1: ( RULE_ID )
+            // InternalKiCool.g:24363:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:24364:1: ( RULE_ID )
             {
-            // InternalKiCool.g:24283:1: ( RULE_ID )
-            // InternalKiCool.g:24284:2: RULE_ID
+            // InternalKiCool.g:24364:1: ( RULE_ID )
+            // InternalKiCool.g:24365:2: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0()); 
@@ -81242,14 +81505,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__1"
-    // InternalKiCool.g:24293:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
+    // InternalKiCool.g:24374:1: rule__ExtendedID__Group__1 : rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 ;
     public final void rule__ExtendedID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24297:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
-            // InternalKiCool.g:24298:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
+            // InternalKiCool.g:24378:1: ( rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2 )
+            // InternalKiCool.g:24379:2: rule__ExtendedID__Group__1__Impl rule__ExtendedID__Group__2
             {
             pushFollow(FollowSets000.FOLLOW_125);
             rule__ExtendedID__Group__1__Impl();
@@ -81280,44 +81543,44 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__1__Impl"
-    // InternalKiCool.g:24305:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
+    // InternalKiCool.g:24386:1: rule__ExtendedID__Group__1__Impl : ( ( rule__ExtendedID__Group_1__0 )* ) ;
     public final void rule__ExtendedID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24309:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
-            // InternalKiCool.g:24310:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalKiCool.g:24390:1: ( ( ( rule__ExtendedID__Group_1__0 )* ) )
+            // InternalKiCool.g:24391:1: ( ( rule__ExtendedID__Group_1__0 )* )
             {
-            // InternalKiCool.g:24310:1: ( ( rule__ExtendedID__Group_1__0 )* )
-            // InternalKiCool.g:24311:2: ( rule__ExtendedID__Group_1__0 )*
+            // InternalKiCool.g:24391:1: ( ( rule__ExtendedID__Group_1__0 )* )
+            // InternalKiCool.g:24392:2: ( rule__ExtendedID__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup_1()); 
             }
-            // InternalKiCool.g:24312:2: ( rule__ExtendedID__Group_1__0 )*
-            loop250:
+            // InternalKiCool.g:24393:2: ( rule__ExtendedID__Group_1__0 )*
+            loop251:
             do {
-                int alt250=2;
-                int LA250_0 = input.LA(1);
+                int alt251=2;
+                int LA251_0 = input.LA(1);
 
-                if ( (LA250_0==24) ) {
-                    int LA250_2 = input.LA(2);
+                if ( (LA251_0==24) ) {
+                    int LA251_2 = input.LA(2);
 
-                    if ( (LA250_2==RULE_ID) ) {
-                        alt250=1;
+                    if ( (LA251_2==RULE_ID) ) {
+                        alt251=1;
                     }
 
 
                 }
-                else if ( (LA250_0==39) ) {
-                    alt250=1;
+                else if ( (LA251_0==39) ) {
+                    alt251=1;
                 }
 
 
-                switch (alt250) {
+                switch (alt251) {
             	case 1 :
-            	    // InternalKiCool.g:24312:3: rule__ExtendedID__Group_1__0
+            	    // InternalKiCool.g:24393:3: rule__ExtendedID__Group_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_126);
             	    rule__ExtendedID__Group_1__0();
@@ -81329,7 +81592,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop250;
+            	    break loop251;
                 }
             } while (true);
 
@@ -81358,14 +81621,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__2"
-    // InternalKiCool.g:24320:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
+    // InternalKiCool.g:24401:1: rule__ExtendedID__Group__2 : rule__ExtendedID__Group__2__Impl ;
     public final void rule__ExtendedID__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24324:1: ( rule__ExtendedID__Group__2__Impl )
-            // InternalKiCool.g:24325:2: rule__ExtendedID__Group__2__Impl
+            // InternalKiCool.g:24405:1: ( rule__ExtendedID__Group__2__Impl )
+            // InternalKiCool.g:24406:2: rule__ExtendedID__Group__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group__2__Impl();
@@ -81391,35 +81654,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group__2__Impl"
-    // InternalKiCool.g:24331:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
+    // InternalKiCool.g:24412:1: rule__ExtendedID__Group__2__Impl : ( ( rule__ExtendedID__Group_2__0 )? ) ;
     public final void rule__ExtendedID__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24335:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
-            // InternalKiCool.g:24336:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalKiCool.g:24416:1: ( ( ( rule__ExtendedID__Group_2__0 )? ) )
+            // InternalKiCool.g:24417:1: ( ( rule__ExtendedID__Group_2__0 )? )
             {
-            // InternalKiCool.g:24336:1: ( ( rule__ExtendedID__Group_2__0 )? )
-            // InternalKiCool.g:24337:2: ( rule__ExtendedID__Group_2__0 )?
+            // InternalKiCool.g:24417:1: ( ( rule__ExtendedID__Group_2__0 )? )
+            // InternalKiCool.g:24418:2: ( rule__ExtendedID__Group_2__0 )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getGroup_2()); 
             }
-            // InternalKiCool.g:24338:2: ( rule__ExtendedID__Group_2__0 )?
-            int alt251=2;
-            int LA251_0 = input.LA(1);
+            // InternalKiCool.g:24419:2: ( rule__ExtendedID__Group_2__0 )?
+            int alt252=2;
+            int LA252_0 = input.LA(1);
 
-            if ( (LA251_0==101) ) {
-                int LA251_1 = input.LA(2);
+            if ( (LA252_0==101) ) {
+                int LA252_1 = input.LA(2);
 
-                if ( (LA251_1==RULE_INT) ) {
-                    alt251=1;
+                if ( (LA252_1==RULE_INT) ) {
+                    alt252=1;
                 }
             }
-            switch (alt251) {
+            switch (alt252) {
                 case 1 :
-                    // InternalKiCool.g:24338:3: rule__ExtendedID__Group_2__0
+                    // InternalKiCool.g:24419:3: rule__ExtendedID__Group_2__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
                     rule__ExtendedID__Group_2__0();
@@ -81457,14 +81720,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0"
-    // InternalKiCool.g:24347:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
+    // InternalKiCool.g:24428:1: rule__ExtendedID__Group_1__0 : rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 ;
     public final void rule__ExtendedID__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24351:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
-            // InternalKiCool.g:24352:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
+            // InternalKiCool.g:24432:1: ( rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1 )
+            // InternalKiCool.g:24433:2: rule__ExtendedID__Group_1__0__Impl rule__ExtendedID__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__ExtendedID__Group_1__0__Impl();
@@ -81495,23 +81758,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__0__Impl"
-    // InternalKiCool.g:24359:1: rule__ExtendedID__Group_1__0__Impl : ( ( rule__ExtendedID__Alternatives_1_0 ) ) ;
+    // InternalKiCool.g:24440:1: rule__ExtendedID__Group_1__0__Impl : ( ( rule__ExtendedID__Alternatives_1_0 ) ) ;
     public final void rule__ExtendedID__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24363:1: ( ( ( rule__ExtendedID__Alternatives_1_0 ) ) )
-            // InternalKiCool.g:24364:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
+            // InternalKiCool.g:24444:1: ( ( ( rule__ExtendedID__Alternatives_1_0 ) ) )
+            // InternalKiCool.g:24445:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
             {
-            // InternalKiCool.g:24364:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
-            // InternalKiCool.g:24365:2: ( rule__ExtendedID__Alternatives_1_0 )
+            // InternalKiCool.g:24445:1: ( ( rule__ExtendedID__Alternatives_1_0 ) )
+            // InternalKiCool.g:24446:2: ( rule__ExtendedID__Alternatives_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getAlternatives_1_0()); 
             }
-            // InternalKiCool.g:24366:2: ( rule__ExtendedID__Alternatives_1_0 )
-            // InternalKiCool.g:24366:3: rule__ExtendedID__Alternatives_1_0
+            // InternalKiCool.g:24447:2: ( rule__ExtendedID__Alternatives_1_0 )
+            // InternalKiCool.g:24447:3: rule__ExtendedID__Alternatives_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Alternatives_1_0();
@@ -81546,14 +81809,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1"
-    // InternalKiCool.g:24374:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
+    // InternalKiCool.g:24455:1: rule__ExtendedID__Group_1__1 : rule__ExtendedID__Group_1__1__Impl ;
     public final void rule__ExtendedID__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24378:1: ( rule__ExtendedID__Group_1__1__Impl )
-            // InternalKiCool.g:24379:2: rule__ExtendedID__Group_1__1__Impl
+            // InternalKiCool.g:24459:1: ( rule__ExtendedID__Group_1__1__Impl )
+            // InternalKiCool.g:24460:2: rule__ExtendedID__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_1__1__Impl();
@@ -81579,17 +81842,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_1__1__Impl"
-    // InternalKiCool.g:24385:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
+    // InternalKiCool.g:24466:1: rule__ExtendedID__Group_1__1__Impl : ( RULE_ID ) ;
     public final void rule__ExtendedID__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24389:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:24390:1: ( RULE_ID )
+            // InternalKiCool.g:24470:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:24471:1: ( RULE_ID )
             {
-            // InternalKiCool.g:24390:1: ( RULE_ID )
-            // InternalKiCool.g:24391:2: RULE_ID
+            // InternalKiCool.g:24471:1: ( RULE_ID )
+            // InternalKiCool.g:24472:2: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_1_1()); 
@@ -81620,14 +81883,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0"
-    // InternalKiCool.g:24401:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
+    // InternalKiCool.g:24482:1: rule__ExtendedID__Group_2__0 : rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 ;
     public final void rule__ExtendedID__Group_2__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24405:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
-            // InternalKiCool.g:24406:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
+            // InternalKiCool.g:24486:1: ( rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1 )
+            // InternalKiCool.g:24487:2: rule__ExtendedID__Group_2__0__Impl rule__ExtendedID__Group_2__1
             {
             pushFollow(FollowSets000.FOLLOW_112);
             rule__ExtendedID__Group_2__0__Impl();
@@ -81658,17 +81921,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__0__Impl"
-    // InternalKiCool.g:24413:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
+    // InternalKiCool.g:24494:1: rule__ExtendedID__Group_2__0__Impl : ( '#' ) ;
     public final void rule__ExtendedID__Group_2__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24417:1: ( ( '#' ) )
-            // InternalKiCool.g:24418:1: ( '#' )
+            // InternalKiCool.g:24498:1: ( ( '#' ) )
+            // InternalKiCool.g:24499:1: ( '#' )
             {
-            // InternalKiCool.g:24418:1: ( '#' )
-            // InternalKiCool.g:24419:2: '#'
+            // InternalKiCool.g:24499:1: ( '#' )
+            // InternalKiCool.g:24500:2: '#'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getNumberSignKeyword_2_0()); 
@@ -81699,14 +81962,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1"
-    // InternalKiCool.g:24428:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
+    // InternalKiCool.g:24509:1: rule__ExtendedID__Group_2__1 : rule__ExtendedID__Group_2__1__Impl ;
     public final void rule__ExtendedID__Group_2__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24432:1: ( rule__ExtendedID__Group_2__1__Impl )
-            // InternalKiCool.g:24433:2: rule__ExtendedID__Group_2__1__Impl
+            // InternalKiCool.g:24513:1: ( rule__ExtendedID__Group_2__1__Impl )
+            // InternalKiCool.g:24514:2: rule__ExtendedID__Group_2__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ExtendedID__Group_2__1__Impl();
@@ -81732,17 +81995,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExtendedID__Group_2__1__Impl"
-    // InternalKiCool.g:24439:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
+    // InternalKiCool.g:24520:1: rule__ExtendedID__Group_2__1__Impl : ( RULE_INT ) ;
     public final void rule__ExtendedID__Group_2__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24443:1: ( ( RULE_INT ) )
-            // InternalKiCool.g:24444:1: ( RULE_INT )
+            // InternalKiCool.g:24524:1: ( ( RULE_INT ) )
+            // InternalKiCool.g:24525:1: ( RULE_INT )
             {
-            // InternalKiCool.g:24444:1: ( RULE_INT )
-            // InternalKiCool.g:24445:2: RULE_INT
+            // InternalKiCool.g:24525:1: ( RULE_INT )
+            // InternalKiCool.g:24526:2: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExtendedIDAccess().getINTTerminalRuleCall_2_1()); 
@@ -81773,14 +82036,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group__0"
-    // InternalKiCool.g:24455:1: rule__QualifiedID__Group__0 : rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 ;
+    // InternalKiCool.g:24536:1: rule__QualifiedID__Group__0 : rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 ;
     public final void rule__QualifiedID__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24459:1: ( rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 )
-            // InternalKiCool.g:24460:2: rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1
+            // InternalKiCool.g:24540:1: ( rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1 )
+            // InternalKiCool.g:24541:2: rule__QualifiedID__Group__0__Impl rule__QualifiedID__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_127);
             rule__QualifiedID__Group__0__Impl();
@@ -81811,17 +82074,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group__0__Impl"
-    // InternalKiCool.g:24467:1: rule__QualifiedID__Group__0__Impl : ( RULE_ID ) ;
+    // InternalKiCool.g:24548:1: rule__QualifiedID__Group__0__Impl : ( RULE_ID ) ;
     public final void rule__QualifiedID__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24471:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:24472:1: ( RULE_ID )
+            // InternalKiCool.g:24552:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:24553:1: ( RULE_ID )
             {
-            // InternalKiCool.g:24472:1: ( RULE_ID )
-            // InternalKiCool.g:24473:2: RULE_ID
+            // InternalKiCool.g:24553:1: ( RULE_ID )
+            // InternalKiCool.g:24554:2: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_0()); 
@@ -81852,14 +82115,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group__1"
-    // InternalKiCool.g:24482:1: rule__QualifiedID__Group__1 : rule__QualifiedID__Group__1__Impl ;
+    // InternalKiCool.g:24563:1: rule__QualifiedID__Group__1 : rule__QualifiedID__Group__1__Impl ;
     public final void rule__QualifiedID__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24486:1: ( rule__QualifiedID__Group__1__Impl )
-            // InternalKiCool.g:24487:2: rule__QualifiedID__Group__1__Impl
+            // InternalKiCool.g:24567:1: ( rule__QualifiedID__Group__1__Impl )
+            // InternalKiCool.g:24568:2: rule__QualifiedID__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QualifiedID__Group__1__Impl();
@@ -81885,35 +82148,35 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group__1__Impl"
-    // InternalKiCool.g:24493:1: rule__QualifiedID__Group__1__Impl : ( ( rule__QualifiedID__Group_1__0 )* ) ;
+    // InternalKiCool.g:24574:1: rule__QualifiedID__Group__1__Impl : ( ( rule__QualifiedID__Group_1__0 )* ) ;
     public final void rule__QualifiedID__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24497:1: ( ( ( rule__QualifiedID__Group_1__0 )* ) )
-            // InternalKiCool.g:24498:1: ( ( rule__QualifiedID__Group_1__0 )* )
+            // InternalKiCool.g:24578:1: ( ( ( rule__QualifiedID__Group_1__0 )* ) )
+            // InternalKiCool.g:24579:1: ( ( rule__QualifiedID__Group_1__0 )* )
             {
-            // InternalKiCool.g:24498:1: ( ( rule__QualifiedID__Group_1__0 )* )
-            // InternalKiCool.g:24499:2: ( rule__QualifiedID__Group_1__0 )*
+            // InternalKiCool.g:24579:1: ( ( rule__QualifiedID__Group_1__0 )* )
+            // InternalKiCool.g:24580:2: ( rule__QualifiedID__Group_1__0 )*
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQualifiedIDAccess().getGroup_1()); 
             }
-            // InternalKiCool.g:24500:2: ( rule__QualifiedID__Group_1__0 )*
-            loop252:
+            // InternalKiCool.g:24581:2: ( rule__QualifiedID__Group_1__0 )*
+            loop253:
             do {
-                int alt252=2;
-                int LA252_0 = input.LA(1);
+                int alt253=2;
+                int LA253_0 = input.LA(1);
 
-                if ( (LA252_0==39) ) {
-                    alt252=1;
+                if ( (LA253_0==39) ) {
+                    alt253=1;
                 }
 
 
-                switch (alt252) {
+                switch (alt253) {
             	case 1 :
-            	    // InternalKiCool.g:24500:3: rule__QualifiedID__Group_1__0
+            	    // InternalKiCool.g:24581:3: rule__QualifiedID__Group_1__0
             	    {
             	    pushFollow(FollowSets000.FOLLOW_128);
             	    rule__QualifiedID__Group_1__0();
@@ -81925,7 +82188,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             	    break;
 
             	default :
-            	    break loop252;
+            	    break loop253;
                 }
             } while (true);
 
@@ -81954,14 +82217,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group_1__0"
-    // InternalKiCool.g:24509:1: rule__QualifiedID__Group_1__0 : rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1 ;
+    // InternalKiCool.g:24590:1: rule__QualifiedID__Group_1__0 : rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1 ;
     public final void rule__QualifiedID__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24513:1: ( rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1 )
-            // InternalKiCool.g:24514:2: rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1
+            // InternalKiCool.g:24594:1: ( rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1 )
+            // InternalKiCool.g:24595:2: rule__QualifiedID__Group_1__0__Impl rule__QualifiedID__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_6);
             rule__QualifiedID__Group_1__0__Impl();
@@ -81992,17 +82255,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group_1__0__Impl"
-    // InternalKiCool.g:24521:1: rule__QualifiedID__Group_1__0__Impl : ( '.' ) ;
+    // InternalKiCool.g:24602:1: rule__QualifiedID__Group_1__0__Impl : ( '.' ) ;
     public final void rule__QualifiedID__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24525:1: ( ( '.' ) )
-            // InternalKiCool.g:24526:1: ( '.' )
+            // InternalKiCool.g:24606:1: ( ( '.' ) )
+            // InternalKiCool.g:24607:1: ( '.' )
             {
-            // InternalKiCool.g:24526:1: ( '.' )
-            // InternalKiCool.g:24527:2: '.'
+            // InternalKiCool.g:24607:1: ( '.' )
+            // InternalKiCool.g:24608:2: '.'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQualifiedIDAccess().getFullStopKeyword_1_0()); 
@@ -82033,14 +82296,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group_1__1"
-    // InternalKiCool.g:24536:1: rule__QualifiedID__Group_1__1 : rule__QualifiedID__Group_1__1__Impl ;
+    // InternalKiCool.g:24617:1: rule__QualifiedID__Group_1__1 : rule__QualifiedID__Group_1__1__Impl ;
     public final void rule__QualifiedID__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24540:1: ( rule__QualifiedID__Group_1__1__Impl )
-            // InternalKiCool.g:24541:2: rule__QualifiedID__Group_1__1__Impl
+            // InternalKiCool.g:24621:1: ( rule__QualifiedID__Group_1__1__Impl )
+            // InternalKiCool.g:24622:2: rule__QualifiedID__Group_1__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__QualifiedID__Group_1__1__Impl();
@@ -82066,17 +82329,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QualifiedID__Group_1__1__Impl"
-    // InternalKiCool.g:24547:1: rule__QualifiedID__Group_1__1__Impl : ( RULE_ID ) ;
+    // InternalKiCool.g:24628:1: rule__QualifiedID__Group_1__1__Impl : ( RULE_ID ) ;
     public final void rule__QualifiedID__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24551:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:24552:1: ( RULE_ID )
+            // InternalKiCool.g:24632:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:24633:1: ( RULE_ID )
             {
-            // InternalKiCool.g:24552:1: ( RULE_ID )
-            // InternalKiCool.g:24553:2: RULE_ID
+            // InternalKiCool.g:24633:1: ( RULE_ID )
+            // InternalKiCool.g:24634:2: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQualifiedIDAccess().getIDTerminalRuleCall_1_1()); 
@@ -82107,14 +82370,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Integer__Group__0"
-    // InternalKiCool.g:24563:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
+    // InternalKiCool.g:24644:1: rule__Integer__Group__0 : rule__Integer__Group__0__Impl rule__Integer__Group__1 ;
     public final void rule__Integer__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24567:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
-            // InternalKiCool.g:24568:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
+            // InternalKiCool.g:24648:1: ( rule__Integer__Group__0__Impl rule__Integer__Group__1 )
+            // InternalKiCool.g:24649:2: rule__Integer__Group__0__Impl rule__Integer__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_129);
             rule__Integer__Group__0__Impl();
@@ -82145,31 +82408,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Integer__Group__0__Impl"
-    // InternalKiCool.g:24575:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalKiCool.g:24656:1: rule__Integer__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Integer__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24579:1: ( ( ( '-' )? ) )
-            // InternalKiCool.g:24580:1: ( ( '-' )? )
+            // InternalKiCool.g:24660:1: ( ( ( '-' )? ) )
+            // InternalKiCool.g:24661:1: ( ( '-' )? )
             {
-            // InternalKiCool.g:24580:1: ( ( '-' )? )
-            // InternalKiCool.g:24581:2: ( '-' )?
+            // InternalKiCool.g:24661:1: ( ( '-' )? )
+            // InternalKiCool.g:24662:2: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getHyphenMinusKeyword_0()); 
             }
-            // InternalKiCool.g:24582:2: ( '-' )?
-            int alt253=2;
-            int LA253_0 = input.LA(1);
+            // InternalKiCool.g:24663:2: ( '-' )?
+            int alt254=2;
+            int LA254_0 = input.LA(1);
 
-            if ( (LA253_0==24) ) {
-                alt253=1;
+            if ( (LA254_0==24) ) {
+                alt254=1;
             }
-            switch (alt253) {
+            switch (alt254) {
                 case 1 :
-                    // InternalKiCool.g:24582:3: '-'
+                    // InternalKiCool.g:24663:3: '-'
                     {
                     match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -82203,14 +82466,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Integer__Group__1"
-    // InternalKiCool.g:24590:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
+    // InternalKiCool.g:24671:1: rule__Integer__Group__1 : rule__Integer__Group__1__Impl ;
     public final void rule__Integer__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24594:1: ( rule__Integer__Group__1__Impl )
-            // InternalKiCool.g:24595:2: rule__Integer__Group__1__Impl
+            // InternalKiCool.g:24675:1: ( rule__Integer__Group__1__Impl )
+            // InternalKiCool.g:24676:2: rule__Integer__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Integer__Group__1__Impl();
@@ -82236,17 +82499,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Integer__Group__1__Impl"
-    // InternalKiCool.g:24601:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
+    // InternalKiCool.g:24682:1: rule__Integer__Group__1__Impl : ( RULE_INT ) ;
     public final void rule__Integer__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24605:1: ( ( RULE_INT ) )
-            // InternalKiCool.g:24606:1: ( RULE_INT )
+            // InternalKiCool.g:24686:1: ( ( RULE_INT ) )
+            // InternalKiCool.g:24687:1: ( RULE_INT )
             {
-            // InternalKiCool.g:24606:1: ( RULE_INT )
-            // InternalKiCool.g:24607:2: RULE_INT
+            // InternalKiCool.g:24687:1: ( RULE_INT )
+            // InternalKiCool.g:24688:2: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntegerAccess().getINTTerminalRuleCall_1()); 
@@ -82277,14 +82540,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Floateger__Group__0"
-    // InternalKiCool.g:24617:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
+    // InternalKiCool.g:24698:1: rule__Floateger__Group__0 : rule__Floateger__Group__0__Impl rule__Floateger__Group__1 ;
     public final void rule__Floateger__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24621:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
-            // InternalKiCool.g:24622:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
+            // InternalKiCool.g:24702:1: ( rule__Floateger__Group__0__Impl rule__Floateger__Group__1 )
+            // InternalKiCool.g:24703:2: rule__Floateger__Group__0__Impl rule__Floateger__Group__1
             {
             pushFollow(FollowSets000.FOLLOW_123);
             rule__Floateger__Group__0__Impl();
@@ -82315,31 +82578,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Floateger__Group__0__Impl"
-    // InternalKiCool.g:24629:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
+    // InternalKiCool.g:24710:1: rule__Floateger__Group__0__Impl : ( ( '-' )? ) ;
     public final void rule__Floateger__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24633:1: ( ( ( '-' )? ) )
-            // InternalKiCool.g:24634:1: ( ( '-' )? )
+            // InternalKiCool.g:24714:1: ( ( ( '-' )? ) )
+            // InternalKiCool.g:24715:1: ( ( '-' )? )
             {
-            // InternalKiCool.g:24634:1: ( ( '-' )? )
-            // InternalKiCool.g:24635:2: ( '-' )?
+            // InternalKiCool.g:24715:1: ( ( '-' )? )
+            // InternalKiCool.g:24716:2: ( '-' )?
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getHyphenMinusKeyword_0()); 
             }
-            // InternalKiCool.g:24636:2: ( '-' )?
-            int alt254=2;
-            int LA254_0 = input.LA(1);
+            // InternalKiCool.g:24717:2: ( '-' )?
+            int alt255=2;
+            int LA255_0 = input.LA(1);
 
-            if ( (LA254_0==24) ) {
-                alt254=1;
+            if ( (LA255_0==24) ) {
+                alt255=1;
             }
-            switch (alt254) {
+            switch (alt255) {
                 case 1 :
-                    // InternalKiCool.g:24636:3: '-'
+                    // InternalKiCool.g:24717:3: '-'
                     {
                     match(input,24,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -82373,14 +82636,14 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Floateger__Group__1"
-    // InternalKiCool.g:24644:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
+    // InternalKiCool.g:24725:1: rule__Floateger__Group__1 : rule__Floateger__Group__1__Impl ;
     public final void rule__Floateger__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24648:1: ( rule__Floateger__Group__1__Impl )
-            // InternalKiCool.g:24649:2: rule__Floateger__Group__1__Impl
+            // InternalKiCool.g:24729:1: ( rule__Floateger__Group__1__Impl )
+            // InternalKiCool.g:24730:2: rule__Floateger__Group__1__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__Floateger__Group__1__Impl();
@@ -82406,17 +82669,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Floateger__Group__1__Impl"
-    // InternalKiCool.g:24655:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
+    // InternalKiCool.g:24736:1: rule__Floateger__Group__1__Impl : ( RULE_FLOAT ) ;
     public final void rule__Floateger__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24659:1: ( ( RULE_FLOAT ) )
-            // InternalKiCool.g:24660:1: ( RULE_FLOAT )
+            // InternalKiCool.g:24740:1: ( ( RULE_FLOAT ) )
+            // InternalKiCool.g:24741:1: ( RULE_FLOAT )
             {
-            // InternalKiCool.g:24660:1: ( RULE_FLOAT )
-            // InternalKiCool.g:24661:2: RULE_FLOAT
+            // InternalKiCool.g:24741:1: ( RULE_FLOAT )
+            // InternalKiCool.g:24742:2: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloategerAccess().getFLOATTerminalRuleCall_1()); 
@@ -82447,17 +82710,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__PragmasAssignment_0"
-    // InternalKiCool.g:24671:1: rule__System__PragmasAssignment_0 : ( rulePragma ) ;
+    // InternalKiCool.g:24752:1: rule__System__PragmasAssignment_0 : ( rulePragma ) ;
     public final void rule__System__PragmasAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24675:1: ( ( rulePragma ) )
-            // InternalKiCool.g:24676:2: ( rulePragma )
+            // InternalKiCool.g:24756:1: ( ( rulePragma ) )
+            // InternalKiCool.g:24757:2: ( rulePragma )
             {
-            // InternalKiCool.g:24676:2: ( rulePragma )
-            // InternalKiCool.g:24677:3: rulePragma
+            // InternalKiCool.g:24757:2: ( rulePragma )
+            // InternalKiCool.g:24758:3: rulePragma
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getPragmasPragmaParserRuleCall_0_0()); 
@@ -82492,17 +82755,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__AnnotationsAssignment_1"
-    // InternalKiCool.g:24686:1: rule__System__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:24767:1: rule__System__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
     public final void rule__System__AnnotationsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24690:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:24691:2: ( ruleAnnotation )
+            // InternalKiCool.g:24771:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:24772:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:24691:2: ( ruleAnnotation )
-            // InternalKiCool.g:24692:3: ruleAnnotation
+            // InternalKiCool.g:24772:2: ( ruleAnnotation )
+            // InternalKiCool.g:24773:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
@@ -82537,23 +82800,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__PublicAssignment_2"
-    // InternalKiCool.g:24701:1: rule__System__PublicAssignment_2 : ( ( 'public' ) ) ;
+    // InternalKiCool.g:24782:1: rule__System__PublicAssignment_2 : ( ( 'public' ) ) ;
     public final void rule__System__PublicAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24705:1: ( ( ( 'public' ) ) )
-            // InternalKiCool.g:24706:2: ( ( 'public' ) )
+            // InternalKiCool.g:24786:1: ( ( ( 'public' ) ) )
+            // InternalKiCool.g:24787:2: ( ( 'public' ) )
             {
-            // InternalKiCool.g:24706:2: ( ( 'public' ) )
-            // InternalKiCool.g:24707:3: ( 'public' )
+            // InternalKiCool.g:24787:2: ( ( 'public' ) )
+            // InternalKiCool.g:24788:3: ( 'public' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getPublicPublicKeyword_2_0()); 
             }
-            // InternalKiCool.g:24708:3: ( 'public' )
-            // InternalKiCool.g:24709:4: 'public'
+            // InternalKiCool.g:24789:3: ( 'public' )
+            // InternalKiCool.g:24790:4: 'public'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getPublicPublicKeyword_2_0()); 
@@ -82590,23 +82853,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__DeveloperAssignment_3"
-    // InternalKiCool.g:24720:1: rule__System__DeveloperAssignment_3 : ( ( 'developer' ) ) ;
+    // InternalKiCool.g:24801:1: rule__System__DeveloperAssignment_3 : ( ( 'developer' ) ) ;
     public final void rule__System__DeveloperAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24724:1: ( ( ( 'developer' ) ) )
-            // InternalKiCool.g:24725:2: ( ( 'developer' ) )
+            // InternalKiCool.g:24805:1: ( ( ( 'developer' ) ) )
+            // InternalKiCool.g:24806:2: ( ( 'developer' ) )
             {
-            // InternalKiCool.g:24725:2: ( ( 'developer' ) )
-            // InternalKiCool.g:24726:3: ( 'developer' )
+            // InternalKiCool.g:24806:2: ( ( 'developer' ) )
+            // InternalKiCool.g:24807:3: ( 'developer' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getDeveloperDeveloperKeyword_3_0()); 
             }
-            // InternalKiCool.g:24727:3: ( 'developer' )
-            // InternalKiCool.g:24728:4: 'developer'
+            // InternalKiCool.g:24808:3: ( 'developer' )
+            // InternalKiCool.g:24809:4: 'developer'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getDeveloperDeveloperKeyword_3_0()); 
@@ -82643,23 +82906,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__SimulationAssignment_4"
-    // InternalKiCool.g:24739:1: rule__System__SimulationAssignment_4 : ( ( 'simulation' ) ) ;
+    // InternalKiCool.g:24820:1: rule__System__SimulationAssignment_4 : ( ( 'simulation' ) ) ;
     public final void rule__System__SimulationAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24743:1: ( ( ( 'simulation' ) ) )
-            // InternalKiCool.g:24744:2: ( ( 'simulation' ) )
+            // InternalKiCool.g:24824:1: ( ( ( 'simulation' ) ) )
+            // InternalKiCool.g:24825:2: ( ( 'simulation' ) )
             {
-            // InternalKiCool.g:24744:2: ( ( 'simulation' ) )
-            // InternalKiCool.g:24745:3: ( 'simulation' )
+            // InternalKiCool.g:24825:2: ( ( 'simulation' ) )
+            // InternalKiCool.g:24826:3: ( 'simulation' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getSimulationSimulationKeyword_4_0()); 
             }
-            // InternalKiCool.g:24746:3: ( 'simulation' )
-            // InternalKiCool.g:24747:4: 'simulation'
+            // InternalKiCool.g:24827:3: ( 'simulation' )
+            // InternalKiCool.g:24828:4: 'simulation'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getSimulationSimulationKeyword_4_0()); 
@@ -82696,17 +82959,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__IdAssignment_6"
-    // InternalKiCool.g:24758:1: rule__System__IdAssignment_6 : ( ruleQualifiedID ) ;
+    // InternalKiCool.g:24839:1: rule__System__IdAssignment_6 : ( ruleQualifiedID ) ;
     public final void rule__System__IdAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24762:1: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:24763:2: ( ruleQualifiedID )
+            // InternalKiCool.g:24843:1: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:24844:2: ( ruleQualifiedID )
             {
-            // InternalKiCool.g:24763:2: ( ruleQualifiedID )
-            // InternalKiCool.g:24764:3: ruleQualifiedID
+            // InternalKiCool.g:24844:2: ( ruleQualifiedID )
+            // InternalKiCool.g:24845:3: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getIdQualifiedIDParserRuleCall_6_0()); 
@@ -82741,17 +83004,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__LabelAssignment_8"
-    // InternalKiCool.g:24773:1: rule__System__LabelAssignment_8 : ( ruleEString ) ;
+    // InternalKiCool.g:24854:1: rule__System__LabelAssignment_8 : ( ruleEString ) ;
     public final void rule__System__LabelAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24777:1: ( ( ruleEString ) )
-            // InternalKiCool.g:24778:2: ( ruleEString )
+            // InternalKiCool.g:24858:1: ( ( ruleEString ) )
+            // InternalKiCool.g:24859:2: ( ruleEString )
             {
-            // InternalKiCool.g:24778:2: ( ruleEString )
-            // InternalKiCool.g:24779:3: ruleEString
+            // InternalKiCool.g:24859:2: ( ruleEString )
+            // InternalKiCool.g:24860:3: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getLabelEStringParserRuleCall_8_0()); 
@@ -82786,17 +83049,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__ConfigAssignment_9_1"
-    // InternalKiCool.g:24788:1: rule__System__ConfigAssignment_9_1 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:24869:1: rule__System__ConfigAssignment_9_1 : ( ruleJsonObjectValue ) ;
     public final void rule__System__ConfigAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24792:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:24793:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:24873:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:24874:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:24793:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:24794:3: ruleJsonObjectValue
+            // InternalKiCool.g:24874:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:24875:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_9_1_0()); 
@@ -82831,17 +83094,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__IntermediatesAssignment_10"
-    // InternalKiCool.g:24803:1: rule__System__IntermediatesAssignment_10 : ( ruleIntermediateReference ) ;
+    // InternalKiCool.g:24884:1: rule__System__IntermediatesAssignment_10 : ( ruleIntermediateReference ) ;
     public final void rule__System__IntermediatesAssignment_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24807:1: ( ( ruleIntermediateReference ) )
-            // InternalKiCool.g:24808:2: ( ruleIntermediateReference )
+            // InternalKiCool.g:24888:1: ( ( ruleIntermediateReference ) )
+            // InternalKiCool.g:24889:2: ( ruleIntermediateReference )
             {
-            // InternalKiCool.g:24808:2: ( ruleIntermediateReference )
-            // InternalKiCool.g:24809:3: ruleIntermediateReference
+            // InternalKiCool.g:24889:2: ( ruleIntermediateReference )
+            // InternalKiCool.g:24890:3: ruleIntermediateReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_10_0()); 
@@ -82876,17 +83139,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__System__ProcessorsAssignment_11"
-    // InternalKiCool.g:24818:1: rule__System__ProcessorsAssignment_11 : ( ruleProcessorGroup ) ;
+    // InternalKiCool.g:24899:1: rule__System__ProcessorsAssignment_11 : ( ruleProcessorGroup ) ;
     public final void rule__System__ProcessorsAssignment_11() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24822:1: ( ( ruleProcessorGroup ) )
-            // InternalKiCool.g:24823:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:24903:1: ( ( ruleProcessorGroup ) )
+            // InternalKiCool.g:24904:2: ( ruleProcessorGroup )
             {
-            // InternalKiCool.g:24823:2: ( ruleProcessorGroup )
-            // InternalKiCool.g:24824:3: ruleProcessorGroup
+            // InternalKiCool.g:24904:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:24905:3: ruleProcessorGroup
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_11_0()); 
@@ -82921,17 +83184,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntermediateReference__IdAssignment_1"
-    // InternalKiCool.g:24833:1: rule__IntermediateReference__IdAssignment_1 : ( ruleQualifiedID ) ;
+    // InternalKiCool.g:24914:1: rule__IntermediateReference__IdAssignment_1 : ( ruleQualifiedID ) ;
     public final void rule__IntermediateReference__IdAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24837:1: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:24838:2: ( ruleQualifiedID )
+            // InternalKiCool.g:24918:1: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:24919:2: ( ruleQualifiedID )
             {
-            // InternalKiCool.g:24838:2: ( ruleQualifiedID )
-            // InternalKiCool.g:24839:3: ruleQualifiedID
+            // InternalKiCool.g:24919:2: ( ruleQualifiedID )
+            // InternalKiCool.g:24920:3: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntermediateReferenceAccess().getIdQualifiedIDParserRuleCall_1_0()); 
@@ -82966,17 +83229,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntermediateReference__AliasAssignment_2_1"
-    // InternalKiCool.g:24848:1: rule__IntermediateReference__AliasAssignment_2_1 : ( ruleEString ) ;
+    // InternalKiCool.g:24929:1: rule__IntermediateReference__AliasAssignment_2_1 : ( ruleEString ) ;
     public final void rule__IntermediateReference__AliasAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24852:1: ( ( ruleEString ) )
-            // InternalKiCool.g:24853:2: ( ruleEString )
+            // InternalKiCool.g:24933:1: ( ( ruleEString ) )
+            // InternalKiCool.g:24934:2: ( ruleEString )
             {
-            // InternalKiCool.g:24853:2: ( ruleEString )
-            // InternalKiCool.g:24854:3: ruleEString
+            // InternalKiCool.g:24934:2: ( ruleEString )
+            // InternalKiCool.g:24935:3: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntermediateReferenceAccess().getAliasEStringParserRuleCall_2_1_0()); 
@@ -83011,17 +83274,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorGroup__LabelAssignment_0_1"
-    // InternalKiCool.g:24863:1: rule__ProcessorGroup__LabelAssignment_0_1 : ( ruleEString ) ;
+    // InternalKiCool.g:24944:1: rule__ProcessorGroup__LabelAssignment_0_1 : ( ruleEString ) ;
     public final void rule__ProcessorGroup__LabelAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24867:1: ( ( ruleEString ) )
-            // InternalKiCool.g:24868:2: ( ruleEString )
+            // InternalKiCool.g:24948:1: ( ( ruleEString ) )
+            // InternalKiCool.g:24949:2: ( ruleEString )
             {
-            // InternalKiCool.g:24868:2: ( ruleEString )
-            // InternalKiCool.g:24869:3: ruleEString
+            // InternalKiCool.g:24949:2: ( ruleEString )
+            // InternalKiCool.g:24950:3: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorGroupAccess().getLabelEStringParserRuleCall_0_1_0()); 
@@ -83056,17 +83319,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorGroup__ProcessorsAssignment_1_0"
-    // InternalKiCool.g:24878:1: rule__ProcessorGroup__ProcessorsAssignment_1_0 : ( ruleProcessor ) ;
+    // InternalKiCool.g:24959:1: rule__ProcessorGroup__ProcessorsAssignment_1_0 : ( ruleProcessor ) ;
     public final void rule__ProcessorGroup__ProcessorsAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24882:1: ( ( ruleProcessor ) )
-            // InternalKiCool.g:24883:2: ( ruleProcessor )
+            // InternalKiCool.g:24963:1: ( ( ruleProcessor ) )
+            // InternalKiCool.g:24964:2: ( ruleProcessor )
             {
-            // InternalKiCool.g:24883:2: ( ruleProcessor )
-            // InternalKiCool.g:24884:3: ruleProcessor
+            // InternalKiCool.g:24964:2: ( ruleProcessor )
+            // InternalKiCool.g:24965:3: ruleProcessor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorGroupAccess().getProcessorsProcessorParserRuleCall_1_0_0()); 
@@ -83101,17 +83364,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorGroup__ProcessorsAssignment_1_1_1"
-    // InternalKiCool.g:24893:1: rule__ProcessorGroup__ProcessorsAssignment_1_1_1 : ( ruleProcessorSystem ) ;
+    // InternalKiCool.g:24974:1: rule__ProcessorGroup__ProcessorsAssignment_1_1_1 : ( ruleProcessorSystem ) ;
     public final void rule__ProcessorGroup__ProcessorsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24897:1: ( ( ruleProcessorSystem ) )
-            // InternalKiCool.g:24898:2: ( ruleProcessorSystem )
+            // InternalKiCool.g:24978:1: ( ( ruleProcessorSystem ) )
+            // InternalKiCool.g:24979:2: ( ruleProcessorSystem )
             {
-            // InternalKiCool.g:24898:2: ( ruleProcessorSystem )
-            // InternalKiCool.g:24899:3: ruleProcessorSystem
+            // InternalKiCool.g:24979:2: ( ruleProcessorSystem )
+            // InternalKiCool.g:24980:3: ruleProcessorSystem
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorGroupAccess().getProcessorsProcessorSystemParserRuleCall_1_1_1_0()); 
@@ -83146,17 +83409,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorGroup__ProcessorsAssignment_1_2_1"
-    // InternalKiCool.g:24908:1: rule__ProcessorGroup__ProcessorsAssignment_1_2_1 : ( ruleProcessorAlternativeGroup ) ;
+    // InternalKiCool.g:24989:1: rule__ProcessorGroup__ProcessorsAssignment_1_2_1 : ( ruleProcessorAlternativeGroup ) ;
     public final void rule__ProcessorGroup__ProcessorsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24912:1: ( ( ruleProcessorAlternativeGroup ) )
-            // InternalKiCool.g:24913:2: ( ruleProcessorAlternativeGroup )
+            // InternalKiCool.g:24993:1: ( ( ruleProcessorAlternativeGroup ) )
+            // InternalKiCool.g:24994:2: ( ruleProcessorAlternativeGroup )
             {
-            // InternalKiCool.g:24913:2: ( ruleProcessorAlternativeGroup )
-            // InternalKiCool.g:24914:3: ruleProcessorAlternativeGroup
+            // InternalKiCool.g:24994:2: ( ruleProcessorAlternativeGroup )
+            // InternalKiCool.g:24995:3: ruleProcessorAlternativeGroup
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorGroupAccess().getProcessorsProcessorAlternativeGroupParserRuleCall_1_2_1_0()); 
@@ -83191,17 +83454,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorGroup__ProcessorsAssignment_1_3_1"
-    // InternalKiCool.g:24923:1: rule__ProcessorGroup__ProcessorsAssignment_1_3_1 : ( ruleProcessorGroup ) ;
+    // InternalKiCool.g:25004:1: rule__ProcessorGroup__ProcessorsAssignment_1_3_1 : ( ruleProcessorGroup ) ;
     public final void rule__ProcessorGroup__ProcessorsAssignment_1_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24927:1: ( ( ruleProcessorGroup ) )
-            // InternalKiCool.g:24928:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25008:1: ( ( ruleProcessorGroup ) )
+            // InternalKiCool.g:25009:2: ( ruleProcessorGroup )
             {
-            // InternalKiCool.g:24928:2: ( ruleProcessorGroup )
-            // InternalKiCool.g:24929:3: ruleProcessorGroup
+            // InternalKiCool.g:25009:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25010:3: ruleProcessorGroup
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorGroupAccess().getProcessorsProcessorGroupParserRuleCall_1_3_1_0()); 
@@ -83236,17 +83499,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__PreprocessesAssignment_0_2"
-    // InternalKiCool.g:24938:1: rule__Processor__PreprocessesAssignment_0_2 : ( ruleCoProcessor ) ;
+    // InternalKiCool.g:25019:1: rule__Processor__PreprocessesAssignment_0_2 : ( ruleCoProcessor ) ;
     public final void rule__Processor__PreprocessesAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24942:1: ( ( ruleCoProcessor ) )
-            // InternalKiCool.g:24943:2: ( ruleCoProcessor )
+            // InternalKiCool.g:25023:1: ( ( ruleCoProcessor ) )
+            // InternalKiCool.g:25024:2: ( ruleCoProcessor )
             {
-            // InternalKiCool.g:24943:2: ( ruleCoProcessor )
-            // InternalKiCool.g:24944:3: ruleCoProcessor
+            // InternalKiCool.g:25024:2: ( ruleCoProcessor )
+            // InternalKiCool.g:25025:3: ruleCoProcessor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getPreprocessesCoProcessorParserRuleCall_0_2_0()); 
@@ -83281,17 +83544,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__IdAssignment_1"
-    // InternalKiCool.g:24953:1: rule__Processor__IdAssignment_1 : ( ruleQualifiedID ) ;
+    // InternalKiCool.g:25034:1: rule__Processor__IdAssignment_1 : ( ruleQualifiedID ) ;
     public final void rule__Processor__IdAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24957:1: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:24958:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25038:1: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:25039:2: ( ruleQualifiedID )
             {
-            // InternalKiCool.g:24958:2: ( ruleQualifiedID )
-            // InternalKiCool.g:24959:3: ruleQualifiedID
+            // InternalKiCool.g:25039:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25040:3: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getIdQualifiedIDParserRuleCall_1_0()); 
@@ -83326,17 +83589,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__PreconfigAssignment_2_1"
-    // InternalKiCool.g:24968:1: rule__Processor__PreconfigAssignment_2_1 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:25049:1: rule__Processor__PreconfigAssignment_2_1 : ( ruleJsonObjectValue ) ;
     public final void rule__Processor__PreconfigAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24972:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:24973:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25053:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:25054:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:24973:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:24974:3: ruleJsonObjectValue
+            // InternalKiCool.g:25054:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25055:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getPreconfigJsonObjectValueParserRuleCall_2_1_0()); 
@@ -83371,17 +83634,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__PostconfigAssignment_2_2_1"
-    // InternalKiCool.g:24983:1: rule__Processor__PostconfigAssignment_2_2_1 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:25064:1: rule__Processor__PostconfigAssignment_2_2_1 : ( ruleJsonObjectValue ) ;
     public final void rule__Processor__PostconfigAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:24987:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:24988:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25068:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:25069:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:24988:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:24989:3: ruleJsonObjectValue
+            // InternalKiCool.g:25069:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25070:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getPostconfigJsonObjectValueParserRuleCall_2_2_1_0()); 
@@ -83416,23 +83679,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__MetricAssignment_3_1"
-    // InternalKiCool.g:24998:1: rule__Processor__MetricAssignment_3_1 : ( ( ruleQualifiedID ) ) ;
+    // InternalKiCool.g:25079:1: rule__Processor__MetricAssignment_3_1 : ( ( ruleQualifiedID ) ) ;
     public final void rule__Processor__MetricAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25002:1: ( ( ( ruleQualifiedID ) ) )
-            // InternalKiCool.g:25003:2: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:25083:1: ( ( ( ruleQualifiedID ) ) )
+            // InternalKiCool.g:25084:2: ( ( ruleQualifiedID ) )
             {
-            // InternalKiCool.g:25003:2: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:25004:3: ( ruleQualifiedID )
+            // InternalKiCool.g:25084:2: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:25085:3: ( ruleQualifiedID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceCrossReference_3_1_0()); 
             }
-            // InternalKiCool.g:25005:3: ( ruleQualifiedID )
-            // InternalKiCool.g:25006:4: ruleQualifiedID
+            // InternalKiCool.g:25086:3: ( ruleQualifiedID )
+            // InternalKiCool.g:25087:4: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getMetricIntermediateReferenceQualifiedIDParserRuleCall_3_1_0_1()); 
@@ -83473,17 +83736,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Processor__PostprocessesAssignment_4_2"
-    // InternalKiCool.g:25017:1: rule__Processor__PostprocessesAssignment_4_2 : ( ruleCoProcessor ) ;
+    // InternalKiCool.g:25098:1: rule__Processor__PostprocessesAssignment_4_2 : ( ruleCoProcessor ) ;
     public final void rule__Processor__PostprocessesAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25021:1: ( ( ruleCoProcessor ) )
-            // InternalKiCool.g:25022:2: ( ruleCoProcessor )
+            // InternalKiCool.g:25102:1: ( ( ruleCoProcessor ) )
+            // InternalKiCool.g:25103:2: ( ruleCoProcessor )
             {
-            // InternalKiCool.g:25022:2: ( ruleCoProcessor )
-            // InternalKiCool.g:25023:3: ruleCoProcessor
+            // InternalKiCool.g:25103:2: ( ruleCoProcessor )
+            // InternalKiCool.g:25104:3: ruleCoProcessor
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAccess().getPostprocessesCoProcessorParserRuleCall_4_2_0()); 
@@ -83518,23 +83781,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CoProcessor__SilentAssignment_0"
-    // InternalKiCool.g:25032:1: rule__CoProcessor__SilentAssignment_0 : ( ( 'silent' ) ) ;
+    // InternalKiCool.g:25113:1: rule__CoProcessor__SilentAssignment_0 : ( ( 'silent' ) ) ;
     public final void rule__CoProcessor__SilentAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25036:1: ( ( ( 'silent' ) ) )
-            // InternalKiCool.g:25037:2: ( ( 'silent' ) )
+            // InternalKiCool.g:25117:1: ( ( ( 'silent' ) ) )
+            // InternalKiCool.g:25118:2: ( ( 'silent' ) )
             {
-            // InternalKiCool.g:25037:2: ( ( 'silent' ) )
-            // InternalKiCool.g:25038:3: ( 'silent' )
+            // InternalKiCool.g:25118:2: ( ( 'silent' ) )
+            // InternalKiCool.g:25119:3: ( 'silent' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_0_0()); 
             }
-            // InternalKiCool.g:25039:3: ( 'silent' )
-            // InternalKiCool.g:25040:4: 'silent'
+            // InternalKiCool.g:25120:3: ( 'silent' )
+            // InternalKiCool.g:25121:4: 'silent'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCoProcessorAccess().getSilentSilentKeyword_0_0()); 
@@ -83571,17 +83834,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CoProcessor__IdAssignment_1"
-    // InternalKiCool.g:25051:1: rule__CoProcessor__IdAssignment_1 : ( ruleQualifiedID ) ;
+    // InternalKiCool.g:25132:1: rule__CoProcessor__IdAssignment_1 : ( ruleQualifiedID ) ;
     public final void rule__CoProcessor__IdAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25055:1: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:25056:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25136:1: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:25137:2: ( ruleQualifiedID )
             {
-            // InternalKiCool.g:25056:2: ( ruleQualifiedID )
-            // InternalKiCool.g:25057:3: ruleQualifiedID
+            // InternalKiCool.g:25137:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25138:3: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCoProcessorAccess().getIdQualifiedIDParserRuleCall_1_0()); 
@@ -83616,17 +83879,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CoProcessor__PreconfigAssignment_2_1"
-    // InternalKiCool.g:25066:1: rule__CoProcessor__PreconfigAssignment_2_1 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:25147:1: rule__CoProcessor__PreconfigAssignment_2_1 : ( ruleJsonObjectValue ) ;
     public final void rule__CoProcessor__PreconfigAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25070:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:25071:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25151:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:25152:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:25071:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:25072:3: ruleJsonObjectValue
+            // InternalKiCool.g:25152:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25153:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCoProcessorAccess().getPreconfigJsonObjectValueParserRuleCall_2_1_0()); 
@@ -83661,17 +83924,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CoProcessor__PostconfigAssignment_2_2_1"
-    // InternalKiCool.g:25081:1: rule__CoProcessor__PostconfigAssignment_2_2_1 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:25162:1: rule__CoProcessor__PostconfigAssignment_2_2_1 : ( ruleJsonObjectValue ) ;
     public final void rule__CoProcessor__PostconfigAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25085:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:25086:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25166:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:25167:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:25086:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:25087:3: ruleJsonObjectValue
+            // InternalKiCool.g:25167:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:25168:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCoProcessorAccess().getPostconfigJsonObjectValueParserRuleCall_2_2_1_0()); 
@@ -83706,17 +83969,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorSystem__IdAssignment"
-    // InternalKiCool.g:25096:1: rule__ProcessorSystem__IdAssignment : ( ruleQualifiedID ) ;
+    // InternalKiCool.g:25177:1: rule__ProcessorSystem__IdAssignment : ( ruleQualifiedID ) ;
     public final void rule__ProcessorSystem__IdAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25100:1: ( ( ruleQualifiedID ) )
-            // InternalKiCool.g:25101:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25181:1: ( ( ruleQualifiedID ) )
+            // InternalKiCool.g:25182:2: ( ruleQualifiedID )
             {
-            // InternalKiCool.g:25101:2: ( ruleQualifiedID )
-            // InternalKiCool.g:25102:3: ruleQualifiedID
+            // InternalKiCool.g:25182:2: ( ruleQualifiedID )
+            // InternalKiCool.g:25183:3: ruleQualifiedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorSystemAccess().getIdQualifiedIDParserRuleCall_0()); 
@@ -83751,17 +84014,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorAlternativeGroup__LabelAssignment_0_1"
-    // InternalKiCool.g:25111:1: rule__ProcessorAlternativeGroup__LabelAssignment_0_1 : ( ruleEString ) ;
+    // InternalKiCool.g:25192:1: rule__ProcessorAlternativeGroup__LabelAssignment_0_1 : ( ruleEString ) ;
     public final void rule__ProcessorAlternativeGroup__LabelAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25115:1: ( ( ruleEString ) )
-            // InternalKiCool.g:25116:2: ( ruleEString )
+            // InternalKiCool.g:25196:1: ( ( ruleEString ) )
+            // InternalKiCool.g:25197:2: ( ruleEString )
             {
-            // InternalKiCool.g:25116:2: ( ruleEString )
-            // InternalKiCool.g:25117:3: ruleEString
+            // InternalKiCool.g:25197:2: ( ruleEString )
+            // InternalKiCool.g:25198:3: ruleEString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAlternativeGroupAccess().getLabelEStringParserRuleCall_0_1_0()); 
@@ -83796,17 +84059,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0"
-    // InternalKiCool.g:25126:1: rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0 : ( ruleProcessorGroup ) ;
+    // InternalKiCool.g:25207:1: rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0 : ( ruleProcessorGroup ) ;
     public final void rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25130:1: ( ( ruleProcessorGroup ) )
-            // InternalKiCool.g:25131:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25211:1: ( ( ruleProcessorGroup ) )
+            // InternalKiCool.g:25212:2: ( ruleProcessorGroup )
             {
-            // InternalKiCool.g:25131:2: ( ruleProcessorGroup )
-            // InternalKiCool.g:25132:3: ruleProcessorGroup
+            // InternalKiCool.g:25212:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25213:3: ruleProcessorGroup
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAlternativeGroupAccess().getProcessorsProcessorGroupParserRuleCall_1_0_0()); 
@@ -83841,17 +84104,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_1_1"
-    // InternalKiCool.g:25141:1: rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_1_1 : ( ruleProcessorGroup ) ;
+    // InternalKiCool.g:25222:1: rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_1_1 : ( ruleProcessorGroup ) ;
     public final void rule__ProcessorAlternativeGroup__ProcessorsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25145:1: ( ( ruleProcessorGroup ) )
-            // InternalKiCool.g:25146:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25226:1: ( ( ruleProcessorGroup ) )
+            // InternalKiCool.g:25227:2: ( ruleProcessorGroup )
             {
-            // InternalKiCool.g:25146:2: ( ruleProcessorGroup )
-            // InternalKiCool.g:25147:3: ruleProcessorGroup
+            // InternalKiCool.g:25227:2: ( ruleProcessorGroup )
+            // InternalKiCool.g:25228:3: ruleProcessorGroup
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProcessorAlternativeGroupAccess().getProcessorsProcessorGroupParserRuleCall_1_1_1_0()); 
@@ -83886,17 +84149,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RootScope__DeclarationsAssignment_1"
-    // InternalKiCool.g:25156:1: rule__RootScope__DeclarationsAssignment_1 : ( ruleDeclaration ) ;
+    // InternalKiCool.g:25237:1: rule__RootScope__DeclarationsAssignment_1 : ( ruleDeclaration ) ;
     public final void rule__RootScope__DeclarationsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25160:1: ( ( ruleDeclaration ) )
-            // InternalKiCool.g:25161:2: ( ruleDeclaration )
+            // InternalKiCool.g:25241:1: ( ( ruleDeclaration ) )
+            // InternalKiCool.g:25242:2: ( ruleDeclaration )
             {
-            // InternalKiCool.g:25161:2: ( ruleDeclaration )
-            // InternalKiCool.g:25162:3: ruleDeclaration
+            // InternalKiCool.g:25242:2: ( ruleDeclaration )
+            // InternalKiCool.g:25243:3: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootScopeAccess().getDeclarationsDeclarationParserRuleCall_1_0()); 
@@ -83931,17 +84194,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RootScope__EntitiesAssignment_2"
-    // InternalKiCool.g:25171:1: rule__RootScope__EntitiesAssignment_2 : ( ruleTestEntity ) ;
+    // InternalKiCool.g:25252:1: rule__RootScope__EntitiesAssignment_2 : ( ruleTestEntity ) ;
     public final void rule__RootScope__EntitiesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25175:1: ( ( ruleTestEntity ) )
-            // InternalKiCool.g:25176:2: ( ruleTestEntity )
+            // InternalKiCool.g:25256:1: ( ( ruleTestEntity ) )
+            // InternalKiCool.g:25257:2: ( ruleTestEntity )
             {
-            // InternalKiCool.g:25176:2: ( ruleTestEntity )
-            // InternalKiCool.g:25177:3: ruleTestEntity
+            // InternalKiCool.g:25257:2: ( ruleTestEntity )
+            // InternalKiCool.g:25258:3: ruleTestEntity
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootScopeAccess().getEntitiesTestEntityParserRuleCall_2_0()); 
@@ -83976,17 +84239,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RootScope__ScopesAssignment_3_1"
-    // InternalKiCool.g:25186:1: rule__RootScope__ScopesAssignment_3_1 : ( ruleScope ) ;
+    // InternalKiCool.g:25267:1: rule__RootScope__ScopesAssignment_3_1 : ( ruleScope ) ;
     public final void rule__RootScope__ScopesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25190:1: ( ( ruleScope ) )
-            // InternalKiCool.g:25191:2: ( ruleScope )
+            // InternalKiCool.g:25271:1: ( ( ruleScope ) )
+            // InternalKiCool.g:25272:2: ( ruleScope )
             {
-            // InternalKiCool.g:25191:2: ( ruleScope )
-            // InternalKiCool.g:25192:3: ruleScope
+            // InternalKiCool.g:25272:2: ( ruleScope )
+            // InternalKiCool.g:25273:3: ruleScope
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRootScopeAccess().getScopesScopeParserRuleCall_3_1_0()); 
@@ -84021,17 +84284,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__NameAssignment_1"
-    // InternalKiCool.g:25201:1: rule__Scope__NameAssignment_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:25282:1: rule__Scope__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Scope__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25205:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:25206:2: ( RULE_ID )
+            // InternalKiCool.g:25286:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:25287:2: ( RULE_ID )
             {
-            // InternalKiCool.g:25206:2: ( RULE_ID )
-            // InternalKiCool.g:25207:3: RULE_ID
+            // InternalKiCool.g:25287:2: ( RULE_ID )
+            // InternalKiCool.g:25288:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScopeAccess().getNameIDTerminalRuleCall_1_0()); 
@@ -84062,17 +84325,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__DeclarationsAssignment_3"
-    // InternalKiCool.g:25216:1: rule__Scope__DeclarationsAssignment_3 : ( ruleDeclaration ) ;
+    // InternalKiCool.g:25297:1: rule__Scope__DeclarationsAssignment_3 : ( ruleDeclaration ) ;
     public final void rule__Scope__DeclarationsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25220:1: ( ( ruleDeclaration ) )
-            // InternalKiCool.g:25221:2: ( ruleDeclaration )
+            // InternalKiCool.g:25301:1: ( ( ruleDeclaration ) )
+            // InternalKiCool.g:25302:2: ( ruleDeclaration )
             {
-            // InternalKiCool.g:25221:2: ( ruleDeclaration )
-            // InternalKiCool.g:25222:3: ruleDeclaration
+            // InternalKiCool.g:25302:2: ( ruleDeclaration )
+            // InternalKiCool.g:25303:3: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScopeAccess().getDeclarationsDeclarationParserRuleCall_3_0()); 
@@ -84107,17 +84370,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__EntitiesAssignment_4"
-    // InternalKiCool.g:25231:1: rule__Scope__EntitiesAssignment_4 : ( ruleTestEntity ) ;
+    // InternalKiCool.g:25312:1: rule__Scope__EntitiesAssignment_4 : ( ruleTestEntity ) ;
     public final void rule__Scope__EntitiesAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25235:1: ( ( ruleTestEntity ) )
-            // InternalKiCool.g:25236:2: ( ruleTestEntity )
+            // InternalKiCool.g:25316:1: ( ( ruleTestEntity ) )
+            // InternalKiCool.g:25317:2: ( ruleTestEntity )
             {
-            // InternalKiCool.g:25236:2: ( ruleTestEntity )
-            // InternalKiCool.g:25237:3: ruleTestEntity
+            // InternalKiCool.g:25317:2: ( ruleTestEntity )
+            // InternalKiCool.g:25318:3: ruleTestEntity
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScopeAccess().getEntitiesTestEntityParserRuleCall_4_0()); 
@@ -84152,17 +84415,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Scope__ScopesAssignment_5_1"
-    // InternalKiCool.g:25246:1: rule__Scope__ScopesAssignment_5_1 : ( ruleScope ) ;
+    // InternalKiCool.g:25327:1: rule__Scope__ScopesAssignment_5_1 : ( ruleScope ) ;
     public final void rule__Scope__ScopesAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25250:1: ( ( ruleScope ) )
-            // InternalKiCool.g:25251:2: ( ruleScope )
+            // InternalKiCool.g:25331:1: ( ( ruleScope ) )
+            // InternalKiCool.g:25332:2: ( ruleScope )
             {
-            // InternalKiCool.g:25251:2: ( ruleScope )
-            // InternalKiCool.g:25252:3: ruleScope
+            // InternalKiCool.g:25332:2: ( ruleScope )
+            // InternalKiCool.g:25333:3: ruleScope
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScopeAccess().getScopesScopeParserRuleCall_5_1_0()); 
@@ -84197,17 +84460,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestEntity__ExpressionAssignment_0"
-    // InternalKiCool.g:25261:1: rule__TestEntity__ExpressionAssignment_0 : ( ruleAnnotatedExpression ) ;
+    // InternalKiCool.g:25342:1: rule__TestEntity__ExpressionAssignment_0 : ( ruleAnnotatedExpression ) ;
     public final void rule__TestEntity__ExpressionAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25265:1: ( ( ruleAnnotatedExpression ) )
-            // InternalKiCool.g:25266:2: ( ruleAnnotatedExpression )
+            // InternalKiCool.g:25346:1: ( ( ruleAnnotatedExpression ) )
+            // InternalKiCool.g:25347:2: ( ruleAnnotatedExpression )
             {
-            // InternalKiCool.g:25266:2: ( ruleAnnotatedExpression )
-            // InternalKiCool.g:25267:3: ruleAnnotatedExpression
+            // InternalKiCool.g:25347:2: ( ruleAnnotatedExpression )
+            // InternalKiCool.g:25348:3: ruleAnnotatedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTestEntityAccess().getExpressionAnnotatedExpressionParserRuleCall_0_0()); 
@@ -84242,17 +84505,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TestEntity__EffectAssignment_1"
-    // InternalKiCool.g:25276:1: rule__TestEntity__EffectAssignment_1 : ( ruleEffect ) ;
+    // InternalKiCool.g:25357:1: rule__TestEntity__EffectAssignment_1 : ( ruleEffect ) ;
     public final void rule__TestEntity__EffectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25280:1: ( ( ruleEffect ) )
-            // InternalKiCool.g:25281:2: ( ruleEffect )
+            // InternalKiCool.g:25361:1: ( ( ruleEffect ) )
+            // InternalKiCool.g:25362:2: ( ruleEffect )
             {
-            // InternalKiCool.g:25281:2: ( ruleEffect )
-            // InternalKiCool.g:25282:3: ruleEffect
+            // InternalKiCool.g:25362:2: ( ruleEffect )
+            // InternalKiCool.g:25363:3: ruleEffect
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTestEntityAccess().getEffectEffectParserRuleCall_1_0()); 
@@ -84287,17 +84550,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnnotatedExpression__AnnotationsAssignment_0"
-    // InternalKiCool.g:25291:1: rule__AnnotatedExpression__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:25372:1: rule__AnnotatedExpression__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__AnnotatedExpression__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25295:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:25296:2: ( ruleAnnotation )
+            // InternalKiCool.g:25376:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:25377:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:25296:2: ( ruleAnnotation )
-            // InternalKiCool.g:25297:3: ruleAnnotation
+            // InternalKiCool.g:25377:2: ( ruleAnnotation )
+            // InternalKiCool.g:25378:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -84332,17 +84595,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AnnotatedExpression__ExpressionAssignment_2"
-    // InternalKiCool.g:25306:1: rule__AnnotatedExpression__ExpressionAssignment_2 : ( ruleExpression ) ;
+    // InternalKiCool.g:25387:1: rule__AnnotatedExpression__ExpressionAssignment_2 : ( ruleExpression ) ;
     public final void rule__AnnotatedExpression__ExpressionAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25310:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:25311:2: ( ruleExpression )
+            // InternalKiCool.g:25391:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:25392:2: ( ruleExpression )
             {
-            // InternalKiCool.g:25311:2: ( ruleExpression )
-            // InternalKiCool.g:25312:3: ruleExpression
+            // InternalKiCool.g:25392:2: ( ruleExpression )
+            // InternalKiCool.g:25393:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAnnotatedExpressionAccess().getExpressionExpressionParserRuleCall_2_0()); 
@@ -84377,17 +84640,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__AnnotationsAssignment_0"
-    // InternalKiCool.g:25321:1: rule__VariableDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:25402:1: rule__VariableDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__VariableDeclaration__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25325:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:25326:2: ( ruleAnnotation )
+            // InternalKiCool.g:25406:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:25407:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:25326:2: ( ruleAnnotation )
-            // InternalKiCool.g:25327:3: ruleAnnotation
+            // InternalKiCool.g:25407:2: ( ruleAnnotation )
+            // InternalKiCool.g:25408:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -84422,23 +84685,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__PrivateAssignment_1"
-    // InternalKiCool.g:25336:1: rule__VariableDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:25417:1: rule__VariableDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__VariableDeclaration__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25340:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:25341:2: ( ( 'private' ) )
+            // InternalKiCool.g:25421:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:25422:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:25341:2: ( ( 'private' ) )
-            // InternalKiCool.g:25342:3: ( 'private' )
+            // InternalKiCool.g:25422:2: ( ( 'private' ) )
+            // InternalKiCool.g:25423:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:25343:3: ( 'private' )
-            // InternalKiCool.g:25344:4: 'private'
+            // InternalKiCool.g:25424:3: ( 'private' )
+            // InternalKiCool.g:25425:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
@@ -84475,23 +84738,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__ConstAssignment_2"
-    // InternalKiCool.g:25355:1: rule__VariableDeclaration__ConstAssignment_2 : ( ( 'const' ) ) ;
+    // InternalKiCool.g:25436:1: rule__VariableDeclaration__ConstAssignment_2 : ( ( 'const' ) ) ;
     public final void rule__VariableDeclaration__ConstAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25359:1: ( ( ( 'const' ) ) )
-            // InternalKiCool.g:25360:2: ( ( 'const' ) )
+            // InternalKiCool.g:25440:1: ( ( ( 'const' ) ) )
+            // InternalKiCool.g:25441:2: ( ( 'const' ) )
             {
-            // InternalKiCool.g:25360:2: ( ( 'const' ) )
-            // InternalKiCool.g:25361:3: ( 'const' )
+            // InternalKiCool.g:25441:2: ( ( 'const' ) )
+            // InternalKiCool.g:25442:3: ( 'const' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getConstConstKeyword_2_0()); 
             }
-            // InternalKiCool.g:25362:3: ( 'const' )
-            // InternalKiCool.g:25363:4: 'const'
+            // InternalKiCool.g:25443:3: ( 'const' )
+            // InternalKiCool.g:25444:4: 'const'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getConstConstKeyword_2_0()); 
@@ -84528,23 +84791,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__InputAssignment_3"
-    // InternalKiCool.g:25374:1: rule__VariableDeclaration__InputAssignment_3 : ( ( 'input' ) ) ;
+    // InternalKiCool.g:25455:1: rule__VariableDeclaration__InputAssignment_3 : ( ( 'input' ) ) ;
     public final void rule__VariableDeclaration__InputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25378:1: ( ( ( 'input' ) ) )
-            // InternalKiCool.g:25379:2: ( ( 'input' ) )
+            // InternalKiCool.g:25459:1: ( ( ( 'input' ) ) )
+            // InternalKiCool.g:25460:2: ( ( 'input' ) )
             {
-            // InternalKiCool.g:25379:2: ( ( 'input' ) )
-            // InternalKiCool.g:25380:3: ( 'input' )
+            // InternalKiCool.g:25460:2: ( ( 'input' ) )
+            // InternalKiCool.g:25461:3: ( 'input' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getInputInputKeyword_3_0()); 
             }
-            // InternalKiCool.g:25381:3: ( 'input' )
-            // InternalKiCool.g:25382:4: 'input'
+            // InternalKiCool.g:25462:3: ( 'input' )
+            // InternalKiCool.g:25463:4: 'input'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getInputInputKeyword_3_0()); 
@@ -84581,23 +84844,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__OutputAssignment_4"
-    // InternalKiCool.g:25393:1: rule__VariableDeclaration__OutputAssignment_4 : ( ( 'output' ) ) ;
+    // InternalKiCool.g:25474:1: rule__VariableDeclaration__OutputAssignment_4 : ( ( 'output' ) ) ;
     public final void rule__VariableDeclaration__OutputAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25397:1: ( ( ( 'output' ) ) )
-            // InternalKiCool.g:25398:2: ( ( 'output' ) )
+            // InternalKiCool.g:25478:1: ( ( ( 'output' ) ) )
+            // InternalKiCool.g:25479:2: ( ( 'output' ) )
             {
-            // InternalKiCool.g:25398:2: ( ( 'output' ) )
-            // InternalKiCool.g:25399:3: ( 'output' )
+            // InternalKiCool.g:25479:2: ( ( 'output' ) )
+            // InternalKiCool.g:25480:3: ( 'output' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getOutputOutputKeyword_4_0()); 
             }
-            // InternalKiCool.g:25400:3: ( 'output' )
-            // InternalKiCool.g:25401:4: 'output'
+            // InternalKiCool.g:25481:3: ( 'output' )
+            // InternalKiCool.g:25482:4: 'output'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getOutputOutputKeyword_4_0()); 
@@ -84634,23 +84897,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__GlobalAssignment_5"
-    // InternalKiCool.g:25412:1: rule__VariableDeclaration__GlobalAssignment_5 : ( ( 'global' ) ) ;
+    // InternalKiCool.g:25493:1: rule__VariableDeclaration__GlobalAssignment_5 : ( ( 'global' ) ) ;
     public final void rule__VariableDeclaration__GlobalAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25416:1: ( ( ( 'global' ) ) )
-            // InternalKiCool.g:25417:2: ( ( 'global' ) )
+            // InternalKiCool.g:25497:1: ( ( ( 'global' ) ) )
+            // InternalKiCool.g:25498:2: ( ( 'global' ) )
             {
-            // InternalKiCool.g:25417:2: ( ( 'global' ) )
-            // InternalKiCool.g:25418:3: ( 'global' )
+            // InternalKiCool.g:25498:2: ( ( 'global' ) )
+            // InternalKiCool.g:25499:3: ( 'global' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getGlobalGlobalKeyword_5_0()); 
             }
-            // InternalKiCool.g:25419:3: ( 'global' )
-            // InternalKiCool.g:25420:4: 'global'
+            // InternalKiCool.g:25500:3: ( 'global' )
+            // InternalKiCool.g:25501:4: 'global'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getGlobalGlobalKeyword_5_0()); 
@@ -84687,23 +84950,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__StaticAssignment_6"
-    // InternalKiCool.g:25431:1: rule__VariableDeclaration__StaticAssignment_6 : ( ( 'static' ) ) ;
+    // InternalKiCool.g:25512:1: rule__VariableDeclaration__StaticAssignment_6 : ( ( 'static' ) ) ;
     public final void rule__VariableDeclaration__StaticAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25435:1: ( ( ( 'static' ) ) )
-            // InternalKiCool.g:25436:2: ( ( 'static' ) )
+            // InternalKiCool.g:25516:1: ( ( ( 'static' ) ) )
+            // InternalKiCool.g:25517:2: ( ( 'static' ) )
             {
-            // InternalKiCool.g:25436:2: ( ( 'static' ) )
-            // InternalKiCool.g:25437:3: ( 'static' )
+            // InternalKiCool.g:25517:2: ( ( 'static' ) )
+            // InternalKiCool.g:25518:3: ( 'static' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getStaticStaticKeyword_6_0()); 
             }
-            // InternalKiCool.g:25438:3: ( 'static' )
-            // InternalKiCool.g:25439:4: 'static'
+            // InternalKiCool.g:25519:3: ( 'static' )
+            // InternalKiCool.g:25520:4: 'static'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getStaticStaticKeyword_6_0()); 
@@ -84740,23 +85003,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__SignalAssignment_7_0_0"
-    // InternalKiCool.g:25450:1: rule__VariableDeclaration__SignalAssignment_7_0_0 : ( ( 'signal' ) ) ;
+    // InternalKiCool.g:25531:1: rule__VariableDeclaration__SignalAssignment_7_0_0 : ( ( 'signal' ) ) ;
     public final void rule__VariableDeclaration__SignalAssignment_7_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25454:1: ( ( ( 'signal' ) ) )
-            // InternalKiCool.g:25455:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25535:1: ( ( ( 'signal' ) ) )
+            // InternalKiCool.g:25536:2: ( ( 'signal' ) )
             {
-            // InternalKiCool.g:25455:2: ( ( 'signal' ) )
-            // InternalKiCool.g:25456:3: ( 'signal' )
+            // InternalKiCool.g:25536:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25537:3: ( 'signal' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getSignalSignalKeyword_7_0_0_0()); 
             }
-            // InternalKiCool.g:25457:3: ( 'signal' )
-            // InternalKiCool.g:25458:4: 'signal'
+            // InternalKiCool.g:25538:3: ( 'signal' )
+            // InternalKiCool.g:25539:4: 'signal'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getSignalSignalKeyword_7_0_0_0()); 
@@ -84793,17 +85056,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__TypeAssignment_7_0_1"
-    // InternalKiCool.g:25469:1: rule__VariableDeclaration__TypeAssignment_7_0_1 : ( ruleValueType ) ;
+    // InternalKiCool.g:25550:1: rule__VariableDeclaration__TypeAssignment_7_0_1 : ( ruleValueType ) ;
     public final void rule__VariableDeclaration__TypeAssignment_7_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25473:1: ( ( ruleValueType ) )
-            // InternalKiCool.g:25474:2: ( ruleValueType )
+            // InternalKiCool.g:25554:1: ( ( ruleValueType ) )
+            // InternalKiCool.g:25555:2: ( ruleValueType )
             {
-            // InternalKiCool.g:25474:2: ( ruleValueType )
-            // InternalKiCool.g:25475:3: ruleValueType
+            // InternalKiCool.g:25555:2: ( ruleValueType )
+            // InternalKiCool.g:25556:3: ruleValueType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getTypeValueTypeEnumRuleCall_7_0_1_0()); 
@@ -84838,23 +85101,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__SignalAssignment_7_1"
-    // InternalKiCool.g:25484:1: rule__VariableDeclaration__SignalAssignment_7_1 : ( ( 'signal' ) ) ;
+    // InternalKiCool.g:25565:1: rule__VariableDeclaration__SignalAssignment_7_1 : ( ( 'signal' ) ) ;
     public final void rule__VariableDeclaration__SignalAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25488:1: ( ( ( 'signal' ) ) )
-            // InternalKiCool.g:25489:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25569:1: ( ( ( 'signal' ) ) )
+            // InternalKiCool.g:25570:2: ( ( 'signal' ) )
             {
-            // InternalKiCool.g:25489:2: ( ( 'signal' ) )
-            // InternalKiCool.g:25490:3: ( 'signal' )
+            // InternalKiCool.g:25570:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25571:3: ( 'signal' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getSignalSignalKeyword_7_1_0()); 
             }
-            // InternalKiCool.g:25491:3: ( 'signal' )
-            // InternalKiCool.g:25492:4: 'signal'
+            // InternalKiCool.g:25572:3: ( 'signal' )
+            // InternalKiCool.g:25573:4: 'signal'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getSignalSignalKeyword_7_1_0()); 
@@ -84891,17 +85154,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__TypeAssignment_7_2_0"
-    // InternalKiCool.g:25503:1: rule__VariableDeclaration__TypeAssignment_7_2_0 : ( ruleHostType ) ;
+    // InternalKiCool.g:25584:1: rule__VariableDeclaration__TypeAssignment_7_2_0 : ( ruleHostType ) ;
     public final void rule__VariableDeclaration__TypeAssignment_7_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25507:1: ( ( ruleHostType ) )
-            // InternalKiCool.g:25508:2: ( ruleHostType )
+            // InternalKiCool.g:25588:1: ( ( ruleHostType ) )
+            // InternalKiCool.g:25589:2: ( ruleHostType )
             {
-            // InternalKiCool.g:25508:2: ( ruleHostType )
-            // InternalKiCool.g:25509:3: ruleHostType
+            // InternalKiCool.g:25589:2: ( ruleHostType )
+            // InternalKiCool.g:25590:3: ruleHostType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getTypeHostTypeEnumRuleCall_7_2_0_0()); 
@@ -84936,17 +85199,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__HostTypeAssignment_7_2_1"
-    // InternalKiCool.g:25518:1: rule__VariableDeclaration__HostTypeAssignment_7_2_1 : ( RULE_STRING ) ;
+    // InternalKiCool.g:25599:1: rule__VariableDeclaration__HostTypeAssignment_7_2_1 : ( RULE_STRING ) ;
     public final void rule__VariableDeclaration__HostTypeAssignment_7_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25522:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:25523:2: ( RULE_STRING )
+            // InternalKiCool.g:25603:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:25604:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:25523:2: ( RULE_STRING )
-            // InternalKiCool.g:25524:3: RULE_STRING
+            // InternalKiCool.g:25604:2: ( RULE_STRING )
+            // InternalKiCool.g:25605:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0()); 
@@ -84977,17 +85240,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__ValuedObjectsAssignment_8"
-    // InternalKiCool.g:25533:1: rule__VariableDeclaration__ValuedObjectsAssignment_8 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:25614:1: rule__VariableDeclaration__ValuedObjectsAssignment_8 : ( ruleValuedObject ) ;
     public final void rule__VariableDeclaration__ValuedObjectsAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25537:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:25538:2: ( ruleValuedObject )
+            // InternalKiCool.g:25618:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:25619:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:25538:2: ( ruleValuedObject )
-            // InternalKiCool.g:25539:3: ruleValuedObject
+            // InternalKiCool.g:25619:2: ( ruleValuedObject )
+            // InternalKiCool.g:25620:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_8_0()); 
@@ -85022,17 +85285,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__ValuedObjectsAssignment_9_1"
-    // InternalKiCool.g:25548:1: rule__VariableDeclaration__ValuedObjectsAssignment_9_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:25629:1: rule__VariableDeclaration__ValuedObjectsAssignment_9_1 : ( ruleValuedObject ) ;
     public final void rule__VariableDeclaration__ValuedObjectsAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25552:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:25553:2: ( ruleValuedObject )
+            // InternalKiCool.g:25633:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:25634:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:25553:2: ( ruleValuedObject )
-            // InternalKiCool.g:25554:3: ruleValuedObject
+            // InternalKiCool.g:25634:2: ( ruleValuedObject )
+            // InternalKiCool.g:25635:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_9_1_0()); 
@@ -85067,17 +85330,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclaration__AnnotationsAssignment_11"
-    // InternalKiCool.g:25563:1: rule__VariableDeclaration__AnnotationsAssignment_11 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:25644:1: rule__VariableDeclaration__AnnotationsAssignment_11 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__VariableDeclaration__AnnotationsAssignment_11() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25567:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:25568:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:25648:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:25649:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:25568:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:25569:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:25649:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:25650:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_11_0()); 
@@ -85112,17 +85375,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0"
-    // InternalKiCool.g:25578:1: rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:25659:1: rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25582:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:25583:2: ( ruleAnnotation )
+            // InternalKiCool.g:25663:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:25664:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:25583:2: ( ruleAnnotation )
-            // InternalKiCool.g:25584:3: ruleAnnotation
+            // InternalKiCool.g:25664:2: ( ruleAnnotation )
+            // InternalKiCool.g:25665:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -85157,23 +85420,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__PrivateAssignment_1"
-    // InternalKiCool.g:25593:1: rule__VariableDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:25674:1: rule__VariableDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25597:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:25598:2: ( ( 'private' ) )
+            // InternalKiCool.g:25678:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:25679:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:25598:2: ( ( 'private' ) )
-            // InternalKiCool.g:25599:3: ( 'private' )
+            // InternalKiCool.g:25679:2: ( ( 'private' ) )
+            // InternalKiCool.g:25680:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:25600:3: ( 'private' )
-            // InternalKiCool.g:25601:4: 'private'
+            // InternalKiCool.g:25681:3: ( 'private' )
+            // InternalKiCool.g:25682:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
@@ -85210,23 +85473,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__ConstAssignment_2"
-    // InternalKiCool.g:25612:1: rule__VariableDeclarationWOSemicolon__ConstAssignment_2 : ( ( 'const' ) ) ;
+    // InternalKiCool.g:25693:1: rule__VariableDeclarationWOSemicolon__ConstAssignment_2 : ( ( 'const' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__ConstAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25616:1: ( ( ( 'const' ) ) )
-            // InternalKiCool.g:25617:2: ( ( 'const' ) )
+            // InternalKiCool.g:25697:1: ( ( ( 'const' ) ) )
+            // InternalKiCool.g:25698:2: ( ( 'const' ) )
             {
-            // InternalKiCool.g:25617:2: ( ( 'const' ) )
-            // InternalKiCool.g:25618:3: ( 'const' )
+            // InternalKiCool.g:25698:2: ( ( 'const' ) )
+            // InternalKiCool.g:25699:3: ( 'const' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getConstConstKeyword_2_0()); 
             }
-            // InternalKiCool.g:25619:3: ( 'const' )
-            // InternalKiCool.g:25620:4: 'const'
+            // InternalKiCool.g:25700:3: ( 'const' )
+            // InternalKiCool.g:25701:4: 'const'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getConstConstKeyword_2_0()); 
@@ -85263,23 +85526,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__InputAssignment_3"
-    // InternalKiCool.g:25631:1: rule__VariableDeclarationWOSemicolon__InputAssignment_3 : ( ( 'input' ) ) ;
+    // InternalKiCool.g:25712:1: rule__VariableDeclarationWOSemicolon__InputAssignment_3 : ( ( 'input' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__InputAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25635:1: ( ( ( 'input' ) ) )
-            // InternalKiCool.g:25636:2: ( ( 'input' ) )
+            // InternalKiCool.g:25716:1: ( ( ( 'input' ) ) )
+            // InternalKiCool.g:25717:2: ( ( 'input' ) )
             {
-            // InternalKiCool.g:25636:2: ( ( 'input' ) )
-            // InternalKiCool.g:25637:3: ( 'input' )
+            // InternalKiCool.g:25717:2: ( ( 'input' ) )
+            // InternalKiCool.g:25718:3: ( 'input' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getInputInputKeyword_3_0()); 
             }
-            // InternalKiCool.g:25638:3: ( 'input' )
-            // InternalKiCool.g:25639:4: 'input'
+            // InternalKiCool.g:25719:3: ( 'input' )
+            // InternalKiCool.g:25720:4: 'input'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getInputInputKeyword_3_0()); 
@@ -85316,23 +85579,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__OutputAssignment_4"
-    // InternalKiCool.g:25650:1: rule__VariableDeclarationWOSemicolon__OutputAssignment_4 : ( ( 'output' ) ) ;
+    // InternalKiCool.g:25731:1: rule__VariableDeclarationWOSemicolon__OutputAssignment_4 : ( ( 'output' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__OutputAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25654:1: ( ( ( 'output' ) ) )
-            // InternalKiCool.g:25655:2: ( ( 'output' ) )
+            // InternalKiCool.g:25735:1: ( ( ( 'output' ) ) )
+            // InternalKiCool.g:25736:2: ( ( 'output' ) )
             {
-            // InternalKiCool.g:25655:2: ( ( 'output' ) )
-            // InternalKiCool.g:25656:3: ( 'output' )
+            // InternalKiCool.g:25736:2: ( ( 'output' ) )
+            // InternalKiCool.g:25737:3: ( 'output' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getOutputOutputKeyword_4_0()); 
             }
-            // InternalKiCool.g:25657:3: ( 'output' )
-            // InternalKiCool.g:25658:4: 'output'
+            // InternalKiCool.g:25738:3: ( 'output' )
+            // InternalKiCool.g:25739:4: 'output'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getOutputOutputKeyword_4_0()); 
@@ -85369,23 +85632,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__GlobalAssignment_5"
-    // InternalKiCool.g:25669:1: rule__VariableDeclarationWOSemicolon__GlobalAssignment_5 : ( ( 'global' ) ) ;
+    // InternalKiCool.g:25750:1: rule__VariableDeclarationWOSemicolon__GlobalAssignment_5 : ( ( 'global' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__GlobalAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25673:1: ( ( ( 'global' ) ) )
-            // InternalKiCool.g:25674:2: ( ( 'global' ) )
+            // InternalKiCool.g:25754:1: ( ( ( 'global' ) ) )
+            // InternalKiCool.g:25755:2: ( ( 'global' ) )
             {
-            // InternalKiCool.g:25674:2: ( ( 'global' ) )
-            // InternalKiCool.g:25675:3: ( 'global' )
+            // InternalKiCool.g:25755:2: ( ( 'global' ) )
+            // InternalKiCool.g:25756:3: ( 'global' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGlobalGlobalKeyword_5_0()); 
             }
-            // InternalKiCool.g:25676:3: ( 'global' )
-            // InternalKiCool.g:25677:4: 'global'
+            // InternalKiCool.g:25757:3: ( 'global' )
+            // InternalKiCool.g:25758:4: 'global'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getGlobalGlobalKeyword_5_0()); 
@@ -85422,23 +85685,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__StaticAssignment_6"
-    // InternalKiCool.g:25688:1: rule__VariableDeclarationWOSemicolon__StaticAssignment_6 : ( ( 'static' ) ) ;
+    // InternalKiCool.g:25769:1: rule__VariableDeclarationWOSemicolon__StaticAssignment_6 : ( ( 'static' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__StaticAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25692:1: ( ( ( 'static' ) ) )
-            // InternalKiCool.g:25693:2: ( ( 'static' ) )
+            // InternalKiCool.g:25773:1: ( ( ( 'static' ) ) )
+            // InternalKiCool.g:25774:2: ( ( 'static' ) )
             {
-            // InternalKiCool.g:25693:2: ( ( 'static' ) )
-            // InternalKiCool.g:25694:3: ( 'static' )
+            // InternalKiCool.g:25774:2: ( ( 'static' ) )
+            // InternalKiCool.g:25775:3: ( 'static' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getStaticStaticKeyword_6_0()); 
             }
-            // InternalKiCool.g:25695:3: ( 'static' )
-            // InternalKiCool.g:25696:4: 'static'
+            // InternalKiCool.g:25776:3: ( 'static' )
+            // InternalKiCool.g:25777:4: 'static'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getStaticStaticKeyword_6_0()); 
@@ -85475,23 +85738,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__SignalAssignment_7_0_0"
-    // InternalKiCool.g:25707:1: rule__VariableDeclarationWOSemicolon__SignalAssignment_7_0_0 : ( ( 'signal' ) ) ;
+    // InternalKiCool.g:25788:1: rule__VariableDeclarationWOSemicolon__SignalAssignment_7_0_0 : ( ( 'signal' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__SignalAssignment_7_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25711:1: ( ( ( 'signal' ) ) )
-            // InternalKiCool.g:25712:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25792:1: ( ( ( 'signal' ) ) )
+            // InternalKiCool.g:25793:2: ( ( 'signal' ) )
             {
-            // InternalKiCool.g:25712:2: ( ( 'signal' ) )
-            // InternalKiCool.g:25713:3: ( 'signal' )
+            // InternalKiCool.g:25793:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25794:3: ( 'signal' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalSignalKeyword_7_0_0_0()); 
             }
-            // InternalKiCool.g:25714:3: ( 'signal' )
-            // InternalKiCool.g:25715:4: 'signal'
+            // InternalKiCool.g:25795:3: ( 'signal' )
+            // InternalKiCool.g:25796:4: 'signal'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalSignalKeyword_7_0_0_0()); 
@@ -85528,17 +85791,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__TypeAssignment_7_0_1"
-    // InternalKiCool.g:25726:1: rule__VariableDeclarationWOSemicolon__TypeAssignment_7_0_1 : ( ruleValueType ) ;
+    // InternalKiCool.g:25807:1: rule__VariableDeclarationWOSemicolon__TypeAssignment_7_0_1 : ( ruleValueType ) ;
     public final void rule__VariableDeclarationWOSemicolon__TypeAssignment_7_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25730:1: ( ( ruleValueType ) )
-            // InternalKiCool.g:25731:2: ( ruleValueType )
+            // InternalKiCool.g:25811:1: ( ( ruleValueType ) )
+            // InternalKiCool.g:25812:2: ( ruleValueType )
             {
-            // InternalKiCool.g:25731:2: ( ruleValueType )
-            // InternalKiCool.g:25732:3: ruleValueType
+            // InternalKiCool.g:25812:2: ( ruleValueType )
+            // InternalKiCool.g:25813:3: ruleValueType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getTypeValueTypeEnumRuleCall_7_0_1_0()); 
@@ -85573,23 +85836,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__SignalAssignment_7_1"
-    // InternalKiCool.g:25741:1: rule__VariableDeclarationWOSemicolon__SignalAssignment_7_1 : ( ( 'signal' ) ) ;
+    // InternalKiCool.g:25822:1: rule__VariableDeclarationWOSemicolon__SignalAssignment_7_1 : ( ( 'signal' ) ) ;
     public final void rule__VariableDeclarationWOSemicolon__SignalAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25745:1: ( ( ( 'signal' ) ) )
-            // InternalKiCool.g:25746:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25826:1: ( ( ( 'signal' ) ) )
+            // InternalKiCool.g:25827:2: ( ( 'signal' ) )
             {
-            // InternalKiCool.g:25746:2: ( ( 'signal' ) )
-            // InternalKiCool.g:25747:3: ( 'signal' )
+            // InternalKiCool.g:25827:2: ( ( 'signal' ) )
+            // InternalKiCool.g:25828:3: ( 'signal' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalSignalKeyword_7_1_0()); 
             }
-            // InternalKiCool.g:25748:3: ( 'signal' )
-            // InternalKiCool.g:25749:4: 'signal'
+            // InternalKiCool.g:25829:3: ( 'signal' )
+            // InternalKiCool.g:25830:4: 'signal'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getSignalSignalKeyword_7_1_0()); 
@@ -85626,17 +85889,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__TypeAssignment_7_2_0"
-    // InternalKiCool.g:25760:1: rule__VariableDeclarationWOSemicolon__TypeAssignment_7_2_0 : ( ruleHostType ) ;
+    // InternalKiCool.g:25841:1: rule__VariableDeclarationWOSemicolon__TypeAssignment_7_2_0 : ( ruleHostType ) ;
     public final void rule__VariableDeclarationWOSemicolon__TypeAssignment_7_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25764:1: ( ( ruleHostType ) )
-            // InternalKiCool.g:25765:2: ( ruleHostType )
+            // InternalKiCool.g:25845:1: ( ( ruleHostType ) )
+            // InternalKiCool.g:25846:2: ( ruleHostType )
             {
-            // InternalKiCool.g:25765:2: ( ruleHostType )
-            // InternalKiCool.g:25766:3: ruleHostType
+            // InternalKiCool.g:25846:2: ( ruleHostType )
+            // InternalKiCool.g:25847:3: ruleHostType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getTypeHostTypeEnumRuleCall_7_2_0_0()); 
@@ -85671,17 +85934,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__HostTypeAssignment_7_2_1"
-    // InternalKiCool.g:25775:1: rule__VariableDeclarationWOSemicolon__HostTypeAssignment_7_2_1 : ( RULE_STRING ) ;
+    // InternalKiCool.g:25856:1: rule__VariableDeclarationWOSemicolon__HostTypeAssignment_7_2_1 : ( RULE_STRING ) ;
     public final void rule__VariableDeclarationWOSemicolon__HostTypeAssignment_7_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25779:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:25780:2: ( RULE_STRING )
+            // InternalKiCool.g:25860:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:25861:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:25780:2: ( RULE_STRING )
-            // InternalKiCool.g:25781:3: RULE_STRING
+            // InternalKiCool.g:25861:2: ( RULE_STRING )
+            // InternalKiCool.g:25862:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getHostTypeSTRINGTerminalRuleCall_7_2_1_0()); 
@@ -85712,17 +85975,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_8"
-    // InternalKiCool.g:25790:1: rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_8 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:25871:1: rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_8 : ( ruleValuedObject ) ;
     public final void rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25794:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:25795:2: ( ruleValuedObject )
+            // InternalKiCool.g:25875:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:25876:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:25795:2: ( ruleValuedObject )
-            // InternalKiCool.g:25796:3: ruleValuedObject
+            // InternalKiCool.g:25876:2: ( ruleValuedObject )
+            // InternalKiCool.g:25877:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_8_0()); 
@@ -85757,17 +86020,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_9_1"
-    // InternalKiCool.g:25805:1: rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_9_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:25886:1: rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_9_1 : ( ruleValuedObject ) ;
     public final void rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_9_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25809:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:25810:2: ( ruleValuedObject )
+            // InternalKiCool.g:25890:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:25891:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:25810:2: ( ruleValuedObject )
-            // InternalKiCool.g:25811:3: ruleValuedObject
+            // InternalKiCool.g:25891:2: ( ruleValuedObject )
+            // InternalKiCool.g:25892:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_9_1_0()); 
@@ -85802,17 +86065,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_10"
-    // InternalKiCool.g:25820:1: rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_10 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:25901:1: rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_10 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_10() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25824:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:25825:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:25905:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:25906:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:25825:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:25826:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:25906:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:25907:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_10_0()); 
@@ -85847,17 +86110,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__AnnotationsAssignment_1"
-    // InternalKiCool.g:25835:1: rule__StructDeclaration__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:25916:1: rule__StructDeclaration__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
     public final void rule__StructDeclaration__AnnotationsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25839:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:25840:2: ( ruleAnnotation )
+            // InternalKiCool.g:25920:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:25921:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:25840:2: ( ruleAnnotation )
-            // InternalKiCool.g:25841:3: ruleAnnotation
+            // InternalKiCool.g:25921:2: ( ruleAnnotation )
+            // InternalKiCool.g:25922:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
@@ -85892,23 +86155,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__PrivateAssignment_2"
-    // InternalKiCool.g:25850:1: rule__StructDeclaration__PrivateAssignment_2 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:25931:1: rule__StructDeclaration__PrivateAssignment_2 : ( ( 'private' ) ) ;
     public final void rule__StructDeclaration__PrivateAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25854:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:25855:2: ( ( 'private' ) )
+            // InternalKiCool.g:25935:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:25936:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:25855:2: ( ( 'private' ) )
-            // InternalKiCool.g:25856:3: ( 'private' )
+            // InternalKiCool.g:25936:2: ( ( 'private' ) )
+            // InternalKiCool.g:25937:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getPrivatePrivateKeyword_2_0()); 
             }
-            // InternalKiCool.g:25857:3: ( 'private' )
-            // InternalKiCool.g:25858:4: 'private'
+            // InternalKiCool.g:25938:3: ( 'private' )
+            // InternalKiCool.g:25939:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getPrivatePrivateKeyword_2_0()); 
@@ -85945,23 +86208,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__ConstAssignment_3"
-    // InternalKiCool.g:25869:1: rule__StructDeclaration__ConstAssignment_3 : ( ( 'const' ) ) ;
+    // InternalKiCool.g:25950:1: rule__StructDeclaration__ConstAssignment_3 : ( ( 'const' ) ) ;
     public final void rule__StructDeclaration__ConstAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25873:1: ( ( ( 'const' ) ) )
-            // InternalKiCool.g:25874:2: ( ( 'const' ) )
+            // InternalKiCool.g:25954:1: ( ( ( 'const' ) ) )
+            // InternalKiCool.g:25955:2: ( ( 'const' ) )
             {
-            // InternalKiCool.g:25874:2: ( ( 'const' ) )
-            // InternalKiCool.g:25875:3: ( 'const' )
+            // InternalKiCool.g:25955:2: ( ( 'const' ) )
+            // InternalKiCool.g:25956:3: ( 'const' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getConstConstKeyword_3_0()); 
             }
-            // InternalKiCool.g:25876:3: ( 'const' )
-            // InternalKiCool.g:25877:4: 'const'
+            // InternalKiCool.g:25957:3: ( 'const' )
+            // InternalKiCool.g:25958:4: 'const'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getConstConstKeyword_3_0()); 
@@ -85998,23 +86261,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__InputAssignment_4"
-    // InternalKiCool.g:25888:1: rule__StructDeclaration__InputAssignment_4 : ( ( 'input' ) ) ;
+    // InternalKiCool.g:25969:1: rule__StructDeclaration__InputAssignment_4 : ( ( 'input' ) ) ;
     public final void rule__StructDeclaration__InputAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25892:1: ( ( ( 'input' ) ) )
-            // InternalKiCool.g:25893:2: ( ( 'input' ) )
+            // InternalKiCool.g:25973:1: ( ( ( 'input' ) ) )
+            // InternalKiCool.g:25974:2: ( ( 'input' ) )
             {
-            // InternalKiCool.g:25893:2: ( ( 'input' ) )
-            // InternalKiCool.g:25894:3: ( 'input' )
+            // InternalKiCool.g:25974:2: ( ( 'input' ) )
+            // InternalKiCool.g:25975:3: ( 'input' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getInputInputKeyword_4_0()); 
             }
-            // InternalKiCool.g:25895:3: ( 'input' )
-            // InternalKiCool.g:25896:4: 'input'
+            // InternalKiCool.g:25976:3: ( 'input' )
+            // InternalKiCool.g:25977:4: 'input'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getInputInputKeyword_4_0()); 
@@ -86051,23 +86314,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__OutputAssignment_5"
-    // InternalKiCool.g:25907:1: rule__StructDeclaration__OutputAssignment_5 : ( ( 'output' ) ) ;
+    // InternalKiCool.g:25988:1: rule__StructDeclaration__OutputAssignment_5 : ( ( 'output' ) ) ;
     public final void rule__StructDeclaration__OutputAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25911:1: ( ( ( 'output' ) ) )
-            // InternalKiCool.g:25912:2: ( ( 'output' ) )
+            // InternalKiCool.g:25992:1: ( ( ( 'output' ) ) )
+            // InternalKiCool.g:25993:2: ( ( 'output' ) )
             {
-            // InternalKiCool.g:25912:2: ( ( 'output' ) )
-            // InternalKiCool.g:25913:3: ( 'output' )
+            // InternalKiCool.g:25993:2: ( ( 'output' ) )
+            // InternalKiCool.g:25994:3: ( 'output' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getOutputOutputKeyword_5_0()); 
             }
-            // InternalKiCool.g:25914:3: ( 'output' )
-            // InternalKiCool.g:25915:4: 'output'
+            // InternalKiCool.g:25995:3: ( 'output' )
+            // InternalKiCool.g:25996:4: 'output'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getOutputOutputKeyword_5_0()); 
@@ -86104,23 +86367,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__GlobalAssignment_6"
-    // InternalKiCool.g:25926:1: rule__StructDeclaration__GlobalAssignment_6 : ( ( 'global' ) ) ;
+    // InternalKiCool.g:26007:1: rule__StructDeclaration__GlobalAssignment_6 : ( ( 'global' ) ) ;
     public final void rule__StructDeclaration__GlobalAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25930:1: ( ( ( 'global' ) ) )
-            // InternalKiCool.g:25931:2: ( ( 'global' ) )
+            // InternalKiCool.g:26011:1: ( ( ( 'global' ) ) )
+            // InternalKiCool.g:26012:2: ( ( 'global' ) )
             {
-            // InternalKiCool.g:25931:2: ( ( 'global' ) )
-            // InternalKiCool.g:25932:3: ( 'global' )
+            // InternalKiCool.g:26012:2: ( ( 'global' ) )
+            // InternalKiCool.g:26013:3: ( 'global' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getGlobalGlobalKeyword_6_0()); 
             }
-            // InternalKiCool.g:25933:3: ( 'global' )
-            // InternalKiCool.g:25934:4: 'global'
+            // InternalKiCool.g:26014:3: ( 'global' )
+            // InternalKiCool.g:26015:4: 'global'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getGlobalGlobalKeyword_6_0()); 
@@ -86157,23 +86420,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__StaticAssignment_7"
-    // InternalKiCool.g:25945:1: rule__StructDeclaration__StaticAssignment_7 : ( ( 'static' ) ) ;
+    // InternalKiCool.g:26026:1: rule__StructDeclaration__StaticAssignment_7 : ( ( 'static' ) ) ;
     public final void rule__StructDeclaration__StaticAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25949:1: ( ( ( 'static' ) ) )
-            // InternalKiCool.g:25950:2: ( ( 'static' ) )
+            // InternalKiCool.g:26030:1: ( ( ( 'static' ) ) )
+            // InternalKiCool.g:26031:2: ( ( 'static' ) )
             {
-            // InternalKiCool.g:25950:2: ( ( 'static' ) )
-            // InternalKiCool.g:25951:3: ( 'static' )
+            // InternalKiCool.g:26031:2: ( ( 'static' ) )
+            // InternalKiCool.g:26032:3: ( 'static' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getStaticStaticKeyword_7_0()); 
             }
-            // InternalKiCool.g:25952:3: ( 'static' )
-            // InternalKiCool.g:25953:4: 'static'
+            // InternalKiCool.g:26033:3: ( 'static' )
+            // InternalKiCool.g:26034:4: 'static'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getStaticStaticKeyword_7_0()); 
@@ -86210,17 +86473,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__TypeAssignment_8"
-    // InternalKiCool.g:25964:1: rule__StructDeclaration__TypeAssignment_8 : ( ruleStructType ) ;
+    // InternalKiCool.g:26045:1: rule__StructDeclaration__TypeAssignment_8 : ( ruleStructType ) ;
     public final void rule__StructDeclaration__TypeAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25968:1: ( ( ruleStructType ) )
-            // InternalKiCool.g:25969:2: ( ruleStructType )
+            // InternalKiCool.g:26049:1: ( ( ruleStructType ) )
+            // InternalKiCool.g:26050:2: ( ruleStructType )
             {
-            // InternalKiCool.g:25969:2: ( ruleStructType )
-            // InternalKiCool.g:25970:3: ruleStructType
+            // InternalKiCool.g:26050:2: ( ruleStructType )
+            // InternalKiCool.g:26051:3: ruleStructType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getTypeStructTypeEnumRuleCall_8_0()); 
@@ -86255,17 +86518,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__NameAssignment_9"
-    // InternalKiCool.g:25979:1: rule__StructDeclaration__NameAssignment_9 : ( RULE_ID ) ;
+    // InternalKiCool.g:26060:1: rule__StructDeclaration__NameAssignment_9 : ( RULE_ID ) ;
     public final void rule__StructDeclaration__NameAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25983:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:25984:2: ( RULE_ID )
+            // InternalKiCool.g:26064:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:26065:2: ( RULE_ID )
             {
-            // InternalKiCool.g:25984:2: ( RULE_ID )
-            // InternalKiCool.g:25985:3: RULE_ID
+            // InternalKiCool.g:26065:2: ( RULE_ID )
+            // InternalKiCool.g:26066:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getNameIDTerminalRuleCall_9_0()); 
@@ -86296,17 +86559,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__DeclarationsAssignment_11"
-    // InternalKiCool.g:25994:1: rule__StructDeclaration__DeclarationsAssignment_11 : ( ruleDeclaration ) ;
+    // InternalKiCool.g:26075:1: rule__StructDeclaration__DeclarationsAssignment_11 : ( ruleDeclaration ) ;
     public final void rule__StructDeclaration__DeclarationsAssignment_11() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:25998:1: ( ( ruleDeclaration ) )
-            // InternalKiCool.g:25999:2: ( ruleDeclaration )
+            // InternalKiCool.g:26079:1: ( ( ruleDeclaration ) )
+            // InternalKiCool.g:26080:2: ( ruleDeclaration )
             {
-            // InternalKiCool.g:25999:2: ( ruleDeclaration )
-            // InternalKiCool.g:26000:3: ruleDeclaration
+            // InternalKiCool.g:26080:2: ( ruleDeclaration )
+            // InternalKiCool.g:26081:3: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getDeclarationsDeclarationParserRuleCall_11_0()); 
@@ -86341,17 +86604,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__ValuedObjectsAssignment_13_0"
-    // InternalKiCool.g:26009:1: rule__StructDeclaration__ValuedObjectsAssignment_13_0 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26090:1: rule__StructDeclaration__ValuedObjectsAssignment_13_0 : ( ruleValuedObject ) ;
     public final void rule__StructDeclaration__ValuedObjectsAssignment_13_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26013:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26014:2: ( ruleValuedObject )
+            // InternalKiCool.g:26094:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26095:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26014:2: ( ruleValuedObject )
-            // InternalKiCool.g:26015:3: ruleValuedObject
+            // InternalKiCool.g:26095:2: ( ruleValuedObject )
+            // InternalKiCool.g:26096:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_13_0_0()); 
@@ -86386,17 +86649,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__ValuedObjectsAssignment_13_1_1"
-    // InternalKiCool.g:26024:1: rule__StructDeclaration__ValuedObjectsAssignment_13_1_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26105:1: rule__StructDeclaration__ValuedObjectsAssignment_13_1_1 : ( ruleValuedObject ) ;
     public final void rule__StructDeclaration__ValuedObjectsAssignment_13_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26028:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26029:2: ( ruleValuedObject )
+            // InternalKiCool.g:26109:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26110:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26029:2: ( ruleValuedObject )
-            // InternalKiCool.g:26030:3: ruleValuedObject
+            // InternalKiCool.g:26110:2: ( ruleValuedObject )
+            // InternalKiCool.g:26111:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_13_1_1_0()); 
@@ -86431,17 +86694,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclaration__AnnotationsAssignment_15"
-    // InternalKiCool.g:26039:1: rule__StructDeclaration__AnnotationsAssignment_15 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26120:1: rule__StructDeclaration__AnnotationsAssignment_15 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__StructDeclaration__AnnotationsAssignment_15() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26043:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26044:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26124:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26125:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26044:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26045:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26125:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26126:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_15_0()); 
@@ -86476,17 +86739,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__AnnotationsAssignment_1"
-    // InternalKiCool.g:26054:1: rule__StructDeclarationWOSemicolon__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:26135:1: rule__StructDeclarationWOSemicolon__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
     public final void rule__StructDeclarationWOSemicolon__AnnotationsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26058:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:26059:2: ( ruleAnnotation )
+            // InternalKiCool.g:26139:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:26140:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:26059:2: ( ruleAnnotation )
-            // InternalKiCool.g:26060:3: ruleAnnotation
+            // InternalKiCool.g:26140:2: ( ruleAnnotation )
+            // InternalKiCool.g:26141:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
@@ -86521,23 +86784,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__PrivateAssignment_2"
-    // InternalKiCool.g:26069:1: rule__StructDeclarationWOSemicolon__PrivateAssignment_2 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:26150:1: rule__StructDeclarationWOSemicolon__PrivateAssignment_2 : ( ( 'private' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__PrivateAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26073:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:26074:2: ( ( 'private' ) )
+            // InternalKiCool.g:26154:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:26155:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:26074:2: ( ( 'private' ) )
-            // InternalKiCool.g:26075:3: ( 'private' )
+            // InternalKiCool.g:26155:2: ( ( 'private' ) )
+            // InternalKiCool.g:26156:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_2_0()); 
             }
-            // InternalKiCool.g:26076:3: ( 'private' )
-            // InternalKiCool.g:26077:4: 'private'
+            // InternalKiCool.g:26157:3: ( 'private' )
+            // InternalKiCool.g:26158:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_2_0()); 
@@ -86574,23 +86837,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__ConstAssignment_3"
-    // InternalKiCool.g:26088:1: rule__StructDeclarationWOSemicolon__ConstAssignment_3 : ( ( 'const' ) ) ;
+    // InternalKiCool.g:26169:1: rule__StructDeclarationWOSemicolon__ConstAssignment_3 : ( ( 'const' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__ConstAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26092:1: ( ( ( 'const' ) ) )
-            // InternalKiCool.g:26093:2: ( ( 'const' ) )
+            // InternalKiCool.g:26173:1: ( ( ( 'const' ) ) )
+            // InternalKiCool.g:26174:2: ( ( 'const' ) )
             {
-            // InternalKiCool.g:26093:2: ( ( 'const' ) )
-            // InternalKiCool.g:26094:3: ( 'const' )
+            // InternalKiCool.g:26174:2: ( ( 'const' ) )
+            // InternalKiCool.g:26175:3: ( 'const' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getConstConstKeyword_3_0()); 
             }
-            // InternalKiCool.g:26095:3: ( 'const' )
-            // InternalKiCool.g:26096:4: 'const'
+            // InternalKiCool.g:26176:3: ( 'const' )
+            // InternalKiCool.g:26177:4: 'const'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getConstConstKeyword_3_0()); 
@@ -86627,23 +86890,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__InputAssignment_4"
-    // InternalKiCool.g:26107:1: rule__StructDeclarationWOSemicolon__InputAssignment_4 : ( ( 'input' ) ) ;
+    // InternalKiCool.g:26188:1: rule__StructDeclarationWOSemicolon__InputAssignment_4 : ( ( 'input' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__InputAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26111:1: ( ( ( 'input' ) ) )
-            // InternalKiCool.g:26112:2: ( ( 'input' ) )
+            // InternalKiCool.g:26192:1: ( ( ( 'input' ) ) )
+            // InternalKiCool.g:26193:2: ( ( 'input' ) )
             {
-            // InternalKiCool.g:26112:2: ( ( 'input' ) )
-            // InternalKiCool.g:26113:3: ( 'input' )
+            // InternalKiCool.g:26193:2: ( ( 'input' ) )
+            // InternalKiCool.g:26194:3: ( 'input' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getInputInputKeyword_4_0()); 
             }
-            // InternalKiCool.g:26114:3: ( 'input' )
-            // InternalKiCool.g:26115:4: 'input'
+            // InternalKiCool.g:26195:3: ( 'input' )
+            // InternalKiCool.g:26196:4: 'input'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getInputInputKeyword_4_0()); 
@@ -86680,23 +86943,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__OutputAssignment_5"
-    // InternalKiCool.g:26126:1: rule__StructDeclarationWOSemicolon__OutputAssignment_5 : ( ( 'output' ) ) ;
+    // InternalKiCool.g:26207:1: rule__StructDeclarationWOSemicolon__OutputAssignment_5 : ( ( 'output' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__OutputAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26130:1: ( ( ( 'output' ) ) )
-            // InternalKiCool.g:26131:2: ( ( 'output' ) )
+            // InternalKiCool.g:26211:1: ( ( ( 'output' ) ) )
+            // InternalKiCool.g:26212:2: ( ( 'output' ) )
             {
-            // InternalKiCool.g:26131:2: ( ( 'output' ) )
-            // InternalKiCool.g:26132:3: ( 'output' )
+            // InternalKiCool.g:26212:2: ( ( 'output' ) )
+            // InternalKiCool.g:26213:3: ( 'output' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getOutputOutputKeyword_5_0()); 
             }
-            // InternalKiCool.g:26133:3: ( 'output' )
-            // InternalKiCool.g:26134:4: 'output'
+            // InternalKiCool.g:26214:3: ( 'output' )
+            // InternalKiCool.g:26215:4: 'output'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getOutputOutputKeyword_5_0()); 
@@ -86733,23 +86996,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__GlobalAssignment_6"
-    // InternalKiCool.g:26145:1: rule__StructDeclarationWOSemicolon__GlobalAssignment_6 : ( ( 'global' ) ) ;
+    // InternalKiCool.g:26226:1: rule__StructDeclarationWOSemicolon__GlobalAssignment_6 : ( ( 'global' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__GlobalAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26149:1: ( ( ( 'global' ) ) )
-            // InternalKiCool.g:26150:2: ( ( 'global' ) )
+            // InternalKiCool.g:26230:1: ( ( ( 'global' ) ) )
+            // InternalKiCool.g:26231:2: ( ( 'global' ) )
             {
-            // InternalKiCool.g:26150:2: ( ( 'global' ) )
-            // InternalKiCool.g:26151:3: ( 'global' )
+            // InternalKiCool.g:26231:2: ( ( 'global' ) )
+            // InternalKiCool.g:26232:3: ( 'global' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getGlobalGlobalKeyword_6_0()); 
             }
-            // InternalKiCool.g:26152:3: ( 'global' )
-            // InternalKiCool.g:26153:4: 'global'
+            // InternalKiCool.g:26233:3: ( 'global' )
+            // InternalKiCool.g:26234:4: 'global'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getGlobalGlobalKeyword_6_0()); 
@@ -86786,23 +87049,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__StaticAssignment_7"
-    // InternalKiCool.g:26164:1: rule__StructDeclarationWOSemicolon__StaticAssignment_7 : ( ( 'static' ) ) ;
+    // InternalKiCool.g:26245:1: rule__StructDeclarationWOSemicolon__StaticAssignment_7 : ( ( 'static' ) ) ;
     public final void rule__StructDeclarationWOSemicolon__StaticAssignment_7() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26168:1: ( ( ( 'static' ) ) )
-            // InternalKiCool.g:26169:2: ( ( 'static' ) )
+            // InternalKiCool.g:26249:1: ( ( ( 'static' ) ) )
+            // InternalKiCool.g:26250:2: ( ( 'static' ) )
             {
-            // InternalKiCool.g:26169:2: ( ( 'static' ) )
-            // InternalKiCool.g:26170:3: ( 'static' )
+            // InternalKiCool.g:26250:2: ( ( 'static' ) )
+            // InternalKiCool.g:26251:3: ( 'static' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getStaticStaticKeyword_7_0()); 
             }
-            // InternalKiCool.g:26171:3: ( 'static' )
-            // InternalKiCool.g:26172:4: 'static'
+            // InternalKiCool.g:26252:3: ( 'static' )
+            // InternalKiCool.g:26253:4: 'static'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getStaticStaticKeyword_7_0()); 
@@ -86839,17 +87102,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__TypeAssignment_8"
-    // InternalKiCool.g:26183:1: rule__StructDeclarationWOSemicolon__TypeAssignment_8 : ( ruleStructType ) ;
+    // InternalKiCool.g:26264:1: rule__StructDeclarationWOSemicolon__TypeAssignment_8 : ( ruleStructType ) ;
     public final void rule__StructDeclarationWOSemicolon__TypeAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26187:1: ( ( ruleStructType ) )
-            // InternalKiCool.g:26188:2: ( ruleStructType )
+            // InternalKiCool.g:26268:1: ( ( ruleStructType ) )
+            // InternalKiCool.g:26269:2: ( ruleStructType )
             {
-            // InternalKiCool.g:26188:2: ( ruleStructType )
-            // InternalKiCool.g:26189:3: ruleStructType
+            // InternalKiCool.g:26269:2: ( ruleStructType )
+            // InternalKiCool.g:26270:3: ruleStructType
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getTypeStructTypeEnumRuleCall_8_0()); 
@@ -86884,17 +87147,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__NameAssignment_9"
-    // InternalKiCool.g:26198:1: rule__StructDeclarationWOSemicolon__NameAssignment_9 : ( RULE_ID ) ;
+    // InternalKiCool.g:26279:1: rule__StructDeclarationWOSemicolon__NameAssignment_9 : ( RULE_ID ) ;
     public final void rule__StructDeclarationWOSemicolon__NameAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26202:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:26203:2: ( RULE_ID )
+            // InternalKiCool.g:26283:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:26284:2: ( RULE_ID )
             {
-            // InternalKiCool.g:26203:2: ( RULE_ID )
-            // InternalKiCool.g:26204:3: RULE_ID
+            // InternalKiCool.g:26284:2: ( RULE_ID )
+            // InternalKiCool.g:26285:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_0()); 
@@ -86925,17 +87188,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__DeclarationsAssignment_11"
-    // InternalKiCool.g:26213:1: rule__StructDeclarationWOSemicolon__DeclarationsAssignment_11 : ( ruleDeclarationWOSemicolon ) ;
+    // InternalKiCool.g:26294:1: rule__StructDeclarationWOSemicolon__DeclarationsAssignment_11 : ( ruleDeclarationWOSemicolon ) ;
     public final void rule__StructDeclarationWOSemicolon__DeclarationsAssignment_11() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26217:1: ( ( ruleDeclarationWOSemicolon ) )
-            // InternalKiCool.g:26218:2: ( ruleDeclarationWOSemicolon )
+            // InternalKiCool.g:26298:1: ( ( ruleDeclarationWOSemicolon ) )
+            // InternalKiCool.g:26299:2: ( ruleDeclarationWOSemicolon )
             {
-            // InternalKiCool.g:26218:2: ( ruleDeclarationWOSemicolon )
-            // InternalKiCool.g:26219:3: ruleDeclarationWOSemicolon
+            // InternalKiCool.g:26299:2: ( ruleDeclarationWOSemicolon )
+            // InternalKiCool.g:26300:3: ruleDeclarationWOSemicolon
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_11_0()); 
@@ -86970,17 +87233,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_0"
-    // InternalKiCool.g:26228:1: rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_0 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26309:1: rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_0 : ( ruleValuedObject ) ;
     public final void rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26232:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26233:2: ( ruleValuedObject )
+            // InternalKiCool.g:26313:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26314:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26233:2: ( ruleValuedObject )
-            // InternalKiCool.g:26234:3: ruleValuedObject
+            // InternalKiCool.g:26314:2: ( ruleValuedObject )
+            // InternalKiCool.g:26315:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_13_0_0()); 
@@ -87015,17 +87278,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_1_1"
-    // InternalKiCool.g:26243:1: rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_1_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26324:1: rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_1_1 : ( ruleValuedObject ) ;
     public final void rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26247:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26248:2: ( ruleValuedObject )
+            // InternalKiCool.g:26328:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26329:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26248:2: ( ruleValuedObject )
-            // InternalKiCool.g:26249:3: ruleValuedObject
+            // InternalKiCool.g:26329:2: ( ruleValuedObject )
+            // InternalKiCool.g:26330:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_13_1_1_0()); 
@@ -87060,17 +87323,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StructDeclarationWOSemicolon__AnnotationsAssignment_14"
-    // InternalKiCool.g:26258:1: rule__StructDeclarationWOSemicolon__AnnotationsAssignment_14 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26339:1: rule__StructDeclarationWOSemicolon__AnnotationsAssignment_14 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__StructDeclarationWOSemicolon__AnnotationsAssignment_14() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26262:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26263:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26343:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26344:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26263:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26264:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26344:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26345:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStructDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_14_0()); 
@@ -87105,17 +87368,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__AnnotationsAssignment_0"
-    // InternalKiCool.g:26273:1: rule__ReferenceDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:26354:1: rule__ReferenceDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__ReferenceDeclaration__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26277:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:26278:2: ( ruleAnnotation )
+            // InternalKiCool.g:26358:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:26359:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:26278:2: ( ruleAnnotation )
-            // InternalKiCool.g:26279:3: ruleAnnotation
+            // InternalKiCool.g:26359:2: ( ruleAnnotation )
+            // InternalKiCool.g:26360:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -87150,23 +87413,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__PrivateAssignment_1"
-    // InternalKiCool.g:26288:1: rule__ReferenceDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:26369:1: rule__ReferenceDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__ReferenceDeclaration__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26292:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:26293:2: ( ( 'private' ) )
+            // InternalKiCool.g:26373:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:26374:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:26293:2: ( ( 'private' ) )
-            // InternalKiCool.g:26294:3: ( 'private' )
+            // InternalKiCool.g:26374:2: ( ( 'private' ) )
+            // InternalKiCool.g:26375:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:26295:3: ( 'private' )
-            // InternalKiCool.g:26296:4: 'private'
+            // InternalKiCool.g:26376:3: ( 'private' )
+            // InternalKiCool.g:26377:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
@@ -87203,23 +87466,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__ReferenceAssignment_2_0_1"
-    // InternalKiCool.g:26307:1: rule__ReferenceDeclaration__ReferenceAssignment_2_0_1 : ( ( ruleNamespaceID ) ) ;
+    // InternalKiCool.g:26388:1: rule__ReferenceDeclaration__ReferenceAssignment_2_0_1 : ( ( ruleNamespaceID ) ) ;
     public final void rule__ReferenceDeclaration__ReferenceAssignment_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26311:1: ( ( ( ruleNamespaceID ) ) )
-            // InternalKiCool.g:26312:2: ( ( ruleNamespaceID ) )
+            // InternalKiCool.g:26392:1: ( ( ( ruleNamespaceID ) ) )
+            // InternalKiCool.g:26393:2: ( ( ruleNamespaceID ) )
             {
-            // InternalKiCool.g:26312:2: ( ( ruleNamespaceID ) )
-            // InternalKiCool.g:26313:3: ( ruleNamespaceID )
+            // InternalKiCool.g:26393:2: ( ( ruleNamespaceID ) )
+            // InternalKiCool.g:26394:3: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectCrossReference_2_0_1_0()); 
             }
-            // InternalKiCool.g:26314:3: ( ruleNamespaceID )
-            // InternalKiCool.g:26315:4: ruleNamespaceID
+            // InternalKiCool.g:26395:3: ( ruleNamespaceID )
+            // InternalKiCool.g:26396:4: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_2_0_1_0_1()); 
@@ -87260,17 +87523,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__ExternAssignment_2_1_1"
-    // InternalKiCool.g:26326:1: rule__ReferenceDeclaration__ExternAssignment_2_1_1 : ( ruleExternString ) ;
+    // InternalKiCool.g:26407:1: rule__ReferenceDeclaration__ExternAssignment_2_1_1 : ( ruleExternString ) ;
     public final void rule__ReferenceDeclaration__ExternAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26330:1: ( ( ruleExternString ) )
-            // InternalKiCool.g:26331:2: ( ruleExternString )
+            // InternalKiCool.g:26411:1: ( ( ruleExternString ) )
+            // InternalKiCool.g:26412:2: ( ruleExternString )
             {
-            // InternalKiCool.g:26331:2: ( ruleExternString )
-            // InternalKiCool.g:26332:3: ruleExternString
+            // InternalKiCool.g:26412:2: ( ruleExternString )
+            // InternalKiCool.g:26413:3: ruleExternString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_1_0()); 
@@ -87305,17 +87568,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__ExternAssignment_2_1_2_1"
-    // InternalKiCool.g:26341:1: rule__ReferenceDeclaration__ExternAssignment_2_1_2_1 : ( ruleExternString ) ;
+    // InternalKiCool.g:26422:1: rule__ReferenceDeclaration__ExternAssignment_2_1_2_1 : ( ruleExternString ) ;
     public final void rule__ReferenceDeclaration__ExternAssignment_2_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26345:1: ( ( ruleExternString ) )
-            // InternalKiCool.g:26346:2: ( ruleExternString )
+            // InternalKiCool.g:26426:1: ( ( ruleExternString ) )
+            // InternalKiCool.g:26427:2: ( ruleExternString )
             {
-            // InternalKiCool.g:26346:2: ( ruleExternString )
-            // InternalKiCool.g:26347:3: ruleExternString
+            // InternalKiCool.g:26427:2: ( ruleExternString )
+            // InternalKiCool.g:26428:3: ruleExternString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getExternExternStringParserRuleCall_2_1_2_1_0()); 
@@ -87350,17 +87613,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__ValuedObjectsAssignment_3"
-    // InternalKiCool.g:26356:1: rule__ReferenceDeclaration__ValuedObjectsAssignment_3 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26437:1: rule__ReferenceDeclaration__ValuedObjectsAssignment_3 : ( ruleValuedObject ) ;
     public final void rule__ReferenceDeclaration__ValuedObjectsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26360:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26361:2: ( ruleValuedObject )
+            // InternalKiCool.g:26441:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26442:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26361:2: ( ruleValuedObject )
-            // InternalKiCool.g:26362:3: ruleValuedObject
+            // InternalKiCool.g:26442:2: ( ruleValuedObject )
+            // InternalKiCool.g:26443:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); 
@@ -87395,17 +87658,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1"
-    // InternalKiCool.g:26371:1: rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26452:1: rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1 : ( ruleValuedObject ) ;
     public final void rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26375:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26376:2: ( ruleValuedObject )
+            // InternalKiCool.g:26456:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26457:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26376:2: ( ruleValuedObject )
-            // InternalKiCool.g:26377:3: ruleValuedObject
+            // InternalKiCool.g:26457:2: ( ruleValuedObject )
+            // InternalKiCool.g:26458:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0()); 
@@ -87440,17 +87703,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclaration__AnnotationsAssignment_6"
-    // InternalKiCool.g:26386:1: rule__ReferenceDeclaration__AnnotationsAssignment_6 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26467:1: rule__ReferenceDeclaration__AnnotationsAssignment_6 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__ReferenceDeclaration__AnnotationsAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26390:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26391:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26471:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26472:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26391:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26392:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26472:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26473:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_6_0()); 
@@ -87485,17 +87748,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0"
-    // InternalKiCool.g:26401:1: rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:26482:1: rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26405:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:26406:2: ( ruleAnnotation )
+            // InternalKiCool.g:26486:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:26487:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:26406:2: ( ruleAnnotation )
-            // InternalKiCool.g:26407:3: ruleAnnotation
+            // InternalKiCool.g:26487:2: ( ruleAnnotation )
+            // InternalKiCool.g:26488:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -87530,23 +87793,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__PrivateAssignment_1"
-    // InternalKiCool.g:26416:1: rule__ReferenceDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:26497:1: rule__ReferenceDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26420:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:26421:2: ( ( 'private' ) )
+            // InternalKiCool.g:26501:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:26502:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:26421:2: ( ( 'private' ) )
-            // InternalKiCool.g:26422:3: ( 'private' )
+            // InternalKiCool.g:26502:2: ( ( 'private' ) )
+            // InternalKiCool.g:26503:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:26423:3: ( 'private' )
-            // InternalKiCool.g:26424:4: 'private'
+            // InternalKiCool.g:26504:3: ( 'private' )
+            // InternalKiCool.g:26505:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
@@ -87583,23 +87846,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2_0_1"
-    // InternalKiCool.g:26435:1: rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2_0_1 : ( ( ruleNamespaceID ) ) ;
+    // InternalKiCool.g:26516:1: rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2_0_1 : ( ( ruleNamespaceID ) ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26439:1: ( ( ( ruleNamespaceID ) ) )
-            // InternalKiCool.g:26440:2: ( ( ruleNamespaceID ) )
+            // InternalKiCool.g:26520:1: ( ( ( ruleNamespaceID ) ) )
+            // InternalKiCool.g:26521:2: ( ( ruleNamespaceID ) )
             {
-            // InternalKiCool.g:26440:2: ( ( ruleNamespaceID ) )
-            // InternalKiCool.g:26441:3: ( ruleNamespaceID )
+            // InternalKiCool.g:26521:2: ( ( ruleNamespaceID ) )
+            // InternalKiCool.g:26522:3: ( ruleNamespaceID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectCrossReference_2_0_1_0()); 
             }
-            // InternalKiCool.g:26442:3: ( ruleNamespaceID )
-            // InternalKiCool.g:26443:4: ruleNamespaceID
+            // InternalKiCool.g:26523:3: ( ruleNamespaceID )
+            // InternalKiCool.g:26524:4: ruleNamespaceID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceNamedObjectNamespaceIDParserRuleCall_2_0_1_0_1()); 
@@ -87640,17 +87903,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_1"
-    // InternalKiCool.g:26454:1: rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_1 : ( ruleExternString ) ;
+    // InternalKiCool.g:26535:1: rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_1 : ( ruleExternString ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26458:1: ( ( ruleExternString ) )
-            // InternalKiCool.g:26459:2: ( ruleExternString )
+            // InternalKiCool.g:26539:1: ( ( ruleExternString ) )
+            // InternalKiCool.g:26540:2: ( ruleExternString )
             {
-            // InternalKiCool.g:26459:2: ( ruleExternString )
-            // InternalKiCool.g:26460:3: ruleExternString
+            // InternalKiCool.g:26540:2: ( ruleExternString )
+            // InternalKiCool.g:26541:3: ruleExternString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_1_0()); 
@@ -87685,17 +87948,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_2_1"
-    // InternalKiCool.g:26469:1: rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_2_1 : ( ruleExternString ) ;
+    // InternalKiCool.g:26550:1: rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_2_1 : ( ruleExternString ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26473:1: ( ( ruleExternString ) )
-            // InternalKiCool.g:26474:2: ( ruleExternString )
+            // InternalKiCool.g:26554:1: ( ( ruleExternString ) )
+            // InternalKiCool.g:26555:2: ( ruleExternString )
             {
-            // InternalKiCool.g:26474:2: ( ruleExternString )
-            // InternalKiCool.g:26475:3: ruleExternString
+            // InternalKiCool.g:26555:2: ( ruleExternString )
+            // InternalKiCool.g:26556:3: ruleExternString
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternExternStringParserRuleCall_2_1_2_1_0()); 
@@ -87730,17 +87993,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_3"
-    // InternalKiCool.g:26484:1: rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_3 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26565:1: rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_3 : ( ruleValuedObject ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26488:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26489:2: ( ruleValuedObject )
+            // InternalKiCool.g:26569:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26570:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26489:2: ( ruleValuedObject )
-            // InternalKiCool.g:26490:3: ruleValuedObject
+            // InternalKiCool.g:26570:2: ( ruleValuedObject )
+            // InternalKiCool.g:26571:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_3_0()); 
@@ -87775,17 +88038,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4_1"
-    // InternalKiCool.g:26499:1: rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26580:1: rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4_1 : ( ruleValuedObject ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__ValuedObjectsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26503:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26504:2: ( ruleValuedObject )
+            // InternalKiCool.g:26584:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26585:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26504:2: ( ruleValuedObject )
-            // InternalKiCool.g:26505:3: ruleValuedObject
+            // InternalKiCool.g:26585:2: ( ruleValuedObject )
+            // InternalKiCool.g:26586:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_4_1_0()); 
@@ -87820,17 +88083,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_5"
-    // InternalKiCool.g:26514:1: rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_5 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26595:1: rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_5 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26518:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26519:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26599:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26600:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26519:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26520:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26600:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26601:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_5_0()); 
@@ -87865,17 +88128,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExternString__AnnotationsAssignment_0"
-    // InternalKiCool.g:26529:1: rule__ExternString__AnnotationsAssignment_0 : ( ruleTagAnnotation ) ;
+    // InternalKiCool.g:26610:1: rule__ExternString__AnnotationsAssignment_0 : ( ruleTagAnnotation ) ;
     public final void rule__ExternString__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26533:1: ( ( ruleTagAnnotation ) )
-            // InternalKiCool.g:26534:2: ( ruleTagAnnotation )
+            // InternalKiCool.g:26614:1: ( ( ruleTagAnnotation ) )
+            // InternalKiCool.g:26615:2: ( ruleTagAnnotation )
             {
-            // InternalKiCool.g:26534:2: ( ruleTagAnnotation )
-            // InternalKiCool.g:26535:3: ruleTagAnnotation
+            // InternalKiCool.g:26615:2: ( ruleTagAnnotation )
+            // InternalKiCool.g:26616:3: ruleTagAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternStringAccess().getAnnotationsTagAnnotationParserRuleCall_0_0()); 
@@ -87910,17 +88173,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ExternString__CodeAssignment_1"
-    // InternalKiCool.g:26544:1: rule__ExternString__CodeAssignment_1 : ( RULE_STRING ) ;
+    // InternalKiCool.g:26625:1: rule__ExternString__CodeAssignment_1 : ( RULE_STRING ) ;
     public final void rule__ExternString__CodeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26548:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:26549:2: ( RULE_STRING )
+            // InternalKiCool.g:26629:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:26630:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:26549:2: ( RULE_STRING )
-            // InternalKiCool.g:26550:3: RULE_STRING
+            // InternalKiCool.g:26630:2: ( RULE_STRING )
+            // InternalKiCool.g:26631:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getExternStringAccess().getCodeSTRINGTerminalRuleCall_1_0()); 
@@ -87951,17 +88214,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__AnnotationsAssignment_0"
-    // InternalKiCool.g:26559:1: rule__ScheduleDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:26640:1: rule__ScheduleDeclaration__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__ScheduleDeclaration__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26563:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:26564:2: ( ruleAnnotation )
+            // InternalKiCool.g:26644:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:26645:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:26564:2: ( ruleAnnotation )
-            // InternalKiCool.g:26565:3: ruleAnnotation
+            // InternalKiCool.g:26645:2: ( ruleAnnotation )
+            // InternalKiCool.g:26646:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -87996,23 +88259,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__PrivateAssignment_1"
-    // InternalKiCool.g:26574:1: rule__ScheduleDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:26655:1: rule__ScheduleDeclaration__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__ScheduleDeclaration__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26578:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:26579:2: ( ( 'private' ) )
+            // InternalKiCool.g:26659:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:26660:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:26579:2: ( ( 'private' ) )
-            // InternalKiCool.g:26580:3: ( 'private' )
+            // InternalKiCool.g:26660:2: ( ( 'private' ) )
+            // InternalKiCool.g:26661:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:26581:3: ( 'private' )
-            // InternalKiCool.g:26582:4: 'private'
+            // InternalKiCool.g:26662:3: ( 'private' )
+            // InternalKiCool.g:26663:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getPrivatePrivateKeyword_1_0()); 
@@ -88049,17 +88312,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__NameAssignment_3"
-    // InternalKiCool.g:26593:1: rule__ScheduleDeclaration__NameAssignment_3 : ( RULE_STRING ) ;
+    // InternalKiCool.g:26674:1: rule__ScheduleDeclaration__NameAssignment_3 : ( RULE_STRING ) ;
     public final void rule__ScheduleDeclaration__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26597:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:26598:2: ( RULE_STRING )
+            // InternalKiCool.g:26678:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:26679:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:26598:2: ( RULE_STRING )
-            // InternalKiCool.g:26599:3: RULE_STRING
+            // InternalKiCool.g:26679:2: ( RULE_STRING )
+            // InternalKiCool.g:26680:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getNameSTRINGTerminalRuleCall_3_0()); 
@@ -88090,17 +88353,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__GlobalAssignment_4_1"
-    // InternalKiCool.g:26608:1: rule__ScheduleDeclaration__GlobalAssignment_4_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26689:1: rule__ScheduleDeclaration__GlobalAssignment_4_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclaration__GlobalAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26612:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26613:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26693:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26694:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26613:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26614:3: rulePriorityProtocol
+            // InternalKiCool.g:26694:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26695:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getGlobalPriorityProtocolEnumRuleCall_4_1_0()); 
@@ -88135,17 +88398,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__PrioritiesAssignment_5_1"
-    // InternalKiCool.g:26623:1: rule__ScheduleDeclaration__PrioritiesAssignment_5_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26704:1: rule__ScheduleDeclaration__PrioritiesAssignment_5_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclaration__PrioritiesAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26627:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26628:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26708:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26709:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26628:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26629:3: rulePriorityProtocol
+            // InternalKiCool.g:26709:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26710:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_1_0()); 
@@ -88180,17 +88443,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__PrioritiesAssignment_5_2_1"
-    // InternalKiCool.g:26638:1: rule__ScheduleDeclaration__PrioritiesAssignment_5_2_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26719:1: rule__ScheduleDeclaration__PrioritiesAssignment_5_2_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclaration__PrioritiesAssignment_5_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26642:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26643:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26723:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26724:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26643:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26644:3: rulePriorityProtocol
+            // InternalKiCool.g:26724:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26725:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_2_1_0()); 
@@ -88225,17 +88488,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__ValuedObjectsAssignment_6"
-    // InternalKiCool.g:26653:1: rule__ScheduleDeclaration__ValuedObjectsAssignment_6 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26734:1: rule__ScheduleDeclaration__ValuedObjectsAssignment_6 : ( ruleValuedObject ) ;
     public final void rule__ScheduleDeclaration__ValuedObjectsAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26657:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26658:2: ( ruleValuedObject )
+            // InternalKiCool.g:26738:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26739:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26658:2: ( ruleValuedObject )
-            // InternalKiCool.g:26659:3: ruleValuedObject
+            // InternalKiCool.g:26739:2: ( ruleValuedObject )
+            // InternalKiCool.g:26740:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_6_0()); 
@@ -88270,17 +88533,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__ValuedObjectsAssignment_7_1"
-    // InternalKiCool.g:26668:1: rule__ScheduleDeclaration__ValuedObjectsAssignment_7_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26749:1: rule__ScheduleDeclaration__ValuedObjectsAssignment_7_1 : ( ruleValuedObject ) ;
     public final void rule__ScheduleDeclaration__ValuedObjectsAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26672:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26673:2: ( ruleValuedObject )
+            // InternalKiCool.g:26753:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26754:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26673:2: ( ruleValuedObject )
-            // InternalKiCool.g:26674:3: ruleValuedObject
+            // InternalKiCool.g:26754:2: ( ruleValuedObject )
+            // InternalKiCool.g:26755:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_7_1_0()); 
@@ -88315,17 +88578,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclaration__AnnotationsAssignment_9"
-    // InternalKiCool.g:26683:1: rule__ScheduleDeclaration__AnnotationsAssignment_9 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26764:1: rule__ScheduleDeclaration__AnnotationsAssignment_9 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__ScheduleDeclaration__AnnotationsAssignment_9() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26687:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26688:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26768:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26769:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26688:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26689:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26769:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26770:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_9_0()); 
@@ -88360,17 +88623,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_0"
-    // InternalKiCool.g:26698:1: rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:26779:1: rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26702:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:26703:2: ( ruleAnnotation )
+            // InternalKiCool.g:26783:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:26784:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:26703:2: ( ruleAnnotation )
-            // InternalKiCool.g:26704:3: ruleAnnotation
+            // InternalKiCool.g:26784:2: ( ruleAnnotation )
+            // InternalKiCool.g:26785:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -88405,23 +88668,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__PrivateAssignment_1"
-    // InternalKiCool.g:26713:1: rule__ScheduleDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
+    // InternalKiCool.g:26794:1: rule__ScheduleDeclarationWOSemicolon__PrivateAssignment_1 : ( ( 'private' ) ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__PrivateAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26717:1: ( ( ( 'private' ) ) )
-            // InternalKiCool.g:26718:2: ( ( 'private' ) )
+            // InternalKiCool.g:26798:1: ( ( ( 'private' ) ) )
+            // InternalKiCool.g:26799:2: ( ( 'private' ) )
             {
-            // InternalKiCool.g:26718:2: ( ( 'private' ) )
-            // InternalKiCool.g:26719:3: ( 'private' )
+            // InternalKiCool.g:26799:2: ( ( 'private' ) )
+            // InternalKiCool.g:26800:3: ( 'private' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
             }
-            // InternalKiCool.g:26720:3: ( 'private' )
-            // InternalKiCool.g:26721:4: 'private'
+            // InternalKiCool.g:26801:3: ( 'private' )
+            // InternalKiCool.g:26802:4: 'private'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrivatePrivateKeyword_1_0()); 
@@ -88458,17 +88721,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__NameAssignment_3"
-    // InternalKiCool.g:26732:1: rule__ScheduleDeclarationWOSemicolon__NameAssignment_3 : ( RULE_STRING ) ;
+    // InternalKiCool.g:26813:1: rule__ScheduleDeclarationWOSemicolon__NameAssignment_3 : ( RULE_STRING ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__NameAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26736:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:26737:2: ( RULE_STRING )
+            // InternalKiCool.g:26817:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:26818:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:26737:2: ( RULE_STRING )
-            // InternalKiCool.g:26738:3: RULE_STRING
+            // InternalKiCool.g:26818:2: ( RULE_STRING )
+            // InternalKiCool.g:26819:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameSTRINGTerminalRuleCall_3_0()); 
@@ -88499,17 +88762,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__GlobalAssignment_4_1"
-    // InternalKiCool.g:26747:1: rule__ScheduleDeclarationWOSemicolon__GlobalAssignment_4_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26828:1: rule__ScheduleDeclarationWOSemicolon__GlobalAssignment_4_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__GlobalAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26751:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26752:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26832:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26833:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26752:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26753:3: rulePriorityProtocol
+            // InternalKiCool.g:26833:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26834:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getGlobalPriorityProtocolEnumRuleCall_4_1_0()); 
@@ -88544,17 +88807,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_1"
-    // InternalKiCool.g:26762:1: rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26843:1: rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26766:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26767:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26847:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26848:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26767:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26768:3: rulePriorityProtocol
+            // InternalKiCool.g:26848:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26849:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_1_0()); 
@@ -88589,17 +88852,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_2_1"
-    // InternalKiCool.g:26777:1: rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_2_1 : ( rulePriorityProtocol ) ;
+    // InternalKiCool.g:26858:1: rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_2_1 : ( rulePriorityProtocol ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26781:1: ( ( rulePriorityProtocol ) )
-            // InternalKiCool.g:26782:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26862:1: ( ( rulePriorityProtocol ) )
+            // InternalKiCool.g:26863:2: ( rulePriorityProtocol )
             {
-            // InternalKiCool.g:26782:2: ( rulePriorityProtocol )
-            // InternalKiCool.g:26783:3: rulePriorityProtocol
+            // InternalKiCool.g:26863:2: ( rulePriorityProtocol )
+            // InternalKiCool.g:26864:3: rulePriorityProtocol
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_2_1_0()); 
@@ -88634,17 +88897,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_6"
-    // InternalKiCool.g:26792:1: rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_6 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26873:1: rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_6 : ( ruleValuedObject ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_6() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26796:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26797:2: ( ruleValuedObject )
+            // InternalKiCool.g:26877:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26878:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26797:2: ( ruleValuedObject )
-            // InternalKiCool.g:26798:3: ruleValuedObject
+            // InternalKiCool.g:26878:2: ( ruleValuedObject )
+            // InternalKiCool.g:26879:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_6_0()); 
@@ -88679,17 +88942,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_7_1"
-    // InternalKiCool.g:26807:1: rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_7_1 : ( ruleValuedObject ) ;
+    // InternalKiCool.g:26888:1: rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_7_1 : ( ruleValuedObject ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__ValuedObjectsAssignment_7_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26811:1: ( ( ruleValuedObject ) )
-            // InternalKiCool.g:26812:2: ( ruleValuedObject )
+            // InternalKiCool.g:26892:1: ( ( ruleValuedObject ) )
+            // InternalKiCool.g:26893:2: ( ruleValuedObject )
             {
-            // InternalKiCool.g:26812:2: ( ruleValuedObject )
-            // InternalKiCool.g:26813:3: ruleValuedObject
+            // InternalKiCool.g:26893:2: ( ruleValuedObject )
+            // InternalKiCool.g:26894:3: ruleValuedObject
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_7_1_0()); 
@@ -88724,17 +88987,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_8"
-    // InternalKiCool.g:26822:1: rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_8 : ( ruleCommentAnnotatonSL ) ;
+    // InternalKiCool.g:26903:1: rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_8 : ( ruleCommentAnnotatonSL ) ;
     public final void rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_8() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26826:1: ( ( ruleCommentAnnotatonSL ) )
-            // InternalKiCool.g:26827:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26907:1: ( ( ruleCommentAnnotatonSL ) )
+            // InternalKiCool.g:26908:2: ( ruleCommentAnnotatonSL )
             {
-            // InternalKiCool.g:26827:2: ( ruleCommentAnnotatonSL )
-            // InternalKiCool.g:26828:3: ruleCommentAnnotatonSL
+            // InternalKiCool.g:26908:2: ( ruleCommentAnnotatonSL )
+            // InternalKiCool.g:26909:3: ruleCommentAnnotatonSL
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_8_0()); 
@@ -88769,17 +89032,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__AnnotationsAssignment_0"
-    // InternalKiCool.g:26837:1: rule__ValuedObject__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
+    // InternalKiCool.g:26918:1: rule__ValuedObject__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
     public final void rule__ValuedObject__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26841:1: ( ( ruleQuotedStringAnnotation ) )
-            // InternalKiCool.g:26842:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:26922:1: ( ( ruleQuotedStringAnnotation ) )
+            // InternalKiCool.g:26923:2: ( ruleQuotedStringAnnotation )
             {
-            // InternalKiCool.g:26842:2: ( ruleQuotedStringAnnotation )
-            // InternalKiCool.g:26843:3: ruleQuotedStringAnnotation
+            // InternalKiCool.g:26923:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:26924:3: ruleQuotedStringAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
@@ -88814,17 +89077,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__NameAssignment_1"
-    // InternalKiCool.g:26852:1: rule__ValuedObject__NameAssignment_1 : ( rulePrimeID ) ;
+    // InternalKiCool.g:26933:1: rule__ValuedObject__NameAssignment_1 : ( rulePrimeID ) ;
     public final void rule__ValuedObject__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26856:1: ( ( rulePrimeID ) )
-            // InternalKiCool.g:26857:2: ( rulePrimeID )
+            // InternalKiCool.g:26937:1: ( ( rulePrimeID ) )
+            // InternalKiCool.g:26938:2: ( rulePrimeID )
             {
-            // InternalKiCool.g:26857:2: ( rulePrimeID )
-            // InternalKiCool.g:26858:3: rulePrimeID
+            // InternalKiCool.g:26938:2: ( rulePrimeID )
+            // InternalKiCool.g:26939:3: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getNamePrimeIDParserRuleCall_1_0()); 
@@ -88859,17 +89122,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__CardinalitiesAssignment_2_1"
-    // InternalKiCool.g:26867:1: rule__ValuedObject__CardinalitiesAssignment_2_1 : ( ruleExpression ) ;
+    // InternalKiCool.g:26948:1: rule__ValuedObject__CardinalitiesAssignment_2_1 : ( ruleExpression ) ;
     public final void rule__ValuedObject__CardinalitiesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26871:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:26872:2: ( ruleExpression )
+            // InternalKiCool.g:26952:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:26953:2: ( ruleExpression )
             {
-            // InternalKiCool.g:26872:2: ( ruleExpression )
-            // InternalKiCool.g:26873:3: ruleExpression
+            // InternalKiCool.g:26953:2: ( ruleExpression )
+            // InternalKiCool.g:26954:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCardinalitiesExpressionParserRuleCall_2_1_0()); 
@@ -88904,17 +89167,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__InitialValueAssignment_3_1"
-    // InternalKiCool.g:26882:1: rule__ValuedObject__InitialValueAssignment_3_1 : ( ruleExpression ) ;
+    // InternalKiCool.g:26963:1: rule__ValuedObject__InitialValueAssignment_3_1 : ( ruleExpression ) ;
     public final void rule__ValuedObject__InitialValueAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26886:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:26887:2: ( ruleExpression )
+            // InternalKiCool.g:26967:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:26968:2: ( ruleExpression )
             {
-            // InternalKiCool.g:26887:2: ( ruleExpression )
-            // InternalKiCool.g:26888:3: ruleExpression
+            // InternalKiCool.g:26968:2: ( ruleExpression )
+            // InternalKiCool.g:26969:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getInitialValueExpressionParserRuleCall_3_1_0()); 
@@ -88949,17 +89212,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObject__CombineOperatorAssignment_4_1"
-    // InternalKiCool.g:26897:1: rule__ValuedObject__CombineOperatorAssignment_4_1 : ( ruleCombineOperator ) ;
+    // InternalKiCool.g:26978:1: rule__ValuedObject__CombineOperatorAssignment_4_1 : ( ruleCombineOperator ) ;
     public final void rule__ValuedObject__CombineOperatorAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26901:1: ( ( ruleCombineOperator ) )
-            // InternalKiCool.g:26902:2: ( ruleCombineOperator )
+            // InternalKiCool.g:26982:1: ( ( ruleCombineOperator ) )
+            // InternalKiCool.g:26983:2: ( ruleCombineOperator )
             {
-            // InternalKiCool.g:26902:2: ( ruleCombineOperator )
-            // InternalKiCool.g:26903:3: ruleCombineOperator
+            // InternalKiCool.g:26983:2: ( ruleCombineOperator )
+            // InternalKiCool.g:26984:3: ruleCombineOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_0()); 
@@ -88994,17 +89257,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PureEmission__AnnotationsAssignment_0"
-    // InternalKiCool.g:26912:1: rule__PureEmission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
+    // InternalKiCool.g:26993:1: rule__PureEmission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
     public final void rule__PureEmission__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26916:1: ( ( ruleQuotedStringAnnotation ) )
-            // InternalKiCool.g:26917:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:26997:1: ( ( ruleQuotedStringAnnotation ) )
+            // InternalKiCool.g:26998:2: ( ruleQuotedStringAnnotation )
             {
-            // InternalKiCool.g:26917:2: ( ruleQuotedStringAnnotation )
-            // InternalKiCool.g:26918:3: ruleQuotedStringAnnotation
+            // InternalKiCool.g:26998:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:26999:3: ruleQuotedStringAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
@@ -89039,17 +89302,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PureEmission__ReferenceAssignment_1"
-    // InternalKiCool.g:26927:1: rule__PureEmission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
+    // InternalKiCool.g:27008:1: rule__PureEmission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
     public final void rule__PureEmission__ReferenceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26931:1: ( ( ruleValuedObjectReference ) )
-            // InternalKiCool.g:26932:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27012:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:27013:2: ( ruleValuedObjectReference )
             {
-            // InternalKiCool.g:26932:2: ( ruleValuedObjectReference )
-            // InternalKiCool.g:26933:3: ruleValuedObjectReference
+            // InternalKiCool.g:27013:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27014:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
@@ -89084,17 +89347,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PureEmission__ScheduleAssignment_2_1"
-    // InternalKiCool.g:26942:1: rule__PureEmission__ScheduleAssignment_2_1 : ( ruleScheduleObjectReference ) ;
+    // InternalKiCool.g:27023:1: rule__PureEmission__ScheduleAssignment_2_1 : ( ruleScheduleObjectReference ) ;
     public final void rule__PureEmission__ScheduleAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26946:1: ( ( ruleScheduleObjectReference ) )
-            // InternalKiCool.g:26947:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27027:1: ( ( ruleScheduleObjectReference ) )
+            // InternalKiCool.g:27028:2: ( ruleScheduleObjectReference )
             {
-            // InternalKiCool.g:26947:2: ( ruleScheduleObjectReference )
-            // InternalKiCool.g:26948:3: ruleScheduleObjectReference
+            // InternalKiCool.g:27028:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27029:3: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0()); 
@@ -89129,17 +89392,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedEmission__AnnotationsAssignment_0"
-    // InternalKiCool.g:26957:1: rule__ValuedEmission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
+    // InternalKiCool.g:27038:1: rule__ValuedEmission__AnnotationsAssignment_0 : ( ruleQuotedStringAnnotation ) ;
     public final void rule__ValuedEmission__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26961:1: ( ( ruleQuotedStringAnnotation ) )
-            // InternalKiCool.g:26962:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:27042:1: ( ( ruleQuotedStringAnnotation ) )
+            // InternalKiCool.g:27043:2: ( ruleQuotedStringAnnotation )
             {
-            // InternalKiCool.g:26962:2: ( ruleQuotedStringAnnotation )
-            // InternalKiCool.g:26963:3: ruleQuotedStringAnnotation
+            // InternalKiCool.g:27043:2: ( ruleQuotedStringAnnotation )
+            // InternalKiCool.g:27044:3: ruleQuotedStringAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0()); 
@@ -89174,17 +89437,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedEmission__ReferenceAssignment_1"
-    // InternalKiCool.g:26972:1: rule__ValuedEmission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
+    // InternalKiCool.g:27053:1: rule__ValuedEmission__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
     public final void rule__ValuedEmission__ReferenceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26976:1: ( ( ruleValuedObjectReference ) )
-            // InternalKiCool.g:26977:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27057:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:27058:2: ( ruleValuedObjectReference )
             {
-            // InternalKiCool.g:26977:2: ( ruleValuedObjectReference )
-            // InternalKiCool.g:26978:3: ruleValuedObjectReference
+            // InternalKiCool.g:27058:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27059:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
@@ -89219,17 +89482,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedEmission__NewValueAssignment_3"
-    // InternalKiCool.g:26987:1: rule__ValuedEmission__NewValueAssignment_3 : ( ruleExpression ) ;
+    // InternalKiCool.g:27068:1: rule__ValuedEmission__NewValueAssignment_3 : ( ruleExpression ) ;
     public final void rule__ValuedEmission__NewValueAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:26991:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:26992:2: ( ruleExpression )
+            // InternalKiCool.g:27072:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:27073:2: ( ruleExpression )
             {
-            // InternalKiCool.g:26992:2: ( ruleExpression )
-            // InternalKiCool.g:26993:3: ruleExpression
+            // InternalKiCool.g:27073:2: ( ruleExpression )
+            // InternalKiCool.g:27074:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedEmissionAccess().getNewValueExpressionParserRuleCall_3_0()); 
@@ -89264,17 +89527,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedEmission__ScheduleAssignment_5_1"
-    // InternalKiCool.g:27002:1: rule__ValuedEmission__ScheduleAssignment_5_1 : ( ruleScheduleObjectReference ) ;
+    // InternalKiCool.g:27083:1: rule__ValuedEmission__ScheduleAssignment_5_1 : ( ruleScheduleObjectReference ) ;
     public final void rule__ValuedEmission__ScheduleAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27006:1: ( ( ruleScheduleObjectReference ) )
-            // InternalKiCool.g:27007:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27087:1: ( ( ruleScheduleObjectReference ) )
+            // InternalKiCool.g:27088:2: ( ruleScheduleObjectReference )
             {
-            // InternalKiCool.g:27007:2: ( ruleScheduleObjectReference )
-            // InternalKiCool.g:27008:3: ruleScheduleObjectReference
+            // InternalKiCool.g:27088:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27089:3: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0()); 
@@ -89309,17 +89572,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Assignment__AnnotationsAssignment_0"
-    // InternalKiCool.g:27017:1: rule__Assignment__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27098:1: rule__Assignment__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__Assignment__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27021:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27022:2: ( ruleAnnotation )
+            // InternalKiCool.g:27102:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27103:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27022:2: ( ruleAnnotation )
-            // InternalKiCool.g:27023:3: ruleAnnotation
+            // InternalKiCool.g:27103:2: ( ruleAnnotation )
+            // InternalKiCool.g:27104:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -89354,17 +89617,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Assignment__ReferenceAssignment_1"
-    // InternalKiCool.g:27032:1: rule__Assignment__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
+    // InternalKiCool.g:27113:1: rule__Assignment__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
     public final void rule__Assignment__ReferenceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27036:1: ( ( ruleValuedObjectReference ) )
-            // InternalKiCool.g:27037:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27117:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:27118:2: ( ruleValuedObjectReference )
             {
-            // InternalKiCool.g:27037:2: ( ruleValuedObjectReference )
-            // InternalKiCool.g:27038:3: ruleValuedObjectReference
+            // InternalKiCool.g:27118:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27119:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
@@ -89399,17 +89662,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Assignment__OperatorAssignment_2"
-    // InternalKiCool.g:27047:1: rule__Assignment__OperatorAssignment_2 : ( ruleAssignOperator ) ;
+    // InternalKiCool.g:27128:1: rule__Assignment__OperatorAssignment_2 : ( ruleAssignOperator ) ;
     public final void rule__Assignment__OperatorAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27051:1: ( ( ruleAssignOperator ) )
-            // InternalKiCool.g:27052:2: ( ruleAssignOperator )
+            // InternalKiCool.g:27132:1: ( ( ruleAssignOperator ) )
+            // InternalKiCool.g:27133:2: ( ruleAssignOperator )
             {
-            // InternalKiCool.g:27052:2: ( ruleAssignOperator )
-            // InternalKiCool.g:27053:3: ruleAssignOperator
+            // InternalKiCool.g:27133:2: ( ruleAssignOperator )
+            // InternalKiCool.g:27134:3: ruleAssignOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getOperatorAssignOperatorEnumRuleCall_2_0()); 
@@ -89444,17 +89707,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Assignment__ExpressionAssignment_3"
-    // InternalKiCool.g:27062:1: rule__Assignment__ExpressionAssignment_3 : ( ruleExpression ) ;
+    // InternalKiCool.g:27143:1: rule__Assignment__ExpressionAssignment_3 : ( ruleExpression ) ;
     public final void rule__Assignment__ExpressionAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27066:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:27067:2: ( ruleExpression )
+            // InternalKiCool.g:27147:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:27148:2: ( ruleExpression )
             {
-            // InternalKiCool.g:27067:2: ( ruleExpression )
-            // InternalKiCool.g:27068:3: ruleExpression
+            // InternalKiCool.g:27148:2: ( ruleExpression )
+            // InternalKiCool.g:27149:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_3_0()); 
@@ -89489,17 +89752,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Assignment__ScheduleAssignment_4_1"
-    // InternalKiCool.g:27077:1: rule__Assignment__ScheduleAssignment_4_1 : ( ruleScheduleObjectReference ) ;
+    // InternalKiCool.g:27158:1: rule__Assignment__ScheduleAssignment_4_1 : ( ruleScheduleObjectReference ) ;
     public final void rule__Assignment__ScheduleAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27081:1: ( ( ruleScheduleObjectReference ) )
-            // InternalKiCool.g:27082:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27162:1: ( ( ruleScheduleObjectReference ) )
+            // InternalKiCool.g:27163:2: ( ruleScheduleObjectReference )
             {
-            // InternalKiCool.g:27082:2: ( ruleScheduleObjectReference )
-            // InternalKiCool.g:27083:3: ruleScheduleObjectReference
+            // InternalKiCool.g:27163:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27164:3: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0()); 
@@ -89534,17 +89797,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostfixEffect__AnnotationsAssignment_0"
-    // InternalKiCool.g:27092:1: rule__PostfixEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27173:1: rule__PostfixEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__PostfixEffect__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27096:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27097:2: ( ruleAnnotation )
+            // InternalKiCool.g:27177:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27178:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27097:2: ( ruleAnnotation )
-            // InternalKiCool.g:27098:3: ruleAnnotation
+            // InternalKiCool.g:27178:2: ( ruleAnnotation )
+            // InternalKiCool.g:27179:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostfixEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -89579,17 +89842,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostfixEffect__ReferenceAssignment_1"
-    // InternalKiCool.g:27107:1: rule__PostfixEffect__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
+    // InternalKiCool.g:27188:1: rule__PostfixEffect__ReferenceAssignment_1 : ( ruleValuedObjectReference ) ;
     public final void rule__PostfixEffect__ReferenceAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27111:1: ( ( ruleValuedObjectReference ) )
-            // InternalKiCool.g:27112:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27192:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:27193:2: ( ruleValuedObjectReference )
             {
-            // InternalKiCool.g:27112:2: ( ruleValuedObjectReference )
-            // InternalKiCool.g:27113:3: ruleValuedObjectReference
+            // InternalKiCool.g:27193:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:27194:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostfixEffectAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0()); 
@@ -89624,17 +89887,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostfixEffect__OperatorAssignment_2"
-    // InternalKiCool.g:27122:1: rule__PostfixEffect__OperatorAssignment_2 : ( rulePostfixOperator ) ;
+    // InternalKiCool.g:27203:1: rule__PostfixEffect__OperatorAssignment_2 : ( rulePostfixOperator ) ;
     public final void rule__PostfixEffect__OperatorAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27126:1: ( ( rulePostfixOperator ) )
-            // InternalKiCool.g:27127:2: ( rulePostfixOperator )
+            // InternalKiCool.g:27207:1: ( ( rulePostfixOperator ) )
+            // InternalKiCool.g:27208:2: ( rulePostfixOperator )
             {
-            // InternalKiCool.g:27127:2: ( rulePostfixOperator )
-            // InternalKiCool.g:27128:3: rulePostfixOperator
+            // InternalKiCool.g:27208:2: ( rulePostfixOperator )
+            // InternalKiCool.g:27209:3: rulePostfixOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostfixEffectAccess().getOperatorPostfixOperatorEnumRuleCall_2_0()); 
@@ -89669,17 +89932,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PostfixEffect__ScheduleAssignment_3_1"
-    // InternalKiCool.g:27137:1: rule__PostfixEffect__ScheduleAssignment_3_1 : ( ruleScheduleObjectReference ) ;
+    // InternalKiCool.g:27218:1: rule__PostfixEffect__ScheduleAssignment_3_1 : ( ruleScheduleObjectReference ) ;
     public final void rule__PostfixEffect__ScheduleAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27141:1: ( ( ruleScheduleObjectReference ) )
-            // InternalKiCool.g:27142:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27222:1: ( ( ruleScheduleObjectReference ) )
+            // InternalKiCool.g:27223:2: ( ruleScheduleObjectReference )
             {
-            // InternalKiCool.g:27142:2: ( ruleScheduleObjectReference )
-            // InternalKiCool.g:27143:3: ruleScheduleObjectReference
+            // InternalKiCool.g:27223:2: ( ruleScheduleObjectReference )
+            // InternalKiCool.g:27224:3: ruleScheduleObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPostfixEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0()); 
@@ -89714,17 +89977,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HostcodeEffect__AnnotationsAssignment_0"
-    // InternalKiCool.g:27152:1: rule__HostcodeEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27233:1: rule__HostcodeEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__HostcodeEffect__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27156:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27157:2: ( ruleAnnotation )
+            // InternalKiCool.g:27237:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27238:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27157:2: ( ruleAnnotation )
-            // InternalKiCool.g:27158:3: ruleAnnotation
+            // InternalKiCool.g:27238:2: ( ruleAnnotation )
+            // InternalKiCool.g:27239:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHostcodeEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -89759,17 +90022,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__HostcodeEffect__TextAssignment_1"
-    // InternalKiCool.g:27167:1: rule__HostcodeEffect__TextAssignment_1 : ( RULE_HOSTCODE ) ;
+    // InternalKiCool.g:27248:1: rule__HostcodeEffect__TextAssignment_1 : ( RULE_HOSTCODE ) ;
     public final void rule__HostcodeEffect__TextAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27171:1: ( ( RULE_HOSTCODE ) )
-            // InternalKiCool.g:27172:2: ( RULE_HOSTCODE )
+            // InternalKiCool.g:27252:1: ( ( RULE_HOSTCODE ) )
+            // InternalKiCool.g:27253:2: ( RULE_HOSTCODE )
             {
-            // InternalKiCool.g:27172:2: ( RULE_HOSTCODE )
-            // InternalKiCool.g:27173:3: RULE_HOSTCODE
+            // InternalKiCool.g:27253:2: ( RULE_HOSTCODE )
+            // InternalKiCool.g:27254:3: RULE_HOSTCODE
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getHostcodeEffectAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
@@ -89800,17 +90063,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCallEffect__AnnotationsAssignment_0"
-    // InternalKiCool.g:27182:1: rule__ReferenceCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27263:1: rule__ReferenceCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__ReferenceCallEffect__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27186:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27187:2: ( ruleAnnotation )
+            // InternalKiCool.g:27267:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27268:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27187:2: ( ruleAnnotation )
-            // InternalKiCool.g:27188:3: ruleAnnotation
+            // InternalKiCool.g:27268:2: ( ruleAnnotation )
+            // InternalKiCool.g:27269:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -89845,23 +90108,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCallEffect__ValuedObjectAssignment_1"
-    // InternalKiCool.g:27197:1: rule__ReferenceCallEffect__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
+    // InternalKiCool.g:27278:1: rule__ReferenceCallEffect__ValuedObjectAssignment_1 : ( ( rulePrimeID ) ) ;
     public final void rule__ReferenceCallEffect__ValuedObjectAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27201:1: ( ( ( rulePrimeID ) ) )
-            // InternalKiCool.g:27202:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:27282:1: ( ( ( rulePrimeID ) ) )
+            // InternalKiCool.g:27283:2: ( ( rulePrimeID ) )
             {
-            // InternalKiCool.g:27202:2: ( ( rulePrimeID ) )
-            // InternalKiCool.g:27203:3: ( rulePrimeID )
+            // InternalKiCool.g:27283:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:27284:3: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0()); 
             }
-            // InternalKiCool.g:27204:3: ( rulePrimeID )
-            // InternalKiCool.g:27205:4: rulePrimeID
+            // InternalKiCool.g:27285:3: ( rulePrimeID )
+            // InternalKiCool.g:27286:4: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1()); 
@@ -89902,17 +90165,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCallEffect__ParametersAssignment_2_0_1"
-    // InternalKiCool.g:27216:1: rule__ReferenceCallEffect__ParametersAssignment_2_0_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27297:1: rule__ReferenceCallEffect__ParametersAssignment_2_0_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCallEffect__ParametersAssignment_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27220:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27221:2: ( ruleParameter )
+            // InternalKiCool.g:27301:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27302:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27221:2: ( ruleParameter )
-            // InternalKiCool.g:27222:3: ruleParameter
+            // InternalKiCool.g:27302:2: ( ruleParameter )
+            // InternalKiCool.g:27303:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getParametersParameterParserRuleCall_2_0_1_0()); 
@@ -89947,17 +90210,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1"
-    // InternalKiCool.g:27231:1: rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27312:1: rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27235:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27236:2: ( ruleParameter )
+            // InternalKiCool.g:27316:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27317:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27236:2: ( ruleParameter )
-            // InternalKiCool.g:27237:3: ruleParameter
+            // InternalKiCool.g:27317:2: ( ruleParameter )
+            // InternalKiCool.g:27318:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallEffectAccess().getParametersParameterParserRuleCall_2_0_2_1_0()); 
@@ -89992,17 +90255,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCallEffect__AnnotationsAssignment_0"
-    // InternalKiCool.g:27246:1: rule__FunctionCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27327:1: rule__FunctionCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__FunctionCallEffect__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27250:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27251:2: ( ruleAnnotation )
+            // InternalKiCool.g:27331:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27332:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27251:2: ( ruleAnnotation )
-            // InternalKiCool.g:27252:3: ruleAnnotation
+            // InternalKiCool.g:27332:2: ( ruleAnnotation )
+            // InternalKiCool.g:27333:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -90037,17 +90300,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCallEffect__FunctionNameAssignment_1_1"
-    // InternalKiCool.g:27261:1: rule__FunctionCallEffect__FunctionNameAssignment_1_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:27342:1: rule__FunctionCallEffect__FunctionNameAssignment_1_1 : ( RULE_ID ) ;
     public final void rule__FunctionCallEffect__FunctionNameAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27265:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:27266:2: ( RULE_ID )
+            // InternalKiCool.g:27346:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:27347:2: ( RULE_ID )
             {
-            // InternalKiCool.g:27266:2: ( RULE_ID )
-            // InternalKiCool.g:27267:3: RULE_ID
+            // InternalKiCool.g:27347:2: ( RULE_ID )
+            // InternalKiCool.g:27348:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallEffectAccess().getFunctionNameIDTerminalRuleCall_1_1_0()); 
@@ -90078,17 +90341,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1"
-    // InternalKiCool.g:27276:1: rule__FunctionCallEffect__ParametersAssignment_1_2_0_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27357:1: rule__FunctionCallEffect__ParametersAssignment_1_2_0_1 : ( ruleParameter ) ;
     public final void rule__FunctionCallEffect__ParametersAssignment_1_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27280:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27281:2: ( ruleParameter )
+            // InternalKiCool.g:27361:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27362:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27281:2: ( ruleParameter )
-            // InternalKiCool.g:27282:3: ruleParameter
+            // InternalKiCool.g:27362:2: ( ruleParameter )
+            // InternalKiCool.g:27363:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallEffectAccess().getParametersParameterParserRuleCall_1_2_0_1_0()); 
@@ -90123,17 +90386,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1"
-    // InternalKiCool.g:27291:1: rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27372:1: rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1 : ( ruleParameter ) ;
     public final void rule__FunctionCallEffect__ParametersAssignment_1_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27295:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27296:2: ( ruleParameter )
+            // InternalKiCool.g:27376:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27377:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27296:2: ( ruleParameter )
-            // InternalKiCool.g:27297:3: ruleParameter
+            // InternalKiCool.g:27377:2: ( ruleParameter )
+            // InternalKiCool.g:27378:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallEffectAccess().getParametersParameterParserRuleCall_1_2_0_2_1_0()); 
@@ -90168,17 +90431,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrintCallEffect__AnnotationsAssignment_0"
-    // InternalKiCool.g:27306:1: rule__PrintCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27387:1: rule__PrintCallEffect__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__PrintCallEffect__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27310:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27311:2: ( ruleAnnotation )
+            // InternalKiCool.g:27391:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27392:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27311:2: ( ruleAnnotation )
-            // InternalKiCool.g:27312:3: ruleAnnotation
+            // InternalKiCool.g:27392:2: ( ruleAnnotation )
+            // InternalKiCool.g:27393:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrintCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -90213,17 +90476,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrintCallEffect__ParametersAssignment_2_1"
-    // InternalKiCool.g:27321:1: rule__PrintCallEffect__ParametersAssignment_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27402:1: rule__PrintCallEffect__ParametersAssignment_2_1 : ( ruleParameter ) ;
     public final void rule__PrintCallEffect__ParametersAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27325:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27326:2: ( ruleParameter )
+            // InternalKiCool.g:27406:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27407:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27326:2: ( ruleParameter )
-            // InternalKiCool.g:27327:3: ruleParameter
+            // InternalKiCool.g:27407:2: ( ruleParameter )
+            // InternalKiCool.g:27408:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrintCallEffectAccess().getParametersParameterParserRuleCall_2_1_0()); 
@@ -90258,17 +90521,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PrintCallEffect__ParametersAssignment_2_2_1"
-    // InternalKiCool.g:27336:1: rule__PrintCallEffect__ParametersAssignment_2_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27417:1: rule__PrintCallEffect__ParametersAssignment_2_2_1 : ( ruleParameter ) ;
     public final void rule__PrintCallEffect__ParametersAssignment_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27340:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27341:2: ( ruleParameter )
+            // InternalKiCool.g:27421:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27422:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27341:2: ( ruleParameter )
-            // InternalKiCool.g:27342:3: ruleParameter
+            // InternalKiCool.g:27422:2: ( ruleParameter )
+            // InternalKiCool.g:27423:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPrintCallEffectAccess().getParametersParameterParserRuleCall_2_2_1_0()); 
@@ -90303,17 +90566,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCallEffect__AnnotationsAssignment_1"
-    // InternalKiCool.g:27351:1: rule__RandomizeCallEffect__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:27432:1: rule__RandomizeCallEffect__AnnotationsAssignment_1 : ( ruleAnnotation ) ;
     public final void rule__RandomizeCallEffect__AnnotationsAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27355:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:27356:2: ( ruleAnnotation )
+            // InternalKiCool.g:27436:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:27437:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:27356:2: ( ruleAnnotation )
-            // InternalKiCool.g:27357:3: ruleAnnotation
+            // InternalKiCool.g:27437:2: ( ruleAnnotation )
+            // InternalKiCool.g:27438:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallEffectAccess().getAnnotationsAnnotationParserRuleCall_1_0()); 
@@ -90348,17 +90611,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCallEffect__ParametersAssignment_3_0_1"
-    // InternalKiCool.g:27366:1: rule__RandomizeCallEffect__ParametersAssignment_3_0_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27447:1: rule__RandomizeCallEffect__ParametersAssignment_3_0_1 : ( ruleParameter ) ;
     public final void rule__RandomizeCallEffect__ParametersAssignment_3_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27370:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27371:2: ( ruleParameter )
+            // InternalKiCool.g:27451:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27452:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27371:2: ( ruleParameter )
-            // InternalKiCool.g:27372:3: ruleParameter
+            // InternalKiCool.g:27452:2: ( ruleParameter )
+            // InternalKiCool.g:27453:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallEffectAccess().getParametersParameterParserRuleCall_3_0_1_0()); 
@@ -90393,17 +90656,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1"
-    // InternalKiCool.g:27381:1: rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:27462:1: rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1 : ( ruleParameter ) ;
     public final void rule__RandomizeCallEffect__ParametersAssignment_3_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27385:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:27386:2: ( ruleParameter )
+            // InternalKiCool.g:27466:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:27467:2: ( ruleParameter )
             {
-            // InternalKiCool.g:27386:2: ( ruleParameter )
-            // InternalKiCool.g:27387:3: ruleParameter
+            // InternalKiCool.g:27467:2: ( ruleParameter )
+            // InternalKiCool.g:27468:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRandomizeCallEffectAccess().getParametersParameterParserRuleCall_3_0_2_1_0()); 
@@ -90438,17 +90701,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalOrExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:27396:1: rule__LogicalOrExpression__OperatorAssignment_1_1_0 : ( ruleLogicalOrOperator ) ;
+    // InternalKiCool.g:27477:1: rule__LogicalOrExpression__OperatorAssignment_1_1_0 : ( ruleLogicalOrOperator ) ;
     public final void rule__LogicalOrExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27400:1: ( ( ruleLogicalOrOperator ) )
-            // InternalKiCool.g:27401:2: ( ruleLogicalOrOperator )
+            // InternalKiCool.g:27481:1: ( ( ruleLogicalOrOperator ) )
+            // InternalKiCool.g:27482:2: ( ruleLogicalOrOperator )
             {
-            // InternalKiCool.g:27401:2: ( ruleLogicalOrOperator )
-            // InternalKiCool.g:27402:3: ruleLogicalOrOperator
+            // InternalKiCool.g:27482:2: ( ruleLogicalOrOperator )
+            // InternalKiCool.g:27483:3: ruleLogicalOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getOperatorLogicalOrOperatorEnumRuleCall_1_1_0_0()); 
@@ -90483,17 +90746,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:27411:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleLogicalAndExpression ) ;
+    // InternalKiCool.g:27492:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleLogicalAndExpression ) ;
     public final void rule__LogicalOrExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27415:1: ( ( ruleLogicalAndExpression ) )
-            // InternalKiCool.g:27416:2: ( ruleLogicalAndExpression )
+            // InternalKiCool.g:27496:1: ( ( ruleLogicalAndExpression ) )
+            // InternalKiCool.g:27497:2: ( ruleLogicalAndExpression )
             {
-            // InternalKiCool.g:27416:2: ( ruleLogicalAndExpression )
-            // InternalKiCool.g:27417:3: ruleLogicalAndExpression
+            // InternalKiCool.g:27497:2: ( ruleLogicalAndExpression )
+            // InternalKiCool.g:27498:3: ruleLogicalAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_1_1_0()); 
@@ -90528,17 +90791,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:27426:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleLogicalAndExpression ) ;
+    // InternalKiCool.g:27507:1: rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleLogicalAndExpression ) ;
     public final void rule__LogicalOrExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27430:1: ( ( ruleLogicalAndExpression ) )
-            // InternalKiCool.g:27431:2: ( ruleLogicalAndExpression )
+            // InternalKiCool.g:27511:1: ( ( ruleLogicalAndExpression ) )
+            // InternalKiCool.g:27512:2: ( ruleLogicalAndExpression )
             {
-            // InternalKiCool.g:27431:2: ( ruleLogicalAndExpression )
-            // InternalKiCool.g:27432:3: ruleLogicalAndExpression
+            // InternalKiCool.g:27512:2: ( ruleLogicalAndExpression )
+            // InternalKiCool.g:27513:3: ruleLogicalAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalOrExpressionAccess().getSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0()); 
@@ -90573,17 +90836,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalAndExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:27441:1: rule__LogicalAndExpression__OperatorAssignment_1_1_0 : ( ruleLogicalAndOperator ) ;
+    // InternalKiCool.g:27522:1: rule__LogicalAndExpression__OperatorAssignment_1_1_0 : ( ruleLogicalAndOperator ) ;
     public final void rule__LogicalAndExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27445:1: ( ( ruleLogicalAndOperator ) )
-            // InternalKiCool.g:27446:2: ( ruleLogicalAndOperator )
+            // InternalKiCool.g:27526:1: ( ( ruleLogicalAndOperator ) )
+            // InternalKiCool.g:27527:2: ( ruleLogicalAndOperator )
             {
-            // InternalKiCool.g:27446:2: ( ruleLogicalAndOperator )
-            // InternalKiCool.g:27447:3: ruleLogicalAndOperator
+            // InternalKiCool.g:27527:2: ( ruleLogicalAndOperator )
+            // InternalKiCool.g:27528:3: ruleLogicalAndOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getOperatorLogicalAndOperatorEnumRuleCall_1_1_0_0()); 
@@ -90618,17 +90881,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:27456:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseOrExpression ) ;
+    // InternalKiCool.g:27537:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseOrExpression ) ;
     public final void rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27460:1: ( ( ruleBitwiseOrExpression ) )
-            // InternalKiCool.g:27461:2: ( ruleBitwiseOrExpression )
+            // InternalKiCool.g:27541:1: ( ( ruleBitwiseOrExpression ) )
+            // InternalKiCool.g:27542:2: ( ruleBitwiseOrExpression )
             {
-            // InternalKiCool.g:27461:2: ( ruleBitwiseOrExpression )
-            // InternalKiCool.g:27462:3: ruleBitwiseOrExpression
+            // InternalKiCool.g:27542:2: ( ruleBitwiseOrExpression )
+            // InternalKiCool.g:27543:3: ruleBitwiseOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_1_1_0()); 
@@ -90663,17 +90926,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:27471:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseOrExpression ) ;
+    // InternalKiCool.g:27552:1: rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseOrExpression ) ;
     public final void rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27475:1: ( ( ruleBitwiseOrExpression ) )
-            // InternalKiCool.g:27476:2: ( ruleBitwiseOrExpression )
+            // InternalKiCool.g:27556:1: ( ( ruleBitwiseOrExpression ) )
+            // InternalKiCool.g:27557:2: ( ruleBitwiseOrExpression )
             {
-            // InternalKiCool.g:27476:2: ( ruleBitwiseOrExpression )
-            // InternalKiCool.g:27477:3: ruleBitwiseOrExpression
+            // InternalKiCool.g:27557:2: ( ruleBitwiseOrExpression )
+            // InternalKiCool.g:27558:3: ruleBitwiseOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsBitwiseOrExpressionParserRuleCall_1_2_1_0()); 
@@ -90708,17 +90971,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseOrExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:27486:1: rule__BitwiseOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseOrOperator ) ;
+    // InternalKiCool.g:27567:1: rule__BitwiseOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseOrOperator ) ;
     public final void rule__BitwiseOrExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27490:1: ( ( ruleBitwiseOrOperator ) )
-            // InternalKiCool.g:27491:2: ( ruleBitwiseOrOperator )
+            // InternalKiCool.g:27571:1: ( ( ruleBitwiseOrOperator ) )
+            // InternalKiCool.g:27572:2: ( ruleBitwiseOrOperator )
             {
-            // InternalKiCool.g:27491:2: ( ruleBitwiseOrOperator )
-            // InternalKiCool.g:27492:3: ruleBitwiseOrOperator
+            // InternalKiCool.g:27572:2: ( ruleBitwiseOrOperator )
+            // InternalKiCool.g:27573:3: ruleBitwiseOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getOperatorBitwiseOrOperatorEnumRuleCall_1_1_0_0()); 
@@ -90753,17 +91016,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:27501:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseXOrExpression ) ;
+    // InternalKiCool.g:27582:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseXOrExpression ) ;
     public final void rule__BitwiseOrExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27505:1: ( ( ruleBitwiseXOrExpression ) )
-            // InternalKiCool.g:27506:2: ( ruleBitwiseXOrExpression )
+            // InternalKiCool.g:27586:1: ( ( ruleBitwiseXOrExpression ) )
+            // InternalKiCool.g:27587:2: ( ruleBitwiseXOrExpression )
             {
-            // InternalKiCool.g:27506:2: ( ruleBitwiseXOrExpression )
-            // InternalKiCool.g:27507:3: ruleBitwiseXOrExpression
+            // InternalKiCool.g:27587:2: ( ruleBitwiseXOrExpression )
+            // InternalKiCool.g:27588:3: ruleBitwiseXOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseXOrExpressionParserRuleCall_1_1_1_0()); 
@@ -90798,17 +91061,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:27516:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseXOrExpression ) ;
+    // InternalKiCool.g:27597:1: rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseXOrExpression ) ;
     public final void rule__BitwiseOrExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27520:1: ( ( ruleBitwiseXOrExpression ) )
-            // InternalKiCool.g:27521:2: ( ruleBitwiseXOrExpression )
+            // InternalKiCool.g:27601:1: ( ( ruleBitwiseXOrExpression ) )
+            // InternalKiCool.g:27602:2: ( ruleBitwiseXOrExpression )
             {
-            // InternalKiCool.g:27521:2: ( ruleBitwiseXOrExpression )
-            // InternalKiCool.g:27522:3: ruleBitwiseXOrExpression
+            // InternalKiCool.g:27602:2: ( ruleBitwiseXOrExpression )
+            // InternalKiCool.g:27603:3: ruleBitwiseXOrExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseOrExpressionAccess().getSubExpressionsBitwiseXOrExpressionParserRuleCall_1_2_1_0()); 
@@ -90843,17 +91106,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseXOrExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:27531:1: rule__BitwiseXOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseXOrOperator ) ;
+    // InternalKiCool.g:27612:1: rule__BitwiseXOrExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseXOrOperator ) ;
     public final void rule__BitwiseXOrExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27535:1: ( ( ruleBitwiseXOrOperator ) )
-            // InternalKiCool.g:27536:2: ( ruleBitwiseXOrOperator )
+            // InternalKiCool.g:27616:1: ( ( ruleBitwiseXOrOperator ) )
+            // InternalKiCool.g:27617:2: ( ruleBitwiseXOrOperator )
             {
-            // InternalKiCool.g:27536:2: ( ruleBitwiseXOrOperator )
-            // InternalKiCool.g:27537:3: ruleBitwiseXOrOperator
+            // InternalKiCool.g:27617:2: ( ruleBitwiseXOrOperator )
+            // InternalKiCool.g:27618:3: ruleBitwiseXOrOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseXOrExpressionAccess().getOperatorBitwiseXOrOperatorEnumRuleCall_1_1_0_0()); 
@@ -90888,17 +91151,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseXOrExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:27546:1: rule__BitwiseXOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseAndExpression ) ;
+    // InternalKiCool.g:27627:1: rule__BitwiseXOrExpression__SubExpressionsAssignment_1_1_1 : ( ruleBitwiseAndExpression ) ;
     public final void rule__BitwiseXOrExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27550:1: ( ( ruleBitwiseAndExpression ) )
-            // InternalKiCool.g:27551:2: ( ruleBitwiseAndExpression )
+            // InternalKiCool.g:27631:1: ( ( ruleBitwiseAndExpression ) )
+            // InternalKiCool.g:27632:2: ( ruleBitwiseAndExpression )
             {
-            // InternalKiCool.g:27551:2: ( ruleBitwiseAndExpression )
-            // InternalKiCool.g:27552:3: ruleBitwiseAndExpression
+            // InternalKiCool.g:27632:2: ( ruleBitwiseAndExpression )
+            // InternalKiCool.g:27633:3: ruleBitwiseAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseXOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_1_1_0()); 
@@ -90933,17 +91196,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseXOrExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:27561:1: rule__BitwiseXOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseAndExpression ) ;
+    // InternalKiCool.g:27642:1: rule__BitwiseXOrExpression__SubExpressionsAssignment_1_2_1 : ( ruleBitwiseAndExpression ) ;
     public final void rule__BitwiseXOrExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27565:1: ( ( ruleBitwiseAndExpression ) )
-            // InternalKiCool.g:27566:2: ( ruleBitwiseAndExpression )
+            // InternalKiCool.g:27646:1: ( ( ruleBitwiseAndExpression ) )
+            // InternalKiCool.g:27647:2: ( ruleBitwiseAndExpression )
             {
-            // InternalKiCool.g:27566:2: ( ruleBitwiseAndExpression )
-            // InternalKiCool.g:27567:3: ruleBitwiseAndExpression
+            // InternalKiCool.g:27647:2: ( ruleBitwiseAndExpression )
+            // InternalKiCool.g:27648:3: ruleBitwiseAndExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseXOrExpressionAccess().getSubExpressionsBitwiseAndExpressionParserRuleCall_1_2_1_0()); 
@@ -90978,17 +91241,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseAndExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:27576:1: rule__BitwiseAndExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseAndOperator ) ;
+    // InternalKiCool.g:27657:1: rule__BitwiseAndExpression__OperatorAssignment_1_1_0 : ( ruleBitwiseAndOperator ) ;
     public final void rule__BitwiseAndExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27580:1: ( ( ruleBitwiseAndOperator ) )
-            // InternalKiCool.g:27581:2: ( ruleBitwiseAndOperator )
+            // InternalKiCool.g:27661:1: ( ( ruleBitwiseAndOperator ) )
+            // InternalKiCool.g:27662:2: ( ruleBitwiseAndOperator )
             {
-            // InternalKiCool.g:27581:2: ( ruleBitwiseAndOperator )
-            // InternalKiCool.g:27582:3: ruleBitwiseAndOperator
+            // InternalKiCool.g:27662:2: ( ruleBitwiseAndOperator )
+            // InternalKiCool.g:27663:3: ruleBitwiseAndOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getOperatorBitwiseAndOperatorEnumRuleCall_1_1_0_0()); 
@@ -91023,17 +91286,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:27591:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleCompareOperation ) ;
+    // InternalKiCool.g:27672:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1 : ( ruleCompareOperation ) ;
     public final void rule__BitwiseAndExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27595:1: ( ( ruleCompareOperation ) )
-            // InternalKiCool.g:27596:2: ( ruleCompareOperation )
+            // InternalKiCool.g:27676:1: ( ( ruleCompareOperation ) )
+            // InternalKiCool.g:27677:2: ( ruleCompareOperation )
             {
-            // InternalKiCool.g:27596:2: ( ruleCompareOperation )
-            // InternalKiCool.g:27597:3: ruleCompareOperation
+            // InternalKiCool.g:27677:2: ( ruleCompareOperation )
+            // InternalKiCool.g:27678:3: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0()); 
@@ -91068,17 +91331,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:27606:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleCompareOperation ) ;
+    // InternalKiCool.g:27687:1: rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1 : ( ruleCompareOperation ) ;
     public final void rule__BitwiseAndExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27610:1: ( ( ruleCompareOperation ) )
-            // InternalKiCool.g:27611:2: ( ruleCompareOperation )
+            // InternalKiCool.g:27691:1: ( ( ruleCompareOperation ) )
+            // InternalKiCool.g:27692:2: ( ruleCompareOperation )
             {
-            // InternalKiCool.g:27611:2: ( ruleCompareOperation )
-            // InternalKiCool.g:27612:3: ruleCompareOperation
+            // InternalKiCool.g:27692:2: ( ruleCompareOperation )
+            // InternalKiCool.g:27693:3: ruleCompareOperation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0()); 
@@ -91113,17 +91376,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CompareOperation__OperatorAssignment_1_1"
-    // InternalKiCool.g:27621:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
+    // InternalKiCool.g:27702:1: rule__CompareOperation__OperatorAssignment_1_1 : ( ruleCompareOperator ) ;
     public final void rule__CompareOperation__OperatorAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27625:1: ( ( ruleCompareOperator ) )
-            // InternalKiCool.g:27626:2: ( ruleCompareOperator )
+            // InternalKiCool.g:27706:1: ( ( ruleCompareOperator ) )
+            // InternalKiCool.g:27707:2: ( ruleCompareOperator )
             {
-            // InternalKiCool.g:27626:2: ( ruleCompareOperator )
-            // InternalKiCool.g:27627:3: ruleCompareOperator
+            // InternalKiCool.g:27707:2: ( ruleCompareOperator )
+            // InternalKiCool.g:27708:3: ruleCompareOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getOperatorCompareOperatorEnumRuleCall_1_1_0()); 
@@ -91158,17 +91421,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CompareOperation__SubExpressionsAssignment_1_2"
-    // InternalKiCool.g:27636:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleNotOrValuedExpression ) ;
+    // InternalKiCool.g:27717:1: rule__CompareOperation__SubExpressionsAssignment_1_2 : ( ruleNotOrValuedExpression ) ;
     public final void rule__CompareOperation__SubExpressionsAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27640:1: ( ( ruleNotOrValuedExpression ) )
-            // InternalKiCool.g:27641:2: ( ruleNotOrValuedExpression )
+            // InternalKiCool.g:27721:1: ( ( ruleNotOrValuedExpression ) )
+            // InternalKiCool.g:27722:2: ( ruleNotOrValuedExpression )
             {
-            // InternalKiCool.g:27641:2: ( ruleNotOrValuedExpression )
-            // InternalKiCool.g:27642:3: ruleNotOrValuedExpression
+            // InternalKiCool.g:27722:2: ( ruleNotOrValuedExpression )
+            // InternalKiCool.g:27723:3: ruleNotOrValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCompareOperationAccess().getSubExpressionsNotOrValuedExpressionParserRuleCall_1_2_0()); 
@@ -91203,17 +91466,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseNotExpression__OperatorAssignment_0_1"
-    // InternalKiCool.g:27651:1: rule__BitwiseNotExpression__OperatorAssignment_0_1 : ( ruleBitwiseNotOperator ) ;
+    // InternalKiCool.g:27732:1: rule__BitwiseNotExpression__OperatorAssignment_0_1 : ( ruleBitwiseNotOperator ) ;
     public final void rule__BitwiseNotExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27655:1: ( ( ruleBitwiseNotOperator ) )
-            // InternalKiCool.g:27656:2: ( ruleBitwiseNotOperator )
+            // InternalKiCool.g:27736:1: ( ( ruleBitwiseNotOperator ) )
+            // InternalKiCool.g:27737:2: ( ruleBitwiseNotOperator )
             {
-            // InternalKiCool.g:27656:2: ( ruleBitwiseNotOperator )
-            // InternalKiCool.g:27657:3: ruleBitwiseNotOperator
+            // InternalKiCool.g:27737:2: ( ruleBitwiseNotOperator )
+            // InternalKiCool.g:27738:3: ruleBitwiseNotOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0()); 
@@ -91248,17 +91511,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BitwiseNotExpression__SubExpressionsAssignment_0_2"
-    // InternalKiCool.g:27666:1: rule__BitwiseNotExpression__SubExpressionsAssignment_0_2 : ( ruleBitwiseNotExpression ) ;
+    // InternalKiCool.g:27747:1: rule__BitwiseNotExpression__SubExpressionsAssignment_0_2 : ( ruleBitwiseNotExpression ) ;
     public final void rule__BitwiseNotExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27670:1: ( ( ruleBitwiseNotExpression ) )
-            // InternalKiCool.g:27671:2: ( ruleBitwiseNotExpression )
+            // InternalKiCool.g:27751:1: ( ( ruleBitwiseNotExpression ) )
+            // InternalKiCool.g:27752:2: ( ruleBitwiseNotExpression )
             {
-            // InternalKiCool.g:27671:2: ( ruleBitwiseNotExpression )
-            // InternalKiCool.g:27672:3: ruleBitwiseNotExpression
+            // InternalKiCool.g:27752:2: ( ruleBitwiseNotExpression )
+            // InternalKiCool.g:27753:3: ruleBitwiseNotExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); 
@@ -91293,17 +91556,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NotExpression__OperatorAssignment_0_1"
-    // InternalKiCool.g:27681:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
+    // InternalKiCool.g:27762:1: rule__NotExpression__OperatorAssignment_0_1 : ( ruleNotOperator ) ;
     public final void rule__NotExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27685:1: ( ( ruleNotOperator ) )
-            // InternalKiCool.g:27686:2: ( ruleNotOperator )
+            // InternalKiCool.g:27766:1: ( ( ruleNotOperator ) )
+            // InternalKiCool.g:27767:2: ( ruleNotOperator )
             {
-            // InternalKiCool.g:27686:2: ( ruleNotOperator )
-            // InternalKiCool.g:27687:3: ruleNotOperator
+            // InternalKiCool.g:27767:2: ( ruleNotOperator )
+            // InternalKiCool.g:27768:3: ruleNotOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); 
@@ -91338,17 +91601,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NotExpression__SubExpressionsAssignment_0_2"
-    // InternalKiCool.g:27696:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
+    // InternalKiCool.g:27777:1: rule__NotExpression__SubExpressionsAssignment_0_2 : ( ruleNotExpression ) ;
     public final void rule__NotExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27700:1: ( ( ruleNotExpression ) )
-            // InternalKiCool.g:27701:2: ( ruleNotExpression )
+            // InternalKiCool.g:27781:1: ( ( ruleNotExpression ) )
+            // InternalKiCool.g:27782:2: ( ruleNotExpression )
             {
-            // InternalKiCool.g:27701:2: ( ruleNotExpression )
-            // InternalKiCool.g:27702:3: ruleNotExpression
+            // InternalKiCool.g:27782:2: ( ruleNotExpression )
+            // InternalKiCool.g:27783:3: ruleNotExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); 
@@ -91383,17 +91646,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:27711:1: rule__ShiftExpressions__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
+    // InternalKiCool.g:27792:1: rule__ShiftExpressions__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
     public final void rule__ShiftExpressions__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27715:1: ( ( ruleShiftLeftOperator ) )
-            // InternalKiCool.g:27716:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:27796:1: ( ( ruleShiftLeftOperator ) )
+            // InternalKiCool.g:27797:2: ( ruleShiftLeftOperator )
             {
-            // InternalKiCool.g:27716:2: ( ruleShiftLeftOperator )
-            // InternalKiCool.g:27717:3: ruleShiftLeftOperator
+            // InternalKiCool.g:27797:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:27798:3: ruleShiftLeftOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getOperatorShiftLeftOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -91428,17 +91691,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:27726:1: rule__ShiftExpressions__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:27807:1: rule__ShiftExpressions__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27730:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27731:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27811:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:27812:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27731:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27732:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:27812:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27813:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_1_1_0()); 
@@ -91473,17 +91736,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:27741:1: rule__ShiftExpressions__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:27822:1: rule__ShiftExpressions__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27745:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27746:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27826:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:27827:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27746:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27747:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:27827:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27828:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_2_1_0()); 
@@ -91518,17 +91781,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:27756:1: rule__ShiftExpressions__OperatorAssignment_1_1_1_0 : ( ruleShiftRightOperator ) ;
+    // InternalKiCool.g:27837:1: rule__ShiftExpressions__OperatorAssignment_1_1_1_0 : ( ruleShiftRightOperator ) ;
     public final void rule__ShiftExpressions__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27760:1: ( ( ruleShiftRightOperator ) )
-            // InternalKiCool.g:27761:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:27841:1: ( ( ruleShiftRightOperator ) )
+            // InternalKiCool.g:27842:2: ( ruleShiftRightOperator )
             {
-            // InternalKiCool.g:27761:2: ( ruleShiftRightOperator )
-            // InternalKiCool.g:27762:3: ruleShiftRightOperator
+            // InternalKiCool.g:27842:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:27843:3: ruleShiftRightOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -91563,17 +91826,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:27771:1: rule__ShiftExpressions__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:27852:1: rule__ShiftExpressions__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27775:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:27776:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27856:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:27857:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:27776:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:27777:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:27857:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27858:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_1_1_0()); 
@@ -91608,17 +91871,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:27786:1: rule__ShiftExpressions__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:27867:1: rule__ShiftExpressions__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27790:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:27791:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27871:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:27872:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:27791:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:27792:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:27872:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27873:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_2_1_0()); 
@@ -91653,17 +91916,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__OperatorAssignment_1_2_1_0"
-    // InternalKiCool.g:27801:1: rule__ShiftExpressions__OperatorAssignment_1_2_1_0 : ( ruleShiftRightUnsignedOperator ) ;
+    // InternalKiCool.g:27882:1: rule__ShiftExpressions__OperatorAssignment_1_2_1_0 : ( ruleShiftRightUnsignedOperator ) ;
     public final void rule__ShiftExpressions__OperatorAssignment_1_2_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27805:1: ( ( ruleShiftRightUnsignedOperator ) )
-            // InternalKiCool.g:27806:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:27886:1: ( ( ruleShiftRightUnsignedOperator ) )
+            // InternalKiCool.g:27887:2: ( ruleShiftRightUnsignedOperator )
             {
-            // InternalKiCool.g:27806:2: ( ruleShiftRightUnsignedOperator )
-            // InternalKiCool.g:27807:3: ruleShiftRightUnsignedOperator
+            // InternalKiCool.g:27887:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:27888:3: ruleShiftRightUnsignedOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_2_1_0_0()); 
@@ -91698,17 +91961,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_2_1_1"
-    // InternalKiCool.g:27816:1: rule__ShiftExpressions__SubExpressionsAssignment_1_2_1_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:27897:1: rule__ShiftExpressions__SubExpressionsAssignment_1_2_1_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27820:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:27821:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:27901:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:27902:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:27821:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:27822:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:27902:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:27903:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_2_1_1_0()); 
@@ -91743,17 +92006,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftExpressions__SubExpressionsAssignment_1_2_2_1"
-    // InternalKiCool.g:27831:1: rule__ShiftExpressions__SubExpressionsAssignment_1_2_2_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:27912:1: rule__ShiftExpressions__SubExpressionsAssignment_1_2_2_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftExpressions__SubExpressionsAssignment_1_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27835:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:27836:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:27916:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:27917:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:27836:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:27837:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:27917:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:27918:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftExpressionsAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_2_2_1_0()); 
@@ -91788,17 +92051,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:27846:1: rule__ShiftLeftRightExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
+    // InternalKiCool.g:27927:1: rule__ShiftLeftRightExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
     public final void rule__ShiftLeftRightExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27850:1: ( ( ruleShiftLeftOperator ) )
-            // InternalKiCool.g:27851:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:27931:1: ( ( ruleShiftLeftOperator ) )
+            // InternalKiCool.g:27932:2: ( ruleShiftLeftOperator )
             {
-            // InternalKiCool.g:27851:2: ( ruleShiftLeftOperator )
-            // InternalKiCool.g:27852:3: ruleShiftLeftOperator
+            // InternalKiCool.g:27932:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:27933:3: ruleShiftLeftOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getOperatorShiftLeftOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -91833,17 +92096,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:27861:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:27942:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27865:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27866:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27946:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:27947:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27866:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27867:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:27947:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27948:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_1_1_0()); 
@@ -91878,17 +92141,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:27876:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:27957:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27880:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27881:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27961:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:27962:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27881:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27882:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:27962:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:27963:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_2_1_0()); 
@@ -91923,17 +92186,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:27891:1: rule__ShiftLeftRightExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightOperator ) ;
+    // InternalKiCool.g:27972:1: rule__ShiftLeftRightExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightOperator ) ;
     public final void rule__ShiftLeftRightExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27895:1: ( ( ruleShiftRightOperator ) )
-            // InternalKiCool.g:27896:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:27976:1: ( ( ruleShiftRightOperator ) )
+            // InternalKiCool.g:27977:2: ( ruleShiftRightOperator )
             {
-            // InternalKiCool.g:27896:2: ( ruleShiftRightOperator )
-            // InternalKiCool.g:27897:3: ruleShiftRightOperator
+            // InternalKiCool.g:27977:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:27978:3: ruleShiftRightOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -91968,17 +92231,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:27906:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:27987:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27910:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:27911:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27991:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:27992:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:27911:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:27912:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:27992:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:27993:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_1_1_0()); 
@@ -92013,17 +92276,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:27921:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:28002:1: rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27925:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:27926:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28006:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:28007:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:27926:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:27927:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:28007:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28008:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightExpressionAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_2_1_0()); 
@@ -92058,17 +92321,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:27936:1: rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
+    // InternalKiCool.g:28017:1: rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftLeftOperator ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27940:1: ( ( ruleShiftLeftOperator ) )
-            // InternalKiCool.g:27941:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:28021:1: ( ( ruleShiftLeftOperator ) )
+            // InternalKiCool.g:28022:2: ( ruleShiftLeftOperator )
             {
-            // InternalKiCool.g:27941:2: ( ruleShiftLeftOperator )
-            // InternalKiCool.g:27942:3: ruleShiftLeftOperator
+            // InternalKiCool.g:28022:2: ( ruleShiftLeftOperator )
+            // InternalKiCool.g:28023:3: ruleShiftLeftOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorShiftLeftOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -92103,17 +92366,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:27951:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:28032:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27955:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27956:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:28036:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:28037:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27956:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27957:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:28037:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:28038:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_1_1_0()); 
@@ -92148,17 +92411,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:27966:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
+    // InternalKiCool.g:28047:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftRightRightUnsignedExpression ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27970:1: ( ( ruleShiftRightRightUnsignedExpression ) )
-            // InternalKiCool.g:27971:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:28051:1: ( ( ruleShiftRightRightUnsignedExpression ) )
+            // InternalKiCool.g:28052:2: ( ruleShiftRightRightUnsignedExpression )
             {
-            // InternalKiCool.g:27971:2: ( ruleShiftRightRightUnsignedExpression )
-            // InternalKiCool.g:27972:3: ruleShiftRightRightUnsignedExpression
+            // InternalKiCool.g:28052:2: ( ruleShiftRightRightUnsignedExpression )
+            // InternalKiCool.g:28053:3: ruleShiftRightRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_2_1_0()); 
@@ -92193,17 +92456,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:27981:1: rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
+    // InternalKiCool.g:28062:1: rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:27985:1: ( ( ruleShiftRightUnsignedOperator ) )
-            // InternalKiCool.g:27986:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28066:1: ( ( ruleShiftRightUnsignedOperator ) )
+            // InternalKiCool.g:28067:2: ( ruleShiftRightUnsignedOperator )
             {
-            // InternalKiCool.g:27986:2: ( ruleShiftRightUnsignedOperator )
-            // InternalKiCool.g:27987:3: ruleShiftRightUnsignedOperator
+            // InternalKiCool.g:28067:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28068:3: ruleShiftRightUnsignedOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -92238,17 +92501,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:27996:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:28077:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28000:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:28001:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28081:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:28082:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:28001:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:28002:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:28082:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28083:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0()); 
@@ -92283,17 +92546,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28011:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:28092:1: rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftLeftRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28015:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:28016:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28096:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:28097:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:28016:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:28017:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:28097:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28098:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0()); 
@@ -92328,17 +92591,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28026:1: rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftRightOperator ) ;
+    // InternalKiCool.g:28107:1: rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_0_1_0 : ( ruleShiftRightOperator ) ;
     public final void rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28030:1: ( ( ruleShiftRightOperator ) )
-            // InternalKiCool.g:28031:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:28111:1: ( ( ruleShiftRightOperator ) )
+            // InternalKiCool.g:28112:2: ( ruleShiftRightOperator )
             {
-            // InternalKiCool.g:28031:2: ( ruleShiftRightOperator )
-            // InternalKiCool.g:28032:3: ruleShiftRightOperator
+            // InternalKiCool.g:28112:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:28113:3: ruleShiftRightOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -92373,17 +92636,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28041:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:28122:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28045:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:28046:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28126:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:28127:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:28046:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:28047:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:28127:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28128:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_1_1_0()); 
@@ -92418,17 +92681,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28056:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
+    // InternalKiCool.g:28137:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleShiftLeftRightUnsignedExpression ) ;
     public final void rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28060:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
-            // InternalKiCool.g:28061:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28141:1: ( ( ruleShiftLeftRightUnsignedExpression ) )
+            // InternalKiCool.g:28142:2: ( ruleShiftLeftRightUnsignedExpression )
             {
-            // InternalKiCool.g:28061:2: ( ruleShiftLeftRightUnsignedExpression )
-            // InternalKiCool.g:28062:3: ruleShiftLeftRightUnsignedExpression
+            // InternalKiCool.g:28142:2: ( ruleShiftLeftRightUnsignedExpression )
+            // InternalKiCool.g:28143:3: ruleShiftLeftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_2_1_0()); 
@@ -92463,17 +92726,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28071:1: rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
+    // InternalKiCool.g:28152:1: rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
     public final void rule__ShiftRightRightUnsignedExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28075:1: ( ( ruleShiftRightUnsignedOperator ) )
-            // InternalKiCool.g:28076:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28156:1: ( ( ruleShiftRightUnsignedOperator ) )
+            // InternalKiCool.g:28157:2: ( ruleShiftRightUnsignedOperator )
             {
-            // InternalKiCool.g:28076:2: ( ruleShiftRightUnsignedOperator )
-            // InternalKiCool.g:28077:3: ruleShiftRightUnsignedOperator
+            // InternalKiCool.g:28157:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28158:3: ruleShiftRightUnsignedOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -92508,17 +92771,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28086:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:28167:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28090:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:28091:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28171:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:28172:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:28091:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:28092:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:28172:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28173:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0()); 
@@ -92553,17 +92816,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28101:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightExpression ) ;
+    // InternalKiCool.g:28182:1: rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleShiftLeftRightExpression ) ;
     public final void rule__ShiftRightRightUnsignedExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28105:1: ( ( ruleShiftLeftRightExpression ) )
-            // InternalKiCool.g:28106:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28186:1: ( ( ruleShiftLeftRightExpression ) )
+            // InternalKiCool.g:28187:2: ( ruleShiftLeftRightExpression )
             {
-            // InternalKiCool.g:28106:2: ( ruleShiftLeftRightExpression )
-            // InternalKiCool.g:28107:3: ruleShiftLeftRightExpression
+            // InternalKiCool.g:28187:2: ( ruleShiftLeftRightExpression )
+            // InternalKiCool.g:28188:3: ruleShiftLeftRightExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightRightUnsignedExpressionAccess().getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0()); 
@@ -92598,17 +92861,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:28116:1: rule__ShiftRightExpression__OperatorAssignment_1_1_0 : ( ruleShiftRightOperator ) ;
+    // InternalKiCool.g:28197:1: rule__ShiftRightExpression__OperatorAssignment_1_1_0 : ( ruleShiftRightOperator ) ;
     public final void rule__ShiftRightExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28120:1: ( ( ruleShiftRightOperator ) )
-            // InternalKiCool.g:28121:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:28201:1: ( ( ruleShiftRightOperator ) )
+            // InternalKiCool.g:28202:2: ( ruleShiftRightOperator )
             {
-            // InternalKiCool.g:28121:2: ( ruleShiftRightOperator )
-            // InternalKiCool.g:28122:3: ruleShiftRightOperator
+            // InternalKiCool.g:28202:2: ( ruleShiftRightOperator )
+            // InternalKiCool.g:28203:3: ruleShiftRightOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightExpressionAccess().getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0()); 
@@ -92643,17 +92906,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:28131:1: rule__ShiftRightExpression__SubExpressionsAssignment_1_1_1 : ( ruleShiftRightUnsignedExpression ) ;
+    // InternalKiCool.g:28212:1: rule__ShiftRightExpression__SubExpressionsAssignment_1_1_1 : ( ruleShiftRightUnsignedExpression ) ;
     public final void rule__ShiftRightExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28135:1: ( ( ruleShiftRightUnsignedExpression ) )
-            // InternalKiCool.g:28136:2: ( ruleShiftRightUnsignedExpression )
+            // InternalKiCool.g:28216:1: ( ( ruleShiftRightUnsignedExpression ) )
+            // InternalKiCool.g:28217:2: ( ruleShiftRightUnsignedExpression )
             {
-            // InternalKiCool.g:28136:2: ( ruleShiftRightUnsignedExpression )
-            // InternalKiCool.g:28137:3: ruleShiftRightUnsignedExpression
+            // InternalKiCool.g:28217:2: ( ruleShiftRightUnsignedExpression )
+            // InternalKiCool.g:28218:3: ruleShiftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0()); 
@@ -92688,17 +92951,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:28146:1: rule__ShiftRightExpression__SubExpressionsAssignment_1_2_1 : ( ruleShiftRightUnsignedExpression ) ;
+    // InternalKiCool.g:28227:1: rule__ShiftRightExpression__SubExpressionsAssignment_1_2_1 : ( ruleShiftRightUnsignedExpression ) ;
     public final void rule__ShiftRightExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28150:1: ( ( ruleShiftRightUnsignedExpression ) )
-            // InternalKiCool.g:28151:2: ( ruleShiftRightUnsignedExpression )
+            // InternalKiCool.g:28231:1: ( ( ruleShiftRightUnsignedExpression ) )
+            // InternalKiCool.g:28232:2: ( ruleShiftRightUnsignedExpression )
             {
-            // InternalKiCool.g:28151:2: ( ruleShiftRightUnsignedExpression )
-            // InternalKiCool.g:28152:3: ruleShiftRightUnsignedExpression
+            // InternalKiCool.g:28232:2: ( ruleShiftRightUnsignedExpression )
+            // InternalKiCool.g:28233:3: ruleShiftRightUnsignedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0()); 
@@ -92733,17 +92996,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:28161:1: rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
+    // InternalKiCool.g:28242:1: rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0 : ( ruleShiftRightUnsignedOperator ) ;
     public final void rule__ShiftRightUnsignedExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28165:1: ( ( ruleShiftRightUnsignedOperator ) )
-            // InternalKiCool.g:28166:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28246:1: ( ( ruleShiftRightUnsignedOperator ) )
+            // InternalKiCool.g:28247:2: ( ruleShiftRightUnsignedOperator )
             {
-            // InternalKiCool.g:28166:2: ( ruleShiftRightUnsignedOperator )
-            // InternalKiCool.g:28167:3: ruleShiftRightUnsignedOperator
+            // InternalKiCool.g:28247:2: ( ruleShiftRightUnsignedOperator )
+            // InternalKiCool.g:28248:3: ruleShiftRightUnsignedOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0()); 
@@ -92778,17 +93041,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:28176:1: rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_1_1 : ( ruleSumExpression ) ;
+    // InternalKiCool.g:28257:1: rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_1_1 : ( ruleSumExpression ) ;
     public final void rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28180:1: ( ( ruleSumExpression ) )
-            // InternalKiCool.g:28181:2: ( ruleSumExpression )
+            // InternalKiCool.g:28261:1: ( ( ruleSumExpression ) )
+            // InternalKiCool.g:28262:2: ( ruleSumExpression )
             {
-            // InternalKiCool.g:28181:2: ( ruleSumExpression )
-            // InternalKiCool.g:28182:3: ruleSumExpression
+            // InternalKiCool.g:28262:2: ( ruleSumExpression )
+            // InternalKiCool.g:28263:3: ruleSumExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_1_1_0()); 
@@ -92823,17 +93086,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:28191:1: rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_2_1 : ( ruleSumExpression ) ;
+    // InternalKiCool.g:28272:1: rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_2_1 : ( ruleSumExpression ) ;
     public final void rule__ShiftRightUnsignedExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28195:1: ( ( ruleSumExpression ) )
-            // InternalKiCool.g:28196:2: ( ruleSumExpression )
+            // InternalKiCool.g:28276:1: ( ( ruleSumExpression ) )
+            // InternalKiCool.g:28277:2: ( ruleSumExpression )
             {
-            // InternalKiCool.g:28196:2: ( ruleSumExpression )
-            // InternalKiCool.g:28197:3: ruleSumExpression
+            // InternalKiCool.g:28277:2: ( ruleSumExpression )
+            // InternalKiCool.g:28278:3: ruleSumExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_2_1_0()); 
@@ -92868,17 +93131,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28206:1: rule__SumExpression__OperatorAssignment_1_0_1_0 : ( ruleAddOperator ) ;
+    // InternalKiCool.g:28287:1: rule__SumExpression__OperatorAssignment_1_0_1_0 : ( ruleAddOperator ) ;
     public final void rule__SumExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28210:1: ( ( ruleAddOperator ) )
-            // InternalKiCool.g:28211:2: ( ruleAddOperator )
+            // InternalKiCool.g:28291:1: ( ( ruleAddOperator ) )
+            // InternalKiCool.g:28292:2: ( ruleAddOperator )
             {
-            // InternalKiCool.g:28211:2: ( ruleAddOperator )
-            // InternalKiCool.g:28212:3: ruleAddOperator
+            // InternalKiCool.g:28292:2: ( ruleAddOperator )
+            // InternalKiCool.g:28293:3: ruleAddOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -92913,17 +93176,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28221:1: rule__SumExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleSubExpression ) ;
+    // InternalKiCool.g:28302:1: rule__SumExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleSubExpression ) ;
     public final void rule__SumExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28225:1: ( ( ruleSubExpression ) )
-            // InternalKiCool.g:28226:2: ( ruleSubExpression )
+            // InternalKiCool.g:28306:1: ( ( ruleSubExpression ) )
+            // InternalKiCool.g:28307:2: ( ruleSubExpression )
             {
-            // InternalKiCool.g:28226:2: ( ruleSubExpression )
-            // InternalKiCool.g:28227:3: ruleSubExpression
+            // InternalKiCool.g:28307:2: ( ruleSubExpression )
+            // InternalKiCool.g:28308:3: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_0_1_1_0()); 
@@ -92958,17 +93221,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28236:1: rule__SumExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleSubExpression ) ;
+    // InternalKiCool.g:28317:1: rule__SumExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleSubExpression ) ;
     public final void rule__SumExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28240:1: ( ( ruleSubExpression ) )
-            // InternalKiCool.g:28241:2: ( ruleSubExpression )
+            // InternalKiCool.g:28321:1: ( ( ruleSubExpression ) )
+            // InternalKiCool.g:28322:2: ( ruleSubExpression )
             {
-            // InternalKiCool.g:28241:2: ( ruleSubExpression )
-            // InternalKiCool.g:28242:3: ruleSubExpression
+            // InternalKiCool.g:28322:2: ( ruleSubExpression )
+            // InternalKiCool.g:28323:3: ruleSubExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getSubExpressionsSubExpressionParserRuleCall_1_0_2_1_0()); 
@@ -93003,17 +93266,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28251:1: rule__SumExpression__OperatorAssignment_1_1_1_0 : ( ruleSubOperator ) ;
+    // InternalKiCool.g:28332:1: rule__SumExpression__OperatorAssignment_1_1_1_0 : ( ruleSubOperator ) ;
     public final void rule__SumExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28255:1: ( ( ruleSubOperator ) )
-            // InternalKiCool.g:28256:2: ( ruleSubOperator )
+            // InternalKiCool.g:28336:1: ( ( ruleSubOperator ) )
+            // InternalKiCool.g:28337:2: ( ruleSubOperator )
             {
-            // InternalKiCool.g:28256:2: ( ruleSubOperator )
-            // InternalKiCool.g:28257:3: ruleSubOperator
+            // InternalKiCool.g:28337:2: ( ruleSubOperator )
+            // InternalKiCool.g:28338:3: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -93048,17 +93311,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28266:1: rule__SumExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleAddExpression ) ;
+    // InternalKiCool.g:28347:1: rule__SumExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleAddExpression ) ;
     public final void rule__SumExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28270:1: ( ( ruleAddExpression ) )
-            // InternalKiCool.g:28271:2: ( ruleAddExpression )
+            // InternalKiCool.g:28351:1: ( ( ruleAddExpression ) )
+            // InternalKiCool.g:28352:2: ( ruleAddExpression )
             {
-            // InternalKiCool.g:28271:2: ( ruleAddExpression )
-            // InternalKiCool.g:28272:3: ruleAddExpression
+            // InternalKiCool.g:28352:2: ( ruleAddExpression )
+            // InternalKiCool.g:28353:3: ruleAddExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getSubExpressionsAddExpressionParserRuleCall_1_1_1_1_0()); 
@@ -93093,17 +93356,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SumExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28281:1: rule__SumExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleAddExpression ) ;
+    // InternalKiCool.g:28362:1: rule__SumExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleAddExpression ) ;
     public final void rule__SumExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28285:1: ( ( ruleAddExpression ) )
-            // InternalKiCool.g:28286:2: ( ruleAddExpression )
+            // InternalKiCool.g:28366:1: ( ( ruleAddExpression ) )
+            // InternalKiCool.g:28367:2: ( ruleAddExpression )
             {
-            // InternalKiCool.g:28286:2: ( ruleAddExpression )
-            // InternalKiCool.g:28287:3: ruleAddExpression
+            // InternalKiCool.g:28367:2: ( ruleAddExpression )
+            // InternalKiCool.g:28368:3: ruleAddExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSumExpressionAccess().getSubExpressionsAddExpressionParserRuleCall_1_1_2_1_0()); 
@@ -93138,17 +93401,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AddExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:28296:1: rule__AddExpression__OperatorAssignment_1_1_0 : ( ruleAddOperator ) ;
+    // InternalKiCool.g:28377:1: rule__AddExpression__OperatorAssignment_1_1_0 : ( ruleAddOperator ) ;
     public final void rule__AddExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28300:1: ( ( ruleAddOperator ) )
-            // InternalKiCool.g:28301:2: ( ruleAddOperator )
+            // InternalKiCool.g:28381:1: ( ( ruleAddOperator ) )
+            // InternalKiCool.g:28382:2: ( ruleAddOperator )
             {
-            // InternalKiCool.g:28301:2: ( ruleAddOperator )
-            // InternalKiCool.g:28302:3: ruleAddOperator
+            // InternalKiCool.g:28382:2: ( ruleAddOperator )
+            // InternalKiCool.g:28383:3: ruleAddOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getOperatorAddOperatorEnumRuleCall_1_1_0_0()); 
@@ -93183,17 +93446,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AddExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:28311:1: rule__AddExpression__SubExpressionsAssignment_1_1_1 : ( ruleProductExpression ) ;
+    // InternalKiCool.g:28392:1: rule__AddExpression__SubExpressionsAssignment_1_1_1 : ( ruleProductExpression ) ;
     public final void rule__AddExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28315:1: ( ( ruleProductExpression ) )
-            // InternalKiCool.g:28316:2: ( ruleProductExpression )
+            // InternalKiCool.g:28396:1: ( ( ruleProductExpression ) )
+            // InternalKiCool.g:28397:2: ( ruleProductExpression )
             {
-            // InternalKiCool.g:28316:2: ( ruleProductExpression )
-            // InternalKiCool.g:28317:3: ruleProductExpression
+            // InternalKiCool.g:28397:2: ( ruleProductExpression )
+            // InternalKiCool.g:28398:3: ruleProductExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_1_0()); 
@@ -93228,17 +93491,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AddExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:28326:1: rule__AddExpression__SubExpressionsAssignment_1_2_1 : ( ruleProductExpression ) ;
+    // InternalKiCool.g:28407:1: rule__AddExpression__SubExpressionsAssignment_1_2_1 : ( ruleProductExpression ) ;
     public final void rule__AddExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28330:1: ( ( ruleProductExpression ) )
-            // InternalKiCool.g:28331:2: ( ruleProductExpression )
+            // InternalKiCool.g:28411:1: ( ( ruleProductExpression ) )
+            // InternalKiCool.g:28412:2: ( ruleProductExpression )
             {
-            // InternalKiCool.g:28331:2: ( ruleProductExpression )
-            // InternalKiCool.g:28332:3: ruleProductExpression
+            // InternalKiCool.g:28412:2: ( ruleProductExpression )
+            // InternalKiCool.g:28413:3: ruleProductExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getAddExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_2_1_0()); 
@@ -93273,17 +93536,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubExpression__OperatorAssignment_1_1_0"
-    // InternalKiCool.g:28341:1: rule__SubExpression__OperatorAssignment_1_1_0 : ( ruleSubOperator ) ;
+    // InternalKiCool.g:28422:1: rule__SubExpression__OperatorAssignment_1_1_0 : ( ruleSubOperator ) ;
     public final void rule__SubExpression__OperatorAssignment_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28345:1: ( ( ruleSubOperator ) )
-            // InternalKiCool.g:28346:2: ( ruleSubOperator )
+            // InternalKiCool.g:28426:1: ( ( ruleSubOperator ) )
+            // InternalKiCool.g:28427:2: ( ruleSubOperator )
             {
-            // InternalKiCool.g:28346:2: ( ruleSubOperator )
-            // InternalKiCool.g:28347:3: ruleSubOperator
+            // InternalKiCool.g:28427:2: ( ruleSubOperator )
+            // InternalKiCool.g:28428:3: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getOperatorSubOperatorEnumRuleCall_1_1_0_0()); 
@@ -93318,17 +93581,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubExpression__SubExpressionsAssignment_1_1_1"
-    // InternalKiCool.g:28356:1: rule__SubExpression__SubExpressionsAssignment_1_1_1 : ( ruleProductExpression ) ;
+    // InternalKiCool.g:28437:1: rule__SubExpression__SubExpressionsAssignment_1_1_1 : ( ruleProductExpression ) ;
     public final void rule__SubExpression__SubExpressionsAssignment_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28360:1: ( ( ruleProductExpression ) )
-            // InternalKiCool.g:28361:2: ( ruleProductExpression )
+            // InternalKiCool.g:28441:1: ( ( ruleProductExpression ) )
+            // InternalKiCool.g:28442:2: ( ruleProductExpression )
             {
-            // InternalKiCool.g:28361:2: ( ruleProductExpression )
-            // InternalKiCool.g:28362:3: ruleProductExpression
+            // InternalKiCool.g:28442:2: ( ruleProductExpression )
+            // InternalKiCool.g:28443:3: ruleProductExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_1_0()); 
@@ -93363,17 +93626,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__SubExpression__SubExpressionsAssignment_1_2_1"
-    // InternalKiCool.g:28371:1: rule__SubExpression__SubExpressionsAssignment_1_2_1 : ( ruleProductExpression ) ;
+    // InternalKiCool.g:28452:1: rule__SubExpression__SubExpressionsAssignment_1_2_1 : ( ruleProductExpression ) ;
     public final void rule__SubExpression__SubExpressionsAssignment_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28375:1: ( ( ruleProductExpression ) )
-            // InternalKiCool.g:28376:2: ( ruleProductExpression )
+            // InternalKiCool.g:28456:1: ( ( ruleProductExpression ) )
+            // InternalKiCool.g:28457:2: ( ruleProductExpression )
             {
-            // InternalKiCool.g:28376:2: ( ruleProductExpression )
-            // InternalKiCool.g:28377:3: ruleProductExpression
+            // InternalKiCool.g:28457:2: ( ruleProductExpression )
+            // InternalKiCool.g:28458:3: ruleProductExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getSubExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_2_1_0()); 
@@ -93408,17 +93671,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28386:1: rule__ProductExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
+    // InternalKiCool.g:28467:1: rule__ProductExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
     public final void rule__ProductExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28390:1: ( ( ruleMultOperator ) )
-            // InternalKiCool.g:28391:2: ( ruleMultOperator )
+            // InternalKiCool.g:28471:1: ( ( ruleMultOperator ) )
+            // InternalKiCool.g:28472:2: ( ruleMultOperator )
             {
-            // InternalKiCool.g:28391:2: ( ruleMultOperator )
-            // InternalKiCool.g:28392:3: ruleMultOperator
+            // InternalKiCool.g:28472:2: ( ruleMultOperator )
+            // InternalKiCool.g:28473:3: ruleMultOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -93453,17 +93716,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28401:1: rule__ProductExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28482:1: rule__ProductExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28405:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28406:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28486:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28487:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28406:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28407:3: ruleDivModExpression
+            // InternalKiCool.g:28487:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28488:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0()); 
@@ -93498,17 +93761,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28416:1: rule__ProductExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28497:1: rule__ProductExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28420:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28421:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28501:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28502:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28421:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28422:3: ruleDivModExpression
+            // InternalKiCool.g:28502:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28503:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0()); 
@@ -93543,17 +93806,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28431:1: rule__ProductExpression__OperatorAssignment_1_1_1_0 : ( ruleDivOperator ) ;
+    // InternalKiCool.g:28512:1: rule__ProductExpression__OperatorAssignment_1_1_1_0 : ( ruleDivOperator ) ;
     public final void rule__ProductExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28435:1: ( ( ruleDivOperator ) )
-            // InternalKiCool.g:28436:2: ( ruleDivOperator )
+            // InternalKiCool.g:28516:1: ( ( ruleDivOperator ) )
+            // InternalKiCool.g:28517:2: ( ruleDivOperator )
             {
-            // InternalKiCool.g:28436:2: ( ruleDivOperator )
-            // InternalKiCool.g:28437:3: ruleDivOperator
+            // InternalKiCool.g:28517:2: ( ruleDivOperator )
+            // InternalKiCool.g:28518:3: ruleDivOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -93588,17 +93851,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28446:1: rule__ProductExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28527:1: rule__ProductExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultModExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28450:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28451:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28531:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28532:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28451:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28452:3: ruleMultModExpression
+            // InternalKiCool.g:28532:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28533:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0()); 
@@ -93633,17 +93896,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28461:1: rule__ProductExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28542:1: rule__ProductExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultModExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28465:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28466:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28546:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28547:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28466:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28467:3: ruleMultModExpression
+            // InternalKiCool.g:28547:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28548:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0()); 
@@ -93678,17 +93941,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__OperatorAssignment_1_2_1_0"
-    // InternalKiCool.g:28476:1: rule__ProductExpression__OperatorAssignment_1_2_1_0 : ( ruleModOperator ) ;
+    // InternalKiCool.g:28557:1: rule__ProductExpression__OperatorAssignment_1_2_1_0 : ( ruleModOperator ) ;
     public final void rule__ProductExpression__OperatorAssignment_1_2_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28480:1: ( ( ruleModOperator ) )
-            // InternalKiCool.g:28481:2: ( ruleModOperator )
+            // InternalKiCool.g:28561:1: ( ( ruleModOperator ) )
+            // InternalKiCool.g:28562:2: ( ruleModOperator )
             {
-            // InternalKiCool.g:28481:2: ( ruleModOperator )
-            // InternalKiCool.g:28482:3: ruleModOperator
+            // InternalKiCool.g:28562:2: ( ruleModOperator )
+            // InternalKiCool.g:28563:3: ruleModOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getOperatorModOperatorEnumRuleCall_1_2_1_0_0()); 
@@ -93723,17 +93986,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_2_1_1"
-    // InternalKiCool.g:28491:1: rule__ProductExpression__SubExpressionsAssignment_1_2_1_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28572:1: rule__ProductExpression__SubExpressionsAssignment_1_2_1_1 : ( ruleMultDivExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28495:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28496:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28576:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28577:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28496:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28497:3: ruleMultDivExpression
+            // InternalKiCool.g:28577:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28578:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_2_1_1_0()); 
@@ -93768,17 +94031,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ProductExpression__SubExpressionsAssignment_1_2_2_1"
-    // InternalKiCool.g:28506:1: rule__ProductExpression__SubExpressionsAssignment_1_2_2_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28587:1: rule__ProductExpression__SubExpressionsAssignment_1_2_2_1 : ( ruleMultDivExpression ) ;
     public final void rule__ProductExpression__SubExpressionsAssignment_1_2_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28510:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28511:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28591:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28592:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28511:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28512:3: ruleMultDivExpression
+            // InternalKiCool.g:28592:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28593:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getProductExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_2_2_1_0()); 
@@ -93813,17 +94076,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28521:1: rule__MultDivExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
+    // InternalKiCool.g:28602:1: rule__MultDivExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
     public final void rule__MultDivExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28525:1: ( ( ruleMultOperator ) )
-            // InternalKiCool.g:28526:2: ( ruleMultOperator )
+            // InternalKiCool.g:28606:1: ( ( ruleMultOperator ) )
+            // InternalKiCool.g:28607:2: ( ruleMultOperator )
             {
-            // InternalKiCool.g:28526:2: ( ruleMultOperator )
-            // InternalKiCool.g:28527:3: ruleMultOperator
+            // InternalKiCool.g:28607:2: ( ruleMultOperator )
+            // InternalKiCool.g:28608:3: ruleMultOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -93858,17 +94121,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28536:1: rule__MultDivExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28617:1: rule__MultDivExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
     public final void rule__MultDivExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28540:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28541:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28621:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28622:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28541:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28542:3: ruleDivModExpression
+            // InternalKiCool.g:28622:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28623:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0()); 
@@ -93903,17 +94166,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28551:1: rule__MultDivExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28632:1: rule__MultDivExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
     public final void rule__MultDivExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28555:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28556:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28636:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28637:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28556:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28557:3: ruleDivModExpression
+            // InternalKiCool.g:28637:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28638:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0()); 
@@ -93948,17 +94211,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28566:1: rule__MultDivExpression__OperatorAssignment_1_1_1_0 : ( ruleDivOperator ) ;
+    // InternalKiCool.g:28647:1: rule__MultDivExpression__OperatorAssignment_1_1_1_0 : ( ruleDivOperator ) ;
     public final void rule__MultDivExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28570:1: ( ( ruleDivOperator ) )
-            // InternalKiCool.g:28571:2: ( ruleDivOperator )
+            // InternalKiCool.g:28651:1: ( ( ruleDivOperator ) )
+            // InternalKiCool.g:28652:2: ( ruleDivOperator )
             {
-            // InternalKiCool.g:28571:2: ( ruleDivOperator )
-            // InternalKiCool.g:28572:3: ruleDivOperator
+            // InternalKiCool.g:28652:2: ( ruleDivOperator )
+            // InternalKiCool.g:28653:3: ruleDivOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -93993,17 +94256,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28581:1: rule__MultDivExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28662:1: rule__MultDivExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultModExpression ) ;
     public final void rule__MultDivExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28585:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28586:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28666:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28667:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28586:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28587:3: ruleMultModExpression
+            // InternalKiCool.g:28667:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28668:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0()); 
@@ -94038,17 +94301,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultDivExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28596:1: rule__MultDivExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28677:1: rule__MultDivExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultModExpression ) ;
     public final void rule__MultDivExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28600:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28601:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28681:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28682:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28601:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28602:3: ruleMultModExpression
+            // InternalKiCool.g:28682:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28683:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultDivExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0()); 
@@ -94083,17 +94346,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28611:1: rule__MultModExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
+    // InternalKiCool.g:28692:1: rule__MultModExpression__OperatorAssignment_1_0_1_0 : ( ruleMultOperator ) ;
     public final void rule__MultModExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28615:1: ( ( ruleMultOperator ) )
-            // InternalKiCool.g:28616:2: ( ruleMultOperator )
+            // InternalKiCool.g:28696:1: ( ( ruleMultOperator ) )
+            // InternalKiCool.g:28697:2: ( ruleMultOperator )
             {
-            // InternalKiCool.g:28616:2: ( ruleMultOperator )
-            // InternalKiCool.g:28617:3: ruleMultOperator
+            // InternalKiCool.g:28697:2: ( ruleMultOperator )
+            // InternalKiCool.g:28698:3: ruleMultOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getOperatorMultOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -94128,17 +94391,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28626:1: rule__MultModExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28707:1: rule__MultModExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleDivModExpression ) ;
     public final void rule__MultModExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28630:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28631:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28711:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28712:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28631:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28632:3: ruleDivModExpression
+            // InternalKiCool.g:28712:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28713:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0()); 
@@ -94173,17 +94436,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28641:1: rule__MultModExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
+    // InternalKiCool.g:28722:1: rule__MultModExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleDivModExpression ) ;
     public final void rule__MultModExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28645:1: ( ( ruleDivModExpression ) )
-            // InternalKiCool.g:28646:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28726:1: ( ( ruleDivModExpression ) )
+            // InternalKiCool.g:28727:2: ( ruleDivModExpression )
             {
-            // InternalKiCool.g:28646:2: ( ruleDivModExpression )
-            // InternalKiCool.g:28647:3: ruleDivModExpression
+            // InternalKiCool.g:28727:2: ( ruleDivModExpression )
+            // InternalKiCool.g:28728:3: ruleDivModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0()); 
@@ -94218,17 +94481,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28656:1: rule__MultModExpression__OperatorAssignment_1_1_1_0 : ( ruleModOperator ) ;
+    // InternalKiCool.g:28737:1: rule__MultModExpression__OperatorAssignment_1_1_1_0 : ( ruleModOperator ) ;
     public final void rule__MultModExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28660:1: ( ( ruleModOperator ) )
-            // InternalKiCool.g:28661:2: ( ruleModOperator )
+            // InternalKiCool.g:28741:1: ( ( ruleModOperator ) )
+            // InternalKiCool.g:28742:2: ( ruleModOperator )
             {
-            // InternalKiCool.g:28661:2: ( ruleModOperator )
-            // InternalKiCool.g:28662:3: ruleModOperator
+            // InternalKiCool.g:28742:2: ( ruleModOperator )
+            // InternalKiCool.g:28743:3: ruleModOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -94263,17 +94526,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28671:1: rule__MultModExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28752:1: rule__MultModExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultDivExpression ) ;
     public final void rule__MultModExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28675:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28676:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28756:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28757:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28676:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28677:3: ruleMultDivExpression
+            // InternalKiCool.g:28757:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28758:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0()); 
@@ -94308,17 +94571,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MultModExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28686:1: rule__MultModExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28767:1: rule__MultModExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultDivExpression ) ;
     public final void rule__MultModExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28690:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28691:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28771:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28772:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28691:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28692:3: ruleMultDivExpression
+            // InternalKiCool.g:28772:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28773:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getMultModExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0()); 
@@ -94353,17 +94616,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__OperatorAssignment_1_0_1_0"
-    // InternalKiCool.g:28701:1: rule__DivModExpression__OperatorAssignment_1_0_1_0 : ( ruleDivOperator ) ;
+    // InternalKiCool.g:28782:1: rule__DivModExpression__OperatorAssignment_1_0_1_0 : ( ruleDivOperator ) ;
     public final void rule__DivModExpression__OperatorAssignment_1_0_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28705:1: ( ( ruleDivOperator ) )
-            // InternalKiCool.g:28706:2: ( ruleDivOperator )
+            // InternalKiCool.g:28786:1: ( ( ruleDivOperator ) )
+            // InternalKiCool.g:28787:2: ( ruleDivOperator )
             {
-            // InternalKiCool.g:28706:2: ( ruleDivOperator )
-            // InternalKiCool.g:28707:3: ruleDivOperator
+            // InternalKiCool.g:28787:2: ( ruleDivOperator )
+            // InternalKiCool.g:28788:3: ruleDivOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getOperatorDivOperatorEnumRuleCall_1_0_1_0_0()); 
@@ -94398,17 +94661,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__SubExpressionsAssignment_1_0_1_1"
-    // InternalKiCool.g:28716:1: rule__DivModExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28797:1: rule__DivModExpression__SubExpressionsAssignment_1_0_1_1 : ( ruleMultModExpression ) ;
     public final void rule__DivModExpression__SubExpressionsAssignment_1_0_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28720:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28721:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28801:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28802:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28721:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28722:3: ruleMultModExpression
+            // InternalKiCool.g:28802:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28803:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_0_1_1_0()); 
@@ -94443,17 +94706,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__SubExpressionsAssignment_1_0_2_1"
-    // InternalKiCool.g:28731:1: rule__DivModExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleMultModExpression ) ;
+    // InternalKiCool.g:28812:1: rule__DivModExpression__SubExpressionsAssignment_1_0_2_1 : ( ruleMultModExpression ) ;
     public final void rule__DivModExpression__SubExpressionsAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28735:1: ( ( ruleMultModExpression ) )
-            // InternalKiCool.g:28736:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28816:1: ( ( ruleMultModExpression ) )
+            // InternalKiCool.g:28817:2: ( ruleMultModExpression )
             {
-            // InternalKiCool.g:28736:2: ( ruleMultModExpression )
-            // InternalKiCool.g:28737:3: ruleMultModExpression
+            // InternalKiCool.g:28817:2: ( ruleMultModExpression )
+            // InternalKiCool.g:28818:3: ruleMultModExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getSubExpressionsMultModExpressionParserRuleCall_1_0_2_1_0()); 
@@ -94488,17 +94751,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__OperatorAssignment_1_1_1_0"
-    // InternalKiCool.g:28746:1: rule__DivModExpression__OperatorAssignment_1_1_1_0 : ( ruleModOperator ) ;
+    // InternalKiCool.g:28827:1: rule__DivModExpression__OperatorAssignment_1_1_1_0 : ( ruleModOperator ) ;
     public final void rule__DivModExpression__OperatorAssignment_1_1_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28750:1: ( ( ruleModOperator ) )
-            // InternalKiCool.g:28751:2: ( ruleModOperator )
+            // InternalKiCool.g:28831:1: ( ( ruleModOperator ) )
+            // InternalKiCool.g:28832:2: ( ruleModOperator )
             {
-            // InternalKiCool.g:28751:2: ( ruleModOperator )
-            // InternalKiCool.g:28752:3: ruleModOperator
+            // InternalKiCool.g:28832:2: ( ruleModOperator )
+            // InternalKiCool.g:28833:3: ruleModOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getOperatorModOperatorEnumRuleCall_1_1_1_0_0()); 
@@ -94533,17 +94796,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__SubExpressionsAssignment_1_1_1_1"
-    // InternalKiCool.g:28761:1: rule__DivModExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28842:1: rule__DivModExpression__SubExpressionsAssignment_1_1_1_1 : ( ruleMultDivExpression ) ;
     public final void rule__DivModExpression__SubExpressionsAssignment_1_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28765:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28766:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28846:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28847:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28766:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28767:3: ruleMultDivExpression
+            // InternalKiCool.g:28847:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28848:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0()); 
@@ -94578,17 +94841,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__DivModExpression__SubExpressionsAssignment_1_1_2_1"
-    // InternalKiCool.g:28776:1: rule__DivModExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultDivExpression ) ;
+    // InternalKiCool.g:28857:1: rule__DivModExpression__SubExpressionsAssignment_1_1_2_1 : ( ruleMultDivExpression ) ;
     public final void rule__DivModExpression__SubExpressionsAssignment_1_1_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28780:1: ( ( ruleMultDivExpression ) )
-            // InternalKiCool.g:28781:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28861:1: ( ( ruleMultDivExpression ) )
+            // InternalKiCool.g:28862:2: ( ruleMultDivExpression )
             {
-            // InternalKiCool.g:28781:2: ( ruleMultDivExpression )
-            // InternalKiCool.g:28782:3: ruleMultDivExpression
+            // InternalKiCool.g:28862:2: ( ruleMultDivExpression )
+            // InternalKiCool.g:28863:3: ruleMultDivExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getDivModExpressionAccess().getSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0()); 
@@ -94623,17 +94886,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NegExpression__OperatorAssignment_0_1"
-    // InternalKiCool.g:28791:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
+    // InternalKiCool.g:28872:1: rule__NegExpression__OperatorAssignment_0_1 : ( ruleSubOperator ) ;
     public final void rule__NegExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28795:1: ( ( ruleSubOperator ) )
-            // InternalKiCool.g:28796:2: ( ruleSubOperator )
+            // InternalKiCool.g:28876:1: ( ( ruleSubOperator ) )
+            // InternalKiCool.g:28877:2: ( ruleSubOperator )
             {
-            // InternalKiCool.g:28796:2: ( ruleSubOperator )
-            // InternalKiCool.g:28797:3: ruleSubOperator
+            // InternalKiCool.g:28877:2: ( ruleSubOperator )
+            // InternalKiCool.g:28878:3: ruleSubOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getOperatorSubOperatorEnumRuleCall_0_1_0()); 
@@ -94668,17 +94931,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__NegExpression__SubExpressionsAssignment_0_2"
-    // InternalKiCool.g:28806:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
+    // InternalKiCool.g:28887:1: rule__NegExpression__SubExpressionsAssignment_0_2 : ( ruleNegExpression ) ;
     public final void rule__NegExpression__SubExpressionsAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28810:1: ( ( ruleNegExpression ) )
-            // InternalKiCool.g:28811:2: ( ruleNegExpression )
+            // InternalKiCool.g:28891:1: ( ( ruleNegExpression ) )
+            // InternalKiCool.g:28892:2: ( ruleNegExpression )
             {
-            // InternalKiCool.g:28811:2: ( ruleNegExpression )
-            // InternalKiCool.g:28812:3: ruleNegExpression
+            // InternalKiCool.g:28892:2: ( ruleNegExpression )
+            // InternalKiCool.g:28893:3: ruleNegExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getNegExpressionAccess().getSubExpressionsNegExpressionParserRuleCall_0_2_0()); 
@@ -94713,17 +94976,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_1"
-    // InternalKiCool.g:28821:1: rule__TernaryOperation__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
+    // InternalKiCool.g:28902:1: rule__TernaryOperation__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
     public final void rule__TernaryOperation__SubExpressionsAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28825:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKiCool.g:28826:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28906:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:28907:2: ( ruleAtomicValuedExpression )
             {
-            // InternalKiCool.g:28826:2: ( ruleAtomicValuedExpression )
-            // InternalKiCool.g:28827:3: ruleAtomicValuedExpression
+            // InternalKiCool.g:28907:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28908:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
@@ -94758,17 +95021,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__OperatorAssignment_0_2"
-    // InternalKiCool.g:28836:1: rule__TernaryOperation__OperatorAssignment_0_2 : ( ruleConditionalOperator ) ;
+    // InternalKiCool.g:28917:1: rule__TernaryOperation__OperatorAssignment_0_2 : ( ruleConditionalOperator ) ;
     public final void rule__TernaryOperation__OperatorAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28840:1: ( ( ruleConditionalOperator ) )
-            // InternalKiCool.g:28841:2: ( ruleConditionalOperator )
+            // InternalKiCool.g:28921:1: ( ( ruleConditionalOperator ) )
+            // InternalKiCool.g:28922:2: ( ruleConditionalOperator )
             {
-            // InternalKiCool.g:28841:2: ( ruleConditionalOperator )
-            // InternalKiCool.g:28842:3: ruleConditionalOperator
+            // InternalKiCool.g:28922:2: ( ruleConditionalOperator )
+            // InternalKiCool.g:28923:3: ruleConditionalOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTernaryOperationAccess().getOperatorConditionalOperatorEnumRuleCall_0_2_0()); 
@@ -94803,17 +95066,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_3"
-    // InternalKiCool.g:28851:1: rule__TernaryOperation__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
+    // InternalKiCool.g:28932:1: rule__TernaryOperation__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
     public final void rule__TernaryOperation__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28855:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKiCool.g:28856:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28936:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:28937:2: ( ruleAtomicValuedExpression )
             {
-            // InternalKiCool.g:28856:2: ( ruleAtomicValuedExpression )
-            // InternalKiCool.g:28857:3: ruleAtomicValuedExpression
+            // InternalKiCool.g:28937:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28938:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
@@ -94848,17 +95111,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__SubExpressionsAssignment_0_5"
-    // InternalKiCool.g:28866:1: rule__TernaryOperation__SubExpressionsAssignment_0_5 : ( ruleAtomicValuedExpression ) ;
+    // InternalKiCool.g:28947:1: rule__TernaryOperation__SubExpressionsAssignment_0_5 : ( ruleAtomicValuedExpression ) ;
     public final void rule__TernaryOperation__SubExpressionsAssignment_0_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28870:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKiCool.g:28871:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28951:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:28952:2: ( ruleAtomicValuedExpression )
             {
-            // InternalKiCool.g:28871:2: ( ruleAtomicValuedExpression )
-            // InternalKiCool.g:28872:3: ruleAtomicValuedExpression
+            // InternalKiCool.g:28952:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28953:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0()); 
@@ -94893,17 +95156,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FBYExpression__SubExpressionsAssignment_0_1"
-    // InternalKiCool.g:28881:1: rule__FBYExpression__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
+    // InternalKiCool.g:28962:1: rule__FBYExpression__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
     public final void rule__FBYExpression__SubExpressionsAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28885:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKiCool.g:28886:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28966:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:28967:2: ( ruleAtomicValuedExpression )
             {
-            // InternalKiCool.g:28886:2: ( ruleAtomicValuedExpression )
-            // InternalKiCool.g:28887:3: ruleAtomicValuedExpression
+            // InternalKiCool.g:28967:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28968:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
@@ -94938,17 +95201,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FBYExpression__OperatorAssignment_0_2"
-    // InternalKiCool.g:28896:1: rule__FBYExpression__OperatorAssignment_0_2 : ( ruleFBYOperator ) ;
+    // InternalKiCool.g:28977:1: rule__FBYExpression__OperatorAssignment_0_2 : ( ruleFBYOperator ) ;
     public final void rule__FBYExpression__OperatorAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28900:1: ( ( ruleFBYOperator ) )
-            // InternalKiCool.g:28901:2: ( ruleFBYOperator )
+            // InternalKiCool.g:28981:1: ( ( ruleFBYOperator ) )
+            // InternalKiCool.g:28982:2: ( ruleFBYOperator )
             {
-            // InternalKiCool.g:28901:2: ( ruleFBYOperator )
-            // InternalKiCool.g:28902:3: ruleFBYOperator
+            // InternalKiCool.g:28982:2: ( ruleFBYOperator )
+            // InternalKiCool.g:28983:3: ruleFBYOperator
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFBYExpressionAccess().getOperatorFBYOperatorEnumRuleCall_0_2_0()); 
@@ -94983,17 +95246,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FBYExpression__SubExpressionsAssignment_0_3"
-    // InternalKiCool.g:28911:1: rule__FBYExpression__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
+    // InternalKiCool.g:28992:1: rule__FBYExpression__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
     public final void rule__FBYExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28915:1: ( ( ruleAtomicValuedExpression ) )
-            // InternalKiCool.g:28916:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28996:1: ( ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:28997:2: ( ruleAtomicValuedExpression )
             {
-            // InternalKiCool.g:28916:2: ( ruleAtomicValuedExpression )
-            // InternalKiCool.g:28917:3: ruleAtomicValuedExpression
+            // InternalKiCool.g:28997:2: ( ruleAtomicValuedExpression )
+            // InternalKiCool.g:28998:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
@@ -95028,23 +95291,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAssignment_0_1"
-    // InternalKiCool.g:28926:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) ;
+    // InternalKiCool.g:29007:1: rule__ValuedObjectTestExpression__OperatorAssignment_0_1 : ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) ;
     public final void rule__ValuedObjectTestExpression__OperatorAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28930:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) )
-            // InternalKiCool.g:28931:2: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
+            // InternalKiCool.g:29011:1: ( ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) ) )
+            // InternalKiCool.g:29012:2: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
             {
-            // InternalKiCool.g:28931:2: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
-            // InternalKiCool.g:28932:3: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
+            // InternalKiCool.g:29012:2: ( ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 ) )
+            // InternalKiCool.g:29013:3: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0()); 
             }
-            // InternalKiCool.g:28933:3: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
-            // InternalKiCool.g:28933:4: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
+            // InternalKiCool.g:29014:3: ( rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0 )
+            // InternalKiCool.g:29014:4: rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0
             {
             pushFollow(FollowSets000.FOLLOW_2);
             rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0();
@@ -95079,17 +95342,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3"
-    // InternalKiCool.g:28941:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
+    // InternalKiCool.g:29022:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3 : ( ruleValuedObjectTestExpression ) ;
     public final void rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28945:1: ( ( ruleValuedObjectTestExpression ) )
-            // InternalKiCool.g:28946:2: ( ruleValuedObjectTestExpression )
+            // InternalKiCool.g:29026:1: ( ( ruleValuedObjectTestExpression ) )
+            // InternalKiCool.g:29027:2: ( ruleValuedObjectTestExpression )
             {
-            // InternalKiCool.g:28946:2: ( ruleValuedObjectTestExpression )
-            // InternalKiCool.g:28947:3: ruleValuedObjectTestExpression
+            // InternalKiCool.g:29027:2: ( ruleValuedObjectTestExpression )
+            // InternalKiCool.g:29028:3: ruleValuedObjectTestExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0()); 
@@ -95123,24 +95386,69 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3"
 
 
+    // $ANTLR start "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1"
+    // InternalKiCool.g:29037:1: rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1 : ( ruleValuedObjectReference ) ;
+    public final void rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+        	
+        try {
+            // InternalKiCool.g:29041:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:29042:2: ( ruleValuedObjectReference )
+            {
+            // InternalKiCool.g:29042:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:29043:3: ruleValuedObjectReference
+            {
+            if ( state.backtracking==0 ) {
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_2);
+            ruleValuedObjectReference();
+
+            state._fsp--;
+            if (state.failed) return ;
+            if ( state.backtracking==0 ) {
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1"
+
+
     // $ANTLR start "rule__ValuedObjectReference__ValuedObjectAssignment_0"
-    // InternalKiCool.g:28956:1: rule__ValuedObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKiCool.g:29052:1: rule__ValuedObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ValuedObjectReference__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28960:1: ( ( ( rulePrimeID ) ) )
-            // InternalKiCool.g:28961:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29056:1: ( ( ( rulePrimeID ) ) )
+            // InternalKiCool.g:29057:2: ( ( rulePrimeID ) )
             {
-            // InternalKiCool.g:28961:2: ( ( rulePrimeID ) )
-            // InternalKiCool.g:28962:3: ( rulePrimeID )
+            // InternalKiCool.g:29057:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29058:3: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKiCool.g:28963:3: ( rulePrimeID )
-            // InternalKiCool.g:28964:4: rulePrimeID
+            // InternalKiCool.g:29059:3: ( rulePrimeID )
+            // InternalKiCool.g:29060:4: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -95181,17 +95489,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__IndicesAssignment_1_1"
-    // InternalKiCool.g:28975:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
+    // InternalKiCool.g:29071:1: rule__ValuedObjectReference__IndicesAssignment_1_1 : ( ruleExpression ) ;
     public final void rule__ValuedObjectReference__IndicesAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28979:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:28980:2: ( ruleExpression )
+            // InternalKiCool.g:29075:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:29076:2: ( ruleExpression )
             {
-            // InternalKiCool.g:28980:2: ( ruleExpression )
-            // InternalKiCool.g:28981:3: ruleExpression
+            // InternalKiCool.g:29076:2: ( ruleExpression )
+            // InternalKiCool.g:29077:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getIndicesExpressionParserRuleCall_1_1_0()); 
@@ -95226,17 +95534,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ValuedObjectReference__SubReferenceAssignment_2_1"
-    // InternalKiCool.g:28990:1: rule__ValuedObjectReference__SubReferenceAssignment_2_1 : ( ruleValuedObjectReference ) ;
+    // InternalKiCool.g:29086:1: rule__ValuedObjectReference__SubReferenceAssignment_2_1 : ( ruleValuedObjectReference ) ;
     public final void rule__ValuedObjectReference__SubReferenceAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:28994:1: ( ( ruleValuedObjectReference ) )
-            // InternalKiCool.g:28995:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:29090:1: ( ( ruleValuedObjectReference ) )
+            // InternalKiCool.g:29091:2: ( ruleValuedObjectReference )
             {
-            // InternalKiCool.g:28995:2: ( ruleValuedObjectReference )
-            // InternalKiCool.g:28996:3: ruleValuedObjectReference
+            // InternalKiCool.g:29091:2: ( ruleValuedObjectReference )
+            // InternalKiCool.g:29092:3: ruleValuedObjectReference
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0()); 
@@ -95271,23 +95579,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__ValuedObjectAssignment_0"
-    // InternalKiCool.g:29005:1: rule__ScheduleObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKiCool.g:29101:1: rule__ScheduleObjectReference__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ScheduleObjectReference__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29009:1: ( ( ( rulePrimeID ) ) )
-            // InternalKiCool.g:29010:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29105:1: ( ( ( rulePrimeID ) ) )
+            // InternalKiCool.g:29106:2: ( ( rulePrimeID ) )
             {
-            // InternalKiCool.g:29010:2: ( ( rulePrimeID ) )
-            // InternalKiCool.g:29011:3: ( rulePrimeID )
+            // InternalKiCool.g:29106:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29107:3: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKiCool.g:29012:3: ( rulePrimeID )
-            // InternalKiCool.g:29013:4: rulePrimeID
+            // InternalKiCool.g:29108:3: ( rulePrimeID )
+            // InternalKiCool.g:29109:4: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -95328,17 +95636,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ScheduleObjectReference__PriorityAssignment_1"
-    // InternalKiCool.g:29024:1: rule__ScheduleObjectReference__PriorityAssignment_1 : ( RULE_INT ) ;
+    // InternalKiCool.g:29120:1: rule__ScheduleObjectReference__PriorityAssignment_1 : ( RULE_INT ) ;
     public final void rule__ScheduleObjectReference__PriorityAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29028:1: ( ( RULE_INT ) )
-            // InternalKiCool.g:29029:2: ( RULE_INT )
+            // InternalKiCool.g:29124:1: ( ( RULE_INT ) )
+            // InternalKiCool.g:29125:2: ( RULE_INT )
             {
-            // InternalKiCool.g:29029:2: ( RULE_INT )
-            // InternalKiCool.g:29030:3: RULE_INT
+            // InternalKiCool.g:29125:2: ( RULE_INT )
+            // InternalKiCool.g:29126:3: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getScheduleObjectReferenceAccess().getPriorityINTTerminalRuleCall_1_0()); 
@@ -95369,23 +95677,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__ValuedObjectAssignment_0"
-    // InternalKiCool.g:29039:1: rule__ReferenceCall__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
+    // InternalKiCool.g:29135:1: rule__ReferenceCall__ValuedObjectAssignment_0 : ( ( rulePrimeID ) ) ;
     public final void rule__ReferenceCall__ValuedObjectAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29043:1: ( ( ( rulePrimeID ) ) )
-            // InternalKiCool.g:29044:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29139:1: ( ( ( rulePrimeID ) ) )
+            // InternalKiCool.g:29140:2: ( ( rulePrimeID ) )
             {
-            // InternalKiCool.g:29044:2: ( ( rulePrimeID ) )
-            // InternalKiCool.g:29045:3: ( rulePrimeID )
+            // InternalKiCool.g:29140:2: ( ( rulePrimeID ) )
+            // InternalKiCool.g:29141:3: ( rulePrimeID )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0()); 
             }
-            // InternalKiCool.g:29046:3: ( rulePrimeID )
-            // InternalKiCool.g:29047:4: rulePrimeID
+            // InternalKiCool.g:29142:3: ( rulePrimeID )
+            // InternalKiCool.g:29143:4: rulePrimeID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectPrimeIDParserRuleCall_0_0_1()); 
@@ -95426,17 +95734,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__ParametersAssignment_1_0_1"
-    // InternalKiCool.g:29058:1: rule__ReferenceCall__ParametersAssignment_1_0_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:29154:1: rule__ReferenceCall__ParametersAssignment_1_0_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCall__ParametersAssignment_1_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29062:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:29063:2: ( ruleParameter )
+            // InternalKiCool.g:29158:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:29159:2: ( ruleParameter )
             {
-            // InternalKiCool.g:29063:2: ( ruleParameter )
-            // InternalKiCool.g:29064:3: ruleParameter
+            // InternalKiCool.g:29159:2: ( ruleParameter )
+            // InternalKiCool.g:29160:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersParameterParserRuleCall_1_0_1_0()); 
@@ -95471,17 +95779,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__ReferenceCall__ParametersAssignment_1_0_2_1"
-    // InternalKiCool.g:29073:1: rule__ReferenceCall__ParametersAssignment_1_0_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:29169:1: rule__ReferenceCall__ParametersAssignment_1_0_2_1 : ( ruleParameter ) ;
     public final void rule__ReferenceCall__ParametersAssignment_1_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29077:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:29078:2: ( ruleParameter )
+            // InternalKiCool.g:29173:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:29174:2: ( ruleParameter )
             {
-            // InternalKiCool.g:29078:2: ( ruleParameter )
-            // InternalKiCool.g:29079:3: ruleParameter
+            // InternalKiCool.g:29174:2: ( ruleParameter )
+            // InternalKiCool.g:29175:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getReferenceCallAccess().getParametersParameterParserRuleCall_1_0_2_1_0()); 
@@ -95516,17 +95824,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__FunctionNameAssignment_1"
-    // InternalKiCool.g:29088:1: rule__FunctionCall__FunctionNameAssignment_1 : ( RULE_ID ) ;
+    // InternalKiCool.g:29184:1: rule__FunctionCall__FunctionNameAssignment_1 : ( RULE_ID ) ;
     public final void rule__FunctionCall__FunctionNameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29092:1: ( ( RULE_ID ) )
-            // InternalKiCool.g:29093:2: ( RULE_ID )
+            // InternalKiCool.g:29188:1: ( ( RULE_ID ) )
+            // InternalKiCool.g:29189:2: ( RULE_ID )
             {
-            // InternalKiCool.g:29093:2: ( RULE_ID )
-            // InternalKiCool.g:29094:3: RULE_ID
+            // InternalKiCool.g:29189:2: ( RULE_ID )
+            // InternalKiCool.g:29190:3: RULE_ID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getFunctionNameIDTerminalRuleCall_1_0()); 
@@ -95557,17 +95865,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_2_0_1"
-    // InternalKiCool.g:29103:1: rule__FunctionCall__ParametersAssignment_2_0_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:29199:1: rule__FunctionCall__ParametersAssignment_2_0_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_2_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29107:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:29108:2: ( ruleParameter )
+            // InternalKiCool.g:29203:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:29204:2: ( ruleParameter )
             {
-            // InternalKiCool.g:29108:2: ( ruleParameter )
-            // InternalKiCool.g:29109:3: ruleParameter
+            // InternalKiCool.g:29204:2: ( ruleParameter )
+            // InternalKiCool.g:29205:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_2_0_1_0()); 
@@ -95602,17 +95910,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FunctionCall__ParametersAssignment_2_0_2_1"
-    // InternalKiCool.g:29118:1: rule__FunctionCall__ParametersAssignment_2_0_2_1 : ( ruleParameter ) ;
+    // InternalKiCool.g:29214:1: rule__FunctionCall__ParametersAssignment_2_0_2_1 : ( ruleParameter ) ;
     public final void rule__FunctionCall__ParametersAssignment_2_0_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29122:1: ( ( ruleParameter ) )
-            // InternalKiCool.g:29123:2: ( ruleParameter )
+            // InternalKiCool.g:29218:1: ( ( ruleParameter ) )
+            // InternalKiCool.g:29219:2: ( ruleParameter )
             {
-            // InternalKiCool.g:29123:2: ( ruleParameter )
-            // InternalKiCool.g:29124:3: ruleParameter
+            // InternalKiCool.g:29219:2: ( ruleParameter )
+            // InternalKiCool.g:29220:3: ruleParameter
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFunctionCallAccess().getParametersParameterParserRuleCall_2_0_2_1_0()); 
@@ -95647,23 +95955,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__PureOutputAssignment_0_0"
-    // InternalKiCool.g:29133:1: rule__Parameter__PureOutputAssignment_0_0 : ( ( '!' ) ) ;
+    // InternalKiCool.g:29229:1: rule__Parameter__PureOutputAssignment_0_0 : ( ( '!' ) ) ;
     public final void rule__Parameter__PureOutputAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29137:1: ( ( ( '!' ) ) )
-            // InternalKiCool.g:29138:2: ( ( '!' ) )
+            // InternalKiCool.g:29233:1: ( ( ( '!' ) ) )
+            // InternalKiCool.g:29234:2: ( ( '!' ) )
             {
-            // InternalKiCool.g:29138:2: ( ( '!' ) )
-            // InternalKiCool.g:29139:3: ( '!' )
+            // InternalKiCool.g:29234:2: ( ( '!' ) )
+            // InternalKiCool.g:29235:3: ( '!' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0()); 
             }
-            // InternalKiCool.g:29140:3: ( '!' )
-            // InternalKiCool.g:29141:4: '!'
+            // InternalKiCool.g:29236:3: ( '!' )
+            // InternalKiCool.g:29237:4: '!'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0()); 
@@ -95700,23 +96008,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__CallByReferenceAssignment_0_1"
-    // InternalKiCool.g:29152:1: rule__Parameter__CallByReferenceAssignment_0_1 : ( ( '&' ) ) ;
+    // InternalKiCool.g:29248:1: rule__Parameter__CallByReferenceAssignment_0_1 : ( ( '&' ) ) ;
     public final void rule__Parameter__CallByReferenceAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29156:1: ( ( ( '&' ) ) )
-            // InternalKiCool.g:29157:2: ( ( '&' ) )
+            // InternalKiCool.g:29252:1: ( ( ( '&' ) ) )
+            // InternalKiCool.g:29253:2: ( ( '&' ) )
             {
-            // InternalKiCool.g:29157:2: ( ( '&' ) )
-            // InternalKiCool.g:29158:3: ( '&' )
+            // InternalKiCool.g:29253:2: ( ( '&' ) )
+            // InternalKiCool.g:29254:3: ( '&' )
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0()); 
             }
-            // InternalKiCool.g:29159:3: ( '&' )
-            // InternalKiCool.g:29160:4: '&'
+            // InternalKiCool.g:29255:3: ( '&' )
+            // InternalKiCool.g:29256:4: '&'
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getCallByReferenceAmpersandKeyword_0_1_0()); 
@@ -95753,17 +96061,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Parameter__ExpressionAssignment_1"
-    // InternalKiCool.g:29171:1: rule__Parameter__ExpressionAssignment_1 : ( ruleExpression ) ;
+    // InternalKiCool.g:29267:1: rule__Parameter__ExpressionAssignment_1 : ( ruleExpression ) ;
     public final void rule__Parameter__ExpressionAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29175:1: ( ( ruleExpression ) )
-            // InternalKiCool.g:29176:2: ( ruleExpression )
+            // InternalKiCool.g:29271:1: ( ( ruleExpression ) )
+            // InternalKiCool.g:29272:2: ( ruleExpression )
             {
-            // InternalKiCool.g:29176:2: ( ruleExpression )
-            // InternalKiCool.g:29177:3: ruleExpression
+            // InternalKiCool.g:29272:2: ( ruleExpression )
+            // InternalKiCool.g:29273:3: ruleExpression
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getParameterAccess().getExpressionExpressionParserRuleCall_1_0()); 
@@ -95798,17 +96106,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__AnnotationsAssignment_0"
-    // InternalKiCool.g:29186:1: rule__TextExpression__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
+    // InternalKiCool.g:29282:1: rule__TextExpression__AnnotationsAssignment_0 : ( ruleAnnotation ) ;
     public final void rule__TextExpression__AnnotationsAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29190:1: ( ( ruleAnnotation ) )
-            // InternalKiCool.g:29191:2: ( ruleAnnotation )
+            // InternalKiCool.g:29286:1: ( ( ruleAnnotation ) )
+            // InternalKiCool.g:29287:2: ( ruleAnnotation )
             {
-            // InternalKiCool.g:29191:2: ( ruleAnnotation )
-            // InternalKiCool.g:29192:3: ruleAnnotation
+            // InternalKiCool.g:29287:2: ( ruleAnnotation )
+            // InternalKiCool.g:29288:3: ruleAnnotation
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getAnnotationsAnnotationParserRuleCall_0_0()); 
@@ -95843,17 +96151,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TextExpression__TextAssignment_1"
-    // InternalKiCool.g:29201:1: rule__TextExpression__TextAssignment_1 : ( RULE_HOSTCODE ) ;
+    // InternalKiCool.g:29297:1: rule__TextExpression__TextAssignment_1 : ( RULE_HOSTCODE ) ;
     public final void rule__TextExpression__TextAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29205:1: ( ( RULE_HOSTCODE ) )
-            // InternalKiCool.g:29206:2: ( RULE_HOSTCODE )
+            // InternalKiCool.g:29301:1: ( ( RULE_HOSTCODE ) )
+            // InternalKiCool.g:29302:2: ( RULE_HOSTCODE )
             {
-            // InternalKiCool.g:29206:2: ( RULE_HOSTCODE )
-            // InternalKiCool.g:29207:3: RULE_HOSTCODE
+            // InternalKiCool.g:29302:2: ( RULE_HOSTCODE )
+            // InternalKiCool.g:29303:3: RULE_HOSTCODE
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTextExpressionAccess().getTextHOSTCODETerminalRuleCall_1_0()); 
@@ -95884,17 +96192,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__IntValue__ValueAssignment"
-    // InternalKiCool.g:29216:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
+    // InternalKiCool.g:29312:1: rule__IntValue__ValueAssignment : ( RULE_INT ) ;
     public final void rule__IntValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29220:1: ( ( RULE_INT ) )
-            // InternalKiCool.g:29221:2: ( RULE_INT )
+            // InternalKiCool.g:29316:1: ( ( RULE_INT ) )
+            // InternalKiCool.g:29317:2: ( RULE_INT )
             {
-            // InternalKiCool.g:29221:2: ( RULE_INT )
-            // InternalKiCool.g:29222:3: RULE_INT
+            // InternalKiCool.g:29317:2: ( RULE_INT )
+            // InternalKiCool.g:29318:3: RULE_INT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getIntValueAccess().getValueINTTerminalRuleCall_0()); 
@@ -95925,17 +96233,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__FloatValue__ValueAssignment"
-    // InternalKiCool.g:29231:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
+    // InternalKiCool.g:29327:1: rule__FloatValue__ValueAssignment : ( RULE_FLOAT ) ;
     public final void rule__FloatValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29235:1: ( ( RULE_FLOAT ) )
-            // InternalKiCool.g:29236:2: ( RULE_FLOAT )
+            // InternalKiCool.g:29331:1: ( ( RULE_FLOAT ) )
+            // InternalKiCool.g:29332:2: ( RULE_FLOAT )
             {
-            // InternalKiCool.g:29236:2: ( RULE_FLOAT )
-            // InternalKiCool.g:29237:3: RULE_FLOAT
+            // InternalKiCool.g:29332:2: ( RULE_FLOAT )
+            // InternalKiCool.g:29333:3: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
@@ -95966,17 +96274,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__BoolValue__ValueAssignment"
-    // InternalKiCool.g:29246:1: rule__BoolValue__ValueAssignment : ( RULE_BOOLEAN ) ;
+    // InternalKiCool.g:29342:1: rule__BoolValue__ValueAssignment : ( RULE_BOOLEAN ) ;
     public final void rule__BoolValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29250:1: ( ( RULE_BOOLEAN ) )
-            // InternalKiCool.g:29251:2: ( RULE_BOOLEAN )
+            // InternalKiCool.g:29346:1: ( ( RULE_BOOLEAN ) )
+            // InternalKiCool.g:29347:2: ( RULE_BOOLEAN )
             {
-            // InternalKiCool.g:29251:2: ( RULE_BOOLEAN )
-            // InternalKiCool.g:29252:3: RULE_BOOLEAN
+            // InternalKiCool.g:29347:2: ( RULE_BOOLEAN )
+            // InternalKiCool.g:29348:3: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getBoolValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
@@ -96007,17 +96315,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringValue__ValueAssignment"
-    // InternalKiCool.g:29261:1: rule__StringValue__ValueAssignment : ( RULE_STRING ) ;
+    // InternalKiCool.g:29357:1: rule__StringValue__ValueAssignment : ( RULE_STRING ) ;
     public final void rule__StringValue__ValueAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29265:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29266:2: ( RULE_STRING )
+            // InternalKiCool.g:29361:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29362:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29266:2: ( RULE_STRING )
-            // InternalKiCool.g:29267:3: RULE_STRING
+            // InternalKiCool.g:29362:2: ( RULE_STRING )
+            // InternalKiCool.g:29363:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringValueAccess().getValueSTRINGTerminalRuleCall_0()); 
@@ -96048,17 +96356,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__ValuesAssignment_1"
-    // InternalKiCool.g:29276:1: rule__VectorValue__ValuesAssignment_1 : ( ruleVectorValueMember ) ;
+    // InternalKiCool.g:29372:1: rule__VectorValue__ValuesAssignment_1 : ( ruleVectorValueMember ) ;
     public final void rule__VectorValue__ValuesAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29280:1: ( ( ruleVectorValueMember ) )
-            // InternalKiCool.g:29281:2: ( ruleVectorValueMember )
+            // InternalKiCool.g:29376:1: ( ( ruleVectorValueMember ) )
+            // InternalKiCool.g:29377:2: ( ruleVectorValueMember )
             {
-            // InternalKiCool.g:29281:2: ( ruleVectorValueMember )
-            // InternalKiCool.g:29282:3: ruleVectorValueMember
+            // InternalKiCool.g:29377:2: ( ruleVectorValueMember )
+            // InternalKiCool.g:29378:3: ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0()); 
@@ -96093,17 +96401,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__VectorValue__ValuesAssignment_2_1"
-    // InternalKiCool.g:29291:1: rule__VectorValue__ValuesAssignment_2_1 : ( ruleVectorValueMember ) ;
+    // InternalKiCool.g:29387:1: rule__VectorValue__ValuesAssignment_2_1 : ( ruleVectorValueMember ) ;
     public final void rule__VectorValue__ValuesAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29295:1: ( ( ruleVectorValueMember ) )
-            // InternalKiCool.g:29296:2: ( ruleVectorValueMember )
+            // InternalKiCool.g:29391:1: ( ( ruleVectorValueMember ) )
+            // InternalKiCool.g:29392:2: ( ruleVectorValueMember )
             {
-            // InternalKiCool.g:29296:2: ( ruleVectorValueMember )
-            // InternalKiCool.g:29297:3: ruleVectorValueMember
+            // InternalKiCool.g:29392:2: ( ruleVectorValueMember )
+            // InternalKiCool.g:29393:3: ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0()); 
@@ -96138,17 +96446,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__MembersAssignment_2_0"
-    // InternalKiCool.g:29306:1: rule__JsonObjectValue__MembersAssignment_2_0 : ( ruleJsonObjectMember ) ;
+    // InternalKiCool.g:29402:1: rule__JsonObjectValue__MembersAssignment_2_0 : ( ruleJsonObjectMember ) ;
     public final void rule__JsonObjectValue__MembersAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29310:1: ( ( ruleJsonObjectMember ) )
-            // InternalKiCool.g:29311:2: ( ruleJsonObjectMember )
+            // InternalKiCool.g:29406:1: ( ( ruleJsonObjectMember ) )
+            // InternalKiCool.g:29407:2: ( ruleJsonObjectMember )
             {
-            // InternalKiCool.g:29311:2: ( ruleJsonObjectMember )
-            // InternalKiCool.g:29312:3: ruleJsonObjectMember
+            // InternalKiCool.g:29407:2: ( ruleJsonObjectMember )
+            // InternalKiCool.g:29408:3: ruleJsonObjectMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_0_0()); 
@@ -96183,17 +96491,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectValue__MembersAssignment_2_1_1"
-    // InternalKiCool.g:29321:1: rule__JsonObjectValue__MembersAssignment_2_1_1 : ( ruleJsonObjectMember ) ;
+    // InternalKiCool.g:29417:1: rule__JsonObjectValue__MembersAssignment_2_1_1 : ( ruleJsonObjectMember ) ;
     public final void rule__JsonObjectValue__MembersAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29325:1: ( ( ruleJsonObjectMember ) )
-            // InternalKiCool.g:29326:2: ( ruleJsonObjectMember )
+            // InternalKiCool.g:29421:1: ( ( ruleJsonObjectMember ) )
+            // InternalKiCool.g:29422:2: ( ruleJsonObjectMember )
             {
-            // InternalKiCool.g:29326:2: ( ruleJsonObjectMember )
-            // InternalKiCool.g:29327:3: ruleJsonObjectMember
+            // InternalKiCool.g:29422:2: ( ruleJsonObjectMember )
+            // InternalKiCool.g:29423:3: ruleJsonObjectMember
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_1_1_0()); 
@@ -96228,17 +96536,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__KeyAssignment_0"
-    // InternalKiCool.g:29336:1: rule__JsonObjectMember__KeyAssignment_0 : ( RULE_STRING ) ;
+    // InternalKiCool.g:29432:1: rule__JsonObjectMember__KeyAssignment_0 : ( RULE_STRING ) ;
     public final void rule__JsonObjectMember__KeyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29340:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29341:2: ( RULE_STRING )
+            // InternalKiCool.g:29436:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29437:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29341:2: ( RULE_STRING )
-            // InternalKiCool.g:29342:3: RULE_STRING
+            // InternalKiCool.g:29437:2: ( RULE_STRING )
+            // InternalKiCool.g:29438:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectMemberAccess().getKeySTRINGTerminalRuleCall_0_0()); 
@@ -96269,17 +96577,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonObjectMember__ValueAssignment_2"
-    // InternalKiCool.g:29351:1: rule__JsonObjectMember__ValueAssignment_2 : ( ruleJsonValue ) ;
+    // InternalKiCool.g:29447:1: rule__JsonObjectMember__ValueAssignment_2 : ( ruleJsonValue ) ;
     public final void rule__JsonObjectMember__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29355:1: ( ( ruleJsonValue ) )
-            // InternalKiCool.g:29356:2: ( ruleJsonValue )
+            // InternalKiCool.g:29451:1: ( ( ruleJsonValue ) )
+            // InternalKiCool.g:29452:2: ( ruleJsonValue )
             {
-            // InternalKiCool.g:29356:2: ( ruleJsonValue )
-            // InternalKiCool.g:29357:3: ruleJsonValue
+            // InternalKiCool.g:29452:2: ( ruleJsonValue )
+            // InternalKiCool.g:29453:3: ruleJsonValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonObjectMemberAccess().getValueJsonValueParserRuleCall_2_0()); 
@@ -96314,17 +96622,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__ElementsAssignment_2_0"
-    // InternalKiCool.g:29366:1: rule__JsonArrayValue__ElementsAssignment_2_0 : ( ruleJsonValue ) ;
+    // InternalKiCool.g:29462:1: rule__JsonArrayValue__ElementsAssignment_2_0 : ( ruleJsonValue ) ;
     public final void rule__JsonArrayValue__ElementsAssignment_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29370:1: ( ( ruleJsonValue ) )
-            // InternalKiCool.g:29371:2: ( ruleJsonValue )
+            // InternalKiCool.g:29466:1: ( ( ruleJsonValue ) )
+            // InternalKiCool.g:29467:2: ( ruleJsonValue )
             {
-            // InternalKiCool.g:29371:2: ( ruleJsonValue )
-            // InternalKiCool.g:29372:3: ruleJsonValue
+            // InternalKiCool.g:29467:2: ( ruleJsonValue )
+            // InternalKiCool.g:29468:3: ruleJsonValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_0_0()); 
@@ -96359,17 +96667,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonArrayValue__ElementsAssignment_2_1_1"
-    // InternalKiCool.g:29381:1: rule__JsonArrayValue__ElementsAssignment_2_1_1 : ( ruleJsonValue ) ;
+    // InternalKiCool.g:29477:1: rule__JsonArrayValue__ElementsAssignment_2_1_1 : ( ruleJsonValue ) ;
     public final void rule__JsonArrayValue__ElementsAssignment_2_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29385:1: ( ( ruleJsonValue ) )
-            // InternalKiCool.g:29386:2: ( ruleJsonValue )
+            // InternalKiCool.g:29481:1: ( ( ruleJsonValue ) )
+            // InternalKiCool.g:29482:2: ( ruleJsonValue )
             {
-            // InternalKiCool.g:29386:2: ( ruleJsonValue )
-            // InternalKiCool.g:29387:3: ruleJsonValue
+            // InternalKiCool.g:29482:2: ( ruleJsonValue )
+            // InternalKiCool.g:29483:3: ruleJsonValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_1_1_0()); 
@@ -96404,17 +96712,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__NameAssignment_1"
-    // InternalKiCool.g:29396:1: rule__JsonPragma__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29492:1: rule__JsonPragma__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__JsonPragma__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29400:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29401:2: ( ruleExtendedID )
+            // InternalKiCool.g:29496:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29497:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29401:2: ( ruleExtendedID )
-            // InternalKiCool.g:29402:3: ruleExtendedID
+            // InternalKiCool.g:29497:2: ( ruleExtendedID )
+            // InternalKiCool.g:29498:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96449,17 +96757,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonPragma__ValueAssignment_2"
-    // InternalKiCool.g:29411:1: rule__JsonPragma__ValueAssignment_2 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:29507:1: rule__JsonPragma__ValueAssignment_2 : ( ruleJsonObjectValue ) ;
     public final void rule__JsonPragma__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29415:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:29416:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:29511:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:29512:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:29416:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:29417:3: ruleJsonObjectValue
+            // InternalKiCool.g:29512:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:29513:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonPragmaAccess().getValueJsonObjectValueParserRuleCall_2_0()); 
@@ -96494,17 +96802,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29426:1: rule__JsonAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29522:1: rule__JsonAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__JsonAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29430:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29431:2: ( ruleExtendedID )
+            // InternalKiCool.g:29526:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29527:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29431:2: ( ruleExtendedID )
-            // InternalKiCool.g:29432:3: ruleExtendedID
+            // InternalKiCool.g:29527:2: ( ruleExtendedID )
+            // InternalKiCool.g:29528:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96539,17 +96847,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__JsonAnnotation__ValueAssignment_2"
-    // InternalKiCool.g:29441:1: rule__JsonAnnotation__ValueAssignment_2 : ( ruleJsonObjectValue ) ;
+    // InternalKiCool.g:29537:1: rule__JsonAnnotation__ValueAssignment_2 : ( ruleJsonObjectValue ) ;
     public final void rule__JsonAnnotation__ValueAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29445:1: ( ( ruleJsonObjectValue ) )
-            // InternalKiCool.g:29446:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:29541:1: ( ( ruleJsonObjectValue ) )
+            // InternalKiCool.g:29542:2: ( ruleJsonObjectValue )
             {
-            // InternalKiCool.g:29446:2: ( ruleJsonObjectValue )
-            // InternalKiCool.g:29447:3: ruleJsonObjectValue
+            // InternalKiCool.g:29542:2: ( ruleJsonObjectValue )
+            // InternalKiCool.g:29543:3: ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getJsonAnnotationAccess().getValueJsonObjectValueParserRuleCall_2_0()); 
@@ -96584,17 +96892,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CommentAnnotation__ValuesAssignment"
-    // InternalKiCool.g:29456:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
+    // InternalKiCool.g:29552:1: rule__CommentAnnotation__ValuesAssignment : ( RULE_COMMENT_ANNOTATION ) ;
     public final void rule__CommentAnnotation__ValuesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29460:1: ( ( RULE_COMMENT_ANNOTATION ) )
-            // InternalKiCool.g:29461:2: ( RULE_COMMENT_ANNOTATION )
+            // InternalKiCool.g:29556:1: ( ( RULE_COMMENT_ANNOTATION ) )
+            // InternalKiCool.g:29557:2: ( RULE_COMMENT_ANNOTATION )
             {
-            // InternalKiCool.g:29461:2: ( RULE_COMMENT_ANNOTATION )
-            // InternalKiCool.g:29462:3: RULE_COMMENT_ANNOTATION
+            // InternalKiCool.g:29557:2: ( RULE_COMMENT_ANNOTATION )
+            // InternalKiCool.g:29558:3: RULE_COMMENT_ANNOTATION
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotationAccess().getValuesCOMMENT_ANNOTATIONTerminalRuleCall_0()); 
@@ -96625,17 +96933,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__CommentAnnotatonSL__ValuesAssignment"
-    // InternalKiCool.g:29471:1: rule__CommentAnnotatonSL__ValuesAssignment : ( RULE_SL_COMMENT_ANNOTATION ) ;
+    // InternalKiCool.g:29567:1: rule__CommentAnnotatonSL__ValuesAssignment : ( RULE_SL_COMMENT_ANNOTATION ) ;
     public final void rule__CommentAnnotatonSL__ValuesAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29475:1: ( ( RULE_SL_COMMENT_ANNOTATION ) )
-            // InternalKiCool.g:29476:2: ( RULE_SL_COMMENT_ANNOTATION )
+            // InternalKiCool.g:29571:1: ( ( RULE_SL_COMMENT_ANNOTATION ) )
+            // InternalKiCool.g:29572:2: ( RULE_SL_COMMENT_ANNOTATION )
             {
-            // InternalKiCool.g:29476:2: ( RULE_SL_COMMENT_ANNOTATION )
-            // InternalKiCool.g:29477:3: RULE_SL_COMMENT_ANNOTATION
+            // InternalKiCool.g:29572:2: ( RULE_SL_COMMENT_ANNOTATION )
+            // InternalKiCool.g:29573:3: RULE_SL_COMMENT_ANNOTATION
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getCommentAnnotatonSLAccess().getValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0()); 
@@ -96666,17 +96974,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TagAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29486:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29582:1: rule__TagAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TagAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29490:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29491:2: ( ruleExtendedID )
+            // InternalKiCool.g:29586:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29587:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29491:2: ( ruleExtendedID )
-            // InternalKiCool.g:29492:3: ruleExtendedID
+            // InternalKiCool.g:29587:2: ( ruleExtendedID )
+            // InternalKiCool.g:29588:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96711,17 +97019,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PragmaTag__NameAssignment_1"
-    // InternalKiCool.g:29501:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29597:1: rule__PragmaTag__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__PragmaTag__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29505:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29506:2: ( ruleExtendedID )
+            // InternalKiCool.g:29601:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29602:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29506:2: ( ruleExtendedID )
-            // InternalKiCool.g:29507:3: ruleExtendedID
+            // InternalKiCool.g:29602:2: ( ruleExtendedID )
+            // InternalKiCool.g:29603:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getPragmaTagAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96756,17 +97064,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29516:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29612:1: rule__KeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__KeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29520:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29521:2: ( ruleExtendedID )
+            // InternalKiCool.g:29616:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29617:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29521:2: ( ruleExtendedID )
-            // InternalKiCool.g:29522:3: ruleExtendedID
+            // InternalKiCool.g:29617:2: ( ruleExtendedID )
+            // InternalKiCool.g:29618:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96801,17 +97109,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKiCool.g:29531:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29627:1: rule__KeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29535:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29536:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29631:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29632:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29536:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29537:3: ruleEStringAllTypes
+            // InternalKiCool.g:29632:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29633:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
@@ -96846,17 +97154,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__KeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKiCool.g:29546:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29642:1: rule__KeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
     public final void rule__KeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29550:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29551:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29646:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29647:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29551:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29552:3: ruleEStringAllTypes
+            // InternalKiCool.g:29647:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29648:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
@@ -96891,17 +97199,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29561:1: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29657:1: rule__RestrictedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29565:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29566:2: ( ruleExtendedID )
+            // InternalKiCool.g:29661:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29662:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29566:2: ( ruleExtendedID )
-            // InternalKiCool.g:29567:3: ruleExtendedID
+            // InternalKiCool.g:29662:2: ( ruleExtendedID )
+            // InternalKiCool.g:29663:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -96936,17 +97244,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKiCool.g:29576:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringBoolean ) ;
+    // InternalKiCool.g:29672:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29580:1: ( ( ruleEStringBoolean ) )
-            // InternalKiCool.g:29581:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29676:1: ( ( ruleEStringBoolean ) )
+            // InternalKiCool.g:29677:2: ( ruleEStringBoolean )
             {
-            // InternalKiCool.g:29581:2: ( ruleEStringBoolean )
-            // InternalKiCool.g:29582:3: ruleEStringBoolean
+            // InternalKiCool.g:29677:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29678:3: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0()); 
@@ -96981,17 +97289,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKiCool.g:29591:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringBoolean ) ;
+    // InternalKiCool.g:29687:1: rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29595:1: ( ( ruleEStringBoolean ) )
-            // InternalKiCool.g:29596:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29691:1: ( ( ruleEStringBoolean ) )
+            // InternalKiCool.g:29692:2: ( ruleEStringBoolean )
             {
-            // InternalKiCool.g:29596:2: ( ruleEStringBoolean )
-            // InternalKiCool.g:29597:3: ruleEStringBoolean
+            // InternalKiCool.g:29692:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29693:3: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0()); 
@@ -97026,17 +97334,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__NameAssignment_1"
-    // InternalKiCool.g:29606:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29702:1: rule__StringPragma__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__StringPragma__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29610:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29611:2: ( ruleExtendedID )
+            // InternalKiCool.g:29706:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29707:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29611:2: ( ruleExtendedID )
-            // InternalKiCool.g:29612:3: ruleExtendedID
+            // InternalKiCool.g:29707:2: ( ruleExtendedID )
+            // InternalKiCool.g:29708:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -97071,17 +97379,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__ValuesAssignment_2"
-    // InternalKiCool.g:29621:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29717:1: rule__StringPragma__ValuesAssignment_2 : ( ruleEStringAllTypes ) ;
     public final void rule__StringPragma__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29625:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29626:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29721:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29722:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29626:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29627:3: ruleEStringAllTypes
+            // InternalKiCool.g:29722:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29723:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0()); 
@@ -97116,17 +97424,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__StringPragma__ValuesAssignment_3_1"
-    // InternalKiCool.g:29636:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29732:1: rule__StringPragma__ValuesAssignment_3_1 : ( ruleEStringAllTypes ) ;
     public final void rule__StringPragma__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29640:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29641:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29736:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29737:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29641:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29642:3: ruleEStringAllTypes
+            // InternalKiCool.g:29737:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29738:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0()); 
@@ -97161,17 +97469,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29651:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29747:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29655:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29656:2: ( ruleExtendedID )
+            // InternalKiCool.g:29751:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29752:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29656:2: ( ruleExtendedID )
-            // InternalKiCool.g:29657:3: ruleExtendedID
+            // InternalKiCool.g:29752:2: ( ruleExtendedID )
+            // InternalKiCool.g:29753:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -97206,17 +97514,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKiCool.g:29666:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29762:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29670:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29671:2: ( ruleExtendedID )
+            // InternalKiCool.g:29766:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29767:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29671:2: ( ruleExtendedID )
-            // InternalKiCool.g:29672:3: ruleExtendedID
+            // InternalKiCool.g:29767:2: ( ruleExtendedID )
+            // InternalKiCool.g:29768:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -97251,17 +97559,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKiCool.g:29681:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29777:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29685:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29686:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29781:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29782:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29686:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29687:3: ruleEStringAllTypes
+            // InternalKiCool.g:29782:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29783:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0()); 
@@ -97296,17 +97604,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKiCool.g:29696:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringAllTypes ) ;
+    // InternalKiCool.g:29792:1: rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringAllTypes ) ;
     public final void rule__TypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29700:1: ( ( ruleEStringAllTypes ) )
-            // InternalKiCool.g:29701:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29796:1: ( ( ruleEStringAllTypes ) )
+            // InternalKiCool.g:29797:2: ( ruleEStringAllTypes )
             {
-            // InternalKiCool.g:29701:2: ( ruleEStringAllTypes )
-            // InternalKiCool.g:29702:3: ruleEStringAllTypes
+            // InternalKiCool.g:29797:2: ( ruleEStringAllTypes )
+            // InternalKiCool.g:29798:3: ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0()); 
@@ -97341,17 +97649,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29711:1: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29807:1: rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29715:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29716:2: ( ruleExtendedID )
+            // InternalKiCool.g:29811:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29812:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29716:2: ( ruleExtendedID )
-            // InternalKiCool.g:29717:3: ruleExtendedID
+            // InternalKiCool.g:29812:2: ( ruleExtendedID )
+            // InternalKiCool.g:29813:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -97386,17 +97694,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKiCool.g:29726:1: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29822:1: rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29730:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29731:2: ( ruleExtendedID )
+            // InternalKiCool.g:29826:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29827:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29731:2: ( ruleExtendedID )
-            // InternalKiCool.g:29732:3: ruleExtendedID
+            // InternalKiCool.g:29827:2: ( ruleExtendedID )
+            // InternalKiCool.g:29828:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -97431,17 +97739,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKiCool.g:29741:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
+    // InternalKiCool.g:29837:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29745:1: ( ( ruleEStringBoolean ) )
-            // InternalKiCool.g:29746:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29841:1: ( ( ruleEStringBoolean ) )
+            // InternalKiCool.g:29842:2: ( ruleEStringBoolean )
             {
-            // InternalKiCool.g:29746:2: ( ruleEStringBoolean )
-            // InternalKiCool.g:29747:3: ruleEStringBoolean
+            // InternalKiCool.g:29842:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29843:3: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0()); 
@@ -97476,17 +97784,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKiCool.g:29756:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
+    // InternalKiCool.g:29852:1: rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( ruleEStringBoolean ) ;
     public final void rule__RestrictedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29760:1: ( ( ruleEStringBoolean ) )
-            // InternalKiCool.g:29761:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29856:1: ( ( ruleEStringBoolean ) )
+            // InternalKiCool.g:29857:2: ( ruleEStringBoolean )
             {
-            // InternalKiCool.g:29761:2: ( ruleEStringBoolean )
-            // InternalKiCool.g:29762:3: ruleEStringBoolean
+            // InternalKiCool.g:29857:2: ( ruleEStringBoolean )
+            // InternalKiCool.g:29858:3: ruleEStringBoolean
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0()); 
@@ -97521,17 +97829,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29771:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29867:1: rule__QuotedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29775:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29776:2: ( ruleExtendedID )
+            // InternalKiCool.g:29871:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29872:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29776:2: ( ruleExtendedID )
-            // InternalKiCool.g:29777:3: ruleExtendedID
+            // InternalKiCool.g:29872:2: ( ruleExtendedID )
+            // InternalKiCool.g:29873:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -97566,17 +97874,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2"
-    // InternalKiCool.g:29786:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
+    // InternalKiCool.g:29882:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29790:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29791:2: ( RULE_STRING )
+            // InternalKiCool.g:29886:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29887:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29791:2: ( RULE_STRING )
-            // InternalKiCool.g:29792:3: RULE_STRING
+            // InternalKiCool.g:29887:2: ( RULE_STRING )
+            // InternalKiCool.g:29888:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0()); 
@@ -97607,17 +97915,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1"
-    // InternalKiCool.g:29801:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
+    // InternalKiCool.g:29897:1: rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1 : ( RULE_STRING ) ;
     public final void rule__QuotedKeyStringValueAnnotation__ValuesAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29805:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29806:2: ( RULE_STRING )
+            // InternalKiCool.g:29901:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29902:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29806:2: ( RULE_STRING )
-            // InternalKiCool.g:29807:3: RULE_STRING
+            // InternalKiCool.g:29902:2: ( RULE_STRING )
+            // InternalKiCool.g:29903:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0()); 
@@ -97648,17 +97956,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1"
-    // InternalKiCool.g:29816:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29912:1: rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29820:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29821:2: ( ruleExtendedID )
+            // InternalKiCool.g:29916:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29917:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29821:2: ( ruleExtendedID )
-            // InternalKiCool.g:29822:3: ruleExtendedID
+            // InternalKiCool.g:29917:2: ( ruleExtendedID )
+            // InternalKiCool.g:29918:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()); 
@@ -97693,17 +98001,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3"
-    // InternalKiCool.g:29831:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
+    // InternalKiCool.g:29927:1: rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3 : ( ruleExtendedID ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__TypeAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29835:1: ( ( ruleExtendedID ) )
-            // InternalKiCool.g:29836:2: ( ruleExtendedID )
+            // InternalKiCool.g:29931:1: ( ( ruleExtendedID ) )
+            // InternalKiCool.g:29932:2: ( ruleExtendedID )
             {
-            // InternalKiCool.g:29836:2: ( ruleExtendedID )
-            // InternalKiCool.g:29837:3: ruleExtendedID
+            // InternalKiCool.g:29932:2: ( ruleExtendedID )
+            // InternalKiCool.g:29933:3: ruleExtendedID
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0()); 
@@ -97738,17 +98046,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5"
-    // InternalKiCool.g:29846:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
+    // InternalKiCool.g:29942:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29850:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29851:2: ( RULE_STRING )
+            // InternalKiCool.g:29946:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29947:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29851:2: ( RULE_STRING )
-            // InternalKiCool.g:29852:3: RULE_STRING
+            // InternalKiCool.g:29947:2: ( RULE_STRING )
+            // InternalKiCool.g:29948:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0()); 
@@ -97779,17 +98087,17 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1"
-    // InternalKiCool.g:29861:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
+    // InternalKiCool.g:29957:1: rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1 : ( RULE_STRING ) ;
     public final void rule__QuotedTypedKeyStringValueAnnotation__ValuesAssignment_6_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29865:1: ( ( RULE_STRING ) )
-            // InternalKiCool.g:29866:2: ( RULE_STRING )
+            // InternalKiCool.g:29961:1: ( ( RULE_STRING ) )
+            // InternalKiCool.g:29962:2: ( RULE_STRING )
             {
-            // InternalKiCool.g:29866:2: ( RULE_STRING )
-            // InternalKiCool.g:29867:3: RULE_STRING
+            // InternalKiCool.g:29962:2: ( RULE_STRING )
+            // InternalKiCool.g:29963:3: RULE_STRING
             {
             if ( state.backtracking==0 ) {
                before(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0()); 
@@ -101415,22 +101723,22 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_49s = "\12\uffff";
-    static final String dfa_50s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_50s = "\2\uffff\1\6\5\uffff\2\6";
     static final String dfa_51s = "\1\145\1\6\1\4\3\6\2\uffff\2\4";
     static final String dfa_52s = "\1\145\1\6\1\151\1\6\1\10\1\7\2\uffff\2\151";
-    static final String dfa_53s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_53s = "\6\uffff\1\1\1\2\2\uffff";
     static final String dfa_54s = "\12\uffff}>";
     static final String[] dfa_55s = {
             "\1\1",
             "\1\2",
-            "\5\7\1\uffff\1\7\15\uffff\1\4\16\uffff\1\3\40\uffff\1\7\11\uffff\1\6\22\uffff\1\5\4\7",
+            "\5\6\1\uffff\1\6\15\uffff\1\4\16\uffff\1\3\40\uffff\1\6\11\uffff\1\7\22\uffff\1\5\4\6",
             "\1\10",
-            "\1\10\2\7",
-            "\1\7\1\11",
+            "\1\10\2\6",
+            "\1\6\1\11",
             "",
             "",
-            "\5\7\1\uffff\1\7\15\uffff\1\4\16\uffff\1\3\40\uffff\1\7\11\uffff\1\6\22\uffff\1\5\4\7",
-            "\5\7\1\uffff\1\7\15\uffff\1\7\57\uffff\1\7\11\uffff\1\6\22\uffff\5\7"
+            "\5\6\1\uffff\1\6\15\uffff\1\4\16\uffff\1\3\40\uffff\1\6\11\uffff\1\7\22\uffff\1\5\4\6",
+            "\5\6\1\uffff\1\6\15\uffff\1\6\57\uffff\1\6\11\uffff\1\7\22\uffff\5\6"
     };
 
     static final short[] dfa_49 = DFA.unpackEncodedString(dfa_49s);
@@ -101530,31 +101838,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             return "4346:1: rule__QuotedStringAnnotation__Alternatives : ( ( superQuotedStringAnnotation ) | ( ruleJsonAnnotation ) );";
         }
     }
-    static final String dfa_63s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
-    static final String dfa_64s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\1\6\1\uffff\2\4\6\6\1\0";
-    static final String dfa_65s = "\1\146\1\uffff\1\6\1\160\1\6\1\10\1\7\2\uffff\1\160\1\uffff\2\160\1\6\1\160\1\6\1\160\1\6\1\160\1\0";
-    static final String dfa_66s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\11\uffff";
+    static final String dfa_63s = "\3\uffff\1\7\4\uffff\1\11\2\uffff\2\7\1\uffff\1\11\1\uffff\1\11\1\uffff\1\11\1\uffff";
+    static final String dfa_64s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\1\uffff\1\6\2\uffff\2\4\6\6\1\0";
+    static final String dfa_65s = "\1\146\1\uffff\1\6\1\160\1\6\1\10\1\7\1\uffff\1\160\2\uffff\2\160\1\6\1\160\1\6\1\160\1\6\1\160\1\0";
+    static final String dfa_66s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\2\1\3\11\uffff";
     static final String dfa_67s = "\23\uffff\1\0}>";
     static final String[] dfa_68s = {
             "\1\1\133\uffff\1\2",
             "",
             "\1\3",
-            "\2\10\1\11\2\10\2\12\15\uffff\1\5\13\uffff\2\12\1\uffff\1\4\30\uffff\5\12\3\uffff\1\12\4\uffff\1\7\6\uffff\1\12\3\uffff\4\12\3\uffff\2\12\4\uffff\1\6\4\12\1\uffff\6\12",
+            "\2\11\1\10\2\11\2\7\15\uffff\1\5\13\uffff\2\7\1\uffff\1\4\30\uffff\5\7\3\uffff\1\7\4\uffff\1\12\6\uffff\1\7\3\uffff\4\7\3\uffff\2\7\4\uffff\1\6\4\7\1\uffff\6\7",
             "\1\13",
-            "\1\13\2\10",
+            "\1\13\2\11",
             "\1\14",
             "",
+            "\1\11\2\uffff\2\11\15\uffff\1\11\13\uffff\2\11\1\7\1\15\2\uffff\20\7\6\uffff\5\11\3\uffff\1\11\4\uffff\1\7\6\uffff\1\11\1\uffff\1\11\1\uffff\4\11\1\uffff\1\7\1\uffff\2\11\1\7\3\uffff\5\11\1\uffff\6\11",
             "",
-            "\1\10\2\uffff\2\10\15\uffff\1\10\13\uffff\2\10\1\12\1\15\2\uffff\20\12\6\uffff\5\10\3\uffff\1\10\4\uffff\1\12\6\uffff\1\10\1\uffff\1\10\1\uffff\4\10\1\uffff\1\12\1\uffff\2\10\1\12\3\uffff\5\10\1\uffff\6\10",
             "",
-            "\2\10\1\11\2\10\2\12\15\uffff\1\5\13\uffff\2\12\1\uffff\1\4\30\uffff\5\12\3\uffff\1\12\4\uffff\1\7\6\uffff\1\12\3\uffff\4\12\3\uffff\2\12\4\uffff\1\6\4\12\1\uffff\6\12",
-            "\2\10\1\11\2\10\2\12\15\uffff\1\10\13\uffff\2\12\32\uffff\5\12\3\uffff\1\12\4\uffff\1\7\6\uffff\1\12\3\uffff\4\12\3\uffff\2\12\5\uffff\4\12\1\uffff\6\12",
+            "\2\11\1\10\2\11\2\7\15\uffff\1\5\13\uffff\2\7\1\uffff\1\4\30\uffff\5\7\3\uffff\1\7\4\uffff\1\12\6\uffff\1\7\3\uffff\4\7\3\uffff\2\7\4\uffff\1\6\4\7\1\uffff\6\7",
+            "\2\11\1\10\2\11\2\7\15\uffff\1\11\13\uffff\2\7\32\uffff\5\7\3\uffff\1\7\4\uffff\1\12\6\uffff\1\7\3\uffff\4\7\3\uffff\2\7\5\uffff\4\7\1\uffff\6\7",
             "\1\16",
-            "\1\10\2\uffff\2\10\15\uffff\1\10\13\uffff\2\10\1\uffff\1\17\2\uffff\20\12\6\uffff\5\10\3\uffff\1\10\4\uffff\1\12\6\uffff\1\10\1\uffff\1\10\1\uffff\4\10\3\uffff\2\10\1\12\3\uffff\5\10\1\uffff\6\10",
+            "\1\11\2\uffff\2\11\15\uffff\1\11\13\uffff\2\11\1\uffff\1\17\2\uffff\20\7\6\uffff\5\11\3\uffff\1\11\4\uffff\1\7\6\uffff\1\11\1\uffff\1\11\1\uffff\4\11\3\uffff\2\11\1\7\3\uffff\5\11\1\uffff\6\11",
             "\1\20",
-            "\1\10\2\uffff\2\10\15\uffff\1\10\13\uffff\2\10\1\uffff\1\21\2\uffff\20\12\6\uffff\5\10\3\uffff\1\10\4\uffff\1\12\6\uffff\1\10\1\uffff\1\10\1\uffff\4\10\3\uffff\2\10\1\12\3\uffff\5\10\1\uffff\6\10",
+            "\1\11\2\uffff\2\11\15\uffff\1\11\13\uffff\2\11\1\uffff\1\21\2\uffff\20\7\6\uffff\5\11\3\uffff\1\11\4\uffff\1\7\6\uffff\1\11\1\uffff\1\11\1\uffff\4\11\3\uffff\2\11\1\7\3\uffff\5\11\1\uffff\6\11",
             "\1\22",
-            "\1\10\2\uffff\2\10\15\uffff\1\10\13\uffff\2\10\1\uffff\1\23\2\uffff\20\12\6\uffff\5\10\3\uffff\1\10\4\uffff\1\12\6\uffff\1\10\1\uffff\1\10\1\uffff\4\10\3\uffff\2\10\1\12\3\uffff\5\10\1\uffff\6\10",
+            "\1\11\2\uffff\2\11\15\uffff\1\11\13\uffff\2\11\1\uffff\1\23\2\uffff\20\7\6\uffff\5\11\3\uffff\1\11\4\uffff\1\7\6\uffff\1\11\1\uffff\1\11\1\uffff\4\11\3\uffff\2\11\1\7\3\uffff\5\11\1\uffff\6\11",
             "\1\uffff"
     };
     static final short[] dfa_63 = DFA.unpackEncodedString(dfa_63s);
@@ -101591,9 +101899,9 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                         int index41_19 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred74_InternalKiCool()) ) {s = 8;}
+                        if ( (synpred74_InternalKiCool()) ) {s = 9;}
 
-                        else if ( (true) ) {s = 10;}
+                        else if ( (true) ) {s = 7;}
 
                          
                         input.seek(index41_19);
@@ -101607,18 +101915,18 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_69s = "\6\uffff\1\1\1\2\2\uffff";
+    static final String dfa_69s = "\6\uffff\1\2\1\1\2\uffff";
     static final String[] dfa_70s = {
             "\1\1",
             "\1\2",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\16\uffff\1\3\40\uffff\1\7\34\uffff\1\5\4\7",
+            "\5\7\1\uffff\1\6\15\uffff\1\4\16\uffff\1\3\40\uffff\1\6\34\uffff\1\5\4\6",
             "\1\10",
-            "\1\10\2\6",
-            "\1\7\1\11",
+            "\1\10\2\7",
+            "\1\6\1\11",
             "",
             "",
-            "\5\6\1\uffff\1\7\15\uffff\1\4\16\uffff\1\3\40\uffff\1\7\34\uffff\1\5\4\7",
-            "\5\6\1\uffff\1\7\15\uffff\1\6\57\uffff\1\7\34\uffff\5\7"
+            "\5\7\1\uffff\1\6\15\uffff\1\4\16\uffff\1\3\40\uffff\1\6\34\uffff\1\5\4\6",
+            "\5\7\1\uffff\1\6\15\uffff\1\7\57\uffff\1\6\34\uffff\5\6"
     };
     static final short[] dfa_69 = DFA.unpackEncodedString(dfa_69s);
     static final short[][] dfa_70 = unpackEncodedStringArray(dfa_70s);
@@ -101642,19 +101950,19 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     }
     static final String dfa_71s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\2\uffff\2\4";
     static final String dfa_72s = "\1\146\1\uffff\1\6\1\145\1\6\1\10\1\7\2\uffff\1\145\1\115";
-    static final String dfa_73s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
+    static final String dfa_73s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
     static final String[] dfa_74s = {
             "\1\1\133\uffff\1\2",
             "",
             "\1\3",
-            "\5\7\17\uffff\1\5\16\uffff\1\4\45\uffff\1\10\27\uffff\1\6",
+            "\5\10\17\uffff\1\5\16\uffff\1\4\45\uffff\1\7\27\uffff\1\6",
             "\1\11",
-            "\1\11\2\7",
+            "\1\11\2\10",
             "\1\12",
             "",
             "",
-            "\5\7\17\uffff\1\5\16\uffff\1\4\45\uffff\1\10\27\uffff\1\6",
-            "\5\7\17\uffff\1\7\64\uffff\1\10"
+            "\5\10\17\uffff\1\5\16\uffff\1\4\45\uffff\1\7\27\uffff\1\6",
+            "\5\10\17\uffff\1\10\64\uffff\1\7"
     };
     static final char[] dfa_71 = DFA.unpackEncodedStringToUnsignedChars(dfa_71s);
     static final char[] dfa_72 = DFA.unpackEncodedStringToUnsignedChars(dfa_72s);
@@ -101679,24 +101987,24 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
     }
     static final String dfa_75s = "\14\uffff";
-    static final String dfa_76s = "\3\uffff\1\11\6\uffff\2\11";
+    static final String dfa_76s = "\3\uffff\1\7\6\uffff\2\7";
     static final String dfa_77s = "\1\12\1\uffff\1\6\1\4\2\6\1\7\3\uffff\2\4";
     static final String dfa_78s = "\1\146\1\uffff\1\6\1\146\2\6\1\7\3\uffff\2\146";
-    static final String dfa_79s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\4\2\uffff";
+    static final String dfa_79s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
     static final String dfa_80s = "\14\uffff}>";
     static final String[] dfa_81s = {
             "\1\1\133\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\15\uffff\1\5\16\uffff\1\4\45\uffff\1\7\27\uffff\1\6\1\11",
+            "\1\11\1\uffff\1\7\3\uffff\1\7\15\uffff\1\5\16\uffff\1\4\45\uffff\1\10\27\uffff\1\6\1\7",
             "\1\12",
             "\1\12",
             "\1\13",
             "",
             "",
             "",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\15\uffff\1\5\16\uffff\1\4\45\uffff\1\7\27\uffff\1\6\1\11",
-            "\1\10\1\uffff\1\11\3\uffff\1\11\102\uffff\1\7\30\uffff\1\11"
+            "\1\11\1\uffff\1\7\3\uffff\1\7\15\uffff\1\5\16\uffff\1\4\45\uffff\1\10\27\uffff\1\6\1\7",
+            "\1\11\1\uffff\1\7\3\uffff\1\7\102\uffff\1\10\30\uffff\1\7"
     };
 
     static final short[] dfa_75 = DFA.unpackEncodedString(dfa_75s);

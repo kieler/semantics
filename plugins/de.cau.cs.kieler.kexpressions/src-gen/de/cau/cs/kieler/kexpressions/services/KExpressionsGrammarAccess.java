@@ -868,22 +868,22 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ShiftRightOperator
 		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftRightUnsignedExpression'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.14/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.14/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.14/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignKeyword_1_1_2_0() { return cGreaterThanSignGreaterThanSignKeyword_1_1_2_0; }
 		
-		//subExpressions+=ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.14/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.14/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class ShiftLeftRightUnsignedExpressionElements extends AbstractParserRuleElementFinder {
@@ -914,94 +914,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//ShiftLeftRightUnsignedExpression Expression:
-		//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftRightUnsignedExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.0'
 		public RuleCall getSumExpressionParserRuleCall_0() { return cSumExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=ShiftLeftOperator subExpressions+=ShiftRightRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=ShiftLeftOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//ShiftLeftOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftLeftOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorShiftLeftOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=ShiftRightRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//ShiftRightRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'<<'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getLessThanSignLessThanSignKeyword_1_0_2_0() { return cLessThanSignLessThanSignKeyword_1_0_2_0; }
 		
-		//subExpressions+=ShiftRightRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//ShiftRightRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsShiftRightRightUnsignedExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=ShiftRightUnsignedOperator subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('>>>' subExpressions+=ShiftLeftRightExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'>>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_1_2_0() { return cGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_1_2_0; }
 		
-		//subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.15/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class ShiftRightRightUnsignedExpressionElements extends AbstractParserRuleElementFinder {
@@ -1032,94 +1020,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//ShiftRightRightUnsignedExpression Expression:
-		//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightRightUnsignedExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.0'
 		public RuleCall getSumExpressionParserRuleCall_0() { return cSumExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=ShiftRightOperator subExpressions+=ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=ShiftRightOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//ShiftRightOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignKeyword_1_0_2_0() { return cGreaterThanSignGreaterThanSignKeyword_1_0_2_0; }
 		
-		//subExpressions+=ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//ShiftLeftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsShiftLeftRightUnsignedExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=ShiftRightUnsignedOperator subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('>>>' subExpressions+=ShiftLeftRightExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'>>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_1_2_0() { return cGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_1_2_0; }
 		
-		//subExpressions+=ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//ShiftLeftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.16/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsShiftLeftRightExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class ShiftLeftExpressionElements extends AbstractParserRuleElementFinder {
@@ -1138,50 +1114,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//ShiftLeftExpression Expression:
-		//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-		//subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.0'
 		public RuleCall getSumExpressionParserRuleCall_0() { return cSumExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression) ('<<'
-		//subExpressions+=ShiftRightExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftLeftOperator subExpressions+=ShiftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=ShiftLeftOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//ShiftLeftOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftLeftOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftLeftOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=ShiftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//ShiftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsShiftRightExpressionParserRuleCall_1_1_1_0; }
 		
-		//('<<' subExpressions+=ShiftRightExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'<<'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getLessThanSignLessThanSignKeyword_1_2_0() { return cLessThanSignLessThanSignKeyword_1_2_0; }
 		
-		//subExpressions+=ShiftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//ShiftRightExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.17/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsShiftRightExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class ShiftRightExpressionElements extends AbstractParserRuleElementFinder {
@@ -1200,50 +1172,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//ShiftRightExpression Expression:
-		//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-		//subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.0'
 		public RuleCall getSumExpressionParserRuleCall_0() { return cSumExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
-		//('>>' subExpressions+=ShiftRightUnsignedExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=ShiftRightOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//ShiftRightOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftRightOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=ShiftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//ShiftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0; }
 		
-		//('>>' subExpressions+=ShiftRightUnsignedExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignKeyword_1_2_0() { return cGreaterThanSignGreaterThanSignKeyword_1_2_0; }
 		
-		//subExpressions+=ShiftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//ShiftRightUnsignedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.18/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class ShiftRightUnsignedExpressionElements extends AbstractParserRuleElementFinder {
@@ -1262,50 +1230,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsSumExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//ShiftRightUnsignedExpression Expression:
-		//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightUnsignedExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-		//subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.0'
 		public RuleCall getSumExpressionParserRuleCall_0() { return cSumExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator subExpressions+=SumExpression) ('>>>'
-		//subExpressions+=SumExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ShiftRightUnsignedOperator subExpressions+=SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//ShiftRightUnsignedOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0() { return cOperatorShiftRightUnsignedOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsSumExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsSumExpressionParserRuleCall_1_1_1_0; }
 		
-		//('>>>' subExpressions+=SumExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'>>>'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0() { return cGreaterThanSignGreaterThanSignGreaterThanSignKeyword_1_2_0; }
 		
-		//subExpressions+=SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//SumExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.19/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsSumExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsSumExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class SumExpressionElements extends AbstractParserRuleElementFinder {
@@ -1336,92 +1300,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsAddExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//SumExpression Expression:
-		//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)
-		//	('+' subExpressions+=SubExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=AddExpression) ('-'
-		//	subExpressions+=AddExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/SumExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)
-		//('+' subExpressions+=SubExpression)* | {OperatorExpression.subExpressions+=current} (operator=SubOperator
-		//subExpressions+=AddExpression) ('-' subExpressions+=AddExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.0'
 		public RuleCall getProductExpressionParserRuleCall_0() { return cProductExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
-		//subExpressions+=SubExpression)* | {OperatorExpression.subExpressions+=current} (operator=SubOperator
-		//subExpressions+=AddExpression) ('-' subExpressions+=AddExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression) ('+'
-		//subExpressions+=SubExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=AddOperator subExpressions+=SubExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=AddOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//AddOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorAddOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorAddOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=SubExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//SubExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('+' subExpressions+=SubExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'+'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getPlusSignKeyword_1_0_2_0() { return cPlusSignKeyword_1_0_2_0; }
 		
-		//subExpressions+=SubExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//SubExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsSubExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsSubExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=AddExpression) ('-'
-		//subExpressions+=AddExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=SubOperator subExpressions+=AddExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorSubOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorSubOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=AddExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//AddExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsAddExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsAddExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('-' subExpressions+=AddExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'-'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getHyphenMinusKeyword_1_1_2_0() { return cHyphenMinusKeyword_1_1_2_0; }
 		
-		//subExpressions+=AddExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//AddExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.20/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsAddExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsAddExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class AddExpressionElements extends AbstractParserRuleElementFinder {
@@ -1440,54 +1394,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsProductExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//// Add Expression Rule
-		//// The rule directs the 'sub expression' rule and creates an operator expression for additions
-		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-		//// Example: 1 + 2
-		//AddExpression Expression:
-		//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator
-		//	subExpressions+=ProductExpression) ('+' subExpressions+=ProductExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/AddExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=ProductExpression)
-		//('+' subExpressions+=ProductExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.0'
 		public RuleCall getProductExpressionParserRuleCall_0() { return cProductExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=ProductExpression) ('+'
-		//subExpressions+=ProductExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=AddOperator subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=AddOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//AddOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorAddOperatorEnumRuleCall_1_1_0_0() { return cOperatorAddOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsProductExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsProductExpressionParserRuleCall_1_1_1_0; }
 		
-		//('+' subExpressions+=ProductExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'+'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getPlusSignKeyword_1_2_0() { return cPlusSignKeyword_1_2_0; }
 		
-		//subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.21/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsProductExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsProductExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class SubExpressionElements extends AbstractParserRuleElementFinder {
@@ -1506,54 +1452,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsProductExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//// Sub Expression Rule
-		//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
-		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-		//// Example: var(A) - i
-		//SubExpression Expression:
-		//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
-		//	subExpressions+=ProductExpression) ('-' subExpressions+=ProductExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/SubExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ProductExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=ProductExpression)
-		//('-' subExpressions+=ProductExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.0'
 		public RuleCall getProductExpressionParserRuleCall_0() { return cProductExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=ProductExpression) ('-'
-		//subExpressions+=ProductExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=SubOperator subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorSubOperatorEnumRuleCall_1_1_0_0() { return cOperatorSubOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsProductExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsProductExpressionParserRuleCall_1_1_1_0; }
 		
-		//('-' subExpressions+=ProductExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'-'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getHyphenMinusKeyword_1_2_0() { return cHyphenMinusKeyword_1_2_0; }
 		
-		//subExpressions+=ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//ProductExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.22/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsProductExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsProductExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class ProductExpressionElements extends AbstractParserRuleElementFinder {
@@ -1595,132 +1533,115 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_2_1 = (Assignment)cGroup_1_2_2.eContents().get(1);
 		private final RuleCall cSubExpressionsMultDivExpressionParserRuleCall_1_2_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_2_1.eContents().get(0);
 		
-		//ProductExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//	('*' subExpressions+=DivModExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//	subExpressions+=MultModExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//	subExpressions+=MultDivExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ProductExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//('*' subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=DivOperator
-		//subExpressions+=MultModExpression) ('/' subExpressions+=MultModExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=DivOperator
-		//subExpressions+=MultModExpression) ('/' subExpressions+=MultModExpression)* |
-		//{OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=MultOperator subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorMultOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorMultOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('*' subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'*'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getAsteriskKeyword_1_0_2_0() { return cAsteriskKeyword_1_0_2_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=DivOperator subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorDivOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('/' subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'/'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getSolidusKeyword_1_1_2_0() { return cSolidusKeyword_1_1_2_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_2_0() { return cOperatorExpressionSubExpressionsAction_1_2_0; }
 		
-		//operator=ModOperator subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Group getGroup_1_2_1() { return cGroup_1_2_1; }
 		
-		//operator=ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_2_1_0() { return cOperatorAssignment_1_2_1_0; }
 		
-		//ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorModOperatorEnumRuleCall_1_2_1_0_0() { return cOperatorModOperatorEnumRuleCall_1_2_1_0_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1_1() { return cSubExpressionsAssignment_1_2_1_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_2_1_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_2_1_1_0; }
 		
-		//('%' subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.2'
 		public Group getGroup_1_2_2() { return cGroup_1_2_2; }
 		
-		//'%'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.2/@elements.0'
 		public Keyword getPercentSignKeyword_1_2_2_0() { return cPercentSignKeyword_1_2_2_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_2_1() { return cSubExpressionsAssignment_1_2_2_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.23/@alternatives/@elements.1/@elements.2/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_2_2_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_2_2_1_0; }
 	}
 	public class MultDivExpressionElements extends AbstractParserRuleElementFinder {
@@ -1751,92 +1672,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//MultDivExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//	('*' subExpressions+=DivModExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//	subExpressions+=MultModExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/MultDivExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//('*' subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=DivOperator
-		//subExpressions+=MultModExpression) ('/' subExpressions+=MultModExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=DivOperator
-		//subExpressions+=MultModExpression) ('/' subExpressions+=MultModExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=MultOperator subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorMultOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorMultOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('*' subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'*'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getAsteriskKeyword_1_0_2_0() { return cAsteriskKeyword_1_0_2_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=DivOperator subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorDivOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('/' subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'/'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getSolidusKeyword_1_1_2_0() { return cSolidusKeyword_1_1_2_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.24/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class MultModExpressionElements extends AbstractParserRuleElementFinder {
@@ -1867,92 +1778,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//MultModExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//	('*' subExpressions+=DivModExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//	subExpressions+=MultDivExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/MultModExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-		//('*' subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//subExpressions+=MultDivExpression) ('%' subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)* | {OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//subExpressions+=MultDivExpression) ('%' subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression) ('*'
-		//subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=MultOperator subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorMultOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorMultOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('*' subExpressions+=DivModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'*'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getAsteriskKeyword_1_0_2_0() { return cAsteriskKeyword_1_0_2_0; }
 		
-		//subExpressions+=DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//DivModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsDivModExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=ModOperator subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorModOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('%' subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'%'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getPercentSignKeyword_1_1_2_0() { return cPercentSignKeyword_1_1_2_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.25/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class DivModExpressionElements extends AbstractParserRuleElementFinder {
@@ -1983,92 +1884,82 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_1_2_1 = (Assignment)cGroup_1_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_2_1.eContents().get(0);
 		
-		//DivModExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression)
-		//	('/' subExpressions+=MultModExpression)*
-		//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//	subExpressions+=MultDivExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/DivModExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression)
-		//('/' subExpressions+=MultModExpression)* | {OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//subExpressions+=MultDivExpression) ('%' subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//subExpressions+=MultModExpression)* | {OperatorExpression.subExpressions+=current} (operator=ModOperator
-		//subExpressions+=MultDivExpression) ('%' subExpressions+=MultDivExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1'
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-		//subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
-		//operator=DivOperator subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.1'
 		public Group getGroup_1_0_1() { return cGroup_1_0_1; }
 		
-		//operator=DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_0_1_0() { return cOperatorAssignment_1_0_1_0; }
 		
-		//DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorDivOperatorEnumRuleCall_1_0_1_0_0() { return cOperatorDivOperatorEnumRuleCall_1_0_1_0_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_1_1() { return cSubExpressionsAssignment_1_0_1_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_0_1_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_0_1_1_0; }
 		
-		//('/' subExpressions+=MultModExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.2'
 		public Group getGroup_1_0_2() { return cGroup_1_0_2; }
 		
-		//'/'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.2/@elements.0'
 		public Keyword getSolidusKeyword_1_0_2_0() { return cSolidusKeyword_1_0_2_0; }
 		
-		//subExpressions+=MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_0_2_1() { return cSubExpressionsAssignment_1_0_2_1; }
 		
-		//MultModExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.0/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultModExpressionParserRuleCall_1_0_2_1_0() { return cSubExpressionsMultModExpressionParserRuleCall_1_0_2_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-		//subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
-		//operator=ModOperator subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Group getGroup_1_1_1() { return cGroup_1_1_1; }
 		
-		//operator=ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_1_0() { return cOperatorAssignment_1_1_1_0; }
 		
-		//ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_1_0_0() { return cOperatorModOperatorEnumRuleCall_1_1_1_0_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1_1() { return cSubExpressionsAssignment_1_1_1_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_1_1_1_0; }
 		
-		//('%' subExpressions+=MultDivExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.2'
 		public Group getGroup_1_1_2() { return cGroup_1_1_2; }
 		
-		//'%'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.2/@elements.0'
 		public Keyword getPercentSignKeyword_1_1_2_0() { return cPercentSignKeyword_1_1_2_0; }
 		
-		//subExpressions+=MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_2_1() { return cSubExpressionsAssignment_1_1_2_1; }
 		
-		//MultDivExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.26/@alternatives/@elements.1/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0() { return cSubExpressionsMultDivExpressionParserRuleCall_1_1_2_1_0; }
 	}
 	public class MultExpressionElements extends AbstractParserRuleElementFinder {
@@ -2087,54 +1978,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//// Mult Expression Rule
-		//// The rule directs the 'div expression' rule and creates an operator expression for multiplications
-		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-		//// Example: 2 * 4
-		//MultExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-		//	subExpressions+=NegExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/MultExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=MultOperator subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//MultOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorMultOperatorEnumRuleCall_1_1_0_0() { return cOperatorMultOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_1_1_0; }
 		
-		//('*' subExpressions+=NegExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'*'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getAsteriskKeyword_1_2_0() { return cAsteriskKeyword_1_2_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.27/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class DivExpressionElements extends AbstractParserRuleElementFinder {
@@ -2153,54 +2036,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//// Div Expression Rule
-		//// The rule directs the 'mod expression' rule and creates an operator expression for divisions
-		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-		//// Example: 2 / 4
-		//DivExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=NegExpression) ('/'
-		//	subExpressions+=NegExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/DivExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=NegExpression) ('/'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=NegExpression) ('/'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=DivOperator subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//DivOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorDivOperatorEnumRuleCall_1_1_0_0() { return cOperatorDivOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_1_1_0; }
 		
-		//('/' subExpressions+=NegExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'/'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getSolidusKeyword_1_2_0() { return cSolidusKeyword_1_2_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.28/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class ModExpressionElements extends AbstractParserRuleElementFinder {
@@ -2219,54 +2094,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//// Mod Expression Rule
-		//// The rule directs the 'neg expression' rule and creates an operator expression for modulo operations
-		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-		//// Example: i % j
-		//ModExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=NegExpression) ('%'
-		//	subExpressions+=NegExpression)*)?;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ModExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=NegExpression) ('%'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.0'
 		public RuleCall getNegExpressionParserRuleCall_0() { return cNegExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=NegExpression) ('%'
-		//subExpressions+=NegExpression)*)?
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1'
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.0'
 		public Action getOperatorExpressionSubExpressionsAction_1_0() { return cOperatorExpressionSubExpressionsAction_1_0; }
 		
-		//operator=ModOperator subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.1'
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//operator=ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.1/@elements.0'
 		public Assignment getOperatorAssignment_1_1_0() { return cOperatorAssignment_1_1_0; }
 		
-		//ModOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.1/@elements.0/@terminal'
 		public RuleCall getOperatorModOperatorEnumRuleCall_1_1_0_0() { return cOperatorModOperatorEnumRuleCall_1_1_0_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.1/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_1_1() { return cSubExpressionsAssignment_1_1_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.1/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_1_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_1_1_0; }
 		
-		//('%' subExpressions+=NegExpression)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.2'
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//'%'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.2/@elements.0'
 		public Keyword getPercentSignKeyword_1_2_0() { return cPercentSignKeyword_1_2_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.2/@elements.1'
 		public Assignment getSubExpressionsAssignment_1_2_1() { return cSubExpressionsAssignment_1_2_1; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.29/@alternatives/@elements.1/@elements.2/@elements.1/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_1_2_1_0() { return cSubExpressionsNegExpressionParserRuleCall_1_2_1_0; }
 	}
 	public class NegExpressionElements extends AbstractParserRuleElementFinder {
@@ -2280,35 +2147,31 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsNegExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
 		private final RuleCall cTernaryOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//// Neg Expression Rule
-		//// The rule negates the actual instance or directs the atomic value expression rule if necessary. 
-		//// Example: -i, -2
-		//NegExpression Expression:
-		//	{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/NegExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression | TernaryOperation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} operator=SubOperator subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0'
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{OperatorExpression}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0/@elements.0'
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
-		//operator=SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0/@elements.1'
 		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
 		
-		//SubOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0/@elements.1/@terminal'
 		public RuleCall getOperatorSubOperatorEnumRuleCall_0_1_0() { return cOperatorSubOperatorEnumRuleCall_0_1_0; }
 		
-		//subExpressions+=NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0/@elements.2'
 		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
 		
-		//NegExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.0/@elements.2/@terminal'
 		public RuleCall getSubExpressionsNegExpressionParserRuleCall_0_2_0() { return cSubExpressionsNegExpressionParserRuleCall_0_2_0; }
 		
-		//TernaryOperation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.30/@alternatives/@elements.1'
 		public RuleCall getTernaryOperationParserRuleCall_1() { return cTernaryOperationParserRuleCall_1; }
 	}
 	public class TernaryOperationElements extends AbstractParserRuleElementFinder {
@@ -2327,51 +2190,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0 = (RuleCall)cSubExpressionsAssignment_0_5.eContents().get(0);
 		private final RuleCall cFBYExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//TernaryOperation Expression:
-		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-		//	| FBYExpression;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/TernaryOperation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression | FBYExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0'
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{OperatorExpression}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.0'
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
-		//subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.1'
 		public Assignment getSubExpressionsAssignment_0_1() { return cSubExpressionsAssignment_0_1; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.1/@terminal'
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
 		
-		//operator=ConditionalOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.2'
 		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
 		
-		//ConditionalOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.2/@terminal'
 		public RuleCall getOperatorConditionalOperatorEnumRuleCall_0_2_0() { return cOperatorConditionalOperatorEnumRuleCall_0_2_0; }
 		
-		//subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.3'
 		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.3/@terminal'
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
 		
-		//':'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.4'
 		public Keyword getColonKeyword_0_4() { return cColonKeyword_0_4; }
 		
-		//subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.5'
 		public Assignment getSubExpressionsAssignment_0_5() { return cSubExpressionsAssignment_0_5; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.0/@elements.5/@terminal'
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0; }
 		
-		//FBYExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.31/@alternatives/@elements.1'
 		public RuleCall getFBYExpressionParserRuleCall_1() { return cFBYExpressionParserRuleCall_1; }
 	}
 	public class FBYExpressionElements extends AbstractParserRuleElementFinder {
@@ -2387,41 +2245,37 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
 		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//FBYExpression Expression:
-		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
-		//	subExpressions+=AtomicValuedExpression
-		//	| AtomicValuedExpression;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/FBYExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression
-		//| AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0'
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{OperatorExpression}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.0'
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
-		//subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.1'
 		public Assignment getSubExpressionsAssignment_0_1() { return cSubExpressionsAssignment_0_1; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.1/@terminal'
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
 		
-		//operator=FBYOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.2'
 		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
 		
-		//FBYOperator
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.2/@terminal'
 		public RuleCall getOperatorFBYOperatorEnumRuleCall_0_2_0() { return cOperatorFBYOperatorEnumRuleCall_0_2_0; }
 		
-		//subExpressions+=AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.3'
 		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.0/@elements.3/@terminal'
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
 		
-		//AtomicValuedExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.32/@alternatives/@elements.1'
 		public RuleCall getAtomicValuedExpressionParserRuleCall_1() { return cAtomicValuedExpressionParserRuleCall_1; }
 	}
 	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
@@ -2439,56 +2293,43 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRandomizeCallParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cTextExpressionParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
-		//// Atomic Expression Rule
-		//// An atomic expression is either a simple boolean value, a test expression, another boolean expression
-		//// encapsulated in braces, a function call or a text expression.
-		//// Basically, the rule chain may start over again at this point.     
-		//AtomicExpression Expression:
-		//	BoolValue
-		//	| ValuedObjectTestExpression
-		//	| '(' BoolExpression ')'
-		//	| ReferenceCall
-		//	| FunctionCall
-		//	| RandomCall
-		//	| RandomizeCall
-		//	| TextExpression;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/AtomicExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | FunctionCall | RandomCall |
-		//RandomizeCall | TextExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//BoolValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.0'
 		public RuleCall getBoolValueParserRuleCall_0() { return cBoolValueParserRuleCall_0; }
 		
-		//ValuedObjectTestExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.1'
 		public RuleCall getValuedObjectTestExpressionParserRuleCall_1() { return cValuedObjectTestExpressionParserRuleCall_1; }
 		
-		//'(' BoolExpression ')'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.2'
 		public Group getGroup_2() { return cGroup_2; }
 		
-		//'('
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.2/@elements.0'
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 		
-		//BoolExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.2/@elements.1'
 		public RuleCall getBoolExpressionParserRuleCall_2_1() { return cBoolExpressionParserRuleCall_2_1; }
 		
-		//')'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.2/@elements.2'
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
 		
-		//ReferenceCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.3'
 		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
 		
-		//FunctionCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.4'
 		public RuleCall getFunctionCallParserRuleCall_4() { return cFunctionCallParserRuleCall_4; }
 		
-		//RandomCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.5'
 		public RuleCall getRandomCallParserRuleCall_5() { return cRandomCallParserRuleCall_5; }
 		
-		//RandomizeCall
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.6'
 		public RuleCall getRandomizeCallParserRuleCall_6() { return cRandomizeCallParserRuleCall_6; }
 		
-		//TextExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.33/@alternatives/@elements.7'
 		public RuleCall getTextExpressionParserRuleCall_7() { return cTextExpressionParserRuleCall_7; }
 	}
 	public class AtomicValuedExpressionElements extends AbstractParserRuleElementFinder {
@@ -2504,20 +2345,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
 		private final RuleCall cAtomicExpressionParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
-		//// Atomic Valued Expression Rule
-		//// An atomic valued expression is either a simple int float or string literal, another valued expression
-		//// encapsulated in braces, or a atomic expression.
-		//// Basically, the rule chain may start over again at this point.     
-		//AtomicValuedExpression Expression:
-		//	IntValue
-		//	| FloatValue
-		//	| StringValue
-		//	| VectorValue
-		//	| '(' ValuedExpression ')'
-		//	| AtomicExpression;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/AtomicValuedExpression'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//IntValue | FloatValue | StringValue | VectorValue | '(' ValuedExpression ')' | AtomicExpression
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.34/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//IntValue
@@ -2559,7 +2390,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
 		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
 		private final RuleCall cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
+		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
+		private final Keyword cCommaKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0 = (RuleCall)cSubExpressionsAssignment_0_4_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
 		private final RuleCall cValuedObjectReferenceParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//// Valued Object Test Expression Rule
@@ -2567,15 +2402,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// valued object reference.
 		//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 		//ValuedObjectTestExpression Expression:
-		//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+		//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//	subExpressions+=ValuedObjectReference)? ')'
 		//	| ValuedObjectReference;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')' |
-		//ValuedObjectReference
+		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//subExpressions+=ValuedObjectReference)? ')' | ValuedObjectReference
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//subExpressions+=ValuedObjectReference)? ')'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{OperatorExpression}
@@ -2602,8 +2439,20 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObjectTestExpression
 		public RuleCall getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0() { return cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0; }
 		
+		//(',' subExpressions+=ValuedObjectReference)?
+		public Group getGroup_0_4() { return cGroup_0_4; }
+		
+		//','
+		public Keyword getCommaKeyword_0_4_0() { return cCommaKeyword_0_4_0; }
+		
+		//subExpressions+=ValuedObjectReference
+		public Assignment getSubExpressionsAssignment_0_4_1() { return cSubExpressionsAssignment_0_4_1; }
+		
+		//ValuedObjectReference
+		public RuleCall getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0() { return cSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0; }
+		
 		//')'
-		public Keyword getRightParenthesisKeyword_0_4() { return cRightParenthesisKeyword_0_4; }
+		public Keyword getRightParenthesisKeyword_0_5() { return cRightParenthesisKeyword_0_5; }
 		
 		//ValuedObjectReference
 		public RuleCall getValuedObjectReferenceParserRuleCall_1() { return cValuedObjectReferenceParserRuleCall_1; }
@@ -3372,13 +3221,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	'null';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{NullValue} 'null'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.84/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//{NullValue}
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.84/@alternatives/@elements.0'
 		public Action getNullValueAction_0() { return cNullValueAction_0; }
 		
-		//'null'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.84/@alternatives/@elements.1'
 		public Keyword getNullKeyword_1() { return cNullKeyword_1; }
 	}
 	public class JsonPragmaElements extends AbstractParserRuleElementFinder {
@@ -3390,27 +3239,25 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueJsonObjectValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
-		//// New Json Annotations
-		//JsonPragma:
-		//	'#' name=ExtendedID value=JsonObjectValue;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/JsonPragma'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'#' name=ExtendedID value=JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'#'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives/@elements.0'
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//value=JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives/@elements.2'
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 		
-		//JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.85/@alternatives/@elements.2/@terminal'
 		public RuleCall getValueJsonObjectValueParserRuleCall_2_0() { return cValueJsonObjectValueParserRuleCall_2_0; }
 	}
 	public class JsonAnnotationElements extends AbstractParserRuleElementFinder {
@@ -3422,26 +3269,25 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueJsonObjectValueParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
-		//JsonAnnotation:
-		//	'@' name=ExtendedID value=JsonObjectValue;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/JsonAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID value=JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//value=JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives/@elements.2'
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 		
-		//JsonObjectValue
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.86/@alternatives/@elements.2/@terminal'
 		public RuleCall getValueJsonObjectValueParserRuleCall_2_0() { return cValueJsonObjectValueParserRuleCall_2_0; }
 	}
 	public class PragmaElements extends AbstractParserRuleElementFinder {
@@ -3450,18 +3296,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPragmaParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cJsonPragmaParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//Pragma annotations::Pragma:
-		//	super | JsonPragma;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/Pragma'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | JsonPragma
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.87/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.87/@alternatives/@elements.0'
 		public RuleCall getPragmaParserRuleCall_0() { return cPragmaParserRuleCall_0; }
 		
-		//JsonPragma
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.87/@alternatives/@elements.1'
 		public RuleCall getJsonPragmaParserRuleCall_1() { return cJsonPragmaParserRuleCall_1; }
 	}
 	public class AnnotationElements extends AbstractParserRuleElementFinder {
@@ -3470,18 +3314,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//Annotation annotations::Annotation:
-		//	super | JsonAnnotation;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/Annotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.88/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.88/@alternatives/@elements.0'
 		public RuleCall getAnnotationParserRuleCall_0() { return cAnnotationParserRuleCall_0; }
 		
-		//JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.88/@alternatives/@elements.1'
 		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
 	}
 	public class ValuedAnnotationElements extends AbstractParserRuleElementFinder {
@@ -3490,18 +3332,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValuedAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//ValuedAnnotation annotations::Annotation:
-		//	super | JsonAnnotation;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ValuedAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.89/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.89/@alternatives/@elements.0'
 		public RuleCall getValuedAnnotationParserRuleCall_0() { return cValuedAnnotationParserRuleCall_0; }
 		
-		//JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.89/@alternatives/@elements.1'
 		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
 	}
 	public class QuotedStringAnnotationElements extends AbstractParserRuleElementFinder {
@@ -3510,18 +3350,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cQuotedStringAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cJsonAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//@Override
-		//QuotedStringAnnotation annotations::Annotation:
-		//	super | JsonAnnotation;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/QuotedStringAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//super | JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.90/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//super
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.90/@alternatives/@elements.0'
 		public RuleCall getQuotedStringAnnotationParserRuleCall_0() { return cQuotedStringAnnotationParserRuleCall_0; }
 		
-		//JsonAnnotation
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.90/@alternatives/@elements.1'
 		public RuleCall getJsonAnnotationParserRuleCall_1() { return cJsonAnnotationParserRuleCall_1; }
 	}
 	
@@ -3541,47 +3379,46 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNEEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cNEExclamationMarkEqualsSignKeyword_5_0 = (Keyword)cNEEnumLiteralDeclaration_5.eContents().get(0);
 		
-		//enum CompareOperator returns OperatorType:
-		//	EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!=";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/CompareOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//EQ="==" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="!="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//EQ="=="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.0'
 		public EnumLiteralDeclaration getEQEnumLiteralDeclaration_0() { return cEQEnumLiteralDeclaration_0; }
 		
-		//"=="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.0/@literal'
 		public Keyword getEQEqualsSignEqualsSignKeyword_0_0() { return cEQEqualsSignEqualsSignKeyword_0_0; }
 		
-		//LT="<"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.1'
 		public EnumLiteralDeclaration getLTEnumLiteralDeclaration_1() { return cLTEnumLiteralDeclaration_1; }
 		
-		//"<"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.1/@literal'
 		public Keyword getLTLessThanSignKeyword_1_0() { return cLTLessThanSignKeyword_1_0; }
 		
-		//LEQ="<="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.2'
 		public EnumLiteralDeclaration getLEQEnumLiteralDeclaration_2() { return cLEQEnumLiteralDeclaration_2; }
 		
-		//"<="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.2/@literal'
 		public Keyword getLEQLessThanSignEqualsSignKeyword_2_0() { return cLEQLessThanSignEqualsSignKeyword_2_0; }
 		
-		//GT=">"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.3'
 		public EnumLiteralDeclaration getGTEnumLiteralDeclaration_3() { return cGTEnumLiteralDeclaration_3; }
 		
-		//">"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.3/@literal'
 		public Keyword getGTGreaterThanSignKeyword_3_0() { return cGTGreaterThanSignKeyword_3_0; }
 		
-		//GEQ=">="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.4'
 		public EnumLiteralDeclaration getGEQEnumLiteralDeclaration_4() { return cGEQEnumLiteralDeclaration_4; }
 		
-		//">="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.4/@literal'
 		public Keyword getGEQGreaterThanSignEqualsSignKeyword_4_0() { return cGEQGreaterThanSignEqualsSignKeyword_4_0; }
 		
-		//NE="!="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.5'
 		public EnumLiteralDeclaration getNEEnumLiteralDeclaration_5() { return cNEEnumLiteralDeclaration_5; }
 		
-		//"!="
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.54/@alternatives/@elements.5/@literal'
 		public Keyword getNEExclamationMarkEqualsSignKeyword_5_0() { return cNEExclamationMarkEqualsSignKeyword_5_0; }
 	}
 	public class PreOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3589,14 +3426,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cPREEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPREPreKeyword_0 = (Keyword)cPREEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum PreOperator returns OperatorType:
-		//	PRE="pre";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/PreOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//PRE="pre"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.55/@alternatives'
 		public EnumLiteralDeclaration getPREEnumLiteralDeclaration() { return cPREEnumLiteralDeclaration; }
 		
-		//"pre"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.55/@alternatives/@literal'
 		public Keyword getPREPreKeyword_0() { return cPREPreKeyword_0; }
 	}
 	public class BitwiseNotOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3604,14 +3440,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cBITWISE_NOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_NOTTildeKeyword_0 = (Keyword)cBITWISE_NOTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum BitwiseNotOperator returns OperatorType:
-		//	BITWISE_NOT="~";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseNotOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//BITWISE_NOT="~"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.56/@alternatives'
 		public EnumLiteralDeclaration getBITWISE_NOTEnumLiteralDeclaration() { return cBITWISE_NOTEnumLiteralDeclaration; }
 		
-		//"~"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.56/@alternatives/@literal'
 		public Keyword getBITWISE_NOTTildeKeyword_0() { return cBITWISE_NOTTildeKeyword_0; }
 	}
 	public class BitwiseXOrOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3619,14 +3454,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cBITWISE_XOREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_XORCircumflexAccentKeyword_0 = (Keyword)cBITWISE_XOREnumLiteralDeclaration.eContents().get(0);
 		
-		//enum BitwiseXOrOperator returns OperatorType:
-		//	BITWISE_XOR="^";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseXOrOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//BITWISE_XOR="^"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.57/@alternatives'
 		public EnumLiteralDeclaration getBITWISE_XOREnumLiteralDeclaration() { return cBITWISE_XOREnumLiteralDeclaration; }
 		
-		//"^"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.57/@alternatives/@literal'
 		public Keyword getBITWISE_XORCircumflexAccentKeyword_0() { return cBITWISE_XORCircumflexAccentKeyword_0; }
 	}
 	public class BitwiseOrOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3634,14 +3468,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cBITWISE_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_ORVerticalLineKeyword_0 = (Keyword)cBITWISE_OREnumLiteralDeclaration.eContents().get(0);
 		
-		//enum BitwiseOrOperator returns OperatorType:
-		//	BITWISE_OR="|";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseOrOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//BITWISE_OR="|"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.58/@alternatives'
 		public EnumLiteralDeclaration getBITWISE_OREnumLiteralDeclaration() { return cBITWISE_OREnumLiteralDeclaration; }
 		
-		//"|"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.58/@alternatives/@literal'
 		public Keyword getBITWISE_ORVerticalLineKeyword_0() { return cBITWISE_ORVerticalLineKeyword_0; }
 	}
 	public class BitwiseAndOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3649,14 +3482,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cBITWISE_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cBITWISE_ANDAmpersandKeyword_0 = (Keyword)cBITWISE_ANDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum BitwiseAndOperator returns OperatorType:
-		//	BITWISE_AND="&";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseAndOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//BITWISE_AND="&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.59/@alternatives'
 		public EnumLiteralDeclaration getBITWISE_ANDEnumLiteralDeclaration() { return cBITWISE_ANDEnumLiteralDeclaration; }
 		
-		//"&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.59/@alternatives/@literal'
 		public Keyword getBITWISE_ANDAmpersandKeyword_0() { return cBITWISE_ANDAmpersandKeyword_0; }
 	}
 	public class NotOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3664,14 +3496,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cNOTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cNOTExclamationMarkKeyword_0 = (Keyword)cNOTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum NotOperator returns OperatorType:
-		//	NOT="!";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/NotOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//NOT="!"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.60/@alternatives'
 		public EnumLiteralDeclaration getNOTEnumLiteralDeclaration() { return cNOTEnumLiteralDeclaration; }
 		
-		//"!"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.60/@alternatives/@literal'
 		public Keyword getNOTExclamationMarkKeyword_0() { return cNOTExclamationMarkKeyword_0; }
 	}
 	public class AddOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3679,14 +3510,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cADDPlusSignKeyword_0 = (Keyword)cADDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum AddOperator returns OperatorType:
-		//	ADD="+";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/AddOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//ADD="+"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.61/@alternatives'
 		public EnumLiteralDeclaration getADDEnumLiteralDeclaration() { return cADDEnumLiteralDeclaration; }
 		
-		//"+"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.61/@alternatives/@literal'
 		public Keyword getADDPlusSignKeyword_0() { return cADDPlusSignKeyword_0; }
 	}
 	public class SubOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3694,14 +3524,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSUBHyphenMinusKeyword_0 = (Keyword)cSUBEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum SubOperator returns OperatorType:
-		//	SUB="-";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/SubOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//SUB="-"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.62/@alternatives'
 		public EnumLiteralDeclaration getSUBEnumLiteralDeclaration() { return cSUBEnumLiteralDeclaration; }
 		
-		//"-"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.62/@alternatives/@literal'
 		public Keyword getSUBHyphenMinusKeyword_0() { return cSUBHyphenMinusKeyword_0; }
 	}
 	public class MultOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3709,14 +3538,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cMULTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMULTAsteriskKeyword_0 = (Keyword)cMULTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum MultOperator returns OperatorType:
-		//	MULT="*";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/MultOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//MULT="*"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.63/@alternatives'
 		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration() { return cMULTEnumLiteralDeclaration; }
 		
-		//"*"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.63/@alternatives/@literal'
 		public Keyword getMULTAsteriskKeyword_0() { return cMULTAsteriskKeyword_0; }
 	}
 	public class ModOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3724,14 +3552,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cMODEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cMODPercentSignKeyword_0 = (Keyword)cMODEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ModOperator returns OperatorType:
-		//	MOD="%";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ModOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//MOD="%"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.64/@alternatives'
 		public EnumLiteralDeclaration getMODEnumLiteralDeclaration() { return cMODEnumLiteralDeclaration; }
 		
-		//"%"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.64/@alternatives/@literal'
 		public Keyword getMODPercentSignKeyword_0() { return cMODPercentSignKeyword_0; }
 	}
 	public class DivOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3739,14 +3566,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVSolidusKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum DivOperator returns OperatorType:
-		//	DIV="/";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/DivOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//DIV="/"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.65/@alternatives'
 		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration() { return cDIVEnumLiteralDeclaration; }
 		
-		//"/"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.65/@alternatives/@literal'
 		public Keyword getDIVSolidusKeyword_0() { return cDIVSolidusKeyword_0; }
 	}
 	public class ValOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3754,14 +3580,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cVALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cVALValKeyword_0 = (Keyword)cVALEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ValOperator returns OperatorType:
-		//	VAL="val";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ValOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//VAL="val"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.66/@alternatives'
 		public EnumLiteralDeclaration getVALEnumLiteralDeclaration() { return cVALEnumLiteralDeclaration; }
 		
-		//"val"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.66/@alternatives/@literal'
 		public Keyword getVALValKeyword_0() { return cVALValKeyword_0; }
 	}
 	public class LogicalOrOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3769,14 +3594,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cLOGICAL_OREnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_ORVerticalLineVerticalLineKeyword_0 = (Keyword)cLOGICAL_OREnumLiteralDeclaration.eContents().get(0);
 		
-		//enum LogicalOrOperator returns OperatorType:
-		//	LOGICAL_OR="||";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/LogicalOrOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//LOGICAL_OR="||"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.67/@alternatives'
 		public EnumLiteralDeclaration getLOGICAL_OREnumLiteralDeclaration() { return cLOGICAL_OREnumLiteralDeclaration; }
 		
-		//"||"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.67/@alternatives/@literal'
 		public Keyword getLOGICAL_ORVerticalLineVerticalLineKeyword_0() { return cLOGICAL_ORVerticalLineVerticalLineKeyword_0; }
 	}
 	public class LogicalAndOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3784,14 +3608,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cLOGICAL_ANDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cLOGICAL_ANDAmpersandAmpersandKeyword_0 = (Keyword)cLOGICAL_ANDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum LogicalAndOperator returns OperatorType:
-		//	LOGICAL_AND="&&";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/LogicalAndOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//LOGICAL_AND="&&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.68/@alternatives'
 		public EnumLiteralDeclaration getLOGICAL_ANDEnumLiteralDeclaration() { return cLOGICAL_ANDEnumLiteralDeclaration; }
 		
-		//"&&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.68/@alternatives/@literal'
 		public Keyword getLOGICAL_ANDAmpersandAmpersandKeyword_0() { return cLOGICAL_ANDAmpersandAmpersandKeyword_0; }
 	}
 	public class ShiftLeftOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3799,14 +3622,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSHIFT_LEFTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_LEFTLessThanSignLessThanSignKeyword_0 = (Keyword)cSHIFT_LEFTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ShiftLeftOperator returns OperatorType:
-		//	SHIFT_LEFT="<<";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//SHIFT_LEFT="<<"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.69/@alternatives'
 		public EnumLiteralDeclaration getSHIFT_LEFTEnumLiteralDeclaration() { return cSHIFT_LEFTEnumLiteralDeclaration; }
 		
-		//"<<"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.69/@alternatives/@literal'
 		public Keyword getSHIFT_LEFTLessThanSignLessThanSignKeyword_0() { return cSHIFT_LEFTLessThanSignLessThanSignKeyword_0; }
 	}
 	public class ShiftRightOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3814,14 +3636,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSHIFT_RIGHTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ShiftRightOperator returns OperatorType:
-		//	SHIFT_RIGHT=">>";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//SHIFT_RIGHT=">>"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.70/@alternatives'
 		public EnumLiteralDeclaration getSHIFT_RIGHTEnumLiteralDeclaration() { return cSHIFT_RIGHTEnumLiteralDeclaration; }
 		
-		//">>"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.70/@alternatives/@literal'
 		public Keyword getSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHTGreaterThanSignGreaterThanSignKeyword_0; }
 	}
 	public class ShiftRightUnsignedOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3829,14 +3650,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0 = (Keyword)cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ShiftRightUnsignedOperator returns OperatorType:
-		//	SHIFT_RIGHT_UNSIGNED=">>>";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightUnsignedOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//SHIFT_RIGHT_UNSIGNED=">>>"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.71/@alternatives'
 		public EnumLiteralDeclaration getSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration() { return cSHIFT_RIGHT_UNSIGNEDEnumLiteralDeclaration; }
 		
-		//">>>"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.71/@alternatives/@literal'
 		public Keyword getSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0() { return cSHIFT_RIGHT_UNSIGNEDGreaterThanSignGreaterThanSignGreaterThanSignKeyword_0; }
 	}
 	public class PostfixAddElements extends AbstractEnumRuleElementFinder {
@@ -3844,14 +3664,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cPOSTFIX_ADDEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPOSTFIX_ADDPlusSignPlusSignKeyword_0 = (Keyword)cPOSTFIX_ADDEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum PostfixAdd returns OperatorType:
-		//	POSTFIX_ADD="++";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/PostfixAdd'
 		public EnumRule getRule() { return rule; }
 		
-		//POSTFIX_ADD="++"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.72/@alternatives'
 		public EnumLiteralDeclaration getPOSTFIX_ADDEnumLiteralDeclaration() { return cPOSTFIX_ADDEnumLiteralDeclaration; }
 		
-		//"++"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.72/@alternatives/@literal'
 		public Keyword getPOSTFIX_ADDPlusSignPlusSignKeyword_0() { return cPOSTFIX_ADDPlusSignPlusSignKeyword_0; }
 	}
 	public class PostfixSubElements extends AbstractEnumRuleElementFinder {
@@ -3859,14 +3678,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cPOSTFIX_SUBEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0 = (Keyword)cPOSTFIX_SUBEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum PostfixSub returns OperatorType:
-		//	POSTFIX_SUB="--";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/PostfixSub'
 		public EnumRule getRule() { return rule; }
 		
-		//POSTFIX_SUB="--"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.73/@alternatives'
 		public EnumLiteralDeclaration getPOSTFIX_SUBEnumLiteralDeclaration() { return cPOSTFIX_SUBEnumLiteralDeclaration; }
 		
-		//"--"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.73/@alternatives/@literal'
 		public Keyword getPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0() { return cPOSTFIX_SUBHyphenMinusHyphenMinusKeyword_0; }
 	}
 	public class ConditionalOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3874,14 +3692,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cCONDITIONALEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cCONDITIONALQuestionMarkKeyword_0 = (Keyword)cCONDITIONALEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum ConditionalOperator returns OperatorType:
-		//	CONDITIONAL="?";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ConditionalOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//CONDITIONAL="?"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.74/@alternatives'
 		public EnumLiteralDeclaration getCONDITIONALEnumLiteralDeclaration() { return cCONDITIONALEnumLiteralDeclaration; }
 		
-		//"?"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.74/@alternatives/@literal'
 		public Keyword getCONDITIONALQuestionMarkKeyword_0() { return cCONDITIONALQuestionMarkKeyword_0; }
 	}
 	public class FBYOperatorElements extends AbstractEnumRuleElementFinder {
@@ -3889,14 +3706,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cFBYHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cFBYEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum FBYOperator returns OperatorType:
-		//	FBY="->";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/FBYOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//FBY="->"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.75/@alternatives'
 		public EnumLiteralDeclaration getFBYEnumLiteralDeclaration() { return cFBYEnumLiteralDeclaration; }
 		
-		//"->"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.75/@alternatives/@literal'
 		public Keyword getFBYHyphenMinusGreaterThanSignKeyword_0() { return cFBYHyphenMinusGreaterThanSignKeyword_0; }
 	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
@@ -3913,43 +3729,40 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSTRINGEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
 		private final Keyword cSTRINGStringKeyword_4_0 = (Keyword)cSTRINGEnumLiteralDeclaration_4.eContents().get(0);
 		
-		//enum ValueType:
-		//	PURE="pure" | BOOL="bool" |
-		//	INT="int" | FLOAT="float" |
-		//	STRING="string";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ValueType'
 		public EnumRule getRule() { return rule; }
 		
-		//PURE="pure" | BOOL="bool" | INT="int" | FLOAT="float" | STRING="string"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//PURE="pure"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.0'
 		public EnumLiteralDeclaration getPUREEnumLiteralDeclaration_0() { return cPUREEnumLiteralDeclaration_0; }
 		
-		//"pure"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.0/@literal'
 		public Keyword getPUREPureKeyword_0_0() { return cPUREPureKeyword_0_0; }
 		
-		//BOOL="bool"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.1'
 		public EnumLiteralDeclaration getBOOLEnumLiteralDeclaration_1() { return cBOOLEnumLiteralDeclaration_1; }
 		
-		//"bool"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.1/@literal'
 		public Keyword getBOOLBoolKeyword_1_0() { return cBOOLBoolKeyword_1_0; }
 		
-		//INT="int"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.2'
 		public EnumLiteralDeclaration getINTEnumLiteralDeclaration_2() { return cINTEnumLiteralDeclaration_2; }
 		
-		//"int"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.2/@literal'
 		public Keyword getINTIntKeyword_2_0() { return cINTIntKeyword_2_0; }
 		
-		//FLOAT="float"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.3'
 		public EnumLiteralDeclaration getFLOATEnumLiteralDeclaration_3() { return cFLOATEnumLiteralDeclaration_3; }
 		
-		//"float"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.3/@literal'
 		public Keyword getFLOATFloatKeyword_3_0() { return cFLOATFloatKeyword_3_0; }
 		
-		//STRING="string"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.4'
 		public EnumLiteralDeclaration getSTRINGEnumLiteralDeclaration_4() { return cSTRINGEnumLiteralDeclaration_4; }
 		
-		//"string"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.76/@alternatives/@elements.4/@literal'
 		public Keyword getSTRINGStringKeyword_4_0() { return cSTRINGStringKeyword_4_0; }
 	}
 	public class HostTypeElements extends AbstractEnumRuleElementFinder {
@@ -3957,14 +3770,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cHOSTHostKeyword_0 = (Keyword)cHOSTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum HostType returns ValueType:
-		//	HOST="host";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/HostType'
 		public EnumRule getRule() { return rule; }
 		
-		//HOST="host"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.77/@alternatives'
 		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration() { return cHOSTEnumLiteralDeclaration; }
 		
-		//"host"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.77/@alternatives/@literal'
 		public Keyword getHOSTHostKeyword_0() { return cHOSTHostKeyword_0; }
 	}
 	public class StructTypeElements extends AbstractEnumRuleElementFinder {
@@ -3972,14 +3784,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cSTRUCTEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cSTRUCTStructKeyword_0 = (Keyword)cSTRUCTEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum StructType returns ValueType:
-		//	STRUCT="struct";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/StructType'
 		public EnumRule getRule() { return rule; }
 		
-		//STRUCT="struct"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.78/@alternatives'
 		public EnumLiteralDeclaration getSTRUCTEnumLiteralDeclaration() { return cSTRUCTEnumLiteralDeclaration; }
 		
-		//"struct"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.78/@alternatives/@literal'
 		public Keyword getSTRUCTStructKeyword_0() { return cSTRUCTStructKeyword_0; }
 	}
 	public class CombineOperatorElements extends AbstractEnumRuleElementFinder {
@@ -4002,60 +3813,58 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cHOSTEnumLiteralDeclaration_7 = (EnumLiteralDeclaration)cAlternatives.eContents().get(7);
 		private final Keyword cHOSTHostKeyword_7_0 = (Keyword)cHOSTEnumLiteralDeclaration_7.eContents().get(0);
 		
-		//enum CombineOperator:
-		//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
-		//	MIN="min" | OR="|" | AND="&" | HOST="host";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/CombineOperator'
 		public EnumRule getRule() { return rule; }
 		
-		//NONE="none" | ADD="+" | MULT="*" | MAX="max" | MIN="min" | OR="|" | AND="&" | HOST="host"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//NONE="none"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.0'
 		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_0() { return cNONEEnumLiteralDeclaration_0; }
 		
-		//"none"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.0/@literal'
 		public Keyword getNONENoneKeyword_0_0() { return cNONENoneKeyword_0_0; }
 		
-		//ADD="+"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.1'
 		public EnumLiteralDeclaration getADDEnumLiteralDeclaration_1() { return cADDEnumLiteralDeclaration_1; }
 		
-		//"+"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.1/@literal'
 		public Keyword getADDPlusSignKeyword_1_0() { return cADDPlusSignKeyword_1_0; }
 		
-		//MULT="*"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.2'
 		public EnumLiteralDeclaration getMULTEnumLiteralDeclaration_2() { return cMULTEnumLiteralDeclaration_2; }
 		
-		//"*"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.2/@literal'
 		public Keyword getMULTAsteriskKeyword_2_0() { return cMULTAsteriskKeyword_2_0; }
 		
-		//MAX="max"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.3'
 		public EnumLiteralDeclaration getMAXEnumLiteralDeclaration_3() { return cMAXEnumLiteralDeclaration_3; }
 		
-		//"max"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.3/@literal'
 		public Keyword getMAXMaxKeyword_3_0() { return cMAXMaxKeyword_3_0; }
 		
-		//MIN="min"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.4'
 		public EnumLiteralDeclaration getMINEnumLiteralDeclaration_4() { return cMINEnumLiteralDeclaration_4; }
 		
-		//"min"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.4/@literal'
 		public Keyword getMINMinKeyword_4_0() { return cMINMinKeyword_4_0; }
 		
-		//OR="|"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.5'
 		public EnumLiteralDeclaration getOREnumLiteralDeclaration_5() { return cOREnumLiteralDeclaration_5; }
 		
-		//"|"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.5/@literal'
 		public Keyword getORVerticalLineKeyword_5_0() { return cORVerticalLineKeyword_5_0; }
 		
-		//AND="&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.6'
 		public EnumLiteralDeclaration getANDEnumLiteralDeclaration_6() { return cANDEnumLiteralDeclaration_6; }
 		
-		//"&"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.6/@literal'
 		public Keyword getANDAmpersandKeyword_6_0() { return cANDAmpersandKeyword_6_0; }
 		
-		//HOST="host"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.7'
 		public EnumLiteralDeclaration getHOSTEnumLiteralDeclaration_7() { return cHOSTEnumLiteralDeclaration_7; }
 		
-		//"host"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#/0/@rules.79/@alternatives/@elements.7/@literal'
 		public Keyword getHOSTHostKeyword_7_0() { return cHOSTHostKeyword_7_0; }
 	}
 	
@@ -4290,49 +4099,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	///**
-	// * @author ssm
-	// * @kieler.design 2015-08-21 proposed 
-	// * @kieler.rating 2015-08-21 proposed yellow
-	// */ // -------------------- //
-	////  KExpressions Rules  // 
-	//// -------------------- //
-	///* Expression rules are organized in a chain. They pass the actual instance to the next rule but may 
-	// * consume tokens to create a specific expression element. Following this pattern, complex constructs
-	// * can be created. This also implies an order of precedence.
-	// *
-	// * Expression
-	// * + BooleanExpression
-	// *   + LogicalOrExpression
-	// *     + LogicalAndExpression
-	// *       + BitwiseOrExpression
-	// *         + BitwiseAndExpression
-	// *           + CompareExpression
-	// *             + NotOrValuedExpression
-	// *               + ValuedExpression (see valued expression below)
-	// *               + NotExpression *
-	// *                 + AtomicExpression *
-	// *                   + BoolValue
-	// *                   + ValuedObjectTestExpression
-	// *                     + ValuedObjectReference
-	// *                   + FunctionCall
-	// *                   + TextExpression
-	// * + ValuedExpression
-	// *   + AddExpression
-	// *     + SubExpression
-	// *       + MultExpression
-	// *         + DivExpression
-	// *           + ModExpression
-	// *             + NegExpression *
-	// *               + AtomicValuedExpression *
-	// *                 + IntValue
-	// *                 + FloatValue
-	// *                 + StringValue
-	// *                 + AtomicExpression
-	// */ // Root Rule
-	//// Always return an expression.
-	//Root ecore::EObject:
-	//	Expression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/Root'
 	public RootElements getRootAccess() {
 		return pRoot;
 	}
@@ -4341,10 +4108,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootAccess().getRule();
 	}
 	
-	//// Expression Rule
-	//// An expression is either a boolean expression or a valued expression.
-	//Expression:
-	//	BoolExpression | ValuedExpression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/Expression'
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -4353,11 +4117,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getExpressionAccess().getRule();
 	}
 	
-	//// Boolean Expression Rule
-	//// Boolean expression directs to logical or expression and kept for overview (and legacy) reason. 
-	//// One could skip directly to the next rule.
-	//BoolExpression Expression:
-	//	LogicalOrExpression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BoolExpression'
 	public BoolExpressionElements getBoolExpressionAccess() {
 		return pBoolExpression;
 	}
@@ -4366,12 +4126,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolExpressionAccess().getRule();
 	}
 	
-	//// Logical Or Expression Rule
-	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
-	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//LogicalOrExpression Expression:
-	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
-	//	subExpressions+=LogicalAndExpression) ('||' subExpressions+=LogicalAndExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/LogicalOrExpression'
 	public LogicalOrExpressionElements getLogicalOrExpressionAccess() {
 		return pLogicalOrExpression;
 	}
@@ -4380,12 +4135,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalOrExpressionAccess().getRule();
 	}
 	
-	//// Logical And Expression Rule
-	//// Directs to the 'bitwise or' rule and may create an operator expression for 'logical and' operations
-	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//LogicalAndExpression Expression:
-	//	BitwiseOrExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalAndOperator
-	//	subExpressions+=BitwiseOrExpression) ('&&' subExpressions+=BitwiseOrExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/LogicalAndExpression'
 	public LogicalAndExpressionElements getLogicalAndExpressionAccess() {
 		return pLogicalAndExpression;
 	}
@@ -4394,12 +4144,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalAndExpressionAccess().getRule();
 	}
 	
-	//// Bitwiese Or Expression Rule
-	//// Directs to the 'bitwise and' rule and may create an operator expression for 'bitwise or' operations
-	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseOrExpression Expression:
-	//	BitwiseXOrExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseOrOperator
-	//	subExpressions+=BitwiseXOrExpression) ('|' subExpressions+=BitwiseXOrExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseOrExpression'
 	public BitwiseOrExpressionElements getBitwiseOrExpressionAccess() {
 		return pBitwiseOrExpression;
 	}
@@ -4408,9 +4153,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseOrExpressionAccess().getRule();
 	}
 	
-	//BitwiseXOrExpression Expression:
-	//	BitwiseAndExpression ({OperatorExpression.subExpressions+=current} (operator=BitwiseXOrOperator
-	//	subExpressions+=BitwiseAndExpression) ('^' subExpressions+=BitwiseAndExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseXOrExpression'
 	public BitwiseXOrExpressionElements getBitwiseXOrExpressionAccess() {
 		return pBitwiseXOrExpression;
 	}
@@ -4419,12 +4162,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseXOrExpressionAccess().getRule();
 	}
 	
-	//// Bitwise And Expression Rule
-	//// Directs to the compare rule and may create an operator expression for 'bitwise and' operations
-	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
-	//BitwiseAndExpression Expression:
-	//	CompareOperation ({OperatorExpression.subExpressions+=current} (operator=BitwiseAndOperator
-	//	subExpressions+=CompareOperation) ('&' subExpressions+=CompareOperation)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseAndExpression'
 	public BitwiseAndExpressionElements getBitwiseAndExpressionAccess() {
 		return pBitwiseAndExpression;
 	}
@@ -4433,12 +4171,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseAndExpressionAccess().getRule();
 	}
 	
-	//// Compare Operation Rule
-	//// Directs to the 'not or valued expression' rule and may create an operator expression for compares. 
-	//// Example: 42 <= val(A)
-	//CompareOperation Expression:
-	//	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
-	//	subExpressions+=NotOrValuedExpression)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/CompareOperation'
 	public CompareOperationElements getCompareOperationAccess() {
 		return pCompareOperation;
 	}
@@ -4447,11 +4180,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCompareOperationAccess().getRule();
 	}
 	
-	//// 'Not or Valued Expression' Rule
-	//// ORDER IS IMPORTANT!
-	//NotOrValuedExpression Expression:
-	//	ValuedExpression
-	//	| NotExpression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/NotOrValuedExpression'
 	public NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return pNotOrValuedExpression;
 	}
@@ -4460,8 +4189,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOrValuedExpressionAccess().getRule();
 	}
 	
-	//BitwiseNotExpression Expression:
-	//	{OperatorExpression} operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression | AtomicExpression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/BitwiseNotExpression'
 	public BitwiseNotExpressionElements getBitwiseNotExpressionAccess() {
 		return pBitwiseNotExpression;
 	}
@@ -4470,12 +4198,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getBitwiseNotExpressionAccess().getRule();
 	}
 	
-	//// Not Expression Rule
-	//// Example: !A, !false, !(A or B)
-	//// At the latter we need the parents to indicate the right binding.
-	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
-	//NotExpression Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/NotExpression'
 	public NotExpressionElements getNotExpressionAccess() {
 		return pNotExpression;
 	}
@@ -4484,11 +4207,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotExpressionAccess().getRule();
 	}
 	
-	//// Valued Expression Rule    
-	//// Everything that evaluates to a primitive number value.
-	//// Similar to the boolean rule this rule is there for overview reasons.
-	//ValuedExpression Expression:
-	//	ShiftExpressions;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ValuedExpression'
 	public ValuedExpressionElements getValuedExpressionAccess() {
 		return pValuedExpression;
 	}
@@ -4497,13 +4216,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getValuedExpressionAccess().getRule();
 	}
 	
-	//ShiftExpressions Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftExpressions'
 	public ShiftExpressionsElements getShiftExpressionsAccess() {
 		return pShiftExpressions;
 	}
@@ -4512,11 +4225,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftExpressionsAccess().getRule();
 	}
 	
-	//ShiftLeftRightExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftRightExpression'
 	public ShiftLeftRightExpressionElements getShiftLeftRightExpressionAccess() {
 		return pShiftLeftRightExpression;
 	}
@@ -4525,11 +4234,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftLeftRightExpressionAccess().getRule();
 	}
 	
-	//ShiftLeftRightUnsignedExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightRightUnsignedExpression) ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftRightUnsignedExpression'
 	public ShiftLeftRightUnsignedExpressionElements getShiftLeftRightUnsignedExpressionAccess() {
 		return pShiftLeftRightUnsignedExpression;
 	}
@@ -4538,11 +4243,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftLeftRightUnsignedExpressionAccess().getRule();
 	}
 	
-	//ShiftRightRightUnsignedExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftLeftRightUnsignedExpression) ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=ShiftLeftRightExpression) ('>>>' subExpressions+=ShiftLeftRightExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightRightUnsignedExpression'
 	public ShiftRightRightUnsignedExpressionElements getShiftRightRightUnsignedExpressionAccess() {
 		return pShiftRightRightUnsignedExpression;
 	}
@@ -4551,9 +4252,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftRightRightUnsignedExpressionAccess().getRule();
 	}
 	
-	//ShiftLeftExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftLeftOperator
-	//	subExpressions+=ShiftRightExpression) ('<<' subExpressions+=ShiftRightExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftLeftExpression'
 	public ShiftLeftExpressionElements getShiftLeftExpressionAccess() {
 		return pShiftLeftExpression;
 	}
@@ -4562,9 +4261,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftLeftExpressionAccess().getRule();
 	}
 	
-	//ShiftRightExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightOperator
-	//	subExpressions+=ShiftRightUnsignedExpression) ('>>' subExpressions+=ShiftRightUnsignedExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightExpression'
 	public ShiftRightExpressionElements getShiftRightExpressionAccess() {
 		return pShiftRightExpression;
 	}
@@ -4573,9 +4270,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftRightExpressionAccess().getRule();
 	}
 	
-	//ShiftRightUnsignedExpression Expression:
-	//	SumExpression ({OperatorExpression.subExpressions+=current} (operator=ShiftRightUnsignedOperator
-	//	subExpressions+=SumExpression) ('>>>' subExpressions+=SumExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ShiftRightUnsignedExpression'
 	public ShiftRightUnsignedExpressionElements getShiftRightUnsignedExpressionAccess() {
 		return pShiftRightUnsignedExpression;
 	}
@@ -4584,11 +4279,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getShiftRightUnsignedExpressionAccess().getRule();
 	}
 	
-	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator subExpressions+=SubExpression)
-	//	('+' subExpressions+=SubExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=SubOperator subExpressions+=AddExpression) ('-'
-	//	subExpressions+=AddExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/SumExpression'
 	public SumExpressionElements getSumExpressionAccess() {
 		return pSumExpression;
 	}
@@ -4597,13 +4288,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getSumExpressionAccess().getRule();
 	}
 	
-	//// Add Expression Rule
-	//// The rule directs the 'sub expression' rule and creates an operator expression for additions
-	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-	//// Example: 1 + 2
-	//AddExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=AddOperator
-	//	subExpressions+=ProductExpression) ('+' subExpressions+=ProductExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/AddExpression'
 	public AddExpressionElements getAddExpressionAccess() {
 		return pAddExpression;
 	}
@@ -4612,13 +4297,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAddExpressionAccess().getRule();
 	}
 	
-	//// Sub Expression Rule
-	//// The rule directs the 'mult expression' rule and creates an operator expression for subtractions
-	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
-	//// Example: var(A) - i
-	//SubExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} (operator=SubOperator
-	//	subExpressions+=ProductExpression) ('-' subExpressions+=ProductExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/SubExpression'
 	public SubExpressionElements getSubExpressionAccess() {
 		return pSubExpression;
 	}
@@ -4627,13 +4306,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getSubExpressionAccess().getRule();
 	}
 	
-	//ProductExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=DivModExpression)
-	//	('*' subExpressions+=DivModExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=DivOperator subExpressions+=MultModExpression) ('/'
-	//	subExpressions+=MultModExpression)*
-	//	| {OperatorExpression.subExpressions+=current} (operator=ModOperator subExpressions+=MultDivExpression) ('%'
-	//	subExpressions+=MultDivExpression)*)?;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/kexpressions/KExpressions.xtext#XtextFragmentProvider_de.cau.cs.kieler.kexpressions.KExpressions/ProductExpression'
 	public ProductExpressionElements getProductExpressionAccess() {
 		return pProductExpression;
 	}
@@ -4686,8 +4359,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
@@ -4808,7 +4481,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued object reference.
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+	//	subExpressions+=ValuedObjectReference)? ')'
 	//	| ValuedObjectReference;
 	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return pValuedObjectTestExpression;

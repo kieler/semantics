@@ -197,7 +197,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//values+=SL_COMMENT_ANNOTATION
 		public Assignment getValuesAssignment() { return cValuesAssignment; }
 		
-		//SL_COMMENT_ANNOTATION
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/SL_COMMENT_ANNOTATION'
 		public RuleCall getValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0() { return cValuesSL_COMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
 	public class TagAnnotationElements extends AbstractParserRuleElementFinder {
@@ -207,22 +207,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//// TagAnnotation
-		//// e.g.: @HVlayout
-		//TagAnnotation:
-		//	'@' name=ExtendedID;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/TagAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.7/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.7/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.7/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.7/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 	}
 	public class PragmaTagElements extends AbstractParserRuleElementFinder {
@@ -232,20 +229,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//PragmaTag Pragma:
-		//	'#' name=ExtendedID;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/PragmaTag'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'#' name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.8/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'#'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.8/@alternatives/@elements.0'
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.8/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.8/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 	}
 	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -261,32 +257,28 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuesEStringAllTypesParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
 		
-		//// KeyStringValueAnnotation
-		//// e.g.: @layouter dot
-		//// You may separate different values via comma.   
-		//KeyStringValueAnnotation StringAnnotation:
-		//	'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/KeyStringValueAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.2'
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
-		//EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.2/@terminal'
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.9/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//','
@@ -324,25 +316,25 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//name=ExtendedID
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/ExtendedID'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.2'
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
-		//EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.2/@terminal'
 		public RuleCall getValuesEStringBooleanParserRuleCall_2_0() { return cValuesEStringBooleanParserRuleCall_2_0; }
 		
-		//(',' values+=EStringBoolean)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.0'
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.1'
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
-		//EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.10/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getValuesEStringBooleanParserRuleCall_3_1_0() { return cValuesEStringBooleanParserRuleCall_3_1_0; }
 	}
 	public class StringPragmaElements extends AbstractParserRuleElementFinder {
@@ -358,38 +350,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuesEStringAllTypesParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
 		
-		//StringPragma:
-		//	'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/StringPragma'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'#' name=ExtendedID values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'#'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.0'
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.2'
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
-		//EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.2/@terminal'
 		public RuleCall getValuesEStringAllTypesParserRuleCall_2_0() { return cValuesEStringAllTypesParserRuleCall_2_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.3/@elements.0'
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.3/@elements.1'
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
-		//EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.11/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getValuesEStringAllTypesParserRuleCall_3_1_0() { return cValuesEStringAllTypesParserRuleCall_3_1_0; }
 	}
 	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -409,52 +400,49 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuesEStringAllTypesParserRuleCall_6_1_0 = (RuleCall)cValuesAssignment_6_1.eContents().get(0);
 		
-		//// TypedKeyStringValueAnnotation
-		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-		//TypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/TypedKeyStringValueAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringAllTypes (',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//'['
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.2'
 		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
 		
-		//type=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.3'
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.3/@terminal'
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
 		
-		//']'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.4'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 		
-		//values+=EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.5'
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 		
-		//EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.5/@terminal'
 		public RuleCall getValuesEStringAllTypesParserRuleCall_5_0() { return cValuesEStringAllTypesParserRuleCall_5_0; }
 		
-		//(',' values+=EStringAllTypes)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.6'
 		public Group getGroup_6() { return cGroup_6; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.6/@elements.0'
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
 		
-		//values+=EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.6/@elements.1'
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
 		
-		//EStringAllTypes
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.12/@alternatives/@elements.6/@elements.1/@terminal'
 		public RuleCall getValuesEStringAllTypesParserRuleCall_6_1_0() { return cValuesEStringAllTypesParserRuleCall_6_1_0; }
 	}
 	public class RestrictedTypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -474,50 +462,49 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuesEStringBooleanParserRuleCall_6_1_0 = (RuleCall)cValuesAssignment_6_1.eContents().get(0);
 		
-		//RestrictedTypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/RestrictedTypedKeyStringValueAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=EStringBoolean (',' values+=EStringBoolean)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//'['
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.2'
 		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
 		
-		//type=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.3'
 		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.3/@terminal'
 		public RuleCall getTypeExtendedIDParserRuleCall_3_0() { return cTypeExtendedIDParserRuleCall_3_0; }
 		
-		//']'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.4'
 		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 		
-		//values+=EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.5'
 		public Assignment getValuesAssignment_5() { return cValuesAssignment_5; }
 		
-		//EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.5/@terminal'
 		public RuleCall getValuesEStringBooleanParserRuleCall_5_0() { return cValuesEStringBooleanParserRuleCall_5_0; }
 		
-		//(',' values+=EStringBoolean)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.6'
 		public Group getGroup_6() { return cGroup_6; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.6/@elements.0'
 		public Keyword getCommaKeyword_6_0() { return cCommaKeyword_6_0; }
 		
-		//values+=EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.6/@elements.1'
 		public Assignment getValuesAssignment_6_1() { return cValuesAssignment_6_1; }
 		
-		//EStringBoolean
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.13/@alternatives/@elements.6/@elements.1/@terminal'
 		public RuleCall getValuesEStringBooleanParserRuleCall_6_1_0() { return cValuesEStringBooleanParserRuleCall_6_1_0; }
 	}
 	public class QuotedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -533,41 +520,37 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cValuesSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
 		
-		//// QuotedKeyStringValueAnnotation
-		//// The quoted key string value annotation is a replacement derived grammars may use
-		//// if they want to disallow quote-less strings in a key string annotation. 
-		//QuotedKeyStringValueAnnotation StringAnnotation:
-		//	'@' name=ExtendedID values+=STRING (',' values+=STRING)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/QuotedKeyStringValueAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID values+=STRING (',' values+=STRING)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
-		//'@'
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.0'
 		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
 		
-		//name=ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.1'
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.1/@terminal'
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 		
-		//values+=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.2'
 		public Assignment getValuesAssignment_2() { return cValuesAssignment_2; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.2/@terminal'
 		public RuleCall getValuesSTRINGTerminalRuleCall_2_0() { return cValuesSTRINGTerminalRuleCall_2_0; }
 		
-		//(',' values+=STRING)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.3'
 		public Group getGroup_3() { return cGroup_3; }
 		
-		//','
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.3/@elements.0'
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 		
-		//values+=STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.3/@elements.1'
 		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.14/@alternatives/@elements.3/@elements.1/@terminal'
 		public RuleCall getValuesSTRINGTerminalRuleCall_3_1_0() { return cValuesSTRINGTerminalRuleCall_3_1_0; }
 	}
 	public class QuotedTypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -587,14 +570,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cValuesSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cValuesAssignment_6_1.eContents().get(0);
 		
-		//// QuotedTypedKeyStringValueAnnotation
-		//// The quoted typed key string value annotation is a replacement derived grammars may use
-		//// if they want to disallow quote-less strings in a key string annotation. 
-		//QuotedTypedKeyStringValueAnnotation TypedStringAnnotation:
-		//	'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/QuotedTypedKeyStringValueAnnotation'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'@' name=ExtendedID '[' type=ExtendedID ']' values+=STRING (',' values+=STRING)*
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.15/@alternatives'
 		public Group getGroup() { return cGroup; }
 		
 		//'@'
@@ -665,20 +644,19 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExtendedIDParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cBOOLEANTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
-		//EStringBoolean:
-		//	STRING | ExtendedID | BOOLEAN;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/BOOLEAN'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//STRING | ExtendedID | BOOLEAN
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.17/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.17/@alternatives/@elements.0'
 		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
 		
-		//ExtendedID
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.17/@alternatives/@elements.1'
 		public RuleCall getExtendedIDParserRuleCall_1() { return cExtendedIDParserRuleCall_1; }
 		
-		//BOOLEAN
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.17/@alternatives/@elements.2'
 		public RuleCall getBOOLEANTerminalRuleCall_2() { return cBOOLEANTerminalRuleCall_2; }
 	}
 	public class EStringAllTypesElements extends AbstractParserRuleElementFinder {
@@ -690,14 +668,13 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIntegerParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cFloategerParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
-		//EStringAllTypes:
-		//	STRING | ExtendedID | BOOLEAN | Integer | Floateger;
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/EStringAllTypes'
 		@Override public ParserRule getRule() { return rule; }
 		
-		//STRING | ExtendedID | BOOLEAN | Integer | Floateger
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.18/@alternatives'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//STRING
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#/0/@rules.18/@alternatives/@elements.0'
 		public RuleCall getSTRINGTerminalRuleCall_0() { return cSTRINGTerminalRuleCall_0; }
 		
 		//ExtendedID
@@ -1242,41 +1219,32 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tSL_COMMENT;
 	}
 	
-	//terminal fragment NUMBER:
-	//	'0'..'9';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/NUMBER'
 	public TerminalRule getNUMBERRule() {
 		return tNUMBER;
 	}
 	
-	//@Override
-	//terminal INT returns ecore::EInt:
-	//	NUMBER+;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/INT'
 	public TerminalRule getINTRule() {
 		return tINT;
 	}
 	
-	//terminal FLOAT returns ecore::EDouble:
-	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/FLOAT'
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
 	}
 	
-	//terminal BOOLEAN returns ecore::EBooleanObject:
-	//	'true' | 'false';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/BOOLEAN'
 	public TerminalRule getBOOLEANRule() {
 		return tBOOLEAN;
 	}
 	
-	//@Override
-	//terminal STRING:
-	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/STRING'
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
 	}
 	
-	//@Override
-	//terminal ID:
-	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/de/cau/cs/kieler/annotations/Annotations.xtext#XtextFragmentProvider_de.cau.cs.kieler.annotations.Annotations/ID'
 	public TerminalRule getIDRule() {
 		return tID;
 	}
