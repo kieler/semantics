@@ -81,9 +81,8 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
                 «action.translateContent»
             «ENDFOR»
             «IF !viz.init.nullOrEmpty»
-                (function () { // Init
-                    «viz.init»
-                })();
+                // Init
+                «viz.init»
             «ENDIF»
         '''
     }
