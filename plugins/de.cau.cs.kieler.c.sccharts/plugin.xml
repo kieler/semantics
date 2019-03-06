@@ -35,6 +35,13 @@
          </command>
       </menuContribution>
    </extension>
+       <extension
+         point="de.cau.cs.kieler.klighd.diagramSyntheses">
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.c.sccharts.synthesis.CASTSynthesis"
+            id="de.cau.cs.kieler.c.sccharts.synthesis.CASTSynthesis">
+      </diagramSynthesis>
+   </extension>
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">
       <editor
