@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.c.sccharts.transformation
+package de.cau.cs.kieler.c.sccharts.processors
 
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.State

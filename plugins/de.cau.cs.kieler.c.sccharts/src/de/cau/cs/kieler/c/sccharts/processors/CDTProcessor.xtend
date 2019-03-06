@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.c.sccharts
+package de.cau.cs.kieler.c.sccharts.processors
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
@@ -71,16 +71,20 @@ import de.cau.cs.kieler.sccharts.Transition
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
 import de.cau.cs.kieler.sccharts.SCCharts
 import org.eclipse.cdt.internal.core.dom.parser.ASTAttributeOwner
-import de.cau.cs.kieler.c.sccharts.transformation.CbasedSCChartFeature
+import de.cau.cs.kieler.c.sccharts.processors.CbasedSCChartFeature
 import org.eclipse.cdt.core.dom.ast.IASTExpressionList
 import java.util.Set
-import java.lang.reflect.Type
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager
+import org.eclipse.cdt.core.dom.ast.IASTTranslationUnit
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
 
 /**
  * @author ssm
@@ -89,7 +93,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 
 @SuppressWarnings("all","unchecked")
-class CDTProcessor {
+class CDTProcessor extends ExogenousProcessor<IASTTranslationUnit, SCCharts> {
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -143,22 +147,36 @@ class CDTProcessor {
     // Save FunctionCallExpression and referencing state to handle function calls
     ArrayList<Pair<CASTIdExpression,CASTFunctionCallExpression>> functionCallAssignment = new ArrayList<Pair<CASTIdExpression,CASTFunctionCallExpression>>();
     
-    
     // Contains all defined functions of the given C code.
     val functions = new ArrayList<Pair<State, Set<ValuedObject>>>();
     
+    
+    
+    override getId() {
+        "de.cau.cs.kieler.c.sccharts.cdtProcessor"
+    }
+    
+    override getName() {
+        "CDT Processor"
+    }
+    
+    override process() {
+//        val tUnit = translationUnitFromEditor(EditPartSystemManager.getInputEditor(compilationContext))
+        val tUnit = getModel
+        setModel(tUnit.transform as SCCharts)
+    }    
+    
 
-    def SCCharts createFromEditor(IEditorPart editor) {
+    def static ITranslationUnit translationUnitFromEditor(IEditorPart editor) {
         val cEditor = editor as CEditor
-        val tu = cEditor.translationUnit
-        tu.transform as SCCharts
+        cEditor.translationUnit
     }
 
-    def EObject transform(ITranslationUnit translationUnit) {
+    def EObject transform(IASTTranslationUnit translationUnit) {
         if (translationUnit === null) {
             return null
         }
-        val ast = translationUnit.getAST
+        val ast = translationUnit //translationUnit.getAST
         if (ast.children !== null) {
             ast.children.printASTNodes("")
         } else {
@@ -1395,8 +1413,10 @@ class CDTProcessor {
             return (exp as CASTBinaryExpression).createKExpression
         } else if (exp instanceof CASTUnaryExpression) {
             (exp as CASTUnaryExpression).createUnaryExpression
+        } else if (exp instanceof CASTLiteralExpression) {
+            return Integer.parseInt(exp.toString).createIntValue
         } else {
-             return Integer.parseInt(exp.toString).createIntValue
+             return 0.createIntValue
         }
     }
 
@@ -1723,4 +1743,5 @@ class CDTProcessor {
             }
         }
     }
+    
 }
