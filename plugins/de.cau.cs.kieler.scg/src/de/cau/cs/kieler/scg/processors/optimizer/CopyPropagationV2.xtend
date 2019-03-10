@@ -217,6 +217,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
                 environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
                 expression.valuedObject = VOR.valuedObject
+                for (i : VOR.indices) {
+                    expression.indices += i.copy
+                }
             } else {
                 // Should only happen at GO guard. Do nothing.
             }
