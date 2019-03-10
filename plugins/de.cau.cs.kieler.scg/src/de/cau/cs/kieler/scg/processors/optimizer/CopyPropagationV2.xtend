@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Copy Propagation
@@ -61,6 +62,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)
     public static val IProperty<Boolean> COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.propagateEqualExpressions", true)       
+    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_TERM_GUARD = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTErmGuard", true)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
@@ -90,15 +93,20 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val removeList = <EObject> newLinkedList
         val preNodes = <Assignment> newLinkedList
         val registerExpressions = <String, Node> newHashMap
+        val guardNodeMapping = <ValuedObject, Assignment> newHashMap
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
             visited += node
             
             if (node instanceof Assignment) {
+                if (node.reference !== null) {
+                    guardNodeMapping.put(node.reference.valuedObject, node)
+                }
+                
                 if (node.expression instanceof ValuedObjectReference) {
-                    if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
-                        !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
+                    if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
+                        && !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
                         node.expression.replaceExpression(replacements, node)
@@ -108,6 +116,21 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         }
                         removeList += node.next
                         removeList += node
+                    }
+                    else if (node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)) {
+                        // Term guards usually only depend on one guard. Simply replace it.
+                        // The replaced guard should also not be contained in pre expression, since _TERM signals a final state.
+                        if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD)) {
+                            val gTNode = guardNodeMapping.get((node.expression as ValuedObjectReference).valuedObject)
+                            if (gTNode !== null) {
+                                gTNode.reference.valuedObject = node.reference.valuedObject
+                                for (incoming :node.allPrevious.toList) {
+                                    incoming.target = node.next.target
+                                }
+                                removeList += node.next
+                                removeList += node
+                            }    
+                        }
                     }
                 } else {
                     if (node.expression instanceof OperatorExpression && 
