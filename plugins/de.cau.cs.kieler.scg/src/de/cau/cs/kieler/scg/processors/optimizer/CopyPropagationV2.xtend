@@ -38,6 +38,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Copy Propagation
@@ -62,8 +63,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)
     public static val IProperty<Boolean> COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.propagateEqualExpressions", true)       
-    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_TERM_GUARD = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTErmGuard", true)
+    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTermGuardPredecessor", true)
+    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceUnmodifiedInputGuards", true)
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
@@ -94,6 +97,15 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val preNodes = <Assignment> newLinkedList
         val registerExpressions = <String, Node> newHashMap
         val guardNodeMapping = <ValuedObject, Assignment> newHashMap
+        val modifiedInputs = <ValuedObject> newHashSet
+        
+        if (environment.getProperty(COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS)) {
+            val inputs = scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
+            modifiedInputs += 
+                scg.nodes.filter(Assignment).filter[ it.reference !== null && inputs.contains(it.reference.valuedObject) ].map[ reference.valuedObject ]
+        } else {
+            modifiedInputs += scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
+        }
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
@@ -105,7 +117,8 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 }
                 
                 if (node.expression instanceof ValuedObjectReference) {
-                    if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
+                    if ((!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
+                        || !modifiedInputs.contains((node.expression as ValuedObjectReference).valuedObject)) 
                         && !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
@@ -120,7 +133,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                     else if (node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)) {
                         // Term guards usually only depend on one guard. Simply replace it.
                         // The replaced guard should also not be contained in pre expression, since _TERM signals a final state.
-                        if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD)) {
+                        if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
                             val gTNode = guardNodeMapping.get((node.expression as ValuedObjectReference).valuedObject)
                             if (gTNode !== null) {
                                 gTNode.reference.valuedObject = node.reference.valuedObject
