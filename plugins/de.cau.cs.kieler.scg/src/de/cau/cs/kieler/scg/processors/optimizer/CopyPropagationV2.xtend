@@ -97,6 +97,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val preNodes = <Assignment> newLinkedList
         val registerExpressions = <String, Node> newHashMap
         val guardNodeMapping = <ValuedObject, Assignment> newHashMap
+        val conditionalGuardMapping = <ValuedObject, Conditional> newHashMap
         val modifiedInputs = <ValuedObject> newHashSet
         
         if (environment.getProperty(COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS)) {
@@ -136,6 +137,12 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
                             val gTNode = guardNodeMapping.get((node.expression as ValuedObjectReference).valuedObject)
                             if (gTNode !== null) {
+                                
+                                val affectedConditionals = conditionalGuardMapping.filter[ k, v | k == gTNode.reference.valuedObject ].values
+                                for (c : affectedConditionals) {
+                                    (c.condition as ValuedObjectReference).valuedObject = node.reference.valuedObject
+                                }
+                                
                                 gTNode.reference.valuedObject = node.reference.valuedObject
                                 for (incoming :node.allPrevious.toList) {
                                     incoming.target = node.next.target
@@ -173,6 +180,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 
             } else if (node instanceof Conditional) {
                 node.condition.replaceExpression(replacements, node)
+                
+                if (node.condition instanceof ValuedObjectReference) {
+                    conditionalGuardMapping.put((node.condition as ValuedObjectReference).valuedObject, node)
+                }
             }
             
             if (node instanceof Conditional) {
