@@ -67,7 +67,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTermGuardPredecessor", true)
     public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceUnmodifiedInputGuards", true)
-    
+            
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
     }
@@ -98,10 +98,11 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val registerExpressions = <String, Node> newHashMap
         val guardNodeMapping = <ValuedObject, Assignment> newHashMap
         val conditionalGuardMapping = <ValuedObject, Conditional> newHashMap
+        val inputs = <ValuedObject> newHashSet
         val modifiedInputs = <ValuedObject> newHashSet
         
+        inputs += scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
         if (environment.getProperty(COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS)) {
-            val inputs = scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
             modifiedInputs += 
                 scg.nodes.filter(Assignment).filter[ it.reference !== null && inputs.contains(it.reference.valuedObject) ].map[ reference.valuedObject ]
         } else {
@@ -118,8 +119,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 }
                 
                 if (node.expression instanceof ValuedObjectReference) {
+                    val VO = (node.expression as ValuedObjectReference).valuedObject
                     if ((!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
-                        || !modifiedInputs.contains((node.expression as ValuedObjectReference).valuedObject)) 
+                        || (inputs.contains(VO) && !modifiedInputs.contains(VO)))
                         && !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
