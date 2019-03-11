@@ -67,7 +67,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTermGuardPredecessor", true)
     public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceUnmodifiedInputGuards", true)
-    
+            
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
     }
@@ -97,10 +97,12 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         val preNodes = <Assignment> newLinkedList
         val registerExpressions = <String, Node> newHashMap
         val guardNodeMapping = <ValuedObject, Assignment> newHashMap
+        val conditionalGuardMapping = <ValuedObject, Conditional> newHashMap
+        val inputs = <ValuedObject> newHashSet
         val modifiedInputs = <ValuedObject> newHashSet
         
+        inputs += scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
         if (environment.getProperty(COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS)) {
-            val inputs = scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
             modifiedInputs += 
                 scg.nodes.filter(Assignment).filter[ it.reference !== null && inputs.contains(it.reference.valuedObject) ].map[ reference.valuedObject ]
         } else {
@@ -117,8 +119,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 }
                 
                 if (node.expression instanceof ValuedObjectReference) {
+                    val VO = (node.expression as ValuedObjectReference).valuedObject
                     if ((!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
-                        || !modifiedInputs.contains((node.expression as ValuedObjectReference).valuedObject)) 
+                        || (inputs.contains(VO) && !modifiedInputs.contains(VO)))
                         && !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
@@ -136,6 +139,12 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
                             val gTNode = guardNodeMapping.get((node.expression as ValuedObjectReference).valuedObject)
                             if (gTNode !== null) {
+                                
+                                val affectedConditionals = conditionalGuardMapping.filter[ k, v | k == gTNode.reference.valuedObject ].values
+                                for (c : affectedConditionals) {
+                                    (c.condition as ValuedObjectReference).valuedObject = node.reference.valuedObject
+                                }
+                                
                                 gTNode.reference.valuedObject = node.reference.valuedObject
                                 for (incoming :node.allPrevious.toList) {
                                     incoming.target = node.next.target
@@ -173,6 +182,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 
             } else if (node instanceof Conditional) {
                 node.condition.replaceExpression(replacements, node)
+                
+                if (node.condition instanceof ValuedObjectReference) {
+                    conditionalGuardMapping.put((node.condition as ValuedObjectReference).valuedObject, node)
+                }
             }
             
             if (node instanceof Conditional) {
@@ -206,6 +219,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
                 environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
                 expression.valuedObject = VOR.valuedObject
+                for (i : VOR.indices) {
+                    expression.indices += i.copy
+                }
             } else {
                 // Should only happen at GO guard. Do nothing.
             }
