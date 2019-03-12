@@ -73,7 +73,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
             case ScgPackage.PREDECESSOR: return createPredecessor();
             case ScgPackage.GUARD: return createGuard();
             case ScgPackage.CONTROL_FLOW: return createControlFlow();
-            case ScgPackage.CONTROL_DEPENDENCY: return createControlDependency();
             case ScgPackage.EXPRESSION_DEPENDENCY: return createExpressionDependency();
             case ScgPackage.GUARD_DEPENDENCY: return createGuardDependency();
             case ScgPackage.SCHEDULE_DEPENDENCY: return createScheduleDependency();
@@ -231,16 +230,6 @@ public class ScgFactoryImpl extends EFactoryImpl implements ScgFactory {
     public ControlFlow createControlFlow() {
         ControlFlowImpl controlFlow = new ControlFlowImpl();
         return controlFlow;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ControlDependency createControlDependency() {
-        ControlDependencyImpl controlDependency = new ControlDependencyImpl();
-        return controlDependency;
     }
 
     /**

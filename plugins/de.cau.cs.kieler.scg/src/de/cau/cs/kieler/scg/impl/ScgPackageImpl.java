@@ -21,7 +21,6 @@ import de.cau.cs.kieler.scg.Assignment;
 import de.cau.cs.kieler.scg.BasicBlock;
 import de.cau.cs.kieler.scg.BranchType;
 import de.cau.cs.kieler.scg.Conditional;
-import de.cau.cs.kieler.scg.ControlDependency;
 import de.cau.cs.kieler.scg.ControlFlow;
 import de.cau.cs.kieler.scg.Depth;
 import de.cau.cs.kieler.scg.Entry;
@@ -141,13 +140,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass controlDependencyEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
      */
@@ -237,7 +229,7 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
 	/**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link ScgPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -251,7 +243,8 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         if (isInited) return (ScgPackage)EPackage.Registry.INSTANCE.getEPackage(ScgPackage.eNS_URI);
 
         // Obtain or create and register package
-        ScgPackageImpl theScgPackage = (ScgPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ScgPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ScgPackageImpl());
+        Object registeredScgPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        ScgPackageImpl theScgPackage = registeredScgPackage instanceof ScgPackageImpl ? (ScgPackageImpl)registeredScgPackage : new ScgPackageImpl();
 
         isInited = true;
 
@@ -270,7 +263,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         // Mark meta-data to indicate it can't be changed
         theScgPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(ScgPackage.eNS_URI, theScgPackage);
         return theScgPackage;
@@ -592,15 +584,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
     }
 
 	/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getControlDependency() {
-        return controlDependencyEClass;
-    }
-
-    /**
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
      * @generated
@@ -944,8 +927,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
 
         controlFlowEClass = createEClass(CONTROL_FLOW);
 
-        controlDependencyEClass = createEClass(CONTROL_DEPENDENCY);
-
         expressionDependencyEClass = createEClass(EXPRESSION_DEPENDENCY);
 
         guardDependencyEClass = createEClass(GUARD_DEPENDENCY);
@@ -1011,7 +992,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         guardEClass.getESuperTypes().add(this.getNode());
         guardEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
         controlFlowEClass.getESuperTypes().add(theKEffectsPackage.getLink());
-        controlDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
         expressionDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
         guardDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
         scheduleDependencyEClass.getESuperTypes().add(theKEffectsPackage.getDependency());
@@ -1090,8 +1070,6 @@ public class ScgPackageImpl extends EPackageImpl implements ScgPackage {
         initEClass(guardEClass, Guard.class, "Guard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(controlFlowEClass, ControlFlow.class, "ControlFlow", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-        initEClass(controlDependencyEClass, ControlDependency.class, "ControlDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(expressionDependencyEClass, ExpressionDependency.class, "ExpressionDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

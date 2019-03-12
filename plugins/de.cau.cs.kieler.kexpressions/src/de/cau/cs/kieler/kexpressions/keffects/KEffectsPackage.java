@@ -863,6 +863,61 @@ public interface KEffectsPackage extends EPackage {
     int DATA_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 3;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.ControlDependencyImpl
+     * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getControlDependency()
+     * @generated
+     */
+    int CONTROL_DEPENDENCY = 12;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__ANNOTATIONS = DEPENDENCY__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__TARGET = DEPENDENCY__TARGET;
+
+    /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__TAG = DEPENDENCY__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__REFERENCE = DEPENDENCY__REFERENCE;
+
+    /**
+     * The number of structural features of the '<em>Control Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -870,7 +925,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getAssignOperator()
      * @generated
      */
-    int ASSIGN_OPERATOR = 12;
+    int ASSIGN_OPERATOR = 13;
 
 
     /**
@@ -881,7 +936,7 @@ public interface KEffectsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getDataDependencyType()
      * @generated
      */
-    int DATA_DEPENDENCY_TYPE = 13;
+    int DATA_DEPENDENCY_TYPE = 14;
 
 
     /**
@@ -1159,6 +1214,16 @@ public interface KEffectsPackage extends EPackage {
     EAttribute getDataDependency_Confluent();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.ControlDependency <em>Control Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Control Dependency</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+     * @generated
+     */
+    EClass getControlDependency();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1431,6 +1496,16 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EAttribute DATA_DEPENDENCY__CONFLUENT = eINSTANCE.getDataDependency_Confluent();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.ControlDependencyImpl
+         * @see de.cau.cs.kieler.kexpressions.keffects.impl.KEffectsPackageImpl#getControlDependency()
+         * @generated
+         */
+        EClass CONTROL_DEPENDENCY = eINSTANCE.getControlDependency();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.AssignOperator <em>Assign Operator</em>}' enum.

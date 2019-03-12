@@ -64,5 +64,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/concurrent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/confluent"/>
     </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//ControlDependency"/>
   </genPackages>
 </genmodel:GenModel>

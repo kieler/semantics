@@ -95,6 +95,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Linkable getTarget() {
         if (target != null && target.eIsProxy()) {
             InternalEObject oldTarget = (InternalEObject)target;
@@ -136,6 +137,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTarget(Linkable newTarget) {
         if (newTarget != target) {
             NotificationChain msgs = null;
@@ -155,6 +157,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getTag() {
         return tag;
     }
@@ -164,6 +167,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTag(String newTag) {
         String oldTag = tag;
         tag = newTag;
@@ -176,6 +180,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject getReference() {
         if (reference != null && reference.eIsProxy()) {
             InternalEObject oldReference = (InternalEObject)reference;
@@ -202,6 +207,7 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(EObject newReference) {
         EObject oldReference = reference;
         reference = newReference;

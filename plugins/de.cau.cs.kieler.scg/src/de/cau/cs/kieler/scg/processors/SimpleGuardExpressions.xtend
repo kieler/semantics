@@ -53,6 +53,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -176,7 +177,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                 conditionalDeclaration.valuedObjects += newVO
                 voStore.update(newVO, "guard", "conditionalGuard")
                 
-                ScgFactory::eINSTANCE.createControlDependency => [
+                KEffectsFactory::eINSTANCE.createControlDependency => [
 	                conditional.dependencies += it
 	                it.target = newGuard
                 ] 
