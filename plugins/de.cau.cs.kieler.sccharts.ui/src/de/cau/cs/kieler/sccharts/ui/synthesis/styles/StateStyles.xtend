@@ -50,6 +50,8 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 
 /**
  * Styles for {@link State}.
@@ -71,6 +73,7 @@ class StateStyles {
     @Inject extension KContainerRenderingExtensions
     @Inject extension ColorStore
     @Inject extension AnnotationsExtensions
+    @Inject extension KColorExtensions
     
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
@@ -442,6 +445,12 @@ class StateStyles {
                     } else if (dependency.type == DataDependencyType.WRITE_WRITE) {
                         it.foreground = DEPENDENCY_ABSWRITEABSWRITE.color
                     }
+                    it.lineStyle = LineStyle::DASH
+                    it.addArrowDecorator
+                ]
+            } else if (dependency instanceof ControlDependency) {
+                edge.addRoundedBendsPolyline(8, 2) => [
+                    it.foreground = "#555".color
                     it.lineStyle = LineStyle::DASH
                     it.addArrowDecorator
                 ]

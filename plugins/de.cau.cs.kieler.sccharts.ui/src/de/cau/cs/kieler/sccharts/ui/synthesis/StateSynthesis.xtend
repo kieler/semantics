@@ -71,6 +71,8 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -360,7 +362,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
         val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
-        val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(DataDependency).toList
+        val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(Dependency).toList
         if (dependencies.empty) {
             val simpleStates = state.regions.filter(ControlflowRegion).map[ states ].flatten.filter[ !isHierarchical ].toList
             for (simpleState : simpleStates) {
@@ -369,8 +371,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         
         dependencyEdges.clear
-        for (dependency : dependencies.filter(DataDependency)) {
-            dependency.synthesizeDataDependency(lcafMap, state)
+        for (dependency : dependencies) {
+            switch(dependency) {
+                DataDependency: dependency.synthesizeDataDependency(lcafMap, state)
+                ControlDependency: dependency.synthesizeControlDependency(lcafMap, state)
+            }
         }
     }
     
@@ -386,9 +391,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
         val sourceNode = cfrs.key.node
         val targetNode = cfrs.value.node
-
-
-        println(dependency.eContainer + " " + dependency.target)
         
         if (regionDependency) {
             dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
@@ -402,10 +404,26 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
     }
     
-    
+    private def void synthesizeControlDependency(ControlDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
+
+        val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
+        
+        // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
+        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
+        val sourceNode = cfrs.key.node
+        val targetNode = cfrs.value.node
+        if (regionDependency) {
+            dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+        } else {
+            val source = cfrs.key.getEdgeableParent
+            val target = cfrs.value.getEdgeableParent
+            val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
+            edge.associateWith(dependency)
+        }
+    }    
     
     private def KEdge createLooseDependencyEdge(Map<Pair<EObject, EObject>, KEdge> edges, KNode attachNode,
-        EObject source, EObject target, DataDependency dependency, boolean ignoreFirstCollapsibleParent) {
+        EObject source, EObject target, Dependency dependency, boolean ignoreFirstCollapsibleParent) {
         val sourceTargetPair = new Pair(source, target);
         val targetSourcePair = new Pair(target, source);
         var opposite = false;
@@ -443,9 +461,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             edges.put(sourceTargetPair, edge);
             edge.setProperty(CoreOptions.NO_LAYOUT, true);
-            
-//            edge.getContainer.
-            edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
+
+            if (dependency instanceof DataDependency) {            
+                edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
+            }
         }
         edge
     }    

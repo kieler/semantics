@@ -193,6 +193,9 @@
               class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
         </Processor>
         <Processor
@@ -221,6 +224,9 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.causalView.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
