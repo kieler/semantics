@@ -23,6 +23,8 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+
 /**
  * Handles the declaration of variables.
  * 
@@ -42,7 +44,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     
     override generate() {
         // Add ltl properties
-        val verificationProperties = getVerificationProperties()
+        val verificationProperties = verificationContext.verificationProperties
         if(!verificationProperties.isNullOrEmpty) {
             val property = verificationProperties.head
             if(property.type == VerificationPropertyType.LTL) {
@@ -89,10 +91,6 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     override generateDone() {
-    }
-    
-    private def List<VerificationProperty> getVerificationProperties() {
-        return processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
     }
     
     private def String toPmlLtlFormula(String ltlFormula) {

@@ -25,7 +25,7 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import java.util.List
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.VerificationPropertyCodeGeneratorExtensions.*
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 
 /**
  * Root SMV Code Generator Module
@@ -59,7 +59,8 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
         addPreGuardsToVariableStore
         
         // Update current task of verification properties
-        for(property : getVerificationProperties) {
+        val verificationProperties = verificationContext.verificationProperties
+        for(property : verificationProperties) {
             property.runningTaskDescription = "Generating model checker code..."
             processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
         }

@@ -50,14 +50,14 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
-        if(verificationProperties.isNullOrEmpty) {
+        if(verificationContext.verificationProperties.isNullOrEmpty) {
             return
         }
         
         val codeContainer = getSourceModel
         val code = codeContainer.head.code
         val smvFile = saveText(smvFilePath, code)
-        for(property : verificationProperties) {
+        for(property : verificationContext.verificationProperties) {
             try {
                 throwIfCanceled
                 property.modelCheckerModelFile = smvFile
@@ -85,11 +85,11 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         var List<String> customInteractiveCommands = null
         switch(property.type) {
             case INVARIANT:
-                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS)
+                customInteractiveCommands = verificationContext.customInteractiveSmvInvarCommands
             case LTL:
-                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS)
+                customInteractiveCommands = verificationContext.customInteractiveSmvLtlCommands
             case CTL:
-                customInteractiveCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS)
+                customInteractiveCommands = verificationContext.customInteractiveSmvCtlCommands
         }
         val interactiveCommands = if (customInteractiveCommands.isNullOrEmpty)
                                       DEFAULT_INTERACTIVE_COMMANDS 
@@ -138,13 +138,13 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     private def void updateVerificationResult(IFile processOutputFile, String processOutput, VerificationProperty property) {
         property.processOutputFile = processOutputFile
         property.updateTaskDescriptionAndNotify("Parsing model checker output...")
-        val interpreter = new NuxmvOutputInterpreter(processOutput, isCreateCounterexamples)
+        val interpreter = new NuxmvOutputInterpreter(processOutput, verificationContext.createCounterexamples)
         val counterexample = interpreter.counterexamples.head
         val passedSpec = interpreter.passedSpecs.head
         if(counterexample !== null && property.matches(counterexample.spec)) {
             val store = VariableStore.get(compilationContext.startEnvironment)
             property.updateTaskDescriptionAndNotify("Saving KTrace...")
-            val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
+            val createCounterexampleWithOutputs = verificationContext.createCounterexamplesWithOutputs
             val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
             val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
             property.fail(ktraceFile)    
@@ -167,7 +167,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     private def IPath getSmvFilePath() {
-        return getOutputFile(modelFile.nameWithoutExtension+".smv")
+        return getOutputFile(verificationContext.verificationModelFile.nameWithoutExtension+".smv")
     }
   
     private def IPath getProcessOutputFilePath(VerificationProperty property) {

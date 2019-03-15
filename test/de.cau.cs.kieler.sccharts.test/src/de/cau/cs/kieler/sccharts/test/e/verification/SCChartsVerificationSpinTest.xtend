@@ -26,6 +26,7 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
+import de.cau.cs.kieler.verification.VerificationContext
 
 /**
  * @author aas
@@ -75,14 +76,14 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
         }
     }
     
-    override configureContext(CompilationContext verificationContext) {
+    override configureContext(VerificationContext verificationContext) {
         super.configureContext(verificationContext)
         
         // Add options
-        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexampleWithOutputs)
+        verificationContext.createCounterexamplesWithOutputs = createCounterexampleWithOutputs
         
         // Add spin options
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_SPIN_COMMANDS, customSpinCommands)
+        verificationContext.customSpinCommands = customSpinCommands
     }
     
     override getPropertyAnalyzerProcessorId() {

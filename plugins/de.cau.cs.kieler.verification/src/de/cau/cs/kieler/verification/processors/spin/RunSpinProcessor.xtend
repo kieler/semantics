@@ -46,7 +46,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
-        val verificationProperties = getVerificationProperties
+        val verificationProperties = verificationContext.verificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return
         }
@@ -92,7 +92,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
             spinCommand += "-a"
         }
         
-        val customSpinCommands = compilationContext.startEnvironment.getProperty(Environment.CUSTOM_SPIN_COMMANDS)
+        val customSpinCommands = verificationContext.customSpinCommands
         if(!customSpinCommands.isNullOrEmpty) {
             spinCommand.addAll(customSpinCommands.filter[!it.isNullOrEmpty])
         }
@@ -134,7 +134,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
             property.status = VerificationPropertyStatus.FAILED
             
             // Create counterexample from spin trail
-            if(isCreateCounterexamples) {
+            if(verificationContext.createCounterexamples) {
                 val trailFile = getFileInTemporaryProject(getTrailFilePath(property))
                 val trailOutput = runSpinTrailCommand(pmlFile, property, trailFile)
                 property.spinTrailFile = trailFile
@@ -144,7 +144,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
                 if(counterexample !== null) {
                     val store = VariableStore.get(compilationContext.startEnvironment)
                     property.updateTaskDescriptionAndNotify("Saving KTrace...")
-                    val createCounterexampleWithOutputs = compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS)
+                    val createCounterexampleWithOutputs = verificationContext.createCounterexamplesWithOutputs
                     val ktrace = counterexample.getKtrace(store, createCounterexampleWithOutputs)
                     val ktraceFile = saveText(getCounterexampleFilePath(property), ktrace)
                     property.fail(ktraceFile)

@@ -32,6 +32,8 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import java.util.List
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+
 /**
  * Adds the code for the tick loop logic.
  * 
@@ -62,8 +64,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
 
     override generate() {
-        assumptions = processorInstance.compilationContext.startEnvironment
-            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>  
+        assumptions = verificationContext.verificationAssumptions  
             
         code.append("init {\n")
         incIndentationLevel
@@ -245,7 +246,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     protected def VerificationProperty getInvariantVerificationProperty() {
-        val verificationProperties = processorInstance.compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+        val verificationProperties = verificationContext.verificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return null
         } else {

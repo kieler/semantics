@@ -12,13 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.test.e.verification
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
+import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import org.junit.Rule
@@ -70,20 +69,20 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
         println()
     }
     
-    override configureContext(CompilationContext verificationContext) {
+    override configureContext(VerificationContext verificationContext) {
         super.configureContext(verificationContext)
         
         // Add options
-        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexampleWithOutputs)
+        verificationContext.createCounterexamplesWithOutputs = createCounterexampleWithOutputs
         
         // Add SMV options
-        verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, smvUseIVAR)
+        verificationContext.smvUseIVAR = smvUseIVAR
         val customSmvInvarCommands = getCustomSmvInvarCommands()
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS, customSmvInvarCommands)
+        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommands
         val customSmvLtlCommands = getCustomSmvLtlCommands()
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS, customSmvLtlCommands)
+        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommands
         val customSmvCtlCommands = getCustomSmvCtlCommands()
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS, customSmvCtlCommands)
+        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommands
     }
     
     override getPropertyAnalyzerProcessorId() {

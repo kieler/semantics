@@ -18,11 +18,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import java.util.List
+
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 
 /**
  * @author aas
@@ -44,12 +45,10 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     }
 
     override generate() {
-        assumptions = processorInstance.compilationContext.startEnvironment
-            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
-              
-        val useIVARinSmvModels = processorInstance.compilationContext.startEnvironment
-            .getProperty(Environment.SMV_USE_IVAR) 
-      
+        assumptions = verificationContext.verificationAssumptions
+        
+        val useIVARinSmvModels = verificationContext.smvUseIVAR
+        
         incIndentationLevel
         if(useIVARinSmvModels) {
             appendIndentedLine("IVAR")

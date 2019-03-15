@@ -27,6 +27,7 @@ import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas
@@ -50,17 +51,16 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     }
     
     override process() {
-        // Only set the properties in the environment if they are not set yet,
-        // because they could have been set from the UI already.
-        val envVerificationProperties = compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
+        // Only set the properties in the environment if they are not set yet.
+        val envVerificationProperties = verificationContext.verificationProperties
         if(!envVerificationProperties.isNullOrEmpty) {
             return
         }
         
         val model = getModel() as SCCharts
         analyze(model)
-        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
-        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
+        verificationContext.verificationProperties = verificationProperties
+        verificationContext.verificationAssumptions = verificationAssumptions
     }
     
     private def void analyze(SCCharts model) {
@@ -141,6 +141,10 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
         } else {
             return list.get(index)    
         } 
+    }
+    
+    private def VerificationContext getVerificationContext() {
+        return compilationContext as VerificationContext
     }
     
 }

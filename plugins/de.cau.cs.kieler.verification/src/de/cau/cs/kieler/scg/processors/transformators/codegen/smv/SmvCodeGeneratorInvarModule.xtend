@@ -12,13 +12,10 @@
  */
 package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.InvariantAssumption
-import de.cau.cs.kieler.verification.VerificationAssumption
-import java.util.List
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
-
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 /**
  * @author aas
  * 
@@ -34,9 +31,8 @@ class SmvCodeGeneratorInvarModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generate() {
-        val assumptions = processorInstance.compilationContext.startEnvironment
-            .getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
-            
+        val assumptions = verificationContext.verificationAssumptions
+        
         if(assumptions.isNullOrEmpty) {
             return
         }

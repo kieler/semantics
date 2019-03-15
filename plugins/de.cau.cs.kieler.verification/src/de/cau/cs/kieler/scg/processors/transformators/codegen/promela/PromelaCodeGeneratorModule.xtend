@@ -24,7 +24,8 @@ import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import java.util.List
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.VerificationPropertyCodeGeneratorExtensions.*
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+
 
 /**
  * Root Promela Code Generator Module
@@ -54,7 +55,8 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
         addPreGuardsToVariableStore
         
         // Update current task of verification properties
-        for(propertyAndIndexPair : getVerificationProperties.indexed) {
+        val verificationProperties = verificationContext.verificationProperties
+        for(propertyAndIndexPair : verificationProperties.indexed) {
             val index= propertyAndIndexPair.key
             val property = propertyAndIndexPair.value
             if(index == 0) {

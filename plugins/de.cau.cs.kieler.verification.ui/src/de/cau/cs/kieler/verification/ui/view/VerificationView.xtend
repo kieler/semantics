@@ -70,6 +70,7 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
+import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas
@@ -98,8 +99,8 @@ class VerificationView extends ViewPart {
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
     
-    private var CompilationContext propertyAnalyzerContext
-    private var CompilationContext verificationContext
+    private var VerificationContext propertyAnalyzerContext
+    private var VerificationContext verificationContext
     private var String selectedSystemId
     
     // == UI ELEMENTS ==
@@ -455,9 +456,9 @@ Example commands:
         }
     }
     
-    private def CompilationContext runPropertyAnalyzer(String processorId, EObject model) {
+    private def VerificationContext runPropertyAnalyzer(String processorId, EObject model) {
         val compilationSystem = CompilationSystem.createCompilationSystem(processorId, #[processorId])
-        val context = Compile.createCompilationContext(compilationSystem, model)
+        val context = Compile.createCompilationContext(compilationSystem, model, VerificationContext)
         context.compile
         if(context.hasErrors) {
             val exception = context.allErrors.get(0).exception
@@ -484,14 +485,6 @@ Example commands:
             }
             viewer.selection = new StructuredSelection(newSelection)
         }
-    }
-    
-    private def List<VerificationProperty> getVerificationProperties(CompilationContext context) {
-        return context?.startEnvironment?.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
-    }
-    
-    private def List<VerificationAssumption> getVerificationAssumptions(CompilationContext context) {
-        return context?.startEnvironment?.getProperty(Environment.VERIFICATION_ASSUMPTIONS) as List<VerificationAssumption>
     }
     
     private def EObject getModel(CompilationContext context) {
@@ -589,31 +582,28 @@ Example commands:
         stopVerification()
        
         // Create new context for verification and compile
-        verificationContext = Compile.createCompilationContext(selectedSystemId, model)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROPERTIES, verificationProperties)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_ASSUMPTIONS, verificationAssumptions)
-        verificationContext.startEnvironment.setProperty(Environment.VERIFICATION_MODEL_FILE, modelFile)
+        verificationContext = Compile.createCompilationContext(selectedSystemId, model, VerificationContext)
+        verificationContext.verificationProperties = verificationProperties
+        verificationContext.verificationAssumptions = verificationAssumptions
+        verificationContext.verificationModelFile = modelFile
         
         // Add options
-        val createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
-        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES, createCounterexamples)
-        val createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
-        verificationContext.startEnvironment.setProperty(Environment.CREATE_COUNTEREXAMPLES_WITH_OUTPUTS, createCounterexamplesWithOutputs)
+        verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
+        verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
         
         // Add nuXmv options
-        val useIVARinSmvModels = getBooleanOption(SMV_USE_IVAR, false)
-        verificationContext.startEnvironment.setProperty(Environment.SMV_USE_IVAR, useIVARinSmvModels)
+        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR, false)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
         val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList
         val customSmvCtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_CTL_PREF_STORE_ID).split("\n").toList
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_INVAR_COMMANDS, customSmvInvarCommandsList)
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_LTL_COMMANDS, customSmvLtlCommandsList)
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_INTERACTIVE_SMV_CTL_COMMANDS, customSmvCtlCommandsList)
+        verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommandsList
+        verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
+        verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
         
         // Add spin options
         val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
-        verificationContext.startEnvironment.setProperty(Environment.CUSTOM_SPIN_COMMANDS, customSpinCommands)
+        verificationContext.customSpinCommands = customSpinCommands
         
         // Add observer for changed properties
         verificationContext.addObserver[ Observable o, Object arg |

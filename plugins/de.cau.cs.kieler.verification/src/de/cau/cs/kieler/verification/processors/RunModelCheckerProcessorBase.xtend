@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.Path
 import org.eclipse.xtext.util.StringInputStream
 
 import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+import de.cau.cs.kieler.verification.VerificationContext
 
 /**
  * @author aas
@@ -69,16 +70,12 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
         return #["/usr/bin/time", "-f", "\n\nelapsed time: %e seconds, max memory in RAM: %M KB"]
     }
     
-    protected def List<VerificationProperty> getVerificationProperties() {
-        return compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_PROPERTIES) as List<VerificationProperty>
-    }
-    
-    protected def IFile getModelFile() {
-        return compilationContext.startEnvironment.getProperty(Environment.VERIFICATION_MODEL_FILE) as IFile
+    protected def VerificationContext getVerificationContext() {
+        return compilationContext as VerificationContext
     }
     
     protected def IPath getOutputFolder() {
-        val folderInKielerTemp = getModelFile.fullPath.toString.replace("/","-").replace(".","-")
+        val folderInKielerTemp = verificationContext.verificationModelFile.fullPath.toString.replace("/","-").replace(".","-")
         return new Path(folderInKielerTemp).append("kieler-gen").append("verification")
     }
     
@@ -87,7 +84,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     }
     
     protected def IPath getOutputFile(VerificationProperty property, String fileExtension) {
-        var String name = modelFile.nameWithoutExtension
+        var String name = verificationContext.verificationModelFile.nameWithoutExtension
         if(!property.name.isNullOrEmpty) {
             name += ("-" + property.name.toIdentifier + "")
         }
@@ -118,11 +115,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     
     protected def Process startVerificationProcess(ProcessBuilder processBuilder) {
         val process = processBuilder.start
-        compilationContext.startEnvironment.setProperty(Environment.VERIFICATION_PROCESS, process)
+        verificationContext.verificationProcess = process
         return process
-    }
-    
-    protected def boolean isCreateCounterexamples() {
-        return compilationContext.startEnvironment.getProperty(Environment.CREATE_COUNTEREXAMPLES)
     }
 }
