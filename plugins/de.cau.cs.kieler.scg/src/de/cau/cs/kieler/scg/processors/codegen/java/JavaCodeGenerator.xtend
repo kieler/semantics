@@ -37,7 +37,7 @@ class JavaCodeGenerator extends CCodeGenerator {
         "Java Code"
     }
     
-    override SCGCodeGeneratorModule createCodeGenetatorModule() {
+    override SCGCodeGeneratorModule createCodeGeneratorModule() {
         return injector.getInstance(JavaCodeGeneratorModule)
     }
 }
