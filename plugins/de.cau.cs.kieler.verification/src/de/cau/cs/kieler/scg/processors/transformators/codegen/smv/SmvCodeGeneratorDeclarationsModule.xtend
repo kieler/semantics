@@ -98,7 +98,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
         // If this is a variable introduced by SSA, then we use the assumptions for the original variable.
         val origValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
         val rangeAssumption = getRangeAssumption(origValuedObject)
-        if(rangeAssumption !== null) {
+        if(rangeAssumption !== null && !verificationContext.isSmvIgnoreRangeAssumptions) {
             return rangeAssumption.minValue+".."+rangeAssumption.maxValue
         }
         if (decl.type == ValueType.HOST && !decl.hostType.isNullOrEmpty) {

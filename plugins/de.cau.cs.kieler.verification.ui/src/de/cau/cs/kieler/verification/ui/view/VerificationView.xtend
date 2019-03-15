@@ -96,6 +96,7 @@ class VerificationView extends ViewPart {
     private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
     private static val CUSTOM_SPIN_COMMANDS_PREF_STORE_ID = "customSpinCommands"
     private static val SMV_USE_IVAR = "SmvModelsWithIVAR"
+    private static val SMV_IGNORE_RANGE_ASSUMPTIONS = "smvIgnoreRangeAssumptions"
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
     
@@ -210,6 +211,14 @@ class VerificationView extends ViewPart {
         useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR, false)
         useIVARinSmvModels.toolTipText = "IVAR variables cannot be used everywhere, e.g., not in CTL"
         
+        val smvIgnoreRangeAssumptions = new Action("Ignore Range Assumptions for SMV", IAction.AS_CHECK_BOX) {
+            override run() {
+                setBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, isChecked)
+            }
+        }
+        smvIgnoreRangeAssumptions.checked = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
+        smvIgnoreRangeAssumptions.toolTipText = "This can be useful in combination with infinite domain algorithms (e.g. IC3)"
+        
         val openEditSmvCommandsDialogAction = new Action("Edit SMV Commands...") {
             override run() {
                 val dialog = new EditSmvCommandsDialog(viewer.control.shell)
@@ -249,6 +258,7 @@ Example commands:
             add(createCounterexampleAction)
             add(writeOutputsToCounterexampleAction)
             add(useIVARinSmvModels)
+            add(smvIgnoreRangeAssumptions)
             add(openEditSmvCommandsDialogAction)
             add(openEditSpinCommandsDialogAction)
         ]
@@ -593,6 +603,7 @@ Example commands:
         
         // Add nuXmv options
         verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR, false)
+        verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
         val customSmvLtlCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID).split("\n").toList

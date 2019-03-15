@@ -22,21 +22,31 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class VerificationContext extends CompilationContext {
     
-    @Accessors private boolean smvUseIVAR = false
-    
+    // General options
     @Accessors private List<VerificationProperty> verificationProperties = newArrayList
     @Accessors private List<VerificationAssumption> verificationAssumptions = newArrayList
     
+    /**
+     * File handle used to define where generated files for verification will be saved.
+     */
     @Accessors private IFile verificationModelFile = null
     
+    /**
+     * The system process (or one of its parents) that is running the model checker
+     */
+    @Accessors private Process verificationProcess = null
+    
+    // Options for counterexample generation
     @Accessors private boolean createCounterexamplesWithOutputs = true
     @Accessors private boolean createCounterexamples = true
     
+    // Options for verification using NuSMV / nuXmv
     @Accessors private List<String> customInteractiveSmvInvarCommands = null
     @Accessors private List<String> customInteractiveSmvLtlCommands = null
     @Accessors private List<String> customInteractiveSmvCtlCommands = null
+    @Accessors private boolean smvUseIVAR = false
+    @Accessors private boolean smvIgnoreRangeAssumptions = false
         
+    // Options for verification using SPIN
     @Accessors private List<String> customSpinCommands =null
-    
-    @Accessors private Process verificationProcess = null
 }
