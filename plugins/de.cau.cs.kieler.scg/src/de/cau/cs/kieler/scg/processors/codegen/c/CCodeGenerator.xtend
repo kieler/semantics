@@ -49,7 +49,7 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
         for (scg : rootModel.scgs) {
-            val generatorModule = createCodeGenetatorModule.configure(scg.name, rootModel, scg, this, moduleMap, 
+            val generatorModule = createCodeGeneratorModule.configure(scg.name, rootModel, scg, this, moduleMap, 
                 scg.name, null, null
             )
             moduleMap.put(scg, generatorModule)
@@ -63,7 +63,7 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
         }
     }
     
-    override createCodeGenetatorModule() {
+    override createCodeGeneratorModule() {
         return injector.getInstance(CCodeGeneratorModule)
     }
 
