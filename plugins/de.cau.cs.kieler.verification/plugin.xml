@@ -22,24 +22,6 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SimplifyNamesOfSSA">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
-      </Processor>
-      <Processor
             class="de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor">
       </Processor>
       <Processor
@@ -47,9 +29,6 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer">
       </Processor>
    </extension>
 

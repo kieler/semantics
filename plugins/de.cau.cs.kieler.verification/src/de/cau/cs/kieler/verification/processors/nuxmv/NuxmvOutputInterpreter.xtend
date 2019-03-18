@@ -12,9 +12,8 @@
  */
  package de.cau.cs.kieler.verification.processors.nuxmv
 
-import de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions
 import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
-import de.cau.cs.kieler.verification.VerificationPropertyCounterexampleState
+import de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.List
 import java.util.regex.Pattern

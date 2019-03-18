@@ -82,7 +82,7 @@ class VerificationView extends ViewPart {
      */
     public static var VerificationView instance
     
-    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer"}
+    private static val MODEL_CLASS_TO_PROPERTY_ANALYZER = #{typeof(SCCharts) -> "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"}
     private static val MODEL_CHECKER_SYSTEM_IDS = #["de.cau.cs.kieler.sccharts.verification.nuxmv",
                                                     "de.cau.cs.kieler.sccharts.verification.nusmv",
                                                     "de.cau.cs.kieler.sccharts.verification.spin"]

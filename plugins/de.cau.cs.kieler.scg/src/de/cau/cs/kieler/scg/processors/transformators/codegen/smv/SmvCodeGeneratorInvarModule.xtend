@@ -14,8 +14,9 @@ package de.cau.cs.kieler.scg.processors.transformators.codegen.smv
 
 import de.cau.cs.kieler.verification.InvariantAssumption
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
 import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
+
 /**
  * @author aas
  * 

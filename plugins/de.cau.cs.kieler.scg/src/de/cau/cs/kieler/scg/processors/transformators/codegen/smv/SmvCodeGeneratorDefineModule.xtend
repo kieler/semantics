@@ -33,7 +33,7 @@ import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
+import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
 
 /**
  * @author aas

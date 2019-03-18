@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.transformators.codegen
+package de.cau.cs.kieler.verification.codegen
 
 /** 
  * @author aas

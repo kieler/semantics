@@ -41,6 +41,9 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.verification.VerificationContext
+import de.cau.cs.kieler.verification.RangeAssumption
 
 /**
  * SCCharts CountDelay Transformation.
@@ -93,6 +96,7 @@ class CountDelay extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
+    @Inject extension AnnotationsExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_cd"
@@ -112,50 +116,57 @@ class CountDelay extends SCChartsProcessor implements Traceable {
 
     // This will encode count delays in transitions.
     def void transformCountDelay(Transition transition, State targetRootState) {
-        if (transition.triggerDelay > 1) {
-            
-            if (environment.getProperty(COUNT_DELAY_ENABLE_STRUCTUREBASED) && 
-                transition.sourceState.simple && transition.sourceState.outgoingTransitions.filter[ triggerDelay > 1].size == 1
-            ) {
-                transition.transformCountDelayStructurally(targetRootState)
-                return
-            }
-            
-            transition.setDefaultTrace
-            val sourceState = transition.sourceState
-            val parentState = sourceState.parentRegion.parentState
-            val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
-            voStore.update(counter, SCCHARTS_GENERATED)
-
-            //Add entry action
-            val entryAction = sourceState.createEntryAction
-            entryAction.addEffect(counter.createAssignment(0.createIntValue))
-
-            // Pre allows to put the during action in the source state and not in the parent state
-            // Add during action
-            val duringAction = sourceState.createDuringAction
-            // Meeting 2016-11-09 Semantics Meetings (ssm)
-            // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
-            // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick".
-            // i.e., the tick when the state is entered 
-            duringAction.immediate = transition.implicitlyImmediate
-            duringAction.setTrigger(transition.trigger.copy)
-            duringAction.addEffect(counter.createAssignment(counter.reference.add((1.createIntValue))))
-
-            // Modify original trigger
-            // trigger := (pre(counter) == delay - 1) && trigger
-            val trigger = createLogicalAndExpression(
-                createEQExpression(
-                    createOperatorExpression(OperatorType.PRE) => [
-                        subExpressions += counter.reference
-                    ],
-                    (transition.triggerDelay - 1).createIntValue
-                ),
-                transition.trigger
-            )
-            transition.setTrigger(trigger)
-            transition.setTriggerDelay(1)
+        val triggerDelay = transition.triggerDelay;
+        if (triggerDelay <= 1) {
+            return
         }
+        
+        if (environment.getProperty(COUNT_DELAY_ENABLE_STRUCTUREBASED) && 
+            transition.sourceState.simple && transition.sourceState.outgoingTransitions.filter[ it.triggerDelay > 1].size == 1
+        ) {
+            transition.transformCountDelayStructurally(targetRootState)
+            return
+        }
+        
+        transition.setDefaultTrace
+        val sourceState = transition.sourceState
+        val parentState = sourceState.parentRegion.parentState
+        val counter = parentState.createValuedObject(GENERATED_PREFIX + "counter", createIntDeclaration).uniqueName
+        voStore.update(counter, SCCHARTS_GENERATED)
+        
+        // Add range assumption for verification
+        if(compilationContext instanceof VerificationContext) {
+            (compilationContext as VerificationContext).verificationAssumptions.add(new RangeAssumption(counter, 0, triggerDelay))
+        }
+
+        //Add entry action
+        val entryAction = sourceState.createEntryAction
+        entryAction.addEffect(counter.createAssignment(0.createIntValue))
+
+        // Pre allows to put the during action in the source state and not in the parent state
+        // Add during action
+        val duringAction = sourceState.createDuringAction
+        // Meeting 2016-11-09 Semantics Meetings (ssm)
+        // https://rtsys.informatik.uni-kiel.de/confluence/pages/viewpage.action?pageId=20153744
+        // In case of a delayed transition we decided to NOT "count" if the trigger evaluates to true in the "initial tick".
+        // i.e., the tick when the state is entered 
+        duringAction.immediate = transition.implicitlyImmediate
+        duringAction.setTrigger(transition.trigger.copy)
+        duringAction.addEffect(counter.createAssignment(counter.reference.add((1.createIntValue))))
+
+        // Modify original trigger
+        // trigger := (pre(counter) == delay - 1) && trigger
+        val trigger = createLogicalAndExpression(
+            createEQExpression(
+                createOperatorExpression(OperatorType.PRE) => [
+                    subExpressions += counter.reference
+                ],
+                (transition.triggerDelay - 1).createIntValue
+            ),
+            transition.trigger
+        )
+        transition.setTrigger(trigger)
+        transition.setTriggerDelay(1)
     }
     
     def void transformCountDelayStructurally(Transition transition, State targetRootState) {

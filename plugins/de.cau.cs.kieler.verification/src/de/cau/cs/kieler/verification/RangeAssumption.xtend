@@ -24,4 +24,8 @@ class RangeAssumption extends VerificationAssumption {
     @Accessors(PUBLIC_GETTER) private val ValuedObject valuedObject
     @Accessors(PUBLIC_GETTER) private val int minValue
     @Accessors(PUBLIC_GETTER) private val int maxValue
+    
+    override toString() {
+        return super.toString+'''(«valuedObject.name», «minValue», «maxValue»)'''
+    }
 }

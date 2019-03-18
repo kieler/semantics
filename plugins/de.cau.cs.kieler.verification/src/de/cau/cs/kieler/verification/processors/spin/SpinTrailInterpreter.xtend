@@ -12,7 +12,6 @@
  */
  package de.cau.cs.kieler.verification.processors.spin
 
-import de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGeneratorModuleBase
 import de.cau.cs.kieler.verification.VerificationPropertyCounterexample
 import de.cau.cs.kieler.verification.processors.LineBasedParser
 import java.util.regex.Pattern
@@ -28,10 +27,11 @@ class SpinTrailInterpreter extends LineBasedParser {
     @Accessors(PUBLIC_GETTER) private String formulaName
     @Accessors(PUBLIC_GETTER) private String failedAssertion
     
+    private static val TICK_END_FLAG_NAME = "pmltickend"
     private static val LTL_SPEC_PATTERN = Pattern.compile('''ltl (.*): (.*)''')
     private static val FAILED_ASSERTION_PATTERN = Pattern.compile('''.*text of failed assertion: assert\((.*)\)''')
-    private static val TICK_START_PATTERN = Pattern.compile('''.*\[«PromelaCodeGeneratorModuleBase.TICK_END_FLAG_NAME» = 0\]''')
-    private static val TICK_END_PATTERN = Pattern.compile('''.*\[«PromelaCodeGeneratorModuleBase.TICK_END_FLAG_NAME» = 1\]''')
+    private static val TICK_START_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 0\]''')
+    private static val TICK_END_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 1\]''')
     private static val LOOP_START_PATTERN = Pattern.compile('''.*<<<<<START OF CYCLE>>>>>''')
     private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''.*\[([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)\]''')
     

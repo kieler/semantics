@@ -16,14 +16,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyType
-import java.util.List
-
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
 
 import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
 /**
  * Handles the declaration of variables.

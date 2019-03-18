@@ -10,24 +10,23 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.verification.processors
+package de.cau.cs.kieler.sccharts.processors.verification
 
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.verification.InvariantAssumption
 import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
-import de.cau.cs.kieler.verification.VerificationContext
+import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
 /** 
  * @author aas
@@ -43,7 +42,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
     
     override getId() {
-        return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer"
+        return "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"
     }
     
     override getName() {

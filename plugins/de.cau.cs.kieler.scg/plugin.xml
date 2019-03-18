@@ -153,6 +153,24 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardOptimization">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SimplifyNamesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">

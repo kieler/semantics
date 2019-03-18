@@ -14,7 +14,6 @@
 
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -24,8 +23,8 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGeneratorExtensions.toSmvExpression
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
+import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
+import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
 
 /**
@@ -160,6 +159,7 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
         // The following is merely a heuristic to check that the correct property was checked.
         // Spaces and brackets are removed and afterwards the formulas are compared.
         // This is because nuXmv gives the answer for a minified formula.
+        
         val propertyFormula = property.formula.toSmvExpression()
         val propertyFormulaSimplified = propertyFormula.replaceAll('''\s|\(|\)''',"")
         val smvFormulaSimplified = smvFormula.replaceAll('''\s|\(|\)''',"")

@@ -27,8 +27,9 @@ import org.eclipse.core.runtime.IPath
 import org.eclipse.core.runtime.Path
 import org.eclipse.xtext.util.StringInputStream
 
-import static extension de.cau.cs.kieler.scg.processors.transformators.codegen.CodeGeneratorExtensions.toIdentifier
 import de.cau.cs.kieler.verification.VerificationContext
+
+import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
 /**
  * @author aas
