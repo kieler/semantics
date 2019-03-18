@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Circuit KLighD Synthesis
 Bundle-Vendor: Kiel University
 Bundle-Version: 0.13.0.qualifier
-Bundle-SymbolicName: de.cau.cs.kieler.circuit.klighd; singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.circuit.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: javax.inject,
  com.google.guava,

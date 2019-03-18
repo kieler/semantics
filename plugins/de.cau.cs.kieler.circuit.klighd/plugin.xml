@@ -4,22 +4,22 @@
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
    <diagramSynthesis
-         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis"
-         id="de.cau.cs.kieler.circuit.klighd.CircuitDiagramSynthesis">
+         class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.circuit.ui.syntheses.CircuitDiagramSynthesis"
+         id="de.cau.cs.kieler.circuit.ui.syntheses.CircuitDiagramSynthesis">
    </diagramSynthesis>
    </extension>
 <extension
       point="org.eclipse.ui.commands">
    <category
          description="Actor diagrams"
-         id="de.cau.cs.kieler.circuit.klighd.ActorDiagrams"
+         id="de.cau.cs.kieler.circuit.ui.syntheses.ActorDiagrams"
          name="ActorDiagrams">
    </category>
    <command
-         categoryId="de.cau.cs.kieler.circuit.klighd.ActorDiagrams"
-         defaultHandler="de.cau.cs.kieler.circuit.klighd.OpenDiagramHandler"
+         categoryId="de.cau.cs.kieler.circuit.ui.syntheses.ActorDiagrams"
+         defaultHandler="de.cau.cs.kieler.circuit.ui.syntheses.OpenDiagramHandler"
          description="Primitive helper command that opens KLighD-based Actor diagrams."
-         id="de.cau.cs.kieler.circuit.klighd.openActorDiagram"
+         id="de.cau.cs.kieler.circuit.ui.syntheses.openActorDiagram"
          name="Open Actor diagram">
    </command>
 </extension>
@@ -29,7 +29,7 @@
    <menuContribution
          locationURI="popup:org.eclipse.ui.popup.any?before=additions">
       <command
-            commandId="de.cau.cs.kieler.circuit.klighd.openActorDiagram"
+            commandId="de.cau.cs.kieler.circuit.ui.syntheses.openActorDiagram"
             label="Open Actor diagram"
             style="push">
          <visibleWhen
@@ -75,8 +75,8 @@
 <extension
       point="de.cau.cs.kieler.klighd.extensions">
    <action
-         class="de.cau.cs.kieler.circuit.klighd.FocusOnActorAction"
-         id="de.cau.cs.kieler.circuit.klighd.FocusOnActorAction">
+         class="de.cau.cs.kieler.circuit.ui.syntheses.FocusOnActorAction"
+         id="de.cau.cs.kieler.circuit.ui.syntheses.FocusOnActorAction">
    </action>
 </extension>
 

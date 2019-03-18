@@ -87,7 +87,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Linkable getSource() {
+	@Override
+    public Linkable getSource() {
         if (source != null && source.eIsProxy()) {
             InternalEObject oldSource = (InternalEObject)source;
             source = (Linkable)eResolveProxy(oldSource);
@@ -128,7 +129,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setSource(Linkable newSource) {
+	@Override
+    public void setSource(Linkable newSource) {
         if (newSource != source) {
             NotificationChain msgs = null;
             if (source != null)
@@ -147,7 +149,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public Linkable getTarget() {
+	@Override
+    public Linkable getTarget() {
         if (target != null && target.eIsProxy()) {
             InternalEObject oldTarget = (InternalEObject)target;
             target = (Linkable)eResolveProxy(oldTarget);
@@ -188,7 +191,8 @@ public class LinkImpl extends NamedObjectImpl implements Link {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setTarget(Linkable newTarget) {
+	@Override
+    public void setTarget(Linkable newTarget) {
         if (newTarget != target) {
             NotificationChain msgs = null;
             if (target != null)
