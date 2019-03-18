@@ -717,13 +717,31 @@ public interface KEffectsPackage extends EPackage {
     int LINK__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__ORIGINAL_SOURCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LINK__ORIGINAL_TARGET = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Link</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int LINK_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.
@@ -770,6 +788,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int DEPENDENCY__REFERENCE = LINK__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__ORIGINAL_SOURCE = LINK__ORIGINAL_SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DEPENDENCY__ORIGINAL_TARGET = LINK__ORIGINAL_TARGET;
 
     /**
      * The number of structural features of the '<em>Dependency</em>' class.
@@ -825,6 +861,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int DATA_DEPENDENCY__REFERENCE = DEPENDENCY__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__ORIGINAL_SOURCE = DEPENDENCY__ORIGINAL_SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATA_DEPENDENCY__ORIGINAL_TARGET = DEPENDENCY__ORIGINAL_TARGET;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -907,6 +961,24 @@ public interface KEffectsPackage extends EPackage {
      * @ordered
      */
     int CONTROL_DEPENDENCY__REFERENCE = DEPENDENCY__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Original Source</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__ORIGINAL_SOURCE = DEPENDENCY__ORIGINAL_SOURCE;
+
+    /**
+     * The feature id for the '<em><b>Original Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_DEPENDENCY__ORIGINAL_TARGET = DEPENDENCY__ORIGINAL_TARGET;
 
     /**
      * The number of structural features of the '<em>Control Dependency</em>' class.
@@ -1159,6 +1231,28 @@ public interface KEffectsPackage extends EPackage {
      * @generated
      */
     EReference getLink_Reference();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getOriginalSource <em>Original Source</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Original Source</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getOriginalSource()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_OriginalSource();
+
+    /**
+     * Returns the meta object for the reference '{@link de.cau.cs.kieler.kexpressions.keffects.Link#getOriginalTarget <em>Original Target</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference '<em>Original Target</em>'.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Link#getOriginalTarget()
+     * @see #getLink()
+     * @generated
+     */
+    EReference getLink_OriginalTarget();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.keffects.Dependency <em>Dependency</em>}'.
@@ -1452,6 +1546,22 @@ public interface KEffectsPackage extends EPackage {
          * @generated
          */
         EReference LINK__REFERENCE = eINSTANCE.getLink_Reference();
+
+        /**
+         * The meta object literal for the '<em><b>Original Source</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__ORIGINAL_SOURCE = eINSTANCE.getLink_OriginalSource();
+
+        /**
+         * The meta object literal for the '<em><b>Original Target</b></em>' reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LINK__ORIGINAL_TARGET = eINSTANCE.getLink_OriginalTarget();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.keffects.impl.DependencyImpl <em>Dependency</em>}' class.

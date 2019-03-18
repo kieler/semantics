@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getTarget <em>Target</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getTag <em>Tag</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getOriginalSource <em>Original Source</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.keffects.impl.LinkImpl#getOriginalTarget <em>Original Target</em>}</li>
  * </ul>
  *
  * @generated
@@ -70,6 +72,26 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * @ordered
      */
     protected EObject reference;
+
+    /**
+     * The cached value of the '{@link #getOriginalSource() <em>Original Source</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalSource()
+     * @generated
+     * @ordered
+     */
+    protected EObject originalSource;
+
+    /**
+     * The cached value of the '{@link #getOriginalTarget() <em>Original Target</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOriginalTarget()
+     * @generated
+     * @ordered
+     */
+    protected EObject originalTarget;
 
     /**
      * <!-- begin-user-doc -->
@@ -221,6 +243,86 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
      * @generated
      */
     @Override
+    public EObject getOriginalSource() {
+        if (originalSource != null && originalSource.eIsProxy()) {
+            InternalEObject oldOriginalSource = (InternalEObject)originalSource;
+            originalSource = eResolveProxy(oldOriginalSource);
+            if (originalSource != oldOriginalSource) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.LINK__ORIGINAL_SOURCE, oldOriginalSource, originalSource));
+            }
+        }
+        return originalSource;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject basicGetOriginalSource() {
+        return originalSource;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalSource(EObject newOriginalSource) {
+        EObject oldOriginalSource = originalSource;
+        originalSource = newOriginalSource;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__ORIGINAL_SOURCE, oldOriginalSource, originalSource));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EObject getOriginalTarget() {
+        if (originalTarget != null && originalTarget.eIsProxy()) {
+            InternalEObject oldOriginalTarget = (InternalEObject)originalTarget;
+            originalTarget = eResolveProxy(oldOriginalTarget);
+            if (originalTarget != oldOriginalTarget) {
+                if (eNotificationRequired())
+                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, KEffectsPackage.LINK__ORIGINAL_TARGET, oldOriginalTarget, originalTarget));
+            }
+        }
+        return originalTarget;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EObject basicGetOriginalTarget() {
+        return originalTarget;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setOriginalTarget(EObject newOriginalTarget) {
+        EObject oldOriginalTarget = originalTarget;
+        originalTarget = newOriginalTarget;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KEffectsPackage.LINK__ORIGINAL_TARGET, oldOriginalTarget, originalTarget));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KEffectsPackage.LINK__TARGET:
@@ -261,6 +363,12 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
             case KEffectsPackage.LINK__REFERENCE:
                 if (resolve) return getReference();
                 return basicGetReference();
+            case KEffectsPackage.LINK__ORIGINAL_SOURCE:
+                if (resolve) return getOriginalSource();
+                return basicGetOriginalSource();
+            case KEffectsPackage.LINK__ORIGINAL_TARGET:
+                if (resolve) return getOriginalTarget();
+                return basicGetOriginalTarget();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -281,6 +389,12 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
                 return;
             case KEffectsPackage.LINK__REFERENCE:
                 setReference((EObject)newValue);
+                return;
+            case KEffectsPackage.LINK__ORIGINAL_SOURCE:
+                setOriginalSource((EObject)newValue);
+                return;
+            case KEffectsPackage.LINK__ORIGINAL_TARGET:
+                setOriginalTarget((EObject)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -303,6 +417,12 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
             case KEffectsPackage.LINK__REFERENCE:
                 setReference((EObject)null);
                 return;
+            case KEffectsPackage.LINK__ORIGINAL_SOURCE:
+                setOriginalSource((EObject)null);
+                return;
+            case KEffectsPackage.LINK__ORIGINAL_TARGET:
+                setOriginalTarget((EObject)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -321,6 +441,10 @@ public abstract class LinkImpl extends AnnotatableImpl implements Link {
                 return TAG_EDEFAULT == null ? tag != null : !TAG_EDEFAULT.equals(tag);
             case KEffectsPackage.LINK__REFERENCE:
                 return reference != null;
+            case KEffectsPackage.LINK__ORIGINAL_SOURCE:
+                return originalSource != null;
+            case KEffectsPackage.LINK__ORIGINAL_TARGET:
+                return originalTarget != null;
         }
         return super.eIsSet(featureID);
     }

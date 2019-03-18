@@ -87,7 +87,10 @@ class StateDependencies extends RegionDependencies {
     override protected DataDependency createDependency(Linkable source, Linkable target) {
         val scfr = source
         val tcfr = target
-        return scfr.createDataDependency(tcfr)
+        return scfr.createDataDependency(tcfr) => [
+            originalSource = source
+            originalTarget = target
+        ]
     }
     
 

@@ -425,6 +425,26 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * @generated
      */
     @Override
+    public EReference getLink_OriginalSource() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLink_OriginalTarget() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getDependency() {
         return dependencyEClass;
     }
@@ -558,6 +578,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(linkEClass, LINK__TARGET);
         createEAttribute(linkEClass, LINK__TAG);
         createEReference(linkEClass, LINK__REFERENCE);
+        createEReference(linkEClass, LINK__ORIGINAL_SOURCE);
+        createEReference(linkEClass, LINK__ORIGINAL_TARGET);
 
         dependencyEClass = createEClass(DEPENDENCY);
 
@@ -656,6 +678,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 1, 1, Link.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getLink_Tag(), ecorePackage.getEString(), "tag", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getLink_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLink_OriginalSource(), ecorePackage.getEObject(), null, "originalSource", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLink_OriginalTarget(), ecorePackage.getEObject(), null, "originalTarget", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

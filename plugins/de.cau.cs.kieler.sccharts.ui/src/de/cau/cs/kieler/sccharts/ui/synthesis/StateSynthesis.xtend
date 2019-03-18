@@ -73,6 +73,11 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -91,6 +96,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension PragmaExtensions
@@ -335,13 +341,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     }
     
     private def static void configureLayoutRegionDependencies(KNode node) {
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10));
-        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5));
+//        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true);
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0);
-        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0);
+        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10.0);
     }    
 
     /** Checks if given state should be visualized as macro state */
@@ -373,14 +379,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         dependencyEdges.clear
         for (dependency : dependencies) {
             switch(dependency) {
-                DataDependency: dependency.synthesizeDataDependency(lcafMap, state)
+                DataDependency: dependency.synthesizeDataDependency(lcafMap, state, result)
                 ControlDependency: dependency.synthesizeControlDependency(lcafMap, state)
             }
         }
     }
     
     /** Synthesize one dependency using the least common ancestor fork (lcaf) data. */
-    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
+    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state, Environment environment) {
         // Don't show confluent dependencies.
         if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
         if (!dependency.concurrent) return;
@@ -393,7 +399,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val targetNode = cfrs.value.node
         
         if (regionDependency) {
-            dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+            if (isOnCausalLoop(dependency, environment)) {
+                dependency.createDependencyEdge(sourceNode, targetNode, "#f00".color).associateWith(dependency)
+            } else {
+                dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency)    
+            }
         } else {
             val source = cfrs.key.getEdgeableParent
             val target = cfrs.value.getEdgeableParent
@@ -469,8 +479,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         edge
     }    
     
-    
-   
     protected def EObject getEdgeableParent(EObject eObject) {
         if (eObject instanceof ControlflowRegion) 
             return eObject as ControlflowRegion
@@ -490,4 +498,53 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         edge.getData(KContainerRendering) as KContainerRendering
     }
         
+    protected def boolean isOnCausalLoop(Dependency dependency, Environment environment) {
+        if (dependency === null || dependency.reference === null || !(dependency.reference instanceof ValuedObject)) 
+            return false
+            
+        val loopData = environment.getProperty(ControlDependencies.LOOP_DATA) 
+        if (loopData === null) 
+            return false
+
+        val dependencyAssignments = loopData.criticalNodes.filter(Assignment).filter[ 
+            it.reference.valuedObject == dependency.reference
+        ].toList
+        
+        var notSchedulable = false
+        for(dA : dependencyAssignments) {
+            notSchedulable = notSchedulable || dA.notSchedulable(dependency)
+        } 
+
+        return notSchedulable             
+    }         
+        
+    protected def boolean notSchedulable(Assignment assignment, Dependency dependency) {
+//        val (dependency.eContainer as ControlflowRegion)
+//        val incomingDependencies = .filter(DataDependency).toList
+//        val outgoingDependencies = assignment.outgoingLinks.filter(DataDependency).toList
+//        
+//        if (incomingDependencies.empty || outgoingDependencies.empty) 
+//            return false
+//            
+//        for(i : incomingDependencies) {
+//            for(o : outgoingDependencies) {
+//                if (o.directControlflow(i))
+//                    return true
+//            }
+//        }
+        
+        return false
+    }
+    
+    protected def boolean directControlflow(DataDependency outgoing, DataDependency incoming) {
+        val outgoingState = outgoing.target.getFirstState
+        val incomingState = incoming.getFirstState
+        
+        if (outgoingState === null || incomingState === null)
+            return false
+        if (outgoingState == incomingState) 
+            return true
+            
+        return true
+    }
 }

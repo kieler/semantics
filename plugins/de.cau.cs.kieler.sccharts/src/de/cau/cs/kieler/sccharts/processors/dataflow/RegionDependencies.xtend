@@ -92,7 +92,10 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
     override protected DataDependency createDependency(Linkable source, Linkable target) {
         val scfr = source.getFirstControlflowRegion
         val tcfr = target.getFirstControlflowRegion
-        return scfr.createDataDependency(tcfr)
+        return scfr.createDataDependency(tcfr) => [
+            originalSource = source
+            originalTarget = target
+        ]
     }
     
     override protected postProcessDependency(DataDependency dependency, ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
