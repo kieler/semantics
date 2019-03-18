@@ -36,7 +36,8 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.processors.SCGFeatures
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.scg.SCGraphs
 
 /**
  * @author fry
@@ -44,40 +45,21 @@ import de.cau.cs.kieler.scg.processors.SCGFeatures
  * 
  * Modifies a given SCG.
  */
-class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation {
+class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> {
 
-	// -------------------------------------------------------------------------
-	// --                 K I C O      C O N F I G U R A T I O N              --
-	// -------------------------------------------------------------------------
-	def getId() {
-		return CircuitFeatures::SCG2SSASCG_ID
+	override getId() {
+		"de.cau.cs.kieler.seqscq.ssa"
 	}
 
-	def getName() {
-		return CircuitFeatures::SCG2SSASCG_NAME
+	override getName() {
+		"Seq SSA Processor"
 	}
-
-	def getProducedFeatureId() {
-		return CircuitFeatures::SCG2SSASCG_ID
-	}
-
-	def getRequiredFeatureIds() {
-		return newHashSet(SCGFeatures::SEQUENTIALIZE_ID)
-	}
-	
-	// -------------------------------------------------------------------------
-	// --                             INJECTIONS                              --
-	// -------------------------------------------------------------------------
 
 	@Inject	extension KExpressionsDeclarationExtensions
 	@Inject	extension KExpressionsValuedObjectExtensions
 	@Inject extension KEffectsExtensions
 	@Inject extension SCGControlFlowExtensions
 	
-	
-	// -------------------------------------------------------------------------
-	// --                             LISTS/MAPS                              --
-	// -------------------------------------------------------------------------
 	
 	//stores name of SSAvariable and its latest version number
 	val ssaMap = new HashMap<String, Integer>
@@ -93,9 +75,12 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 	val inputOutputMap = new HashMap<String, Integer>
 
 
-	// -------------------------------------------------------------------------
-	// --                          Transformation Start                       --
-	// -------------------------------------------------------------------------
+    override process() {
+        for(scg : model.scgs) {
+            scg.transform
+        }
+    }
+
 
 	def transform(SCGraph scg) {
 	    
@@ -117,10 +102,12 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 		// Make it the starting point of the SSA transformation
 		val entry = scg.nodes.filter(Entry).head
 		
+        // TODO: support scgs that start with an condition node
 		// If the SCG does not have an entry node, use the assignment that does not have any incoming controlflows.
 		val firstAssignment = if (entry === null)  
 		  scg.nodes.filter(Assignment).filter[ it.incomingLinks.filter(ControlFlow).empty ].head
 		  else (entry.next.target as Assignment)
+//        val firstAssignment = scg.nodes.filter(Assignment).head
 
 		// Search for all assignments which have to be replaced by SSA variables and fill all lists.
 		filterRelevantAssignments(scg.nodes.filter(Assignment).toList)
@@ -259,7 +246,9 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 
 		if (ssaMap.containsKey(name)) {
 
-			transformExpressions(n.expression)
+            // TODO: support new assignments
+			if (n.expression !== null)
+			    transformExpressions(n.expression)
 			val m = ssaMap.get(name)
 			ssaMap.replace(name, m, m + 1)
 
@@ -384,6 +373,7 @@ class SeqSCG2SSA_SCGTransformation {// extends AbstractProductionTransformation 
 			}
 		}
 	}
+
 }
 
 

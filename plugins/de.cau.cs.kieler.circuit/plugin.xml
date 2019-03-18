@@ -14,4 +14,21 @@
             genModel="model/circuit.genmodel"/>
    </extension>
 
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.circuit.kico">
+      </TransformationSystem>
+   </extension>
+   
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.circuit.processors.SeqSCG2SSA_SCGTransformation">
+      </Processor>   
+      <Processor
+            class="de.cau.cs.kieler.circuit.processors.SSA_SCG2CircuitTransformation">
+      </Processor>   
+   </extension>
+
 </plugin>

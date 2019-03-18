@@ -34,6 +34,8 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
+import de.cau.cs.kieler.scg.SCGraphs
 
 /**
  * @author fry
@@ -41,55 +43,31 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSA_SCG2CircuitTransformation {// extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> {// extends AbstractProductionTransformation {
 
-	// -------------------------------------------------------------------------
-	// --                 K I C O      C O N F I G U R A T I O N              --
-	// -------------------------------------------------------------------------
-	def getId() {
-		return CircuitTransformation::SCG2CIRCUIT_ID
+	override getId() {
+		"de.cau.cs.kieler.seqssa.circuit"
 	}
 
-	def getName() {
-		return CircuitTransformation::SCG2CIRCUIT_NAME
+	override getName() {
+		"Circuit Processor"
 	}
 
-	def getProducedFeatureId() {
-		return CircuitFeatures::CIRCUIT_ID
-	}
-
-	def getRequiredFeatureIds() {
-		return newHashSet(CircuitFeatures::SCG2SSASCG_ID)
-	}
-	
-	// -------------------------------------------------------------------------
-	// --                             INJECTIONS                              --
-	// -------------------------------------------------------------------------
-	
 	@Inject extension KEffectsSerializeExtensions
 	@Inject extension KEffectsExtensions
 	@Inject extension SCGControlFlowExtensions
 
-	@Inject
-	LinkCreator linkCreator
-
-	@Inject
-	CircuitInitialization circuitInitialization
-
+	@Inject LinkCreator linkCreator
+	@Inject	CircuitInitialization circuitInitialization
 	
-	// -------------------------------------------------------------------------
-	// --                             LISTS/MAPS                              --
-	// -------------------------------------------------------------------------
-
 //	protected var KielerCompilerContext compilerContext
 		
 	val LinkedList<String> assignmentActor = new LinkedList<String>
-	
 	val voExpressions = new HashMap<String, ValuedObject>
-	
-	// -------------------------------------------------------------------------
-	// --                          Transformation Start                       --
-	// -------------------------------------------------------------------------
+
+	override process() {
+       model = model.scgs.head.transform
+	}
 
 	def transform(SCGraph scg) {
 
