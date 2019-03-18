@@ -13,46 +13,44 @@
 package de.cau.cs.kieler.sccharts.processors.dataflow
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 import java.util.Set
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifier
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
-import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kicool.processors.dependencies.TarjanLinkable
+import de.cau.cs.kieler.kicool.processors.dependencies.LoopDataLinkable
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import java.util.List
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kicool.processors.dependencies.ITarjanFilter
 
 /**
  * @author ssm
  * @kieler.design 2019-03-14-23-26 proposed
  * @kieler.rating 2019-03-14-23-26 proposed yellow  
  */
-class ControlDependencies extends StateDependencies {
+class ControlDependencies extends StateDependencies implements ITarjanFilter {
     
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KEffectsDependencyExtensions
+    @Inject extension TarjanLinkable
     
-    extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
-    
-    public static val IProperty<Boolean> STATE_DEPENDENCIES = 
-        new Property<Boolean>("de.cau.cs.kieler.sccharts.dataflow.stateDependencies", false)        
+    public static val IProperty<Boolean> DO_TARJAN = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.dataflow.tarjan", true)        
+    public static val IProperty<LoopDataLinkable> LOOP_DATA = 
+        new Property<LoopDataLinkable>("de.cau.cs.kieler.kicool.processors.dependencies.data", null)   
+    public static val IProperty<Boolean> LOOP_DATA_PERSISTENT = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.processors.dependencies.data.persistent", false)          
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.controlDependencies"
@@ -64,7 +62,27 @@ class ControlDependencies extends StateDependencies {
     
     override process() {
         super.process()
-        environment.setProperty(STATE_DEPENDENCIES, true)
+        environment.setProperty(STATE_DEPENDENCIES, false)
+        
+        if (environment.getProperty(DO_TARJAN)) {
+            val loopData = new LoopDataLinkable(environment.getProperty(LOOP_DATA_PERSISTENT))
+            getModel.findSCCs(loopData, this)
+            environment.setProperty(LOOP_DATA, loopData)
+            for(loop : loopData.loops) {
+                println("Loop")
+                for(n : loop.criticalNodes) {
+                    println("  " + n)
+                }
+                println("")
+            }
+        }
+        
+        for(d : dependencies.filter(DataDependency).toList) {
+            val scfr = d.eContainer.getFirstControlflowRegion
+            val tcfr = d.target.getFirstControlflowRegion
+            scfr.outgoingLinks += d
+            d.target = tcfr
+       } 
     }
     
     override void searchDependenciesInControlflowRegion(ControlflowRegion cfr, ForkStack forkStack, Set<EObject> visited, 
@@ -95,6 +113,17 @@ class ControlDependencies extends StateDependencies {
         }
         
         forkStack.pop
-    }    
+    }
+        
+    override getLinkableNodes(EObject rootObject) {
+        rootObject.eAllContents.filter(Linkable).toList
+    }
+    
+    override filterNeighbors(Linkable node, List<Linkable> neighborList) {
+        val directLinks = node.getOutgoingLinks.map[ target ]
+        val nestedLinks = node.eAllContents.filter(DataDependency).map[ target ].toList
+        neighborList.addAll(directLinks)
+        neighborList.addAll(nestedLinks)
+    }
     
 }

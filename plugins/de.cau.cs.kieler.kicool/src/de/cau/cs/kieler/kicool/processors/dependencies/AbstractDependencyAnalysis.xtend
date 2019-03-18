@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kicool.processors
+package de.cau.cs.kieler.kicool.processors.dependencies
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
@@ -83,8 +83,11 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     @Inject extension KEffectsExtensions
     @Inject extension KEffectsDependencyExtensions
     
+    protected val dependencies = <Dependency> newLinkedList
+    
     /** You should use {@link processSubModel} to perform a dependency analysis on a sub model instance. */
     override process() {
+        dependencies.clear
         for (subModul : getModel.getSubModels) {
             subModul.processSubModel
         }
@@ -314,7 +317,8 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         ]
         
         dependency.trace(source.node)       
-        dependency.postProcessDependency(valuedObjectIdentifier, source, target)             
+        dependency.postProcessDependency(valuedObjectIdentifier, source, target)      
+        dependencies += dependency       
     }
     
     protected def accessType(ValuedObjectAccess source, ValuedObjectAccess target) {

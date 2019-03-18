@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 import java.util.Set
-import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsDependencyExtensions
@@ -35,7 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifie
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
-import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 import de.cau.cs.kieler.sccharts.Action
 
 /**

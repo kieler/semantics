@@ -35,7 +35,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectIdentifie
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.classes.ImmutableCloneable
-import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 
 /**
  * @author ssm
