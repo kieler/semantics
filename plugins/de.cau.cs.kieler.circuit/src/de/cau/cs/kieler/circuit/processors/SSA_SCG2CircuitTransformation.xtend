@@ -77,6 +77,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 		// this map stores SSA variables of input output variables and their highest version number
 		// only interesting for linkCreator 
 //		val inputOutputMap = context.compilationResult.getAuxiliaryData(SSAMapData).head.inputOutputMap
+		val inputOutputMap = environment.getProperty(SeqSCG2SSA_SCGTransformation.SSA_MAP_DATA).inputOutputMap
 		
 		
 		// -------------------------------------------------------
@@ -130,7 +131,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 		// create links for each region of the circuit
 		// this has to be done step by step..... otherwise wrong ports are connected
 		linkCreator.circuitRegion(newCircuit)
-//		linkCreator.logicRegion(logicRegion, inputOutputMap)
+		linkCreator.logicRegion(logicRegion, inputOutputMap)
 		linkCreator.initRegion(initializationRegian)
 
 		//return the circuit

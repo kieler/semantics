@@ -38,6 +38,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraphs
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * @author fry
@@ -60,6 +62,10 @@ class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> {
 	@Inject extension KEffectsExtensions
 	@Inject extension SCGControlFlowExtensions
 	
+	
+    public static val IProperty<SSAMapData> SSA_MAP_DATA = 
+        new Property<SSAMapData>("de.cau.cs.kieler.circuit.ssaMapData", null)        
+
 	
 	//stores name of SSAvariable and its latest version number
 	val ssaMap = new HashMap<String, Integer>
@@ -117,6 +123,7 @@ class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> {
 		
 		// Store input output variables for link creation
 //		context.compilationResult.addAuxiliaryData((new SSAMapData) => [it.inputOutputMap = inputOutputMap])
+        environment.setProperty(SSA_MAP_DATA, new SSAMapData => [ it.inputOutputMap = inputOutputMap ])
 		
 		// Return the SSA SCG
 		scg
@@ -379,7 +386,7 @@ class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> {
 
 
 //Prepare data for CircuitTransformation
-class SSAMapData {// extends AbstractKielerCompilerAuxiliaryData {
+class SSAMapData {
 	@Accessors
 	HashMap<String, Integer> inputOutputMap
 }
