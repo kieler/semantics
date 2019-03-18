@@ -78,6 +78,8 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSearchExtensions
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -107,6 +109,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSearchExtensions
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
@@ -519,32 +523,35 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     }         
         
     protected def boolean notSchedulable(Assignment assignment, Dependency dependency) {
-//        val (dependency.eContainer as ControlflowRegion)
-//        val incomingDependencies = .filter(DataDependency).toList
-//        val outgoingDependencies = assignment.outgoingLinks.filter(DataDependency).toList
-//        
-//        if (incomingDependencies.empty || outgoingDependencies.empty) 
-//            return false
-//            
-//        for(i : incomingDependencies) {
-//            for(o : outgoingDependencies) {
-//                if (o.directControlflow(i))
-//                    return true
-//            }
-//        }
+        val cfr = assignment.getFirstControlflowRegion
+        val incomingDependencies = cfr.incomingLinks.filter(DataDependency).filter[ originalTarget == assignment ].toList
+        val outgoingDependencies = cfr.outgoingLinks.filter(DataDependency).filter[ originalSource == assignment ].toList
+        
+        if (incomingDependencies.empty || outgoingDependencies.empty) 
+            return false
+            
+        for(i : incomingDependencies) {
+            for(o : outgoingDependencies) {
+                if (o.directControlflow(i))
+                    return true
+            }
+        }
         
         return false
     }
     
     protected def boolean directControlflow(DataDependency outgoing, DataDependency incoming) {
-        val outgoingState = outgoing.target.getFirstState
-        val incomingState = incoming.getFirstState
+        val outgoingState = outgoing.originalTarget.getFirstTransition.targetState
+        val incomingState = incoming.originalSource.getFirstTransition.targetState
         
         if (outgoingState === null || incomingState === null)
             return false
         if (outgoingState == incomingState) 
             return true
             
-        return true
+        if (outgoingState.immediatePathBFS(incomingState)) 
+            return true
+            
+        return false
     }
 }
