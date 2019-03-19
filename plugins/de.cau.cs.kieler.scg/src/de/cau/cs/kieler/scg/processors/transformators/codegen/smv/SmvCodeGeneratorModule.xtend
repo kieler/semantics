@@ -59,10 +59,12 @@ class SmvCodeGeneratorModule extends SmvCodeGeneratorModuleBase {
         addPreGuardsToVariableStore
         
         // Update current task of verification properties
-        val verificationProperties = verificationContext.verificationProperties
-        for(property : verificationProperties) {
-            property.runningTaskDescription = "Generating model checker code..."
-            processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
+        val verificationProperties = verificationContext?.verificationProperties
+        if(!verificationProperties.isNullOrEmpty) {
+            for(property : verificationProperties) {
+                property.runningTaskDescription = "Generating model checker code..."
+                processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
+            }    
         }
     }
     

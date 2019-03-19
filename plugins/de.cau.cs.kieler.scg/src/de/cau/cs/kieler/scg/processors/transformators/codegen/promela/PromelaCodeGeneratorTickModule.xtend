@@ -17,11 +17,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.verification.RangeAssumption
-import de.cau.cs.kieler.verification.VerificationAssumption
-import de.cau.cs.kieler.verification.VerificationProperty
-import de.cau.cs.kieler.verification.VerificationPropertyType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -30,6 +25,10 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.VerificationProperty
+import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 
 import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
@@ -64,8 +63,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
 
     override generate() {
-        assumptions = verificationContext.verificationAssumptions  
-            
+        assumptions = verificationContext?.verificationAssumptions  
+        
         code.append("init {\n")
         incIndentationLevel
         
@@ -246,7 +245,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     protected def VerificationProperty getInvariantVerificationProperty() {
-        val verificationProperties = verificationContext.verificationProperties
+        val verificationProperties = verificationContext?.verificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return null
         } else {

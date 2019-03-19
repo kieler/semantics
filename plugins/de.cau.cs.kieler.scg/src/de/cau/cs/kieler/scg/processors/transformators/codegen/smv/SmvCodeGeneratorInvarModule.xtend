@@ -32,7 +32,7 @@ class SmvCodeGeneratorInvarModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generate() {
-        val assumptions = verificationContext.verificationAssumptions
+        val assumptions = verificationContext?.verificationAssumptions
         
         if(assumptions.isNullOrEmpty) {
             return

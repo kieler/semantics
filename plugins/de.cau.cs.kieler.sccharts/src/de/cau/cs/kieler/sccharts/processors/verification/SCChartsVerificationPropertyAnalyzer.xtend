@@ -19,19 +19,22 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.verification.InvariantAssumption
 import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
-import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
 /** 
  * @author aas
  */
 class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
+    
+    public static val PROCESSOR_ID = "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"
+    
     public static val INVARIANT_ANNOTATION_NAME = "Invariant"
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
@@ -42,7 +45,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     @Accessors(PUBLIC_GETTER) private val verificationAssumptions = <VerificationAssumption>newArrayList
     
     override getId() {
-        return "de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer"
+        return PROCESSOR_ID
     }
     
     override getName() {
@@ -50,6 +53,11 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     }
     
     override process() {
+        val verificationContext = compilationContext.asVerificationContext
+        if(verificationContext === null) {
+            return
+        }
+        
         // Only set the properties in the environment if they are not set yet.
         val envVerificationProperties = verificationContext.verificationProperties
         if(!envVerificationProperties.isNullOrEmpty) {
@@ -140,10 +148,6 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
         } else {
             return list.get(index)    
         } 
-    }
-    
-    private def VerificationContext getVerificationContext() {
-        return compilationContext as VerificationContext
     }
     
 }

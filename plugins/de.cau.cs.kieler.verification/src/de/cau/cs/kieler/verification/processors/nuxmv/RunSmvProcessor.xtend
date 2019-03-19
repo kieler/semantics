@@ -23,6 +23,7 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
@@ -49,14 +50,19 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
-        if(verificationContext.verificationProperties.isNullOrEmpty) {
+        if(!compilationContext.isVerificationContext) {
+            return
+        }
+        
+        val verificationProperties = verificationContext.verificationProperties
+        if(verificationProperties.isNullOrEmpty) {
             return
         }
         
         val codeContainer = getSourceModel
         val code = codeContainer.head.code
         val smvFile = saveText(smvFilePath, code)
-        for(property : verificationContext.verificationProperties) {
+        for(property : verificationProperties) {
             try {
                 throwIfCanceled
                 property.modelCheckerModelFile = smvFile

@@ -31,6 +31,8 @@ import de.cau.cs.kieler.verification.VerificationContext
 
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+
 /**
  * @author aas
  */
@@ -72,7 +74,7 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     }
     
     protected def VerificationContext getVerificationContext() {
-        return compilationContext as VerificationContext
+        return compilationContext.asVerificationContext
     }
     
     protected def IPath getOutputFolder() {

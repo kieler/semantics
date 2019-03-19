@@ -12,13 +12,11 @@
  */
 package de.cau.cs.kieler.sccharts.test.e.verification
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
+import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import org.junit.Rule
@@ -26,14 +24,13 @@ import org.junit.Test
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
-import de.cau.cs.kieler.verification.VerificationContext
 
 /**
  * @author aas
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
+class SCChartsVerificationSpinTest extends AbstractSCChartsVerificationTest {
     
     public static val scchartsInjector = SCTXStandaloneSetup.doSetup
     
@@ -84,10 +81,6 @@ class SCChartsVerificationSpinTest extends AbstractVerificationTest<SCCharts> {
         
         // Add spin options
         verificationContext.customSpinCommands = customSpinCommands
-    }
-    
-    override getPropertyAnalyzerProcessorId() {
-        return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer" 
     }
     
     override protected getVerificationSystemId() {

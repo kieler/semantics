@@ -55,15 +55,17 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
         addPreGuardsToVariableStore
         
         // Update current task of verification properties
-        val verificationProperties = verificationContext.verificationProperties
-        for(propertyAndIndexPair : verificationProperties.indexed) {
-            val index= propertyAndIndexPair.key
-            val property = propertyAndIndexPair.value
-            if(index == 0) {
-                property.runningTaskDescription = "Generating model checker code..."
-            } else {
-                property.fail(new Exception("Handling multiple properties using SPIN is not implemented"))
-                processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
+        val verificationProperties = verificationContext?.verificationProperties
+        if(!verificationProperties.isNullOrEmpty) {
+            for(propertyAndIndexPair : verificationProperties.indexed) {
+                val index= propertyAndIndexPair.key
+                val property = propertyAndIndexPair.value
+                if(index == 0) {
+                    property.runningTaskDescription = "Generating model checker code..."
+                } else {
+                    property.fail(new Exception("Handling multiple properties using SPIN is not implemented"))
+                    processorInstance.compilationContext.notify(new VerificationPropertyChanged(property))
+                }
             }
         }
     }

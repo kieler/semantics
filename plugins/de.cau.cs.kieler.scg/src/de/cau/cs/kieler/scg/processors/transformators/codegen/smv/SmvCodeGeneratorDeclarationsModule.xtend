@@ -36,6 +36,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     @Inject extension SmvCodeSerializeHRExtensions serializer
     
     var List<VerificationAssumption> assumptions
+    var boolean useIVARinSmvModels = false
     
     override getName() {
         return class.simpleName;
@@ -45,9 +46,8 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     }
 
     override generate() {
-        assumptions = verificationContext.verificationAssumptions
-        
-        val useIVARinSmvModels = verificationContext.smvUseIVAR
+        assumptions = verificationContext?.verificationAssumptions
+        useIVARinSmvModels = verificationContext?.smvUseIVAR
         
         incIndentationLevel
         if(useIVARinSmvModels) {

@@ -40,7 +40,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     
     override generate() {
         // Add ltl properties
-        val verificationProperties = verificationContext.verificationProperties
+        val verificationProperties = verificationContext?.verificationProperties
         if(!verificationProperties.isNullOrEmpty) {
             val property = verificationProperties.head
             if(property.type == VerificationPropertyType.LTL) {

@@ -16,17 +16,17 @@ import com.google.common.base.Charsets
 import com.google.common.io.Files
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
+import de.cau.cs.kieler.verification.VerificationPropertyType
 import de.cau.cs.kieler.verification.processors.RunModelCheckerProcessorBase
 import java.io.File
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
+import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
-import de.cau.cs.kieler.verification.VerificationPropertyType
 
 /**
  * @author aas
@@ -46,6 +46,10 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
     }
     
     override process() {
+        if(!compilationContext.isVerificationContext) {
+            return
+        }
+        
         val verificationProperties = verificationContext.verificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return

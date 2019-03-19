@@ -16,7 +16,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
@@ -31,7 +30,7 @@ import org.junit.runner.RunWith
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
+class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
     
     public static val scchartsInjector = SCTXStandaloneSetup.doSetup
 
@@ -83,10 +82,6 @@ class SCChartsVerificationSmvTest extends AbstractVerificationTest<SCCharts> {
         verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommands
         val customSmvCtlCommands = getCustomSmvCtlCommands()
         verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommands
-    }
-    
-    override getPropertyAnalyzerProcessorId() {
-        return "de.cau.cs.kieler.verification.processors.SCChartsVerificationPropertyAnalyzer" 
     }
     
     override protected getVerificationSystemId() {

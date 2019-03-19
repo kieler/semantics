@@ -22,11 +22,15 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 class VerificationContextExtensions {
     
     public static def VerificationContext asVerificationContext(CompilationContext context) {
-        return context as VerificationContext
+        if(context instanceof VerificationContext) {
+            return context
+        } else {
+            return null
+        }
     }
     
     public static def VerificationContext getVerificationContext(CodeGeneratorModule<?, ?> codeGenModule) {
-        return codeGenModule.processorInstance.compilationContext as VerificationContext
+        return codeGenModule.processorInstance.compilationContext.asVerificationContext
     }
     
     public static def void copyAssumptions(VerificationContext context, ValuedObject vo, ValuedObject source) {
@@ -40,5 +44,9 @@ class VerificationContextExtensions {
                 }
             }
         }
+    }
+    
+    public static def boolean isVerificationContext(CompilationContext context) {
+        return (context instanceof VerificationContext)
     }
 }

@@ -32,10 +32,11 @@ class SmvCodeGeneratorSpecificationsModule extends SmvCodeGeneratorModuleBase {
     }
     
     override generate() {
-        val verificationProperties = verificationContext.verificationProperties
+        val verificationProperties = verificationContext?.verificationProperties
         if(verificationProperties.isNullOrEmpty) {
             return
         }
+        
         for(property : verificationProperties) {
             val specName = property.getSmvSpecName
             appendIndentedLine('''«specName»''')

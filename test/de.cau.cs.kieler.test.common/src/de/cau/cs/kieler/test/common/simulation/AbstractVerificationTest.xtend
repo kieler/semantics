@@ -46,9 +46,6 @@ import static extension de.cau.cs.kieler.verification.processors.ProcessExtensio
 abstract class AbstractVerificationTest<T extends EObject> extends AbstractXTextModelRepositoryTest<T> {
 
     public static val MUST_FAIL_PATTERN_KEY = "verification-must-fail-pattern"
-
-    abstract protected def String getPropertyAnalyzerProcessorId()
-    abstract protected def String getVerificationSystemId()
     
     protected var VerificationContext currentVerificationContext
     
@@ -59,6 +56,10 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
     protected var List<VerificationAssumption> verificationAssumptions
     
     protected var String verificationMustFailPattern
+    
+    // Abstract methods
+    abstract protected def String getPropertyAnalyzerProcessorId()
+    abstract protected def String getVerificationSystemId()
     
     /**
      * Constructor
