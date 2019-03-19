@@ -95,13 +95,13 @@ Transition returns sccharts::Transition:
         history=HistoryType?
         //                      -> This alternative is only for the serializer to enable forcing of brackets
         ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
-            ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
+            ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?
         )? 
         ('do' effects+=Effect (';' effects+=Effect)*)?
     )|(
         delay=DelayType?
         ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
-            ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
+            ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?
         )?
         ('do' effects+=Effect (';' effects+=Effect)*)?
         preemption=PreemptionType 
@@ -187,32 +187,32 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)?
+	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
 	('label' label=STRING)?;
       
 PrecedingAction returns sccharts::PrecedingAction:
 	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
 PeriodAction returns sccharts::PeriodAction:

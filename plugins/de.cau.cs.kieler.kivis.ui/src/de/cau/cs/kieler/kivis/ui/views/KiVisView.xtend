@@ -49,6 +49,8 @@ import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kivis.ui.views.KiVisView.ActionIndicatorFunction
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
+import com.google.gson.JsonNull
+import com.google.gson.JsonParser
 
 /**
  * The KiVis View.
@@ -119,19 +121,30 @@ class KiVisView extends ViewPart implements SimulationListener {
      * Callback for action indicator
      */
     static class ActionIndicatorFunction extends BrowserFunction {
+        
+        val parser = new JsonParser
 
         new(Browser browser) {
-            super(browser, KiVisConstants.ACTION_INDICATOR_CALLBACK);
+            super(browser, KiVisConstants.ACTION_SETTER_CALLBACK);
         }
 
         override function(Object[] arguments) {
-            val variable = if(arguments.length === 1) arguments.head;
+            val variable = if(arguments.length >= 1) arguments.get(0)
+            val JsonElement value = if(arguments.length >= 2) {
+                try {
+                    parser.parse(arguments.get(1) as String)
+                } catch (Exception e) {
+                    JsonNull.INSTANCE
+                }
+            } else {
+                JsonNull.INSTANCE
+            }
             if (variable instanceof String) {
                 val sim = SimulationUI.currentSimulation
                 if (sim !== null) {
                     val patch = sim.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
                     synchronized (patch) {
-                        patch.put(variable, new JsonPrimitive(true))
+                        patch.put(variable, value)
                     }
                 }
             } 

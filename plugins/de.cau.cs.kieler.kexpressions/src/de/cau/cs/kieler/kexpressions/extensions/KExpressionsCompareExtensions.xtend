@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.TextExpression
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.Declaration
@@ -124,16 +123,6 @@ class KExpressionsCompareExtensions {
     }
 
     def dispatch boolean equals2(FloatValue expression1, FloatValue expression2) {
-        if (expression1 === expression2) { // same object or both null
-            return true
-        } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null
-            return false
-        }
-        
-        return expression1.value == expression2.value
-    }
-
-    def dispatch boolean equals2(DoubleValue expression1, DoubleValue expression2) {
         if (expression1 === expression2) { // same object or both null
             return true
         } else if ((expression1 !== null).xor(expression2 !== null)) { // one is null

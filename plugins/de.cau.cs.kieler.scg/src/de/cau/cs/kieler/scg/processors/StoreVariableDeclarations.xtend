@@ -17,8 +17,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
 
 /**
  * @author aas
@@ -39,9 +37,7 @@ class StoreVariableDeclarations extends InplaceProcessor<SCGraphs> {
     
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
-    @Inject extension SSACoreExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension IOPreserverExtensions    
     
     // -------------------------------------------------------------------------
     

@@ -114,7 +114,7 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
      * Creates a generator module via the injector. 
      * Override this if you need to create specialized generator modules of a certain type.
      */
-    protected def CodeGeneratorModule<T, E> createCodeGenetatorModule() {
+    protected def CodeGeneratorModule<T, E> createCodeGeneratorModule() {
         return injector.getInstance(CodeGeneratorModule) as CodeGeneratorModule<T, E>
     }
     

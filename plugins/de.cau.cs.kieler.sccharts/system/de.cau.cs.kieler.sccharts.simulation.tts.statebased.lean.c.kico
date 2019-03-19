@@ -1,0 +1,5 @@
+simulation system de.cau.cs.kieler.sccharts.^simulation.tts.statebased.lean.c
+    label "State-based Lean Simulation (C)"
+
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.^simulation.statebased.lean.c

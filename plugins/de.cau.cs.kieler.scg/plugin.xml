@@ -40,28 +40,28 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.c.CCodeGenerator">
+            class="de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.transformations.sequentializer.SimpleGuardSequentializer">
+            class="de.cau.cs.kieler.scg.processors.SimpleGuardSequentializer">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.transformations.guardExpressions.SimpleGuardExpressions">
+            class="de.cau.cs.kieler.scg.processors.SimpleGuardExpressions">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation">
+            class="de.cau.cs.kieler.scg.processors.BasicBlockTransformation">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.analyzer.ControlflowValidator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardScheduler">
+            class="de.cau.cs.kieler.scg.processors.SimpleGuardScheduler">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation">
+            class="de.cau.cs.kieler.scg.processors.SimpleGuardTransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.dependencies.DependencyTransformationV2">
+            class="de.cau.cs.kieler.scg.processors.DependencyTransformationV2">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.ssa.SSATransformation">
@@ -85,22 +85,19 @@
             class="de.cau.cs.kieler.scg.processors.ssa.UnSSATransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.ssa.optimizer.SCCP">
+            class="de.cau.cs.kieler.scg.processors.ssa.SCCP">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.transformations.dependencies.DependencyTransformation">
+            class="de.cau.cs.kieler.scg.processors.codegen.java.JavaCodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.java.JavaCodeGenerator">
+            class="de.cau.cs.kieler.scg.processors.priority.PriorityProcessor">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor">
+            class="de.cau.cs.kieler.scg.processors.priority.SJTransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.priority.SJTransformation">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.priority.SCLPTransformation">
+            class="de.cau.cs.kieler.scg.processors.priority.SCLPTransformation">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer">
@@ -109,10 +106,10 @@
             class="de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.StructuralDepthJoinProcessor">
+            class="de.cau.cs.kieler.scg.processors.StructuralDepthJoinProcessor">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SurfaceDepthSeparatorProcessor">
+            class="de.cau.cs.kieler.scg.processors.SurfaceDepthSeparatorProcessor">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.CopyPropagationV2">
@@ -133,7 +130,7 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.PartialExpressionEvaluation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformationSCplus">
+            class="de.cau.cs.kieler.scg.processors.BasicBlockTransformationSCplus">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.PersistentStateOptimizer">
@@ -142,7 +139,7 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.PartialAssignmentEvaluation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.GuardTickBoundaryProcessor">
+            class="de.cau.cs.kieler.scg.processors.analyzer.GuardTickBoundaryProcessor">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.optimizer.IneffectiveGuardRemover">
@@ -151,22 +148,22 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.UnobservableGuardRemover">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.SimpleGuardOptimization">
+            class="de.cau.cs.kieler.scg.processors.optimizer.SimpleGuardOptimization">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.promela.PromelaCodeGenerator">
+            class="de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SmvCodeGenerator">
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.SmvCodeGenerator">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.SimplifyNamesOfSSA">
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.SimplifyNamesOfSSA">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.DefineUnboundVariablesOfSSA">
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.DefineUnboundVariablesOfSSA">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.scg.processors.transformators.codegen.smv.PreFinalVariableValuesOfSSA">
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.PreFinalVariableValuesOfSSA">
       </Processor>
       <Processor
             class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">

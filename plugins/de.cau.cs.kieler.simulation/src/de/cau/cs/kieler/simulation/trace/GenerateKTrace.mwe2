@@ -50,7 +50,7 @@ Workflow {
                 createEclipseMetaData = true
                 genericIde = {
                     enabled = true
-                    name = "${projectName}.ui" // Use ui plugin!
+                    name = "${projectName}.ide"
                 }       
             }
             

@@ -60,21 +60,21 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.common.SCGAnnotations
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
 import de.cau.cs.kieler.scg.extensions.ThreadPathType
-import de.cau.cs.kieler.scg.features.SCGFeatures
+import de.cau.cs.kieler.scg.processors.SCGFeatures
 import de.cau.cs.kieler.scg.klighd.actions.NodePriorityActions
 import de.cau.cs.kieler.scg.klighd.actions.OptNodePrioActions
 import de.cau.cs.kieler.scg.klighd.actions.PrioStatementsActions
 import de.cau.cs.kieler.scg.klighd.actions.SCCActions
 import de.cau.cs.kieler.scg.klighd.actions.ThreadPriorityActions
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityAuxiliaryData
-import de.cau.cs.kieler.scg.processors.transformators.priority.PriorityProcessor
+import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
+import de.cau.cs.kieler.scg.processors.priority.PriorityProcessor
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
@@ -99,7 +99,7 @@ import org.eclipse.jface.viewers.ISelectionChangedListener
 import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.xtext.serializer.ISerializer
 
-import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import static de.cau.cs.kieler.scg.klighd.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*

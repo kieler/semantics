@@ -20,7 +20,6 @@ package de.cau.cs.kieler.kexpressions;
  * @generated
  */
 public interface ScheduleObjectReference extends ValuedObjectReference {
-
     /**
      * Returns the value of the '<em><b>Priority</b></em>' attribute.
      * <!-- begin-user-doc -->
@@ -46,4 +45,5 @@ public interface ScheduleObjectReference extends ValuedObjectReference {
      * @generated
      */
     void setPriority(int value);
+
 } // ScheduleObjectReference

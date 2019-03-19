@@ -21,7 +21,6 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.Node
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Value
@@ -34,8 +33,6 @@ import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 /**
@@ -46,7 +43,6 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements Traceable {
 
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsCreateExtensions
     @Inject extension SCGControlFlowExtensions
 
     public static val IProperty<Boolean> PAE_REMOVE_SOURCENODE = 

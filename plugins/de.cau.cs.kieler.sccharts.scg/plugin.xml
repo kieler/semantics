@@ -7,10 +7,10 @@
    <extension
          point="de.cau.cs.kieler.kicool.processor">
       <Processor
-            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCGTransformation">
+            class="de.cau.cs.kieler.sccharts.scg.processors.SCGTransformation">
       </Processor>
       <Processor
-            class="de.cau.cs.kieler.sccharts.scg.processors.transformators.SCG2SCCProcessor">
+            class="de.cau.cs.kieler.sccharts.scg.processors.SCG2SCCProcessor">
       </Processor>
    </extension>
 

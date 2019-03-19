@@ -21,28 +21,30 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected KiVisGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q;
-	protected AbstractElementAlias match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q;
-	protected AbstractElementAlias match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q;
+	protected AbstractElementAlias match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q;
+	protected AbstractElementAlias match_ActionInterface2_EqualsSignGreaterThanSignKeyword_1_3_q;
+	protected AbstractElementAlias match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q;
 	protected AbstractElementAlias match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q;
 	protected AbstractElementAlias match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q;
 	protected AbstractElementAlias match_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q;
 	protected AbstractElementAlias match_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q;
 	protected AbstractElementAlias match_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q;
 	protected AbstractElementAlias match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q;
+	protected AbstractElementAlias match_SetterInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (KiVisGrammarAccess) access;
-		match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q = new TokenAlias(false, true, grammarAccess.getActionInterface1Access().getEqualsSignGreaterThanSignKeyword_1_3());
-		match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getRightParenthesisKeyword_1_2()), new TokenAlias(false, true, grammarAccess.getActionInterface1Access().getEqualsSignGreaterThanSignKeyword_1_3()));
-		match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getRightParenthesisKeyword_1_1()), new TokenAlias(false, true, grammarAccess.getActionInterface2Access().getEqualsSignGreaterThanSignKeyword_1_2()));
+		match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface1Access().getRightParenthesisKeyword_1_1()), new TokenAlias(false, true, grammarAccess.getActionInterface1Access().getEqualsSignGreaterThanSignKeyword_1_2()));
+		match_ActionInterface2_EqualsSignGreaterThanSignKeyword_1_3_q = new TokenAlias(false, true, grammarAccess.getActionInterface2Access().getEqualsSignGreaterThanSignKeyword_1_3());
+		match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getActionInterface2Access().getRightParenthesisKeyword_1_2()), new TokenAlias(false, true, grammarAccess.getActionInterface2Access().getEqualsSignGreaterThanSignKeyword_1_3()));
 		match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q = new TokenAlias(false, true, grammarAccess.getBindingInterface1Access().getEqualsSignGreaterThanSignKeyword_5());
 		match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q = new TokenAlias(false, true, grammarAccess.getBindingInterface2Access().getEqualsSignGreaterThanSignKeyword_4());
 		match_CodeInterface_EqualsSignGreaterThanSignKeyword_1_3_q = new TokenAlias(false, true, grammarAccess.getCodeInterfaceAccess().getEqualsSignGreaterThanSignKeyword_1_3());
 		match_CodeInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getCodeInterfaceAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getCodeInterfaceAccess().getRightParenthesisKeyword_1_2()), new TokenAlias(false, true, grammarAccess.getCodeInterfaceAccess().getEqualsSignGreaterThanSignKeyword_1_3()));
 		match_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q = new TokenAlias(false, true, grammarAccess.getHandlerInterface1Access().getEqualsSignGreaterThanSignKeyword_7());
 		match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q = new TokenAlias(false, true, grammarAccess.getHandlerInterface2Access().getEqualsSignGreaterThanSignKeyword_5());
+		match_SetterInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSetterInterfaceAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getSetterInterfaceAccess().getRightParenthesisKeyword_1_1()), new TokenAlias(false, true, grammarAccess.getSetterInterfaceAccess().getEqualsSignGreaterThanSignKeyword_1_2()));
 	}
 	
 	@Override
@@ -57,12 +59,12 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q.equals(syntax))
-				emit_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q.equals(syntax))
-				emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q.equals(syntax))
-				emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q.equals(syntax))
+				emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ActionInterface2_EqualsSignGreaterThanSignKeyword_1_3_q.equals(syntax))
+				emit_ActionInterface2_EqualsSignGreaterThanSignKeyword_1_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q.equals(syntax))
+				emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q.equals(syntax))
 				emit_BindingInterface1_EqualsSignGreaterThanSignKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_BindingInterface2_EqualsSignGreaterThanSignKeyword_4_q.equals(syntax))
@@ -75,10 +77,23 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 				emit_HandlerInterface1_EqualsSignGreaterThanSignKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q.equals(syntax))
 				emit_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SetterInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q.equals(syntax))
+				emit_SetterInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')' '=>'?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     '=>'?
@@ -86,7 +101,7 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     pool=ID ')' (ambiguity) (rule end)
 	 */
-	protected void emit_ActionInterface1_EqualsSignGreaterThanSignKeyword_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ActionInterface2_EqualsSignGreaterThanSignKeyword_1_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -97,18 +112,7 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) (rule start)
 	 */
-	protected void emit_ActionInterface1___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
-		acceptNodes(transition, nodes);
-	}
-	
-	/**
-	 * Ambiguous syntax:
-	 *     ('(' ')' '=>'?)?
-	 *
-	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) (rule start)
-	 */
-	protected void emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_ActionInterface2___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_2_EqualsSignGreaterThanSignKeyword_1_3_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -181,6 +185,17 @@ public abstract class AbstractKiVisSyntacticSequencer extends AbstractSyntacticS
 	 *     variable=ID ')' (ambiguity) (rule end)
 	 */
 	protected void emit_HandlerInterface2_EqualsSignGreaterThanSignKeyword_5_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('(' ')' '=>'?)?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_SetterInterface___LeftParenthesisKeyword_1_0_RightParenthesisKeyword_1_1_EqualsSignGreaterThanSignKeyword_1_2_q__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

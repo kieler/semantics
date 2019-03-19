@@ -23,7 +23,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -32,8 +31,8 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.Set
-import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
 /**
  * Smart Register Allocation
@@ -79,8 +78,8 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
             val node = nextNodes.pop
             
             if (node instanceof Assignment) {
-                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
-                    !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                    !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                 ) {
                     registerAllocation.registerRange.push(node.reference.valuedObject.name, node)
                 }
@@ -133,8 +132,8 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
                 }
             }                
             if (node instanceof Assignment) {
-                if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
-                    !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                    !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                 ) {
                     if (!registerAllocation.freedRegister.empty) {
                         val recycledRegister = registerAllocation.freedRegister.pop

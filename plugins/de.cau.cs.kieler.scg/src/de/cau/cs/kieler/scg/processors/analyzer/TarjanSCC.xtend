@@ -28,15 +28,15 @@ class TarjanSCC {
     
     @Inject extension SCCExtensions
 
-    private var count = 0
-    private var visited = <Node, Boolean>newHashMap
-    private var stack = new Stack<Node>
-    private var index = <Node, Integer>newHashMap
-    private var lowlink = <Node, Integer>newHashMap
-    private var sccList = <LinkedList<Node>>newLinkedList
-    private var isContained = <Node, Boolean>newHashMap
+    var count = 0
+    var visited = <Node, Boolean>newHashMap
+    var stack = new Stack<Node>
+    var index = <Node, Integer>newHashMap
+    var lowlink = <Node, Integer>newHashMap
+    var sccList = <LinkedList<Node>>newLinkedList
+    var isContained = <Node, Boolean>newHashMap
     
-    public def void  findSCCs(SCGraph scg, LoopData loopData, boolean considerAllDependencies) {
+    def void  findSCCs(SCGraph scg, LoopData loopData, boolean considerAllDependencies) {
         val res = scg.nodes.findSCCs(considerAllDependencies).filter[ size > 1 ].toList
         
         for (l : res) {
@@ -56,7 +56,7 @@ class TarjanSCC {
      * @return
      *          List of all Strongly Connected Components in the SCG
      */
-    public def LinkedList<LinkedList<Node>> findSCCs(Iterable<Node> nodes, boolean considerAllDependencies) {
+    def LinkedList<LinkedList<Node>> findSCCs(Iterable<Node> nodes, boolean considerAllDependencies) {
 
         // Clear everything to enable a second run
         lowlink.clear

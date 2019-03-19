@@ -11,6 +11,7 @@ import de.cau.cs.kieler.kivis.kivis.Handler;
 import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisFactory;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
+import de.cau.cs.kieler.kivis.kivis.Setter;
 import de.cau.cs.kieler.kivis.kivis.SimulationCorntrol;
 import de.cau.cs.kieler.kivis.kivis.Visualization;
 
@@ -77,6 +78,13 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass setterEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass interfaceEClass = null;
 
   /**
@@ -115,7 +123,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
 
   /**
    * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-   * 
+   *
    * <p>This method is used to initialize {@link KivisPackage#eINSTANCE} when that field is accessed.
    * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
    * <!-- begin-user-doc -->
@@ -130,7 +138,8 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     if (isInited) return (KivisPackage)EPackage.Registry.INSTANCE.getEPackage(KivisPackage.eNS_URI);
 
     // Obtain or create and register package
-    KivisPackageImpl theKivisPackage = (KivisPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KivisPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KivisPackageImpl());
+    Object registeredKivisPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    KivisPackageImpl theKivisPackage = registeredKivisPackage instanceof KivisPackageImpl ? (KivisPackageImpl)registeredKivisPackage : new KivisPackageImpl();
 
     isInited = true;
 
@@ -143,7 +152,6 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     // Mark meta-data to indicate it can't be changed
     theKivisPackage.freeze();
 
-  
     // Update the registry and return the package
     EPackage.Registry.INSTANCE.put(KivisPackage.eNS_URI, theKivisPackage);
     return theKivisPackage;
@@ -344,9 +352,9 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Deferred()
+  public EReference getAction_DeferredInterface()
   {
-    return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
+    return (EReference)actionEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -354,7 +362,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getAction_Variable()
+  public EAttribute getAction_DeferredScript()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
   }
@@ -364,9 +372,29 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getAction_Setter()
+  {
+    return (EReference)actionEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAction_Signal()
+  {
+    return (EAttribute)actionEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EAttribute getAction_Control()
   {
-    return (EAttribute)actionEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)actionEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -377,6 +405,46 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
   public EClass getCode()
   {
     return codeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSetter()
+  {
+    return setterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSetter_Variable()
+  {
+    return (EAttribute)setterEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSetter_Interface()
+  {
+    return (EReference)setterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSetter_Script()
+  {
+    return (EAttribute)setterEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -482,11 +550,18 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     createEAttribute(actionEClass, ACTION__DOM_EVENT);
     createEAttribute(actionEClass, ACTION__MULTIMATCH);
     createEAttribute(actionEClass, ACTION__DOM_ELEMENT);
-    createEAttribute(actionEClass, ACTION__DEFERRED);
-    createEAttribute(actionEClass, ACTION__VARIABLE);
+    createEReference(actionEClass, ACTION__DEFERRED_INTERFACE);
+    createEAttribute(actionEClass, ACTION__DEFERRED_SCRIPT);
+    createEReference(actionEClass, ACTION__SETTER);
+    createEAttribute(actionEClass, ACTION__SIGNAL);
     createEAttribute(actionEClass, ACTION__CONTROL);
 
     codeEClass = createEClass(CODE);
+
+    setterEClass = createEClass(SETTER);
+    createEAttribute(setterEClass, SETTER__VARIABLE);
+    createEReference(setterEClass, SETTER__INTERFACE);
+    createEAttribute(setterEClass, SETTER__SCRIPT);
 
     interfaceEClass = createEClass(INTERFACE);
     createEAttribute(interfaceEClass, INTERFACE__ELEMENT);
@@ -555,11 +630,18 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
     initEAttribute(getAction_DomEvent(), ecorePackage.getEString(), "domEvent", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Multimatch(), ecorePackage.getEBoolean(), "multimatch", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_DomElement(), ecorePackage.getEString(), "domElement", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAction_Deferred(), ecorePackage.getEBoolean(), "deferred", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAction_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_DeferredInterface(), this.getInterface(), null, "deferredInterface", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAction_DeferredScript(), ecorePackage.getEString(), "deferredScript", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAction_Setter(), this.getSetter(), null, "setter", null, 0, -1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAction_Signal(), ecorePackage.getEString(), "signal", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAction_Control(), this.getSimulationCorntrol(), "control", null, 0, 1, Action.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(codeEClass, Code.class, "Code", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(setterEClass, Setter.class, "Setter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSetter_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, Setter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetter_Interface(), this.getInterface(), null, "interface", null, 0, 1, Setter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSetter_Script(), ecorePackage.getEString(), "script", null, 0, 1, Setter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(interfaceEClass, Interface.class, "Interface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInterface_Element(), ecorePackage.getEString(), "element", null, 0, 1, Interface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

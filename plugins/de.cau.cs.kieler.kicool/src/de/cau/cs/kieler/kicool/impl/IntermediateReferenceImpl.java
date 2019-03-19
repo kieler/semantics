@@ -69,6 +69,7 @@ public class IntermediateReferenceImpl extends ProcessorReferenceImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getAlias() {
         return alias;
     }
@@ -78,6 +79,7 @@ public class IntermediateReferenceImpl extends ProcessorReferenceImpl implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setAlias(String newAlias) {
         String oldAlias = alias;
         alias = newAlias;

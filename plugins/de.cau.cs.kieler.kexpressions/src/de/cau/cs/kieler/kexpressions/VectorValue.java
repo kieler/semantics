@@ -26,7 +26,7 @@ public interface VectorValue extends Value {
      * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of the '<em>Values</em>' attribute list isn't clear,
+     * If the meaning of the '<em>Values</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->

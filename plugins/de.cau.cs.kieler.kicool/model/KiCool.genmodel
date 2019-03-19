@@ -14,6 +14,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/processors"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/intermediates"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/config"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference KiCool.ecore#//System/startConfig"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/public"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/developer"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute KiCool.ecore#//System/simulation"/>

@@ -54,10 +54,6 @@ public final class GeneralSynthesisOptions {
     public static final SynthesisOption USE_KLAY =
             SynthesisOption.createCheckOption("KLayLayered", true).setCategory(LAYOUT);
 
-    /** Option for enabling adaptive zoom */
-    public static final SynthesisOption USE_ADAPTIVEZOOM =
-            SynthesisOption.createCheckOption("Adaptive Zoom", false).setCategory(APPEARANCE);
-
     public static final SynthesisOption SHOW_ALL_SCCHARTS =
             SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE);
 

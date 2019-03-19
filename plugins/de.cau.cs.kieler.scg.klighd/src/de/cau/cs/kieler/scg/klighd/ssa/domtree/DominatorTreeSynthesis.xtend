@@ -32,7 +32,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
+import de.cau.cs.kieler.scg.processors.ssa.DominatorTree
 import java.util.Map
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction

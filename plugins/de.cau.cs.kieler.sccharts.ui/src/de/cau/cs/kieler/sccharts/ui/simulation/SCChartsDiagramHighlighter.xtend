@@ -23,7 +23,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
-import de.cau.cs.kieler.sccharts.processors.transformators.TakenTransitionSignaling
+import de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling
 import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter

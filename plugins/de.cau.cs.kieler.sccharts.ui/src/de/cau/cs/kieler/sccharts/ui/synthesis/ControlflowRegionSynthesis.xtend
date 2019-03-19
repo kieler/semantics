@@ -23,6 +23,7 @@ import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
@@ -30,7 +31,7 @@ import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.sccharts.processors.transformators.For
+import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
@@ -44,6 +45,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -65,9 +67,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     @Inject extension ControlflowRegionStyles
     @Inject extension CommentSynthesis
     @Inject extension ColorStore
+    @Inject extension AdaptiveZoom
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
+        
+        node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
@@ -131,8 +136,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                            associateWith(declaration);
-                            eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
+                            associateWith(declaration)
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(declaration)
+                                if (it instanceof KText) configureTextLOD(declaration)
+                            ]
                         ]
                     }
                     // Add actions
@@ -140,13 +148,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                         addActionLabel(action.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(action);
-                            eAllContents.filter(KRendering).forEach[associateWith(action)];
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(action)
+                                if (it instanceof KText) configureTextLOD(action)
+                            ]
                         ]
                     }
                 }
                 if (sLabel.length > 0) it.setUserScheduleStyle
                 // Add Button after area to assure correct overlapping
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
 
             // Collapsed
@@ -155,7 +167,8 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 associateWith(region)
                 if (sLabel.length > 0) it.setUserScheduleStyle
                 addDoubleClickAction(ReferenceExpandAction::ID)
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
             
             node.setSelectionStyle
@@ -177,7 +190,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 label += region.reference.parameters.serializeHRParameters
             }
             
-            node.createReferenceRegionFigures(label) => [
+            node.createReferenceRegionFigures(label, region) => [
                 node.data.filter(KRectangle).forEach[
                     it.foreground = ColorStore.Color.STATE_REFERENCED_BACKGROUND_GRADIENT_2.color
                     it.lineWidth = it.lineWidth.lineWidth + 1
@@ -214,12 +227,12 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
 
-        node.createReferenceRegionFigures(null)
+        node.createReferenceRegionFigures(null, null)
 
         return node;
     }
     
-    protected def KNode createReferenceRegionFigures(KNode node, String label) {
+    protected def KNode createReferenceRegionFigures(KNode node, String label, Region region) {
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
@@ -231,6 +244,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
             addCollapseButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
         // Collapsed
@@ -238,6 +252,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             addExpandButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
         return node;
