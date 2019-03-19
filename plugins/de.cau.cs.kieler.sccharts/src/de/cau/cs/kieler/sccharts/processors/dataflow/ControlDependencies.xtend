@@ -81,13 +81,6 @@ class ControlDependencies extends StateDependencies implements ITarjanFilter {
             val loopData = new LoopDataLinkable(environment.getProperty(LOOP_DATA_PERSISTENT))
             getModel.findSCCs(loopData, this)
             environment.setProperty(LOOP_DATA, loopData)
-            for(loop : loopData.loops) {
-                println("Loop")
-                for(n : loop.criticalNodes) {
-                    println("  " + n)
-                }
-                println("")
-            }
         }
         
         for(d : dependencies.filter(DataDependency).toList) {
