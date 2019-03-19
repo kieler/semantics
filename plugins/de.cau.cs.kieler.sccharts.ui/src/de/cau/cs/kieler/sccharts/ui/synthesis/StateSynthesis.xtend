@@ -510,48 +510,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (loopData === null) 
             return false
 
-        val dependencyAssignments = loopData.criticalNodes.filter(Assignment).filter[ 
-            it.reference.valuedObject == dependency.reference
-        ].toList
-        
-        var notSchedulable = false
-        for(dA : dependencyAssignments) {
-            notSchedulable = notSchedulable || dA.notSchedulable(dependency)
-        } 
-
-        return notSchedulable             
+        return loopData.criticalNodes.filter(State).exists[
+            incomingTransitions.map[ effects ].flatten.filter(Assignment).exists[
+                it.reference.valuedObject == dependency.reference                
+            ]
+        ]
     }         
-        
-    protected def boolean notSchedulable(Assignment assignment, Dependency dependency) {
-        val cfr = assignment.getFirstControlflowRegion
-        val incomingDependencies = cfr.incomingLinks.filter(DataDependency).filter[ originalTarget == assignment ].toList
-        val outgoingDependencies = cfr.outgoingLinks.filter(DataDependency).filter[ originalSource == assignment ].toList
-        
-        if (incomingDependencies.empty || outgoingDependencies.empty) 
-            return false
-            
-        for(i : incomingDependencies) {
-            for(o : outgoingDependencies) {
-                if (o.directControlflow(i))
-                    return true
-            }
-        }
-        
-        return false
-    }
-    
-    protected def boolean directControlflow(DataDependency outgoing, DataDependency incoming) {
-        val outgoingState = outgoing.originalTarget.getFirstTransition.targetState
-        val incomingState = incoming.originalSource.getFirstTransition.targetState
-        
-        if (outgoingState === null || incomingState === null)
-            return false
-        if (outgoingState == incomingState) 
-            return true
-            
-        if (outgoingState.immediatePathBFS(incomingState)) 
-            return true
-            
-        return false
-    }
+       
 }

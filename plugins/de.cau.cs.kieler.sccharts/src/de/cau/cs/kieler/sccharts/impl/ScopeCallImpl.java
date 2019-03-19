@@ -134,6 +134,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SCChartsPackage.SCOPE_CALL__SCHEDULE);
@@ -146,6 +147,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, SCChartsPackage.SCOPE_CALL__PARAMETERS);
@@ -158,6 +160,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Scope getScope() {
         if (scope != null && scope.eIsProxy()) {
             InternalEObject oldScope = (InternalEObject)scope;
@@ -184,6 +187,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setScope(Scope newScope) {
         Scope oldScope = scope;
         scope = newScope;
@@ -196,6 +200,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSuper() {
         return super_;
     }
@@ -205,6 +210,7 @@ public class ScopeCallImpl extends MinimalEObjectImpl.Container implements Scope
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSuper(boolean newSuper) {
         boolean oldSuper = super_;
         super_ = newSuper;
