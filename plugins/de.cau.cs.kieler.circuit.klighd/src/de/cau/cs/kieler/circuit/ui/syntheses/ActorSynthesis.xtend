@@ -74,8 +74,8 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 	override KNode transform(Actor actor) {
 
 		val atomicActor = !(actor.innerActors.toList.length > 0)
-		val hasType = !(actor.type == null)
-		val hasName = !(actor.name == null)
+		val hasType = !(actor.type === null)
+		val hasName = !(actor.name === null)
 
 	// -------------------------------------------------------------------------
 	// --                     Create KNode for Actor                          --
@@ -109,13 +109,14 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 					case "FF":
 						actorNode = flipflopActorSynthesis.draw(actor)
 					default: {
-						actorNode.setNodeSize(2, 2);
+						actorNode.setNodeSize(32, 20);
 						actorNode.addRectangle => [
 							it.setBackground("white".color);
 							it.selectionBackground = "red".color;
 						]
 						actorNode.addInsideBottomLeftNodeLabel(actor.type, KlighdConstants.DEFAULT_FONT_SIZE, KlighdConstants.DEFAULT_FONT_NAME)
-						actorNode.addLayoutParam(LayeredOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+//						actorNode.addLayoutParam(LayeredOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE, SizeConstraint.NODE_LABELS));
+                        actorNode.addLayoutParam(LayeredOptions.NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.MINIMUM_SIZE));
 					}
 				}
 			}
@@ -161,12 +162,12 @@ class ActorSynthesis extends AbstractDiagramSynthesis<Actor> {
 		val darkBlue = createKColor.setColor(240, 247, 253);
 		val red = createKColor.setColor(222, 100, 100);
 		val frame = renderingFactory.createKRoundedRectangle() => [ rect |
-			rect.lineWidth = 0
-			if (actor.name.startsWith("g") && !actor.innerActors.empty) {
+			rect.lineWidth = 1
+			if (actor.name.startsWith("_g") && !actor.innerActors.empty) {
 				rect.lineWidth = 1;
 				rect.setForeground(red);
 			} else {
-				if(actor.eContainer != null ){
+				if(actor.eContainer !== null ){
 				rect.setBackground(darkBlue)} else {
 					rect.lineWidth = 1;
 					rect.setForeground = "black".color

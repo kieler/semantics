@@ -36,6 +36,9 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.scg.SCGraphs
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /**
  * @author fry
@@ -43,7 +46,7 @@ import de.cau.cs.kieler.scg.SCGraphs
  * Transformation from SSA SCG into Circuit.
  * Follows the control flow of the SCG.
  */
-class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> {// extends AbstractProductionTransformation {
+class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> implements Traceable {// extends AbstractProductionTransformation {
 
 	override getId() {
 		"de.cau.cs.kieler.seqssa.circuit"
@@ -92,6 +95,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 		 */
 		val newCircuit = CircuitFactory::eINSTANCE.createActor
 		newCircuit.name = scg.label
+		creationalTransformation(model, newCircuit)
 
 		val logicRegion = CircuitFactory::eINSTANCE.createActor
 		logicRegion.name = "Program Logic"
@@ -183,6 +187,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 				val newMUX = CircuitFactory::eINSTANCE.createActor
 				newMUX.type = "MUX"
 				newMUX.name = thenNode.valuedObject.name
+				newMUX.trace(source)
 				
 				//add MUX to logic region
 				logic.innerActors += newMUX
@@ -270,6 +275,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 			val actor = CircuitFactory::eINSTANCE.createActor
 			actor.name = guardname
 //			logic.innerActors += actor //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! add for no red regions
+            actor.trace(assignment)
 
 			assignmentActor.add(actor.name)
 			// Create output port of guard actor gX
@@ -298,6 +304,7 @@ class SSA_SCG2CircuitTransformation extends ExogenousProcessor<SCGraphs, Actor> 
 			actorRegion.innerActors += actor
 			actorRegion.name = guardname
 			logic.innerActors += actorRegion
+			actorRegion.trace(assignment)
 			/////////////////////////////////!!!!!!!!!!!!!!!!!!!!!  delete for no red regions
 			
 			// the created actor gate gX gets an input port for each subExpression

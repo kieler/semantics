@@ -40,6 +40,7 @@ import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 
 /**
  * @author fry
@@ -47,7 +48,7 @@ import de.cau.cs.kieler.core.properties.Property
  * 
  * Modifies a given SCG.
  */
-class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> {
+class SeqSCG2SSA_SCGTransformation extends InplaceProcessor<SCGraphs> implements Traceable {
 
 	override getId() {
 		"de.cau.cs.kieler.seqscq.ssa"
