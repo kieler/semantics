@@ -46,7 +46,7 @@ class VerificationContext extends CompilationContext {
     @Accessors private List<String> customInteractiveSmvCtlCommands = null
     @Accessors private boolean smvUseIVAR = false
     @Accessors private boolean smvIgnoreRangeAssumptions = false
-        
+    
     // Options for verification using SPIN
     @Accessors private List<String> customSpinCommands =null
 }

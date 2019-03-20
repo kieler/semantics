@@ -27,6 +27,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
+import de.cau.cs.kieler.verification.DefaultRangeAssumption
 
 /** 
  * @author aas
@@ -38,6 +39,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     public static val INVARIANT_ANNOTATION_NAME = "Invariant"
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
+    public static val DEFAULT_RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRangeDefault"
     public static val RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRange"
     public static val INVARIANT_ASSUMPTION_ANNOTATION_NAME = "Assume"
     
@@ -96,7 +98,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     }
     
     private def List<RangeAssumption> getRangeAssumptions(StringAnnotation anno) {
-        if(anno.name != RANGE_ASSUMPTION_ANNOTATION_NAME) {
+        if(anno.name != RANGE_ASSUMPTION_ANNOTATION_NAME && anno.name != DEFAULT_RANGE_ASSUMPTION_ANNOTATION_NAME) {
             return #[]
         }
         val minValueString = anno.values.getIfExists(0)
@@ -106,17 +108,24 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
         }
         val minValue = Integer.valueOf(minValueString)
         val maxValue = Integer.valueOf(maxValueString)
+        val assumptions = newArrayList
+        
         val container = anno.eContainer
         if(container instanceof VariableDeclaration) {
-            val assumptions = newArrayList
             for(vo : container.valuedObjects) {
                 val assumption = new RangeAssumption(vo, minValue, maxValue)
                 assumptions.add(assumption)
             }
-            return assumptions
         } else {
-            throw new Exception("Range assumption can only be used on variables")
+            if(anno.name == DEFAULT_RANGE_ASSUMPTION_ANNOTATION_NAME) {
+                val assumption = new DefaultRangeAssumption(minValue, maxValue)
+                assumptions.add(assumption)
+            } else {
+                throw new Exception("Range assumption can only be used on variables")    
+            }
         }
+        
+        return assumptions
     }
     
     private def Optional<VerificationProperty> getVerificationProperty(StringAnnotation anno) {

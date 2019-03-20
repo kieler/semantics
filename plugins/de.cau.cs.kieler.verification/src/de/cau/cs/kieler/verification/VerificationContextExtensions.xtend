@@ -37,7 +37,7 @@ class VerificationContextExtensions {
         for(assumption : context.verificationAssumptions.clone) {
             switch(assumption) {
                 RangeAssumption : {
-                    if(assumption.valuedObject.name == source.name) {
+                    if(assumption.valuedObject !== null && assumption.valuedObject.name == source.name) {
                         val assumptionCopy = new RangeAssumption(vo, assumption.minValue, assumption.maxValue)
                         context.verificationAssumptions.add(assumptionCopy)
                     }

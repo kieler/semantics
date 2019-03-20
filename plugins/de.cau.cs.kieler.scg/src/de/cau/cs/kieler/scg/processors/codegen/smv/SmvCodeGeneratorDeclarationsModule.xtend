@@ -24,6 +24,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
+import de.cau.cs.kieler.verification.DefaultRangeAssumption
 
 /**
  * @author aas
@@ -62,8 +63,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
                 if (decl instanceof VariableDeclaration) {
                     if(decl.isInput) {
                         val declType = decl.getSmvType(valuedObject)
-                        appendIndentation
-                        code.append(valuedObject.name).append(" : ").append(declType).append(";\n")    
+                        appendIndentedLine('''«valuedObject.name» : «declType»;''')
                     }
                 }
             }
@@ -84,8 +84,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
                 val preGuardName = entry.key
                 val predValuedObject = variableInformation.valuedObject
                 val declType = predValuedObject.variableDeclaration.getSmvType(predValuedObject)
-                appendIndentation()
-                code.append(preGuardName).append(" : ").append(declType).append(";\n")
+                appendIndentedLine('''«preGuardName» : «declType»;''')
             }
         }
     }
@@ -108,10 +107,25 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     }
     
     private def RangeAssumption getRangeAssumption(ValuedObject valuedObject) {
-        if(!assumptions.isNullOrEmpty) {
-            return assumptions.filter(RangeAssumption).findFirst [
-                it.valuedObject.name == valuedObject.name
-            ]
+        if(assumptions === null) {
+            return null
         }
+        
+        var RangeAssumption defaultRangeAssumption = null
+        for(assumption : assumptions.filter(RangeAssumption)) {
+            if(assumption instanceof DefaultRangeAssumption) {
+                defaultRangeAssumption = assumption
+            } else {
+                if(assumption.valuedObject.name == valuedObject.name) {
+                    return assumption
+                }
+            } 
+        }
+        
+        if(valuedObject.type == ValueType.INT) {
+            return defaultRangeAssumption            
+        }
+        
+        return null
     }
 }
