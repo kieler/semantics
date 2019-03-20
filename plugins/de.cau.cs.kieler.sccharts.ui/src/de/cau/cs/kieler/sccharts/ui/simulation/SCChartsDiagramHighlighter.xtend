@@ -30,6 +30,7 @@ import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -207,7 +208,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         traversedTransitions.clear
         traversedStates.clear
         // Get the traversed transitions array from the data pool
-        if(pool == null) {
+        if(pool === null) {
             return
         }
         val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
@@ -223,8 +224,13 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             if(!currentDiagramModel.rootStates.isEmpty) {
                 rootState = currentDiagramModel.rootStates.get(0)
             }            
+        } else if (currentDiagramModel instanceof ModelChain) {
+            val scc = currentDiagramModel.models.findFirst[ it instanceof SCCharts ] as SCCharts
+            if (!scc.rootStates.empty) {
+                rootState = scc.rootStates.head
+            }
         }
-        if(rootState == null) {
+        if(rootState === null) {
             return
         }
         val transitions = TakenTransitionSignaling.getTransitions(rootState)
