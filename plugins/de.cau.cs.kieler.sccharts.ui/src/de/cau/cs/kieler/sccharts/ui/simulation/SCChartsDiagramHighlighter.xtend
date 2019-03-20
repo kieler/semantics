@@ -28,7 +28,6 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
@@ -52,7 +51,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     /**
      * Single instance.
      */
-    private static var SCChartsDiagramHighlighter instance
+    static var SCChartsDiagramHighlighter instance
     
     /**
      * The traversed transitions.
@@ -81,17 +80,17 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     /**
      * The highlighting style for traversed states and transitions
      */
-    private static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
+    static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
     
     /**
      * The highlighting style for current states
      */
-    private static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
+    static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
 
     /**
      * The size of the taken transitions signaling array.
      */
-    private var takenTransitionArraySize = 0
+    var takenTransitionArraySize = 0
 
 
     private new() {}

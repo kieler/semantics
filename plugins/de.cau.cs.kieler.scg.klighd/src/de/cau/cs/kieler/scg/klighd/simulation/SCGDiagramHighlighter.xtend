@@ -35,12 +35,12 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
     /**
      * Single instance.
      */
-    private static var SCGDiagramHighlighter instance
+    static var SCGDiagramHighlighter instance
     
     protected var List<Node> activeNodes = <Node> newArrayList
     
-    private static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
-    private static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
+    static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
+    static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
 
 
     private new() {
