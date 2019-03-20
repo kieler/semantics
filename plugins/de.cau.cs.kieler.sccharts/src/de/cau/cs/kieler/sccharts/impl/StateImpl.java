@@ -208,6 +208,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Region> getRegions() {
         if (regions == null) {
             regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
@@ -220,6 +221,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlflowRegion getParentRegion() {
         if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
         return (ControlflowRegion)eInternalContainer();
@@ -240,6 +242,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParentRegion(ControlflowRegion newParentRegion) {
         if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION && newParentRegion != null)) {
             if (EcoreUtil.isAncestor(this, newParentRegion))
@@ -261,6 +264,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isInitial() {
         return initial;
     }
@@ -270,6 +274,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInitial(boolean newInitial) {
         boolean oldInitial = initial;
         initial = newInitial;
@@ -282,6 +287,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFinal() {
         return final_;
     }
@@ -291,6 +297,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFinal(boolean newFinal) {
         boolean oldFinal = final_;
         final_ = newFinal;
@@ -303,6 +310,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isViolation() {
         return violation;
     }
@@ -312,6 +320,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setViolation(boolean newViolation) {
         boolean oldViolation = violation;
         violation = newViolation;
@@ -324,7 +333,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isConnector() {
+	@Override
+    public boolean isConnector() {
         return connector;
     }
 
@@ -333,7 +343,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setConnector(boolean newConnector) {
+	@Override
+    public void setConnector(boolean newConnector) {
         boolean oldConnector = connector;
         connector = newConnector;
         if (eNotificationRequired())
@@ -345,6 +356,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Transition> getOutgoingTransitions() {
         if (outgoingTransitions == null) {
             outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.TRANSITION__SOURCE_STATE);
@@ -357,6 +369,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Transition> getIncomingTransitions() {
         if (incomingTransitions == null) {
             incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, SCChartsPackage.TRANSITION__TARGET_STATE);
@@ -369,6 +382,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<State> getBaseStates() {
         if (baseStates == null) {
             baseStates = new EObjectResolvingEList<State>(State.class, this, SCChartsPackage.STATE__BASE_STATES);

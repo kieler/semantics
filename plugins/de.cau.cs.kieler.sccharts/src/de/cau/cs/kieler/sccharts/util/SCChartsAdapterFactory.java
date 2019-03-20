@@ -185,16 +185,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSchedulableAdapter();
             }
             @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
             public Adapter caseExpression(Expression object) {
                 return createExpressionAdapter();
             }
             @Override
             public Adapter caseCall(Call object) {
                 return createCallAdapter();
-            }
-            @Override
-            public Adapter caseLinkable(Linkable object) {
-                return createLinkableAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
