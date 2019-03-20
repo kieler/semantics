@@ -39,6 +39,7 @@ import static java.lang.Math.toIntExact
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import com.google.inject.Inject
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
 /**
  * @author fry 
@@ -76,6 +77,9 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
 	static boolean newTick = true // is true if this tick is a new tick (no back step)
 
     static var CircuitDiagramHighlighter instance
+    
+    static val KForeground LOW_WIRE_ELEMENT_STYLE = createLowElementStyle
+    static val KForeground HIGH_WIRE_ELEMENT_STYLE = createHighElementStyle
 
     private new() {
         Guice.createInjector().injectMembers(this)
@@ -93,15 +97,66 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
     }
 
     def isSupported(SimulationContext ctx) {
-//        val compileCtx = ctx.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
-//        return compileCtx !== null
-        return true 
+        return getActorModel !== null
     }
+    
+    def Actor getActorModel() {
+        val currentDiagramModel = diagramViewContext.inputModel
+        if(currentDiagramModel instanceof Actor) {
+            return currentDiagramModel
+        } else if (currentDiagramModel instanceof ModelChain) {
+            return currentDiagramModel.models.findFirst[ it instanceof Actor ] as Actor
+        }
+        return null
+    }
+    
+    private static def KForeground createLowElementStyle() {
+        val style = KRenderingFactory.eINSTANCE.createKForeground()
+        style.setColor(Colors::GRAY_55)
+        style.setPropagateToChildren(true)
+        return style
+    }
+        
+    private static def KForeground createHighElementStyle() {
+        val style = KRenderingFactory.eINSTANCE.createKForeground()
+        style.setColor(Colors::LIGHT_SALMON)
+        style.setPropagateToChildren(true)
+        return style
+    }  
+    
+    private def getActorsAndWires() {
+        wires.clear
+        actors.clear
+        
+        val circuit = getActorModel
+        if (circuit === null) 
+          return;
+
+        // -------------------------------------------------------------
+        // Store all KEdges and their source port names               --
+        // and store all links                                        --
+        // -------------------------------------------------------------
+        circuit.eAllContents.filter(Link).forEach [ link |
+            wires.add(link)
+        ]
+
+        // -------------------------------------------------------------------
+        // Store all KRendering information for gate highlighting           --
+        // -------------------------------------------------------------------
+        for (node : circuit.eAllContents.filter(Actor).toList) {
+            val atomicActor = node.innerActors.empty
+
+            if (atomicActor && (node.name !== null) && (node.type !== null)) {
+                actors.add(node)
+            }
+        }        
+    }  
     
 	// ----------------------------------------------------------------------
 	// in this method several maps are cleared and filled with information --
 	// ----------------------------------------------------------------------
 	override initialize(SimulationContext ctx) {
+        super.initialize(ctx)
 
 		actorMapping.clear
 		wires.clear
@@ -117,204 +172,127 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
 		muxFlapChangeCollection.clear
 		regChangeCollection.clear
 		
-		val diagramEditor = null
-		if (diagramEditor === null) {
-			return;
-		}
+		val circuit = getActorModel
+		if (circuit === null) 
+		  return;
 
-//		val viewParts = DiagramView.getDiagramViews(diagramEditor)
-//		if (viewParts.empty) {
-//		}
+		// -------------------------------------------------------------
+		// Store all KEdges and their source port names               --
+		// and store all links                                        --
+		// -------------------------------------------------------------
+		circuit.eAllContents.filter(Link).forEach [ link |
+    		wires.add(link)
+		]
 		
-		// grab the circuit view from all active views 
-//		val contextsCirc = viewParts.map[viewer.viewContext].filter[inputModel instanceof Actor]
-//
-//		val Runnable run = [|
-//			for (context : contextsCirc) {
-//				val circuit = context.inputModel as Actor
-//
-//				// -------------------------------------------------------------
-//				// Store all KEdges and their source port names               --
-//				// and store all links                                        --
-//				// -------------------------------------------------------------
-//				circuit.eAllContents.filter(Link).forEach [ link |
-//					val l = context.getTargetElement(link, KEdge)
-//					if (l != null) {
-//						val rend = l.getData.filter(KRendering).head
-//						val sourcePort = link.source as Port
-//						linkMapping.put(sourcePort.name, rend)
-//						wires.add(link)
-//					}
-//
-//					// ----------------------------------------------------------
-//					// Before first tick all links shall be gray.              --
-//					// ----------------------------------------------------------
-//					if (l != null) {
-//						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-//						style.setColor(Colors::GRAY_55)
-//						l.KRendering.styles.add(style)
-//					}
-//				]
-//
-//				// -------------------------------------------------------------------
-//				// Store all KRendering information for gate highlighting           --
-//				// -------------------------------------------------------------------
-//				for (node : circuit.eAllContents.filter(Actor).toList) {
-//					val atomicActor = node.innerActors.empty
-//
-//					if (atomicActor && (node.name != null) && (node.type != null)) {
-//
-//						// get kRendering information for each actor
-//						val frame = context.getTargetElement(node, KNode)
-//						if (frame != null) {
-//							val KContainerRendering kgelem = frame.getData(KContainerRendering)
-//							val shape = frame.getData.filter(KRendering)
-//							
-//							// every highlightable part of the gate needs to have a "highlightable" id in its specific draw() method
-//							val children = kgelem.children.filter [
-//								id == "highlightable" || id == "highlightable_0" || id == "highlightable_1"
-//							]
-//							actorMapping.putAll(node.name, children)
-//							actorMapping.putAll(node.name, shape)
-//							actors.add(node)
-//							
-//							//store each register and each mux in maps for flap and register highlighting
-//							if (node.type != null) {
-//								if (node.type == "MUX") {
-//									muxFlapChange.put(node.name, false)
-//								} else if (node.type == "REG") {
-//									regChange.put(node.name, false)
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//		]
-//
-//		Display.getDefault().syncExec(run)
+        val lowWiresHighlighting = getHighlighting(wires, LOW_WIRE_ELEMENT_STYLE)
+                                           
+        highlightDiagram(lowWiresHighlighting)		
 
+		// -------------------------------------------------------------------
+		// Store all KRendering information for gate highlighting           --
+		// -------------------------------------------------------------------
+		for (node : circuit.eAllContents.filter(Actor).toList) {
+			val atomicActor = node.innerActors.empty
+
+			if (atomicActor && (node.name !== null) && (node.type !== null)) {
+    			actors.add(node)
+					
+				//store each register and each mux in maps for flap and register highlighting
+				if (node.type !== null) {
+					if (node.type == "MUX") {
+						muxFlapChange.put(node.name, false)
+					} else if (node.type == "REG") {
+						regChange.put(node.name, false)
+					}
+				}
+			}
+    	}
 	}
 	
 	// -------------------------------------------------------------------------------------------------
 	// In each step: list the gates which shall be highlighted                     --
 	// -------------------------------------------------------------------------------------------------
 	override update(SimulationContext ctx) {
-		// -----------------------------------------------------------
-		// Use highlighting information from C Code            --
-		// -----------------------------------------------------------
-//		var highlighting = <String>newHashSet // this map stores the nodes which shall be highlighted
-//		
-//		//only if this tick is a new tick, new highlighting information need to be computed
-//		//otherwise, old information is copied from "...Collection" lists.
-//		if (newTick) {
-//			for (key : jSONObject.keys.toIterable) {
-//
-//				// check for active guards in this tick
-//				if ((key as String).startsWith(BasicBlockTransformation::GUARDPREFIX)) {
-//					val object = jSONObject.get(key)
-//					if (object instanceof JSONObject && (object as JSONObject).has("value")) {
-//						val value = (object as JSONObject).get("value")
-//
-//						if ((value as Integer) != 0) {
-//							if (key.endsWith(DepthJoinSynchronizer::SCHIZOPHRENIC_SUFFIX)) {
-//								val myKey = key.substring(0, key.length - 2)
-//								highlighting += myKey
-//							} else {
-//								highlighting += key
-//							}
-//						}
-//					}
-//				} // check for Input Signals which are true for this tick.....or Output if you remove has"value
-//				else {
-//					val object = jSONObject.get(key)
-//					if (object instanceof JSONObject && (object as JSONObject).has("present")) { // &&!(object as JSONObject).has("value")) {
-//						val value = (object as JSONObject).get("present")
-//						if ((value as Boolean)) {
-//							highlighting += key
-//						} else {
-//							// e.g.: !A is true
-//							highlighting += "!" + key
-//						}
-//					}
-//				}
-//			}
-//
-//			// -------------------------------------------------------------
-//			// Add MUX, REG, AND and OR gates to highlighting information --
-//			// -------------------------------------------------------------
-//			//stores all ports which are target of links with highlighted source gates
-//			targetPorts.clear
-//			for (entry : highlighting) {
-//				for (w : wires) {
-//					val sP = w.source as Port
-//					if (sP.name == entry) {
-//						val target = w.target as Port
-//						targetPorts.add(target.name)
-//					}
-//				}
-//			}
-//			//store actors because this list will be modified in addActors(..)
-//			val actorsCopy = actors.immutableCopy
-//
-//			addActors(highlighting, actors)
-//
-//			actors.clear
-//			actors.addAll(actorsCopy) 
-//
-//			//now store all information in the Collection lists
-//			// add a new entry, is there is no entry at index = tick
+        super.update(ctx)
+        val pool = ctx.dataPool
+        
+        getActorsAndWires
+        
+	    unhighlightDiagram      
+	    
+	    if (!isSupported(ctx)) 
+	       return;
+	    
+		var highlighting = <String>newHashSet // this map stores the nodes which shall be highlighted
+		
+        val entries = pool.entries
+        for(entry : entries.values) {
+            val value = entry.getTypedValue
+            if (value instanceof Boolean) {
+                if (value.booleanValue) {
+                    highlighting += entry.name
+                }
+            }
+        }
+
+		// -------------------------------------------------------------
+		// Add MUX, REG, AND and OR gates to highlighting information --
+		// -------------------------------------------------------------
+		//stores all ports which are target of links with highlighted source gates
+		targetPorts.clear
+		for (entry : highlighting) {
+			for (w : wires) {
+				val sP = w.source as Port
+				if (sP.name == entry) {
+					val target = w.target as Port
+					targetPorts.add(target.name)
+				}
+			}
+		}
+		
+		//store actors because this list will be modified in addActors(..)
+		val actorsCopy = actors.immutableCopy
+
+    	addActors(highlighting, actors)
+
+		actors.clear
+		actors.addAll(actorsCopy) 
+
+		//now store all information in the Collection lists
+		// add a new entry, is there is no entry at index = tick
+			
+//		val tickInt = toIntExact(tick)
 //			
-//			val tickInt = toIntExact(tick)
-//			
-//			if (highlightingCollection.size < tickInt) {
-//				highlightingCollection.add(highlighting)
-//				val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
-//				mfc.putAll(muxFlapChange)
-//				muxFlapChangeCollection.add(mfc)
+//		if (highlightingCollection.size < tickInt) {
+//			highlightingCollection.add(highlighting)
+//			val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
+//			mfc.putAll(muxFlapChange)
+//			muxFlapChangeCollection.add(mfc)
 //				
-//				val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
-//				rc.putAll(regChange)
-//				regChangeCollection.add(rc)
-//			} 
-//			
-//			// maybe this case never occurs
-//			// if the user went back several steps, and changed inputs, the entries at the index equal to the tick shall be replaced
-//			else {
-//				highlightingCollection.set(tickInt - 1, highlighting)
-//				val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
-//				mfc.putAll(muxFlapChange)
-//				muxFlapChangeCollection.set(tickInt - 1, mfc)
-//				
-//				val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
-//				rc.putAll(regChange)
-//				regChangeCollection.set(tickInt - 1, rc)
-//			}
-//
+//			val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
+//			rc.putAll(regChange)
+//			regChangeCollection.add(rc)
 //		} 
-//		
-//		// if this is not a new tick, use the values stored in the "...Collection" lists
-//		else if (!newTick) {
-//			for (entry : muxFlapChangeCollection) {
-//					CircuitKiviPlugin.log("muxflapchange11: " + entry)
-//			}
-//			CircuitKiviPlugin.log("this is an old tick..")
-//			highlighting.clear
-//			val tickInt = toIntExact(tick)
-//			highlighting.addAll(highlightingCollection.get(tickInt - 1))
-//			muxFlapChange.clear
-//			muxFlapChange.putAll(muxFlapChangeCollection.get(tickInt - 1))
-//			regChange.clear
-//			regChange.putAll(regChangeCollection.get(tickInt - 1))
 //			
+//		// maybe this case never occurs
+//		// if the user went back several steps, and changed inputs, the entries at the index equal to the tick shall be replaced
+//		else {
+//			highlightingCollection.set(tickInt - 1, highlighting)
+//			val HashMap<String,Boolean> mfc = new HashMap<String,Boolean>
+//			mfc.putAll(muxFlapChange)
+//			muxFlapChangeCollection.set(tickInt - 1, mfc)
+//			
+//			val HashMap<String,Boolean> rc = new HashMap<String,Boolean>
+//			rc.putAll(regChange)
+//			regChangeCollection.set(tickInt - 1, rc)
 //		}
-//		
-//		// ---------------------------------------------------------------
-//		// Now highlight all entries of highlighting list          --
-//		// ---------------------------------------------------------------
-//		highlight(highlighting)
-//
-//		jSONObject
+
+		// ---------------------------------------------------------------
+		// Now highlight all entries of highlighting list          --
+		// ---------------------------------------------------------------
+		highlight(highlighting)
+		
+		tick = tick + 1
 	}
 	
 	// adds highlighting information to the highlighting list depending on actor type
@@ -361,7 +339,7 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
 	//remember for the next tick for each register, if there was a 1 at the input port in the this tick
 	protected def addReg(Actor reg, Set<String> highlighting, List<Actor> removeActors) {
 
-		val lastTick = regChange.get(reg.name)
+		val lastTick = false //regChange.get(reg.name)
 		val presentTick = highlighting.contains(reg.name) || targetPorts.contains(reg.ports.filter [
 			(type == "In") && (name != "Tick")
 		].head.name)
@@ -433,10 +411,10 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
 			muxFlapChange.replace(mux.name, true)
 		} 
 		// case selection port = 0 and was 1 before 
-		else if (!targetPorts.contains(selectionPort.name) && muxFlapChange.get(mux.name)) {
-			muxFlapChange.replace(mux.name, false)
-
-		}
+//		else if (!targetPorts.contains(selectionPort.name) && muxFlapChange.get(mux.name)) {
+//			muxFlapChange.replace(mux.name, false)
+//
+//		}
 
 	}
 	
@@ -488,104 +466,41 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
 	}
 
 
-
-
-	protected static val HIGHLIGHTING_MARKER = new Property<Boolean>("highlightingMarker", false);
-	protected static val FLAP_MARKER = new Property<Boolean>("muxflapMarker", false);
-
 	// -----------------------------------------------------------------------
 	// This method finally highlights the gates and links                   --
 	// -----------------------------------------------------------------------
 	protected def void highlight(Set<String> highlighting) {
-		val Runnable run = [|
-
-			// highlight actors: check for each entry (actor) if its name is in highlighting list. If so, highlight it.
-			for (entry : actorMapping.entries) {
-
-				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-
-				if (highlighting.contains(entry.key)) {
-
-					if (highlightingMarker === null) {
-
-						val KBackground style = KRenderingFactory.eINSTANCE.createKBackground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::LIGHT_SALMON)
-						entry.value.styles.add(style)
-
-					}
-				} 
-				// if the gate's name is not listed in highlighting list, remove all highlighting.
-				else { 
-					if (!highlighting.contains(entry.key)) {
-						entry.value.styles.remove(highlightingMarker)
-					}
-				}
+	    val actorsToHighlight = <Actor> newLinkedList
+    	for (actor : actors) {
+			if (highlighting.contains(actor.name)) {
+			    actorsToHighlight += actor
+			}
+		} 
+		
+        val actorHighlighting = getHighlighting(actorsToHighlight, HIGH_WIRE_ELEMENT_STYLE)
 				
-				//highlighting for the mux flaps
-				val muxflapMarker = entry.value.styles.findFirst[getProperty(FLAP_MARKER)]
-
-				for (mux : muxFlapChange.entrySet) {
-					if (mux.key == entry.key) {
-						if (mux.value) {
-							if (muxflapMarker === null) {
-								
-								//each mux has two flaps. which one is white and which one is black is decided by the muxFlapChange list
-								if (entry.value.id == "highlightable_1") {
-									val KForeground bstyle = KRenderingFactory.eINSTANCE.createKForeground()
-									bstyle.setProperty(FLAP_MARKER, true)
-									bstyle.setColor(Colors::BLACK)
-									entry.value.styles.add(bstyle)
-								}
-								if (entry.value.id == "highlightable_0") {
-									val KForeground wstyle = KRenderingFactory.eINSTANCE.createKForeground()
-									wstyle.setColor(Colors::WHITE) // make it white: check if muxActros.contains(entry.key) is else case above..
-									wstyle.setProperty(FLAP_MARKER, true)
-									entry.value.styles.add(wstyle)
-								}
-							}
-						} 
-						// if the mux's flap shall not point to it's input1, remove the highlighting.
-						//this will color the flap pointing to the input0 black and the flap for input 1 white.
-						else if (!mux.value) {
-							if (muxflapMarker !== null)
-								entry.value.styles.remove(muxflapMarker)
-						}
-					}
-				}
-
-			}
-
-			// highlight links: check for each link if source port is located at actor which shall be highlighted.
-			// if so: highlight the outgoing link and make it fat..
-			for (entry : linkMapping.entries) {
-				val highlightingMarker = entry.value.styles.findFirst[getProperty(HIGHLIGHTING_MARKER)]
-				val value = entry.value
-
-				if (highlighting.contains(entry.key)) {
-					if (highlightingMarker === null) {
-						if (value instanceof KRoundedBendsPolyline) {
-							entry.value.lineWidth = 3
-						}
-						val KForeground style = KRenderingFactory.eINSTANCE.createKForeground()
-						style.setProperty(HIGHLIGHTING_MARKER, true);
-						style.setColor(Colors::LIGHT_SALMON)
-						entry.value.styles.add(style)
-					}
-				} 
-				// if this link shall not be highlighted: remove highlighting
-				else if (!highlighting.contains(entry.key)) {
-					if (highlightingMarker !== null) {
-						entry.value.styles.remove(highlightingMarker)
-						if (value instanceof KRoundedBendsPolyline) {
-							entry.value.lineWidth = 1
-
-						}
-					}
-				}
-			}
-		]
-		Display.getDefault().syncExec(run)
+    	// highlight links: check for each link if source port is located at actor which shall be highlighted.
+    	// if so: highlight the outgoing link and make it fat..
+    	val linksToHigh = <Link> newLinkedList
+    	val linksToLow = <Link> newLinkedList
+    	for (wire : wires) {
+    	    linksToLow += wire
+    	    if (targetPorts.contains((wire.target as Port).name)) {
+    	        linksToHigh += wire
+    	    }
+//    		if (highlighting.contains(wire.name)) {
+//    		    linksToHigh += wire      
+//    		} else {
+//                linksToLow += wire    		    
+//    		}
+  		}
+  		
+        val highWireHighlighting = getHighlighting(linksToHigh, HIGH_WIRE_ELEMENT_STYLE)
+        val lowWireHighlighting = getHighlighting(linksToLow, LOW_WIRE_ELEMENT_STYLE)  		
+  		
+  		highlightDiagram(actorHighlighting)
+  		highlightDiagram(lowWireHighlighting)         
+  		highlightDiagram(highWireHighlighting)
 	}
 }
 
