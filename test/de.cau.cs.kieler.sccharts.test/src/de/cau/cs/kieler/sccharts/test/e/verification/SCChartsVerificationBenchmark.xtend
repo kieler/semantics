@@ -565,7 +565,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
             }
             statisticsFile.createNewFile
             // Add header line
-            val statsHeader = '''"Test", "Model", "Property", "Code Gen Time (sec)", "Model Checking Time (sec)", "Model Checking Memory (MB)", "Failed to Proof", "Timed Out"'''
+            val statsHeader = '''"Test", "Model", "Property", "Code Gen Time (sec)", "Model Checking Time (sec)", "Model Checking Memory (MB)", "Failed to Prove", "Timed Out"'''
             appendToFile(statisticsFile, statsHeader+"\n")
         }
         appendToFile(statisticsFile, newStats+"\n")
