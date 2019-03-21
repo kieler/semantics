@@ -70252,11 +70252,11 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20827:2: ')'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
+               before(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5()); 
             }
             match(input,95,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4()); 
+               after(grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5()); 
             }
 
             }
