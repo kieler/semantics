@@ -13,8 +13,15 @@
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -32,9 +39,9 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.lustre.extensions.LustreTransformationExtension
 import de.cau.cs.kieler.lustre.lustre.AState
 import de.cau.cs.kieler.lustre.lustre.ATransition
+import de.cau.cs.kieler.lustre.lustre.Assertion
 import de.cau.cs.kieler.lustre.lustre.Automaton
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
@@ -51,6 +58,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import java.util.ArrayList
@@ -58,12 +66,6 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.lustre.lustre.Assertion
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FloatValue
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -77,20 +79,22 @@ import de.cau.cs.kieler.kexpressions.FloatValue
  * 
  */
 abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
+        
+    public static val IProperty<Boolean> USE_DURING_ACTIONS_FOR_WHEN = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.useDuringActionsForWhen", false)
+        
+    public static val IProperty<Boolean> USE_SIGNALS_FOR_CLOCKED_VARIABLES = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.useSignalsForClockedVariables", false)
 
     public static final String DATAFLOW_REGION_PREFIX = "df"
     public static final String CONTROLFLOW_REGION_PREFIX = "cf"
     public static final String ALIBI = "alibi_"
-
-    // TODO: This should be configurable for the user.    
-    public static boolean USE_SIGNALS_FOR_CLOCKED_VARIABLES = true
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KEffectsExtensions
-    @Inject extension LustreTransformationExtension
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -100,18 +104,19 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     // M2M mappings
     protected HashMap<ValuedObject, ValuedObject> lustreToScchartsValuedObjectMap = new HashMap
+    protected HashMap<ValuedObject, ValuedObject> scchartsToLustreValuedObjectMap = new HashMap
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<AState, State> lustreStateToScchartsStateMap = new HashMap
     protected int controlflowRegionCounter
 
+    /* --------------------------------------------------------------------------------------------
+     * Structural methods
+     * ----------------------------------------------------------------------------------------- */
     override process() {
-        USE_SIGNALS_FOR_CLOCKED_VARIABLES = false
         reset()
         model = model.transform
     }
-
-    abstract protected def void processEquation(Equation equation, State state);
-
+    
     def SCCharts transform(LustreProgram p) {
         var scchartsProgram = createSCChart
 
@@ -132,107 +137,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     
     protected def reset() {
         lustreToScchartsValuedObjectMap.clear
+        scchartsToLustreValuedObjectMap.clear
         nodeToStateMap.clear
         lustreStateToScchartsStateMap.clear
         controlflowRegionCounter = 0
     }
-    
-    protected def processAssertion(Expression assertion, State state) {
-        val transformedAssertion = transformExpression((assertion as Assertion).expr, state)
-        val assertionAnnotation = AnnotationsFactory::eINSTANCE.createStringAnnotation => [
-            name = "Assume"
-            values += transformedAssertion.getStringRepresentation
-        ]
-        
-        state.annotations += assertionAnnotation
-    }
-    
-    def String getStringRepresentation(Expression expression) {
-        var String result = ""
-        if (expression instanceof OperatorExpression) {
-            if (expression.subExpressions.length == 1) {
-                result = expression.operator.toString + "(" + getStringRepresentation(expression.subExpressions.get(0)) + ")"
-            } else {
-                for (Expression expr : expression.subExpressions) {
-                    result += getStringRepresentation(expr)
-                    if (expression.subExpressions.indexOf(expr) < expression.subExpressions.length - 1) {
-                        result += " " + expression.operator.toString + " "
-                    }
-                }
-            }
-        } else if (expression instanceof ValuedObjectReference) {
-            result = expression.valuedObject.name
-        } else if (expression instanceof IntValue) {
-            result = expression.value.toString
-        } else if (expression instanceof BoolValue) {
-            result = expression.value.toString
-        } else if (expression instanceof FloatValue) {
-            result = expression.value.toString
-        }
-        return result
-    }
 
-    protected def void processAutomaton(Automaton automaton, State state) {
-        var controlflowRegion = createControlflowRegion(CONTROLFLOW_REGION_PREFIX + controlflowRegionCounter)
-        state.regions += controlflowRegion
-        
-        var initialState = true;
-        for (AState lusState : automaton.states) {
-            var newState = createState => [
-                name = lusState.name
-            ]
-            if (initialState) {
-                newState.initial = true
-                initialState = false
-            }
-            controlflowRegion.states += newState
-            lustreStateToScchartsStateMap.put(lusState, newState)
-        }
-        
-        for (AState lusState : automaton.states) {
-            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
-        }
-    }
-    
-    protected def processState(AState lusState, State state) {
-        
-        for (Assignment equation: lusState.equations) {
-            processEquation(equation as Equation, state)
-        }
-        
-        for (Expression assertion : lusState.assertions) {
-            processAssertion(assertion, state)
-        }
-        
-        for (Automaton automaton : lusState.automatons) {
-            processAutomaton(automaton, state)
-        }
-        
-        for (ATransition transition : lusState.transitions) {
-            processTransition(transition, state)
-        }
-    }    
-    
-    protected def processTransition(ATransition transition, State source) {
-        var newTransition = createTransition => [
-            sourceState = source
-            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
-        ]
-        
-        var trigger = transformExpression(transition.condition, source)
-        if (trigger !== null) {
-            newTransition.trigger = trigger
-        }
-        if (transition.strong) {
-            newTransition.preemption = PreemptionType.STRONGABORT
-        }
-        if (transition.history) {
-            newTransition.history = HistoryType.DEEP
-        }        
-    }
-
+    /* --------------------------------------------------------------------------------------------
+     * Structural methods for managing elements of higher order (packages, models, nodes and its interface).
+     * ----------------------------------------------------------------------------------------- */
     protected def processPackBody(PackBody packBody, SCCharts scchartsProgram) {
-
         val constantsState = createState => [
             name = "_constants"
         ]
@@ -244,6 +158,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             constant.processConstantDeclaration(constantsState)
         }
         val constantsLustreToScchartsMap = lustreToScchartsValuedObjectMap
+        val constantsScchartsToLustreMap = scchartsToLustreValuedObjectMap
 
         // ----- Nodes
         // In order for References to work, we need to transform the interface of all nodes first
@@ -264,13 +179,14 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         for (node : packBody.nodes) {
             if (node instanceof NodeDeclaration) {
                 lustreToScchartsValuedObjectMap = new HashMap(constantsLustreToScchartsMap)
+                scchartsToLustreValuedObjectMap = new HashMap(constantsScchartsToLustreMap)
                 var nodeState = nodeToStateMap.get(node)
                 node.processNodeDeclaration(nodeState)
                 scchartsProgram.rootStates += nodeState
             }
         }
 
-    // TODO: TypeDeclarations and ExternalNodeDeclarations
+        // TODO: TypeDeclarations and ExternalNodeDeclarations
     }
 
     protected def processConstantDeclaration(VariableDeclaration variableDeclaration, State rootState) {
@@ -324,83 +240,113 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
     }
 
-    protected def createConstantDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
-        lustreVariableDeclaration.createVariableDeclaration(state) => [
-            const = true
+    /* --------------------------------------------------------------------------------------------
+     * Methods for transformations of basic elements: equations, assertions and automatons.
+     * ----------------------------------------------------------------------------------------- */
+    abstract protected def void processEquation(Equation equation, State state);
+    
+    protected def processAssertion(Expression assertion, State state) {
+        val transformedAssertion = transformExpression((assertion as Assertion).expr, state)
+        val assertionAnnotation = AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            name = "Assume"
+            values += transformedAssertion.getStringRepresentation
         ]
+        
+        state.annotations += assertionAnnotation
     }
-
-    protected def createInputDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
-        lustreVariableDeclaration.createVariableDeclaration(state) => [
-            input = true
-        ]
-    }
-
-    protected def createOutputDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
-        lustreVariableDeclaration.createVariableDeclaration(state) => [
-            output = true
-        ]
-    }
-
-    protected def createVariableDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
-        var kExpressionsVariableDeclaration = createVariableDeclaration
-
-        // Determine whether the declaration is an initialization...
-        if (lustreVariableDeclaration.valuedObjects.length == 1 &&
-            lustreVariableDeclaration.valuedObjects.head instanceof LustreValuedObject) {
-            val lustreValuedObject = lustreVariableDeclaration.valuedObjects.head as LustreValuedObject
-            val objType = lustreValuedObject.type
-            kExpressionsVariableDeclaration.type = objType
-
-            val kExpressionsValuedObject = lustreValuedObject.createValuedObject(state)
-            kExpressionsVariableDeclaration.valuedObjects += kExpressionsValuedObject
-
-        } // ... or a declaration of an arbitary amount of variables with the same type
-        else {
-            kExpressionsVariableDeclaration.type = lustreVariableDeclaration.type
-
-            for (lustreValuedObject : lustreVariableDeclaration.valuedObjects) {
-                val kExpressionsValuedObject = lustreValuedObject.createValuedObject(state)
-                kExpressionsVariableDeclaration.valuedObjects += kExpressionsValuedObject
+    
+    protected def void processAutomaton(Automaton automaton, State state) {
+        var controlflowRegion = createControlflowRegion(CONTROLFLOW_REGION_PREFIX + controlflowRegionCounter)
+        state.regions += controlflowRegion
+        
+        var initialState = true;
+        for (AState lusState : automaton.states) {
+            var newState = createState => [
+                name = lusState.name
+            ]
+            if (initialState) {
+                newState.initial = true
+                initialState = false
             }
+            controlflowRegion.states += newState
+            lustreStateToScchartsStateMap.put(lusState, newState)
         }
-
-        return kExpressionsVariableDeclaration
+        
+        for (AState lusState : automaton.states) {
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
+        }
     }
 
-    protected def createValuedObject(ValuedObject lustreValuedObject, State state) {
-        val kExpressionsValuedObject = createValuedObject => [
-            name = lustreValuedObject.name
-            initialValue = lustreValuedObject.initialValue.transformExpression(state)
+    /* --------------------------------------------------------------------------------------------
+     * Methods used in basic methods.
+     * ----------------------------------------------------------------------------------------- */    
+    // Assertion transformation: Get a string representation of a boolean expression for SCC Model Checking
+    private def String getStringRepresentation(Expression expression) {
+        var String result = ""
+        if (expression instanceof OperatorExpression) {
+            if (expression.subExpressions.length == 1) {
+                result = expression.operator.toString + "(" + getStringRepresentation(expression.subExpressions.get(0)) + ")"
+            } else {
+                for (Expression expr : expression.subExpressions) {
+                    result += getStringRepresentation(expr)
+                    if (expression.subExpressions.indexOf(expr) < expression.subExpressions.length - 1) {
+                        result += " " + expression.operator.toString + " "
+                    }
+                }
+            }
+        } else if (expression instanceof ValuedObjectReference) {
+            result = expression.valuedObject.name
+        } else if (expression instanceof IntValue) {
+            result = expression.value.toString
+        } else if (expression instanceof BoolValue) {
+            result = expression.value.toString
+        } else if (expression instanceof FloatValue) {
+            result = expression.value.toString
+        }
+        return result
+    }
+    
+    // Automaton transformation: Transform a state
+    protected def processState(AState lusState, State state) {
+        
+        for (Assignment equation: lusState.equations) {
+            processEquation(equation as Equation, state)
+        }
+        
+        for (Expression assertion : lusState.assertions) {
+            processAssertion(assertion, state)
+        }
+        
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+        
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }    
+    
+    // Automaton transformation: Transform a transition
+    protected def processTransition(ATransition transition, State source) {
+        var newTransition = createTransition => [
+            sourceState = source
+            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
         ]
-        for (cardinalityExpression : lustreValuedObject.cardinalities) {
-            kExpressionsValuedObject.cardinalities += cardinalityExpression.transformExpression(state)
+        
+        var trigger = transformExpression(transition.condition, source)
+        if (trigger !== null) {
+            newTransition.trigger = trigger
         }
-
-        lustreToScchartsValuedObjectMap.put(lustreValuedObject, kExpressionsValuedObject)
-
-        return kExpressionsValuedObject
-    }
-
-    protected def createVariableDeclarationFromLustreClockedVariableDeclaration(
-        ClockedVariableDeclaration lustreClockedVariableDeclaration, State state) {
-        var varDeclaration = lustreClockedVariableDeclaration.vardecl.createVariableDeclaration(state)
-        if (lustreClockedVariableDeclaration.clockExpr !== null) {
-            makeSignalFromVariableDeclaration(varDeclaration, USE_SIGNALS_FOR_CLOCKED_VARIABLES)
+        if (transition.strong) {
+            newTransition.preemption = PreemptionType.STRONGABORT
         }
-
-        return varDeclaration
+        if (transition.history) {
+            newTransition.history = HistoryType.DEEP
+        }        
     }
+    
 
-    protected def createVariableDeclaration(String name, ValueType type, State state) {
-        var varDecl = createVariableDeclaration(type)
-        var valuedObj = createValuedObject(varDecl, name)
-        
-        state.declarations += varDecl    
-        
-        return valuedObj    
-    }
-        
+    // Equation transformation: Transform an expression
     protected def Expression transformExpression(Expression kExpression, State state) {
         if (kExpression !== null) {
             if (kExpression instanceof OperatorExpression) {
@@ -414,34 +360,34 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 var Expression convertedExpression
                 switch (kExpression.operator) {
                     case WHEN: {
-                        processWhenExpression(kExpression, subExpressionList, state)
+                        convertedExpression = processWhenExpression(kExpression, subExpressionList, state)
                     }
                     case CURRENT: {
-                        convertedExpression = createCurrentExpression(kExpression, subExpressionList, state)
+                        convertedExpression = processCurrentExpression(kExpression, subExpressionList, state)
                     }
                     case FBY: {
-                        convertedExpression = createFollowedByExpression(subExpressionList)
+                        convertedExpression = processFollowedByExpression(subExpressionList, state)
                     }
                     case IMPLIES: {
-                        convertedExpression = createImpliesExpression(subExpressionList)
+                        convertedExpression = processImpliesExpression(subExpressionList)
                     }
                     case INIT: {
-                        convertedExpression = createInitExpression(subExpressionList)
+                        convertedExpression = processInitExpression(subExpressionList)
                     }
                     case INTDIV: {
-                        convertedExpression = createIntDivExpression(subExpressionList)
+                        convertedExpression = processIntDivExpression(subExpressionList)
                     }
                     case LOGICAL_XOR: {
-                        convertedExpression = createXorExpression(subExpressionList)
+                        convertedExpression = processXorExpression(subExpressionList)
                     }
                     case NONEOF: {
-                        convertedExpression = createNoneOfExpression(subExpressionList)
+                        convertedExpression = processNoneOfExpression(subExpressionList)
                     }
                     case NOR: {
-                        convertedExpression = createNorExpression(subExpressionList)
+                        convertedExpression = processNorExpression(subExpressionList)
                     }
                     case PRE: {
-                        convertedExpression = createPreCascadedExpression(subExpressionList.head)
+                        convertedExpression = processPreExpression(subExpressionList.head, state)
                     }
                     default: {
                         convertedExpression = createOperatorExpression(kExpression.operator) => [
@@ -468,6 +414,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
     }
 
+    // Equation transformation: Transform a when expression
     protected def processWhenExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
         val realExpression = subExpressionList.get(0)
         val clock = subExpressionList.get(1)
@@ -481,41 +428,53 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // Assignments containing a when expression use a during action for transformation
         if (containingElement instanceof Assignment) {
-            var duringAction = createDuringAction(state) => [
-                delay = DelayType.IMMEDIATE
-            ]
-            val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(
-                containingElement.reference.valuedObject)
-
-            if (USE_SIGNALS_FOR_CLOCKED_VARIABLES) {
-
-                // Create a signal emission if this variant is used
-                makeSignalFromVariableDeclaration(scchartsAssignmentValuedObject.declaration as VariableDeclaration, USE_SIGNALS_FOR_CLOCKED_VARIABLES)
-                duringAction.effects += createEmission => [
-                    reference = scchartsAssignmentValuedObject.reference
-                    newValue = realExpression
+            if (environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
+                
+                // Create during action for when expression
+                var duringAction = createDuringAction(state) => [
+                    delay = DelayType.IMMEDIATE
                 ]
-
-            } else {
-
-                // Create a simple assignment if signal usage is disabled
-                var duringActionAssignment = createAssignment => [
-                    reference = scchartsAssignmentValuedObject.reference
-                    operator = AssignOperator.ASSIGN
-                ]
-
-                if (type.equals(ValueType.BOOL)) {
-                    // For booleans, create a conjunction with the previous clock
-                    duringActionAssignment.expression = createLogicalAndExpression => [
-                        subExpressions += clock
-                        subExpressions += realExpression
+                val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
+    
+                if (environment.getProperty(USE_SIGNALS_FOR_CLOCKED_VARIABLES)) {
+    
+                    // Create a signal emission if this variant is used
+                    makeSignalFromVariableDeclaration(scchartsAssignmentValuedObject.declaration as VariableDeclaration)
+                    duringAction.effects += createEmission => [
+                        reference = scchartsAssignmentValuedObject.reference
+                        newValue = realExpression
                     ]
+    
                 } else {
-                    duringAction.trigger = clock
-                    duringActionAssignment.expression = realExpression
+    
+                    // Create a simple assignment if signal usage is disabled
+                    var duringActionAssignment = createAssignment => [
+                        reference = scchartsAssignmentValuedObject.reference
+                        operator = AssignOperator.ASSIGN
+                    ]
+    
+                    if (type.equals(ValueType.BOOL)) {
+                        // For booleans, create a conjunction with the previous clock
+                        duringActionAssignment.expression = createLogicalAndExpression => [
+                            subExpressions += clock
+                            subExpressions += realExpression
+                        ]
+                    } else {
+                        duringAction.trigger = clock
+                        duringActionAssignment.expression = realExpression
+                    }
+                    duringAction.effects += duringActionAssignment
+    
                 }
-                duringAction.effects += duringActionAssignment
-
+            } else {
+                // Create condition for when expression
+                val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
+                var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
+                conditional.subExpressions.add(clock)
+                conditional.subExpressions.add(realExpression)
+                conditional.subExpressions.add(scchartsAssignmentValuedObject.reference)
+                 
+                return conditional                
             }
         }
 
@@ -523,7 +482,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         return null
     }
 
-    protected def createCurrentExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
+    // Equation transformation: Transform a current expression
+    protected def processCurrentExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
         // If it is a signal, take the value, else take the expression and do nothing
         val realExpression = subExpressionList.get(0)
 
@@ -536,13 +496,190 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             } else {
                 return realExpression
             }
+        } else if (realExpression instanceof OperatorExpression) {
+            return realExpression
         }
     }
+    
+    // Equation transformation: Transform a followed by expression
+    protected def processFollowedByExpression(Stack<Expression> subExpressionList, State state) {
+        // x fby y <=> x -> pre(y)
+        var bExpression = subExpressionList.pop
+        while(!subExpressionList.isEmpty) {
+            bExpression = processPreExpression(bExpression, state)
+            var aExpression = createOperatorExpression(OperatorType.FBY)
+            aExpression.subExpressions += subExpressionList.pop
+            aExpression.subExpressions += bExpression
+            bExpression = aExpression
+        }
 
-    protected def processReferenceCall(ReferenceCall kExpression, State state) {
+        return bExpression as OperatorExpression
+    }
+
+    // Equation transformation: Transform an implies expression
+    protected def processImpliesExpression(Stack<Expression> subExpressionList) {
+        // A => B  <=>  !A or B
+        var rightExpression = subExpressionList.pop
+        var leftExpression = subExpressionList.pop
+
+        leftExpression = leftExpression.createNotExpression
+        var convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
+
+        while (subExpressionList.length > 0) {
+            rightExpression = convertedExpression
+            leftExpression = subExpressionList.pop.createNotExpression
+            convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
+        }
+
+        return convertedExpression
+    }
+
+    // Equation transformation: Transform an init expression
+    protected def processInitExpression(Stack<Expression> subExpressionList) {
+        // x -> y <=> x fby y (in sccharts)
+        var convertedExpression = createOperatorExpression(OperatorType.FBY)
+        convertedExpression.subExpressions += subExpressionList
+
+        return convertedExpression
+    }
+
+    // Equation transformation: Transform an integer division expression
+    protected def processIntDivExpression(Stack<Expression> subExpressionList) {
+        // Division depends on type in sccharts
+        var convertedExpression = createOperatorExpression(OperatorType.DIV)
+        convertedExpression.subExpressions += subExpressionList
+
+        return convertedExpression
+    }
+
+    // Equation transformation: Transform a xor expression
+    protected def processXorExpression(Stack<Expression> subExpressionList) {
+        // A xor B <=> A && !B || !A && B
+        var Expression bExpression
+        var Expression aExpression
+        var Expression notBExpression
+        var Expression notAExpression
+        var Expression leftOrExpression
+        var Expression rightOrExpression
+
+        var tempExpression = subExpressionList.pop
+
+        do {
+            bExpression = tempExpression
+            aExpression = subExpressionList.pop
+
+            notBExpression = createNotExpression(bExpression.copy)
+            notAExpression = createNotExpression(aExpression.copy)
+
+            leftOrExpression = createLogicalAndExpression(aExpression, notBExpression)
+            rightOrExpression = createLogicalAndExpression(notAExpression, bExpression)
+
+            tempExpression = createLogicalOrExpression(leftOrExpression, rightOrExpression)
+        } while (subExpressionList.length > 0);
+
+        var convertedExpression = tempExpression as OperatorExpression
+
+        return convertedExpression
+    }
+
+    // Equation transformation: Transform a noneOf expression
+    protected def processNoneOfExpression(Stack<Expression> subExpressionList) {
+        var listcopy = newArrayList
+        listcopy.addAll(subExpressionList)
+
+        // noneOf(A, B, C) <=> !or(A, B, C) || A & !or(B,C) || B & !or(A,C) || C & !or(A,B)
+        var aExpression = subExpressionList.pop
+        while (!subExpressionList.isEmpty) {
+            var bExpression = subExpressionList.pop
+            aExpression = createLogicalOrExpression(aExpression, bExpression)
+        }
+        var completeExpression = createNotExpression(aExpression)
         
-        val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
+        for (var i = 0; i < listcopy.size; i++) {
+            var frontVariable = listcopy.get(i).copy
+            var Expression orExpression = null
+            for (var j = 0; j < listcopy.size; j++) {
+                if (j != i) {
+                    var subExpression = listcopy.get(j).copy
+                    if (orExpression !== null) {
+                        orExpression = createLogicalOrExpression(orExpression, subExpression)
+                    } else {
+                        orExpression = subExpression
+                    }
+                }
+            }
+            var andExpression = createLogicalAndExpression(frontVariable, createNotExpression(orExpression))
+            completeExpression = createLogicalOrExpression(completeExpression, andExpression)
+        }
+        
+        return completeExpression
 
+    }
+    
+    // Equation transformation: Transform a nor expression
+    protected def processNorExpression(Stack<Expression> subExpressionList) {
+        var listcopy = newArrayList
+        listcopy.addAll(subExpressionList)
+
+        // nor(A, B, C) <=> !or(A, B, C)
+        // !or(A,B,C)
+        var aExpression = subExpressionList.pop
+        while (!subExpressionList.isEmpty) {
+            var bExpression = subExpressionList.pop
+            aExpression = createLogicalOrExpression(aExpression, bExpression)
+        }
+        
+        return createNotExpression(aExpression)
+    }
+
+    // Equation transformation: Transform a pre expression
+    protected def processPreExpression(Expression subExpression, State state) {
+        var lustreExpression = subExpression
+
+        lustreExpression = movePreAroundValuedObjectReferences(lustreExpression, state)
+
+        return lustreExpression as OperatorExpression
+    }
+    
+    // Needed by processPreExpression to put the pre in front of ValuedObjects, not on OperatorExpressions
+    private def Expression movePreAroundValuedObjectReferences(Expression kExpression, State state) {
+        if (kExpression instanceof OperatorExpression) {
+
+            val subExpressionList = new ArrayList<Expression>
+            for (var i = 0; i < kExpression.subExpressions.length; i++) {
+                var kSubExpression = kExpression.subExpressions.get(i)
+                var convertedKSubExpression = kSubExpression.movePreAroundValuedObjectReferences(state)
+                subExpressionList.add(convertedKSubExpression)
+            }
+
+            return createOperatorExpression => [
+                operator = kExpression.operator
+                subExpressions.addAll(subExpressionList)
+            ]
+
+        } else if (kExpression instanceof ValuedObjectReference) {
+            var preExpression =  createPreExpression
+            var valObj = kExpression.valuedObject
+            preExpression.subExpressions += valObj.reference
+            
+            val clockedVarDecl = scchartsToLustreValuedObjectMap.get(valObj).variableDeclaration.eContainer
+            if (clockedVarDecl instanceof ClockedVariableDeclaration) {
+                if (clockedVarDecl.clockExpr !== null) {
+                    preExpression.subExpressions += clockedVarDecl.clockExpr.transformExpression(state)
+                }
+            }
+            return preExpression
+        } else {
+            return kExpression
+        }
+    }
+    
+    
+    /* --------------------------------------------------------------------------------------------
+     * Methods needed to process reference calls.
+     * ----------------------------------------------------------------------------------------- */    
+    protected def processReferenceCall(ReferenceCall kExpression, State state) {
+        val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         addReferenceDeclaration(kExpression, state)
 
         // Extract inputs and outputs of the sccharts state
@@ -575,6 +712,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 uniqueName
             ]
             lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
+            scchartsToLustreValuedObjectMap.put(calledValuedObject, kExpression.valuedObject)
             val referenceDeclaration = createReferenceDeclaration => [
                 reference = calledState
                 valuedObjects += calledValuedObject
@@ -657,4 +795,107 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             }
         }
     }
+    
+    
+    
+
+    /* --------------------------------------------------------------------------------------------
+     * Methods for handling of Variables, ValuedObjects and their declarations.
+     * ----------------------------------------------------------------------------------------- */
+    protected def createConstantDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
+        lustreVariableDeclaration.createVariableDeclaration(state) => [
+            const = true
+        ]
+    }
+
+    protected def createInputDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
+        lustreVariableDeclaration.createVariableDeclaration(state) => [
+            input = true
+        ]
+    }
+
+    protected def createOutputDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
+        lustreVariableDeclaration.createVariableDeclaration(state) => [
+            output = true
+        ]
+    }
+
+    protected def createVariableDeclaration(VariableDeclaration lustreVariableDeclaration, State state) {
+        var kExpressionsVariableDeclaration = createVariableDeclaration
+
+        // Determine whether the declaration is an initialization...
+        if (lustreVariableDeclaration.valuedObjects.length == 1 &&
+            lustreVariableDeclaration.valuedObjects.head instanceof LustreValuedObject) {
+            val lustreValuedObject = lustreVariableDeclaration.valuedObjects.head as LustreValuedObject
+            val objType = lustreValuedObject.type
+            kExpressionsVariableDeclaration.type = objType
+
+            val kExpressionsValuedObject = lustreValuedObject.createValuedObject(state)
+            kExpressionsVariableDeclaration.valuedObjects += kExpressionsValuedObject
+
+        } // ... or a declaration of an arbitary amount of variables with the same type
+        else {
+            kExpressionsVariableDeclaration.type = lustreVariableDeclaration.type
+
+            for (lustreValuedObject : lustreVariableDeclaration.valuedObjects) {
+                val kExpressionsValuedObject = lustreValuedObject.createValuedObject(state)
+                kExpressionsVariableDeclaration.valuedObjects += kExpressionsValuedObject
+            }
+        }
+
+        return kExpressionsVariableDeclaration
+    }
+
+    protected def createVariableDeclaration(String name, ValueType type, State state) {
+        var varDecl = createVariableDeclaration(type)
+        var valuedObj = createValuedObject(varDecl, name)
+        
+        state.declarations += varDecl    
+        
+        return valuedObj    
+    }
+
+    protected def createValuedObject(ValuedObject lustreValuedObject, State state) {
+        val kExpressionsValuedObject = createValuedObject => [
+            name = lustreValuedObject.name
+            initialValue = lustreValuedObject.initialValue.transformExpression(state)
+        ]
+        for (cardinalityExpression : lustreValuedObject.cardinalities) {
+            kExpressionsValuedObject.cardinalities += cardinalityExpression.transformExpression(state)
+        }
+
+        lustreToScchartsValuedObjectMap.put(lustreValuedObject, kExpressionsValuedObject)
+        scchartsToLustreValuedObjectMap.put(kExpressionsValuedObject, lustreValuedObject)
+
+        return kExpressionsValuedObject
+    }
+
+    protected def createVariableDeclarationFromLustreClockedVariableDeclaration(ClockedVariableDeclaration lustreClockedVariableDeclaration, State state) {
+        var varDeclaration = lustreClockedVariableDeclaration.vardecl.createVariableDeclaration(state)
+        if (lustreClockedVariableDeclaration.clockExpr !== null) {
+            if (environment.getProperty(USE_SIGNALS_FOR_CLOCKED_VARIABLES)) {
+                makeSignalFromVariableDeclaration(varDeclaration)
+            }
+        }
+
+        return varDeclaration
+    }
+
+    def makeSignalFromVariableDeclaration(VariableDeclaration variableDeclaration) {
+        if (variableDeclaration.valuedObjects.length != 1) {
+            throw new UnsupportedOperationException("Cannot transform clock expressions with multiple valued objects.")
+        }
+        
+        variableDeclaration.signal = true;
+        switch (variableDeclaration.type) {
+            case BOOL: 
+                variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.OR
+            case FLOAT,
+            case INT: 
+                variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.ADD
+            default: 
+                {}            
+        }
+    }
+    
 }
