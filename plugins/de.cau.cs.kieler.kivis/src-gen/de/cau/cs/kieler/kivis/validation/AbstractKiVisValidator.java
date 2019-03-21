@@ -16,5 +16,4 @@ public abstract class AbstractKiVisValidator extends AbstractDeclarativeValidato
 		result.add(de.cau.cs.kieler.kivis.kivis.KivisPackage.eINSTANCE);
 		return result;
 	}
-	
 }

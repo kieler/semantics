@@ -5150,9 +5150,9 @@ rule__System__Group__10__Impl
 	}
 :
 (
-	{ before(grammarAccess.getSystemAccess().getIntermediatesAssignment_10()); }
-	(rule__System__IntermediatesAssignment_10)*
-	{ after(grammarAccess.getSystemAccess().getIntermediatesAssignment_10()); }
+	{ before(grammarAccess.getSystemAccess().getGroup_10()); }
+	(rule__System__Group_10__0)?
+	{ after(grammarAccess.getSystemAccess().getGroup_10()); }
 )
 ;
 finally {
@@ -5165,6 +5165,7 @@ rule__System__Group__11
 	}
 :
 	rule__System__Group__11__Impl
+	rule__System__Group__12
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5176,9 +5177,35 @@ rule__System__Group__11__Impl
 	}
 :
 (
-	{ before(grammarAccess.getSystemAccess().getProcessorsAssignment_11()); }
-	(rule__System__ProcessorsAssignment_11)
-	{ after(grammarAccess.getSystemAccess().getProcessorsAssignment_11()); }
+	{ before(grammarAccess.getSystemAccess().getIntermediatesAssignment_11()); }
+	(rule__System__IntermediatesAssignment_11)*
+	{ after(grammarAccess.getSystemAccess().getIntermediatesAssignment_11()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group__12
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__System__Group__12__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group__12__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getSystemAccess().getProcessorsAssignment_12()); }
+	(rule__System__ProcessorsAssignment_12)
+	{ after(grammarAccess.getSystemAccess().getProcessorsAssignment_12()); }
 )
 ;
 finally {
@@ -5204,9 +5231,9 @@ rule__System__Group_9__0__Impl
 	}
 :
 (
-	{ before(grammarAccess.getSystemAccess().getConfigKeyword_9_0()); }
-	'config'
-	{ after(grammarAccess.getSystemAccess().getConfigKeyword_9_0()); }
+	{ before(grammarAccess.getSystemAccess().getStartKeyword_9_0()); }
+	'start'
+	{ after(grammarAccess.getSystemAccess().getStartKeyword_9_0()); }
 )
 ;
 finally {
@@ -5219,6 +5246,7 @@ rule__System__Group_9__1
 	}
 :
 	rule__System__Group_9__1__Impl
+	rule__System__Group_9__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -5230,9 +5258,89 @@ rule__System__Group_9__1__Impl
 	}
 :
 (
-	{ before(grammarAccess.getSystemAccess().getConfigAssignment_9_1()); }
-	(rule__System__ConfigAssignment_9_1)
-	{ after(grammarAccess.getSystemAccess().getConfigAssignment_9_1()); }
+	{ before(grammarAccess.getSystemAccess().getConfigKeyword_9_1()); }
+	'config'
+	{ after(grammarAccess.getSystemAccess().getConfigKeyword_9_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group_9__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__System__Group_9__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group_9__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getSystemAccess().getStartConfigAssignment_9_2()); }
+	(rule__System__StartConfigAssignment_9_2)
+	{ after(grammarAccess.getSystemAccess().getStartConfigAssignment_9_2()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__System__Group_10__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__System__Group_10__0__Impl
+	rule__System__Group_10__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group_10__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getSystemAccess().getConfigKeyword_10_0()); }
+	'config'
+	{ after(grammarAccess.getSystemAccess().getConfigKeyword_10_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group_10__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__System__Group_10__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__Group_10__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getSystemAccess().getConfigAssignment_10_1()); }
+	(rule__System__ConfigAssignment_10_1)
+	{ after(grammarAccess.getSystemAccess().getConfigAssignment_10_1()); }
 )
 ;
 finally {
@@ -24866,45 +24974,60 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__System__ConfigAssignment_9_1
+rule__System__StartConfigAssignment_9_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_9_1_0()); }
+		{ before(grammarAccess.getSystemAccess().getStartConfigJsonObjectValueParserRuleCall_9_2_0()); }
 		ruleJsonObjectValue
-		{ after(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_9_1_0()); }
+		{ after(grammarAccess.getSystemAccess().getStartConfigJsonObjectValueParserRuleCall_9_2_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__System__IntermediatesAssignment_10
+rule__System__ConfigAssignment_10_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_10_0()); }
+		{ before(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_10_1_0()); }
+		ruleJsonObjectValue
+		{ after(grammarAccess.getSystemAccess().getConfigJsonObjectValueParserRuleCall_10_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__System__IntermediatesAssignment_11
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_11_0()); }
 		ruleIntermediateReference
-		{ after(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_10_0()); }
+		{ after(grammarAccess.getSystemAccess().getIntermediatesIntermediateReferenceParserRuleCall_11_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__System__ProcessorsAssignment_11
+rule__System__ProcessorsAssignment_12
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_11_0()); }
+		{ before(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_12_0()); }
 		ruleProcessorGroup
-		{ after(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_11_0()); }
+		{ after(grammarAccess.getSystemAccess().getProcessorsProcessorGroupParserRuleCall_12_0()); }
 	)
 ;
 finally {

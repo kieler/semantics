@@ -28,9 +28,9 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 
 /**
  * Persistent State Optimizer
@@ -96,7 +96,7 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
                         
                     } else if (expr.operator == OperatorType.LOGICAL_OR && candidates.contains(node.reference.valuedObject)) {
                         if (expr.subExpressions.filter(ValuedObjectReference).exists[ it.valuedObject == node.reference.valuedObject ] &&
-                            expr.subExpressions.filter(ValuedObjectReference).exists[ it.valuedObject.name == AbstractGuardExpressions.GO_GUARD_NAME]) {
+                            expr.subExpressions.filter(ValuedObjectReference).exists[ it.valuedObject.name == SimpleGuardExpressions.GO_GUARD_NAME]) {
                                 expr.subExpressions.immutableCopy.forEach[ remove ]
                                 node.expression.remove
                                 node.expression = TRUE

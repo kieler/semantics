@@ -58,7 +58,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 

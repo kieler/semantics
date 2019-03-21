@@ -33,11 +33,12 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGSerializeHRExtensions
-import de.cau.cs.kieler.scg.processors.transformators.SimpleGuardTransformation
-import de.cau.cs.kieler.scg.transformations.guardExpressions.AbstractGuardExpressions
 import org.eclipse.emf.ecore.EObject
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * Copy Propagation
@@ -62,7 +63,11 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)
     public static val IProperty<Boolean> COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.propagateEqualExpressions", true)       
-    
+    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceTermGuardPredecessor", true)
+    public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceUnmodifiedInputGuards", true)
+            
     override getId() {
         "de.cau.cs.kieler.scg.processors.copyPropagation"
     }
@@ -83,23 +88,41 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
     
     def performCopyPropagation(SCGraph scg) {
         val replacements = new Replacements
-        val GO = scg.findValuedObjectByName(AbstractGuardExpressions.GO_GUARD_NAME) 
-        replacements.push(AbstractGuardExpressions.GO_GUARD_NAME, GO.reference)
+        val GO = scg.findValuedObjectByName(SimpleGuardExpressions.GO_GUARD_NAME) 
+        replacements.push(SimpleGuardExpressions.GO_GUARD_NAME, GO.reference)
         
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
         val visited = <Node> newHashSet
         val removeList = <EObject> newLinkedList
         val preNodes = <Assignment> newLinkedList
         val registerExpressions = <String, Node> newHashMap
+        val guardNodeMapping = <ValuedObject, Assignment> newHashMap
+        val conditionalGuardMapping = <ValuedObject, Conditional> newHashMap
+        val inputs = <ValuedObject> newHashSet
+        val modifiedInputs = <ValuedObject> newHashSet
+        
+        inputs += scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
+        if (environment.getProperty(COPY_PROPAGATION_REPLACE_UNMODIFIED_INPUT_GUARDS)) {
+            modifiedInputs += 
+                scg.nodes.filter(Assignment).filter[ it.reference !== null && inputs.contains(it.reference.valuedObject) ].map[ reference.valuedObject ]
+        } else {
+            modifiedInputs += scg.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten.toSet
+        }
         
         while (!nextNodes.empty) {
             val node = nextNodes.pop
             visited += node
             
             if (node instanceof Assignment) {
+                if (node.reference !== null) {
+                    guardNodeMapping.put(node.reference.valuedObject, node)
+                }
+                
                 if (node.expression instanceof ValuedObjectReference) {
-                    if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
-                        !node.reference.valuedObject.name.startsWith(SimpleGuardTransformation.TERM_GUARD_NAME)
+                    val VO = (node.expression as ValuedObjectReference).valuedObject
+                    if ((!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) 
+                        || (inputs.contains(VO) && !modifiedInputs.contains(VO)))
+                        && !node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)
                     ) {
                         node.expression.replaceExpression(replacements, node)
                         node.expression.replaceExpression(replacements, node)
@@ -109,6 +132,27 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         }
                         removeList += node.next
                         removeList += node
+                    }
+                    else if (node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.TERM_GUARD_NAME)) {
+                        // Term guards usually only depend on one guard. Simply replace it.
+                        // The replaced guard should also not be contained in pre expression, since _TERM signals a final state.
+                        if (environment.getProperty(COPY_PROPAGATION_REPLACE_TERM_GUARD_PREDECESSOR)) {
+                            val gTNode = guardNodeMapping.get((node.expression as ValuedObjectReference).valuedObject)
+                            if (gTNode !== null) {
+                                
+                                val affectedConditionals = conditionalGuardMapping.filter[ k, v | k == gTNode.reference.valuedObject ].values
+                                for (c : affectedConditionals) {
+                                    (c.condition as ValuedObjectReference).valuedObject = node.reference.valuedObject
+                                }
+                                
+                                gTNode.reference.valuedObject = node.reference.valuedObject
+                                for (incoming :node.allPrevious.toList) {
+                                    incoming.target = node.next.target
+                                }
+                                removeList += node.next
+                                removeList += node
+                            }    
+                        }
                     }
                 } else {
                     if (node.expression instanceof OperatorExpression && 
@@ -121,7 +165,7 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                         
                     if (environment.getProperty(COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS)) {
                         val serializedExpression = node.expression.serializeHR.toString
-                        if (!node.reference.valuedObject.name.startsWith(AbstractGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
+                        if (!node.reference.valuedObject.name.startsWith(SimpleGuardExpressions.CONDITIONAL_EXPRESSION_PREFIX) &&
                             (registerExpressions.keySet.contains(serializedExpression))) {
                             val originalNode = registerExpressions.get(serializedExpression)
                             replacements.push(node.reference.valuedObject.name, originalNode.asAssignment.reference)
@@ -138,6 +182,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 
             } else if (node instanceof Conditional) {
                 node.condition.replaceExpression(replacements, node)
+                
+                if (node.condition instanceof ValuedObjectReference) {
+                    conditionalGuardMapping.put((node.condition as ValuedObjectReference).valuedObject, node)
+                }
             }
             
             if (node instanceof Conditional) {
@@ -171,6 +219,9 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
                 environment.infos.add("CP: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
                 expression.valuedObject = VOR.valuedObject
+                for (i : VOR.indices) {
+                    expression.indices += i.copy
+                }
             } else {
                 // Should only happen at GO guard. Do nothing.
             }

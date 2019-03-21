@@ -28,14 +28,13 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.scg.ssa.MergeExpressionExtension
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.processors.ssa.IOPreserverExtensions
+import de.cau.cs.kieler.scg.processors.ssa.MergeExpressionExtension
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL
 import java.util.Map
 

@@ -91,6 +91,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 			builder.put(grammarAccess.getSystemAccess().getGroup(), "rule__System__Group__0");
 			builder.put(grammarAccess.getSystemAccess().getGroup_9(), "rule__System__Group_9__0");
+			builder.put(grammarAccess.getSystemAccess().getGroup_10(), "rule__System__Group_10__0");
 			builder.put(grammarAccess.getIntermediateReferenceAccess().getGroup(), "rule__IntermediateReference__Group__0");
 			builder.put(grammarAccess.getIntermediateReferenceAccess().getGroup_2(), "rule__IntermediateReference__Group_2__0");
 			builder.put(grammarAccess.getProcessorGroupAccess().getGroup(), "rule__ProcessorGroup__Group__0");
@@ -370,9 +371,10 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSystemAccess().getSimulationAssignment_4(), "rule__System__SimulationAssignment_4");
 			builder.put(grammarAccess.getSystemAccess().getIdAssignment_6(), "rule__System__IdAssignment_6");
 			builder.put(grammarAccess.getSystemAccess().getLabelAssignment_8(), "rule__System__LabelAssignment_8");
-			builder.put(grammarAccess.getSystemAccess().getConfigAssignment_9_1(), "rule__System__ConfigAssignment_9_1");
-			builder.put(grammarAccess.getSystemAccess().getIntermediatesAssignment_10(), "rule__System__IntermediatesAssignment_10");
-			builder.put(grammarAccess.getSystemAccess().getProcessorsAssignment_11(), "rule__System__ProcessorsAssignment_11");
+			builder.put(grammarAccess.getSystemAccess().getStartConfigAssignment_9_2(), "rule__System__StartConfigAssignment_9_2");
+			builder.put(grammarAccess.getSystemAccess().getConfigAssignment_10_1(), "rule__System__ConfigAssignment_10_1");
+			builder.put(grammarAccess.getSystemAccess().getIntermediatesAssignment_11(), "rule__System__IntermediatesAssignment_11");
+			builder.put(grammarAccess.getSystemAccess().getProcessorsAssignment_12(), "rule__System__ProcessorsAssignment_12");
 			builder.put(grammarAccess.getIntermediateReferenceAccess().getIdAssignment_1(), "rule__IntermediateReference__IdAssignment_1");
 			builder.put(grammarAccess.getIntermediateReferenceAccess().getAliasAssignment_2_1(), "rule__IntermediateReference__AliasAssignment_2_1");
 			builder.put(grammarAccess.getProcessorGroupAccess().getLabelAssignment_0_1(), "rule__ProcessorGroup__LabelAssignment_0_1");

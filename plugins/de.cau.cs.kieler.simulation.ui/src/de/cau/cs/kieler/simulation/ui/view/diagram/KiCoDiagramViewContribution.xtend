@@ -26,8 +26,10 @@ import org.eclipse.emf.ecore.resource.URIConverter
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
+import org.eclipse.ui.IMemento
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
+import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
 
 /**
  * @author als
@@ -77,6 +79,19 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
             
         }
         return null
+    }
+    
+    override saveState(KiCoModelUpdateController muc, IMemento memento) {
+        if (!SimulationAction.LAST_SELECTED_SYSTEM.nullOrEmpty) {
+            memento.putString("SimulationAction.LAST_SELECTED_SYSTEM", SimulationAction.LAST_SELECTED_SYSTEM)
+        }
+    }
+    
+    override loadState(KiCoModelUpdateController muc, IMemento memento) {
+        val system = memento.getString("SimulationAction.LAST_SELECTED_SYSTEM")
+        if (!system.nullOrEmpty) {
+            SimulationAction.LAST_SELECTED_SYSTEM = system
+        }
     }
     
     override update(SimulationContext ctx, SimulationEvent e) {

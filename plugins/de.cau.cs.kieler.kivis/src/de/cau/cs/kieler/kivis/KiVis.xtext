@@ -15,8 +15,8 @@ Content:
     Binding | Handler | Action | Code
 ;
 
-Binding: 
-    'bind' variable=Key
+Binding:
+    'bind' variable=ComplexKey
     (
         'to' domElement=STRING
         'with' interface=BindingInterface1 script=SCRIPT
@@ -25,8 +25,8 @@ Binding:
     )
 ;
 
-Handler: 
-    'handle' variable=Key
+Handler:
+    'handle' variable=SimpleKey
     (
         'in' (multimatch?='all')? domElement=STRING
         'with' interface=HandlerInterface1 script=SCRIPT
@@ -38,19 +38,21 @@ Handler:
 Action:
     'event' domEvent=STRING
     'on' (multimatch?='all')? domElement=STRING
-    ('do' 
-        (
-            deferred?='deferred' interface=ActionInterface1 script=SCRIPT
-        |
-            interface=ActionInterface2 script=SCRIPT
-        )
-    )?
-    ('set' variable=Key)?
+    ('do' interface=ActionInterface1 script=SCRIPT)?
+    ('deferred' deferredInterface=ActionInterface2 deferredScript=SCRIPT)?
+    ('set' setter+=Setter)*
+    ('signal' signal=ComplexKey)?
     ('simulation' control=SimulationCorntrol)?
 ;
 
 Code:
     'script' interface=CodeInterface script=SCRIPT
+;
+
+Setter:
+    variable=ComplexKey
+    interface=SetterInterface
+    script=SCRIPT
 ;
 
 
@@ -98,16 +100,15 @@ ActionInterface1 returns Interface:
     {Interface}
     (
     '('
-    (pool = ID)?
     ')' '=>'?
     )?
 ;
-
 
 ActionInterface2 returns Interface:
     {Interface}
     (
     '('
+    (pool = ID)?
     ')' '=>'?
     )?
 ;
@@ -121,9 +122,21 @@ CodeInterface returns Interface:
     )?
 ;
 
+SetterInterface returns Interface:
+    {Interface}
+    (
+    '('
+    ')' '=>'?
+    )?
+;
+
 // Json object member key
-Key returns ecore::EString:
-    ( ID | '#' ID) (('.'|'-')? ID)*
+SimpleKey returns ecore::EString:
+    (ID | '#' ID) ('-' ID)*
+;
+// Json object member key with member access via '.'
+ComplexKey returns ecore::EString:
+    (ID | '#' ID) (('-' ID) | ('.' (INT | ID)))*
 ;
 
 enum SimulationCorntrol:

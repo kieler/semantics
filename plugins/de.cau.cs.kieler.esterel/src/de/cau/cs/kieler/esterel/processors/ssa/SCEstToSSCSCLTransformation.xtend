@@ -44,7 +44,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
 import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
@@ -59,7 +59,7 @@ import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.esterel.LocalVariableDeclaration
 import de.cau.cs.kieler.kexpressions.BoolValue

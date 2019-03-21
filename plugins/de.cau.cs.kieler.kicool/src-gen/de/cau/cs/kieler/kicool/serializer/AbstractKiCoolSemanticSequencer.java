@@ -588,6 +588,7 @@ public abstract class AbstractKiCoolSemanticSequencer extends KExtSemanticSequen
 	 *         simulation?='simulation'? 
 	 *         id=QualifiedID 
 	 *         label=EString 
+	 *         startConfig=JsonObjectValue? 
 	 *         config=JsonObjectValue? 
 	 *         intermediates+=IntermediateReference* 
 	 *         processors=ProcessorGroup

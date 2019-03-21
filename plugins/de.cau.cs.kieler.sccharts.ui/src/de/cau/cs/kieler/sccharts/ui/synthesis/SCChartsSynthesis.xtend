@@ -93,6 +93,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         
         // General options
         options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS)
+
+        // Adaptive Zoom
+        options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
         
         // Subsynthesis options
         options.addAll(stateSynthesis.displayedSynthesisOptions)
