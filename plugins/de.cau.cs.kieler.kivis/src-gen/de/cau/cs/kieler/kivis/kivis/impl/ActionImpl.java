@@ -4,14 +4,25 @@
 package de.cau.cs.kieler.kivis.kivis.impl;
 
 import de.cau.cs.kieler.kivis.kivis.Action;
+import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
+import de.cau.cs.kieler.kivis.kivis.Setter;
 import de.cau.cs.kieler.kivis.kivis.SimulationCorntrol;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -24,8 +35,10 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomEvent <em>Dom Event</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#isMultimatch <em>Multimatch</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomElement <em>Dom Element</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#isDeferred <em>Deferred</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getVariable <em>Variable</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDeferredInterface <em>Deferred Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDeferredScript <em>Deferred Script</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getSetter <em>Setter</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getControl <em>Control</em>}</li>
  * </ul>
  *
@@ -94,44 +107,64 @@ public class ActionImpl extends ContentImpl implements Action
   protected String domElement = DOM_ELEMENT_EDEFAULT;
 
   /**
-   * The default value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+   * The cached value of the '{@link #getDeferredInterface() <em>Deferred Interface</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isDeferred()
+   * @see #getDeferredInterface()
    * @generated
    * @ordered
    */
-  protected static final boolean DEFERRED_EDEFAULT = false;
+  protected Interface deferredInterface;
 
   /**
-   * The cached value of the '{@link #isDeferred() <em>Deferred</em>}' attribute.
+   * The default value of the '{@link #getDeferredScript() <em>Deferred Script</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isDeferred()
+   * @see #getDeferredScript()
    * @generated
    * @ordered
    */
-  protected boolean deferred = DEFERRED_EDEFAULT;
+  protected static final String DEFERRED_SCRIPT_EDEFAULT = null;
 
   /**
-   * The default value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The cached value of the '{@link #getDeferredScript() <em>Deferred Script</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getDeferredScript()
    * @generated
    * @ordered
    */
-  protected static final String VARIABLE_EDEFAULT = null;
+  protected String deferredScript = DEFERRED_SCRIPT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The cached value of the '{@link #getSetter() <em>Setter</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getSetter()
    * @generated
    * @ordered
    */
-  protected String variable = VARIABLE_EDEFAULT;
+  protected EList<Setter> setter;
+
+  /**
+   * The default value of the '{@link #getSignal() <em>Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignal()
+   * @generated
+   * @ordered
+   */
+  protected static final String SIGNAL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSignal() <em>Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignal()
+   * @generated
+   * @ordered
+   */
+  protected String signal = SIGNAL_EDEFAULT;
 
   /**
    * The default value of the '{@link #getControl() <em>Control</em>}' attribute.
@@ -248,9 +281,9 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isDeferred()
+  public Interface getDeferredInterface()
   {
-    return deferred;
+    return deferredInterface;
   }
 
   /**
@@ -258,12 +291,16 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDeferred(boolean newDeferred)
+  public NotificationChain basicSetDeferredInterface(Interface newDeferredInterface, NotificationChain msgs)
   {
-    boolean oldDeferred = deferred;
-    deferred = newDeferred;
+    Interface oldDeferredInterface = deferredInterface;
+    deferredInterface = newDeferredInterface;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED, oldDeferred, deferred));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_INTERFACE, oldDeferredInterface, newDeferredInterface);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -271,9 +308,20 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getVariable()
+  public void setDeferredInterface(Interface newDeferredInterface)
   {
-    return variable;
+    if (newDeferredInterface != deferredInterface)
+    {
+      NotificationChain msgs = null;
+      if (deferredInterface != null)
+        msgs = ((InternalEObject)deferredInterface).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__DEFERRED_INTERFACE, null, msgs);
+      if (newDeferredInterface != null)
+        msgs = ((InternalEObject)newDeferredInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__DEFERRED_INTERFACE, null, msgs);
+      msgs = basicSetDeferredInterface(newDeferredInterface, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_INTERFACE, newDeferredInterface, newDeferredInterface));
   }
 
   /**
@@ -281,12 +329,59 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVariable(String newVariable)
+  public String getDeferredScript()
   {
-    String oldVariable = variable;
-    variable = newVariable;
+    return deferredScript;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDeferredScript(String newDeferredScript)
+  {
+    String oldDeferredScript = deferredScript;
+    deferredScript = newDeferredScript;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__VARIABLE, oldVariable, variable));
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_SCRIPT, oldDeferredScript, deferredScript));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Setter> getSetter()
+  {
+    if (setter == null)
+    {
+      setter = new EObjectContainmentEList<Setter>(Setter.class, this, KivisPackage.ACTION__SETTER);
+    }
+    return setter;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getSignal()
+  {
+    return signal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSignal(String newSignal)
+  {
+    String oldSignal = signal;
+    signal = newSignal;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__SIGNAL, oldSignal, signal));
   }
 
   /**
@@ -318,6 +413,24 @@ public class ActionImpl extends ContentImpl implements Action
    * @generated
    */
   @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return basicSetDeferredInterface(null, msgs);
+      case KivisPackage.ACTION__SETTER:
+        return ((InternalEList<?>)getSetter()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -328,10 +441,14 @@ public class ActionImpl extends ContentImpl implements Action
         return isMultimatch();
       case KivisPackage.ACTION__DOM_ELEMENT:
         return getDomElement();
-      case KivisPackage.ACTION__DEFERRED:
-        return isDeferred();
-      case KivisPackage.ACTION__VARIABLE:
-        return getVariable();
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return getDeferredInterface();
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        return getDeferredScript();
+      case KivisPackage.ACTION__SETTER:
+        return getSetter();
+      case KivisPackage.ACTION__SIGNAL:
+        return getSignal();
       case KivisPackage.ACTION__CONTROL:
         return getControl();
     }
@@ -343,6 +460,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -357,11 +475,18 @@ public class ActionImpl extends ContentImpl implements Action
       case KivisPackage.ACTION__DOM_ELEMENT:
         setDomElement((String)newValue);
         return;
-      case KivisPackage.ACTION__DEFERRED:
-        setDeferred((Boolean)newValue);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        setDeferredInterface((Interface)newValue);
         return;
-      case KivisPackage.ACTION__VARIABLE:
-        setVariable((String)newValue);
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        setDeferredScript((String)newValue);
+        return;
+      case KivisPackage.ACTION__SETTER:
+        getSetter().clear();
+        getSetter().addAll((Collection<? extends Setter>)newValue);
+        return;
+      case KivisPackage.ACTION__SIGNAL:
+        setSignal((String)newValue);
         return;
       case KivisPackage.ACTION__CONTROL:
         setControl((SimulationCorntrol)newValue);
@@ -389,11 +514,17 @@ public class ActionImpl extends ContentImpl implements Action
       case KivisPackage.ACTION__DOM_ELEMENT:
         setDomElement(DOM_ELEMENT_EDEFAULT);
         return;
-      case KivisPackage.ACTION__DEFERRED:
-        setDeferred(DEFERRED_EDEFAULT);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        setDeferredInterface((Interface)null);
         return;
-      case KivisPackage.ACTION__VARIABLE:
-        setVariable(VARIABLE_EDEFAULT);
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        setDeferredScript(DEFERRED_SCRIPT_EDEFAULT);
+        return;
+      case KivisPackage.ACTION__SETTER:
+        getSetter().clear();
+        return;
+      case KivisPackage.ACTION__SIGNAL:
+        setSignal(SIGNAL_EDEFAULT);
         return;
       case KivisPackage.ACTION__CONTROL:
         setControl(CONTROL_EDEFAULT);
@@ -418,10 +549,14 @@ public class ActionImpl extends ContentImpl implements Action
         return multimatch != MULTIMATCH_EDEFAULT;
       case KivisPackage.ACTION__DOM_ELEMENT:
         return DOM_ELEMENT_EDEFAULT == null ? domElement != null : !DOM_ELEMENT_EDEFAULT.equals(domElement);
-      case KivisPackage.ACTION__DEFERRED:
-        return deferred != DEFERRED_EDEFAULT;
-      case KivisPackage.ACTION__VARIABLE:
-        return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return deferredInterface != null;
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        return DEFERRED_SCRIPT_EDEFAULT == null ? deferredScript != null : !DEFERRED_SCRIPT_EDEFAULT.equals(deferredScript);
+      case KivisPackage.ACTION__SETTER:
+        return setter != null && !setter.isEmpty();
+      case KivisPackage.ACTION__SIGNAL:
+        return SIGNAL_EDEFAULT == null ? signal != null : !SIGNAL_EDEFAULT.equals(signal);
       case KivisPackage.ACTION__CONTROL:
         return control != CONTROL_EDEFAULT;
     }
@@ -438,17 +573,17 @@ public class ActionImpl extends ContentImpl implements Action
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (domEvent: ");
     result.append(domEvent);
     result.append(", multimatch: ");
     result.append(multimatch);
     result.append(", domElement: ");
     result.append(domElement);
-    result.append(", deferred: ");
-    result.append(deferred);
-    result.append(", variable: ");
-    result.append(variable);
+    result.append(", deferredScript: ");
+    result.append(deferredScript);
+    result.append(", signal: ");
+    result.append(signal);
     result.append(", control: ");
     result.append(control);
     result.append(')');

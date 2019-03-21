@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.URI
  */
 class BerryEsterelCompilerProvider implements IExternalCompilerProvider {
     
-    static val PLUGIN = "org.esterel.compiler"
+    static val PLUGIN = "de.cau.cs.kieler.esterel.compiler"
     
     override getId() {
         return "BerryEsterelV5_100"

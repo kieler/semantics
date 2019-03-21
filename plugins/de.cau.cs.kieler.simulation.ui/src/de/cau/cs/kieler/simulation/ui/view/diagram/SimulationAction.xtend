@@ -33,6 +33,8 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
  * @kieler.rating proposed yellow
  */
 class SimulationAction extends Action implements IMenuCreator {
+
+    public static var String LAST_SELECTED_SYSTEM = null
     
     private static val TEXT = "Start new Simulation"
     private static val ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/launch.png")
@@ -42,7 +44,6 @@ class SimulationAction extends Action implements IMenuCreator {
     private var String lastSelectedSystem
     private var Class<?> filter
     private var Menu fMenu
-    
 
     new(KiCoModelUpdateController muc) {
         this.muc = muc
@@ -59,19 +60,19 @@ class SimulationAction extends Action implements IMenuCreator {
                 (model === null && filter !== null)) {
                 
             systems.clear
-            if (model === null) {
-                filter = null
-                systems.putAll(KiCoolRegistration.systemModels.filter[simulation].toMap[id])
-            } else {
+            if (model !== null) {
                 filter = model.class
                 for (system : KiCoolRegistration.systemModels.filter[simulation && hasInput(filter)]) {
                     systems.put(system.id, system)
                 }
+                if (lastSelectedSystem === null && !systems.empty) {
+                    if (systems.containsKey(LAST_SELECTED_SYSTEM)) {
+                        lastSelectedSystem = LAST_SELECTED_SYSTEM
+                    } else {
+                        lastSelectedSystem = systems.keySet.head
+                    }
+                }
             }
-            if (lastSelectedSystem === null && !systems.empty) {
-                lastSelectedSystem = systems.keySet.head
-            }
-            
             enabled = !systems.empty
         }
     }
@@ -108,6 +109,7 @@ class SimulationAction extends Action implements IMenuCreator {
                     actions.forEach[checked = false]
                     this.checked = true
                     lastSelectedSystem = entry.key
+                    LAST_SELECTED_SYSTEM = lastSelectedSystem
                 }
             }
             if (lastSelectedSystem.equals(entry.key)) {

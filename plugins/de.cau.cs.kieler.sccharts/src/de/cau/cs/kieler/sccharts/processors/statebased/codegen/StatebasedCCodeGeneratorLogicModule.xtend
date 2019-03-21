@@ -216,7 +216,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
         );
             
         function.add(
-            SLC("Set the thread status to waiting for the upcomiong tick.")
+            SLC("Set the thread status to waiting for the upcoming tick.")
         )
             
         if (multiThreaded) {
@@ -539,7 +539,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             function.add(
                 MLCii(4, 2,
                     IFC(transition.immediate, "Immediate "),
-                    "Transition " + index + ": ", transition.targetState.name, " to ", transition.targetState.name, NL,
+                    "Transition " + index + ": ", transition.sourceState.name, " to ", transition.targetState.name, NL,
                     IFC(!transitionTrigger.nullOrEmpty, "Trigger: " + transitionTrigger), 
                     IFC(!transition.effects.empty, "Effects: " + effects)
                 )
@@ -547,7 +547,7 @@ class StatebasedCCodeGeneratorLogicModule extends SCChartsCodeGeneratorModule {
             struct.forwardDeclarationsLogic.add(
                 MLCii(2, 2,
                         IFC(transition.immediate, "Immediate "),
-                        "Transition " + index + ": ", transition.targetState.name, " to ", transition.targetState.name, NL,
+                        "Transition " + index + ": ", transition.sourceState.name, " to ", transition.targetState.name, NL,
                         IFC(!transitionTrigger.nullOrEmpty, "Trigger: " + transitionTrigger), 
                         IFC(!transition.effects.empty, "Effects: " + effects)
                 ), NL

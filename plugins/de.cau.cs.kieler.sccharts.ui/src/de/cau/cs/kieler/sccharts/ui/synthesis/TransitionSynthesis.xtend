@@ -61,6 +61,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension TransitionLabelSerializer
     @Inject extension TransitionStyles
     @Inject extension ColorStore
+    @Inject extension AdaptiveZoom
     
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_USER_LABELS)
@@ -68,6 +69,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
+        edge.configureEdgeLOD(transition)
 
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
@@ -110,7 +112,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     exists.add(existPair)
                 }
             }
-            edge.addTailLabel(sLabel.toString).associateWith(transition)
+            edge.addTailLabel(sLabel.toString) => [
+                associateWith(transition)
+                configureLabelLOD(transition)
+            ]
             edge.setUserScheduleStyle
         }
         
@@ -134,8 +139,9 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         
         if (SHOW_COMMENTS.booleanValue) {
             transition.getCommentAnnotations.forEach[
-                edge.addLabel(it.values.head, 
-                    COMMENT_BACKGROUND_GRADIENT_2.color)
+                edge.addLabel(it.values.head, COMMENT_BACKGROUND_GRADIENT_2.color) => [
+                    configureLabelLOD(transition)
+                ]
             ]
         }     
         
@@ -145,7 +151,10 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         // Add Label
         val label = transition.serializeLabel(SHOW_USER_LABELS.booleanValue)
         if (label.length != 0) {
-            edge.addLabel(label.toString).associateWith(transition);
+            edge.addLabel(label.toString) => [
+                associateWith(transition)
+                configureLabelLOD(transition)
+            ]
         }
         
         return <KEdge> newArrayList(edge)

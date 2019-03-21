@@ -19,6 +19,7 @@ import org.eclipse.jface.action.IMenuManager
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.legacy.sccharts.State
 import de.cau.cs.kieler.sccharts.legacy.text.validation.SctValidator
+import org.eclipse.ui.IMemento
 
 /**
  * @author als
@@ -36,6 +37,12 @@ class LegacySCTModelViewContributor implements KiCoModelViewUIContributor {
             return #["Legacy SCCharts diagram.", SctValidator.LEGACY]
         }
         return null
+    }
+    
+    override saveState(KiCoModelUpdateController muc, IMemento memento) {
+    }
+    
+    override loadState(KiCoModelUpdateController muc, IMemento memento) {
     }
     
 }
