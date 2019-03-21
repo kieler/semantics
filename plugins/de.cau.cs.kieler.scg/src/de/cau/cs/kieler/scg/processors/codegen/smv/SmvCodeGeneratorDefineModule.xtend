@@ -147,7 +147,7 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         incIndentationLevel
         appendIndentedLine("DEFINE")
         
-        // Define valued objects that are no pre-guard and no input to the model
+        // Define valued objects that are no register values (pre of something) and no input to the model
         for (declaration : scg.declarations) {
             if (declaration instanceof VariableDeclaration) {
                 for (valuedObject : declaration.valuedObjects) {
@@ -164,6 +164,12 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
                 valuedObject.generateUnconditionalAssignment(assignments.head)
             } else {
                 valuedObject.generateConditionalAssignments(assignments)
+            }
+        } else {
+            if(!valuedObject.variableDeclaration.isInput && !(valuedObject.name == "_GO")) {
+                // TODO: This valued object should not exist in the first place.
+                // It is probably a guard that is never set. (See also the comment in DefineUnboundVariablesOfSSA.
+                appendIndentedLine('''«valuedObject.name» := FALSE; -- WARNING: This variable is undefined in the SCG''')
             }
         }
     }
