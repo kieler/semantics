@@ -96,7 +96,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
-        scg.setDefaultTrace
+//        scg.setDefaultTrace
         newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getAnnotations(ANNOTATION_HOSTCODE)
