@@ -96,7 +96,6 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         	name = scg.name
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
-        
         scg.setDefaultTrace
         newSCG.trace(scg)
         
@@ -133,11 +132,13 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
                 	node.copySCGAssignment(valuedObjectMap) => [
                 		newSCG.nodes += it
                 		AAMap.put(node, it)
+                		it.trace(node)
                 	]
             	} else if (node instanceof Exit) {
             	    ScgFactory.eINSTANCE.createExit => [
             	        newSCG.nodes += it
             	        AAMap.put(node, it)
+            	        it.trace(node)
             	    ]
             	    exitNode = node
             	}
