@@ -39,7 +39,7 @@ class SCChartsVerificationPropertyAnalyzer extends InplaceProcessor<SCCharts>  {
     public static val INVARIANT_ANNOTATION_NAME = "Invariant"
     public static val CTL_ANNOTATION_NAME = "CTL"
     public static val LTL_ANNOTATION_NAME = "LTL"
-    public static val DEFAULT_RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRangeDefault"
+    public static val DEFAULT_RANGE_ASSUMPTION_ANNOTATION_NAME = "DefaultAssumeRange"
     public static val RANGE_ASSUMPTION_ANNOTATION_NAME = "AssumeRange"
     public static val INVARIANT_ASSUMPTION_ANNOTATION_NAME = "Assume"
     
