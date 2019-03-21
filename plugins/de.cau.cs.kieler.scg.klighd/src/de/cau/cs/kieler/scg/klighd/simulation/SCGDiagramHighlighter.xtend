@@ -27,10 +27,13 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import com.google.inject.Inject
 import com.google.inject.Guice
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 class SCGDiagramHighlighter extends DiagramHighlighter {
     
-    @Inject extension KEffectsExtensions    
+    @Inject extension KEffectsExtensions 
+    @Inject extension SCGControlFlowExtensions  
     
     /**
      * Single instance.
@@ -120,7 +123,13 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
             val value = entry.getTypedValue
             if (value instanceof Boolean) {
                 if (value.booleanValue) {
-                    activeEntries += entry.name
+                    if (entry.name.startsWith("_g") && !entry.name.contains("_e")) {
+                        val lastChar = entry.name.charAt(entry.name.length-1)
+                        if (lastChar >= '0' && lastChar <= '9') {
+                            activeEntries += "_g" + (Integer.parseInt(entry.name.substring(2)) - 1)
+                        }
+                    }
+                    
                 }
             }
         }
@@ -133,6 +142,19 @@ class SCGDiagramHighlighter extends DiagramHighlighter {
                 }
                 if (activeEntries.contains(nodeName)) {
                     activeNodes += node
+                }
+            }
+            if (node instanceof Conditional) {
+                if (node.condition instanceof ValuedObjectReference) {
+                    val VOName = (node.condition as ValuedObjectReference).valuedObject.name
+                    if (activeEntries.contains(VOName)) {
+                        activeNodes += node
+                        var nextNode = node.then.target as Node
+                        while(nextNode.getAllPrevious.size <= 1) {
+                            activeNodes += nextNode    
+                            nextNode = nextNode.allNext.map[ target ].filter(Node).head
+                        }
+                    }
                 }
             }
         }

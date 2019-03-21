@@ -230,7 +230,14 @@ class CircuitDiagramHighlighter extends DiagramHighlighter {
             val value = entry.getTypedValue
             if (value instanceof Boolean) {
                 if (value.booleanValue) {
-                    highlighting += entry.name
+                    if (entry.name.startsWith("_g") && !entry.name.contains("_e")) {
+                        val lastChar = entry.name.charAt(entry.name.length-1)
+                        if (lastChar >= '0' && lastChar <= '9') {
+                            highlighting += "_g" + (Integer.parseInt(entry.name.substring(2)) - 1)
+                        }
+                    } else {
+                        highlighting += entry.name
+                    }
                 }
             }
         }
