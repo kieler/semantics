@@ -33,7 +33,11 @@ class SpinTrailInterpreter extends LineBasedParser {
     private static val TICK_START_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 0\]''')
     private static val TICK_END_PATTERN = Pattern.compile('''.*\[«TICK_END_FLAG_NAME» = 1\]''')
     private static val LOOP_START_PATTERN = Pattern.compile('''.*<<<<<START OF CYCLE>>>>>''')
-    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''.*\[([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)\]''')
+    private static val VARIABLE_ASSIGNMENT_PATTERN = Pattern.compile('''([a-zA-Z_][a-zA-Z_0-9]*)\s*=\s*([a-zA-Z_0-9.-]*)''')
+    
+    private static val TRAIL_END_PATTERN = Pattern.compile('''spin: trail ends after.*''')
+    
+    private boolean trailEnded = false
     
     new(String processOutput) {
         if(processOutput.isNullOrEmpty) {
@@ -43,7 +47,18 @@ class SpinTrailInterpreter extends LineBasedParser {
     }
     
     override parseLine(String line) {
+        if(trailEnded) {
+            return
+        }
+        
         val trimmedLine = line.trim
+        
+        // Check if the trail ended
+        val trailEndMatcher = TRAIL_END_PATTERN.matcher(trimmedLine)
+        if(trailEndMatcher.matches) {
+            trailEnded = true
+            return
+        }
         
         // Get LTL formula from output
         if(formulaName === null) {

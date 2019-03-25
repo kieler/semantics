@@ -119,7 +119,7 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val javaioProcessOutputFile = processOutputFile.location.toFile
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
-        val trailCommand = #["spin", "-t", "-p", pmlFile.name]
+        val trailCommand = #["spin", "-t", "-p", "-g", "-l", pmlFile.name]
         processBuilder.command(trailCommand)
         processBuilder.redirectErrorStream(true)
         processBuilder.redirectOutput(javaioProcessOutputFile)
