@@ -162,10 +162,15 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
     }
     
     private def boolean matches(VerificationProperty property, String smvFormula) {
+        // When there is only one property to be verified,
+        // assume that it is the one that was checked by smv.
+        if(verificationContext.verificationProperties.size == 1) {
+            return true
+        }
+        
         // The following is merely a heuristic to check that the correct property was checked.
         // Spaces and brackets are removed and afterwards the formulas are compared.
         // This is because nuXmv gives the answer for a minified formula.
-        
         val propertyFormula = property.formula.toSmvExpression()
         val propertyFormulaSimplified = propertyFormula.replaceAll('''\s|\(|\)''',"")
         val smvFormulaSimplified = smvFormula.replaceAll('''\s|\(|\)''',"")
