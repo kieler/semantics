@@ -17,7 +17,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
-import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
@@ -43,6 +42,10 @@ import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
 import org.junit.runners.model.TestTimedOutException
+import de.cau.cs.kieler.test.common.repository.ModelsRepository
+import java.nio.file.Paths
+import java.util.Map
+import java.util.Collections
 
 /**
  * @author aas
@@ -55,6 +58,8 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     public static val scchartsInjector = SCTXStandaloneSetup.doSetup
 
     private static var File statisticsFile
+
+    private static var boolean isInitialWarmupDone
 
     /**
      * Holds the name of the test-method that is executed by JUnit
@@ -86,7 +91,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     private var Double codeGenTimeSecs
     
-    private var Boolean failedToProof
+    private var Boolean failedToProve
     private var Boolean timedOut
     
     /**
@@ -133,6 +138,13 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         startNuxmvVerification(scc, modelData)
     }
     
+    @Test
+    public def void nuxmv_go_check_invar_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
+        prepareNuxmvInvarTest( #['''go''', '''check_invar_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
+        mustNotHaveModelProperties = #["unbounded-int"]
+        startNuxmvVerification(scc, modelData)
+    }
+    
 //    public def void nuxmv_go_check_invar_guided(SCCharts scc, TestModelData modelData) {
 //        customSmvInvarCommands =  #['''go''', '''check_invar_guided -P «smvPropertyPlaceholder»''']
 //        mustNotHaveModelProperties = #["unbounded-int"]
@@ -140,13 +152,6 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
 //        ignoreCtl = true
 //        startNuxmvVerification(scc, modelData)
 //    }
-
-    @Test
-    public def void nuxmv_go_check_invar_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
-        prepareNuxmvInvarTest( #['''go''', '''check_invar_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
-        mustNotHaveModelProperties = #["unbounded-int"]
-        startNuxmvVerification(scc, modelData)
-    }
     
 //    public def void nuxmv_go_check_invar_inc_local(SCCharts scc, TestModelData modelData) {
 //        prepareNuxmvInvarTest( #['''go''', '''check_invar_local -P «smvPropertyPlaceholder»'''] )
@@ -258,12 +263,6 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         startNuxmvVerification(scc, modelData)
     }
     
-//    public def void nuxmv_gobmc_check_ltlspec_bmc_onepb(SCCharts scc, TestModelData modelData) {
-//        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_bmc_onepb -P «smvPropertyPlaceholder»'''] )
-//        mustNotHaveModelProperties = #["unbounded-int"]
-//        startNuxmvVerification(scc, modelData)
-//    }
-    
 //    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gobmc_check_ltlspec_sbmc(SCCharts scc, TestModelData modelData) {
@@ -279,6 +278,12 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
+    
+//    public def void nuxmv_gobmc_check_ltlspec_bmc_onepb(SCCharts scc, TestModelData modelData) {
+//        prepareNuxmvLtlTest( #['''go_bmc''', '''check_ltlspec_bmc_onepb -P «smvPropertyPlaceholder»'''] )
+//        mustNotHaveModelProperties = #["unbounded-int"]
+//        startNuxmvVerification(scc, modelData)
+//    }
     
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go_msat (invar)
@@ -401,6 +406,14 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         println()
     }
     
+    @Before
+    public def void doInitialWarmupIfNotDoneYet() {
+        if(!isInitialWarmupDone) {
+            doInitialWarmup()
+            isInitialWarmupDone = true
+        }
+    }
+    
     //////////////////////////////////////////////////////////////////////
     // Other methods
     //////////////////////////////////////////////////////////////////////
@@ -505,9 +518,9 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     override onVerificationPropertyChanged(VerificationPropertyChanged event) {
         val property = event.changedProperty
         if(property.status == VerificationPropertyStatus.EXCEPTION) {
-            failedToProof = true
+            failedToProve = true
             if(property.cause instanceof TestTimedOutException) {
-                failedToProof = false
+                failedToProve = false
                 timedOut = true
             }
         }
@@ -551,7 +564,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         fetchStatisticsOfCodeGeneration
         
         // Create combined statistics in CSV format
-        val newStats = '''"«testMethodName»", "«modelFile»", "«propertyName»", "«codeGenTimeSecs.twoDigitsAfterComma»", "«timeCommandElapsedTime.twoDigitsAfterComma»", "«timeCommandMaxMemoryInRamMB.twoDigitsAfterComma»", "«failedToProof.toCsvMarker»", "«timedOut.toCsvMarker»"'''
+        val newStats = '''"«testMethodName»", "«modelFile»", "«propertyName»", "«codeGenTimeSecs.twoDigitsAfterComma»", "«timeCommandElapsedTime.twoDigitsAfterComma»", "«timeCommandMaxMemoryInRamMB.twoDigitsAfterComma»", "«failedToProve.toCsvMarker»", "«timedOut.toCsvMarker»"'''
         
         // Append information to statistics file
         if(statisticsFile === null) {
@@ -645,5 +658,45 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         }
         ignoreLtl= true
         ignoreCtl = true
+    }
+    
+    private def void doInitialWarmup() {
+        // Use nuXmv and SPIN on some model before the tests are executed
+        // to prevent a lag in the first test
+        println(">>>>>>>>>> starting initial verification warmup")
+        
+        // Setup TestModelData for warmup model
+        val relWarmupModelPathString =  "sccharts/verification/aas/benchmark/warmup.sctx"
+        
+        val repositoryPathString = System.getenv(ModelsRepository.MODELS_REPOSITORY_KEY)
+        val repositoryPath = Paths.get(repositoryPathString)
+        val relModelPath = Paths.get(relWarmupModelPathString)
+        val modelData = new TestModelData(
+            repositoryPath,
+            relModelPath,
+            Collections.EMPTY_LIST,
+            null,
+            #[relModelPath].toSet,
+            #["verification-benchmark-aas-mt", "sccharts"].toSet,
+            Collections.EMPTY_MAP,
+            false
+        )
+        
+        // Load the EObject from the model data
+        val scc = loadModel(modelData)
+        
+        // Do some dummy verifications on the warmup model
+        println(">>>>>>>>>> doing warmup of SMV")
+        prepareNuxmvInvarTest( #['''go''', '''check_invar -P «smvPropertyPlaceholder»'''] )
+        startNuxmvVerification(scc, modelData)
+        
+        println(">>>>>>>>>> doing warmup of SPIN")
+        ignoreInvar = false
+        ignoreLtl = false
+        ignoreCtl = true
+        mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
+        startSpinVerification(scc, modelData)
+        
+        println(">>>>>>>>>> initial verification warmup done")
     }
 }

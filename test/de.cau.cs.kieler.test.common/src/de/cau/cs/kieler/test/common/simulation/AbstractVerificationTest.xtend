@@ -100,7 +100,6 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
             return
         }
         // Cancel verification
-        System.err.println("Canceling verification after test run")
         currentVerificationContext.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
         
         // Kill process        
