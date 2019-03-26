@@ -25,7 +25,7 @@ import java.util.List
 import java.util.Optional
 import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import de.cau.cs.kieler.verification.DefaultRangeAssumption
 

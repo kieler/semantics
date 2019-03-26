@@ -18,13 +18,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.extensions.VerificationExtensions
 import java.util.List
 
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.verification.DefaultRangeAssumption
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * @author aas
@@ -32,6 +31,7 @@ import de.cau.cs.kieler.verification.DefaultRangeAssumption
  */
 class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
 
+    @Inject extension VerificationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SSACoreExtensions
     @Inject extension SmvCodeSerializeHRExtensions serializer
@@ -96,7 +96,7 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
     private def CharSequence getSmvType(VariableDeclaration decl, ValuedObject valuedObject) {
         // If this is a variable introduced by SSA, then we use the assumptions for the original variable.
         val origValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
-        val rangeAssumption = getRangeAssumption(origValuedObject)
+        val rangeAssumption = assumptions.findRangeAssumption(origValuedObject)
         if(rangeAssumption !== null && !verificationContext.isSmvIgnoreRangeAssumptions) {
             return rangeAssumption.minValue+".."+rangeAssumption.maxValue
         }
@@ -104,28 +104,5 @@ class SmvCodeGeneratorDeclarationsModule extends SmvCodeGeneratorModuleBase {
             return decl.hostType
         }
         return decl.type.serializeHR
-    }
-    
-    private def RangeAssumption getRangeAssumption(ValuedObject valuedObject) {
-        if(assumptions === null) {
-            return null
-        }
-        
-        var RangeAssumption defaultRangeAssumption = null
-        for(assumption : assumptions.filter(RangeAssumption)) {
-            if(assumption instanceof DefaultRangeAssumption) {
-                defaultRangeAssumption = assumption
-            } else {
-                if(assumption.valuedObject.name == valuedObject.name) {
-                    return assumption
-                }
-            } 
-        }
-        
-        if(valuedObject.type == ValueType.INT) {
-            return defaultRangeAssumption            
-        }
-        
-        return null
     }
 }

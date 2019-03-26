@@ -16,7 +16,7 @@ import de.cau.cs.kieler.verification.VerificationProperty
 
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * @author aas

@@ -39,7 +39,7 @@ import java.util.Stack
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**

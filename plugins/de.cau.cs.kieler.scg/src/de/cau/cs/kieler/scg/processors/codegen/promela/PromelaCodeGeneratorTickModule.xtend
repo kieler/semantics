@@ -25,13 +25,13 @@ import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.verification.RangeAssumption
 import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.extensions.VerificationExtensions
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * Adds the code for the tick loop logic.
@@ -41,6 +41,7 @@ import static extension de.cau.cs.kieler.verification.VerificationContextExtensi
  */
 class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
 
+    @Inject extension VerificationExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SSACoreExtensions
@@ -157,7 +158,7 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         appendIndentedLine('''// «valuedObject.name»''')
         // Use select feature of promela if there is a range assumption. Otherwise use non-deterministic increase / decrease otherwise
         val origValuedObject = if(decl.isSSA) decl.ssaOrigVO else valuedObject
-        val rangeAssumption = getRangeAssumption(origValuedObject)
+        val rangeAssumption = assumptions.findRangeAssumption(origValuedObject)
         if(rangeAssumption !== null) {
             appendIndentedLine('''select(«valuedObject.name» : «rangeAssumption.minValue»..«rangeAssumption.maxValue»);''')
         } else {
@@ -167,14 +168,6 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
             appendIndentedLine(''':: «valuedObject.name»--;''')
             appendIndentedLine(''':: break;''')
             appendIndentedLine('''od''')    
-        }
-    }
-    
-    private def RangeAssumption getRangeAssumption(ValuedObject valuedObject) {
-        if(!assumptions.isNullOrEmpty) {
-            return assumptions.filter(RangeAssumption).findFirst [
-                it.valuedObject.name == valuedObject.name
-            ]
         }
     }
     

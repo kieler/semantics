@@ -10,11 +10,13 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.verification
+package de.cau.cs.kieler.verification.extensions
 
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
+import de.cau.cs.kieler.verification.RangeAssumption
+import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas

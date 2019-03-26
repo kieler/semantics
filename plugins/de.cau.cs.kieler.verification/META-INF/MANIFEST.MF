@@ -19,6 +19,7 @@ Require-Bundle: com.google.guava,
  de.cau.cs.kieler.kicool
 Export-Package: de.cau.cs.kieler.verification,
  de.cau.cs.kieler.verification.codegen,
+ de.cau.cs.kieler.verification.extensions,
  de.cau.cs.kieler.verification.processors,
  de.cau.cs.kieler.verification.processors.nuxmv,
  de.cau.cs.kieler.verification.processors.spin

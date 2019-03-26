@@ -31,7 +31,7 @@ import de.cau.cs.kieler.verification.VerificationContext
 
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * @author aas

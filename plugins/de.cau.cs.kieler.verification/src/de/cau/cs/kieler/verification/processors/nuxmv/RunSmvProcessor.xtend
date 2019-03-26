@@ -23,7 +23,7 @@ import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.IPath
 
-import static extension de.cau.cs.kieler.verification.VerificationContextExtensions.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
 import static extension de.cau.cs.kieler.verification.processors.ProcessExtensions.*
