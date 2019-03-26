@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
@@ -54,7 +55,8 @@ class SimulationAction extends Action implements IMenuCreator {
         update(muc.model)
     }
     
-    def update(Object model) {
+    def update(Object mucModel) {
+        val model = mucModel.compilableModel
         if ((systems.empty && filter === null) ||
                 (model !== null && !model.class.equals(filter)) ||
                 (model === null && filter !== null)) {
@@ -126,9 +128,17 @@ class SimulationAction extends Action implements IMenuCreator {
      * @see IAction#run()
      */
     override void run() {
-        if (!lastSelectedSystem.nullOrEmpty && !systems.empty && muc.model !== null) {
-            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model)
+        if (!lastSelectedSystem.nullOrEmpty && !systems.empty && muc.model.compilableModel !== null) {
+            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model.compilableModel)
             DataPoolView.bringToTopIfOpen
+        }
+    }
+    
+    def getCompilableModel(Object model) {
+        if (model instanceof ModelChain) {
+            return (model as ModelChain).models.head
+        } else {
+            return model
         }
     }
 
