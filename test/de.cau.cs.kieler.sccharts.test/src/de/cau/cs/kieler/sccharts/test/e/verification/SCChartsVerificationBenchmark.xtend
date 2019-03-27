@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.test.e.verification
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.test.common.repository.ModelsRepository
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.verification.VerificationContext
@@ -27,7 +28,9 @@ import de.cau.cs.kieler.verification.processors.nuxmv.RunSmvProcessor
 import java.io.File
 import java.io.IOException
 import java.nio.file.Files
+import java.nio.file.Paths
 import java.nio.file.StandardOpenOption
+import java.util.Collections
 import java.util.List
 import java.util.Locale
 import java.util.regex.Pattern
@@ -41,11 +44,6 @@ import org.junit.rules.TestName
 import org.junit.rules.TestRule
 import org.junit.rules.Timeout
 import org.junit.runner.RunWith
-import org.junit.runners.model.TestTimedOutException
-import de.cau.cs.kieler.test.common.repository.ModelsRepository
-import java.nio.file.Paths
-import java.util.Map
-import java.util.Collections
 
 /**
  * @author aas
@@ -72,7 +70,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
      * The verification is canceled in an @After method to kill the model checking process if needed.
      */
     @Rule
-    public final TestRule globalTimeout = Timeout.seconds(120);
+    public final TestRule globalTimeout = Timeout.seconds(11);
     
     /**
      * Pattern to separate the test-method name and the model of the test-method.
@@ -131,14 +129,14 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go (invar)
     //////////////////////////////////////////////////////////////////////
-    @Test
+//    @Test
     public def void nuxmv_go_check_invar(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go''', '''check_invar -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_go_check_invar_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go''', '''check_invar_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
@@ -162,21 +160,21 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go (ltl)
     //////////////////////////////////////////////////////////////////////
-    @Test
+//    @Test
     public def void nuxmv_go_check_ltlspec(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_go_check_ltlspec_inc_coi_bdd(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec_inc_coi_bdd -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_go_check_ltlspec_simplify(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go''', '''check_ltlspec_simplify -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
@@ -289,49 +287,49 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     // nuXmv - go_msat (invar)
     //////////////////////////////////////////////////////////////////////
     
-    @Test
+//    @Test
     // Gives the answer for a property where o is replaced by its definition (in ao.smv)
     public def void nuxmv_gomsat_check_invar_cegar_predabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''check_invar_cegar_predabs -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_invar_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_invar_bmc_cegar_implabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc_cegar_implabs -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_invar_bmc_implabs(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_bmc_implabs -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_gomsat_msat_check_invar_ic3(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''build_boolean_model''', '''check_invar_ic3 -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_gomsat_msat_check_invar_ic3_infinite(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''check_invar_ic3 -i -P «smvPropertyPlaceholder»'''] )
         mustHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Bad performance already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_invar_inc_coi(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go_msat''', '''msat_check_invar_inc_coi -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
@@ -342,28 +340,28 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     // nuXmv - go_msat (ltl)
     //////////////////////////////////////////////////////////////////////
     
-    @Test
+//    @Test
     public def void nuxmv_gomsat_check_ltlspec_klive(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''build_boolean_model''', '''check_ltlspec_klive -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     public def void nuxmv_gomsat_check_ltlspec_klive_infinite(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''check_ltlspec_klive -i -P «smvPropertyPlaceholder»'''] )
         mustHaveModelProperties = #["unbounded-int"]
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_ltlspec_bmc(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''msat_check_ltlspec_bmc -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
         startNuxmvVerification(scc, modelData)
     }
     
-    @Test
+//    @Test
     // Failed already in aas-traffic-light
     public def void nuxmv_gomsat_msat_check_ltlspec_inc_coi(SCCharts scc, TestModelData modelData) {
         prepareNuxmvLtlTest( #['''go_msat''', '''msat_check_ltlspec_inc_coi -k «maxSmvIterations» -P «smvPropertyPlaceholder»'''] )
@@ -380,24 +378,53 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     //////////////////////////////////////////////////////////////////////
     // SPIN
     //////////////////////////////////////////////////////////////////////
+    
     @Test
     // Failed in modulo-3int-8bit-par
-    public def void spin_bfs(SCCharts scc, TestModelData modelData) {
+    public def void spin_default_invar(SCCharts scc, TestModelData modelData) {
         mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
-        customSpinCommands = #["-bfs"]
+        ignoreInvar = false
+        ignoreLtl= true
+        ignoreCtl = true
         startSpinVerification(scc, modelData)
     }
     
     @Test
     // Failed in modulo-3int-8bit-par
-    public def void spin_default(SCCharts scc, TestModelData modelData) {
+    public def void spin_default_ltl(SCCharts scc, TestModelData modelData) {
         mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
+        ignoreInvar = true
+        ignoreLtl= false
+        ignoreCtl = true
+        startSpinVerification(scc, modelData)
+    }
+    
+//    @Test
+    // Failed in modulo-3int-8bit-par
+    public def void spin_bfs_invar(SCCharts scc, TestModelData modelData) {
+        mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
+        customSpinCommands = #["-bfs"]
+        ignoreInvar = false
+        ignoreLtl= true
+        ignoreCtl = true
+        startSpinVerification(scc, modelData)
+    }
+    
+//    @Test
+    // Failed in modulo-3int-8bit-par
+    public def void spin_bfs_ltl(SCCharts scc, TestModelData modelData) {
+        mustNotHaveModelProperties = #["unbounded-int", "ctl-specs"]
+        customSpinCommands = #["-bfs"]
+        ignoreInvar = true
+        ignoreLtl= false
+        ignoreCtl = true
         startSpinVerification(scc, modelData)
     }
     
     //////////////////////////////////////////////////////////////////////
     // JUnit config
     //////////////////////////////////////////////////////////////////////
+    
     @Before
     public def void printTestMethodName() {
         println('''////////////////////''')
@@ -517,9 +544,17 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     override onVerificationPropertyChanged(VerificationPropertyChanged event) {
         val property = event.changedProperty
+        
+        // Set failedToProve flag for statistics if there was an exception
         if(property.status == VerificationPropertyStatus.EXCEPTION) {
+            System.err.println("onVerificationPropertyChanged with EXCEPTION "+property.cause)
             failedToProve = true
-            if(property.cause instanceof TestTimedOutException) {
+            
+            // Check which exception the property got to determine if the test timed out.
+            // These are the exceptions that interrupt when waiting for a response (InterruptedException)
+            // or that just kill the process communications (IOException).
+            val cause = property.cause
+            if(cause instanceof InterruptedException || cause instanceof IOException) {
                 failedToProve = false
                 timedOut = true
             }
@@ -549,7 +584,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     @After
     public def void recordStatistics() {
-        if(currentVerificationProperty === null) {
+        if(currentVerificationProperty === null || !isInitialWarmupDone) {
             return
         }
         
