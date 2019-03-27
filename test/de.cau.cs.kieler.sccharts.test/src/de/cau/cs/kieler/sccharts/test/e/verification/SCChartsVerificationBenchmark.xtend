@@ -644,18 +644,12 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     private def void prepareNuxmvLtlTest(List<String> ltlCommands) {
         customSmvLtlCommands = newArrayList(ltlCommands)
-        if(! (customSmvLtlCommands.last == "quit")) {
-            customSmvLtlCommands.add("quit")
-        }
         ignoreInvar = true
         ignoreCtl = true
     }
     
     private def void prepareNuxmvInvarTest(List<String> invarCommands) {
         customSmvInvarCommands = newArrayList(invarCommands)
-        if(! (customSmvInvarCommands.last == "quit")) {
-            customSmvInvarCommands.add("quit")
-        }
         ignoreLtl= true
         ignoreCtl = true
     }

@@ -87,6 +87,9 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
      * @param property The property to be checked
      */
     protected def getInteractiveCommands(IFile smvFile, VerificationProperty property) {
+        var List<String> interactiveCommands = DEFAULT_INTERACTIVE_COMMANDS
+        
+        // Get custom commands
         var List<String> customInteractiveCommands = null
         switch(property.type) {
             case INVARIANT:
@@ -95,12 +98,22 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
                 customInteractiveCommands = verificationContext.customInteractiveSmvLtlCommands
             case CTL:
                 customInteractiveCommands = verificationContext.customInteractiveSmvCtlCommands
+        }        
+        if (!customInteractiveCommands.isNullOrEmpty) {
+            interactiveCommands = customInteractiveCommands
+            // Add "quit" as last command if this is missing
+            if(customInteractiveCommands.last == "quit") {
+                interactiveCommands = customInteractiveCommands
+            } else {
+                interactiveCommands = newArrayList
+                interactiveCommands.addAll(customInteractiveCommands)
+                interactiveCommands.add("quit")
+            }
         }
-        val interactiveCommands = if (customInteractiveCommands.isNullOrEmpty)
-                                      DEFAULT_INTERACTIVE_COMMANDS 
-                                  else
-                                      customInteractiveCommands
-        return interactiveCommands.resolvePlaceholders(property)
+        
+        // Replace placeholders
+        val interactiveCommandsWithoutPlaceholders = interactiveCommands.resolvePlaceholders(property)
+        return interactiveCommandsWithoutPlaceholders
     }
     
     private def String runModelChecker(IFile smvFile, VerificationProperty property) {
