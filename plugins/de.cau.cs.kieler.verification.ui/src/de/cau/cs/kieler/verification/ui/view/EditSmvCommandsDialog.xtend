@@ -82,12 +82,11 @@ class EditSmvCommandsDialog extends Dialog {
     private def Label createMessage(Composite parent) {
         val message =
 '''Set custom commands for model checking with NuSMV / nuXmv.
-Commands are separated by newline. The last command must be 'quit'.
+Commands are separated by newline. The 'quit' command is added automatically.
 Use «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER» as placeholder for the property to be checked.
 Default commands:
     go
-    check_property -P «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER»
-    quit'''
+    check_property -P «RunSmvProcessor.PROPERTY_NAME_PLACEHOLDER»'''
         // create message
         val label = new Label(parent, SWT.WRAP);
         label.setText(message);
