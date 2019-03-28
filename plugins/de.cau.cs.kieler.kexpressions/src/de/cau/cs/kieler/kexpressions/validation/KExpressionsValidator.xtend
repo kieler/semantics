@@ -25,7 +25,7 @@ class KExpressionsValidator extends AbstractKExpressionsValidator {
     
     @Check
     public def void checkConstInitialization(VariableDeclaration declaration) {
-        if (declaration.isConst) {
+        if (declaration.isConst && !declaration.isInput) {
             for(vo : declaration.valuedObjects) {
                 if (vo.initialValue === null) {
                     error(CONST_DECLARATION_EXPECTS_INITIALIZATION, vo, null, -1)
