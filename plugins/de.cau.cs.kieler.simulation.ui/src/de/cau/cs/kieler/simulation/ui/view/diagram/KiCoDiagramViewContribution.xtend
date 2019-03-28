@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewUIContributor
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
@@ -62,10 +63,12 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {
-                if (muc.showsCompiledModel && muc.compiledModel !== null) {
-                    inputIsShown = input == muc.compiledModel
+                if (muc.showsCompiledModel && !muc.compiledModel.empty) {
+                    inputIsShown = input == muc.compiledModel.head ||
+                        (muc.compiledModel instanceof ModelChain && (muc.compiledModel as ModelChain).models.head == input)
                 } else {
-                    inputIsShown = input == muc.sourceModel
+                    inputIsShown = input == muc.sourceModel ||
+                        (muc.sourceModel instanceof ModelChain && (muc.sourceModel as ModelChain).models.head == input)
                     if (inputIsShown) {
                         if (input instanceof EObject) {
                             if (input.eResource !== null) {
