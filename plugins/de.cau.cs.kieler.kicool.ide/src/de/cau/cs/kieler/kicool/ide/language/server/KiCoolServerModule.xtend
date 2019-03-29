@@ -26,7 +26,7 @@ class KiCoolServerModule extends KGraphDiagramModule {
     /**
      * Bind language server extension for keith.
      */
-    override Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
-        KiCoolLanguageServerExtension
-    }
+//    override Class<? extends ILanguageServerExtension> bindILanguageServerExtension() {
+//        KiCoolLanguageServerExtension
+//    }
 }
