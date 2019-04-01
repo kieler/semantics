@@ -19,7 +19,7 @@ z = x * (2 + 3)
 z = ((1 / x) + y)
 
 @check arithmetics.mixed.paranthesis#004
-@readable "z = x / 2 * y"
+@readable "z = x / (2 * y)" //als: serializer must not omit paranthesis of mult here!
 @strict
 z = (x / (2 * y))
 
@@ -70,7 +70,7 @@ z = x * ((2 + 3) * w)
 z = ((1 / x) + y) - (1 + w * (v - 2))
 
 @check arithmetics.mixed.paranthesis#009
-@readable "z = x / 2 * y / 3"
+@readable "z = x / (2 * y) / 3" //als: serializer must not omit paranthesis of mult here!
 z = (x / (2 * y)) / 3
 
 @check arithmetics.mixed.paranthesis#010
@@ -86,7 +86,7 @@ z = 1 / x + y
 
 @check arithmetics.mixed.readable#002
 @expect "z = x / (2 * y)"
-@readable "z = x / 2 * y"
+@readable "z = x / (2 * y)" //als: serializer must not omit paranthesis of mult here!
 z = x / (2 * y)
 
 @check arithmetics.mixed.readable#003
