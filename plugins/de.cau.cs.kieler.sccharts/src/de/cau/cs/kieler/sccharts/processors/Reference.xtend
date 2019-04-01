@@ -48,6 +48,7 @@ import de.cau.cs.kieler.core.properties.Property
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import java.util.Stack
 import java.util.Set
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -66,6 +67,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
+    @Inject extension SCChartsCoreExtensions
     
     public static val IProperty<Boolean> RENAME_SHADOWED_VARIABLES = 
        new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
@@ -134,7 +136,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     /** Expands one referenced state and keeps track of the replacement stack. */
     protected def void expandReferencedScope(Scope scopeWithReference, Replacements replacements) {
         // Create the new scope via copy. All internal references are ok. However, you must correct the bindings now.
-        val newScope = scopeWithReference.reference.scope.copy as Scope => [ 
+        val newScope = scopeWithReference.reference.scope.copy.asScope => [ 
             name = scopeWithReference.name 
             label = scopeWithReference.label
             if (scopeWithReference instanceof State) {
@@ -352,7 +354,11 @@ class Reference extends SCChartsProcessor implements Traceable {
         if (replacedWithLiterals.contains(valuedObject)) return;
         val oldDeclaration = valuedObject.variableDeclaration
         val newDeclaration = createVariableDeclaration(oldDeclaration.type)
-        (oldDeclaration.eContainer as Scope).declarations += newDeclaration
+        // The literal never changes, thus this new declaration could be set as const.
+        // However, the user could decide to prefer a variable for readability.
+        // Thus, we only declare it const if the old declaration was declared as const.
+        newDeclaration.const = oldDeclaration.isConst
+        oldDeclaration.eContainer.asScope.declarations += newDeclaration
         newDeclaration.valuedObjects += valuedObject
         valuedObject.initialValue = value.copy   
         replacedWithLiterals += valuedObject
@@ -464,7 +470,7 @@ class Reference extends SCChartsProcessor implements Traceable {
 //        val replacementVONames = replacements.values.filter(Stack).map[ it.head ].
 //            filter(ValuedObjectReference).map[ valuedObject ].map[ name ].toSet
         
-        val replacementVONames = (oldScope.eContainer as Scope).getAllReservedVariableNames
+        val replacementVONames = oldScope.eContainer.asScope.getAllReservedVariableNames
         
         for (vo : VOs) {
             if (replacementVONames.contains(vo.name)) {
@@ -484,7 +490,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     private def Set<String> getAllReservedVariableNames(Scope scope) {
         val reserved = scope.declarations.map[ valuedObjects ].flatten.map[ name ].toSet
         if (scope.eContainer !== null && scope.eContainer instanceof Scope) {
-            reserved.addAll((scope.eContainer as Scope).getAllReservedVariableNames)
+            reserved.addAll(scope.eContainer.asScope.getAllReservedVariableNames)
         }
         return reserved
     }
