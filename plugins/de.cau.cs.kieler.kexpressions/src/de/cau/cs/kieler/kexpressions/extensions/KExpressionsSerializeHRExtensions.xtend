@@ -122,8 +122,11 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		
 		if (expression.eContainer !== null && expression.eContainer instanceof OperatorExpression) {
 			val myPrecedence = expression.operator.precedence
-			val parentPrecedence = (expression.eContainer as OperatorExpression).operator.precedence
-			if (myPrecedence > parentPrecedence) {
+			val parent = expression.eContainer as OperatorExpression
+			val parentPrecedence = parent.operator.precedence
+			if (myPrecedence > parentPrecedence || 
+			   (myPrecedence == parentPrecedence && !expression.operator.isAssociative(parent.operator))
+			) { // Same precedence is not always associative, such as div! KISEMA-1394
 				return "(" + result + ")"
 			} else {
 				return result
@@ -159,6 +162,19 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		if (operatorType == OperatorType::LOGICAL_OR) return 12;
 		if (operatorType == OperatorType::CONDITIONAL) return 13;
 		return 99
+	}
+	
+	protected def boolean isAssociative(OperatorType operatorType, OperatorType parentOperatorType) {
+	    switch(operatorType) {
+            case POSTFIX_ADD,
+            case POSTFIX_SUB,
+            case NOT,
+            case BITWISE_NOT,
+	        case ADD,
+	        case SUB : return true
+	        case MULT: return parentOperatorType == OperatorType::MULT
+	        default: return false
+	    }
 	}
 	
     protected def String combineOperatorsHR(Iterator<Expression> expressions, String separator) {
