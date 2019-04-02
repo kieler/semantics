@@ -192,7 +192,7 @@ class DataCanvas extends Canvas {
                 )
                 lastX = lastX + cellWidth
                 
-                for (e : hIter.drop(1)) {
+                for (e : hIter) {
                     var newY = e.normalizedMorph(cHeight)
                     if (!dataObserver.numberDomain && newY != lastY) {
                         gc.drawLine((COORDINATE_LEFTBORDERSPACING + lastX) as int, 
