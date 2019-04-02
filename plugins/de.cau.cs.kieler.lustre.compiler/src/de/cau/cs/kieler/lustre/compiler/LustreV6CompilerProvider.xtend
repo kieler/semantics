@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.URI
  */
 class LustreV6CompilerProvider implements IExternalCompilerProvider {
     
-    static val PLUGIN = "org.lustre.compiler"
+    static val PLUGIN = "de.cau.cs.kieler.lustre.compiler"
     
     override getId() {
         return "Lustre_V6"
