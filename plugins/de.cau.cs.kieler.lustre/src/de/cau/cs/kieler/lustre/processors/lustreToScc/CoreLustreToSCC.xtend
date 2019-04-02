@@ -83,9 +83,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     public static val IProperty<Boolean> USE_DURING_ACTIONS_FOR_WHEN = 
         new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.useDuringActionsForWhen", false)
         
-    public static val IProperty<Boolean> USE_SIGNALS_FOR_CLOCKED_VARIABLES = 
-        new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.useSignalsForClockedVariables", false)
-        
     public static val IProperty<Boolean> NO_PRE_IN_WHEN_TRANSFORMATION = 
         new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.noPreInWhenTransformation", false)
 
@@ -420,8 +417,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     // Equation transformation: Transform a when expression
     protected def processWhenExpression(Expression kExpression, Stack<Expression> subExpressionList, State state) {
         val realExpression = subExpressionList.get(0)
-        val clock = subExpressionList.get(1)
-        val type = realExpression.inferType
+        val clock = subExpressionList.get(1) as ValuedObjectReference
 
         // Find containing element that is not an expression
         var containingElement = kExpression.eContainer
@@ -439,40 +435,24 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 ]
                 val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
     
-                if (environment.getProperty(USE_SIGNALS_FOR_CLOCKED_VARIABLES)) {
-    
-                    // Create a signal emission if this variant is used
-                    makeSignalFromVariableDeclaration(scchartsAssignmentValuedObject.declaration as VariableDeclaration)
-                    duringAction.effects += createEmission => [
-                        reference = scchartsAssignmentValuedObject.reference
-                        newValue = realExpression
-                    ]
-    
-                } else {
-                    // Create a simple assignment if signal usage is disabled
-                    var duringActionAssignment = createAssignment => [
-                        reference = scchartsAssignmentValuedObject.reference
-                        operator = AssignOperator.ASSIGN
-                    ]
-    
-                    if (type.equals(ValueType.BOOL)) {
-                        // For booleans, create a conjunction with the previous clock
-                        duringActionAssignment.expression = createLogicalAndExpression => [
-                            subExpressions += clock
-                            subExpressions += realExpression
-                        ]
-                    } else {
-                        duringAction.trigger = clock
-                        duringActionAssignment.expression = realExpression
-                    }
-                    duringAction.effects += duringActionAssignment
-    
-                }
+                // Create a simple assignment if signal usage is disabled
+                var duringActionAssignment = createAssignment => [
+                    reference = scchartsAssignmentValuedObject.reference
+                    operator = AssignOperator.ASSIGN
+                ]
+                
+                // The trigger must be a conjunction with all previous clocks
+                var clockConjunction = createClockConjunction(clock, realExpression, state)
+                duringAction.trigger = clockConjunction
+                duringActionAssignment.expression = realExpression
+                duringAction.effects += duringActionAssignment
+            
             } else {
                 // Create condition for when expression
                 val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
                 var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
-                conditional.subExpressions.add(clock)
+                var clockConjugation = createClockConjunction(clock, realExpression, state)
+                conditional.subExpressions.add(clockConjugation)
                 conditional.subExpressions.add(realExpression)
                 if (environment.getProperty(NO_PRE_IN_WHEN_TRANSFORMATION)) {
                     conditional.subExpressions.add(scchartsAssignmentValuedObject.reference)
@@ -879,30 +859,43 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     protected def createVariableDeclarationFromLustreClockedVariableDeclaration(ClockedVariableDeclaration lustreClockedVariableDeclaration, State state) {
         var varDeclaration = lustreClockedVariableDeclaration.vardecl.createVariableDeclaration(state)
-        if (lustreClockedVariableDeclaration.clockExpr !== null) {
-            if (environment.getProperty(USE_SIGNALS_FOR_CLOCKED_VARIABLES)) {
-                makeSignalFromVariableDeclaration(varDeclaration)
-            }
-        }
 
         return varDeclaration
     }
-
-    def makeSignalFromVariableDeclaration(VariableDeclaration variableDeclaration) {
-        if (variableDeclaration.valuedObjects.length != 1) {
-            throw new UnsupportedOperationException("Cannot transform clock expressions with multiple valued objects.")
+    
+    private def createClockConjunction(ValuedObjectReference sccClockVariable, Expression sccVariable, State state) {
+        var clockList = newLinkedList(sccClockVariable)
+        var clockVar = scchartsToLustreValuedObjectMap.get(sccClockVariable.valuedObject)
+        
+        var ok = true
+        while(ok) {
+            var clockVarDeclContainer = clockVar.variableDeclaration.eContainer
+            if (clockVarDeclContainer instanceof ClockedVariableDeclaration) {
+                var superClockReference = clockVarDeclContainer.clockExpr as ValuedObjectReference
+                if (superClockReference !== null) {
+                    if (lustreToScchartsValuedObjectMap.containsKey(superClockReference.valuedObject)) {
+                        clockList.add(lustreToScchartsValuedObjectMap.get(superClockReference.valuedObject).reference)
+                    } else {
+                        var superClockVarDecl = createVariableDeclaration(superClockReference.valuedObject.variableDeclaration, state)
+                        clockList.add(superClockVarDecl.valuedObjects.get(0).reference)
+                    }
+                    clockVar = superClockReference.valuedObject            
+                } else {
+                    ok = false
+                }
+            } else {
+                ok = false
+            }
         }
         
-        variableDeclaration.signal = true;
-        switch (variableDeclaration.type) {
-            case BOOL: 
-                variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.OR
-            case FLOAT,
-            case INT: 
-                variableDeclaration.valuedObjects.head.combineOperator = CombineOperator.ADD
-            default: 
-                {}            
+        var logicalAndExpression = createLogicalAndExpression
+        logicalAndExpression.subExpressions.add(sccVariable)
+        
+        for (ValuedObjectReference valObjRef : clockList) {
+            logicalAndExpression.subExpressions.add(valObjRef)
         }
+        
+        return logicalAndExpression        
     }
     
 }
