@@ -85,6 +85,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         
     public static val IProperty<Boolean> USE_SIGNALS_FOR_CLOCKED_VARIABLES = 
         new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.useSignalsForClockedVariables", false)
+        
+    public static val IProperty<Boolean> NO_PRE_IN_WHEN_TRANSFORMATION = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.processors.lustreToSCC.noPreInWhenTransformation", false)
 
     public static final String DATAFLOW_REGION_PREFIX = "df"
     public static final String CONTROLFLOW_REGION_PREFIX = "cf"
@@ -446,7 +449,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     ]
     
                 } else {
-    
                     // Create a simple assignment if signal usage is disabled
                     var duringActionAssignment = createAssignment => [
                         reference = scchartsAssignmentValuedObject.reference
@@ -472,7 +474,12 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
                 conditional.subExpressions.add(clock)
                 conditional.subExpressions.add(realExpression)
-                conditional.subExpressions.add(scchartsAssignmentValuedObject.reference)
+                if (environment.getProperty(NO_PRE_IN_WHEN_TRANSFORMATION)) {
+                    conditional.subExpressions.add(scchartsAssignmentValuedObject.reference)
+                } else {
+                    var preForLoopBack = createPreExpression(scchartsAssignmentValuedObject.reference)
+                    conditional.subExpressions.add(preForLoopBack)
+                }
                  
                 return conditional                
             }
