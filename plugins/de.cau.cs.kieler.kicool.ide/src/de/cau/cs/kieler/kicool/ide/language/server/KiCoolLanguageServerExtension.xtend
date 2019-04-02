@@ -36,6 +36,7 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
 import java.net.URLDecoder
+import java.util.ArrayList
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -62,7 +63,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
      */
-    protected Map<String, List<SnapshotDescription>> snapshotMap = new HashMap<String, List<SnapshotDescription>>
+    protected Map<String, List<List<SnapshotDescription>>> snapshotMap = new HashMap<String, List<List<SnapshotDescription>>>
     
     /**
      * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
@@ -153,12 +154,15 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         var warnings = environment.warnings
         var infos = environment.infos
         this.objectMap.get(uri).add(impl)
-        this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
+        val snapshotList = new ArrayList<SnapshotDescription>
+        snapshotList.add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
         for (snapshot : snapshots.indexed) {
             this.objectMap.get(uri).add(snapshot.value.object)
-            this.snapshotMap.get(uri).add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
+            // one has to be added to the index, since the first snapshot is already added here
+            snapshotList.add(new SnapshotDescription(processorName, snapshot.key + 1, errors, warnings, infos))
         }
-        
+        this.snapshotMap.get(uri).addAll(snapshotList)
+        return
     }
     
     /**

@@ -20,9 +20,9 @@ import java.util.List
  * @author sdo
  */
 class CompilationResults {
-    public List<SnapshotDescription> files = new LinkedList
+    public List<List<SnapshotDescription>> files = new LinkedList
     
-    new(List<SnapshotDescription> descriptions) {
+    new(List<List<SnapshotDescription>> descriptions) {
         this.files = descriptions
     }
     
