@@ -180,10 +180,28 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override show(String uri, String clientId, int index) {
+        var Object model
+        if (index != -1) {
+            model = this.objectMap.get(uri).get(index)
+        } else {
+            // get eObject of model specified by uri
+            var fileUri = URLDecoder.decode( uri, "UTF-8" );
+            
+            if (fileUri.startsWith("file://")) {
+                fileUri = fileUri.substring(7) 
+            }
+            
+            var stringUri = URI.createFileURI(fileUri)
+            var resourceSet = stringUri.xtextResourceSet 
+            val resource = resourceSet.getResource(stringUri, true)
+        
+            var eobject = resource.getContents().head
+            model = eobject
+        }
+        val modelToSend = model
         return requestManager.runRead[ cancelIndicator |
             currentIndex = index
-            showSnapshot(uri, clientId, this.objectMap.get(uri).get(index), cancelIndicator, false)
-//            null
+            showSnapshot(uri, clientId, modelToSend, cancelIndicator, false)
         ]
     }
     
