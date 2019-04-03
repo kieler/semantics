@@ -161,7 +161,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         }
         // Add result snapshot
         this.objectMap.get(uri).add(impl)
-        snapshotList.add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
+        snapshotList.add(new SnapshotDescription(processorName, snapshotList.length, errors, warnings, infos))
       
         this.snapshotMap.get(uri).addAll(snapshotList)
         return
