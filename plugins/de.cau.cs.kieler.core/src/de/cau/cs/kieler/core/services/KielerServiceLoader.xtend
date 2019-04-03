@@ -19,7 +19,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 /**
- * ServiceLoader adaoted to the KIELER project.
+ * ServiceLoader adapted to the KIELER project.
  * 
  * @author als
  */
@@ -28,8 +28,8 @@ class KielerServiceLoader {
     /**
      * Loads and instanciates all implementing classes of the given service registered via '/META-INF/services/'.
      * <br>
-     * If exected with a running eclipse platform the implementations will be loaded from the Bundles, otherwise the
-     * standart ServiceLoader is used.
+     * If executed with a running eclipse platform the implementations will be loaded from the Bundles, otherwise the
+     * standard ServiceLoader is used.
      * 
      * @param  service
      *         The interface or abstract class representing the service.

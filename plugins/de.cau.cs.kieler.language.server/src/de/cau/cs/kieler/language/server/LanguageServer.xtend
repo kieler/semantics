@@ -30,7 +30,6 @@ import org.eclipse.equinox.app.IApplicationContext
 import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
-import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
 
@@ -89,7 +88,7 @@ class LanguageServer implements IApplication {
                 })
                 bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
             ]))
-            this.run(injector, host, port)
+            this.run(injector, host, port, kgraphExt)
             return EXIT_OK 
         } else {
             LanguageServerLauncher.main(#[])
@@ -104,18 +103,17 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, String host,  int port) {
+    def run(Injector injector, String host,  int port, KGraphLanguageServerExtension kgl) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-            val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-                KGraphTypeAdapterUtil.configureGson(gsonBuilder)
+            val Consumer<GsonBuilder> configureGson = [
+                KGraphTypeAdapterUtil.configureGson(it)
             ]
-            val languageServer = injector.getInstance(LanguageServerImpl)
-            var iLanguageServerExtensions = <Object>newArrayList(languageServer)
+            var iLanguageServerExtensions = <Object>newArrayList(kgl)
             for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
                 iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
             }
@@ -129,7 +127,7 @@ class LanguageServer implements IApplication {
                 .configureGson(configureGson)
                 .setClassLoader(this.getClass.classLoader)
                 .create();
-            languageServer.connect(launcher.remoteProxy)
+            kgl.connect(launcher.remoteProxy)
             launcher.startListening
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
         }
