@@ -149,18 +149,20 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     def convertImpl(Environment environment, String uri, String processorName) {
         var Snapshots snapshots = environment.getProperty(Environment.SNAPSHOTS)
-        var impl = environment.model
+        var impl = environment.model // this is the result of the processor, e.g. the last snapshot of this step
         var errors = environment.errors
         var warnings = environment.warnings
         var infos = environment.infos
-        this.objectMap.get(uri).add(impl)
         val snapshotList = new ArrayList<SnapshotDescription>
-        snapshotList.add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
         for (snapshot : snapshots.indexed) {
             this.objectMap.get(uri).add(snapshot.value.object)
             // one has to be added to the index, since the first snapshot is already added here
-            snapshotList.add(new SnapshotDescription(processorName, snapshot.key + 1, errors, warnings, infos))
+            snapshotList.add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
         }
+        // Add result snapshot
+        this.objectMap.get(uri).add(impl)
+        snapshotList.add(new SnapshotDescription(processorName, 0, errors, warnings, infos))
+      
         this.snapshotMap.get(uri).addAll(snapshotList)
         return
     }
