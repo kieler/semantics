@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen
+package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
@@ -47,7 +47,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
        new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".iface.")
               
     public static val IProperty<Boolean> PRINT_DEBUG = 
-       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.lean.printDebug", false)      
+       new Property<Boolean>("de.cau.cs.kieler.kicool.codegen.statebased.lean.c.printDebug", false)      
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")    
 
@@ -59,7 +59,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     @Accessors val Multimap<String, String> modifications = HashMultimap.create
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.codegen.statebased.lean"
+        "de.cau.cs.kieler.sccharts.processors.codegen.statebased.lean.c"
     }
     
     override getName() {

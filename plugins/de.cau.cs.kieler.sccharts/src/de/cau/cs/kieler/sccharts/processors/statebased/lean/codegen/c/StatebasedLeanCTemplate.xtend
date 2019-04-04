@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen
+package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.sccharts.State
@@ -20,7 +20,7 @@ import java.util.List
 import de.cau.cs.kieler.sccharts.Scope
 import java.util.Map
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.StatebasedLeanCCodeGenerator.hostcodeSafeName
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedLeanCCodeGenerator.hostcodeSafeName
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
