@@ -31,6 +31,7 @@ import de.cau.cs.kieler.klighd.krendering.KPolyline
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
@@ -103,6 +104,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension DataflowRegionSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
+    @Inject extension AdaptiveZoom
     
     // als magic: this should never reach the master (11.09.2018)! ;-)
     // but probably will. (10.10.2018) ;-)
@@ -127,6 +129,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         } else {
             configureLayout(node)
         }
+        
+        node.configureNodeLOD(state)
 
         //pre-evaluate type
         val isConnector = state.isConnector
@@ -171,7 +175,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         if (!isConnector) {
             // Add label
             if (!state.label.nullOrEmpty) {
-                if (state.isMacroState) {
+                (if (state.isMacroState) {
                     val label = <Pair<? extends CharSequence, TextFormat>>newArrayList
                     label += new Pair(state.serializeHR, TextFormat.TEXT)
                     if (state.isReferencedState) {
@@ -197,10 +201,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     node.addMacroStateLabel(label)
                 } else {
                     node.addSimpleStateLabel(state.serializeHR.toString)
-                } => [
+                }) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
-                    eAllContents.filter(KRendering).forEach[associateWith(state)]
+                    if (it instanceof KText) configureTextLOD(state)
+                    eAllContents.filter(KRendering).forEach[
+                        associateWith(state)
+                        if (it instanceof KText) configureTextLOD(state)
+                    ]
                 ]
             } else {
                 node.addEmptyStateLabel
@@ -216,7 +224,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).forEach[associateWith(declaration)]
+                        eAllContents.filter(KRendering).forEach[
+                            associateWith(declaration)
+                            if (it instanceof KText) configureTextLOD(declaration)
+                        ]
                     ]
                 }
             }           
@@ -228,7 +239,10 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(action)
-                    eAllContents.filter(KRendering).forEach[associateWith(action)]
+                    eAllContents.filter(KRendering).forEach[
+                        associateWith(action)
+                        if (it instanceof KText) configureTextLOD(action)
+                    ]
                     actionRectangleMap.put(action, it)
                 ]
             }

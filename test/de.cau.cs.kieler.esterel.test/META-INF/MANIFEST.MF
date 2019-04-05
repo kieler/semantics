@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Esterel Tests
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.test;singleton:=true
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 1.0.0.qualifier
 Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Activator: de.cau.cs.kieler.esterel.test.EsterelTestActivator
@@ -21,5 +21,5 @@ Require-Bundle: org.junit;bundle-version="4.12.0",
  de.cau.cs.kieler.simulation,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.sccharts.test,
- org.esterel.compiler
+ de.cau.cs.kieler.esterel.compiler
 

@@ -63,7 +63,6 @@ public class AnnotationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getCommentAnnotationAccess().getValuesAssignment(), "rule__CommentAnnotation__ValuesAssignment");
 			builder.put(grammarAccess.getCommentAnnotatonSLAccess().getValuesAssignment(), "rule__CommentAnnotatonSL__ValuesAssignment");
 			builder.put(grammarAccess.getTagAnnotationAccess().getNameAssignment_1(), "rule__TagAnnotation__NameAssignment_1");

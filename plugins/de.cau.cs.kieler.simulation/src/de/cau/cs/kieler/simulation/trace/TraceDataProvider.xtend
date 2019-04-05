@@ -42,12 +42,16 @@ import static extension de.cau.cs.kieler.simulation.util.JsonUtil.*
  */
 class TraceDataProvider {
     
+    static val DEFAULT_DOUBLE_TOLERANCE = 1e-6
+    
     @Accessors
     val Trace trace
     @Accessors
     val TraceFile tracefile
     @Accessors
     val boolean followGotos
+    @Accessors
+    val double doubleTolerance
     
     @Accessors
     val boolean signalSemantics
@@ -64,9 +68,14 @@ class TraceDataProvider {
     // -----------------------------------------------------------------------------------------
     
     new(Trace trace, boolean followGotos) {
+        this(trace, followGotos, DEFAULT_DOUBLE_TOLERANCE)
+    }
+    
+    new(Trace trace, boolean followGotos, double doubleTolerance) {
         this.trace = trace
         this.tracefile = trace.eContainer as TraceFile
         this.followGotos = followGotos
+        this.doubleTolerance = doubleTolerance
         checkNotNull(tracefile, "Trace is not contained in a TraceFile")
         this.signalSemantics = if (trace.eResource !== null && trace.eResource.URI !== null) {
             val fileExt = trace.eResource.URI.fileExtension
@@ -283,6 +292,19 @@ class TraceDataProvider {
             } else {
                 return true
             }
+        } else if (trace.isJsonPrimitive
+            && trace.asJsonPrimitive.isNumber
+            && ( trace.asJsonPrimitive.asNumber instanceof Double
+              || trace.asJsonPrimitive.asNumber instanceof Float)
+            && pool.isJsonPrimitive
+            && pool.asJsonPrimitive.isNumber) {
+            // Compare with fuzzyness
+            val traceValue = trace.asJsonPrimitive.asNumber.doubleValue
+            val tolerance = traceValue * doubleTolerance
+            val poolValue = pool.asJsonPrimitive.asNumber.doubleValue
+            val upper = if (traceValue < 0) traceValue - tolerance else traceValue + tolerance
+            val lower = if (traceValue < 0) traceValue + tolerance else traceValue - tolerance
+            return poolValue < lower || poolValue > upper
         } else {
             return !pool.equals(trace)
         }

@@ -119,6 +119,13 @@ public class KivisSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case KivisPackage.SETTER:
+      {
+        Setter setter = (Setter)theEObject;
+        T result = caseSetter(setter);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case KivisPackage.INTERFACE:
       {
         Interface interface_ = (Interface)theEObject;
@@ -222,6 +229,22 @@ public class KivisSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseCode(Code object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Setter</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Setter</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSetter(Setter object)
   {
     return null;
   }

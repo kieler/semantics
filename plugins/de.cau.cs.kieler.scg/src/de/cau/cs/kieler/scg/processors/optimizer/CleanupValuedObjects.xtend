@@ -24,7 +24,7 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.scg.transformations.basicblocks.BasicBlockTransformation
+import de.cau.cs.kieler.scg.processors.BasicBlockTransformation
 
 /**
  * Cleanup ValuedObjects

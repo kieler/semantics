@@ -1,26 +1,23 @@
 /**
+ * generated with EMF ecore
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.PriorityProtocol;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
-import de.cau.cs.kieler.kexpressions.SchedulePriority;
 
-import de.cau.cs.kieler.kexpressions.SchedulePriorityType;
 import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 
-import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -133,18 +130,6 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<PriorityProtocol> getPriorities() {
-        if (priorities == null) {
-            priorities = new EDataTypeUniqueEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
-        }
-        return priorities;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     public PriorityProtocol getGlobal() {
         return global;
     }
@@ -159,6 +144,18 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
         global = newGlobal == null ? GLOBAL_EDEFAULT : newGlobal;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.SCHEDULE_DECLARATION__GLOBAL, oldGlobal, global));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<PriorityProtocol> getPriorities() {
+        if (priorities == null) {
+            priorities = new EDataTypeUniqueEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
+        }
+        return priorities;
     }
 
     /**

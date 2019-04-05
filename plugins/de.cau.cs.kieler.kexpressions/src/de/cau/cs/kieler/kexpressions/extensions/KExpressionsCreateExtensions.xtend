@@ -303,7 +303,7 @@ class KExpressionsCreateExtensions {
     }
 
     // Create a float value.
-    def FloatValue createFloatValue(float value) {
+    def FloatValue createFloatValue(double value) {
         KExpressionsFactory::eINSTANCE.createFloatValue() => [
             setValue(value)
         ]

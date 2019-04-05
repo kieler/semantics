@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
@@ -33,6 +34,8 @@ import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
  * @kieler.rating proposed yellow
  */
 class SimulationAction extends Action implements IMenuCreator {
+
+    public static var String LAST_SELECTED_SYSTEM = null
     
     private static val TEXT = "Start new Simulation"
     private static val ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/launch.png")
@@ -42,7 +45,6 @@ class SimulationAction extends Action implements IMenuCreator {
     private var String lastSelectedSystem
     private var Class<?> filter
     private var Menu fMenu
-    
 
     new(KiCoModelUpdateController muc) {
         this.muc = muc
@@ -53,25 +55,26 @@ class SimulationAction extends Action implements IMenuCreator {
         update(muc.model)
     }
     
-    def update(Object model) {
+    def update(Object mucModel) {
+        val model = mucModel.compilableModel
         if ((systems.empty && filter === null) ||
                 (model !== null && !model.class.equals(filter)) ||
                 (model === null && filter !== null)) {
                 
             systems.clear
-            if (model === null) {
-                filter = null
-                systems.putAll(KiCoolRegistration.systemModels.filter[simulation].toMap[id])
-            } else {
+            if (model !== null) {
                 filter = model.class
                 for (system : KiCoolRegistration.systemModels.filter[simulation && hasInput(filter)]) {
                     systems.put(system.id, system)
                 }
+                if (lastSelectedSystem === null && !systems.empty) {
+                    if (systems.containsKey(LAST_SELECTED_SYSTEM)) {
+                        lastSelectedSystem = LAST_SELECTED_SYSTEM
+                    } else {
+                        lastSelectedSystem = systems.keySet.head
+                    }
+                }
             }
-            if (lastSelectedSystem === null && !systems.empty) {
-                lastSelectedSystem = systems.keySet.head
-            }
-            
             enabled = !systems.empty
         }
     }
@@ -108,6 +111,7 @@ class SimulationAction extends Action implements IMenuCreator {
                     actions.forEach[checked = false]
                     this.checked = true
                     lastSelectedSystem = entry.key
+                    LAST_SELECTED_SYSTEM = lastSelectedSystem
                 }
             }
             if (lastSelectedSystem.equals(entry.key)) {
@@ -124,9 +128,17 @@ class SimulationAction extends Action implements IMenuCreator {
      * @see IAction#run()
      */
     override void run() {
-        if (!lastSelectedSystem.nullOrEmpty && !systems.empty && muc.model !== null) {
-            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model)
+        if (!lastSelectedSystem.nullOrEmpty && !systems.empty && muc.model.compilableModel !== null) {
+            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model.compilableModel)
             DataPoolView.bringToTopIfOpen
+        }
+    }
+    
+    def getCompilableModel(Object model) {
+        if (model instanceof ModelChain) {
+            return (model as ModelChain).models.head
+        } else {
+            return model
         }
     }
 

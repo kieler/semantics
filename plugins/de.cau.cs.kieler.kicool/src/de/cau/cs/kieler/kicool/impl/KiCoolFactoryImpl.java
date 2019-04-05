@@ -78,6 +78,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.cau.cs.kieler.kicool.System createSystem() {
         SystemImpl system = new SystemImpl();
         return system;
@@ -88,6 +89,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcessorReference createProcessorReference() {
         ProcessorReferenceImpl processorReference = new ProcessorReferenceImpl();
         return processorReference;
@@ -98,6 +100,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcessorSystem createProcessorSystem() {
         ProcessorSystemImpl processorSystem = new ProcessorSystemImpl();
         return processorSystem;
@@ -108,6 +111,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcessorGroup createProcessorGroup() {
         ProcessorGroupImpl processorGroup = new ProcessorGroupImpl();
         return processorGroup;
@@ -118,6 +122,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcessorAlternativeGroup createProcessorAlternativeGroup() {
         ProcessorAlternativeGroupImpl processorAlternativeGroup = new ProcessorAlternativeGroupImpl();
         return processorAlternativeGroup;
@@ -128,6 +133,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntermediateReference createIntermediateReference() {
         IntermediateReferenceImpl intermediateReference = new IntermediateReferenceImpl();
         return intermediateReference;
@@ -138,6 +144,7 @@ public class KiCoolFactoryImpl extends EFactoryImpl implements KiCoolFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KiCoolPackage getKiCoolPackage() {
         return (KiCoolPackage)getEPackage();
     }

@@ -154,6 +154,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
     /** The action for toggling forced simple update strategy mode. */
     private var Action simpleUpdateToggleAction
     private static final boolean SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE = false
+    
+    /** External contributions */
+    private val List<KiCoModelViewUIContributor> externalUIContributors = newArrayList
         
     // -- Model --
 
@@ -279,6 +282,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         simpleUpdateToggleAction.setToolTipText(
                 "Forces this view to always use the simple update strategy (no incremental update)")
         simpleUpdateToggleAction.setChecked(SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE)
+        
+        
+        externalUIContributors += KiCoModelViewUIContributorRegistry.contributors
     }
 
     // -- Controller
@@ -377,8 +383,7 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         menu.add(chainToggleAction)
         menu.add(simpleUpdateToggleAction)
         
-        val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
-        externalUIContributors.forEach[it.contributeControls(this, toolBar, menu)]
+        externalUIContributors.forEach[contributeControls(this, toolBar, menu)]
     }
 
     /**
@@ -466,7 +471,7 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
      * {@inheritDoc}
      */
     override void saveState(IMemento memento) {
-        if (lastSaveDirectory != null) {
+        if (lastSaveDirectory !== null) {
             memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString())
         }
         
@@ -479,6 +484,8 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         memento.putBoolean("chainToggleAction", chainToggleAction.isChecked())
 
         memento.putBoolean("simpleUpdateToggleAction", simpleUpdateToggleAction.isChecked())
+        
+        externalUIContributors.forEach[saveState(this, memento)]
     }
 
     /**
@@ -524,6 +531,8 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                 simpleUpdateToggleAction.setChecked(simpleUpdateToggleActionValue)
             }
         }
+        
+        externalUIContributors.forEach[loadState(this, memento)]
     }
 
 

@@ -1,15 +1,11 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
-import org.eclipse.emf.common.util.EList;
-
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.NamedObject;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,48 +35,6 @@ import de.cau.cs.kieler.annotations.NamedObject;
  */
 public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
     /**
-     * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Initial Value</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @return the value of the '<em>Initial Value</em>' containment reference.
-     * @see #setInitialValue(Expression)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_InitialValue()
-     * @model containment="true"
-     * @generated
-     */
-    Expression getInitialValue();
-
-    /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Initial Value</em>' containment reference.
-     * @see #getInitialValue()
-     * @generated
-     */
-    void setInitialValue(Expression value);
-
-    /**
-     * Returns the value of the '<em><b>Cardinalities</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
-     * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Cardinalities</em>' attribute list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-     * @return the value of the '<em>Cardinalities</em>' containment reference list.
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Cardinalities()
-     * @model containment="true"
-     * @generated
-     */
-	EList<Expression> getCardinalities();
-
-				/**
      * Returns the value of the '<em><b>Combine Operator</b></em>' attribute.
      * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.CombineOperator}.
      * <!-- begin-user-doc -->
@@ -108,5 +62,47 @@ public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
      * @generated
      */
     void setCombineOperator(CombineOperator value);
+
+    /**
+     * Returns the value of the '<em><b>Initial Value</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Initial Value</em>' containment reference isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Initial Value</em>' containment reference.
+     * @see #setInitialValue(Expression)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_InitialValue()
+     * @model containment="true"
+     * @generated
+     */
+    Expression getInitialValue();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Initial Value</em>' containment reference.
+     * @see #getInitialValue()
+     * @generated
+     */
+    void setInitialValue(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Cardinalities</b></em>' containment reference list.
+     * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Cardinalities</em>' containment reference list isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Cardinalities</em>' containment reference list.
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Cardinalities()
+     * @model containment="true"
+     * @generated
+     */
+    EList<Expression> getCardinalities();
 
 } // ValuedObject

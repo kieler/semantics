@@ -365,7 +365,6 @@ public class SCLParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getDoublegerAccess().getGroup(), "rule__Doubleger__Group__0");
 			builder.put(grammarAccess.getSCLProgramAccess().getPragmasAssignment_0(), "rule__SCLProgram__PragmasAssignment_0");
 			builder.put(grammarAccess.getSCLProgramAccess().getModulesAssignment_1(), "rule__SCLProgram__ModulesAssignment_1");
 			builder.put(grammarAccess.getModuleAccess().getAnnotationsAssignment_0(), "rule__Module__AnnotationsAssignment_0");

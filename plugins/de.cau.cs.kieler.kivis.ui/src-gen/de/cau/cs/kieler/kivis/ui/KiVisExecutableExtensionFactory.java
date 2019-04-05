@@ -5,6 +5,7 @@ package de.cau.cs.kieler.kivis.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.kivis.ui.internal.KiVisActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class KiVisExecutableExtensionFactory extends AbstractGuiceAwareExecutabl
 
 	@Override
 	protected Bundle getBundle() {
-		return KiVisActivator.getInstance().getBundle();
+		return Platform.getBundle(KiVisActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return KiVisActivator.getInstance().getInjector(KiVisActivator.DE_CAU_CS_KIELER_KIVIS_KIVIS);
+		KiVisActivator activator = KiVisActivator.getInstance();
+		return activator != null ? activator.getInjector(KiVisActivator.DE_CAU_CS_KIELER_KIVIS_KIVIS) : null;
 	}
-	
+
 }

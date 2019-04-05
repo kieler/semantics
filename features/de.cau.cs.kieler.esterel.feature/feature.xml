@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel/Lustre" version="0.14.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
+<feature id="de.cau.cs.kieler.esterel.feature" label="KIELER Esterel/Lustre" version="1.0.0.qualifier" provider-name="Kiel University" plugin="de.cau.cs.kieler.esterel.ui">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Esterel feature contains an Xtext based full featured textual Esterel and Lustre editor.
@@ -8,11 +8,11 @@
    <copyright>
       Copyright 2013 by Real-Time and Embedded Systems Group, Department
 of Computer Science, Kiel University
-For the Esterel compiler in org.esterel.complier: Copyright by C. Armines / Ecole des Mines / Inria, 2000
+For the Esterel compiler in de.cau.cs.kieler.esterel.complier: Copyright by C. Armines / Ecole des Mines / Inria, 2000
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
-      This license does not apply for the org.esterel.complier plugin which is provided under regular copyright with agreement of G. Berry.
+      This license does not apply for the Esterel compiler in the de.cau.cs.kieler.esterel.complier plugin which is provided under regular copyright with agreement of G. Berry.
 
 For all other plugins:
 
@@ -235,6 +235,6 @@ litigation.
    
    <plugin id="de.cau.cs.kieler.lustre.ide" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
    
-   <plugin id="org.esterel.compiler" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
+   <plugin id="de.cau.cs.kieler.esterel.compiler" download-size="0" install-size="0" version="0.0.0" unpack="false"/>
 
 </feature>
