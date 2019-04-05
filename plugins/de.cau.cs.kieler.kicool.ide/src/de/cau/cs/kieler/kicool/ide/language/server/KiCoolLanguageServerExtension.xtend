@@ -96,22 +96,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected boolean lastInplace
     
     override compile(String uri, String clientId, String command, boolean inplace) {
-        var fileUri = URLDecoder.decode( uri, "UTF-8" );
         
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
         
-        if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7) 
-        }
-        
-        var stringUri = URI.createFileURI(fileUri)
-        
-        var resourceSet = stringUri.xtextResourceSet 
-        val resource = resourceSet.getResource(stringUri, true)
-        
-        var eobject = resource.getContents().head
-        var context = compile(eobject, command, inplace)
+        val eobject = getEObjectFromUri(uri)
+        val context = compile(eobject, command, inplace)
         for (iResult : context.processorInstancesSequence) {
             convertImpl(iResult.environment , uri, iResult.name)
         }
@@ -148,11 +138,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
      */
     def convertImpl(Environment environment, String uri, String processorName) {
-        var Snapshots snapshots = environment.getProperty(Environment.SNAPSHOTS)
-        var impl = environment.model // this is the result of the processor, e.g. the last snapshot of this step
-        var errors = environment.errors
-        var warnings = environment.warnings
-        var infos = environment.infos
+        val Snapshots snapshots = environment.getProperty(Environment.SNAPSHOTS)
+        val impl = environment.model // this is the result of the processor, e.g. the last snapshot of this step
+        val errors = environment.errors
+        val warnings = environment.warnings
+        val infos = environment.infos
         val snapshotList = new ArrayList<SnapshotDescription>
         for (snapshot : snapshots.indexed) {
             this.objectMap.get(uri).add(snapshot.value.object)
@@ -167,13 +157,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         return
     }
     
-    /**
-     * @return the correct XtextResourceSet for the given uri based in its file extension.
-     */
-    def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
-        return injector.getInstance(XtextResourceSet);
-    }
-    
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
@@ -186,19 +169,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         if (index != -1) {
             model = this.objectMap.get(uri).get(index)
         } else {
-            // get eObject of model specified by uri
-            var fileUri = URLDecoder.decode( uri, "UTF-8" );
-            
-            if (fileUri.startsWith("file://")) {
-                fileUri = fileUri.substring(7) 
-            }
-            
-            var stringUri = URI.createFileURI(fileUri)
-            var resourceSet = stringUri.xtextResourceSet 
-            val resource = resourceSet.getResource(stringUri, true)
-        
-            var eobject = resource.getContents().head
-            model = eobject
+            // get eObject of model specified by uri        
+            model = getEObjectFromUri(uri)
         }
         val modelToSend = model
         return requestManager.runRead[ cancelIndicator |
@@ -208,15 +180,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override getSystems(String uri, boolean filter) {
-        var fileUri = URLDecoder.decode( uri, "UTF-8" );
-        if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7) 
-        }
-        var uriObject = URI.createFileURI(fileUri)
-        var resourceSet = uriObject.xtextResourceSet 
-        val resource = resourceSet.getResource(uriObject, true)
         
-        var eobject = resource.getContents().head
+        var eobject = getEObjectFromUri(uri)
         val model = if(filter) eobject
         if (model !== null && model.class !== modelClassFilter) {
             modelClassFilter = model.class
@@ -231,15 +196,26 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     /**
      * Gets EObject for resource specified by given uri as String
      * 
-     * @param stringUri uri as String for resource to get EObject from
+     * @param uri uri as String for resource to get EObject from
      * @return EObject of specified resource
      */
-    def EObject getEObjectFromURI(String stringUri) {
-        var uri = URI.createFileURI(stringUri)
-        var resourceSet = uri.xtextResourceSet
-        val resource = resourceSet.getResource(uri, true)
-
+    def EObject getEObjectFromUri(String uri) {
+        var fileUri = URLDecoder.decode( uri, "UTF-8" );
+        if (fileUri.startsWith("file://")) {
+            fileUri = fileUri.substring(7) 
+        }
+        val uriObject = URI.createFileURI(fileUri)
+        val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
+        
         return resource.getContents().head
+    }
+    
+    /**
+     * @param uri URI of file without file://
+     * @return the correct XtextResourceSet for the given uri based in its file extension.
+     */
+    def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
+        return injector.getInstance(XtextResourceSet);
     }
     
     /**
