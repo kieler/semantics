@@ -40,9 +40,12 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
     @Inject protected Injector injector
     
     protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")    
+    protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
+    protected static val INCLUDE = PragmaRegistry.register("include", StringPragma, "Additional things that should be imported")
 
     public static val JAVA_EXTENSION = ".java"
     public static val IMPORTS = "imports"
+    public static val CONTEXT_SUFFIX = "Context"
     
     @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
     
@@ -68,6 +71,7 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
         val javaFilename = codeFilename + JAVA_EXTENSION
         val javaFile = new StringBuilder
 
+        javaFile.packageAdditions(scc)
         javaFile.append(addHeader)
         javaFile.hostcodeAdditions(scc, template)
         javaFile.append(template.source)
@@ -77,7 +81,20 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
         naming.put(LOGIC, environment.getProperty(LOGIC_FUNCTION_NAME))
         naming.put(TICKDATA, environment.getProperty(TICKDATA_STRUCT_NAME))   
         
-        codeContainer.addJavaCode(javaFilename, javaFile.toString).naming.putAll(naming)       
+        codeContainer.addJavaCode(javaFilename, javaFile.toString).naming.putAll(naming)
+        
+        if (template.needsContextInterface) {
+          val contextFilename = codeFilename + CONTEXT_SUFFIX + JAVA_EXTENSION
+          val contextFile = new StringBuilder
+          
+          contextFile.packageAdditions(scc)
+          contextFile.append(addHeader)
+          contextFile.hostcodeAdditions(scc, template)
+          contextFile.append(template.context)
+          
+          codeContainer.addJavaContextInterface(contextFilename, contextFile.toString)
+        }
+               
     }      
     
     protected def CharSequence addHeader() {
@@ -96,13 +113,26 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
         for (include : includes)  {
             sb.append("import " + include + ";\n")
         }
+
+        val includePragmas = scc.getStringPragmas(INCLUDE)
+        for (pragma : includePragmas) {
+            sb.append("import ").append(pragma.values.head).append(";\n")
+        }        
         
         val hostcodePragmas = scc.getStringPragmas(HOSTCODE)
         for (pragma : hostcodePragmas) {
             sb.append(pragma.values.head + "\n")
         }
-        if (hostcodePragmas.size > 0 || includes.size > 0) {
+        
+        if (hostcodePragmas.size > 0 || includes.size > 0 || includePragmas.size > 0) {
             sb.append("\n")
         }
-    }      
+    }
+
+    protected def void packageAdditions(StringBuilder sb, SCCharts scc) {
+        val packagePragma = scc.getStringPragmas(PACKAGE)
+        if (packagePragma.size > 0) {
+            sb.append("package ").append(packagePragma.head.values.head).append(";\n\n")
+        }
+    }
 }

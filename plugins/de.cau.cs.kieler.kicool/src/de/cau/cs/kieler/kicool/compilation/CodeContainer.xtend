@@ -66,9 +66,14 @@ class CodeContainer {
         return new CCodeFile(fileName, code, false) => [files += it]
     }
     
+    def addJavaContextInterface(String fileName, String code) {
+        checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
+        return new JavaCodeFile(fileName, code, true, fileName.substring(0, fileName.indexOf(".java")) + "Context") => [files += it]        
+    }    
+    
     def addJavaCode(String fileName, String code) {
         checkArgument(fileName.endsWith(".java"), "File name has not the correct pattern for java source files")
-        return new JavaCodeFile(fileName, code, fileName.substring(0, fileName.indexOf(".java"))) => [files += it]
+        return new JavaCodeFile(fileName, code, false, fileName.substring(0, fileName.indexOf(".java"))) => [files += it]
     }
     
     def addProxyCCodeFile(File file) {
@@ -142,19 +147,21 @@ class CCodeFile extends CodeFile {
 
 class JavaCodeFile extends CodeFile {
     
-    @Accessors var String className
+    @Accessors val boolean contextInterface
+    @Accessors val String className
     
     new(File underlyingFile) {
         this(underlyingFile, null)
     }
     
     new(File underlyingFile, String content) {
-        this(underlyingFile.name, content, underlyingFile.name)
+        this(underlyingFile.name, content, false, underlyingFile.name)
         this.underlyingFile = underlyingFile
     }
     
-    new(String fileName, String code, String className) {
+    new(String fileName, String code, boolean contextInterface, String className) {
         super(fileName, code)
+        this.contextInterface = contextInterface
         this.className = className
     }
 }
