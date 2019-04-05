@@ -12,23 +12,26 @@
  */
 package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
-import de.cau.cs.kieler.sccharts.SCCharts
-import org.eclipse.xtend.lib.annotations.Accessors
-import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
 import com.google.inject.Inject
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
-import de.cau.cs.kieler.annotations.StringPragma
-import com.google.inject.Injector
-import java.util.Map
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.ExogenousProcessor
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+import de.cau.cs.kieler.sccharts.SCCharts
+import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
+
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+
+import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.hostcodeSafeName
 
 /**
  * C Code Generator for the Statebased code generation using templates.
@@ -135,10 +138,4 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
             sb.append("\n")
         }
     }      
-    
-    static def hostcodeSafeName(String string) {
-        if (string === null) return ""
-        string.replaceAll("[\\s-]","_")
-    }    
-    
 }
