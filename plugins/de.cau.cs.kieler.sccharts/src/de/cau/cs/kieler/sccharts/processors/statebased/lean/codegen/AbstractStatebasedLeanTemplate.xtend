@@ -94,14 +94,19 @@ abstract class AbstractStatebasedLeanTemplate {
     protected def enumerateControlflowRegion(ControlflowRegion scope, String namePrefix, String contextPrefix) {
         // Check if this scope has no unique name yet 
         if (!scopeNames.containsKey(scope)) {
-            val name = if (scope.name.nullOrEmpty) {
-                    // Generate a name with a running number if no region name is defined
-                    '''R«regionCounter++»'''
-                } else {
-                    scope.name.hostcodeSafeName
+            var String name
+            if (scope.name.nullOrEmpty) {
+                // Generate a name with a running number if no region name is defined
+                name = namePrefix + '_regionR' + (regionCounter++)
+            } else {
+                name = namePrefix + '_region' + scope.name.hostcodeSafeName
+                // Ensure the name is really unique
+                while (scopeNames.containsValue(name)) {
+                    name = namePrefix + '_region' + scope.name.hostcodeSafeName + (regionCounter++)
                 }
+            }
             // Store this unique region name in the name cache
-            scopeNames.put(scope, '''«namePrefix»_region«name»''')
+            scopeNames.put(scope, name)
 
             contextStructNames.put(scope, contextPrefix + scope.uniqueName.lowerCapital)
         }
