@@ -98,16 +98,16 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
                 customInteractiveCommands = verificationContext.customInteractiveSmvLtlCommands
             case CTL:
                 customInteractiveCommands = verificationContext.customInteractiveSmvCtlCommands
-        }        
-        if (!customInteractiveCommands.isNullOrEmpty) {
-            interactiveCommands = customInteractiveCommands
+        }
+        // Remove whitespace in the custom interactive commands
+        val nonWhitespaceCustomInteractiveCommands =
+                customInteractiveCommands?.filter[!it.isNullOrEmpty && !it.matches('''\s+''')].toList
+        if (!nonWhitespaceCustomInteractiveCommands.isNullOrEmpty) {
             // Add "quit" as last command if this is missing
-            if(customInteractiveCommands.last == "quit") {
-                interactiveCommands = customInteractiveCommands
+            if(nonWhitespaceCustomInteractiveCommands.last == "quit") {
+                interactiveCommands = nonWhitespaceCustomInteractiveCommands
             } else {
-                interactiveCommands = newArrayList
-                interactiveCommands.addAll(customInteractiveCommands)
-                interactiveCommands.add("quit")
+                interactiveCommands = (nonWhitespaceCustomInteractiveCommands + #["quit"]).toList
             }
         }
         
@@ -137,7 +137,10 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
             val commandWithNewline = command+"\n"
             process.outputStream.write(commandWithNewline.bytes)
             process.outputStream.flush
-            // Add the sent command to the outputBuffer, so one can understand what happened when viewing the log 
+            // Update the property so the user sees, which command is executed now
+            updateTaskDescriptionAndNotify(property, '''Running Model Checker... «command»...''')
+            // Add the sent command to the outputBuffer, so one can understand what happened when viewing the log
+            // TODO: The position in the ouput is sometimes not correct (race condition) 
             outputBuffer.append(commandWithNewline)
             // Wait for new output from the process
             process.waitForOutput([ return isCanceled() ])

@@ -70,7 +70,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
      * The verification is canceled in an @After method to kill the model checking process if needed.
      */
     @Rule
-    public final TestRule globalTimeout = Timeout.seconds(11);
+    public final TestRule globalTimeout = Timeout.seconds(120);
     
     /**
      * Pattern to separate the test-method name and the model of the test-method.
@@ -129,7 +129,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     //////////////////////////////////////////////////////////////////////
     // nuXmv - go (invar)
     //////////////////////////////////////////////////////////////////////
-//    @Test
+    @Test
     public def void nuxmv_go_check_invar(SCCharts scc, TestModelData modelData) {
         prepareNuxmvInvarTest( #['''go''', '''check_invar -P «smvPropertyPlaceholder»'''] )
         mustNotHaveModelProperties = #["unbounded-int"]
