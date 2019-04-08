@@ -12,37 +12,21 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.gson.GsonBuilder
 import com.google.inject.Inject
 import com.google.inject.Injector
-import com.google.inject.Provider
-import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import java.util.concurrent.Executors
-import java.util.function.Consumer
 import java.util.function.Function
-import org.apache.log4j.AppenderSkeleton
-import org.apache.log4j.AsyncAppender
-import org.apache.log4j.Level
-import org.apache.log4j.Logger
-import org.apache.log4j.spi.LoggingEvent
-import org.eclipse.lsp4j.MessageParams
-import org.eclipse.lsp4j.MessageType
-import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer
-import org.eclipse.lsp4j.services.LanguageClient
-import org.eclipse.xtend.lib.annotations.Data
-import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
-import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.util.Modules2
 
 /**
+ * Do NOT start this directly. This is only called by the LanguageServer.
+ * This main method of this class is only called in the stdio case (production case).
  * Used to start language server via stdin/out connection.
+ * Defines static methods used by the LangaugeServer to create an injector and a LS.
  * 
  * @author sdo
  *
@@ -51,58 +35,25 @@ class LanguageServerLauncher extends ServerLauncher {
     
     static extension LanguageRegistration registration = new LanguageRegistration
     
+    static extension LSCreator creator = new LSCreator
+    
     static KGraphLanguageServerExtension kgl
     
     @Inject Injector injector
     
     def static void main(String[] args) {       
         // Launch the server
-        val kgraphExt = bindAndRegisterLanguages()
-        kgl = kgraphExt
-        launch(ServerLauncher.name, args, Modules2.mixin(new KeithServerModule, [
-            bind(ServerLauncher).to(LanguageServerLauncher)
-            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-            bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
-                override get() {
-                    kgraphExt
-                }
-            })
-            bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
-        ]))
+        kgl = bindAndRegisterLanguages()
+        launch(ServerLauncher.name, args, createLSModules(kgl, false))
     }
     
+    /**
+     * Started via launch (called in main).
+     * Creates and starts a LS for the stdio case.
+     */
     override start(LaunchArgs args) {
-        val executorService = Executors.newCachedThreadPool
-        val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
-            KGraphTypeAdapterUtil.configureGson(gsonBuilder)
-        ]
-        var iLanguageServerExtensions = <Object>newArrayList(kgl)
-        for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
-            iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
-        }
-        val launcher = new Builder<LanguageClient>()
-                .setLocalServices(iLanguageServerExtensions)
-                .setRemoteInterface(LanguageClient)
-                .setInput(args.in)
-                .setOutput(args.out)
-                .setExecutorService(executorService)
-                .wrapMessages(args.wrapper)
-                .configureGson(configureGson)
-                .setClassLoader(LanguageServer.classLoader)
-                .create();
-        val client = launcher.remoteProxy
-        kgl.connect(client)
-        // Redirect Log4J output to a file
-        Logger.rootLogger => [
-            removeAllAppenders()
-            addAppender(new AsyncAppender() => [
-                addAppender(new LanguageClientAppender(client))
-            ])
-        ]
-        val future = launcher.startListening
-        while (!future.done) {
-            Thread.sleep(10_000l)
-        }
+        val threadPool = Executors.newCachedThreadPool
+        buildAndStartLS(injector, kgl, args.in, args.out, threadPool, args.wrapper,false)
     }
     
     private def Function<MessageConsumer, MessageConsumer> getWrapper(LaunchArgs args) {
@@ -120,38 +71,5 @@ class LanguageServerLauncher extends ServerLauncher {
             }
             return result
         ]
-    }
-    
-    /**
-     * Asynchronous string appender used for logging
-     */
-    @Data static class LanguageClientAppender extends AppenderSkeleton {
-        LanguageClient client
-        
-        override protected append(LoggingEvent event) {
-            client.logMessage(new MessageParams => [
-                message = event.message.toString 
-                    + if(event.throwableStrRep !== null && event.throwableStrRep.length > 0) 
-                        ': ' + event.throwableStrRep?.join('\n')
-                      else 
-                        ''
-                type = switch event.getLevel {
-                    case Level.ERROR: MessageType.Error
-                    case Level.INFO : MessageType.Info
-                    case Level.WARN : MessageType.Warning
-                    default : MessageType.Log
-                }
-            ])
-        }
-        
-        override close() {
-            
-        }
-        
-        override requiresLayout() {
-            return false
-        }
-        
-    }
-    
+    }    
 }

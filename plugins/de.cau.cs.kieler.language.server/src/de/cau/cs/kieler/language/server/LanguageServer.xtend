@@ -12,26 +12,16 @@
  */
 package de.cau.cs.kieler.language.server
 
-import com.google.gson.GsonBuilder
 import com.google.inject.Guice
 import com.google.inject.Injector
-import com.google.inject.Provider
-import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
-import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
 import java.util.concurrent.Executors
-import java.util.function.Consumer
 import org.apache.log4j.Logger
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
-import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
-import org.eclipse.lsp4j.services.LanguageClient
-import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
-import org.eclipse.xtext.resource.IResourceServiceProvider
-import org.eclipse.xtext.util.Modules2
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -56,6 +46,8 @@ class LanguageServer implements IApplication {
     
     extension LanguageRegistration languageRegistration = new LanguageRegistration
     
+    extension LSCreator creator = new LSCreator
+    
     /**
      * Starts the language server.
      */
@@ -79,15 +71,7 @@ class LanguageServer implements IApplication {
             println("Starting language server socket")
             val kgraphExt = bindAndRegisterLanguages()
             
-            val injector = Guice.createInjector(Modules2.mixin(new KeithServerModule, [
-                bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-                bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
-                    override get() {
-                        kgraphExt
-                    }
-                })
-                bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
-            ]))
+            val injector = Guice.createInjector(createLSModules(kgraphExt, true))
             this.run(injector, host, port, kgraphExt)
             return EXIT_OK 
         } else {
@@ -110,25 +94,7 @@ class LanguageServer implements IApplication {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-            val Consumer<GsonBuilder> configureGson = [
-                KGraphTypeAdapterUtil.configureGson(it)
-            ]
-            var iLanguageServerExtensions = <Object>newArrayList(kgl)
-            for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
-                iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
-            }
-            val launcher = new Builder<LanguageClient>()
-                .setLocalServices(iLanguageServerExtensions)
-                .setRemoteInterface(LanguageClient)
-                .setInput(in)
-                .setOutput(out)
-                .setExecutorService(threadPool)
-                .wrapMessages([it])
-                .configureGson(configureGson)
-                .setClassLoader(this.getClass.classLoader)
-                .create();
-            kgl.connect(launcher.remoteProxy)
-            launcher.startListening
+            buildAndStartLS(injector, kgl, in, out, threadPool, [it], true)
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
         }
     }
