@@ -51,11 +51,14 @@ class LanguageServerLauncher extends ServerLauncher {
     
     static extension LanguageRegistration registration = new LanguageRegistration
     
+    static KGraphLanguageServerExtension kgl
+    
     @Inject Injector injector
     
     def static void main(String[] args) {       
         // Launch the server
-        val kgraphExt = bindAndRegisterLanguages()    
+        val kgraphExt = bindAndRegisterLanguages()
+        kgl = kgraphExt
         launch(ServerLauncher.name, args, Modules2.mixin(new KeithServerModule, [
             bind(ServerLauncher).to(LanguageServerLauncher)
             bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
@@ -73,8 +76,7 @@ class LanguageServerLauncher extends ServerLauncher {
         val Consumer<GsonBuilder> configureGson = [ gsonBuilder |
             KGraphTypeAdapterUtil.configureGson(gsonBuilder)
         ]
-        val languageServer = injector.getInstance(LanguageServerImpl)
-        var iLanguageServerExtensions = <Object>newArrayList(languageServer)
+        var iLanguageServerExtensions = <Object>newArrayList(kgl)
         for (lse : KielerServiceLoader.load(ILanguageServerContribution)) {
             iLanguageServerExtensions.add(lse.getLanguageServerExtension(injector))
         }
@@ -89,7 +91,7 @@ class LanguageServerLauncher extends ServerLauncher {
                 .setClassLoader(LanguageServer.classLoader)
                 .create();
         val client = launcher.remoteProxy
-        languageServer.connect(client)
+        kgl.connect(client)
         // Redirect Log4J output to a file
         Logger.rootLogger => [
             removeAllAppenders()
