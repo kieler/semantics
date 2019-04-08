@@ -14,7 +14,6 @@
  package de.cau.cs.kieler.verification.processors
 
 import java.util.List
-import java.util.Locale
 import java.util.concurrent.TimeUnit
 import java.util.function.Function
 
@@ -67,16 +66,14 @@ class ProcessExtensions {
      * and further use system resources.
      */
     public static def void kill(Process process) {
+        // TODO: check if killing the process is needed on windows and mac.
+        
         // Process.destroyForcibly does not kill child processes (at least on Linux).
         // For instance when using "/usr/bin/time sleep 60",
         // the time command can be killed but sleep remains as an orphan.
         // Therefore we issue system commands to find all child processes and kill them manually.
         try {
-            // Check if on unix taken from StackOverflow
-            // https://stackoverflow.com/questions/228477/how-do-i-programmatically-determine-operating-system-in-java
-            val osName = System.getProperty("os.name", "generic").toLowerCase(Locale.ENGLISH)
-            val isUnix = osName.indexOf("nux") >= 0
-            if(isUnix) {
+            if(OsUtil.isLinux) {
                 val pid = process.getPID
                 val childrenPIDs = getChildrenPIDs(pid, true)
                 for(childPID : childrenPIDs) {
@@ -164,6 +161,7 @@ class ProcessExtensions {
 //            process.destroyForcibly
             
             // ProcessExtensions.kill also kills all child processes (on linux / unix)
+            // TODO: Try if this works on Mac
             process.kill
         }    
     }

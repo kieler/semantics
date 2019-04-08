@@ -70,7 +70,11 @@ abstract class RunModelCheckerProcessorBase extends Processor<CodeContainer, Obj
     }
     
     protected def List<String> getTimeCommand() {
-        return #["/usr/bin/time", "-f", "\n\nelapsed time: %e seconds, max memory in RAM: %M KB"]
+        if(OsUtil.isLinux) {
+            return #["/usr/bin/time", "-f", "\n\nelapsed time: %e seconds, max memory in RAM: %M KB"]    
+        } else {
+            #[]
+        }
     }
     
     protected def VerificationContext getVerificationContext() {
