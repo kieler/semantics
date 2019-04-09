@@ -52,8 +52,9 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     @Accessors val source = new StringBuilder
     @Accessors val context = new StringBuilder
    
-    @Accessors var boolean needsContextInterface = false;
+    @Accessors var boolean needsContextInterface = false
     protected Iterable<VariableDeclaration> inputEventDeclarations
+    @Accessors var String superClass = null  
 
     static val INTERFACE_PARAM_NAME = "arg"
 
@@ -84,7 +85,7 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
     protected def void createCode() {
         source.append('''
           @SuppressWarnings("unused")
-          public class « rootState.uniqueName » {
+          public class « rootState.uniqueName »« IF superClass !== null » extends « superClass »« ENDIF » {
 
             public Iface iface;
             private TickData rootContext;
