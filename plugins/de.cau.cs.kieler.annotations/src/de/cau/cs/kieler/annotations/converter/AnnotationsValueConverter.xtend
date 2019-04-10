@@ -14,19 +14,11 @@
 package de.cau.cs.kieler.annotations.converter
 
 import com.google.inject.Inject
-import com.google.inject.Injector
-import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.annotations.AnnotationsStandaloneSetup
-import de.cau.cs.kieler.annotations.CommentAnnotation
-import java.io.ByteArrayInputStream
-import org.eclipse.emf.common.util.URI
 import org.eclipse.xtext.common.services.DefaultTerminalConverters
 import org.eclipse.xtext.conversion.IValueConverter
 import org.eclipse.xtext.conversion.ValueConverter
 import org.eclipse.xtext.conversion.ValueConverterException
 import org.eclipse.xtext.nodemodel.INode
-import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.Strings
 
 /**
@@ -38,9 +30,7 @@ import org.eclipse.xtext.util.Strings
  * 
  * @author chsch ssm
  */
-public class AnnotationsValueConverter extends DefaultTerminalConverters {
-
-    static val Injector injector = new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration();
+class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     /**
      * Provides comment annotation converter dropping/attaching the leading/trailing characters.
@@ -56,17 +46,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 val lines = string.replace("/**", "").replace("*/", "").replaceAll("\\r", "").trim.split("\n")
                 val newLines = <String> newArrayList
                 for (i : 0..lines.length - 1) {
-                    var add = true
-                    val newLine = lines.get(i).replaceFirst("^\\s*\\*\\s*", "")
-                    
-                    if (newLine.startsWith("@")) {
-                        val commentAnnotation = node.parent.semanticElement
-                        if (commentAnnotation instanceof CommentAnnotation) {
-                            if (commentAnnotation.parseAnnotation(newLine)) add = false        
-                        }             
-                    }
-                    
-                    if (add) newLines += newLine
+                    newLines += lines.get(i).replaceFirst("^\\s*\\*\\s?", "")
                 }
                 
                 val newString = newLines.join("\n")
@@ -90,31 +70,16 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
         };
     }
     
-    private def boolean parseAnnotation(Annotatable annotatable, String text) {
-        try {
-            val resourceSet = injector.getInstance(XtextResourceSet)
-            val resource = resourceSet.createResource(URI.createURI("dummy:/example.anno"))
-            val in = new ByteArrayInputStream(text.getBytes)
-            resource.load(in, resourceSet.getLoadOptions());
-            val annotationModel = resource.getContents().get(0)
-            if (annotationModel instanceof Annotation) {
-                annotatable.annotations += annotationModel
-                return true
-            }
-        } catch (Exception e) {}
-        return false
-    }
-    
-    
-    
-    @Inject private QualifiedIDValueConverter qualifiedIDValueConverter;
+    @Inject
+    QualifiedIDValueConverter qualifiedIDValueConverter;
     
     @ValueConverter(rule = "QualifiedID") 
     def IValueConverter<String> convertQualifiedID() {
         return qualifiedIDValueConverter;
     }
     
-    @Inject private ExtendedIDValueConverter extendedIDValueConverter;
+    @Inject
+    ExtendedIDValueConverter extendedIDValueConverter;
     
     @ValueConverter(rule = "ExtendedID") 
     def IValueConverter<String> convertExtendedID() {
@@ -175,7 +140,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     }
     
-    public static def String removeEscapeChars(String string) {
+    static def String removeEscapeChars(String string) {
         return string.replaceAll("\\\\\\\"", "\"").replaceAll("\\\\\\\\", "\\\\");
     }    
 }

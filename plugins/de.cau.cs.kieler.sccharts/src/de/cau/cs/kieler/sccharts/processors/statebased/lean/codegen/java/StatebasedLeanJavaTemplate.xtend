@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sccharts.processors.statebased.codegen.java.StatebasedJa
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.annotations.CommentAnnotation
 
 /**
  * @author wechselberg
@@ -418,7 +419,6 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
             context.append('''
               @SuppressWarnings("unused")
               public interface « rootState.uniqueName»«StatebasedLeanJavaCodeGenerator.CONTEXT_SUFFIX » {
-
                 « FOR usage : referenceUsages.entries.sortBy[key.extern.head.code] »
                   « generateMethod(usage.key, usage.value) »
                 « ENDFOR »
@@ -474,8 +474,19 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
                 // If we have (at most) one parameter, we just call it whatever
                 types.map[it + " " + INTERFACE_PARAM_NAME].join()
             }
+            val comments = decl.annotations.filter(CommentAnnotation).head;
 
         '''
+
+            « IF comments !== null »
+            /**
+             « FOR comment : comments.values »
+             « FOR line : comment.split("\n") »
+             * « line »
+             « ENDFOR » 
+             « ENDFOR »
+             */
+            « ENDIF »
             « extractContextType(decl) » « decl.extern.head.code »(« paramList »);
         '''
     }
