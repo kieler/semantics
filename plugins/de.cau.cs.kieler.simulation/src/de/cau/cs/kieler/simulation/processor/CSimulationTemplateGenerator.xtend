@@ -30,10 +30,8 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
-class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
+class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
 
     public static val FILE_NAME = "c-simulation.ftl" 
 
@@ -110,7 +108,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariables»
+                    «FOR v : store.orderedVariables.dropBlacklisted»
                         // Receive «v.key»
                         item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
@@ -128,7 +126,7 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
                     cJSON* array;
                 «ENDIF»
                 
-                «FOR v : store.orderedVariables»
+                «FOR v : store.orderedVariables.dropBlacklisted»
                     // Send «v.key»
                     «v.serialize("root", "array")»
                 «ENDFOR»
