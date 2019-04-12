@@ -14,7 +14,6 @@ package de.cau.cs.kieler.language.server
 
 import com.google.inject.Guice
 import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import java.net.InetSocketAddress
 import java.nio.channels.AsynchronousServerSocketChannel
 import java.nio.channels.Channels
@@ -22,6 +21,7 @@ import java.util.concurrent.Executors
 import org.apache.log4j.Logger
 import org.eclipse.equinox.app.IApplication
 import org.eclipse.equinox.app.IApplicationContext
+import org.eclipse.xtext.ide.server.LanguageServerImpl
 
 /**
  * Entry point for the language server application for KIELER Theia.<br>
@@ -87,14 +87,15 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, String host,  int port, KGraphLanguageServerExtension kgl) {
+    def run(Injector injector, String host,  int port, Injector lsInjector) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-            buildAndStartLS(injector, kgl, in, out, threadPool, [it], true)
+            val ls = lsInjector.getInstance(LanguageServerImpl)
+            buildAndStartLS(injector, ls, in, out, threadPool, [it], true)
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
         }
     }

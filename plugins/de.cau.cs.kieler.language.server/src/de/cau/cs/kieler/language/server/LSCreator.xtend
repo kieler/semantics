@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
+import com.google.inject.Injector
+import com.google.inject.Provider
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
@@ -20,20 +22,18 @@ import java.io.InputStream
 import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.function.Consumer
+import java.util.function.Function
 import org.apache.log4j.AsyncAppender
+import org.apache.log4j.Logger
+import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer
 import org.eclipse.lsp4j.services.LanguageClient
+import org.eclipse.sprotty.xtext.launch.DiagramServerLauncher.LanguageClientAppender
 import org.eclipse.xtext.ide.server.IWorkspaceConfigFactory
 import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
-import com.google.inject.Injector
-import org.apache.log4j.Logger
-import org.eclipse.sprotty.xtext.launch.DiagramServerLauncher.LanguageClientAppender
-import org.eclipse.lsp4j.jsonrpc.Launcher.Builder
-import java.util.function.Function
-import com.google.inject.Provider
 
 /** 
  * Provides methods to create a LS.
@@ -46,10 +46,10 @@ class LSCreator {
     
     /**
      * Binds all necessary classes to start the LS.
-     * @param kgl KGraphLSExtension which is registered at the injector to inject it into other LSExtensions.
+     * @param lsInjector Injector to inject LSExtensions.
      * @param socket boolean whether modules for socket or stdio case are generated.
      */
-    def createLSModules(KGraphLanguageServerExtension kgl, boolean socket) {
+    def createLSModules(Injector lsInjector, boolean socket) {
         return Modules2.mixin(new KeithServerModule, [
             if (socket) {
                 // nothing special to bind
@@ -60,7 +60,7 @@ class LSCreator {
             // the KGraphLSExtension is bound to make it accessible via injection
             bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
                 override get() {
-                    kgl
+                    lsInjector.getInstance(KGraphLanguageServerExtension)
                 }
             })
             // the WorkspaceConfigFactory is overridden to disable the creation of a folder with xtext nature.
@@ -118,8 +118,6 @@ class LSCreator {
             while (!future.done) {
                 Thread.sleep(10_000l)
             }
-            
         }
-        
     }
 }

@@ -14,11 +14,11 @@ package de.cau.cs.kieler.language.server
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.klighd.lsp.gson_utils.ReflectiveMessageValidatorExcludingSKGraph
 import java.util.concurrent.Executors
 import java.util.function.Function
 import org.eclipse.lsp4j.jsonrpc.MessageConsumer
+import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.LaunchArgs
 import org.eclipse.xtext.ide.server.ServerLauncher
 
@@ -37,14 +37,14 @@ class LanguageServerLauncher extends ServerLauncher {
     
     static extension LSCreator creator = new LSCreator
     
-    static KGraphLanguageServerExtension kgl
+    static Injector lsInjector
     
     @Inject Injector injector
     
     def static void main(String[] args) {       
         // Launch the server
-        kgl = bindAndRegisterLanguages()
-        launch(ServerLauncher.name, args, createLSModules(kgl, false))
+        lsInjector = bindAndRegisterLanguages()
+        launch(ServerLauncher.name, args, createLSModules(lsInjector, false))
     }
     
     /**
@@ -53,7 +53,8 @@ class LanguageServerLauncher extends ServerLauncher {
      */
     override start(LaunchArgs args) {
         val threadPool = Executors.newCachedThreadPool
-        buildAndStartLS(injector, kgl, args.in, args.out, threadPool, args.wrapper,false)
+        val ls = lsInjector.getInstance(LanguageServerImpl)
+        buildAndStartLS(injector, ls, args.in, args.out, threadPool, args.wrapper,false)
     }
     
     private def Function<MessageConsumer, MessageConsumer> getWrapper(LaunchArgs args) {

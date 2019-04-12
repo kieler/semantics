@@ -15,7 +15,6 @@ package de.cau.cs.kieler.language.server
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.kgraph.text.ide.KGraphLSSetup
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import org.eclipse.elk.graph.text.ElkGraphRuntimeModule
 import org.eclipse.elk.graph.text.ElkGraphStandaloneSetup
 import org.eclipse.elk.graph.text.ide.ElkGraphIdeModule
@@ -39,6 +38,6 @@ class LanguageRegistration {
         for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
             contribution.LSSetup.doLSSetup()
         }
-        return injectorKGraph.getInstance(KGraphLanguageServerExtension)
+        return injectorKGraph
     }
 }
