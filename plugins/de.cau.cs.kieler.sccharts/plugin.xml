@@ -175,6 +175,9 @@
               class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedLeanCCodeGenerator">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.cpp.StatebasedLeanCppCodeGenerator">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.java.StatebasedLeanJavaCodeGenerator">
         </Processor>
         <Processor
@@ -308,6 +311,9 @@
         </TransformationSystem>
         <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.statebased.lean.template.cpp.kico">
         </TransformationSystem>
         <TransformationSystem
             system="system/de.cau.cs.kieler.c.sccharts.dataflow.kico">
