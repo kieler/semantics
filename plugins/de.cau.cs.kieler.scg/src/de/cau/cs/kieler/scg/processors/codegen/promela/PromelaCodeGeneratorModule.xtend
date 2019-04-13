@@ -109,7 +109,7 @@ class PromelaCodeGeneratorModule extends PromelaCodeGeneratorModuleBase {
                 val operatorExpression = assignment.expression as OperatorExpression
                 for(preOp : operatorExpression.getPreOperatorExpressions) {
                     val preOpName = preOp.serializeHR
-                    val variableInformation = store.add(preOpName, PROPERTY_GUARD, PROPERTY_PREGUARD)
+                    val variableInformation = store.add(preOpName, PROPERTY_PREGUARD)
                     variableInformation.type = ValueType.BOOL    
                 }
             }

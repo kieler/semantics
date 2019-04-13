@@ -86,6 +86,10 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
          
         appendIndentedLine("atomic { ")
         incIndentationLevel
+        // Add declarations
+        appendGuardDeclarations();
+        appendIndentedLine('''bool «TICK_END_FLAG_NAME»;''')
+        code.append("\n")
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
         generateSettingRandomInputs()
         code.append("\n")
@@ -102,6 +106,19 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         // End of tick loop
     }
     
+    private def void appendGuardDeclarations() {
+        for (declaration : scg.declarations) {
+            for (valuedObject : declaration.valuedObjects) {
+                if(valuedObject.isGuard) {
+                    if (declaration instanceof VariableDeclaration) {
+                        val declarationType = declaration.type.serializeHR
+                        appendIndentedLine('''«declarationType» «valuedObject.name»;''')
+                    }    
+                }
+            }
+        }
+    }
+    
     private def void generateAssertions() {
         val invariant = getInvariantVerificationProperty
         if(invariant === null) {
@@ -114,7 +131,6 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     
     private def void generateAfterTickLogic() {
         appendSeparatorComment("after tick logic")
-        appendIndentedLine('''«GO_GUARD» = 0;''')
         // Set pre guards
         val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
@@ -127,6 +143,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
                 code.append(preGuardName).append(" = ").append(predVariableName).append(";\n")
             }
         }
+        // There could be a pre(_GO) guard that depends on _GO. So this must be reset last.
+        appendIndentedLine('''«GO_GUARD» = 0;''')
     }
     
     private def void generateSettingRandomInputs() {

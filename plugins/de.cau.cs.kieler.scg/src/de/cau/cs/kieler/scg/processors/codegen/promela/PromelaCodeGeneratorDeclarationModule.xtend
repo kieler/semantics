@@ -20,6 +20,7 @@ import de.cau.cs.kieler.verification.VerificationPropertyType
 
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * Handles the declaration of variables.
@@ -39,6 +40,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     override generate() {
+        val store = VariableStore.get(processorInstance.environment)
+        
         // Add ltl properties
         val verificationProperties = verificationContext?.verificationProperties
         if(!verificationProperties.isNullOrEmpty) {
@@ -58,7 +61,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         // Add the declarations of the model.
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
-                if(valuedObject.name != "_GO") {
+                if(valuedObject.name != "_GO" && !valuedObject.isGuard) {
                     if (declaration instanceof VariableDeclaration) {
                         val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
                             declaration.type.serializeHR
@@ -70,7 +73,6 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         }
         
         // Add pre guards
-        val store = VariableStore.get(processorInstance.environment)
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
             if(variableInformation.properties.contains(PromelaCodeGeneratorModule.PROPERTY_PREGUARD)) {
@@ -81,9 +83,6 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         
         // Add _GO signal
         appendIndentedLine('''bool _GO = 1;''')
-        
-        // Set end-of-tick flag
-        appendIndentedLine('''bool «TICK_END_FLAG_NAME» = 0;''')
     }
     
     override generateDone() {

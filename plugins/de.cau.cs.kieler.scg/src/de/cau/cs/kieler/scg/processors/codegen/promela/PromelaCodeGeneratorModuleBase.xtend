@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.scg.processors.codegen.promela
 
 import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * @author aas
@@ -26,5 +27,9 @@ abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     
     override getLineCommentToken() {
         return "//";
+    }
+    
+    protected def boolean isGuard(ValuedObject vo) {
+        return vo.name.startsWith("_g") || vo.name.startsWith("_cg")
     }
 }

@@ -82,8 +82,9 @@ class SpinTrailInterpreter extends LineBasedParser {
         if(tickStartMatcher.matches) {
             if(counterexample === null) {
                 counterexample = new VerificationPropertyCounterexample()
+            } if (counterexample.currentState === null) {
+                counterexample.createNextState    
             }
-            counterexample.createNextState
         } else if(tickEndMatcher.matches) {
             counterexample.currentState = null
         } else if(counterexample !== null && counterexample.currentState !== null) {
