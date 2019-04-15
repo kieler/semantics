@@ -23,7 +23,7 @@
 '/'=86
 '/='=116
 ':'=48
-';'=43
+';'=42
 '<'=129
 '<<'=80
 '<<='=121
@@ -39,7 +39,7 @@
 '?'=137
 '@'=94
 'Pr'=52
-'Pr='=40
+'Pr='=39
 '['=36
 '\''=88
 ']'=37
@@ -56,9 +56,9 @@
 'connector'=26
 'const'=63
 'dataflow'=49
-'deferred'=38
+'deferred'=43
 'delayed'=99
-'do'=42
+'do'=41
 'during'=53
 'entry'=51
 'exit'=54
@@ -72,7 +72,7 @@
 'go to'=95
 'history'=104
 'host'=139
-'if'=39
+'if'=38
 'immediate'=100
 'import'=17
 'initial'=23
@@ -85,7 +85,7 @@
 'max='=125
 'min'=143
 'min='=124
-'nondeterministic'=41
+'nondeterministic'=40
 'none'=141
 'null'=92
 'once'=50
