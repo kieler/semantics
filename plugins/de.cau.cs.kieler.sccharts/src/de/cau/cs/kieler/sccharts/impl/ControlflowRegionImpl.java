@@ -105,6 +105,7 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<State> getStates() {
         if (states == null) {
             states = new EObjectContainmentWithInverseEList<State>(State.class, this, SCChartsPackage.CONTROLFLOW_REGION__STATES, SCChartsPackage.STATE__PARENT_REGION);
@@ -117,6 +118,7 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFinal() {
         return final_;
     }
@@ -126,6 +128,7 @@ public class ControlflowRegionImpl extends RegionImpl implements ControlflowRegi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFinal(boolean newFinal) {
         boolean oldFinal = final_;
         final_ = newFinal;

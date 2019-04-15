@@ -32,6 +32,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import java.util.List
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kicool.processors.dependencies.ITarjanFilter
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.State
 
 /**
  * @author ssm
@@ -42,6 +45,8 @@ class ControlDependencies extends StateDependencies implements ITarjanFilter {
     
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsActionExtensions
     @Inject extension KEffectsDependencyExtensions
     @Inject extension TarjanLinkable
     
@@ -65,16 +70,17 @@ class ControlDependencies extends StateDependencies implements ITarjanFilter {
         environment.setProperty(STATE_DEPENDENCIES, false)
         
         if (environment.getProperty(DO_TARJAN)) {
+            
+            for(d : dependencies.filter(DataDependency).toList) {
+                val stra = d.eContainer.getFirstTransition
+                val ttra = d.target.getFirstTransition
+                stra.targetState.outgoingLinks += d
+                d.target = ttra.targetState
+           }             
+            
             val loopData = new LoopDataLinkable(environment.getProperty(LOOP_DATA_PERSISTENT))
             getModel.findSCCs(loopData, this)
             environment.setProperty(LOOP_DATA, loopData)
-            for(loop : loopData.loops) {
-                println("Loop")
-                for(n : loop.criticalNodes) {
-                    println("  " + n)
-                }
-                println("")
-            }
         }
         
         for(d : dependencies.filter(DataDependency).toList) {
@@ -97,9 +103,9 @@ class ControlDependencies extends StateDependencies implements ITarjanFilter {
             for (transition : state.outgoingTransitions) {
                 transition.processAction(forkStack, valuedObjectAccessors)
                 
-                for (tsAction : transition.targetState.outgoingTransitions) {
-                    if (!transition.outgoingLinks.exists[ it instanceof ControlDependency && it.target == tsAction]) {
-                        transition.createControlDependency(tsAction)
+                if (transition.immediate) {
+                    if (!state.outgoingLinks.exists[ it instanceof ControlDependency && it.target == transition.targetState ]) {
+                        state.createControlDependency(transition.targetState)
                     }
                 }
             }    
@@ -116,7 +122,7 @@ class ControlDependencies extends StateDependencies implements ITarjanFilter {
     }
         
     override getLinkableNodes(EObject rootObject) {
-        rootObject.eAllContents.filter(Linkable).toList
+        rootObject.eAllContents.filter(State).toList
     }
     
     override filterNeighbors(Linkable node, List<Linkable> neighborList) {

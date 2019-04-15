@@ -95,6 +95,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 it.pragmas += pragma.copy
             }              
         ] 
+        creationalTransformation(model, SCGGraphs)        
         for (scg : model.scgs) {
             SCGGraphs.scgs += 
             scg.createGuards => [
@@ -122,8 +123,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
-        creationalTransformation(scg,newSCG)
-        scg.setDefaultTrace
+//        creationalTransformation(scg,newSCG)
+//        scg.setDefaultTrace
         newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)

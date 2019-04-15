@@ -68,4 +68,8 @@ public final class GeneralSynthesisOptions {
     public static final SynthesisOption SHOW_INHERITANCE =
             SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(APPEARANCE);
 
+    /** inherited declarations and regions synthesis option */
+    public static final SynthesisOption SHOW_CAUSAL_DATAFLOW =
+            SynthesisOption.createCheckOption("Causal Dataflow", true).setCategory(DEBUGGING);
+
 }
