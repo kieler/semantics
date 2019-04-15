@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER SC Graph
+Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.scg;singleton:=true
+Automatic-Module-Name: de.cau.cs.kieler.scg
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.SCGPlugin
-Bundle-Vendor: Kiel University
+Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,

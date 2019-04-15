@@ -148,6 +148,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.REFERENCE_CALL_EFFECT__SCHEDULE);
@@ -160,6 +161,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.REFERENCE_CALL_EFFECT__OUTGOING_LINKS);
@@ -172,6 +174,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.REFERENCE_CALL_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -184,6 +187,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getValuedObject() {
         if (valuedObject != null && valuedObject.eIsProxy()) {
             InternalEObject oldValuedObject = (InternalEObject)valuedObject;
@@ -210,6 +214,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValuedObject(ValuedObject newValuedObject) {
         ValuedObject oldValuedObject = valuedObject;
         valuedObject = newValuedObject;
@@ -222,6 +227,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getIndices() {
         if (indices == null) {
             indices = new EObjectContainmentEList<Expression>(Expression.class, this, KEffectsPackage.REFERENCE_CALL_EFFECT__INDICES);
@@ -234,6 +240,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getSubReference() {
         return subReference;
     }
@@ -258,6 +265,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSubReference(ValuedObjectReference newSubReference) {
         if (newSubReference != subReference) {
             NotificationChain msgs = null;
@@ -277,6 +285,7 @@ public class ReferenceCallEffectImpl extends AnnotatableImpl implements Referenc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.REFERENCE_CALL_EFFECT__PARAMETERS);

@@ -156,6 +156,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.ASSIGNMENT__SCHEDULE);
@@ -168,6 +169,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.ASSIGNMENT__OUTGOING_LINKS);
@@ -180,6 +182,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.ASSIGNMENT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -192,6 +195,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getReference() {
         return reference;
     }
@@ -216,6 +220,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ValuedObjectReference newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -235,6 +240,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -259,6 +265,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -278,6 +285,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AssignOperator getOperator() {
         return operator;
     }
@@ -287,6 +295,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperator(AssignOperator newOperator) {
         AssignOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
@@ -299,6 +308,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getSubReference() {
         return subReference;
     }
@@ -323,6 +333,7 @@ public class AssignmentImpl extends AnnotatableImpl implements Assignment {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSubReference(ValuedObjectReference newSubReference) {
         if (newSubReference != subReference) {
             NotificationChain msgs = null;

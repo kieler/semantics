@@ -78,6 +78,15 @@ public interface KivisFactory extends EFactory
   Code createCode();
 
   /**
+   * Returns a new object of class '<em>Setter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Setter</em>'.
+   * @generated
+   */
+  Setter createSetter();
+
+  /**
    * Returns a new object of class '<em>Interface</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
