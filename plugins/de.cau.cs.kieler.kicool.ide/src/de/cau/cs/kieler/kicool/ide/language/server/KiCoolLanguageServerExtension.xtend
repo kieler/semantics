@@ -78,16 +78,18 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     /**
      * The command that was compiled the last time.
      */
+    @Accessors(PUBLIC_GETTER)
     protected String lastCommand
     
     /**
      * The index of the snapshot currently shown in the diagram view.
      */
-     protected int currentIndex
+    protected int currentIndex
     
     /**
      * The uri for that was compiled the last time.
      */
+    @Accessors(PUBLIC_GETTER)
     protected String lastUri
     
     /**
