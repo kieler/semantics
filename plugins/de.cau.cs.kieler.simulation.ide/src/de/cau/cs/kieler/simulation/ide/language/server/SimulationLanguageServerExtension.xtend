@@ -12,15 +12,23 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server
 
+import com.google.gson.JsonObject
 import com.google.inject.Inject
 import com.google.inject.Injector
-import java.util.ArrayList
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.SimulationContext
+import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+
+import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import de.cau.cs.kieler.simulation.mode.ManualMode
 
 /**
  * @author sdo
@@ -38,48 +46,58 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     @Inject
     Injector injector
     
+    package var JsonObject userValues
+    
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
     
     override start(String uri, String simulationType) {
-        // TODO find interface you are dealing with
-        // TODO start simulation and answer with initial values according to the type of the variables.
-        println("LastCommand" + lastCommand)
-        if (!lastCommand.contains("simulation")) {
+        // hacky way to find out if a simulation exists (TODO fix this)
+        if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation", newArrayList)
+                new SimulationStartedMessage(false, "No previous simulation", null, null)
             ]
         }
-        val map = new ArrayList
-        map.add(new SimulationStartedData("x", false, true, false))
-        map.add(new SimulationStartedData("y", 0, false, false))
-        map.add(new SimulationStartedData("z", #[0,0,0,0], false, true))
-        map.add(new SimulationStartedData("z2", #[0], true, true))
-        val message = new SimulationStartedMessage(true, "", map)
+        // Get simulation context and dataPool
+        val List<Object> resultArray = objectMap.get(lastUri)
+        val sim = resultArray.last()
+        var DataPool datapool
+        if (sim instanceof SimulationContext) {
+            startSimulation(sim as SimulationContext)
+            // Add user value processor
+            val root = currentSimulation.system.processors as ProcessorGroup
+            root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
+                id = UserValues.ID
+            ])
+            canRestartSimulation = true
+            currentSimulation.mode = ManualMode
+            currentSimulation.start(true)
+            datapool = currentSimulation.dataPool
+        } else {
+            return this.requestManager.runRead[ cancelIndicator |
+                new SimulationStartedMessage(false, "No previous simulation", null, null)
+            ]
+        }
+        val message = new SimulationStartedMessage(true, "", datapool.pool, datapool.input)
         return this.requestManager.runRead[ cancelIndicator |
             message
         ]
     }
     
-    override step(SimulationData[] valuesForNextStep, String simulationType) {
-        val map = new ArrayList
-        valuesForNextStep.forEach[value|
-            var SimulationData newValue
-            if (value.value instanceof Double) { // JS numbers are always doubles
-                newValue = new SimulationData(value.symbol, value.value as Double + 1)
-            } else {
-                newValue = value
-            }
-            map.add(newValue) // input or output does not matter anymore
-        ]
+    override step(JsonObject valuesForNextStep, String simulationType) {
+        // TODO this does only set the inputs for the next tick, not the current one
+        ClientInputs.values = valuesForNextStep
+        currentSimulation.step()
+        val datapool = currentSimulation.dataPool
         val result = this.requestManager.runRead[
-            new SimulationStepMessage(true, "", map)
+            new SimulationStepMessage(true, "", datapool.pool)
         ]
         return result
     }
     
     override stop() {
+        stopAndRemoveSimulation
         return this.requestManager.runRead[cancelIndicator |
             new SimulationStoppedMessage(true, "Killed process")
         ]

@@ -17,6 +17,7 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.SimulationIDE
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
@@ -46,7 +47,7 @@ class DataView extends ViewPart implements SimulationListener {
     protected val dataObservers = <DataObserver> newLinkedList
     
     new() {
-        SimulationUI.registerObserver(this)
+        SimulationIDE.registerObserver(this)
     }
     
     override createPartControl(Composite parent) {
@@ -153,11 +154,11 @@ class DataView extends ViewPart implements SimulationListener {
             
             override drop(DropTargetEvent event) {
                 if (event.data instanceof String) {
-                    dataPool = SimulationUI.currentSimulation.dataPool
+                    dataPool = SimulationIDE.currentSimulation.dataPool
                     for (varName : (event.data as String).split(",")) {
                         createDataObserver(dataPool, varName, parent)
                     }
-                    updateValues(SimulationUI.currentSimulation)
+                    updateValues(SimulationIDE.currentSimulation)
                 }
             }
             

@@ -12,6 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server
 
+import com.google.gson.JsonObject
 import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
@@ -35,7 +36,7 @@ interface CommandExtension {
      * Performs a step.
      */
     @JsonRequest('step')
-    def CompletableFuture<SimulationStepMessage> step(SimulationData[] valuesForNextStep, String simulationType)
+    def CompletableFuture<SimulationStepMessage> step(JsonObject valuesForNextStep, String simulationType)
     
     /**
      * Stops a running simulation.

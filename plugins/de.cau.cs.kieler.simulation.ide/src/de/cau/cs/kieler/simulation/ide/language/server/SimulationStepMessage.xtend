@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server
 
-import java.util.ArrayList
+import com.google.gson.JsonObject
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
@@ -23,6 +23,6 @@ import org.eclipse.xtend.lib.annotations.Data
     
     boolean successful
     String error
-    ArrayList<SimulationData> values
+    JsonObject values
     
 }

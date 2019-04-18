@@ -44,70 +44,71 @@ import java.util.ArrayList
  * @author sdo
  * 
  */
- @Singleton
+@Singleton
 class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
-    
+
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
-    
+
     @Inject
     Injector injector
 
     @Inject
     extension KGraphLanguageServerExtension
-    
+
     extension IdeCompilerView compilerView = new IdeCompilerView
     protected extension ILanguageServerAccess languageServerAccess
-    
+
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
      */
     protected Map<String, List<List<SnapshotDescription>>> snapshotMap = new HashMap<String, List<List<SnapshotDescription>>>
-    
+
     /**
      * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
      */
+    @Accessors(PUBLIC_GETTER)
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
-  
+
     /**
      * Used to filter the compilation system according to the compiler preferences
      */
     var Class<?> modelClassFilter
-    
+
     /**
      * The command that was compiled the last time.
      */
     @Accessors(PUBLIC_GETTER)
     protected String lastCommand
-    
+
     /**
      * The index of the snapshot currently shown in the diagram view.
      */
     protected int currentIndex
-    
+
     /**
      * The uri for that was compiled the last time.
      */
     @Accessors(PUBLIC_GETTER)
     protected String lastUri
-    
+
     /**
      * Indicates if the last compilation was done inplace.
      */
     protected boolean lastInplace
-    
+
     override compile(String uri, String clientId, String command, boolean inplace) {
-        
+
         this.snapshotMap.put(uri, new LinkedList)
         this.objectMap.put(uri, new LinkedList)
-        
+
         val eobject = getEObjectFromUri(uri)
         val context = compile(eobject, command, inplace)
         for (iResult : context.processorInstancesSequence) {
-            convertImpl(iResult.environment , uri, iResult.name)
+            convertImpl(iResult.environment, uri, iResult.name)
         }
-        val result = requestManager.runRead[ cancelIndicator |
+        val result = requestManager.runRead [ cancelIndicator |
             new CompilationResults(this.snapshotMap.get(uri))
         ]
         result.thenRun [
@@ -118,12 +119,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         ]
         return result
     }
-    
+
     /**
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
      */
-    protected def didCompile(String uri, String clientId, String command, boolean inplace, CancelIndicator cancelIndicator) {
+    protected def didCompile(String uri, String clientId, String command, boolean inplace,
+        CancelIndicator cancelIndicator) {
         if (command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace) {
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
@@ -135,7 +137,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         lastCommand = command
         lastInplace = inplace
     }
-    
+
     /**
      * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
      */
@@ -154,18 +156,18 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         // Add result snapshot
         this.objectMap.get(uri).add(impl)
         snapshotList.add(new SnapshotDescription(processorName, snapshotList.length, errors, warnings, infos))
-      
+
         this.snapshotMap.get(uri).addAll(snapshotList)
         return
     }
-    
+
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         context.compile
         return context
     }
-    
+
     override show(String uri, String clientId, int index) {
         var Object model
         if (index != -1) {
@@ -175,14 +177,14 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             model = getEObjectFromUri(uri)
         }
         val modelToSend = model
-        return requestManager.runRead[ cancelIndicator |
+        return requestManager.runRead [ cancelIndicator |
             currentIndex = index
             showSnapshot(uri, clientId, modelToSend, cancelIndicator, false)
         ]
     }
-    
+
     override getSystems(String uri, boolean filter) {
-        
+
         var eobject = getEObjectFromUri(uri)
         val model = if(filter) eobject
         if (model !== null && model.class !== modelClassFilter) {
@@ -190,11 +192,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         }
         var systems = getSystemModels(true, modelClassFilter)
         val systemDescriptions = getSystemDescription(systems)
-        return requestManager.runRead[ cancelIndicator |
+        return requestManager.runRead [ cancelIndicator |
             systemDescriptions
         ]
     }
-    
+
     /**
      * Gets EObject for resource specified by given uri as String
      * 
@@ -202,16 +204,16 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @return EObject of specified resource
      */
     def EObject getEObjectFromUri(String uri) {
-        var fileUri = URLDecoder.decode( uri, "UTF-8" );
+        var fileUri = URLDecoder.decode(uri, "UTF-8");
         if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7) 
+            fileUri = fileUri.substring(7)
         }
         val uriObject = URI.createFileURI(fileUri)
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
-        
+
         return resource.getContents().head
     }
-    
+
     /**
      * @param uri URI of file without file://
      * @return the correct XtextResourceSet for the given uri based in its file extension.
@@ -219,7 +221,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
         return injector.getInstance(XtextResourceSet);
     }
-    
+
     /**
      * Converts systems returned from language server to system description containing the information the Theia client
      * needs to display the available compilation systems
@@ -230,13 +232,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id, system.public))	
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public))
         }
         return systemDescription
     }
-    
+
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
-    
+
 }

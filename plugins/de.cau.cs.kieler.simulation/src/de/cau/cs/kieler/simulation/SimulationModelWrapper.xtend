@@ -182,7 +182,7 @@ class SimulationModelWrapper implements Simulatable {
     
     protected def writeInput(DataPool pool) {
         // Create json for this model from data pool
-        val jsonInput = DataPool.serializeJSON(pool.getInput(this))
+        val jsonInput = DataPool.serializeJSON(pool.getInput())
         
         // Write data pool to process
         in.print(jsonInput)

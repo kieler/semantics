@@ -13,7 +13,8 @@
 package de.cau.cs.kieler.kivis.ui.views
 
 import com.google.gson.JsonElement
-import com.google.gson.JsonPrimitive
+import com.google.gson.JsonNull
+import com.google.gson.JsonParser
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kivis.KiVisConstants
@@ -21,8 +22,10 @@ import de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.SimulationIDE
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.io.File
 import java.net.URL
@@ -47,10 +50,6 @@ import org.eclipse.ui.internal.browser.WebBrowserUtil
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kivis.ui.views.KiVisView.ActionIndicatorFunction
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
-import com.google.gson.JsonNull
-import com.google.gson.JsonParser
 
 /**
  * The KiVis View.
@@ -97,7 +96,7 @@ class KiVisView extends ViewPart implements SimulationListener {
 
         override function(Object[] arguments) {
             val command = if(arguments.length === 1) arguments.head;
-            val sim = SimulationUI.currentSimulation
+            val sim = SimulationIDE.currentSimulation
             if (sim !== null) {
                 new UIJob("Simulation - Visualization Action") {
                     
@@ -140,7 +139,7 @@ class KiVisView extends ViewPart implements SimulationListener {
                 JsonNull.INSTANCE
             }
             if (variable instanceof String) {
-                val sim = SimulationUI.currentSimulation
+                val sim = SimulationIDE.currentSimulation
                 if (sim !== null) {
                     val patch = sim.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
                     synchronized (patch) {
@@ -153,7 +152,7 @@ class KiVisView extends ViewPart implements SimulationListener {
     }
 
     new() {
-        SimulationUI.registerObserver(this);
+        SimulationIDE.registerObserver(this);
     }
 
     /**
@@ -179,8 +178,8 @@ class KiVisView extends ViewPart implements SimulationListener {
                     new SimulationControlFunction(browser);
                     new ActionIndicatorFunction(browser);
                     // Initialize Vizualization
-                    if (SimulationUI.currentSimulation !== null) {
-                        updateView(SimulationUI.currentSimulation);
+                    if (SimulationIDE.currentSimulation !== null) {
+                        updateView(SimulationIDE.currentSimulation);
                     }
                 }
     
@@ -211,9 +210,9 @@ class KiVisView extends ViewPart implements SimulationListener {
         }
         
         // Late start
-        if (SimulationUI.currentSimulation !== null && SimulationUI.currentSimulation.running) {
+        if (SimulationIDE.currentSimulation !== null && SimulationIDE.currentSimulation.running) {
             // Reemit missed start
-            this.update(SimulationUI.currentSimulation, new SimulationControlEvent(SimulationUI.currentSimulation, SimulationOperation.START))
+            this.update(SimulationIDE.currentSimulation, new SimulationControlEvent(SimulationIDE.currentSimulation, SimulationOperation.START))
         }
     }
 

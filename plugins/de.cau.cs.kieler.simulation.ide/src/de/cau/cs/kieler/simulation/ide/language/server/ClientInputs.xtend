@@ -13,17 +13,11 @@
 package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
-import org.eclipse.xtend.lib.annotations.Data
 
 /**
  * @author sdo
  *
  */
-@Data class SimulationStartedMessage {
-    
-    boolean successful
-    String error
-    JsonObject dataPool
-    JsonObject input
-    
+class ClientInputs {
+    package static JsonObject values
 }

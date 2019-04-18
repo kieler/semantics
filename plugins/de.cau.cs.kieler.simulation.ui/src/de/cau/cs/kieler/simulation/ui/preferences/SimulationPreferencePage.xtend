@@ -13,7 +13,8 @@
 package de.cau.cs.kieler.simulation.ui.preferences
 
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.ui.SimulationUI
+import de.cau.cs.kieler.simulation.ide.SimulationIDE
+import de.cau.cs.kieler.simulation.ide.preferences.SimulationPreferences
 import org.eclipse.debug.internal.ui.SWTFactory
 import org.eclipse.jface.preference.PreferencePage
 import org.eclipse.swt.SWT
@@ -32,7 +33,7 @@ import org.eclipse.ui.IWorkbenchPreferencePage
  */
 class SimulationPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
     
-    extension SimulationPreferences = SimulationUI.environmentDefaults
+    extension SimulationPreferences = SimulationIDE.environmentDefaults
     
     /**
      * The workbench from the init(...) method.

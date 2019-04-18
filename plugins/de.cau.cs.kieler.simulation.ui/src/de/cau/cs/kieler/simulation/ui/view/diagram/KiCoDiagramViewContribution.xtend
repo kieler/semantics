@@ -29,7 +29,7 @@ import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.ui.IMemento
 
-import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
+import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
 import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
 
 /**
@@ -42,7 +42,7 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
     private var long simulationResourceTimeStamp = URIConverter.NULL_TIME_STAMP
     
     new() {
-        SimulationUI.registerObserver(this)
+        registerObserver(this)
     }
     
     override contributeControls(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
@@ -58,8 +58,8 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
     override contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties) {
         simulateActions.get(muc)?.update(model)
         
-        if (SimulationUI.currentSimulation !== null) {
-            val simCC = SimulationUI.currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        if (currentSimulation !== null) {
+            val simCC = currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {

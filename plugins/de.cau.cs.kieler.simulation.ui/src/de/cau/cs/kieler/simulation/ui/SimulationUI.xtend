@@ -12,17 +12,17 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import de.cau.cs.kieler.kicool.ui.console.Consoles
+import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ui.console.Consoles
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.ui.internal.processor.UserValues
-import de.cau.cs.kieler.simulation.ui.preferences.SimulationPreferences
 import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
 import de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView
 import de.cau.cs.kieler.simulation.ui.view.pool.SimulationModeMenu
@@ -34,12 +34,14 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.ui.statushandlers.StatusAdapter
+
+import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import de.cau.cs.kieler.simulation.ide.SimulationIDE
 
 /**
  * Handles the one simulation that should be shown in the UI.
  * 
- * @author als
+ * @author als, sdo
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
@@ -47,11 +49,10 @@ class SimulationUI {
     
     public static val SIMULATION_CONSOLE_NAME = "KIELER Simulation"
     
-    @Accessors(PUBLIC_GETTER)
-    static var SimulationContext currentSimulation
-    
-    @Accessors(PUBLIC_GETTER)
-    static val environmentDefaults = new SimulationPreferences
+    @Inject
+    static def initialize() {
+        initialize(cleaner, errorReporter, SimulationUIPlugin.instance.preferenceStore)
+    }
     
     private static val errorReporter = new SimulationListener() {
         
@@ -78,7 +79,6 @@ class SimulationUI {
         
     }
     
-    
     private static val cleaner = new SimulationListener() {
         
         override update(SimulationContext context, SimulationEvent e) {
@@ -103,10 +103,6 @@ class SimulationUI {
         
     }
     
-    private static val listeners = <SimulationListener>newHashSet(cleaner, errorReporter)
-    @Accessors
-    private static var boolean canRestartSimulation = false
-    
     // ---------------------------------------------------------------------------
     
     static def setCanRestartSimulation(boolean enableRestart) {
@@ -117,35 +113,8 @@ class SimulationUI {
         ]
     }
     
-    static def stopAndRemoveSimulation() {
-        // Stop
-        if (currentSimulation !== null) {
-            if (currentSimulation.running) {
-                currentSimulation.stop
-            }
-        
-            // Remove Listeners
-            for (listener : listeners) {
-                currentSimulation.deleteObserver(listener)
-            }
-        }
-        
-        currentSimulation = null
-        canRestartSimulation = false
-    }
-    
     static def startSimulation(SimulationContext context) {
-        stopAndRemoveSimulation
-        
-        currentSimulation = context
-        
-        // Add Listeners
-        for (listener : listeners) {
-            currentSimulation.addObserver(listener)
-        }
-        
-        // TODO connect to preference page
-        currentSimulation.startEnvironment.copyProperties(environmentDefaults)
+        SimulationIDE.startSimulation(context)
         val console = Consoles.getConsole(SIMULATION_CONSOLE_NAME)
         currentSimulation.outputStream = console.getInfoStream()
         currentSimulation.errorStream = console.getErrorStream()
@@ -209,18 +178,7 @@ class SimulationUI {
             priority = Job.INTERACTIVE
             schedule()
         ]
-    }
-    
-    static def registerObserver(SimulationListener listener) {
-        listeners += listener
-        if (currentSimulation !== null) {
-            currentSimulation.addObserver(listener)
-        }
-    }
-    
-    static def getObservers() {
-        listeners.unmodifiableView
-    }    
+    }  
 
     static def updateUI(() => void task) {
         updateUI(true, task)

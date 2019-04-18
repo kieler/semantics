@@ -23,10 +23,12 @@ import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationListener
-import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.util.List
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
+
+import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -59,7 +61,7 @@ abstract class DiagramHighlighter implements SimulationListener {
      * Registers the simulation listener for this instance.
      */
     new() {
-        SimulationUI.registerObserver(this)
+        registerObserver(this)
     }
 
     /**
@@ -94,7 +96,7 @@ abstract class DiagramHighlighter implements SimulationListener {
             if(diagramModel === null) {
                 return;
             }
-            SimulationUI.updateUI[
+            updateUI[
                 try {
                     startDiagramBatchUpdate
                     switch(e.operation) {

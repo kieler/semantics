@@ -10,12 +10,13 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui.preferences
+package de.cau.cs.kieler.simulation.ide.preferences
 
 import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import org.eclipse.jface.preference.IPreferenceStore
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.jface.preference.PreferenceStore
 
 /**
  * @author als
@@ -24,7 +25,8 @@ import org.eclipse.jface.preference.IPreferenceStore
  */
 class SimulationPreferences extends MapPropertyHolder {
 
-    private val IPreferenceStore store = SimulationUIPlugin.instance.preferenceStore
+    @Accessors(PUBLIC_SETTER)
+    private var IPreferenceStore store = new PreferenceStore
 
     new() {
         store.setDefault(SimulationContext.REACTION_TIMEOUT_IN_SECONDS.id, SimulationContext.REACTION_TIMEOUT_IN_SECONDS.^default)
