@@ -3,7 +3,7 @@
  * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
- * Copyright ${year} by
+ * Copyright 2018 by
  * + Kiel University
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,7 +32,7 @@ class VerificationContext extends CompilationContext {
     @Accessors private IFile verificationModelFile = null
     
     /**
-     * The system process (or one of its parents) that is running the model checker
+     * The OS process (or one of its parents) that is running the model checker
      */
     @Accessors private Process verificationProcess = null
     
