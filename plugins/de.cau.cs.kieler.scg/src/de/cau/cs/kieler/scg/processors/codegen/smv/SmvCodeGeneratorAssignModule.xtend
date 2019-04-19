@@ -27,6 +27,8 @@ import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
+
 /**
  * @author aas
  * 
@@ -147,11 +149,13 @@ class SmvCodeGeneratorAssignModule extends SmvCodeGeneratorModuleBase {
         for(entry : store.variables.entries) {
             val variableInformation = entry.value
             if(variableInformation.properties.contains(SmvCodeGeneratorModule.PROPERTY_PREGUARD)) {
-                val predValuedObject = variableInformation.valuedObject
-                val initValue = if(variableInformation.type == ValueType.INT) "0" else "FALSE"
                 val preVariableName = entry.key
                 val origVariableName = smvCodeGeneratorModule.getOriginalVariableName(preVariableName)
-                appendIndentedLine('''init(«preVariableName») := «initValue»;''')
+                
+                if(verificationContext?.smvInitializePreVariables) {
+                    val initValue = if(variableInformation.type == ValueType.INT) "0" else "FALSE"
+                    appendIndentedLine('''init(«preVariableName») := «initValue»;''')
+                }
                 appendIndentedLine('''next(«preVariableName») := «origVariableName»;''')
                 code.append("\n")
             }

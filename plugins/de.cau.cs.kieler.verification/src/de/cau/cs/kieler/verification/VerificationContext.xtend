@@ -40,12 +40,15 @@ class VerificationContext extends CompilationContext {
     @Accessors private boolean createCounterexamplesWithOutputs = true
     @Accessors private boolean createCounterexamples = true
     
+    // Options for SMV code generation
+    @Accessors private boolean smvUseIVAR = false
+    @Accessors private boolean smvInitializePreVariables = false
+    @Accessors private boolean smvIgnoreRangeAssumptions = false
+    
     // Options for verification using NuSMV / nuXmv
     @Accessors private List<String> customInteractiveSmvInvarCommands = null
     @Accessors private List<String> customInteractiveSmvLtlCommands = null
     @Accessors private List<String> customInteractiveSmvCtlCommands = null
-    @Accessors private boolean smvUseIVAR = false
-    @Accessors private boolean smvIgnoreRangeAssumptions = false
     
     // Options for verification using SPIN
     @Accessors private List<String> customSpinCommands =null

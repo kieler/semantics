@@ -95,7 +95,8 @@ class VerificationView extends ViewPart {
     private static val CUSTOM_SMV_COMMANDS_LTL_PREF_STORE_ID = "customSmvCommandsCTL"
     private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
     private static val CUSTOM_SPIN_COMMANDS_PREF_STORE_ID = "customSpinCommands"
-    private static val SMV_USE_IVAR = "SmvModelsWithIVAR"
+    private static val SMV_USE_IVAR_PREF_STORE_ID = "smvModelsUseIVAR"
+    private static val SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID = "smvInitializePreVariables"
     private static val SMV_IGNORE_RANGE_ASSUMPTIONS = "smvIgnoreRangeAssumptions"
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
@@ -203,13 +204,20 @@ class VerificationView extends ViewPart {
         }
         writeOutputsToCounterexampleAction.checked = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
         
-        val useIVARinSmvModels = new Action("Use IVAR in SMV Models", IAction.AS_CHECK_BOX) {
+        val useIVARinSmvModels = new Action("Use IVAR in SMV", IAction.AS_CHECK_BOX) {
             override run() {
-                setBooleanOption(SMV_USE_IVAR, isChecked)
+                setBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, isChecked)
             }
         }
-        useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR, false)
+        useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
         useIVARinSmvModels.toolTipText = "IVAR variables cannot be used everywhere, e.g., not in CTL"
+        
+        val initializePreVariablesInSmvModels = new Action("Init. Pre-variables in SMV", IAction.AS_CHECK_BOX) {
+            override run() {
+                setBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, isChecked)
+            }
+        }
+        initializePreVariablesInSmvModels.checked = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, false)
         
         val smvIgnoreRangeAssumptions = new Action("Ignore Range Assumptions for SMV", IAction.AS_CHECK_BOX) {
             override run() {
@@ -258,6 +266,7 @@ Example commands:
             add(createCounterexampleAction)
             add(writeOutputsToCounterexampleAction)
             add(useIVARinSmvModels)
+            add(initializePreVariablesInSmvModels)
             add(smvIgnoreRangeAssumptions)
             add(openEditSmvCommandsDialogAction)
             add(openEditSpinCommandsDialogAction)
@@ -597,12 +606,13 @@ Example commands:
         verificationContext.verificationAssumptions = verificationAssumptions
         verificationContext.verificationModelFile = modelFile
         
-        // Add options
+        // Add general options
         verificationContext.createCounterexamples = getBooleanOption(CREATE_COUNTEREXAMPLES_PREF_STORE_ID, true)
         verificationContext.createCounterexamplesWithOutputs = getBooleanOption(CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID, true)
         
-        // Add nuXmv options
-        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR, false)
+        // Add SMV options
+        verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
+        verificationContext.smvInitializePreVariables = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, false)
         verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList
@@ -612,7 +622,7 @@ Example commands:
         verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommandsList
         verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommandsList
         
-        // Add spin options
+        // Add SPIN options
         val customSpinCommands = getCustomCommands(CUSTOM_SPIN_COMMANDS_PREF_STORE_ID).split("\n").toList
         verificationContext.customSpinCommands = customSpinCommands
         

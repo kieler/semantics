@@ -106,6 +106,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     // NuSMV / nuXmv verification options
     protected var boolean smvUseIVAR = false
+    protected var boolean smvInitializePreVariables = false
     protected var List<String> customSmvInvarCommands = #[]
     protected var List<String> customSmvLtlCommands = #[]
     protected var List<String> customSmvCtlCommands = #[]
@@ -475,6 +476,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         
         // Add SMV options
         verificationContext.smvUseIVAR = smvUseIVAR
+        verificationContext.smvInitializePreVariables = smvInitializePreVariables
         verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommands
         verificationContext.customInteractiveSmvLtlCommands = customSmvLtlCommands
         verificationContext.customInteractiveSmvCtlCommands = customSmvCtlCommands
