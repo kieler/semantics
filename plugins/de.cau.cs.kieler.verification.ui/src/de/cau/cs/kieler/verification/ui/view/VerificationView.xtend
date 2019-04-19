@@ -217,7 +217,7 @@ class VerificationView extends ViewPart {
                 setBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, isChecked)
             }
         }
-        initializePreVariablesInSmvModels.checked = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, false)
+        initializePreVariablesInSmvModels.checked = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, true)
         
         val smvIgnoreRangeAssumptions = new Action("Ignore Range Assumptions for SMV", IAction.AS_CHECK_BOX) {
             override run() {
@@ -612,7 +612,7 @@ Example commands:
         
         // Add SMV options
         verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
-        verificationContext.smvInitializePreVariables = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, false)
+        verificationContext.smvInitializePreVariables = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, true)
         verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList

@@ -106,7 +106,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
     
     // NuSMV / nuXmv verification options
     protected var boolean smvUseIVAR = false
-    protected var boolean smvInitializePreVariables = false
+    protected var boolean smvInitializePreVariables = true
     protected var List<String> customSmvInvarCommands = #[]
     protected var List<String> customSmvLtlCommands = #[]
     protected var List<String> customSmvCtlCommands = #[]
