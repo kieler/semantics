@@ -38,16 +38,15 @@ class SpinOutputInterpreter extends LineBasedParser {
         
         // TODO: check that "never claim" has + when checking ltl formula
         
-        if(!wroteTrail) {
-            val wroteTrailMatcher = WROTE_TRAIL_PATTERN.matcher(trimmedLine)
-            if(wroteTrailMatcher.matches) {
-                wroteTrail = true
-            } else {
-                val errorMatcher = ERROR_PATTERN.matcher(trimmedLine)
-                if(errorMatcher.matches) {
-                    throw new Exception(line)
-                }    
-            }
+        val wroteTrailMatcher = WROTE_TRAIL_PATTERN.matcher(trimmedLine)
+        if(wroteTrailMatcher.matches) {
+            wroteTrail = true
+            stopParsing = true
+        } else {
+            val errorMatcher = ERROR_PATTERN.matcher(trimmedLine)
+            if(errorMatcher.matches) {
+                throw new Exception(line)
+            }    
         }
     }
 }

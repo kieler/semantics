@@ -13,18 +13,17 @@
  package de.cau.cs.kieler.verification.processors
 
 import java.io.BufferedReader
+import java.io.File
 import java.io.FileReader
 import java.io.StringReader
 import org.eclipse.core.resources.IFile
-import java.io.File
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author aas
  */
 abstract class LineBasedParser {
     
-    @Accessors private boolean stopParsing
+    protected boolean stopParsing
     
     public def void parse(String text) {
         val reader = new BufferedReader(new StringReader(text))
@@ -44,10 +43,17 @@ abstract class LineBasedParser {
     }
     
     public def void parse(BufferedReader reader) {
-        var line = reader.readLine()
-        while(line !== null && !stopParsing) {
-            parseLine(line)
-            line = reader.readLine()
+        try {
+            var line = reader.readLine()
+            while(line !== null && !stopParsing) {
+                parseLine(line)
+                line = reader.readLine()
+            }
+            reader.close()
+        } catch(Exception e) {
+            // Close the buffer to avoid memory leaks
+            reader.close()
+            throw new Exception("Exception occured while parsing line", e)
         }
     }
     
