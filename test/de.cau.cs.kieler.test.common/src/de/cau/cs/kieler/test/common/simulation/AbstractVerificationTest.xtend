@@ -179,15 +179,15 @@ abstract class AbstractVerificationTest<T extends EObject> extends AbstractXText
                 if (property.shouldFail) {
                     fail('''VerificationProperty "«property.name»" PASSED but should not''')
                 } else {
-                    println('''VerificationProperty '«property.name»' PASSED''')
+                    println('''VerificationProperty '«property.name»' PASSED as intended''')
                 }
             }
             
             case VerificationPropertyStatus.FAILED : {
                 if (property.shouldFail) {
-                    println('''VerificationProperty "«property.name»" failed as intended''')
+                    println('''VerificationProperty "«property.name»" FAILED as intended''')
                 } else {
-                    fail('''VerificationProperty "«property.name»" FAILED''')
+                    fail('''VerificationProperty "«property.name»" FAILED but should not''')
                 }
             }
             

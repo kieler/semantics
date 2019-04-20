@@ -88,21 +88,11 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         val processBuilder = new ProcessBuilder()
         processBuilder.directory(new File(pmlFile.parent.location.toOSString))
         // Create spin command for the property.
-        // -bfs (breadth-first-search) cannot be used together with -a (search acceptance cycles, e.g. for liveness).
-        // Thus -bfs is used only for invariants.
-        // example: spin -run -a myfile.pml
+        // example: spin -run myfile.pml
         val spinCommand = newArrayList("spin", "-run")
-        if(property.type == VerificationPropertyType.LTL) {
-            spinCommand += "-a"
-        }
-        
         val customSpinCommands = verificationContext.customSpinCommands
         if(!customSpinCommands.isNullOrEmpty) {
             spinCommand.addAll(customSpinCommands.filter[!it.isNullOrEmpty])
-        }
-        if(property.type == VerificationPropertyType.LTL) {
-            // -bfs option is not allowed together with -a option, which is needed for LTL
-            spinCommand.remove("-bfs")
         }
         spinCommand += pmlFile.name
         
