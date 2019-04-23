@@ -51,9 +51,9 @@ abstract class LineBasedParser {
             }
             reader.close()
         } catch(Exception e) {
-            // Close the buffer to avoid memory leaks
+            // Close the buffer to avoid memory leaks, then re-throw
             reader.close()
-            throw new Exception("Exception occured while parsing line", e)
+            throw e
         }
     }
     

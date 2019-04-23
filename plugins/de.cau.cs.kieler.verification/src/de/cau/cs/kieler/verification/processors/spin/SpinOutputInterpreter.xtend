@@ -20,7 +20,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  */
 class SpinOutputInterpreter extends LineBasedParser {
-    
+   
     @Accessors(PUBLIC_GETTER) private boolean wroteTrail
     
     private static val WROTE_TRAIL_PATTERN = Pattern.compile('''.*wrote (.*)\.pml\.trail*''')

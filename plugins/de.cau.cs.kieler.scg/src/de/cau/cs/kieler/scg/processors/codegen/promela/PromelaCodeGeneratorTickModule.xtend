@@ -32,6 +32,7 @@ import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
+import de.cau.cs.kieler.verification.InvariantAssumption
 
 /**
  * Adds the code for the tick loop logic.
@@ -125,8 +126,18 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
             return
         }
         code.append("\n")
-        appendSeparatorComment("assertion")        
-        appendIndentedLine('''assert(«invariant.formula»);''')
+        appendSeparatorComment("assertion")
+        // Add assertion inside of if-statement to respect assumptions, or outside if there are none.
+        val invariantAssumptions = assumptions?.filter[it instanceof InvariantAssumption]
+        if(!invariantAssumptions.isNullOrEmpty ) {
+            val invariantAssumptionConjunction = invariantAssumptions.map[(it as InvariantAssumption).formula].map['''(«it»)'''].join(" && ")
+            appendIndentedLine('''if''')
+            appendIndentedLine(''':: («invariantAssumptionConjunction») -> assert(«invariant.formula»);''')
+            appendIndentedLine(''':: else -> skip;''')
+            appendIndentedLine('''fi''')
+        } else {
+            appendIndentedLine('''assert(«invariant.formula»);''')   
+        }
     }
     
     private def void generateAfterTickLogic() {
