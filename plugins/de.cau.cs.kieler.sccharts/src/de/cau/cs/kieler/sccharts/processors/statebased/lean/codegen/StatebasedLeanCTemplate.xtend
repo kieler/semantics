@@ -311,7 +311,7 @@ class StatebasedLeanCTemplate {
                     else condition = "1"
             } else {
                 if (transition.trigger === null) condition = "context->delayedEnabled" 
-                    else condition = "context->delayedEnabled && " + transition.trigger.serializeHR
+                    else condition = "context->delayedEnabled && (" + transition.trigger.serializeHR + ")"
             }  
         }
         
