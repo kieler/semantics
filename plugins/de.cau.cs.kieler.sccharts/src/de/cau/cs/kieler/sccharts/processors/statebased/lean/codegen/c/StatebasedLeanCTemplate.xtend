@@ -10,18 +10,14 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen
+package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.sccharts.State
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
-import java.util.List
 import de.cau.cs.kieler.sccharts.Scope
-import java.util.Map
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.StatebasedLeanCCodeGenerator.hostcodeSafeName
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -30,6 +26,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 
 /**
  * @author ssm
@@ -37,9 +34,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
  * @kieler.rating 2018-12-06 proposed yellow 
  * 
  */
-class StatebasedLeanCTemplate {
+class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     
-    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
@@ -49,14 +45,6 @@ class StatebasedLeanCTemplate {
     @Accessors val source = new StringBuilder
     
     @Accessors var boolean debug = false;
-    
-    protected State rootState
-    protected List<Scope> scopes
-    protected Map<Scope, String> scopeNames
-    protected Map<Scope, String> scopeEnumNames
-    protected Map<Scope, String> contextStructNames
-    protected var int regionCounter
-    protected var int stateEnumCounter
     
     def void create(State rootState) {
         this.rootState = rootState
@@ -72,41 +60,6 @@ class StatebasedLeanCTemplate {
         createHeader
         createSource   
     }
-    
-    protected def void enumerateScopes(Scope scope, String namePrefix, String contextPrefix) {
-        scopes += scope
-        if (scope instanceof State) {
-            if (!scopeNames.containsKey(scope)) {
-                val name = if (namePrefix.nullOrEmpty) scope.name.hostcodeSafeName else namePrefix + '''_state''' + scope.name.hostcodeSafeName
-                scopeNames.put(scope, name)
-            }
-            
-            var enumName = scope.name.hostcodeSafeName.toUpperCase
-            
-            while (scopeEnumNames.containsValue(enumName)) {
-                enumName = scope.name.hostcodeSafeName.toUpperCase + (stateEnumCounter++)
-            }
-            
-            scopeEnumNames.put(scope, enumName)
-            for (region : scope.regions.filter(ControlflowRegion)) {
-                val newContextPrefix = if (scope.parentRegion === null) contextPrefix  
-                    else contextPrefix + scope.parentRegion.uniqueName.lowerCapital + '''.'''
-                enumerateScopes(region, scopeNames.get(scope), newContextPrefix)
-            }
-        } else if (scope instanceof ControlflowRegion) {
-            if (!scopeNames.containsKey(scope)) {
-                val name = if (scope.name.nullOrEmpty) '''R''' + (regionCounter++) else scope.name.hostcodeSafeName
-                scopeNames.put(scope, namePrefix + '''_region''' + name)
-                
-                contextStructNames.put(scope, contextPrefix + scope.uniqueName.lowerCapital)
-            }
-            for (state : scope.states) {
-                enumerateScopes(state, scopeNames.get(scope), contextPrefix)
-            }
-            
-        }
-    }
-    
     
     protected def void createHeader() {
         val code = 
@@ -370,10 +323,6 @@ class StatebasedLeanCTemplate {
         '''        
     }
     
-  
-    
-    
-    
     protected def CharSequence createDeclarations(State state) {
         val sb = new StringBuilder
         for (declaration : rootState.declarations.filter(VariableDeclaration)) {
@@ -408,49 +357,4 @@ class StatebasedLeanCTemplate {
         
         return code
     }    
-    
-    
-    
-    
-    
-    protected def String uniqueName(Scope scope) {
-        scopeNames.get(scope)
-    }
-    
-    protected def String capitalize(String string) {
-        string.substring(0, 1).toUpperCase + string.substring(1) 
-    }
-
-    protected def String lowerCapital(String string) {
-        string.substring(0, 1).toLowerCase + string.substring(1) 
-    }
-    
-    protected def String uniqueEnumName(State state) {
-        scopeEnumNames.get(state)
-    }
-    
-    protected def String uniqueContextName(Scope scope) {
-        if (scope instanceof State) {
-            if (scope == rootState) {
-                '''TickData'''            
-            } else {
-                scope.parentRegion.uniqueName
-            }
-        } else if (scope instanceof ControlflowRegion) {
-            scope.uniqueName
-        }
-    }
-    
-    protected def String uniqueContextMemberName(Scope scope) {
-        if (scope instanceof State) {
-            if (scope == rootState) {
-                '''TickData'''            
-            } else {
-                scope.parentRegion.uniqueName + "Context"
-            }
-        } else if (scope instanceof ControlflowRegion) {
-            scope.uniqueName.capitalize + "Context"       
-        }
-    }
-        
 }
