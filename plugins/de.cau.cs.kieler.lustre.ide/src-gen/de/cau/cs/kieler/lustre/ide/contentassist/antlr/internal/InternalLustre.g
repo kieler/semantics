@@ -3571,16 +3571,16 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Rule NoneOfOperator
-ruleNoneOfOperator
+// Rule AtMostOneOperator
+ruleAtMostOneOperator
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration()); }
+		{ before(grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration()); }
 		('#')
-		{ after(grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration()); }
+		{ after(grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration()); }
 	)
 ;
 finally {
@@ -33523,9 +33523,9 @@ rule__NorExpression__OperatorAssignment_1_0
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_1_0_0()); }
-		ruleNoneOfOperator
-		{ after(grammarAccess.getNorExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_1_0_0()); }
+		{ before(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
+		ruleAtMostOneOperator
+		{ after(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
 	)
 ;
 finally {

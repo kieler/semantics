@@ -190,7 +190,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 case IMPLIES,
                 case INTDIV,
                 case LOGICAL_XOR,
-                case NONEOF, 
+                case ATMOSTONEOF, 
                 case NOR: {
                     return transformPlainExpression(valObj, expression, state, varState, controlflowRegion)
                 }
@@ -373,16 +373,18 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
         val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
         val subExpressionState1 = cfRegion.createState("_s" + stateNameIdx++)
-        val subExpressionState2 = cfRegion.createState("_s" + stateNameIdx++)
+//        val subExpressionState2 = cfRegion.createState("_s" + stateNameIdx++)
         if (state.eContainer !== null) {
             subExpressionState1.final = true
-            subExpressionState2.final = true
+//            subExpressionState2.final = true
         }
 
         val ifRef = transformExpressionToSimple(null, expression.subExpressions.get(0), initalState, varState, null)
         val thenRef = transformExpressionToSimple(null, expression.subExpressions.get(1), subExpressionState1, varState,
             null)
-        val elseRef = transformExpressionToSimple(null, expression.subExpressions.get(2), subExpressionState2, varState,
+//        val elseRef = transformExpressionToSimple(null, expression.subExpressions.get(2), subExpressionState2, varState,
+//            null)
+        val elseRef = transformExpressionToSimple(null, expression.subExpressions.get(2), subExpressionState1, varState,
             null)
 
         val thenTransition = createImmediateTransitionTo(initalState, subExpressionState1)
@@ -396,7 +398,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         ]
         thenTransition.addAssignment(thenAssignment)
 
-        val elseTransition = createImmediateTransitionTo(initalState, subExpressionState2)
+        val elseTransition = createImmediateTransitionTo(initalState, subExpressionState1)
         if (initalState.isHierarchical) {
             elseTransition.preemption = PreemptionType.TERMINATION
         }
@@ -406,8 +408,10 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         ]
         elseTransition.addAssignment(elseAssignment)
 
-        createTransitionTo(subExpressionState1, initalState)
-        createTransitionTo(subExpressionState2, initalState)
+        if (state.eContainer === null) {
+            createTransitionTo(subExpressionState1, initalState)
+//            createTransitionTo(subExpressionState1, initalState)
+        }
         
         return newValObj.reference
     }
@@ -436,6 +440,10 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
             var transition = createImmediateTransitionTo(subExpressionState, lastState)
             transition.preemption = PreemptionType.TERMINATION
             transition.addAssignment(assignment)
+            
+            if (state.eContainer === null) {
+                createTransitionTo(lastState, initalState)
+            }
         } else {
             if (state.eContainer !== null) {
                 subExpressionState.final = true

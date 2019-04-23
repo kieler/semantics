@@ -2966,7 +2966,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cOperatorExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Assignment cOperatorAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cOperatorNoneOfOperatorEnumRuleCall_1_0_0 = (RuleCall)cOperatorAssignment_1_0.eContents().get(0);
+		private final RuleCall cOperatorAtMostOneOperatorEnumRuleCall_1_0_0 = (RuleCall)cOperatorAssignment_1_0.eContents().get(0);
 		private final Assignment cOperatorAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
 		private final RuleCall cOperatorNorOperatorEnumRuleCall_1_1_0 = (RuleCall)cOperatorAssignment_1_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
@@ -2979,27 +2979,27 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//NorExpression kexpressions::Expression:
-		//	{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator)
+		//	{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator)
 		//	'('
 		//	subExpressions+=Expression (',' subExpressions+=Expression)*
 		//	')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator) '(' subExpressions+=Expression (','
-		//subExpressions+=Expression)* ')'
+		//{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator) '(' subExpressions+=Expression
+		//(',' subExpressions+=Expression)* ')'
 		public Group getGroup() { return cGroup; }
 		
 		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0() { return cOperatorExpressionAction_0; }
 		
-		//operator=NoneOfOperator | operator=NorOperator
+		//operator=AtMostOneOperator | operator=NorOperator
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//operator=NoneOfOperator
+		//operator=AtMostOneOperator
 		public Assignment getOperatorAssignment_1_0() { return cOperatorAssignment_1_0; }
 		
-		//NoneOfOperator
-		public RuleCall getOperatorNoneOfOperatorEnumRuleCall_1_0_0() { return cOperatorNoneOfOperatorEnumRuleCall_1_0_0; }
+		//AtMostOneOperator
+		public RuleCall getOperatorAtMostOneOperatorEnumRuleCall_1_0_0() { return cOperatorAtMostOneOperatorEnumRuleCall_1_0_0; }
 		
 		//operator=NorOperator
 		public Assignment getOperatorAssignment_1_1() { return cOperatorAssignment_1_1; }
@@ -3983,20 +3983,20 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//"if"
 		public Keyword getCONDITIONALIfKeyword_0() { return cCONDITIONALIfKeyword_0; }
 	}
-	public class NoneOfOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NoneOfOperator");
-		private final EnumLiteralDeclaration cNONEOFEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cNONEOFNumberSignKeyword_0 = (Keyword)cNONEOFEnumLiteralDeclaration.eContents().get(0);
+	public class AtMostOneOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AtMostOneOperator");
+		private final EnumLiteralDeclaration cATMOSTONEOFEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cATMOSTONEOFNumberSignKeyword_0 = (Keyword)cATMOSTONEOFEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum NoneOfOperator returns kexpressions::OperatorType:
-		//	NONEOF="#";
+		//enum AtMostOneOperator returns kexpressions::OperatorType:
+		//	ATMOSTONEOF="#";
 		public EnumRule getRule() { return rule; }
 		
-		//NONEOF="#"
-		public EnumLiteralDeclaration getNONEOFEnumLiteralDeclaration() { return cNONEOFEnumLiteralDeclaration; }
+		//ATMOSTONEOF="#"
+		public EnumLiteralDeclaration getATMOSTONEOFEnumLiteralDeclaration() { return cATMOSTONEOFEnumLiteralDeclaration; }
 		
 		//"#"
-		public Keyword getNONEOFNumberSignKeyword_0() { return cNONEOFNumberSignKeyword_0; }
+		public Keyword getATMOSTONEOFNumberSignKeyword_0() { return cATMOSTONEOFNumberSignKeyword_0; }
 	}
 	public class NorOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorOperator");
@@ -4066,7 +4066,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final ImpliesOperatorElements eImpliesOperator;
 	private final IntDivOperatorElements eIntDivOperator;
 	private final ConditionalOperatorElements eConditionalOperator;
-	private final NoneOfOperatorElements eNoneOfOperator;
+	private final AtMostOneOperatorElements eAtMostOneOperator;
 	private final NorOperatorElements eNorOperator;
 	private final ParamsElements pParams;
 	private final StaticParamElements pStaticParam;
@@ -4157,7 +4157,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.eImpliesOperator = new ImpliesOperatorElements();
 		this.eIntDivOperator = new IntDivOperatorElements();
 		this.eConditionalOperator = new ConditionalOperatorElements();
-		this.eNoneOfOperator = new NoneOfOperatorElements();
+		this.eAtMostOneOperator = new AtMostOneOperatorElements();
 		this.eNorOperator = new NorOperatorElements();
 		this.pParams = new ParamsElements();
 		this.pStaticParam = new StaticParamElements();
@@ -4690,7 +4690,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//NorExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} (operator=NoneOfOperator | operator=NorOperator)
+	//	{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator)
 	//	'('
 	//	subExpressions+=Expression (',' subExpressions+=Expression)*
 	//	')';
@@ -4850,14 +4850,14 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 	
-	//enum NoneOfOperator returns kexpressions::OperatorType:
-	//	NONEOF="#";
-	public NoneOfOperatorElements getNoneOfOperatorAccess() {
-		return eNoneOfOperator;
+	//enum AtMostOneOperator returns kexpressions::OperatorType:
+	//	ATMOSTONEOF="#";
+	public AtMostOneOperatorElements getAtMostOneOperatorAccess() {
+		return eAtMostOneOperator;
 	}
 	
-	public EnumRule getNoneOfOperatorRule() {
-		return getNoneOfOperatorAccess().getRule();
+	public EnumRule getAtMostOneOperatorRule() {
+		return getAtMostOneOperatorAccess().getRule();
 	}
 	
 	//enum NorOperator returns kexpressions::OperatorType:

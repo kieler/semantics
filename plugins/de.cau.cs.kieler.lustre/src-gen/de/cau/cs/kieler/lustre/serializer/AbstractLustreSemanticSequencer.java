@@ -677,7 +677,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -788,7 +788,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (
 	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseOrOperator 
@@ -887,7 +887,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (
 	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseXOrOperator 
@@ -980,7 +980,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (
 	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
 	 *             operator=BitwiseAndOperator 
@@ -1066,7 +1066,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1159,7 +1159,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1239,7 +1239,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1332,7 +1332,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1412,7 +1412,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1505,7 +1505,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1585,7 +1585,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1683,7 +1683,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1769,7 +1769,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1861,7 +1861,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -1953,7 +1953,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -2039,7 +2039,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -2131,7 +2131,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -2217,7 +2217,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -2358,7 +2358,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation 
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
-	 *         ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
@@ -2558,7 +2558,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     NorExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     ((operator=NoneOfOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*)
+	 *     ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*)
 	 */
 	protected void sequence_NorExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

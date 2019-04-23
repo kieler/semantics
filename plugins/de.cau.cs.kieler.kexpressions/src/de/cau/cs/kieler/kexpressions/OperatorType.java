@@ -392,14 +392,14 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     IMPLIES(31, "IMPLIES", "IMPLIES"), /**
-     * The '<em><b>NONEOF</b></em>' literal object.
+     * The '<em><b>ATMOSTONEOF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #NONEOF_VALUE
+     * @see #ATMOSTONEOF_VALUE
      * @generated
      * @ordered
      */
-    NONEOF(32, "NONEOF", "NONEOF"), /**
+    ATMOSTONEOF(32, "ATMOSTONEOF", "ATMOSTONEOF"), /**
      * The '<em><b>NOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -891,19 +891,15 @@ public enum OperatorType implements Enumerator {
     public static final int IMPLIES_VALUE = 31;
 
     /**
-     * The '<em><b>NONEOF</b></em>' literal value.
+     * The '<em><b>ATMOSTONEOF</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NONEOF</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
-     * @see #NONEOF
+     * @see #ATMOSTONEOF
      * @model
      * @generated
      * @ordered
      */
-    public static final int NONEOF_VALUE = 32;
+    public static final int ATMOSTONEOF_VALUE = 32;
 
     /**
      * The '<em><b>NOR</b></em>' literal value.
@@ -961,7 +957,7 @@ public enum OperatorType implements Enumerator {
             INTDIV,
             LOGICAL_XOR,
             IMPLIES,
-            NONEOF,
+            ATMOSTONEOF,
             NOR,
         };
 
@@ -1051,7 +1047,7 @@ public enum OperatorType implements Enumerator {
             case INTDIV_VALUE: return INTDIV;
             case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
             case IMPLIES_VALUE: return IMPLIES;
-            case NONEOF_VALUE: return NONEOF;
+            case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
             case NOR_VALUE: return NOR;
         }
         return null;

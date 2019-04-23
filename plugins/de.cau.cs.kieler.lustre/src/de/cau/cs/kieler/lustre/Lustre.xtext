@@ -410,7 +410,7 @@ AtomicExpression returns kexpressions::Expression:
 
 NorExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression}
-    (operator=NoneOfOperator | operator=NorOperator)
+    (operator=AtMostOneOperator | operator=NorOperator)
     '('
     subExpressions+=Expression (',' subExpressions+=Expression)*
     ')'
@@ -472,8 +472,8 @@ enum IntDivOperator returns kexpressions::OperatorType:
 enum ConditionalOperator returns kexpressions::OperatorType:
     CONDITIONAL = "if";
 
-enum NoneOfOperator returns kexpressions::OperatorType:  
-    NONEOF="#";
+enum AtMostOneOperator returns kexpressions::OperatorType:  
+    ATMOSTONEOF="#";
 
 enum NorOperator returns kexpressions::OperatorType:  
     NOR="nor";

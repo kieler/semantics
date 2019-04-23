@@ -12964,7 +12964,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNorExpression"
-    // InternalLustre.g:4884:1: ruleNorExpression returns [EObject current=null] : ( () ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' ) ;
+    // InternalLustre.g:4884:1: ruleNorExpression returns [EObject current=null] : ( () ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' ) ;
     public final EObject ruleNorExpression() throws RecognitionException {
         EObject current = null;
 
@@ -12984,11 +12984,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:4890:2: ( ( () ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' ) )
-            // InternalLustre.g:4891:2: ( () ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' )
+            // InternalLustre.g:4890:2: ( ( () ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' ) )
+            // InternalLustre.g:4891:2: ( () ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' )
             {
-            // InternalLustre.g:4891:2: ( () ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' )
-            // InternalLustre.g:4892:3: () ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')'
+            // InternalLustre.g:4891:2: ( () ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')' )
+            // InternalLustre.g:4892:3: () ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) ) otherlv_3= '(' ( (lv_subExpressions_4_0= ruleExpression ) ) (otherlv_5= ',' ( (lv_subExpressions_6_0= ruleExpression ) ) )* otherlv_7= ')'
             {
             // InternalLustre.g:4892:3: ()
             // InternalLustre.g:4893:4: 
@@ -13008,7 +13008,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:4902:3: ( ( (lv_operator_1_0= ruleNoneOfOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) )
+            // InternalLustre.g:4902:3: ( ( (lv_operator_1_0= ruleAtMostOneOperator ) ) | ( (lv_operator_2_0= ruleNorOperator ) ) )
             int alt90=2;
             int LA90_0 = input.LA(1);
 
@@ -13027,21 +13027,21 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             }
             switch (alt90) {
                 case 1 :
-                    // InternalLustre.g:4903:4: ( (lv_operator_1_0= ruleNoneOfOperator ) )
+                    // InternalLustre.g:4903:4: ( (lv_operator_1_0= ruleAtMostOneOperator ) )
                     {
-                    // InternalLustre.g:4903:4: ( (lv_operator_1_0= ruleNoneOfOperator ) )
-                    // InternalLustre.g:4904:5: (lv_operator_1_0= ruleNoneOfOperator )
+                    // InternalLustre.g:4903:4: ( (lv_operator_1_0= ruleAtMostOneOperator ) )
+                    // InternalLustre.g:4904:5: (lv_operator_1_0= ruleAtMostOneOperator )
                     {
-                    // InternalLustre.g:4904:5: (lv_operator_1_0= ruleNoneOfOperator )
-                    // InternalLustre.g:4905:6: lv_operator_1_0= ruleNoneOfOperator
+                    // InternalLustre.g:4904:5: (lv_operator_1_0= ruleAtMostOneOperator )
+                    // InternalLustre.g:4905:6: lv_operator_1_0= ruleAtMostOneOperator
                     {
                     if ( state.backtracking==0 ) {
 
-                      						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_1_0_0());
+                      						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0());
                       					
                     }
                     pushFollow(FollowSets000.FOLLOW_25);
-                    lv_operator_1_0=ruleNoneOfOperator();
+                    lv_operator_1_0=ruleAtMostOneOperator();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -13054,7 +13054,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							current,
                       							"operator",
                       							lv_operator_1_0,
-                      							"de.cau.cs.kieler.lustre.Lustre.NoneOfOperator");
+                      							"de.cau.cs.kieler.lustre.Lustre.AtMostOneOperator");
                       						afterParserOrEnumRuleCall();
                       					
                     }
@@ -39170,9 +39170,9 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleConditionalOperator"
 
 
-    // $ANTLR start "ruleNoneOfOperator"
-    // InternalLustre.g:14201:1: ruleNoneOfOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
-    public final Enumerator ruleNoneOfOperator() throws RecognitionException {
+    // $ANTLR start "ruleAtMostOneOperator"
+    // InternalLustre.g:14201:1: ruleAtMostOneOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
+    public final Enumerator ruleAtMostOneOperator() throws RecognitionException {
         Enumerator current = null;
 
         Token enumLiteral_0=null;
@@ -39190,8 +39190,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,90,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			current = grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration().getEnumLiteral().getInstance();
-              			newLeafNode(enumLiteral_0, grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration());
+              			current = grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration().getEnumLiteral().getInstance();
+              			newLeafNode(enumLiteral_0, grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration());
               		
             }
 
@@ -39215,7 +39215,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleNoneOfOperator"
+    // $ANTLR end "ruleAtMostOneOperator"
 
 
     // $ANTLR start "ruleNorOperator"

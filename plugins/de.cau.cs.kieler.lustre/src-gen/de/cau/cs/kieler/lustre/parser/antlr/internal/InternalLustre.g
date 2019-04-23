@@ -4903,9 +4903,9 @@ ruleNorExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_1_0_0());
+						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0());
 					}
-					lv_operator_1_0=ruleNoneOfOperator
+					lv_operator_1_0=ruleAtMostOneOperator
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getNorExpressionRule());
@@ -4914,7 +4914,7 @@ ruleNorExpression returns [EObject current=null]
 							$current,
 							"operator",
 							lv_operator_1_0,
-							"de.cau.cs.kieler.lustre.Lustre.NoneOfOperator");
+							"de.cau.cs.kieler.lustre.Lustre.AtMostOneOperator");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -14197,8 +14197,8 @@ ruleConditionalOperator returns [Enumerator current=null]
 	)
 ;
 
-// Rule NoneOfOperator
-ruleNoneOfOperator returns [Enumerator current=null]
+// Rule AtMostOneOperator
+ruleAtMostOneOperator returns [Enumerator current=null]
 @init {
 	enterRule();
 }
@@ -14208,8 +14208,8 @@ ruleNoneOfOperator returns [Enumerator current=null]
 	(
 		enumLiteral_0='#'
 		{
-			$current = grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration().getEnumLiteral().getInstance();
-			newLeafNode(enumLiteral_0, grammarAccess.getNoneOfOperatorAccess().getNONEOFEnumLiteralDeclaration());
+			$current = grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getAtMostOneOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration());
 		}
 	)
 ;

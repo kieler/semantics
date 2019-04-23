@@ -66,6 +66,7 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -167,7 +168,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 var nodeState = createState => [
                     name = "_" + node.valuedObjects.head.name
                 ]
-                processNodeInterface(node, nodeState)
+                processNodeDeclarations(node, nodeState)
                 if (constantsExist) {
                     nodeState.baseStates += constantsState
                 }
@@ -181,7 +182,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 lustreToScchartsValuedObjectMap = new HashMap(constantsLustreToScchartsMap)
                 scchartsToLustreValuedObjectMap = new HashMap(constantsScchartsToLustreMap)
                 var nodeState = nodeToStateMap.get(node)
-                node.processNodeDeclaration(nodeState)
+                node.processNodeBehavior(nodeState)
                 scchartsProgram.rootStates += nodeState
             }
         }
@@ -194,7 +195,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         rootState.declarations += constantVariableDeclaration
     }
 
-    protected def processNodeInterface(NodeDeclaration node, State rootState) {
+    protected def processNodeDeclarations(NodeDeclaration node, State rootState) {
         // Process inputs
         for (inputDecl : node.input.parameter) {
             rootState.declarations += inputDecl.createInputDeclaration(rootState)
@@ -217,7 +218,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     }
 
-    protected def processNodeDeclaration(NodeDeclaration node, State rootState) {
+    protected def processNodeBehavior(NodeDeclaration node, State rootState) {
         // Transform equations
         for (equation : node.equations) {
             (equation as Equation).processEquation(rootState)
@@ -380,7 +381,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case LOGICAL_XOR: {
                         convertedExpression = processXorExpression(subExpressionList)
                     }
-                    case NONEOF: {
+                    case ATMOSTONEOF: {
                         convertedExpression = processNoneOfExpression(subExpressionList)
                     }
                     case NOR: {
@@ -427,7 +428,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // Assignments containing a when expression use a during action for transformation
         if (containingElement instanceof Assignment) {
-            if (environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
+            var hasSideEffects = realExpression.checkOnSideEffects
+            if (hasSideEffects || environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
                 
                 // Create during action for when expression
                 var duringAction = createDuringAction(state) => [
@@ -888,6 +890,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             }
         }
         
+        if (clockList.length > 1) {
         var logicalAndExpression = createLogicalAndExpression
         logicalAndExpression.subExpressions.add(sccVariable)
         
@@ -895,7 +898,14 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             logicalAndExpression.subExpressions.add(valObjRef)
         }
         
-        return logicalAndExpression        
+        return logicalAndExpression 
+        
+        } else {
+            return clockList.get(0)
+        }       
     }
     
+    private def boolean checkOnSideEffects(Expression expr) {
+        return false       
+    }
 }
