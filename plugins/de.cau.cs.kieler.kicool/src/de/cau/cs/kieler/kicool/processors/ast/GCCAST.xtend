@@ -19,13 +19,14 @@ import java.io.File
 import java.nio.file.Files
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.CCompiler
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 
 /**
  * @author ssm
  * @kieler.design 2019-04-23 proposed
  * @kieler.rating 2019-04-23 proposed yellow
  */
-class GCCAST extends AbstractSystemCompilerProcessor<Object, Object> {
+class GCCAST extends AbstractSystemCompilerProcessor<CodeContainer, CodeContainer> {
 
     public static val IProperty<String> RAW_AST_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.ast.raw.name", "ast")
@@ -49,7 +50,7 @@ class GCCAST extends AbstractSystemCompilerProcessor<Object, Object> {
         
         // Bin folder
         val binFolder = infra.createBinFolder
-        val debugFolder = infra.createDebugFolder
+        val debugFolder = infra.createDebugFolder(true)
         
         logger.println
         logger.println("== Compiling source files (GCC) ==")

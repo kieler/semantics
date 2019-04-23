@@ -86,11 +86,11 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         return binFolder
     }
     
-    def createDebugFolder(ProjectInfrastructure infra) {
+    def createDebugFolder(ProjectInfrastructure infra, boolean clearDirectory) {
         val debugFolder = new File(infra.generatedCodeFolder, environment.getProperty(DEBUG_FOLDER)?:DEBUG_FOLDER.^default)
         logger.println("Debug output folder: " + debugFolder)
-        if (debugFolder.exists) {
-            logger.println("\n== Clearing Binary Output Folder ==")
+        if (debugFolder.exists && clearDirectory) {
+            logger.println("\n== Clearing Debug Output Folder ==")
             debugFolder.deleteRecursively(logger)
             logger.println()
                 
