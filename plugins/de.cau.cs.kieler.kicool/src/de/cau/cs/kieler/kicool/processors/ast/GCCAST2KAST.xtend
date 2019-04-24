@@ -16,13 +16,10 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
-import java.nio.file.Files
-import de.cau.cs.kieler.kicool.deploy.processor.CCompiler
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
 import java.io.BufferedReader
 import java.io.FileReader
-import java.util.List
 import java.util.LinkedList
 import java.util.regex.Pattern
 import de.cau.cs.kieler.kicool.processors.ast.KAST.KASTNode
@@ -178,7 +175,6 @@ class GCCAST2KAST extends AbstractSystemCompilerProcessor<CodeContainer, KAST> {
         logger.println("== Creating KAST ==")
         
         val sourceAST = new File(debugFolder, environment.getProperty(GCCAST.RAW_AST_NAME)?:GCCAST.RAW_AST_NAME.^default)
-        val sourceASTPath = infra.generatedCodeFolder.toPath.relativize(sourceAST.toPath).toString
         logger.println("Source AST file: " + sourceAST)
 
         val br = new BufferedReader(new FileReader(sourceAST)); 
