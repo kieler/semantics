@@ -31,6 +31,9 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.Value
 
 /**
  * SCCharts Const Transformation.
@@ -57,17 +60,10 @@ class Const extends SCChartsProcessor implements Traceable {
     }
 
 
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::CONST_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID)
-//    }
+    extension PartialExpressionEvaluator par = new PartialExpressionEvaluator() => [ 
+        compute = true
+        inplace = true
+    ]
 
     // -------------------------------------------------------------------------
     @Inject extension AnnotationsExtensions
@@ -87,8 +83,9 @@ class Const extends SCChartsProcessor implements Traceable {
         var targetRootState = rootState
 
         // Traverse all states
-        for (scopes : targetRootState.getAllScopes.toList) {
-            scopes.transformConst
+        for (scope : targetRootState.getAllScopes.filter[ it.declarations.filter(VariableDeclaration).exists[ isConst ] ].toList) {
+            scope.evaluateExpressions
+            scope.transformConst
         }
         targetRootState;
     }
@@ -124,6 +121,18 @@ class Const extends SCChartsProcessor implements Traceable {
         constObjects.forEach[ removeFromContainmentAndCleanup; voStore.remove(it) ]
 
     }
+    
+    def void evaluateExpressions(Scope scope) {
+        val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
+        
+        for (vo : constObjects) {
+            vo.initialValue.replace(vo.initialValue.evaluate)
+            if (vo.initialValue instanceof Value) {
+                par.values.put(vo, vo.initialValue as Value)
+            } 
+        }
+    }
+    
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]
