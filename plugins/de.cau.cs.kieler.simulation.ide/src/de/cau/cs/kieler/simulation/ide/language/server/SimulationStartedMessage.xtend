@@ -13,8 +13,9 @@
 package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
-import org.eclipse.xtend.lib.annotations.Data
 import java.util.ArrayList
+import java.util.HashMap
+import org.eclipse.xtend.lib.annotations.Data
 
 /**
  * @author sdo
@@ -28,7 +29,7 @@ import java.util.ArrayList
     JsonObject dataPool
     JsonObject input
     JsonObject output
-    ArrayList<Category> propertySet
+    HashMap<String, ArrayList<String>> propertySet
     
     new(boolean successful, String error) {
         this.successful = successful
@@ -39,7 +40,7 @@ import java.util.ArrayList
         this.propertySet = null
     }
     
-    new(boolean successful, String error, JsonObject dataPool, JsonObject input, JsonObject output, ArrayList<Category> propertySet) {
+    new(boolean successful, String error, JsonObject dataPool, JsonObject input, JsonObject output, HashMap<String, ArrayList<String>> propertySet) {
         this.successful = successful
         this.error = error
         this.dataPool = dataPool

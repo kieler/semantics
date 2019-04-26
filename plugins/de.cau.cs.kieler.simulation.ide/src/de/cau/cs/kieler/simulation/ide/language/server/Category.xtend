@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ide.language.server
 
-import java.util.ArrayList
+import java.util.HashSet
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
@@ -23,11 +23,15 @@ class Category {
     String name
     
     @Accessors(PUBLIC_GETTER)
-    ArrayList<String> symbols
+    HashSet<String> symbols
     
     new(String name) {
         this.name = name
-        this.symbols = newArrayList
+        this.symbols = newHashSet
+    }
+    
+    override toString() {
+        return "{name " + name + ", symbols" + symbols + "}"
     }
     
     

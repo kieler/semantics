@@ -14,7 +14,6 @@ package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
@@ -26,6 +25,7 @@ import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
+import java.util.HashSet
 import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -35,6 +35,8 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
+import java.util.HashMap
+import java.util.ArrayList
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -110,21 +112,23 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         for (property : properties) {
             val key = property.toLowerCase
             if (!propertyFilter.containsKey(key)) {
-                propertyFilter.put(key, true)
+                propertyFilter.put(property, true)
             }
         }
         // Add all properties with their respective elements
-        val propertySet = newArrayList
+        val HashMap<String, ArrayList<String>> propertySet  = newHashMap
         propertyFilter.forEach[key, value|
-            val property = new Category(key)
+            propertySet.put(key, newArrayList)
+        ]
+        propertySet.forEach[key, list|
             val infos = finalPool.entries
             for (entry : finalPool.entries.entrySet) {
                 val combinedProperties = infos.get(entry.key)?.combinedProperties
                 if (combinedProperties !== null && combinedProperties.contains(key)) {
-                    property.symbols.add(entry.key)
+                    list.add(entry.key)
                 }
             }
-            propertySet.add(property)
+            propertySet.put(key, list)
         ]
         // Return the whole data pool, the inputs, the outputs, and properties with their respective elements
         val message = new SimulationStartedMessage(true, "", datapool.pool, datapool.input, datapool.output, propertySet)
