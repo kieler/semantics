@@ -184,7 +184,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
 
     override getSystems(String uri, boolean filter) {
-
+        // Reset the calculation of the current snapshot index.
+        lastUri = null
         var eobject = getEObjectFromUri(uri)
         val model = if(filter) eobject
         if (model !== null && model.class !== modelClassFilter) {
