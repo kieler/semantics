@@ -80,6 +80,7 @@ public class JsonArrayValueImpl extends EObjectImpl implements JsonArrayValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.JSON_ARRAY_VALUE__SCHEDULE);
@@ -92,6 +93,7 @@ public class JsonArrayValueImpl extends EObjectImpl implements JsonArrayValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Value> getElements() {
         if (elements == null) {
             elements = new EObjectContainmentEList<Value>(Value.class, this, KExpressionsPackage.JSON_ARRAY_VALUE__ELEMENTS);

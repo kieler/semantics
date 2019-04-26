@@ -711,7 +711,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclaration kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -729,7 +729,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -747,7 +747,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//StructDeclaration kext::StructDeclaration:
 	//	{kext::StructDeclaration} annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -770,7 +770,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//StructDeclarationWOSemicolon kext::StructDeclaration:
 	//	{kext::StructDeclaration} annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -802,7 +802,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -816,7 +816,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -841,7 +841,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -856,7 +856,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
@@ -1021,7 +1021,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+	//	(',' parameters+=Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -1571,12 +1572,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Basically, the rule chain may start over again at this point.     
 	//AtomicExpression Expression:
 	//	BoolValue
-	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
 	//	| RandomCall
 	//	| RandomizeCall
+	//	| ValuedObjectTestExpression // Last to allow detection of calls
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1657,7 +1658,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
+	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -2089,6 +2091,16 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
+	}
+	
+	//enum AccessModifier:
+	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
+		return gaKExpressions.getAccessModifierAccess();
+	}
+	
+	public EnumRule getAccessModifierRule() {
+		return getAccessModifierAccess().getRule();
 	}
 	
 	//// -------------------- //

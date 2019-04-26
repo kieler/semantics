@@ -55,7 +55,8 @@ public class ColorStore {
         
         REGION_FOREGROUND(Colors.GRAY),
         REGION_BACKGROUND(Colors.WHITE),
-        REGION_BUTTON_BACKGROUND(Colors.GRAY),
+        REGION_OVERRIDE_FOREGROUND(0xaa, 0xd4, 0x00),
+        REGION_OVERRIDE_BACKGROUND(Colors.WHITE),
         REGION_BUTTON_FOREGROUND(Colors.WHITE),
         REGION_LABEL(Colors.DIM_GRAY),
         
@@ -87,6 +88,9 @@ public class ColorStore {
         DEPENDENCY_ABSWRITEREAD(0, 192, 0),
         DEPENDENCY_ABSWRITERELWRITE(0, 0, 255),
         DEPENDENCY_ABSWRITEABSWRITE(255, 0, 0),
+        
+        METHOD_FOREGROUND(Colors.GRAY_22),
+        METHOD_BACKGROUND(Colors.GRAY_92),
         
         SELECTION(74, 144, 217),
         

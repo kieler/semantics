@@ -27,6 +27,8 @@ import de.cau.cs.kieler.sccharts.SCChartsPackage
 import org.eclipse.emf.ecore.resource.Resource
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.sccharts.ClassDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -149,6 +151,10 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 if (declarationScope.counterVariable !== null) {
                     candidates += declarationScope.counterVariable
                 }
+                // Methods
+                for (method : declarationScope.methods) {
+                    candidates += method
+                }
             }
             
             // Inherited VOs
@@ -160,11 +166,26 @@ class SCTXScopeProvider extends KExtScopeProvider {
                         }
                     }
                 }
+                // Methods
+                for (method : declarationScope.methods) {
+                    candidates += method
+                }
             }
             
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
+    }
+    
+    override IScope getScopeForStruct(StructDeclaration struct) {
+        if (struct instanceof ClassDeclaration) {
+            val candidates = newArrayList()
+            candidates.addAll(struct.declarations.map[valuedObjects].flatten)
+            candidates.addAll(struct.methods)
+            return Scopes.scopeFor(candidates)
+        } else {
+            return super.getScopeForStruct(struct)
+        }
     }
     
     protected def getAllAvailableRootStates(Resource eResource) {

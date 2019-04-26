@@ -328,13 +328,13 @@ public interface KExtPackage extends EPackage {
     int STRUCT_DECLARATION__VALUED_OBJECTS = DECLARATION_SCOPE_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STRUCT_DECLARATION__PRIVATE = DECLARATION_SCOPE_FEATURE_COUNT + 2;
+    int STRUCT_DECLARATION__ACCESS = DECLARATION_SCOPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.

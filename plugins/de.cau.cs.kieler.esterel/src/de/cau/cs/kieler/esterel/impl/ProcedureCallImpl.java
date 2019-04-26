@@ -97,6 +97,7 @@ public class ProcedureCallImpl extends StatementImpl implements ProcedureCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Procedure getProcedure() {
         if (procedure != null && procedure.eIsProxy()) {
             InternalEObject oldProcedure = (InternalEObject)procedure;
@@ -123,6 +124,7 @@ public class ProcedureCallImpl extends StatementImpl implements ProcedureCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setProcedure(Procedure newProcedure) {
         Procedure oldProcedure = procedure;
         procedure = newProcedure;
@@ -135,6 +137,7 @@ public class ProcedureCallImpl extends StatementImpl implements ProcedureCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Variable> getReferenceArguments() {
         if (referenceArguments == null) {
             referenceArguments = new EObjectResolvingEList<Variable>(Variable.class, this, EsterelPackage.PROCEDURE_CALL__REFERENCE_ARGUMENTS);
@@ -147,6 +150,7 @@ public class ProcedureCallImpl extends StatementImpl implements ProcedureCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getValueArguments() {
         if (valueArguments == null) {
             valueArguments = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.PROCEDURE_CALL__VALUE_ARGUMENTS);

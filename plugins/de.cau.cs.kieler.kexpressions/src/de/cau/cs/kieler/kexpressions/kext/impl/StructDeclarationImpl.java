@@ -8,6 +8,7 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.ValueType;
@@ -42,7 +43,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getAnnotations <em>Annotations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isPrivate <em>Private</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getAccess <em>Access</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isOutput <em>Output</em>}</li>
@@ -80,24 +81,24 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     protected EList<ValuedObject> valuedObjects;
 
     /**
-     * The default value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The default value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected static final boolean PRIVATE_EDEFAULT = false;
+    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.PUBLIC;
 
     /**
-     * The cached value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The cached value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected boolean private_ = PRIVATE_EDEFAULT;
+    protected AccessModifier access = ACCESS_EDEFAULT;
 
     /**
      * The default value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -343,6 +344,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExtPackage.STRUCT_DECLARATION__ANNOTATIONS);
@@ -355,6 +357,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getValuedObjects() {
         if (valuedObjects == null) {
             valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS);
@@ -367,8 +370,9 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isPrivate() {
-        return private_;
+    @Override
+    public AccessModifier getAccess() {
+        return access;
     }
 
     /**
@@ -376,11 +380,12 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPrivate(boolean newPrivate) {
-        boolean oldPrivate = private_;
-        private_ = newPrivate;
+    @Override
+    public void setAccess(AccessModifier newAccess) {
+        AccessModifier oldAccess = access;
+        access = newAccess == null ? ACCESS_EDEFAULT : newAccess;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__PRIVATE, oldPrivate, private_));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__ACCESS, oldAccess, access));
     }
 
     /**
@@ -388,6 +393,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValueType getType() {
         return type;
     }
@@ -397,6 +403,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(ValueType newType) {
         ValueType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -409,6 +416,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isInput() {
         return input;
     }
@@ -418,6 +426,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInput(boolean newInput) {
         boolean oldInput = input;
         input = newInput;
@@ -430,6 +439,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOutput() {
         return output;
     }
@@ -439,6 +449,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOutput(boolean newOutput) {
         boolean oldOutput = output;
         output = newOutput;
@@ -451,6 +462,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isStatic() {
         return static_;
     }
@@ -460,6 +472,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStatic(boolean newStatic) {
         boolean oldStatic = static_;
         static_ = newStatic;
@@ -472,6 +485,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSignal() {
         return signal;
     }
@@ -481,6 +495,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSignal(boolean newSignal) {
         boolean oldSignal = signal;
         signal = newSignal;
@@ -493,6 +508,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isConst() {
         return const_;
     }
@@ -502,6 +518,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConst(boolean newConst) {
         boolean oldConst = const_;
         const_ = newConst;
@@ -514,6 +531,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isExtern() {
         return extern;
     }
@@ -523,6 +541,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExtern(boolean newExtern) {
         boolean oldExtern = extern;
         extern = newExtern;
@@ -535,6 +554,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isVolatile() {
         return volatile_;
     }
@@ -544,6 +564,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVolatile(boolean newVolatile) {
         boolean oldVolatile = volatile_;
         volatile_ = newVolatile;
@@ -556,6 +577,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isGlobal() {
         return global;
     }
@@ -565,6 +587,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setGlobal(boolean newGlobal) {
         boolean oldGlobal = global;
         global = newGlobal;
@@ -577,6 +600,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getHostType() {
         return hostType;
     }
@@ -586,6 +610,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHostType(String newHostType) {
         String oldHostType = hostType;
         hostType = newHostType;
@@ -598,6 +623,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -607,6 +633,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -642,8 +669,8 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
                 return getAnnotations();
             case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
                 return getValuedObjects();
-            case KExtPackage.STRUCT_DECLARATION__PRIVATE:
-                return isPrivate();
+            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+                return getAccess();
             case KExtPackage.STRUCT_DECLARATION__TYPE:
                 return getType();
             case KExtPackage.STRUCT_DECLARATION__INPUT:
@@ -687,8 +714,8 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
                 getValuedObjects().clear();
                 getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__PRIVATE:
-                setPrivate((Boolean)newValue);
+            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+                setAccess((AccessModifier)newValue);
                 return;
             case KExtPackage.STRUCT_DECLARATION__TYPE:
                 setType((ValueType)newValue);
@@ -741,8 +768,8 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
             case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 return;
-            case KExtPackage.STRUCT_DECLARATION__PRIVATE:
-                setPrivate(PRIVATE_EDEFAULT);
+            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+                setAccess(ACCESS_EDEFAULT);
                 return;
             case KExtPackage.STRUCT_DECLARATION__TYPE:
                 setType(TYPE_EDEFAULT);
@@ -793,8 +820,8 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
                 return annotations != null && !annotations.isEmpty();
             case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
                 return valuedObjects != null && !valuedObjects.isEmpty();
-            case KExtPackage.STRUCT_DECLARATION__PRIVATE:
-                return private_ != PRIVATE_EDEFAULT;
+            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+                return access != ACCESS_EDEFAULT;
             case KExtPackage.STRUCT_DECLARATION__TYPE:
                 return type != TYPE_EDEFAULT;
             case KExtPackage.STRUCT_DECLARATION__INPUT:
@@ -837,7 +864,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         if (baseClass == Declaration.class) {
             switch (derivedFeatureID) {
                 case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS: return KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
-                case KExtPackage.STRUCT_DECLARATION__PRIVATE: return KExpressionsPackage.DECLARATION__PRIVATE;
+                case KExtPackage.STRUCT_DECLARATION__ACCESS: return KExpressionsPackage.DECLARATION__ACCESS;
                 default: return -1;
             }
         }
@@ -886,7 +913,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         if (baseClass == Declaration.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.DECLARATION__VALUED_OBJECTS: return KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS;
-                case KExpressionsPackage.DECLARATION__PRIVATE: return KExtPackage.STRUCT_DECLARATION__PRIVATE;
+                case KExpressionsPackage.DECLARATION__ACCESS: return KExtPackage.STRUCT_DECLARATION__ACCESS;
                 default: return -1;
             }
         }
@@ -929,8 +956,8 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (private: ");
-        result.append(private_);
+        result.append(" (access: ");
+        result.append(access);
         result.append(", type: ");
         result.append(type);
         result.append(", input: ");

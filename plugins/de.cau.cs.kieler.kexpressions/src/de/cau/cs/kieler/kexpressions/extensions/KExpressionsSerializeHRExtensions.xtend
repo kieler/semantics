@@ -59,7 +59,11 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         vo
     }    
 
-    def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+    def dispatch CharSequence serializeHR(ValuedObjectReference vor) {
+        return vor.serializeVOR
+    }
+    
+    def CharSequence serializeVOR(ValuedObjectReference valuedObjectReference) {
         if (valuedObjectReference.valuedObject === null) {
             System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
             return ""
@@ -75,7 +79,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }
     
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+        return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {

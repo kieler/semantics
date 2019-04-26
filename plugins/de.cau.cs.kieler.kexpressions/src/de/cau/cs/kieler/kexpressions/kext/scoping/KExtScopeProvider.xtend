@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 
 /**
  * @author ssm
@@ -132,10 +133,17 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
                             getScopeForReferencedDeclarationObject[ output || input ]
                     }
+                    if (parentVO.valuedObject.eContainer instanceof StructDeclaration) {
+                        return (parentVO.valuedObject.eContainer as StructDeclaration).getScopeForStruct
+                    }
                 }
             }
         }
         return context.getScopeHierarchical(reference)	    
+	}
+	
+	protected def IScope getScopeForStruct(StructDeclaration struct) {
+	    return Scopes.scopeFor(struct.declarations.map[valuedObjects].flatten)
 	}
 	
 	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,

@@ -872,6 +872,53 @@ public interface SCLPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ReturnImpl <em>Return</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ReturnImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getReturn()
+     * @generated
+     */
+    int RETURN = 16;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__SEMICOLON = STATEMENT__SEMICOLON;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__EXPRESSION = STATEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Return</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.SCLProgram <em>Program</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1120,6 +1167,27 @@ public interface SCLPackage extends EPackage {
     EAttribute getSequencePart_Semicolon();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Return <em>Return</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Return</em>'.
+     * @see de.cau.cs.kieler.scl.Return
+     * @generated
+     */
+    EClass getReturn();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Return#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scl.Return#getExpression()
+     * @see #getReturn()
+     * @generated
+     */
+    EReference getReturn_Expression();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1364,6 +1432,24 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EAttribute SEQUENCE_PART__SEMICOLON = eINSTANCE.getSequencePart_Semicolon();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ReturnImpl <em>Return</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.ReturnImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getReturn()
+         * @generated
+         */
+        EClass RETURN = eINSTANCE.getReturn();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
 
     }
 

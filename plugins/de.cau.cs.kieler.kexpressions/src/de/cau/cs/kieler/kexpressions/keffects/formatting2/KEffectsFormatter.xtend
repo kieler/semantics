@@ -58,8 +58,8 @@ class KEffectsFormatter extends KExpressionsFormatter {
 			format(annotations, document);
 		}
 		
-        referencecalleffect.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        referencecalleffect.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+        referencecalleffect.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_3_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        referencecalleffect.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_3_0_3)?.prepend[ noSpace ]
 		
 		for (Parameter parameters : referencecalleffect.getParameters()) {
 			format(parameters, document);

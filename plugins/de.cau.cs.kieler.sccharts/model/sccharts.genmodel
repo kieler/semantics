@@ -4,7 +4,7 @@
     modelDirectory="/de.cau.cs.kieler.sccharts/src" modelPluginID="de.cau.cs.kieler.sccharts"
     modelName="SCCharts" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="8.0"
-    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext"
+    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext ../../de.cau.cs.kieler.scl/model/scl.genmodel#//scl"
     importOrganizing="true" pluginKey="sccharts">
   <foreignModel>sccharts.ecore</foreignModel>
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
@@ -33,6 +33,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Scope/label"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/actions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/reference"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/methods"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//ScopeCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//ScopeCall/scope"/>
@@ -92,5 +93,14 @@
     <genClasses ecoreClass="sccharts.ecore#//PrecedingAction"/>
     <genClasses ecoreClass="sccharts.ecore#//SucceedingAction"/>
     <genClasses ecoreClass="sccharts.ecore#//PeriodAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//Method">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Method/returnType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Method/parameterDeclarations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Method/access"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//ClassDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ClassDeclaration/methods"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ClassDeclaration/host"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

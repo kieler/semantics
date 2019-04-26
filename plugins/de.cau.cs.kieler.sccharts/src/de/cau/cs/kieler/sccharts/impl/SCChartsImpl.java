@@ -95,7 +95,8 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<State> getRootStates() {
+	@Override
+    public EList<State> getRootStates() {
         if (rootStates == null) {
             rootStates = new EObjectContainmentEList<State>(State.class, this, SCChartsPackage.SC_CHARTS__ROOT_STATES);
         }
@@ -107,6 +108,7 @@ public class SCChartsImpl extends PragmatableImpl implements SCCharts {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<String> getImports() {
         if (imports == null) {
             imports = new EDataTypeUniqueEList<String>(String.class, this, SCChartsPackage.SC_CHARTS__IMPORTS);

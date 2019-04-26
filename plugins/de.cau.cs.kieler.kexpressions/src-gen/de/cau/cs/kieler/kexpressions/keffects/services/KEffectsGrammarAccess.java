@@ -398,28 +398,33 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValuedObjectAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final CrossReference cValuedObjectValuedObjectCrossReference_1_0 = (CrossReference)cValuedObjectAssignment_1.eContents().get(0);
 		private final RuleCall cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1 = (RuleCall)cValuedObjectValuedObjectCrossReference_1_0.eContents().get(1);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cAlternatives_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_1_0 = (RuleCall)cParametersAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_0_2 = (Group)cGroup_2_0.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0_2_0 = (Keyword)cGroup_2_0_2.eContents().get(0);
-		private final Assignment cParametersAssignment_2_0_2_1 = (Assignment)cGroup_2_0_2.eContents().get(1);
-		private final RuleCall cParametersParameterParserRuleCall_2_0_2_1_0 = (RuleCall)cParametersAssignment_2_0_2_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_2_0_3 = (Keyword)cGroup_2_0.eContents().get(3);
-		private final Keyword cLeftParenthesisRightParenthesisKeyword_2_1 = (Keyword)cAlternatives_2.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cFullStopKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cSubReferenceAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0 = (RuleCall)cSubReferenceAssignment_2_1.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_1_0 = (RuleCall)cParametersAssignment_3_0_1.eContents().get(0);
+		private final Group cGroup_3_0_2 = (Group)cGroup_3_0.eContents().get(2);
+		private final Keyword cCommaKeyword_3_0_2_0 = (Keyword)cGroup_3_0_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_0_2_1 = (Assignment)cGroup_3_0_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_0_2_1_0 = (RuleCall)cParametersAssignment_3_0_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_0_3 = (Keyword)cGroup_3_0.eContents().get(3);
+		private final Keyword cLeftParenthesisRightParenthesisKeyword_3_1 = (Keyword)cAlternatives_3.eContents().get(1);
 		
 		//// Reference Call Effect Rule
 		//// A reference call effect works similar to the reference call expression. Additionally, it may be
 		//// preceded by a list of annotations.
 		//ReferenceCallEffect keffects::ReferenceCallEffect:
 		//	annotations+=Annotation*
-		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
+		//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+		//	(',' parameters+=Parameter)* ')' | '()');
 		@Override public ParserRule getRule() { return rule; }
 		
-		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (','
-		//parameters+=Parameter)* ')' | '()')
+		//annotations+=Annotation* valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)?
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -437,38 +442,50 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		//PrimeID
 		public RuleCall getValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1() { return cValuedObjectValuedObjectPrimeIDParserRuleCall_1_0_1; }
 		
+		//('.' subReference=ValuedObjectReference)?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_2_0() { return cFullStopKeyword_2_0; }
+		
+		//subReference=ValuedObjectReference
+		public Assignment getSubReferenceAssignment_2_1() { return cSubReferenceAssignment_2_1; }
+		
+		//ValuedObjectReference
+		public RuleCall getSubReferenceValuedObjectReferenceParserRuleCall_2_1_0() { return cSubReferenceValuedObjectReferenceParserRuleCall_2_1_0; }
+		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()'
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
 		
 		//'(' parameters+=Parameter (',' parameters+=Parameter)* ')'
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		public Group getGroup_3_0() { return cGroup_3_0; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_2_0_0() { return cLeftParenthesisKeyword_2_0_0; }
+		public Keyword getLeftParenthesisKeyword_3_0_0() { return cLeftParenthesisKeyword_3_0_0; }
 		
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_1() { return cParametersAssignment_2_0_1; }
+		public Assignment getParametersAssignment_3_0_1() { return cParametersAssignment_3_0_1; }
 		
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_1_0() { return cParametersParameterParserRuleCall_2_0_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_3_0_1_0() { return cParametersParameterParserRuleCall_3_0_1_0; }
 		
 		//(',' parameters+=Parameter)*
-		public Group getGroup_2_0_2() { return cGroup_2_0_2; }
+		public Group getGroup_3_0_2() { return cGroup_3_0_2; }
 		
 		//','
-		public Keyword getCommaKeyword_2_0_2_0() { return cCommaKeyword_2_0_2_0; }
+		public Keyword getCommaKeyword_3_0_2_0() { return cCommaKeyword_3_0_2_0; }
 		
 		//parameters+=Parameter
-		public Assignment getParametersAssignment_2_0_2_1() { return cParametersAssignment_2_0_2_1; }
+		public Assignment getParametersAssignment_3_0_2_1() { return cParametersAssignment_3_0_2_1; }
 		
 		//Parameter
-		public RuleCall getParametersParameterParserRuleCall_2_0_2_1_0() { return cParametersParameterParserRuleCall_2_0_2_1_0; }
+		public RuleCall getParametersParameterParserRuleCall_3_0_2_1_0() { return cParametersParameterParserRuleCall_3_0_2_1_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_2_0_3() { return cRightParenthesisKeyword_2_0_3; }
+		public Keyword getRightParenthesisKeyword_3_0_3() { return cRightParenthesisKeyword_3_0_3; }
 		
 		//'()'
-		public Keyword getLeftParenthesisRightParenthesisKeyword_2_1() { return cLeftParenthesisRightParenthesisKeyword_2_1; }
+		public Keyword getLeftParenthesisRightParenthesisKeyword_3_1() { return cLeftParenthesisRightParenthesisKeyword_3_1; }
 	}
 	public class FunctionCallEffectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.keffects.KEffects.FunctionCallEffect");
@@ -1053,7 +1070,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+	//	(',' parameters+=Parameter)* ')' | '()');
 	public ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return pReferenceCallEffect;
 	}
@@ -1603,12 +1621,12 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Basically, the rule chain may start over again at this point.     
 	//AtomicExpression Expression:
 	//	BoolValue
-	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
 	//	| RandomCall
 	//	| RandomizeCall
+	//	| ValuedObjectTestExpression
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1689,7 +1707,8 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
+	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -2121,6 +2140,16 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
+	}
+	
+	//enum AccessModifier:
+	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
+		return gaKExpressions.getAccessModifierAccess();
+	}
+	
+	public EnumRule getAccessModifierRule() {
+		return getAccessModifierAccess().getRule();
 	}
 	
 	//// -------------------- //

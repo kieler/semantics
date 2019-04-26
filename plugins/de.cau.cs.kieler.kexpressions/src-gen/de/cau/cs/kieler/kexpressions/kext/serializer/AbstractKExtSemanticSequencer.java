@@ -499,7 +499,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
@@ -519,7 +519,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
 	 *         valuedObjects+=ValuedObject 
 	 *         valuedObjects+=ValuedObject* 
@@ -551,7 +551,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
@@ -573,7 +573,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         name=STRING? 
 	 *         global=PriorityProtocol? 
 	 *         (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
@@ -607,7 +607,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
@@ -633,7 +633,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
@@ -683,7 +683,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
@@ -708,7 +708,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
-	 *         private?='private'? 
+	 *         access=AccessModifier? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 

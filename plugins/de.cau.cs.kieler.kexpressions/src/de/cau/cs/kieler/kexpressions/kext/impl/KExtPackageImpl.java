@@ -142,6 +142,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getKext() {
         return kextEClass;
     }
@@ -151,6 +152,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getKExtScope() {
         return kExtScopeEClass;
     }
@@ -160,6 +162,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getKExtScope_Entities() {
         return (EReference)kExtScopeEClass.getEStructuralFeatures().get(0);
     }
@@ -169,6 +172,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getKExtScope_Scopes() {
         return (EReference)kExtScopeEClass.getEStructuralFeatures().get(1);
     }
@@ -178,6 +182,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTestEntity() {
         return testEntityEClass;
     }
@@ -187,6 +192,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTestEntity_Effect() {
         return (EReference)testEntityEClass.getEStructuralFeatures().get(0);
     }
@@ -196,6 +202,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTestEntity_Expression() {
         return (EReference)testEntityEClass.getEStructuralFeatures().get(1);
     }
@@ -205,6 +212,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAnnotatedExpression() {
         return annotatedExpressionEClass;
     }
@@ -214,6 +222,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAnnotatedExpression_Expression() {
         return (EReference)annotatedExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -223,6 +232,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDeclarationScope() {
         return declarationScopeEClass;
     }
@@ -232,6 +242,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDeclarationScope_Declarations() {
         return (EReference)declarationScopeEClass.getEStructuralFeatures().get(0);
     }
@@ -241,6 +252,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStructDeclaration() {
         return structDeclarationEClass;
     }
@@ -250,6 +262,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExtFactory getKExtFactory() {
         return (KExtFactory)getEFactoryInstance();
     }

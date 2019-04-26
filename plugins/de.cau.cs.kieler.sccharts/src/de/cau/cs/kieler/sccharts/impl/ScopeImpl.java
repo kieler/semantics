@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 import de.cau.cs.kieler.sccharts.Scope;
 
@@ -56,6 +57,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getMethods <em>Methods</em>}</li>
  * </ul>
  *
  * @generated
@@ -149,6 +151,16 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     protected ScopeCall reference;
 
     /**
+     * The cached value of the '{@link #getMethods() <em>Methods</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getMethods()
+     * @generated
+     * @ordered
+     */
+    protected EList<Method> methods;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -185,6 +197,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
@@ -197,6 +210,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<LocalAction> getActions() {
         if (actions == null) {
             actions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__ACTIONS);
@@ -209,6 +223,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScopeCall getReference() {
         return reference;
     }
@@ -233,6 +248,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ScopeCall newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -252,6 +268,20 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EList<Method> getMethods() {
+        if (methods == null) {
+            methods = new EObjectContainmentEList<Method>(Method.class, this, SCChartsPackage.SCOPE__METHODS);
+        }
+        return methods;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.SCOPE__DECLARATIONS);
@@ -264,6 +294,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -273,6 +304,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -285,6 +317,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SCChartsPackage.SCOPE__SCHEDULE);
@@ -308,6 +341,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__REFERENCE:
                 return basicSetReference(null, msgs);
+            case SCChartsPackage.SCOPE__METHODS:
+                return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -332,6 +367,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getActions();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return getReference();
+            case SCChartsPackage.SCOPE__METHODS:
+                return getMethods();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -366,6 +403,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__REFERENCE:
                 setReference((ScopeCall)newValue);
                 return;
+            case SCChartsPackage.SCOPE__METHODS:
+                getMethods().clear();
+                getMethods().addAll((Collection<? extends Method>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -396,6 +437,9 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__REFERENCE:
                 setReference((ScopeCall)null);
                 return;
+            case SCChartsPackage.SCOPE__METHODS:
+                getMethods().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -420,6 +464,8 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return actions != null && !actions.isEmpty();
             case SCChartsPackage.SCOPE__REFERENCE:
                 return reference != null;
+            case SCChartsPackage.SCOPE__METHODS:
+                return methods != null && !methods.isEmpty();
         }
         return super.eIsSet(featureID);
     }

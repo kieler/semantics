@@ -132,6 +132,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isCallByReference() {
         return callByReference;
     }
@@ -141,6 +142,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCallByReference(boolean newCallByReference) {
         boolean oldCallByReference = callByReference;
         callByReference = newCallByReference;
@@ -153,6 +155,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isPureOutput() {
         return pureOutput;
     }
@@ -162,6 +165,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPureOutput(boolean newPureOutput) {
         boolean oldPureOutput = pureOutput;
         pureOutput = newPureOutput;
@@ -174,6 +178,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -198,6 +203,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -217,6 +223,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getExplicitBinding() {
         if (explicitBinding != null && explicitBinding.eIsProxy()) {
             InternalEObject oldExplicitBinding = (InternalEObject)explicitBinding;
@@ -243,6 +250,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExplicitBinding(ValuedObject newExplicitBinding) {
         ValuedObject oldExplicitBinding = explicitBinding;
         explicitBinding = newExplicitBinding;
@@ -255,6 +263,7 @@ public class ParameterImpl extends EObjectImpl implements Parameter {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getExplicitBindingIndices() {
         if (explicitBindingIndices == null) {
             explicitBindingIndices = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.PARAMETER__EXPLICIT_BINDING_INDICES);

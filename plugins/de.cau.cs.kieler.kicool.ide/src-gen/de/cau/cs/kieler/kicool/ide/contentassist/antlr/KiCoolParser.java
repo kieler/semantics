@@ -41,7 +41,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__ReferenceDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 			builder.put(grammarAccess.getPureOrValuedEmissionAccess().getAlternatives(), "rule__PureOrValuedEmission__Alternatives");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_2(), "rule__ReferenceCallEffect__Alternatives_2");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_3(), "rule__ReferenceCallEffect__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 			builder.put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
 			builder.put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
@@ -64,7 +64,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
-			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_1(), "rule__ReferenceCall__Alternatives_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
@@ -89,6 +89,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 			builder.put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
+			builder.put(grammarAccess.getAccessModifierAccess().getAlternatives(), "rule__AccessModifier__Alternatives");
 			builder.put(grammarAccess.getSystemAccess().getGroup(), "rule__System__Group__0");
 			builder.put(grammarAccess.getSystemAccess().getGroup_9(), "rule__System__Group_9__0");
 			builder.put(grammarAccess.getSystemAccess().getGroup_10(), "rule__System__Group_10__0");
@@ -168,8 +169,9 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPostfixEffectAccess().getGroup_3(), "rule__PostfixEffect__Group_3__0");
 			builder.put(grammarAccess.getHostcodeEffectAccess().getGroup(), "rule__HostcodeEffect__Group__0");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup(), "rule__ReferenceCallEffect__Group__0");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_2_0(), "rule__ReferenceCallEffect__Group_2_0__0");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_2_0_2(), "rule__ReferenceCallEffect__Group_2_0_2__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_2(), "rule__ReferenceCallEffect__Group_2__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_3_0(), "rule__ReferenceCallEffect__Group_3_0__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_3_0_2(), "rule__ReferenceCallEffect__Group_3_0_2__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup_1(), "rule__FunctionCallEffect__Group_1__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0(), "rule__FunctionCallEffect__Group_1_2_0__0");
@@ -308,7 +310,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
 			builder.put(grammarAccess.getFBYExpressionAccess().getGroup_0(), "rule__FBYExpression__Group_0__0");
-			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
+			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
@@ -317,8 +319,10 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_2(), "rule__ValuedObjectReference__Group_2__0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getGroup(), "rule__ScheduleObjectReference__Group__0");
 			builder.put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
-			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
-			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1(), "rule__ReferenceCall__Group_1__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_2(), "rule__ReferenceCall__Group_2__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_3_0(), "rule__ReferenceCall__Group_3_0__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_3_0_2(), "rule__ReferenceCall__Group_3_0_2__0");
 			builder.put(grammarAccess.getRandomCallAccess().getGroup(), "rule__RandomCall__Group__0");
 			builder.put(grammarAccess.getRandomizeCallAccess().getGroup(), "rule__RandomizeCall__Group__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
@@ -408,7 +412,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getAnnotationsAssignment_0(), "rule__AnnotatedExpression__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getAnnotatedExpressionAccess().getExpressionAssignment_2(), "rule__AnnotatedExpression__ExpressionAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAnnotationsAssignment_0(), "rule__VariableDeclaration__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getVariableDeclarationAccess().getPrivateAssignment_1(), "rule__VariableDeclaration__PrivateAssignment_1");
+			builder.put(grammarAccess.getVariableDeclarationAccess().getAccessAssignment_1(), "rule__VariableDeclaration__AccessAssignment_1");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getConstAssignment_2(), "rule__VariableDeclaration__ConstAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getInputAssignment_3(), "rule__VariableDeclaration__InputAssignment_3");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getOutputAssignment_4(), "rule__VariableDeclaration__OutputAssignment_4");
@@ -423,7 +427,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getVariableDeclarationAccess().getValuedObjectsAssignment_9_1(), "rule__VariableDeclaration__ValuedObjectsAssignment_9_1");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAnnotationsAssignment_11(), "rule__VariableDeclaration__AnnotationsAssignment_11");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsAssignment_0(), "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getPrivateAssignment_1(), "rule__VariableDeclarationWOSemicolon__PrivateAssignment_1");
+			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAccessAssignment_1(), "rule__VariableDeclarationWOSemicolon__AccessAssignment_1");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getConstAssignment_2(), "rule__VariableDeclarationWOSemicolon__ConstAssignment_2");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getInputAssignment_3(), "rule__VariableDeclarationWOSemicolon__InputAssignment_3");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getOutputAssignment_4(), "rule__VariableDeclarationWOSemicolon__OutputAssignment_4");
@@ -438,7 +442,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getValuedObjectsAssignment_9_1(), "rule__VariableDeclarationWOSemicolon__ValuedObjectsAssignment_9_1");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAnnotationsAssignment_10(), "rule__VariableDeclarationWOSemicolon__AnnotationsAssignment_10");
 			builder.put(grammarAccess.getStructDeclarationAccess().getAnnotationsAssignment_1(), "rule__StructDeclaration__AnnotationsAssignment_1");
-			builder.put(grammarAccess.getStructDeclarationAccess().getPrivateAssignment_2(), "rule__StructDeclaration__PrivateAssignment_2");
+			builder.put(grammarAccess.getStructDeclarationAccess().getAccessAssignment_2(), "rule__StructDeclaration__AccessAssignment_2");
 			builder.put(grammarAccess.getStructDeclarationAccess().getConstAssignment_3(), "rule__StructDeclaration__ConstAssignment_3");
 			builder.put(grammarAccess.getStructDeclarationAccess().getInputAssignment_4(), "rule__StructDeclaration__InputAssignment_4");
 			builder.put(grammarAccess.getStructDeclarationAccess().getOutputAssignment_5(), "rule__StructDeclaration__OutputAssignment_5");
@@ -451,7 +455,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStructDeclarationAccess().getValuedObjectsAssignment_13_1_1(), "rule__StructDeclaration__ValuedObjectsAssignment_13_1_1");
 			builder.put(grammarAccess.getStructDeclarationAccess().getAnnotationsAssignment_15(), "rule__StructDeclaration__AnnotationsAssignment_15");
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getAnnotationsAssignment_1(), "rule__StructDeclarationWOSemicolon__AnnotationsAssignment_1");
-			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getPrivateAssignment_2(), "rule__StructDeclarationWOSemicolon__PrivateAssignment_2");
+			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getAccessAssignment_2(), "rule__StructDeclarationWOSemicolon__AccessAssignment_2");
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getConstAssignment_3(), "rule__StructDeclarationWOSemicolon__ConstAssignment_3");
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getInputAssignment_4(), "rule__StructDeclarationWOSemicolon__InputAssignment_4");
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getOutputAssignment_5(), "rule__StructDeclarationWOSemicolon__OutputAssignment_5");
@@ -464,7 +468,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getValuedObjectsAssignment_13_1_1(), "rule__StructDeclarationWOSemicolon__ValuedObjectsAssignment_13_1_1");
 			builder.put(grammarAccess.getStructDeclarationWOSemicolonAccess().getAnnotationsAssignment_14(), "rule__StructDeclarationWOSemicolon__AnnotationsAssignment_14");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getAnnotationsAssignment_0(), "rule__ReferenceDeclaration__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getReferenceDeclarationAccess().getPrivateAssignment_1(), "rule__ReferenceDeclaration__PrivateAssignment_1");
+			builder.put(grammarAccess.getReferenceDeclarationAccess().getAccessAssignment_1(), "rule__ReferenceDeclaration__AccessAssignment_1");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getReferenceAssignment_2_0_1(), "rule__ReferenceDeclaration__ReferenceAssignment_2_0_1");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getExternAssignment_2_1_1(), "rule__ReferenceDeclaration__ExternAssignment_2_1_1");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getExternAssignment_2_1_2_1(), "rule__ReferenceDeclaration__ExternAssignment_2_1_2_1");
@@ -472,7 +476,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getValuedObjectsAssignment_4_1(), "rule__ReferenceDeclaration__ValuedObjectsAssignment_4_1");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getAnnotationsAssignment_6(), "rule__ReferenceDeclaration__AnnotationsAssignment_6");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAnnotationsAssignment_0(), "rule__ReferenceDeclarationWOSemicolon__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getPrivateAssignment_1(), "rule__ReferenceDeclarationWOSemicolon__PrivateAssignment_1");
+			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAccessAssignment_1(), "rule__ReferenceDeclarationWOSemicolon__AccessAssignment_1");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getReferenceAssignment_2_0_1(), "rule__ReferenceDeclarationWOSemicolon__ReferenceAssignment_2_0_1");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternAssignment_2_1_1(), "rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_1");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getExternAssignment_2_1_2_1(), "rule__ReferenceDeclarationWOSemicolon__ExternAssignment_2_1_2_1");
@@ -482,7 +486,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getExternStringAccess().getAnnotationsAssignment_0(), "rule__ExternString__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getExternStringAccess().getCodeAssignment_1(), "rule__ExternString__CodeAssignment_1");
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getAnnotationsAssignment_0(), "rule__ScheduleDeclaration__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getScheduleDeclarationAccess().getPrivateAssignment_1(), "rule__ScheduleDeclaration__PrivateAssignment_1");
+			builder.put(grammarAccess.getScheduleDeclarationAccess().getAccessAssignment_1(), "rule__ScheduleDeclaration__AccessAssignment_1");
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getNameAssignment_3(), "rule__ScheduleDeclaration__NameAssignment_3");
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getGlobalAssignment_4_1(), "rule__ScheduleDeclaration__GlobalAssignment_4_1");
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getPrioritiesAssignment_5_1(), "rule__ScheduleDeclaration__PrioritiesAssignment_5_1");
@@ -491,7 +495,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getValuedObjectsAssignment_7_1(), "rule__ScheduleDeclaration__ValuedObjectsAssignment_7_1");
 			builder.put(grammarAccess.getScheduleDeclarationAccess().getAnnotationsAssignment_9(), "rule__ScheduleDeclaration__AnnotationsAssignment_9");
 			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAnnotationsAssignment_0(), "rule__ScheduleDeclarationWOSemicolon__AnnotationsAssignment_0");
-			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrivateAssignment_1(), "rule__ScheduleDeclarationWOSemicolon__PrivateAssignment_1");
+			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getAccessAssignment_1(), "rule__ScheduleDeclarationWOSemicolon__AccessAssignment_1");
 			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getNameAssignment_3(), "rule__ScheduleDeclarationWOSemicolon__NameAssignment_3");
 			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getGlobalAssignment_4_1(), "rule__ScheduleDeclarationWOSemicolon__GlobalAssignment_4_1");
 			builder.put(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrioritiesAssignment_5_1(), "rule__ScheduleDeclarationWOSemicolon__PrioritiesAssignment_5_1");
@@ -524,8 +528,9 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHostcodeEffectAccess().getTextAssignment_1(), "rule__HostcodeEffect__TextAssignment_1");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getAnnotationsAssignment_0(), "rule__ReferenceCallEffect__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getValuedObjectAssignment_1(), "rule__ReferenceCallEffect__ValuedObjectAssignment_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_2_0_1(), "rule__ReferenceCallEffect__ParametersAssignment_2_0_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_2_0_2_1(), "rule__ReferenceCallEffect__ParametersAssignment_2_0_2_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getSubReferenceAssignment_2_1(), "rule__ReferenceCallEffect__SubReferenceAssignment_2_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_3_0_1(), "rule__ReferenceCallEffect__ParametersAssignment_3_0_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_3_0_2_1(), "rule__ReferenceCallEffect__ParametersAssignment_3_0_2_1");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAssignment_0(), "rule__FunctionCallEffect__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1_1");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1");
@@ -658,8 +663,10 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ScheduleObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1(), "rule__ScheduleObjectReference__PriorityAssignment_1");
 			builder.put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
-			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
-			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getIndicesAssignment_1_1(), "rule__ReferenceCall__IndicesAssignment_1_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getSubReferenceAssignment_2_1(), "rule__ReferenceCall__SubReferenceAssignment_2_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_3_0_1(), "rule__ReferenceCall__ParametersAssignment_3_0_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_3_0_2_1(), "rule__ReferenceCall__ParametersAssignment_3_0_2_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");

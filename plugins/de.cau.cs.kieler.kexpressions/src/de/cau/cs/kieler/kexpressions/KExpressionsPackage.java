@@ -808,13 +808,13 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DECLARATION__PRIVATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int DECLARATION__ACCESS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Declaration</em>' class.
@@ -854,13 +854,13 @@ public interface KExpressionsPackage extends EPackage {
     int VARIABLE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VARIABLE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int VARIABLE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -990,13 +990,13 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int REFERENCE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' reference.
@@ -1063,13 +1063,13 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int SCHEDULE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1591,6 +1591,17 @@ public interface KExpressionsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
+     * @generated
+     */
+    int ACCESS_MODIFIER = 37;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2012,15 +2023,15 @@ public interface KExpressionsPackage extends EPackage {
     EReference getDeclaration_ValuedObjects();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Declaration#getAccess <em>Access</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Private</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Declaration#isPrivate()
+     * @return the meta object for the attribute '<em>Access</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Declaration#getAccess()
      * @see #getDeclaration()
      * @generated
      */
-    EAttribute getDeclaration_Private();
+    EAttribute getDeclaration_Access();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration <em>Variable Declaration</em>}'.
@@ -2489,6 +2500,16 @@ public interface KExpressionsPackage extends EPackage {
     EEnum getPriorityProtocol();
 
     /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Access Modifier</em>'.
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @generated
+     */
+    EEnum getAccessModifier();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2869,12 +2890,12 @@ public interface KExpressionsPackage extends EPackage {
         EReference DECLARATION__VALUED_OBJECTS = eINSTANCE.getDeclaration_ValuedObjects();
 
         /**
-         * The meta object literal for the '<em><b>Private</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Access</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute DECLARATION__PRIVATE = eINSTANCE.getDeclaration_Private();
+        EAttribute DECLARATION__ACCESS = eINSTANCE.getDeclaration_Access();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -3263,6 +3284,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EEnum PRIORITY_PROTOCOL = eINSTANCE.getPriorityProtocol();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.AccessModifier
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
+         * @generated
+         */
+        EEnum ACCESS_MODIFIER = eINSTANCE.getAccessModifier();
 
     }
 

@@ -98,6 +98,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSemicolon() {
         return semicolon;
     }
@@ -107,6 +108,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSemicolon(boolean newSemicolon) {
         boolean oldSemicolon = semicolon;
         semicolon = newSemicolon;
@@ -119,6 +121,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -143,6 +146,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -162,6 +166,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Scope getElse() {
         return else_;
     }
@@ -186,6 +191,7 @@ public class ConditionalImpl extends ScopeImpl implements Conditional {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setElse(Scope newElse) {
         if (newElse != else_) {
             NotificationChain msgs = null;

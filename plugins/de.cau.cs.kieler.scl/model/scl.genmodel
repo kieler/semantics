@@ -38,5 +38,8 @@
     <genClasses image="false" ecoreClass="scl.ecore#//SequencePart">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scl.ecore#//SequencePart/semicolon"/>
     </genClasses>
+    <genClasses ecoreClass="scl.ecore#//Return">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Return/expression"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

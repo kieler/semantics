@@ -895,6 +895,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -904,6 +905,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -913,6 +915,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

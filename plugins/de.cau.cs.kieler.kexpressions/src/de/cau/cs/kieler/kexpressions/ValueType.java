@@ -145,7 +145,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    SCHEDULE(9, "SCHEDULE", "SCHEDULE"),
+    SCHEDULE(9, "SCHEDULE", "schedule"),
 
     /**
      * The '<em><b>UNKNOWN</b></em>' literal object.
@@ -165,7 +165,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    CLOCK(11, "CLOCK", "CLOCK"),
+    CLOCK(11, "CLOCK", "clock"),
 
     /**
      * The '<em><b>JSON</b></em>' literal object.
@@ -175,7 +175,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    JSON(12, "JSON", "JSON"),
+    JSON(12, "JSON", "json"),
 
     /**
      * The '<em><b>STRUCT</b></em>' literal object.
@@ -185,7 +185,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRUCT(13, "STRUCT", "STRUCT");
+    STRUCT(13, "STRUCT", "struct"), /**
+     * The '<em><b>VOID</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #VOID_VALUE
+     * @generated
+     * @ordered
+     */
+    VOID(14, "VOID", "void");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -333,7 +341,7 @@ public enum ValueType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #SCHEDULE
-     * @model
+     * @model literal="schedule"
      * @generated
      * @ordered
      */
@@ -363,7 +371,7 @@ public enum ValueType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #CLOCK
-     * @model
+     * @model literal="clock"
      * @generated
      * @ordered
      */
@@ -378,7 +386,7 @@ public enum ValueType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #JSON
-     * @model
+     * @model literal="json"
      * @generated
      * @ordered
      */
@@ -393,11 +401,22 @@ public enum ValueType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #STRUCT
-     * @model
+     * @model literal="struct"
      * @generated
      * @ordered
      */
     public static final int STRUCT_VALUE = 13;
+
+    /**
+     * The '<em><b>VOID</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #VOID
+     * @model literal="void"
+     * @generated
+     * @ordered
+     */
+    public static final int VOID_VALUE = 14;
 
     /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
@@ -421,6 +440,7 @@ public enum ValueType implements Enumerator {
             CLOCK,
             JSON,
             STRUCT,
+            VOID,
         };
 
     /**
@@ -491,6 +511,7 @@ public enum ValueType implements Enumerator {
             case CLOCK_VALUE: return CLOCK;
             case JSON_VALUE: return JSON;
             case STRUCT_VALUE: return STRUCT;
+            case VOID_VALUE: return VOID;
         }
         return null;
     }
@@ -533,6 +554,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -542,6 +564,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -551,6 +574,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

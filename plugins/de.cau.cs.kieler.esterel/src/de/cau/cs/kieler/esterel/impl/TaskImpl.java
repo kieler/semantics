@@ -79,6 +79,7 @@ public class TaskImpl extends ValuedObjectImpl implements Task {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TypeIdentifier> getReferenceArguments() {
         if (referenceArguments == null) {
             referenceArguments = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__REFERENCE_ARGUMENTS);
@@ -91,6 +92,7 @@ public class TaskImpl extends ValuedObjectImpl implements Task {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TypeIdentifier> getValueArguments() {
         if (valueArguments == null) {
             valueArguments = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.TASK__VALUE_ARGUMENTS);

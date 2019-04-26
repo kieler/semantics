@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.ClassDeclaration;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DelayType;
@@ -26,6 +27,7 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
+import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.PeriodAction;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
@@ -39,6 +41,7 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.scl.SCLPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -178,6 +181,20 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass methodEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass classDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum preemptionTypeEEnum = null;
 
     /**
@@ -253,6 +270,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         KEffectsPackage.eINSTANCE.eClass();
         KExpressionsPackage.eINSTANCE.eClass();
         KExtPackage.eINSTANCE.eClass();
+        SCLPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
@@ -273,6 +291,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAction() {
         return actionEClass;
     }
@@ -282,6 +301,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAction_Effects() {
         return (EReference)actionEClass.getEStructuralFeatures().get(0);
     }
@@ -291,6 +311,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAction_Trigger() {
         return (EReference)actionEClass.getEStructuralFeatures().get(1);
     }
@@ -300,6 +321,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAction_TriggerDelay() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(2);
     }
@@ -309,6 +331,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAction_TriggerProbability() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(3);
     }
@@ -318,6 +341,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAction_Delay() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(5);
     }
@@ -327,6 +351,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAction_Nondeterministic() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(6);
     }
@@ -336,6 +361,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAction_Label() {
         return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
     }
@@ -345,6 +371,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getState() {
         return stateEClass;
     }
@@ -354,6 +381,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getState_Regions() {
         return (EReference)stateEClass.getEStructuralFeatures().get(1);
     }
@@ -363,6 +391,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getState_ParentRegion() {
         return (EReference)stateEClass.getEStructuralFeatures().get(0);
     }
@@ -372,6 +401,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getState_Initial() {
         return (EAttribute)stateEClass.getEStructuralFeatures().get(2);
     }
@@ -381,6 +411,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getState_Final() {
         return (EAttribute)stateEClass.getEStructuralFeatures().get(3);
     }
@@ -390,6 +421,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getState_Violation() {
         return (EAttribute)stateEClass.getEStructuralFeatures().get(4);
     }
@@ -399,7 +431,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EAttribute getState_Connector() {
+	@Override
+    public EAttribute getState_Connector() {
         return (EAttribute)stateEClass.getEStructuralFeatures().get(5);
     }
 
@@ -408,6 +441,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getState_OutgoingTransitions() {
         return (EReference)stateEClass.getEStructuralFeatures().get(6);
     }
@@ -417,6 +451,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getState_IncomingTransitions() {
         return (EReference)stateEClass.getEStructuralFeatures().get(7);
     }
@@ -426,6 +461,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getState_BaseStates() {
         return (EReference)stateEClass.getEStructuralFeatures().get(8);
     }
@@ -435,6 +471,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRegion() {
         return regionEClass;
     }
@@ -444,6 +481,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRegion_ParentState() {
         return (EReference)regionEClass.getEStructuralFeatures().get(0);
     }
@@ -453,6 +491,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRegion_CounterVariable() {
         return (EReference)regionEClass.getEStructuralFeatures().get(1);
     }
@@ -462,6 +501,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRegion_ForStart() {
         return (EReference)regionEClass.getEStructuralFeatures().get(2);
     }
@@ -471,6 +511,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRegion_ForEnd() {
         return (EReference)regionEClass.getEStructuralFeatures().get(3);
     }
@@ -480,6 +521,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRegion_Override() {
         return (EAttribute)regionEClass.getEStructuralFeatures().get(4);
     }
@@ -489,6 +531,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getControlflowRegion() {
         return controlflowRegionEClass;
     }
@@ -498,6 +541,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getControlflowRegion_States() {
         return (EReference)controlflowRegionEClass.getEStructuralFeatures().get(0);
     }
@@ -507,6 +551,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getControlflowRegion_Final() {
         return (EAttribute)controlflowRegionEClass.getEStructuralFeatures().get(1);
     }
@@ -516,6 +561,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataflowRegion() {
         return dataflowRegionEClass;
     }
@@ -525,6 +571,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDataflowRegion_Equations() {
         return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(0);
     }
@@ -534,6 +581,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataflowRegion_Once() {
         return (EAttribute)dataflowRegionEClass.getEStructuralFeatures().get(1);
     }
@@ -543,6 +591,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTransition() {
         return transitionEClass;
     }
@@ -552,6 +601,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTransition_Preemption() {
         return (EAttribute)transitionEClass.getEStructuralFeatures().get(0);
     }
@@ -561,6 +611,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTransition_Deferred() {
         return (EAttribute)transitionEClass.getEStructuralFeatures().get(2);
     }
@@ -570,6 +621,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTransition_History() {
         return (EAttribute)transitionEClass.getEStructuralFeatures().get(1);
     }
@@ -579,6 +631,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTransition_TargetState() {
         return (EReference)transitionEClass.getEStructuralFeatures().get(3);
     }
@@ -588,6 +641,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTransition_SourceState() {
         return (EReference)transitionEClass.getEStructuralFeatures().get(4);
     }
@@ -597,6 +651,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getScope() {
         return scopeEClass;
     }
@@ -606,6 +661,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScope_Label() {
         return (EAttribute)scopeEClass.getEStructuralFeatures().get(0);
     }
@@ -615,6 +671,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getScope_Actions() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(1);
     }
@@ -624,6 +681,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getScope_Reference() {
         return (EReference)scopeEClass.getEStructuralFeatures().get(2);
     }
@@ -633,6 +691,17 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EReference getScope_Methods() {
+        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getScopeCall() {
         return scopeCallEClass;
     }
@@ -642,6 +711,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getScopeCall_Scope() {
         return (EReference)scopeCallEClass.getEStructuralFeatures().get(0);
     }
@@ -651,6 +721,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getScopeCall_Super() {
         return (EAttribute)scopeCallEClass.getEStructuralFeatures().get(1);
     }
@@ -660,6 +731,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLocalAction() {
         return localActionEClass;
     }
@@ -669,6 +741,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEntryAction() {
         return entryActionEClass;
     }
@@ -678,6 +751,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDuringAction() {
         return duringActionEClass;
     }
@@ -687,6 +761,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDuringAction_Reset() {
         return (EAttribute)duringActionEClass.getEStructuralFeatures().get(0);
     }
@@ -696,6 +771,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExitAction() {
         return exitActionEClass;
     }
@@ -705,6 +781,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSuspendAction() {
         return suspendActionEClass;
     }
@@ -714,6 +791,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSuspendAction_Weak() {
         return (EAttribute)suspendActionEClass.getEStructuralFeatures().get(0);
     }
@@ -723,6 +801,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrecedingAction() {
         return precedingActionEClass;
     }
@@ -732,6 +811,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSucceedingAction() {
         return succeedingActionEClass;
     }
@@ -741,6 +821,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPeriodAction() {
         return periodActionEClass;
     }
@@ -750,6 +831,77 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getMethod() {
+        return methodEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMethod_ReturnType() {
+        return (EAttribute)methodEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMethod_ParameterDeclarations() {
+        return (EReference)methodEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMethod_Access() {
+        return (EAttribute)methodEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getClassDeclaration() {
+        return classDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getClassDeclaration_Methods() {
+        return (EReference)classDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getClassDeclaration_Host() {
+        return (EAttribute)classDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -759,7 +911,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EClass getSCCharts() {
+	@Override
+    public EClass getSCCharts() {
         return scChartsEClass;
     }
 
@@ -768,7 +921,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EReference getSCCharts_RootStates() {
+	@Override
+    public EReference getSCCharts_RootStates() {
         return (EReference)scChartsEClass.getEStructuralFeatures().get(0);
     }
 
@@ -777,6 +931,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSCCharts_Imports() {
         return (EAttribute)scChartsEClass.getEStructuralFeatures().get(1);
     }
@@ -786,6 +941,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getHistoryType() {
         return historyTypeEEnum;
     }
@@ -795,6 +951,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getDelayType() {
         return delayTypeEEnum;
     }
@@ -804,6 +961,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCChartsFactory getSCChartsFactory() {
         return (SCChartsFactory)getEFactoryInstance();
     }
@@ -835,6 +993,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCE);
+        createEReference(scopeEClass, SCOPE__METHODS);
 
         scopeCallEClass = createEClass(SCOPE_CALL);
         createEReference(scopeCallEClass, SCOPE_CALL__SCOPE);
@@ -900,6 +1059,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         periodActionEClass = createEClass(PERIOD_ACTION);
 
+        methodEClass = createEClass(METHOD);
+        createEAttribute(methodEClass, METHOD__RETURN_TYPE);
+        createEReference(methodEClass, METHOD__PARAMETER_DECLARATIONS);
+        createEAttribute(methodEClass, METHOD__ACCESS);
+
+        classDeclarationEClass = createEClass(CLASS_DECLARATION);
+        createEReference(classDeclarationEClass, CLASS_DECLARATION__METHODS);
+        createEAttribute(classDeclarationEClass, CLASS_DECLARATION__HOST);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -934,6 +1102,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
+        SCLPackage theSCLPackage = (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
 
         // Create type parameters
 
@@ -963,6 +1132,10 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         precedingActionEClass.getESuperTypes().add(this.getLocalAction());
         succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
         periodActionEClass.getESuperTypes().add(this.getLocalAction());
+        methodEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
+        methodEClass.getESuperTypes().add(theSCLPackage.getScope());
+        methodEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
+        classDeclarationEClass.getESuperTypes().add(theKExtPackage.getStructDeclaration());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -973,6 +1146,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Actions(), this.getLocalAction(), null, "actions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Reference(), this.getScopeCall(), null, "reference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getScope_Methods(), this.getMethod(), null, "methods", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getScopeCall_Scope(), this.getScope(), null, "scope", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1037,6 +1211,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(succeedingActionEClass, SucceedingAction.class, "SucceedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(methodEClass, Method.class, "Method", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethod_ReturnType(), theKExpressionsPackage.getValueType(), "returnType", null, 0, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethod_ParameterDeclarations(), theKExpressionsPackage.getDeclaration(), null, "parameterDeclarations", null, 0, -1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getMethod_Access(), theKExpressionsPackage.getAccessModifier(), "access", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+        initEClass(classDeclarationEClass, ClassDeclaration.class, "ClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getClassDeclaration_Methods(), this.getMethod(), null, "methods", null, 0, -1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getClassDeclaration_Host(), ecorePackage.getEBoolean(), "host", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

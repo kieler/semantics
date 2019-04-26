@@ -59,6 +59,7 @@ import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.ScopeStatement;
@@ -157,8 +158,19 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		else if (epackage == KEffectsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				sequence_PostfixEffect(context, (Assignment) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
 			case KEffectsPackage.EMISSION:
 				if (rule == grammarAccess.getPureEmissionRule()) {
 					sequence_PureEmission(context, (Emission) semanticObject); 
@@ -453,8 +465,19 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		else if (epackage == SCLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SCLPackage.ASSIGNMENT:
-				sequence_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getSclAssignmentRule()) {
+					sequence_SclAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_SclAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSclPostfixAssignmentRule()) {
+					sequence_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.CONDITIONAL:
 				if (rule == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
@@ -497,6 +520,9 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case SCLPackage.PAUSE:
 				sequence_Pause(context, (Pause) semanticObject); 
 				return; 
+			case SCLPackage.RETURN:
+				sequence_Return(context, (Return) semanticObject); 
+				return; 
 			case SCLPackage.SCL_PROGRAM:
 				sequence_SCLProgram(context, (SCLProgram) semanticObject); 
 				return; 
@@ -510,27 +536,6 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 		if (errorAcceptor != null)
 			errorAcceptor.accept(diagnosticProvider.createInvalidContextOrTypeDiagnostic(semanticObject, context));
 	}
-	
-	/**
-	 * Contexts:
-	 *     Statement returns Assignment
-	 *     Assignment returns Assignment
-	 *     Effect returns Assignment
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         reference=ValuedObjectReference 
-	 *         operator=AssignOperator 
-	 *         expression=Expression 
-	 *         schedule+=ScheduleObjectReference* 
-	 *         semicolon?=';'?
-	 *     )
-	 */
-	protected void sequence_Assignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
 	
 	/**
 	 * Contexts:
@@ -686,12 +691,77 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Return returns Return
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* expression=Expression)
+	 */
+	protected void sequence_Return(ISerializationContext context, Return semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     SCLProgram returns SCLProgram
 	 *
 	 * Constraint:
 	 *     ((pragmas+=Pragma+ modules+=Module+) | modules+=Module+)?
 	 */
 	protected void sequence_SCLProgram(ISerializationContext context, SCLProgram semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SclAssignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         reference=ValuedObjectReference 
+	 *         operator=AssignOperator 
+	 *         expression=Expression 
+	 *         schedule+=ScheduleObjectReference* 
+	 *         semicolon?=';'?
+	 *     )
+	 */
+	protected void sequence_SclAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             reference=ValuedObjectReference 
+	 *             operator=AssignOperator 
+	 *             expression=Expression 
+	 *             schedule+=ScheduleObjectReference* 
+	 *             semicolon?=';'?
+	 *         ) | 
+	 *         (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference* semicolon?=';'?)
+	 *     )
+	 */
+	protected void sequence_SclAssignment_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SclPostfixAssignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* reference=ValuedObjectReference operator=PostfixOperator schedule+=ScheduleObjectReference* semicolon?=';'?)
+	 */
+	protected void sequence_SclPostfixAssignment(ISerializationContext context, de.cau.cs.kieler.scl.Assignment semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

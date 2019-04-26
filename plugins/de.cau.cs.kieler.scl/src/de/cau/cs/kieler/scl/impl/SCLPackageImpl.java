@@ -19,6 +19,7 @@ import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLFactory;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
@@ -155,6 +156,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
     private EClass sequencePartEClass = null;
 
     /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass returnEClass = null;
+
+    /**
      * Creates an instance of the model <b>Package</b>, registered with
      * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
      * package URI value.
@@ -226,6 +234,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSCLProgram() {
         return sclProgramEClass;
     }
@@ -235,6 +244,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSCLProgram_Modules() {
         return (EReference)sclProgramEClass.getEStructuralFeatures().get(0);
     }
@@ -244,6 +254,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getModule() {
         return moduleEClass;
     }
@@ -253,6 +264,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStatement() {
         return statementEClass;
     }
@@ -262,6 +274,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getStatementContainer() {
         return statementContainerEClass;
     }
@@ -271,6 +284,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getStatementContainer_Statements() {
         return (EReference)statementContainerEClass.getEStructuralFeatures().get(0);
     }
@@ -280,6 +294,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getScope() {
         return scopeEClass;
     }
@@ -289,6 +304,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPause() {
         return pauseEClass;
     }
@@ -298,6 +314,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLabel() {
         return labelEClass;
     }
@@ -307,6 +324,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getGoto() {
         return gotoEClass;
     }
@@ -316,6 +334,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getGoto_Target() {
         return (EReference)gotoEClass.getEStructuralFeatures().get(0);
     }
@@ -325,6 +344,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAssignment() {
         return assignmentEClass;
     }
@@ -334,6 +354,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getConditional() {
         return conditionalEClass;
     }
@@ -343,6 +364,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConditional_Expression() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(0);
     }
@@ -352,6 +374,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConditional_Else() {
         return (EReference)conditionalEClass.getEStructuralFeatures().get(1);
     }
@@ -361,6 +384,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getParallel() {
         return parallelEClass;
     }
@@ -370,6 +394,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getParallel_Threads() {
         return (EReference)parallelEClass.getEStructuralFeatures().get(0);
     }
@@ -379,6 +404,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getModuleCall() {
         return moduleCallEClass;
     }
@@ -388,6 +414,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getModuleCall_Module() {
         return (EReference)moduleCallEClass.getEStructuralFeatures().get(0);
     }
@@ -397,6 +424,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getThread() {
         return threadEClass;
     }
@@ -406,6 +434,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getScopeStatement() {
         return scopeStatementEClass;
     }
@@ -415,6 +444,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElseScope() {
         return elseScopeEClass;
     }
@@ -424,6 +454,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSequencePart() {
         return sequencePartEClass;
     }
@@ -433,6 +464,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSequencePart_Semicolon() {
         return (EAttribute)sequencePartEClass.getEStructuralFeatures().get(0);
     }
@@ -442,6 +474,27 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getReturn() {
+        return returnEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReturn_Expression() {
+        return (EReference)returnEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public SCLFactory getSCLFactory() {
         return (SCLFactory)getEFactoryInstance();
     }
@@ -504,6 +557,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         sequencePartEClass = createEClass(SEQUENCE_PART);
         createEAttribute(sequencePartEClass, SEQUENCE_PART__SEMICOLON);
+
+        returnEClass = createEClass(RETURN);
+        createEReference(returnEClass, RETURN__EXPRESSION);
     }
 
     /**
@@ -566,6 +622,7 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         scopeStatementEClass.getESuperTypes().add(this.getScope());
         elseScopeEClass.getESuperTypes().add(this.getScope());
         elseScopeEClass.getESuperTypes().add(this.getSequencePart());
+        returnEClass.getESuperTypes().add(this.getStatement());
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -607,6 +664,9 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         initEClass(sequencePartEClass, SequencePart.class, "SequencePart", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getSequencePart_Semicolon(), ecorePackage.getEBoolean(), "semicolon", "false", 1, 1, SequencePart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(returnEClass, Return.class, "Return", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getReturn_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Return.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

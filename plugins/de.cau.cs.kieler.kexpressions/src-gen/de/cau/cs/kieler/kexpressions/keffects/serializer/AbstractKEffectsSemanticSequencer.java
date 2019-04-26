@@ -493,7 +493,12 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     ReferenceCallEffect returns ReferenceCallEffect
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         subReference=ValuedObjectReference? 
+	 *         (parameters+=Parameter parameters+=Parameter*)?
+	 *     )
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

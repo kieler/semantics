@@ -26,6 +26,7 @@ import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * 
@@ -70,11 +71,11 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             for (baseDelc : allBaseStates.map[declarations].flatten) {
                 var newDecl = baseDelc.copy
                 
-                if (newDecl.private) { // rename
+                if (newDecl.access !== AccessModifier.PUBLIC) { // rename
                     for (vo : newDecl.valuedObjects) {
                         vo.name = GENERATED_PREFIX + (baseDelc.eContainer as State).name + "_" + vo.name
                     }
-                    newDecl.private = false
+                    newDecl.access = AccessModifier.PUBLIC
                 }
 
                 for (baseVoIdx : baseDelc.valuedObjects.indexed) {

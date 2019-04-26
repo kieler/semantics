@@ -189,11 +189,12 @@
     </eLiterals>
     <eLiterals name="STRING" value="6" literal="string"/>
     <eLiterals name="REFERENCE" value="8" literal="reference"/>
-    <eLiterals name="SCHEDULE" value="9"/>
+    <eLiterals name="SCHEDULE" value="9" literal="schedule"/>
     <eLiterals name="UNKNOWN" value="10" literal="UNKNOWN"/>
-    <eLiterals name="CLOCK" value="11" literal="CLOCK"/>
-    <eLiterals name="JSON" value="12" literal="JSON"/>
-    <eLiterals name="STRUCT" value="13" literal="STRUCT"/>
+    <eLiterals name="CLOCK" value="11" literal="clock"/>
+    <eLiterals name="JSON" value="12" literal="json"/>
+    <eLiterals name="STRUCT" value="13" literal="struct"/>
+    <eLiterals name="VOID" value="14" literal="void"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -286,8 +287,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Declaration" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
         eType="#//ValuedObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="private" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" eType="#//AccessModifier"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
@@ -355,5 +355,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExternString" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AccessModifier">
+    <eLiterals name="PUBLIC"/>
+    <eLiterals name="PROTECTED" value="1"/>
+    <eLiterals name="PRIVATE" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

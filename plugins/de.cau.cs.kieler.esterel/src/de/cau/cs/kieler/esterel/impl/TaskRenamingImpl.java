@@ -73,6 +73,7 @@ public class TaskRenamingImpl extends MinimalEObjectImpl.Container implements Ta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Task getNewName() {
         if (newName != null && newName.eIsProxy()) {
             InternalEObject oldNewName = (InternalEObject)newName;
@@ -99,6 +100,7 @@ public class TaskRenamingImpl extends MinimalEObjectImpl.Container implements Ta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(Task newNewName) {
         Task oldNewName = newName;
         newName = newNewName;
@@ -111,6 +113,7 @@ public class TaskRenamingImpl extends MinimalEObjectImpl.Container implements Ta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Task getOldName() {
         if (oldName != null && oldName.eIsProxy()) {
             InternalEObject oldOldName = (InternalEObject)oldName;
@@ -137,6 +140,7 @@ public class TaskRenamingImpl extends MinimalEObjectImpl.Container implements Ta
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(Task newOldName) {
         Task oldOldName = oldName;
         oldName = newOldName;

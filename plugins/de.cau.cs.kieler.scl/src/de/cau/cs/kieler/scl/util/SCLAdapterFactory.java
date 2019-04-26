@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.Scope;
@@ -159,6 +160,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseSequencePart(SequencePart object) {
                 return createSequencePartAdapter();
+            }
+            @Override
+            public Adapter caseReturn(Return object) {
+                return createReturnAdapter();
             }
             @Override
             public Adapter casePragmatable(Pragmatable object) {
@@ -445,6 +450,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createSequencePartAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Return <em>Return</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.Return
+     * @generated
+     */
+    public Adapter createReturnAdapter() {
         return null;
     }
 

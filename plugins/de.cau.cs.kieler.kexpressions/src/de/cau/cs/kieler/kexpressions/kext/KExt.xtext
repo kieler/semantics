@@ -82,7 +82,7 @@ DeclarationWOSemicolon returns kexpressions::Declaration:
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -97,7 +97,7 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -113,7 +113,7 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
 StructDeclaration returns kext::StructDeclaration:
     {kext::StructDeclaration}
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     const?='const'?
     input?='input'?
     output?='output'?
@@ -131,7 +131,7 @@ StructDeclaration returns kext::StructDeclaration:
 StructDeclarationWOSemicolon returns kext::StructDeclaration:
     {kext::StructDeclaration}
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     const?='const'?
     input?='input'? 
     output?='output'?
@@ -150,7 +150,7 @@ NamespaceID returns ecore::EString:
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -161,7 +161,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -177,7 +177,7 @@ ExternString returns kexpressions::ExternString:
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    private?='private'?
+    access=AccessModifier?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
@@ -186,7 +186,7 @@ ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    private?='private'?
+    access=AccessModifier?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?

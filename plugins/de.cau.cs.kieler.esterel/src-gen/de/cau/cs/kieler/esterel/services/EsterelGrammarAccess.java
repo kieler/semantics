@@ -8877,7 +8877,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Statement:
-	//	Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement;
+	//	SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall
+	//	| ScopeStatement;
 	public SCLGrammarAccess.StatementElements getStatementAccess() {
 		return gaSCL.getStatementAccess();
 	}
@@ -8920,19 +8921,43 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getGotoAccess().getRule();
 	}
 	
-	//@Override
-	//Assignment:
+	//SclAssignment Assignment:
 	//	annotations+=super::Annotation*
 	//	reference=ValuedObjectReference
 	//	operator=AssignOperator
 	//	expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?
 	//	semicolon?=';'?;
-	public SCLGrammarAccess.AssignmentElements getAssignmentAccess() {
-		return gaSCL.getAssignmentAccess();
+	public SCLGrammarAccess.SclAssignmentElements getSclAssignmentAccess() {
+		return gaSCL.getSclAssignmentAccess();
 	}
 	
-	public ParserRule getAssignmentRule() {
-		return getAssignmentAccess().getRule();
+	public ParserRule getSclAssignmentRule() {
+		return getSclAssignmentAccess().getRule();
+	}
+	
+	//SclPostfixAssignment Assignment:
+	//	annotations+=super::Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=PostfixOperator ('schedule' schedule+=ScheduleObjectReference+)?
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.SclPostfixAssignmentElements getSclPostfixAssignmentAccess() {
+		return gaSCL.getSclPostfixAssignmentAccess();
+	}
+	
+	public ParserRule getSclPostfixAssignmentRule() {
+		return getSclPostfixAssignmentAccess().getRule();
+	}
+	
+	//Return:
+	//	annotations+=super::Annotation*
+	//	'return'
+	//	expression=super::Expression;
+	public SCLGrammarAccess.ReturnElements getReturnAccess() {
+		return gaSCL.getReturnAccess();
+	}
+	
+	public ParserRule getReturnRule() {
+		return getReturnAccess().getRule();
 	}
 	
 	//Conditional:
@@ -9162,7 +9187,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclaration kexpressions::VariableDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -9180,7 +9205,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -9198,7 +9223,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//StructDeclaration kext::StructDeclaration:
 	//	{kext::StructDeclaration} annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -9221,7 +9246,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//StructDeclarationWOSemicolon kext::StructDeclaration:
 	//	{kext::StructDeclaration} annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -9253,7 +9278,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -9267,7 +9292,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -9292,7 +9317,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -9307,7 +9332,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=super::Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=super::STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
@@ -9364,7 +9389,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
 	//// If precedence is changed the converter has to be adapted too.
 	//Effect keffects::Effect:
-	//	super::Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
+	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
 	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
 	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
 		return gaKEffects.getEffectAccess();
@@ -9416,6 +9441,23 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getPureOrValuedEmissionAccess().getRule();
 	}
 	
+	//// Assignment Rule
+	//// An assignment may start with a list of arbitrary annotatations.
+	//// Then, an arbitrary expression is assigned to a valued object. The object may be suffixed by an 
+	//// indices part. The type of assignment is determined by the type of the operator.
+	//// Example: A = true, I[0] = I[1], I += 1     
+	//Assignment keffects::Assignment:
+	//	annotations+=super::Annotation*
+	//	reference=ValuedObjectReference
+	//	operator=AssignOperator expression=super::Expression ('schedule' schedule+=ScheduleObjectReference+)?;
+	public KEffectsGrammarAccess.AssignmentElements getAssignmentAccess() {
+		return gaKEffects.getAssignmentAccess();
+	}
+	
+	public ParserRule getAssignmentRule() {
+		return getAssignmentAccess().getRule();
+	}
+	
 	////SubReferenceAssignment returns keffects::Assignment:
 	////    (annotations+=Annotation)*    
 	////    valuedObject=ValuedObjectReference
@@ -9455,8 +9497,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=super::Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=super::Parameter (','
-	//	parameters+=super::Parameter)* ')' | '()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('('
+	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')' | '()');
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -9899,7 +9941,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.' subReference=ValuedObjectReference)?
+	//	('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -10316,6 +10359,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
+	}
+	
+	//enum AccessModifier:
+	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
+		return gaKExpressions.getAccessModifierAccess();
+	}
+	
+	public EnumRule getAccessModifierRule() {
+		return getAccessModifierAccess().getRule();
 	}
 	
 	//// -------------------- //

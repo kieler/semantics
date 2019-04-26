@@ -303,7 +303,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 node = sCGFactory.createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
                     scg.nodes += it
                     it.operator = assignment.operator
-                    it.expression = assignment.expression.copyExpression
+                    if (expression !== null) it.expression = assignment.expression.copyExpression
                     it.valuedObject = assignment.valuedObject.copyValuedObject
                     it.controlFlowTarget(incoming)
                     for(annotation : assignment.annotations) {

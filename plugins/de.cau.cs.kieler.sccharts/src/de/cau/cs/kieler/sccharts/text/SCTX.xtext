@@ -1,10 +1,11 @@
-grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.kexpressions.kext.KExt
+grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.scl.SCL
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 
 //generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
@@ -32,7 +33,9 @@ RootState returns sccharts::State:
 	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationWOSemicolon*
+		methods+=MethodImplementation*
 		actions+=LocalAction*
+        methods+=MethodImplementation*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
     
@@ -52,7 +55,9 @@ State returns sccharts::State:
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationWOSemicolon*
+        methods+=MethodImplementation*
 		actions+=LocalAction*
+        methods+=MethodImplementation*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	   '}')
 	)?
@@ -140,13 +145,17 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ((
             '{'
             declarations+=DeclarationWOSemicolon*
+            methods+=MethodImplementation*
             actions+=LocalAction*
+            methods+=MethodImplementation*
             (states+=ImplicitState | states+=State+)
             '}'
         )|(
             ':'
             declarations+=DeclarationWOSemicolon*
+            methods+=MethodImplementation*
             actions+=LocalAction*
+            methods+=MethodImplementation
             states+=State*
         ))
     ));
@@ -220,7 +229,70 @@ PeriodAction returns sccharts::PeriodAction:
     annotations+=RestrictedTypeAnnotation*
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
-    
+
+// --------------- //
+//  Class/ Method  // 
+// --------------- //
+
+@Override
+DeclarationWOSemicolon returns kexpressions::Declaration:
+    super | ClassDeclaration
+;
+
+ClassDeclaration returns sccharts::ClassDeclaration:
+    {sccharts::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    host?='host'?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    type = ClassType
+    (name = ID)?
+    '{'
+        declarations+=DeclarationWOSemicolon*
+        methods+=(MethodDeclaration)*
+    '}'
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    annotations+=CommentAnnotatonSL?
+;
+
+MethodDeclaration returns sccharts::Method:
+    {sccharts::Method}
+    annotations+=Annotation*
+    access=AccessModifier?
+    returnType=ReturnType?
+    name=ExtendedID
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    ('{'
+        declarations+=DeclarationWOSemicolon*
+        statements+=Statement*
+    '}')?
+;
+
+MethodImplementation returns sccharts::Method:
+    {sccharts::Method}
+    annotations+=Annotation*
+    'method'
+    access=AccessModifier?
+    returnType=ReturnType?
+    name=ExtendedID
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    '{'
+        declarations+=DeclarationWOSemicolon*
+        statements+=Statement*
+    '}'
+;
+
+@Override
+Statement returns scl::Statement:
+    SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | ScopeStatement | Return
+;
+
 // ------------ //
 //  Enum Rules  // 
 // ------------ //
@@ -240,6 +312,14 @@ enum ValueType returns kexpressions::ValueType:
     INT="int" | FLOAT="float" |
     STRING="string" |
     CLOCK="clock"; // als: added clock for timed automata
+    
+enum ReturnType returns kexpressions::ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string";
+    
+enum ClassType returns kexpressions::ValueType:
+    STRUCT="class";
 	
 // -------------- //
 //  Helper Rules  // 

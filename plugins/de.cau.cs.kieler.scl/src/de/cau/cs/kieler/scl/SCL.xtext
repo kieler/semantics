@@ -20,7 +20,7 @@ Module returns Module:
 ;
 
 Statement returns Statement:
-    Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement
+    SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement
 ;
 
 Pause returns Pause:
@@ -41,14 +41,27 @@ Goto returns Goto:
     semicolon?=';'?
 ;
 
-@Override 
-Assignment returns Assignment:
+SclAssignment returns Assignment:
     (annotations += Annotation)*
     reference = ValuedObjectReference
     operator = AssignOperator
     expression = Expression
     ('schedule' schedule+=ScheduleObjectReference+)?
     semicolon?=';'?
+;
+
+SclPostfixAssignment returns Assignment:
+    (annotations+=Annotation)*    
+    reference=ValuedObjectReference
+    operator=PostfixOperator
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    semicolon?=';'?
+;
+
+Return returns Return:
+    (annotations += Annotation)*
+    'return'
+    expression = Expression
 ;
 
 Conditional returns Conditional: 

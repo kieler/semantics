@@ -42,7 +42,7 @@ class KExtValidator extends AbstractKExtValidator {
     @Check
     public def void checkStructDeclaration(StructDeclaration struct) {
         // TODO remove when implemented
-        error("Struct declarations are not yet supported", struct, null)
+        warning("Struct declarations are not yet supported", struct, null)
     }
     
     @Check

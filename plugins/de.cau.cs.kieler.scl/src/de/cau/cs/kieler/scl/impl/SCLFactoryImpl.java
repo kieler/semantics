@@ -11,6 +11,7 @@ import de.cau.cs.kieler.scl.Module;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLFactory;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
@@ -80,6 +81,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
             case SCLPackage.THREAD: return createThread();
             case SCLPackage.SCOPE_STATEMENT: return createScopeStatement();
             case SCLPackage.ELSE_SCOPE: return createElseScope();
+            case SCLPackage.RETURN: return createReturn();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -90,6 +92,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCLProgram createSCLProgram() {
         SCLProgramImpl sclProgram = new SCLProgramImpl();
         return sclProgram;
@@ -100,6 +103,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.cau.cs.kieler.scl.Module createModule() {
         ModuleImpl module = new ModuleImpl();
         return module;
@@ -110,6 +114,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Pause createPause() {
         PauseImpl pause = new PauseImpl();
         return pause;
@@ -120,6 +125,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Label createLabel() {
         LabelImpl label = new LabelImpl();
         return label;
@@ -130,6 +136,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Goto createGoto() {
         GotoImpl goto_ = new GotoImpl();
         return goto_;
@@ -140,6 +147,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Assignment createAssignment() {
         AssignmentImpl assignment = new AssignmentImpl();
         return assignment;
@@ -150,6 +158,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Conditional createConditional() {
         ConditionalImpl conditional = new ConditionalImpl();
         return conditional;
@@ -160,6 +169,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Parallel createParallel() {
         ParallelImpl parallel = new ParallelImpl();
         return parallel;
@@ -170,6 +180,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ModuleCall createModuleCall() {
         ModuleCallImpl moduleCall = new ModuleCallImpl();
         return moduleCall;
@@ -180,6 +191,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.cau.cs.kieler.scl.Thread createThread() {
         ThreadImpl thread = new ThreadImpl();
         return thread;
@@ -190,6 +202,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScopeStatement createScopeStatement() {
         ScopeStatementImpl scopeStatement = new ScopeStatementImpl();
         return scopeStatement;
@@ -200,6 +213,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElseScope createElseScope() {
         ElseScopeImpl elseScope = new ElseScopeImpl();
         return elseScope;
@@ -210,6 +224,18 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public Return createReturn() {
+        ReturnImpl return_ = new ReturnImpl();
+        return return_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public SCLPackage getSCLPackage() {
         return (SCLPackage)getEPackage();
     }

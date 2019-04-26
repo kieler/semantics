@@ -41,6 +41,10 @@ import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import java.util.List
 import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.sccharts.Method
+import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.sccharts.ClassDeclaration
+import de.cau.cs.kieler.sccharts.processors.For
 
 /**
  * @author ssm
@@ -148,8 +152,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
-            if (declaration.isPrivate) {
+            if (declaration.access == AccessModifier.PRIVATE) {
                 components.addKeyword("private")
+            }
+            if (declaration.access == AccessModifier.PROTECTED) {
+                components.addKeyword("protected")
             }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
@@ -185,7 +192,12 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else if (type == ValueType.CLOCK) {
                 components.addKeyword("clock")
             }  else if (type == ValueType.STRUCT) {
-                components.addKeyword("struct")
+                if (declaration instanceof ClassDeclaration) {
+                    if (declaration.host) components.addKeyword("host")
+                    components.addKeyword("class")
+                } else {
+                    components.addKeyword("struct")
+                }
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -249,6 +261,88 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             if (voIter.hasNext) {
                 components.addText(",");
+            }
+        }
+
+        return components;
+    }
+    
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Method method, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (method.access != AccessModifier.PUBLIC) {
+            components.addKeyword(switch(method.access) {
+                case PRIVATE: "public"
+                case PROTECTED: "protected"
+                case PUBLIC: "private"
+            })
+        }
+        
+        if (method.returnType !== ValueType.PURE) {
+            components.addKeyword(method.returnType.serialize)
+        } else {
+            components.addKeyword("void")
+        }
+        
+        components.addText(method.name)
+        
+        components.addText("(")
+        for (para : method.parameterDeclarations.indexed) {
+            components.addText((if (hr) {
+                para.serializeHR
+            } else {
+                para.serialize
+            }))
+            if (para.key < method.parameterDeclarations.size - 1) {
+                components.addText(",")
+            }
+        }
+        components.addText(")")
+        
+        if (!method.schedule.nullOrEmpty) {
+            components.addKeyword("schedule")
+            for (schedule : method.schedule) {
+                components.addHighlight(schedule.serialize)
+            }
+        }
+
+        return components;
+    }
+    
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Region region, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (region.override) {
+            components.addKeyword("override")
+        }
+        
+        if (!region.label.nullOrEmpty) {
+            components.addText(if (hr) region.label.serializeHR else region.label.serialize)
+        }
+        
+        if (region.counterVariable !== null) {
+            val range = For.getForRegionRange(region)
+            components.addKeyword("|")
+            components.addText(region.counterVariable.name)
+            components.addText("[")
+            components.addText(range.key.toString)
+            components.addText(",")
+            components.addText(range.value.toString)
+            components.addText("]")
+        }
+        
+        // User schedules
+        val userSchedule = region.schedule
+        if (userSchedule.size > 0) {
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            components.addKeyword("schedule")
+            for (s : userSchedule.indexed) {
+                val existPair = new Pair<ValuedObject, Integer>(s.value.valuedObject, s.value.priority)
+                if (!exists.contains(existPair)) {
+                    if (s.key != 0) components.addText(",")
+                    components.addHighlight(s.value.valuedObject.name + " " + s.value.priority)
+                    exists.add(existPair)
+                }
             }
         }
 

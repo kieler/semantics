@@ -157,6 +157,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.REGION__OUTGOING_LINKS);
@@ -169,6 +170,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.REGION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -181,6 +183,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public State getParentState() {
         if (eContainerFeatureID() != SCChartsPackage.REGION__PARENT_STATE) return null;
         return (State)eInternalContainer();
@@ -201,6 +204,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParentState(State newParentState) {
         if (newParentState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.REGION__PARENT_STATE && newParentState != null)) {
             if (EcoreUtil.isAncestor(this, newParentState))
@@ -222,6 +226,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getCounterVariable() {
         return counterVariable;
     }
@@ -246,6 +251,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCounterVariable(ValuedObject newCounterVariable) {
         if (newCounterVariable != counterVariable) {
             NotificationChain msgs = null;
@@ -265,6 +271,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getForStart() {
         return forStart;
     }
@@ -289,6 +296,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForStart(Expression newForStart) {
         if (newForStart != forStart) {
             NotificationChain msgs = null;
@@ -308,6 +316,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getForEnd() {
         return forEnd;
     }
@@ -332,6 +341,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setForEnd(Expression newForEnd) {
         if (newForEnd != forEnd) {
             NotificationChain msgs = null;
@@ -351,6 +361,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOverride() {
         return override;
     }
@@ -360,6 +371,7 @@ public abstract class RegionImpl extends ScopeImpl implements Region {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOverride(boolean newOverride) {
         boolean oldOverride = override;
         override = newOverride;

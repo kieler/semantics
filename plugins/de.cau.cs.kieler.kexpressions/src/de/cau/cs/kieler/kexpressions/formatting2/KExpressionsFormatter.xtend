@@ -66,8 +66,8 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 	def dispatch void format(ReferenceCall referencecall, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
-        referencecall.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        referencecall.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+        referencecall.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_3_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        referencecall.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_3_0_3)?.prepend[ noSpace ]
 		
 		for (Parameter parameters : referencecall.getParameters()) {
 			format(parameters, document);

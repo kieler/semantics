@@ -86,6 +86,7 @@ public class EveryDoImpl extends StatementImpl implements EveryDo {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.EVERY_DO__STATEMENTS);
@@ -98,6 +99,7 @@ public class EveryDoImpl extends StatementImpl implements EveryDo {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -122,6 +124,7 @@ public class EveryDoImpl extends StatementImpl implements EveryDo {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;

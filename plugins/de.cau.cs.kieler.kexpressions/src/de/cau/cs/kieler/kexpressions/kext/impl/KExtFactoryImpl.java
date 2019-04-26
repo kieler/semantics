@@ -72,6 +72,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Kext createKext() {
         KextImpl kext = new KextImpl();
         return kext;
@@ -82,6 +83,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExtScope createKExtScope() {
         KExtScopeImpl kExtScope = new KExtScopeImpl();
         return kExtScope;
@@ -92,6 +94,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TestEntity createTestEntity() {
         TestEntityImpl testEntity = new TestEntityImpl();
         return testEntity;
@@ -102,6 +105,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AnnotatedExpression createAnnotatedExpression() {
         AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
         return annotatedExpression;
@@ -112,6 +116,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public StructDeclaration createStructDeclaration() {
         StructDeclarationImpl structDeclaration = new StructDeclarationImpl();
         return structDeclaration;
@@ -122,6 +127,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExtPackage getKExtPackage() {
         return (KExtPackage)getEPackage();
     }

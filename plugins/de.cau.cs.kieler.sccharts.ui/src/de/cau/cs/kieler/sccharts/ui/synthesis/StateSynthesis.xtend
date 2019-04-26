@@ -71,6 +71,7 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.sccharts.ClassDeclaration
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -102,6 +103,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
+    @Inject extension MethodSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
@@ -205,7 +207,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(state)
                         if (it instanceof KText) configureTextLOD(state)
                     ]
@@ -224,7 +226,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).forEach[
+                        eAllContents.filter(KRendering).toList.forEach[
                             associateWith(declaration)
                             if (it instanceof KText) configureTextLOD(declaration)
                         ]
@@ -239,7 +241,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(action)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(action)
                         if (it instanceof KText) configureTextLOD(action)
                     ]
@@ -252,6 +254,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.containsDataflowRegions
                 || state.isReferencedState
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
+                || !state.methods.empty
             ) {
                 node.addRegionsArea;
             }
@@ -268,6 +271,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     edge.head.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = target.name + counter]
                 }
             ];
+        }
+
+        // Transform methods
+        for (method : state.methods) {
+            node.children += method.transform
         }
 
         // Transform regions
@@ -318,6 +326,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     associateWith(declaration)
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)]
                 ]
+            }
+        }
+        if (struct instanceof ClassDeclaration) {
+            for (method : struct.methods) {
+                node.addDeclarationLabel(method.serializeHighlighted(true), indent + 1)
             }
         }
         node.addDeclarationLabel(tail, indent);

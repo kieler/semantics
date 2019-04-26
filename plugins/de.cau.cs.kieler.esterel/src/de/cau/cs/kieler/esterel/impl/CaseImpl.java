@@ -64,6 +64,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -88,6 +89,7 @@ public class CaseImpl extends StatementContainerImpl implements Case {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;

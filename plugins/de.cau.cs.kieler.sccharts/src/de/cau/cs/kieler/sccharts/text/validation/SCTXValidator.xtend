@@ -54,6 +54,7 @@ import com.google.common.collect.HashMultimap
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 //import org.eclipse.xtext.validation.Check
 
@@ -157,7 +158,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (!state.baseStates.nullOrEmpty) {
             val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
             for (base : state.allInheritedStates) {
-                base.declarations.filter[!private].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
+                base.declarations.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
             }
             val clashes = names.keySet.filter[names.get(it).size > 1].toSet
             if (!clashes.empty) {
