@@ -2377,7 +2377,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	| FunctionCall
 	//	| RandomCall
 	//	| RandomizeCall
-	//	| ValuedObjectTestExpression
+	//	| ValuedObjectTestExpression // Last to allow detection of calls
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();

@@ -43,9 +43,9 @@ class SctxFileWizard extends BasicNewResourceWizard {
                 val template = '''
                     scchart NewSCChart {
                     
-                        region {
-                            initial state A
-                        }
+                      region {
+                        initial state A
+                      }
                     }
                 '''
                 return new ByteArrayInputStream(template.getBytes(StandardCharsets.UTF_8))

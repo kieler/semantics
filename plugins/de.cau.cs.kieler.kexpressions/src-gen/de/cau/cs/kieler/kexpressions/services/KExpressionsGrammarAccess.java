@@ -2450,12 +2450,13 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	| FunctionCall
 		//	| RandomCall
 		//	| RandomizeCall
-		//	| ValuedObjectTestExpression
+		//	| ValuedObjectTestExpression // Last to allow detection of calls
 		//	| TextExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//BoolValue | '(' BoolExpression ')' | ReferenceCall | FunctionCall | RandomCall | RandomizeCall |
-		//ValuedObjectTestExpression | TextExpression
+		//ValuedObjectTestExpression // Last to allow detection of calls
+		//| TextExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//BoolValue
@@ -4849,7 +4850,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	| FunctionCall
 	//	| RandomCall
 	//	| RandomizeCall
-	//	| ValuedObjectTestExpression
+	//	| ValuedObjectTestExpression // Last to allow detection of calls
 	//	| TextExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;

@@ -2107,26 +2107,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         annotations+=RestrictedTypeAnnotation* 
-	 *         (
-	 *             (
-	 *                 preemption=PreemptionType 
-	 *                 targetState=[State|ID] 
-	 *                 delay=DelayType? 
-	 *                 deferred?='deferred'? 
-	 *                 history=HistoryType? 
-	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=FLOAT? nondeterministic?='nondeterministic'?)? 
-	 *                 (effects+=Effect effects+=Effect*)?
-	 *             ) | 
-	 *             (
-	 *                 delay=DelayType? 
-	 *                 (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=FLOAT? nondeterministic?='nondeterministic'?)? 
-	 *                 (effects+=Effect effects+=Effect*)? 
-	 *                 preemption=PreemptionType 
-	 *                 targetState=[State|ID] 
-	 *                 deferred?='deferred'? 
-	 *                 history=HistoryType?
-	 *             )
-	 *         ) 
+	 *         delay=DelayType? 
+	 *         (triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) triggerProbability=FLOAT? nondeterministic?='nondeterministic'?)? 
+	 *         (effects+=Effect effects+=Effect*)? 
+	 *         preemption=PreemptionType 
+	 *         targetState=[State|ID] 
+	 *         deferred?='deferred'? 
+	 *         history=HistoryType? 
 	 *         label=STRING?
 	 *     )
 	 */

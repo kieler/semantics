@@ -1115,13 +1115,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         scopeEClass.getESuperTypes().add(theKExtPackage.getDeclarationScope());
         scopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         scopeEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
+        scopeEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
         scopeCallEClass.getESuperTypes().add(theKExpressionsPackage.getCall());
         actionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         actionEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
         localActionEClass.getESuperTypes().add(this.getAction());
         stateEClass.getESuperTypes().add(this.getScope());
         regionEClass.getESuperTypes().add(this.getScope());
-        regionEClass.getESuperTypes().add(theKEffectsPackage.getLinkable());
         controlflowRegionEClass.getESuperTypes().add(this.getRegion());
         dataflowRegionEClass.getESuperTypes().add(this.getRegion());
         transitionEClass.getESuperTypes().add(this.getAction());

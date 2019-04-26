@@ -305,7 +305,10 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             stateTypeCache.put(s, stateTypeSet)
         }
 
-        rootStateEntry = sCGraph.addEntry.trace(rootState) => [setExit(sCGraph.addExit.trace(rootState))]
+        rootStateEntry = sCGraph.addEntry.trace(rootState) => [
+//            setExit(sCGraph.addExit.trace(rootState))
+            setExit(sCGraph.addExit)
+        ]
 
         rootState.transformSCGGenerateNodes(sCGraph)
         rootState.transformSCGConnectNodes(sCGraph)
@@ -452,7 +455,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
             // KITT redirect tracing origins
             links.trace(link)
-            exitNode.next.target.trace(exitNode)
+//            exitNode.next.target.trace(exitNode)
+            exitNode.next.target
 
             // The removal of the EOpposite relation is necessary
             link.target.incomingLinks.remove(link)
@@ -512,7 +516,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         if (region.hasAnnotation(ANNOTATION_IGNORETHREAD)) {
               entry.createStringAnnotation(ANNOTATION_IGNORETHREAD, "")
         }
-        val exit = sCGraph.addExit.trace(region, region.parentState)
+//        val exit = sCGraph.addExit.trace(region, region.parentState)
+        val exit = sCGraph.addExit
         region.map(entry)
         entry.setExit(exit)
         exit.map(region)

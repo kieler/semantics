@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -53,6 +52,7 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 
 /** 
  * @author ssm
@@ -95,6 +95,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 it.pragmas += pragma.copy
             }              
         ] 
+        creationalTransformation(model, SCGGraphs)        
         for (scg : model.scgs) {
             SCGGraphs.scgs += 
             scg.createGuards => [
@@ -122,8 +123,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
-        creationalTransformation(scg,newSCG)
-        scg.setDefaultTrace
+//        creationalTransformation(scg,newSCG)
+//        scg.setDefaultTrace
         newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)

@@ -12,34 +12,36 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.HashMap
 import java.util.LinkedHashSet
+import org.eclipse.elk.alg.force.options.StressOptions
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.klighd.krendering.Colors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.HashMap
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.force.options.StressOptions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -95,7 +97,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_INHERITANCE_EDGES, SHOW_BINDINGS, SHOW_COMMENTS)
+        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_INHERITANCE_EDGES, SHOW_BINDINGS, SHOW_COMMENTS, SHOW_CAUSAL_DATAFLOW)
 
         // Adaptive Zoom
         options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
@@ -114,8 +116,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         return options.toList
     }
 
-    override transform(SCCharts scc) {
+    override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
+        
+        val scc = 
+            if (SHOW_CAUSAL_DATAFLOW.booleanValue) {
+                val compilationContext = Compile.createCompilationContext(sccharts, 
+                    #[ "de.cau.cs.kieler.sccharts.processors.controlDependencies" ]
+                )
+                compilationContext.compile
+//                val originalContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+//                originalContext.result.setProperty(RegionDependencies.REGION_DEPENDENCIES, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES))
+//                originalContext.result.setProperty(RegionDependencies.REGION_LCAF_MAP, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_LCAF_MAP))
+                this.usedContext.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
+                compilationContext.result.model as SCCharts
+            } else sccharts
         
         val rootNode = createNode
                 

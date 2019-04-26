@@ -87,6 +87,26 @@ class Compile {
         createCompilationContext(system, sourceModel)
     }
     
+    /**
+     * Create a compilation context from a system id and a source model and additional processors
+     */
+    static def CompilationContext createCompilationContext(Object sourceModel, List<String> additionalProcessors) {
+        checkNotNull(additionalProcessors)
+        checkState(!additionalProcessors.empty)
+        val system = KiCoolFactory.eINSTANCE.createSystem => [
+            processors = KiCoolFactory.eINSTANCE.createProcessorGroup
+            for (processorId : additionalProcessors) {
+                val entry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+                    it.id = processorId
+                ]
+                switch(processors) {
+                    ProcessorGroup: (processors as ProcessorGroup).processors += entry
+                }
+                
+            }
+        ]
+        createCompilationContext(system, sourceModel)
+    }    
     
     
     /**

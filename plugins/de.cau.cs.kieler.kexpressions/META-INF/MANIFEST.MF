@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Expressions Infrastructure
 Bundle-SymbolicName: de.cau.cs.kieler.kexpressions;singleton:=true
 Automatic-Module-Name: de.cau.cs.kieler.kexpressions
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin

@@ -199,16 +199,16 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createSchedulableAdapter();
             }
             @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
             public Adapter caseExpression(Expression object) {
                 return createExpressionAdapter();
             }
             @Override
             public Adapter caseCall(Call object) {
                 return createCallAdapter();
-            }
-            @Override
-            public Adapter caseLinkable(Linkable object) {
-                return createLinkableAdapter();
             }
             @Override
             public Adapter caseReferenceable(Referenceable object) {
@@ -637,20 +637,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
-     * @generated
-     */
-    public Adapter createLinkableAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -745,6 +731,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createStructDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+     * @generated
+     */
+    public Adapter createLinkableAdapter() {
         return null;
     }
 

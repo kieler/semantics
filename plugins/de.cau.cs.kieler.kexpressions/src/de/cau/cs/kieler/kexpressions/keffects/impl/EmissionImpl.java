@@ -118,6 +118,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.EMISSION__SCHEDULE);
@@ -130,6 +131,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.EMISSION__OUTGOING_LINKS);
@@ -142,6 +144,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.EMISSION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -154,6 +157,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getReference() {
         return reference;
     }
@@ -178,6 +182,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ValuedObjectReference newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -197,6 +202,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getNewValue() {
         return newValue;
     }
@@ -221,6 +227,7 @@ public class EmissionImpl extends AnnotatableImpl implements Emission {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewValue(Expression newNewValue) {
         if (newNewValue != newValue) {
             NotificationChain msgs = null;

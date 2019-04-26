@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.DelayType
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -141,4 +142,15 @@ class SCChartsTransitionExtensions {
     def isSelfLoop(Transition transition) {
         transition.targetState !== null && transition.targetState == transition.sourceState
     }
+    
+    def Transition getFirstTransition(EObject eObject) {
+        if (eObject === null) 
+            return null
+        else if (eObject instanceof Transition) 
+            return eObject as Transition
+        else if (eObject.eContainer === null) 
+            return null
+        else 
+            return eObject.eContainer.getFirstTransition
+    }     
 }

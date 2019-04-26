@@ -172,7 +172,10 @@
               class="de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGenerator">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.StatebasedLeanCCodeGenerator">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedLeanCCodeGenerator">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.java.StatebasedLeanJavaCodeGenerator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.ToHybridDataflow">
@@ -191,6 +194,9 @@
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
@@ -223,6 +229,9 @@
               system="system/de.cau.cs.kieler.sccharts.dataflow.kico">
         </TransformationSystem>
         <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.causalView.kico">
+        </TransformationSystem>
+        <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
         </TransformationSystem>
         <TransformationSystem
@@ -235,7 +244,10 @@
               system="system/de.cau.cs.kieler.sccharts.statebased.lean.kico">
         </TransformationSystem>
         <TransformationSystem
-              system="system/de.cau.cs.kieler.sccharts.statebased.lean.template.kico">
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.c.template.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.java.template.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.csv.kico">

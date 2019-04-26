@@ -57,7 +57,7 @@
 'connector'=143
 'const'=150
 'dataflow'=110
-'deferred'=145
+'deferred'=146
 'delayed'=45
 'do'=104
 'during'=113
@@ -91,7 +91,7 @@
 'min'=84
 'min='=72
 'module'=120
-'nondeterministic'=146
+'nondeterministic'=145
 'none'=82
 'null'=137
 'once'=148
