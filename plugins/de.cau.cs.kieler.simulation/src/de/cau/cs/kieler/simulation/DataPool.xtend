@@ -106,6 +106,18 @@ class DataPool implements IKiCoolCloneable {
         return input
     }
     
+    def JsonObject getOutput() {
+        val output = new JsonObject
+        val infos = entries
+        for (entry : pool.entrySet) {
+            val properties = infos.get(entry.key)?.combinedProperties
+            if (properties !== null && properties.contains(VariableStore.OUTPUT)) {
+                output.add(entry.key, entry.value)
+            }
+        }
+        return output
+    }
+    
     def merge(DataPool otherPool) {
         if (pool === null || pool.size == 0) {
             pool = otherPool.pool
