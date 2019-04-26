@@ -31,14 +31,12 @@ class UserValues extends SimulationProcessor {
     
     override process() {
         val values = ClientInputs.values
-        if (values === null) {
-            println("Vlaues are null")
-            return
+        if (values !== null) {
+            ClientInputs.values = null
+            values.entrySet.forEach[entry|
+                dataPool.setValue(entry.key, entry.value)
+            ]
         }
-        ClientInputs.values = null
-        values.entrySet.forEach[entry|
-            dataPool.setValue(entry.key, entry.value)
-        ]
     }
     
 }

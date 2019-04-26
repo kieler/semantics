@@ -27,7 +27,8 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 interface CommandExtension {
     
     /**
-     * Simulates a model given by uri. Currently it is assumed that the model was compiled via a simulation CS before.
+     * Simulates a model given by uri. It is assumed that the model was compiled via a simulation CS before.
+     * The client should take care that this happened.
      */
     @JsonRequest('start')
     def CompletableFuture<SimulationStartedMessage> start(String uri, String simulationType);

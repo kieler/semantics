@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
 import org.eclipse.xtend.lib.annotations.Data
+import java.util.ArrayList
 
 /**
  * @author sdo
@@ -21,9 +22,29 @@ import org.eclipse.xtend.lib.annotations.Data
  */
 @Data class SimulationStartedMessage {
     
+    
     boolean successful
     String error
     JsonObject dataPool
     JsonObject input
+    JsonObject output
+    ArrayList<Category> propertySet
     
+    new(boolean successful, String error) {
+        this.successful = successful
+        this.error = error
+        this.dataPool = null
+        this.input = null
+        this.output = null
+        this.propertySet = null
+    }
+    
+    new(boolean successful, String error, JsonObject dataPool, JsonObject input, JsonObject output, ArrayList<Category> propertySet) {
+        this.successful = successful
+        this.error = error
+        this.dataPool = dataPool
+        this.input = input
+        this.output = output
+        this.propertySet = propertySet
+    }
 }

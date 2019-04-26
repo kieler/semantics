@@ -20,6 +20,12 @@ import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.mode.DynamicTickMode
+import de.cau.cs.kieler.simulation.mode.ManualMode
+import de.cau.cs.kieler.simulation.mode.PeriodicMode
 import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -28,35 +34,49 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
-import de.cau.cs.kieler.simulation.mode.ManualMode
+import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
 
 /**
+ * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
+ * Play and pause are not supported, since a play requires to send data from the server to the client without an request.
+ * 
  * @author sdo
  *
  */
-class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, SimulationListener {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
     
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
     
+    /**
+     * Compiler LS extension to access the compilation snapshots, namely the simulation executable.
+     */
     @Inject extension KiCoolLanguageServerExtension
     
-    @Inject
-    Injector injector
+    /**
+     * Data pool that will be send to the client in start of step function.
+     */
+    var DataPool nextDataPool
     
-    package var JsonObject userValues
+    /**
+     * Counts the steps of a simulation. -1 for no simulation running.
+     */
+    var int stepNumber = -1
     
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
     
-    override start(String uri, String simulationType) {
+    override synchronized start(String uri, String simulationType) {
+        stepNumber = 0
+        stopAndRemoveSimulation
+        registerObserver(this)
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation", null, null)
+                new SimulationStartedMessage(false, "No previous simulation")
             ]
         }
         // Get simulation context and dataPool
@@ -71,36 +91,97 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 id = UserValues.ID
             ])
             canRestartSimulation = true
-            currentSimulation.mode = ManualMode
-            currentSimulation.start(true)
-            datapool = currentSimulation.dataPool
+            // Set simulation mode, default mode is manual mode
+            setSimulationType(simulationType)
+            // Start a new start which starts the simulation to be able to wait for the updates
+            new Thread([currentSimulation.start(true)]).start
+            // Wait for the update function to write the initial data pool
+            wait()
+            datapool = this.nextDataPool
         } else {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation", null, null)
+                new SimulationStartedMessage(false, "No previous simulation")
             ]
         }
-        val message = new SimulationStartedMessage(true, "", datapool.pool, datapool.input)
+        val finalPool = datapool
+        // Get properties categories additional to input and output (e.g. guard, ...)
+        var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.filter[!"input".equals(it.toLowerCase) && !"output".equals(it.toLowerCase)].toSet
+        val propertyFilter = <String, Boolean>newHashMap
+        for (property : properties) {
+            val key = property.toLowerCase
+            if (!propertyFilter.containsKey(key)) {
+                propertyFilter.put(key, true)
+            }
+        }
+        // Add all properties with their respective elements
+        val propertySet = newArrayList
+        propertyFilter.forEach[key, value|
+            val property = new Category(key)
+            val infos = finalPool.entries
+            for (entry : finalPool.entries.entrySet) {
+                val combinedProperties = infos.get(entry.key)?.combinedProperties
+                if (combinedProperties !== null && combinedProperties.contains(key)) {
+                    property.symbols.add(entry.key)
+                }
+            }
+            propertySet.add(property)
+        ]
+        // Return the whole data pool, the inputs, the outputs, and properties with their respective elements
+        val message = new SimulationStartedMessage(true, "", datapool.pool, datapool.input, datapool.output, propertySet)
         return this.requestManager.runRead[ cancelIndicator |
             message
         ]
     }
     
-    override step(JsonObject valuesForNextStep, String simulationType) {
-        // TODO this does only set the inputs for the next tick, not the current one
+    override synchronized step(JsonObject valuesForNextStep, String simulationType) {
+        // Set the values used by the UserValues processor de.cau.cs.kieler.simulation.ide.language.server.uservalues
         ClientInputs.values = valuesForNextStep
-        currentSimulation.step()
-        val datapool = currentSimulation.dataPool
+        stepNumber++
+        // Set simulation mode, default mode is manual mode
+        setSimulationType(simulationType)
+        // Execute an asynchronous simulation step
+        new Thread([currentSimulation.step()]).start
+        // Wait for the update function to write to the next data pool
+        wait()
         val result = this.requestManager.runRead[
-            new SimulationStepMessage(true, "", datapool.pool)
+            new SimulationStepMessage(true, "", this.nextDataPool.pool)
         ]
         return result
     }
     
     override stop() {
+        // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
+        stepNumber = -1
         return this.requestManager.runRead[cancelIndicator |
-            new SimulationStoppedMessage(true, "Killed process")
+            new SimulationStoppedMessage(true, "Stopped simulation")
         ]
+    }
+    
+    override synchronized update(SimulationContext ctx, SimulationEvent e) {
+        if (e instanceof SimulationControlEvent) {
+            if (stepNumber >= 0) {
+                this.nextDataPool = ctx.dataPool
+                notify()
+            }
+        }
+    }
+    
+    override getName() {
+        return this.class.simpleName
+    }
+    
+    def setSimulationType(String simulationType) {        
+        // Set simulation mode, default mode is manual mode
+        switch(simulationType) {
+            case "Manual" :
+                currentSimulation.mode = ManualMode
+            case "Periodic" :
+                currentSimulation.mode = PeriodicMode
+            case "Dynamic" :
+                currentSimulation.mode = DynamicTickMode
+            default : currentSimulation.mode = ManualMode
+        }
     }
     
 }
