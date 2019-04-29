@@ -93,6 +93,12 @@ class Dataflow extends SCChartsProcessor {
         val newMainState = newControlflowRegion.createState(GENERATED_PREFIX + "main") => [
             initial = true
         ]
+        if (dataflowRegion.once) {
+            newControlflowRegion.createState(GENERATED_PREFIX + "done") => [
+                final = true
+                newMainState.createTerminationTo(it)
+            ]
+        }
         for (declaration : dataflowRegion.declarations.immutableCopy) {
             newControlflowRegion.declarations += declaration
         }
@@ -188,8 +194,12 @@ class Dataflow extends SCChartsProcessor {
                 val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key)
                 val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ initial = true ]
                 val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key)
-                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ delay = DelayType.IMMEDIATE]
-                newEqDelayState.createTransitionTo(newEqState)
+                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ delay = DelayType.IMMEDIATE ]
+                if (dataflowRegion.once) {
+                    newEqDelayState.final = true                    
+                } else {
+                    newEqDelayState.createTransitionTo(newEqState)
+                }
                 
                 eqTrans.addAssignment(equation.value)
                 for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
