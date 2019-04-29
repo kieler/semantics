@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.sccharts.statebased.lean.java.template.selected
+	label "State-based Compilation (Java) lean-mode (Template, Selected)"
+
+de.cau.cs.kieler.sccharts.processors.modelselect
+system de.cau.cs.kieler.sccharts.statebased.lean.java.template
