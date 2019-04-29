@@ -46,11 +46,13 @@ class SCChartsOptimization {
 
     // TODO: at the moment this will not work with referenced valued objects    
     def void optimizeSuperflousImmediateTransitions(State state, State targetRootState) {
-        if (state.outgoingTransitions.size == 1 && !state.controlflowRegionsContainStates) {
+        if (state.outgoingTransitions.size == 1 && !state.controlflowRegionsContainStates &&
+            !state.isReferencing
+        ) {
             val transition = state.outgoingTransitions.head
             val targetState = transition.targetState
             if (transition.implicitlyImmediate) {
-                if (transition.trigger == null && transition.effects.nullOrEmpty) {
+                if (transition.trigger === null && transition.effects.nullOrEmpty) {
                     targetState.trace(transition) //KITT: Redirect tracing relations before removing
                     targetState.incomingTransitions.remove(transition)
                     state.outgoingTransitions.remove(transition)

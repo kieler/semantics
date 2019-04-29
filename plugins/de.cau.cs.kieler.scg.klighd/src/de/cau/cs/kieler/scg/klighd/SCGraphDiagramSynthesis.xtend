@@ -112,6 +112,7 @@ import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -824,7 +825,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return assignment.createNode().associateWith(assignment) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Straightforward rectangle drawing
-            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
+            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH) 
+            if (assignment.expression instanceof ReferenceCall) {
+                figure.setBackgroundGradient("#f9f8fd".color , "#a23bba".color, 90.0f)
+            } else {
+                figure.background = "white".color;
+            }
             (figure) => [
                 associateWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)

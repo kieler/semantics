@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.extensions
+package de.cau.cs.kieler.kexpressions.kext.extensions
 
 /**
  * @author ssm

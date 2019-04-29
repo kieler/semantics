@@ -163,6 +163,9 @@
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
       </TransformationSystem>
       <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.ref.kico">
+      </TransformationSystem>
+      <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">
       </TransformationSystem>
       <TransformationSystem

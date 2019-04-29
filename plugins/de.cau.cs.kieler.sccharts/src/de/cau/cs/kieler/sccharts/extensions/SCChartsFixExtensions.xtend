@@ -102,11 +102,11 @@ class SCChartsFixExtensions {
     }
 
     def boolean isStateReachable(State originalState, State state, List<State> visited) {
-        if (visited.contains(state) || state == null) {
+        if (visited.contains(state) || state === null) {
             return false
         }
         visited.add(state);
-        if (originalState.parentRegion == null) {
+        if (originalState.parentRegion === null) {
 
             // Root states ARE reachable
             return true
