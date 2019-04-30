@@ -141,7 +141,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         lastUri = uri
         lastCommand = command
         lastInplace = inplace
-        println("Lastcommand is " + command)
         return
     }
 
