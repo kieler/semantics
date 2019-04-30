@@ -314,12 +314,12 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
 
         for (output : refSCG.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].flatten) {
             for (n : 1..indentationDepth) sb.append(indentation)
+            sb.append(bindings.filter[ it.targetValuedObject == output ].head.sourceExpression.serialize)
+            sb.append(" = ")
             sb.append(struct.getVariableName).append(struct.separator)
             sb.append(referenceCall.valuedObject.name)
             sb.append(".")
             sb.append(output.name)
-            sb.append(" = ")
-            sb.append(bindings.filter[ it.targetValuedObject == output ].head.sourceExpression.serialize)
             sb.append(";\n")               
         }
 
