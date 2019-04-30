@@ -335,9 +335,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val vor = wire.sink
         
-        if (wire.referenceDeclaration.reference !== null) {
-            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
-            node.createReferenceNodePorts(wire.referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+        if (referenceDeclaration.reference !== null) {
+            node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
+            node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
         }
 
         referenceNodes += node

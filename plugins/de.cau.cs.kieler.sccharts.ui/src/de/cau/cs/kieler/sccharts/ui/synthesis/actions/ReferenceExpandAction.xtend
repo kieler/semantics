@@ -75,8 +75,12 @@ class ReferenceExpandAction extends CollapseExpandAction {
                             setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis") 
                         ]                        
                     )
-                    val extractedDataflow = diagram.children.head.children
-                    context.getKNode.children += extractedDataflow
+                    var extractedDataflow = diagram.children.head.children
+                    if (extractedDataflow.empty) {
+                        context.getKNode.children += diagram.children.head
+                    } else {
+                        context.getKNode.children += extractedDataflow
+                    }
                 } 
             }
         }
