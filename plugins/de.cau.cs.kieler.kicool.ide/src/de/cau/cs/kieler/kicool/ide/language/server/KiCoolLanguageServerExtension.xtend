@@ -97,7 +97,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Indicates if the last compilation was done inplace.
      */
     protected boolean lastInplace
-
+    
+    protected Thread compilationThread
+    protected Thread getSystemsThread
+    
+    private var EObject model
+    
     override compile(String uri, String clientId, String command, boolean inplace) {
 
         this.snapshotMap.put(uri, new LinkedList)
@@ -124,9 +129,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
      */
-    protected def didCompile(String uri, String clientId, String command, boolean inplace,
-        CancelIndicator cancelIndicator) {
+    protected def didCompile(String uri, String clientId, String command, boolean inplace, CancelIndicator cancelIndicator) {
         if (command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace) {
+
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
             val newIndex = this.objectMap.get(uri).size - 1
@@ -136,6 +141,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         lastUri = uri
         lastCommand = command
         lastInplace = inplace
+        println("Lastcommand is " + command)
+        return
     }
 
     /**
@@ -164,7 +171,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
-        context.compile
+        this.compilationThread = new CompilationThread(this, context)
+        this.compilationThread.start()
+        this.compilationThread.join()
         return context
     }
 
@@ -186,14 +195,17 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     override getSystems(String uri, boolean filter) {
         // Reset the calculation of the current snapshot index.
         lastUri = null
-        var eobject = getEObjectFromUri(uri)
-        val model = if(filter) eobject
+        this.getSystemsThread = new GetSystemsThread([
+            this.model = getEObjectFromUri(uri)
+        ])
+        this.getSystemsThread.start
+        this.getSystemsThread.join()
         if (model !== null && model.class !== modelClassFilter) {
             modelClassFilter = model.class
         }
         var systems = getSystemModels(true, modelClassFilter)
         val systemDescriptions = getSystemDescription(systems)
-        return requestManager.runRead [ cancelIndicator |
+        return requestManager.runRead[ cancelIndicator |
             systemDescriptions
         ]
     }
@@ -241,5 +253,29 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
-
+    
+    override cancelCompilation() {
+        
+        println("Interrupt thread")
+        if (compilationThread.alive) {
+            this.compilationThread.interrupt()
+            this.compilationThread.stop()
+            println(compilationThread.alive)
+        }
+        return requestManager.runRead[ cancelIndicator |
+            true
+        ]
+    }
+    
+    override cancelGetSystems() {
+        println("Interrupt thread")
+        if (getSystemsThread.alive) {
+            this.getSystemsThread.interrupt()
+            this.compilationThread.stop()
+            println(compilationThread.alive)
+        }
+        return requestManager.runRead[ cancelIndicator |
+            true
+        ]
+    }
 }

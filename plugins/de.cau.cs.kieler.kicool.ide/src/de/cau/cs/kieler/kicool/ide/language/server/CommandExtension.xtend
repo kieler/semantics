@@ -32,6 +32,12 @@ interface CommandExtension {
     def CompletableFuture<CompilationResults> compile(String uri, String clientId, String command, boolean inplace);
     
     /**
+     * Cancels the current compilation by stopping the current compilation thread.
+     */
+    @JsonRequest('cancel-compilation')
+    def CompletableFuture<Boolean> cancelCompilation();
+    
+    /**
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.
      */
     @JsonRequest('show')
@@ -45,4 +51,10 @@ interface CommandExtension {
      */
     @JsonRequest('get-systems')
     def CompletableFuture<Object> getSystems(String uri, boolean filterSystems)
+    
+    /**
+     * Cancels get systems thread by force if it takes too long.
+     */
+    @JsonRequest('cancel-get-systems')
+    def CompletableFuture<Boolean> cancelGetSystems();
 }
