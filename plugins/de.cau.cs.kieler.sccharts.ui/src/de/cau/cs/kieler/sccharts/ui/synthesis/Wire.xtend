@@ -43,6 +43,7 @@ class Wire {
     @Accessors var int externalSinkReferenceCounter = 0
     @Accessors var boolean sourceIsDeclaredInEquationScope = false
     @Accessors var boolean sinkIsDeclaredInEquationScope = false
+    @Accessors var boolean sourceIsEquationTarget = false
 
     new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring
@@ -72,5 +73,5 @@ class Wire {
         return result.toString();
     }
 
-    private static val SCChartsSerializeHRExtensions serializer = new SCChartsSerializeHRExtensions
+    static val SCChartsSerializeHRExtensions serializer = new SCChartsSerializeHRExtensions
 }

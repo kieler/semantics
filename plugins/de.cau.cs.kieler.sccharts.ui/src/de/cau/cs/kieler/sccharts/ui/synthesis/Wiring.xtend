@@ -83,7 +83,7 @@ class Wiring {
     
     /** Create a wiring for a a single assignment. */
     def void createWires(Assignment equation) {
-        equation.expression.create(equation.reference)
+        equation.expression.create(equation.reference, equation)
     }
     
     /** 
@@ -94,10 +94,10 @@ class Wiring {
      * As another example, if the source is a vector of values then create a wire for each of the values and 
      * connect them to the sink.
      */
-    private def Wire create(Expression source, Expression sink) {
+    private def Wire create(Expression source, Expression sink, Assignment equation) {
         if (source instanceof VectorValue) {
             // Vectors a treated differently because they potentially result in more than one wire.
-            return source.resolveVectorValueSource(sink)
+            return source.resolveVectorValueSource(sink, equation)
         }
         
         val wire = createWire(source, sink)
@@ -117,6 +117,9 @@ class Wiring {
                 if (declaration instanceof VariableDeclaration) {
                     wire.sourceIsInterface = declaration.input
                     wire.sourceIsDeclaredInEquationScope = declaration.nextScope == source.nextScope
+                    if (src.valuedObject == equation.reference.valuedObject) {
+                        wire.sourceIsEquationTarget = true
+                     }
                 } else if (declaration instanceof ReferenceDeclaration) {
                     wire.semanticSourceReferenceDeclaration = declaration 
                     wire.externalSourceReferenceCounter = 
@@ -125,7 +128,7 @@ class Wiring {
             }
             OperatorExpression: {
                 for (expression : src.subExpressions.indexed) {
-                    val w = expression.value.create(source)
+                    val w = expression.value.create(source, equation)
                     w.sinkIndex = expression.key
                 }    
             }
@@ -160,7 +163,7 @@ class Wiring {
      * This method splits up vector values and creates wires for each value.
      * This is only possible if the sink is a referenced object (with more input ports).
      */
-    protected def Wire resolveVectorValueSource(VectorValue source, Expression sink) {
+    protected def Wire resolveVectorValueSource(VectorValue source, Expression sink, Assignment equation) {
         var sinkTarget = sink
         val isReferenceSink = sink.getReferenceDeclarationReference instanceof DeclarationScope
         val valuedObjectList = if (isReferenceSink) sink.getReferenceDeclarationReference.asDeclarationScope.valuedObjects.filter[ input ].toList 
@@ -176,7 +179,7 @@ class Wiring {
                          sinkTarget = sink
                      }
                 }
-                vector.create(sinkTarget)
+                vector.create(sinkTarget, equation)
             }
             i++
         }
