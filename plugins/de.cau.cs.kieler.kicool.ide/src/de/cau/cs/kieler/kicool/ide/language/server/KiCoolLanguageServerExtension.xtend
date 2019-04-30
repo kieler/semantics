@@ -171,7 +171,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
-        this.compilationThread = new CompilationThread(this, context)
+        this.compilationThread = new CompilationThread(context)
         this.compilationThread.start()
         this.compilationThread.join()
         return context

@@ -21,20 +21,13 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
  */
 class CompilationThread extends Thread {
     
-    val KiCoolLanguageServerExtension kicoolExt
-    
     val CompilationContext context
     
-    new(KiCoolLanguageServerExtension kicoolExt, CompilationContext context) {
-        this.kicoolExt = kicoolExt
+    new(CompilationContext context) {
         this.context = context
     }
     
     override run()  {
-        println("Start compile after this")
         context.compile()
-        println("Finsihed compile")
     }
-    
-    
 }
