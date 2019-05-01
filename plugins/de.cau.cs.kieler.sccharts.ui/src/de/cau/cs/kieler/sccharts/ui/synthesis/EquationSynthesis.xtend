@@ -186,6 +186,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                     node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
+                    println("Source Port> " + node.ports.head + "@" + node.ports.head.hashCode)
                 }
             }            
             
@@ -230,7 +231,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 val text = wire.semanticSink.serializeHR.toString
                 node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
                 
-                println("Port> " + node.ports.head + "@" + node.ports.head.hashCode)
+                println("Target Port> " + node.ports.head + "@" + node.ports.head.hashCode)
             }
             
             println("Target> " + node + "@" + node.hashCode +  ": " + wire)            
@@ -289,7 +290,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 targetPort = targetNode.createDynamicInputPort(wire)
             }
         } else if (targetPort === null) {
-            targetPort = wire.sink.getPort(IN_PORT)
+//            targetPort = wire.sink.getPort(IN_PORT)
+            targetPort = targetNode.ports.filter[
+                    it.getId.startsWith(PORT_IN_PREFIX)
+                ].head
             println("Port> " + targetPort + "@" + targetPort.hashCode)
         }
         if (targetPort === null) {
@@ -342,8 +346,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
 //        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
         node.addLayoutParam(KlighdProperties::EXPAND, false)      
-        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORT_LABELS, SizeConstraint.PORTS))
-//        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_NETWORK_SIMPLEX_NODE_FLEXIBILITY, NodeFlexibility.NODE_SIZE)
+////        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_NETWORK_SIMPLEX_NODE_FLEXIBILITY, NodeFlexibility.NODE_SIZE)
+        node.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
+//        node.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
   
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
@@ -371,6 +376,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
             node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
         }
+
+        node.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
 
         referenceNodes += node
         return node
