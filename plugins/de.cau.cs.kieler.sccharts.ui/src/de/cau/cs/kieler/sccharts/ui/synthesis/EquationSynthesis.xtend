@@ -157,7 +157,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var KNode node 
         if (!nodeExists) {
             if (wire.semanticSourceReferenceDeclaration !== null) {
+                
                 node = wire.semanticSource.createNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget)
+                
                 if (wire.externalSourceReferenceCounter > 0) {
                     node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
                         wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY
@@ -166,6 +168,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node = node.createReferenceNode(wire.semanticSource, wire.externalSourceReferenceCounter, 
                         wire, (wire.semanticSource as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSourceReferenceDeclaration
                     )
+                    wire.semanticSource.addNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget, node)
                 }
             } else {
                 var text = wire.source.serializeHR.toString
@@ -186,11 +189,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                     node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
-                    println("Source Port> " + node.ports.head + "@" + node.ports.head.hashCode)
+                    println("Source Port> KPort@" + node.ports.head.hashCode)
                 }
             }            
             
-            println("Source> " + node + "@" + node.hashCode + ": " + wire)
+            println("Source> KNode@" + node.hashCode + ": " + wire)
             
             nodes += node
         } 
@@ -221,6 +224,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node = node.createReferenceNode(wire.semanticSink, wire.externalSinkReferenceCounter, 
                         wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration
                     )
+                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, wire.sourceIsEquationTarget, node)
                 }
             } else { 
                 node = wire.semanticSink.createKGTNode(wire.externalSinkReferenceCounter, false, 
@@ -231,10 +235,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 val text = wire.semanticSink.serializeHR.toString
                 node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
                 
-                println("Target Port> " + node.ports.head + "@" + node.ports.head.hashCode)
+                println("Target Port> KPort@" + node.ports.head.hashCode)
             }
             
-            println("Target> " + node + "@" + node.hashCode +  ": " + wire)            
+            println("Target> KNode@" + node.hashCode +  ": " + wire)            
             
             nodes += node
         }
@@ -255,7 +259,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (sourceNode === null || targetNode === null) return;
         
-        println("Wire> " + sourceNode + "@" + sourceNode.hashCode + " - " + targetNode + "@" + targetNode.hashCode +  ": " + wire)
+        println("Wire> KNode@" + sourceNode.hashCode + " - " + "Node@" + targetNode.hashCode +  ": " + wire)
          
         var targetPort = null as KPort
         if (wire.semanticSinkReferenceDeclaration !== null) {
@@ -265,15 +269,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
         }
         if (wire.semanticSourceReferenceDeclaration !== null) {
-            if (wire.semanticSource.asValuedObjectReference.subReference !== null) 
-                sourcePort = sourceNode.getPort(wire.semanticSourceSubReference.valuedObject)
+            if (wire.semanticSource.asValuedObjectReference.subReference !== null) {
+                val p = sourceNode.getPort(wire.semanticSourceSubReference.valuedObject)
+                println("Wire> Source Port@" + p.hashCode + " for " + wire.semanticSourceSubReference.valuedObject) 
+                sourcePort = p
+            }
         }
         
         if (wire.semanticSource instanceof OperatorExpression) {
             val p = sourceNode.ports.filter[ 
                     it.getId.startsWith(PORT_OUT_PREFIX)
                 ].head
-            sourcePort = wire.semanticSource.getPort(OUT_PORT, p)
+//            sourcePort = wire.semanticSource.getPort(OUT_PORT, p)
             sourcePort = p
             println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)    
         }
@@ -309,10 +316,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             label = wire.source.serializeHR.toString
         }
         
-        println("Wire> " + sourceNode + "@" + sourceNode.hashCode + " " + 
-            sourcePort + "@" + sourcePort.hashCode +
-            " - " + targetNode + "@" + targetNode.hashCode + " " +
-            targetPort + "@" + targetPort.hashCode +  
+        println("Wire> KNode@" + sourceNode.hashCode + " " + 
+            "KPort@" + sourcePort.hashCode +
+            " - " + "KNode@" + targetNode.hashCode + " " +
+            "KPort@" + targetPort.hashCode +  
              ": " + wire)
         wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
     }
@@ -352,11 +359,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
   
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
-            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration)
+            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
             if (newNode !== null) return newNode
         }
         if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
-            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable)
+            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable, wire)
             if (newNode !== null) return newNode
         }
          
@@ -403,7 +410,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }        
     }
     
-    protected def KNode loadFigureFromKGT(EObject eObject, Object association, Annotatable annotationObject) {
+    protected def KNode loadFigureFromKGT(EObject eObject, Object association, Annotatable annotationObject, Wire wire) {
         if (!annotationObject.hasAnnotation(ANNOTATION_FIGURE)) return null
         
         val path = getSkinPath 
@@ -420,7 +427,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             res.load(newResourceSet.loadOptions)
             val node = (res.getContents().get(0) as KNode).children.head
             node.associateWith(association)
-            association.addNode(node)
+            association.addNode(false, node)
 
             val valuedObjects = eObject.asDeclarationScope.valuedObjects.filter[ input || output ].toList        
         
@@ -430,7 +437,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 
                 p.associateWith(v)          
                 node.addPort(v, p)  
+                println("Figure Port> KPort@" + p.hashCode + " for " + v)
             }
+            
+            println("Figure Node> KNode@" + node.hashCode)
 
             return node
         } catch (Exception e) {
