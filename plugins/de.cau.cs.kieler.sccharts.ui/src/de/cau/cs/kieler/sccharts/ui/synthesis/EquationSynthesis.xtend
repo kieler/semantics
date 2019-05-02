@@ -58,6 +58,13 @@ import org.eclipse.elk.core.options.SizeConstraint
 import de.cau.cs.kieler.klighd.kgraph.KLabel
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.kexpressions.OperatorType
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import de.cau.cs.kieler.kexpressions.Value
+import org.eclipse.elk.core.options.Alignment
+import org.eclipse.elk.alg.layered.options.LayeringStrategy
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 /**
  * @author ssm
@@ -70,6 +77,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
     public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)        
+    public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption("Align inputs/outputs", true).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Align constants", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Show Wire Labels", true).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption("Show Expression Port Labels", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
+        
 
     @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
@@ -84,11 +100,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationStyles
     @Inject Injector injector
     
+    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
+
     
     static val ANNOTATION_FIGURE = "figure"
     
-    static val PORT_LABEL_FONT_SIZE = 6
-    static val INPUT_OUTPUT_TEXT_SIZE = 7
+    static val PORT_LABEL_FONT_SIZE = 5
+    static val INPUT_OUTPUT_TEXT_SIZE = 9
+    static val PADDING_INPUT_LEFT = 2
+    static val PADDING_INPUT_RIGHT = 4
+    static val PADDING_OUTPUT_LEFT = 4
+    static val PADDING_OUTPUT_RIGHT = 2
     
     protected static val PORT_IN_PREFIX = "in"
     protected static val PORT1_IN_PREFIX = "in1"
@@ -118,9 +141,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         'Local' -> 'Local.kgt',
         EXTERNAL_FUNCTION_KEY -> "OperatorExpressionUnary.kgt"
     }
-     
     
     protected val referenceNodes = <KNode> newHashSet
+    
+    override getDisplayedSynthesisOptions() {
+        val options = newArrayList(ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, SHOW_EXPRESSION_PORT_LABELS)
+        
+        return options
+    }   
+    
 
     override performTranformation(Assignment element) {
         null
@@ -179,7 +208,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node.associateWith(wire.semanticSource)
                     text = wire.semanticSource.asOperatorExpression.operator.toString
                     if (wire.semanticSource.asOperatorExpression.operator != OperatorType.CONDITIONAL) {
-                        node.addNodeLabel(text)
+                        node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
                     }
                 } else {
                     node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter,
@@ -188,7 +217,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             INPUT_ID
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
-                    node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
+                    node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+                    
+                    val isConstant = wire.semanticSource instanceof Value
+                    if(ALIGN_INPUTS_OUTPUTS.booleanValue && !isConstant) {
+                        node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                        node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)                        
+                    }
+                    if(ALIGN_CONSTANTS.booleanValue && isConstant) { 
+                        node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
+                        node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
+                    }
+                        
                     println("Source Port> KPort@" + node.ports.head.hashCode)
                 }
             }            
@@ -233,9 +273,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 )
                 wire.semanticSink.addPort(IN_PORT, node.ports.head)
                 val text = wire.semanticSink.serializeHR.toString
-                node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
+                node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_OUTPUT_LEFT, PADDING_OUTPUT_RIGHT)
+                
+                if(ALIGN_INPUTS_OUTPUTS.booleanValue) {
+                    node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
+                    node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.RIGHT)
+                }
                 
                 println("Target Port> KPort@" + node.ports.head.hashCode)
+                
             }
             
             println("Target> KNode@" + node.hashCode +  ": " + wire)            
@@ -312,8 +358,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         // Only label operator expressions and only do it once.
         var String label = null 
-        if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression) {
-            label = wire.source.serializeHR.toString
+        if (SHOW_WIRE_LABELS.booleanValue) {
+            if (wire.source == wire.semanticSource && wire.source instanceof OperatorExpression) {
+                label = wire.source.serializeHR.toString
+            }
         }
         
         println("Wire> KNode@" + sourceNode.hashCode + " " + 
@@ -347,6 +395,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         node.associateWith(association)
         
+        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
         node.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
         node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
@@ -360,6 +409,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
+            newNode.setProperty(PROPAGATED_SKINPATH, skinPath)
             if (newNode !== null) return newNode
         }
         if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
@@ -391,7 +441,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
     
     protected def createReferenceNodePorts(KNode node, Scope scope, Object association, Function1<? super VariableDeclaration, Boolean> predicate, PortSide portSide, boolean reverse) {
-        for(input : scope.declarations.filter(VariableDeclaration).filter(predicate)) {
+        val scopes = scope.declarations.filter(VariableDeclaration).filter(predicate).toList
+        val scopeView = if (reverse) scopes.reverseView else scopes        
+        for(input : scopeView) {
             val declarationView = if (reverse) input.valuedObjects.reverseView else input.valuedObjects
             for(v : declarationView) {
                 val port = node.createPort(v) => [
@@ -514,11 +566,22 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 }
                             } catch(NumberFormatException e) {
                                 // abort at convert issues
-                            }                        
-                            if (!port1Label.nullOrEmpty && id == PORT1_IN_PREFIX) {
-                                val label = p.labels.head
-                                if (label !== null) {
-                                    label.text = port1Label 
+                            }    
+                            if (!port1Label.nullOrEmpty) {     
+                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
+                                    if (id == PORT1_IN_PREFIX) {
+                                        val label = p.labels.head
+                                        if (label !== null) {
+                                            label.text = port1Label 
+                                        }
+                                    }
+                                } else {
+                                    if (id.startsWith(PORT_IN_PREFIX)) {
+                                        val label = p.labels.head
+                                        if (label !== null) {
+                                            label.text = ""
+                                        }
+                                    }
                                 }
                             }
                         } else {
