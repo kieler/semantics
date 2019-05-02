@@ -940,25 +940,25 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Entry rule entryRuleNorExpression
-entryRuleNorExpression
+// Entry rule entryRuleNorAtMostOneExpression
+entryRuleNorAtMostOneExpression
 :
-{ before(grammarAccess.getNorExpressionRule()); }
-	 ruleNorExpression
-{ after(grammarAccess.getNorExpressionRule()); } 
+{ before(grammarAccess.getNorAtMostOneExpressionRule()); }
+	 ruleNorAtMostOneExpression
+{ after(grammarAccess.getNorAtMostOneExpressionRule()); } 
 	 EOF 
 ;
 
-// Rule NorExpression
-ruleNorExpression 
+// Rule NorAtMostOneExpression
+ruleNorAtMostOneExpression 
 	@init {
 		int stackSize = keepStackSize();
 	}
 	:
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getGroup()); }
-		(rule__NorExpression__Group__0)
-		{ after(grammarAccess.getNorExpressionAccess().getGroup()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getGroup()); }
+		(rule__NorAtMostOneExpression__Group__0)
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getGroup()); }
 	)
 ;
 finally {
@@ -4584,30 +4584,30 @@ rule__AtomicExpression__Alternatives
 	)
 	|
 	(
-		{ before(grammarAccess.getAtomicExpressionAccess().getNorExpressionParserRuleCall_4()); }
-		ruleNorExpression
-		{ after(grammarAccess.getAtomicExpressionAccess().getNorExpressionParserRuleCall_4()); }
+		{ before(grammarAccess.getAtomicExpressionAccess().getNorAtMostOneExpressionParserRuleCall_4()); }
+		ruleNorAtMostOneExpression
+		{ after(grammarAccess.getAtomicExpressionAccess().getNorAtMostOneExpressionParserRuleCall_4()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Alternatives_1
+rule__NorAtMostOneExpression__Alternatives_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_0()); }
-		(rule__NorExpression__OperatorAssignment_1_0)
-		{ after(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_0()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_0()); }
+		(rule__NorAtMostOneExpression__OperatorAssignment_1_0)
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_0()); }
 	)
 	|
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_1()); }
-		(rule__NorExpression__OperatorAssignment_1_1)
-		{ after(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_1()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_1()); }
+		(rule__NorAtMostOneExpression__OperatorAssignment_1_1)
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_1()); }
 	)
 ;
 finally {
@@ -15626,161 +15626,161 @@ finally {
 }
 
 
-rule__NorExpression__Group__0
+rule__NorAtMostOneExpression__Group__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__0__Impl
-	rule__NorExpression__Group__1
+	rule__NorAtMostOneExpression__Group__0__Impl
+	rule__NorAtMostOneExpression__Group__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__0__Impl
+rule__NorAtMostOneExpression__Group__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getOperatorExpressionAction_0()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorExpressionAction_0()); }
 	()
-	{ after(grammarAccess.getNorExpressionAccess().getOperatorExpressionAction_0()); }
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorExpressionAction_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__1
+rule__NorAtMostOneExpression__Group__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__1__Impl
-	rule__NorExpression__Group__2
+	rule__NorAtMostOneExpression__Group__1__Impl
+	rule__NorAtMostOneExpression__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__1__Impl
+rule__NorAtMostOneExpression__Group__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getAlternatives_1()); }
-	(rule__NorExpression__Alternatives_1)
-	{ after(grammarAccess.getNorExpressionAccess().getAlternatives_1()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getAlternatives_1()); }
+	(rule__NorAtMostOneExpression__Alternatives_1)
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getAlternatives_1()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__2
+rule__NorAtMostOneExpression__Group__2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__2__Impl
-	rule__NorExpression__Group__3
+	rule__NorAtMostOneExpression__Group__2__Impl
+	rule__NorAtMostOneExpression__Group__3
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__2__Impl
+rule__NorAtMostOneExpression__Group__2__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getLeftParenthesisKeyword_2()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getLeftParenthesisKeyword_2()); }
 	'('
-	{ after(grammarAccess.getNorExpressionAccess().getLeftParenthesisKeyword_2()); }
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getLeftParenthesisKeyword_2()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__3
+rule__NorAtMostOneExpression__Group__3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__3__Impl
-	rule__NorExpression__Group__4
+	rule__NorAtMostOneExpression__Group__3__Impl
+	rule__NorAtMostOneExpression__Group__4
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__3__Impl
+rule__NorAtMostOneExpression__Group__3__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_3()); }
-	(rule__NorExpression__SubExpressionsAssignment_3)
-	{ after(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_3()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_3()); }
+	(rule__NorAtMostOneExpression__SubExpressionsAssignment_3)
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_3()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__4
+rule__NorAtMostOneExpression__Group__4
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__4__Impl
-	rule__NorExpression__Group__5
+	rule__NorAtMostOneExpression__Group__4__Impl
+	rule__NorAtMostOneExpression__Group__5
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__4__Impl
+rule__NorAtMostOneExpression__Group__4__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getGroup_4()); }
-	(rule__NorExpression__Group_4__0)*
-	{ after(grammarAccess.getNorExpressionAccess().getGroup_4()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getGroup_4()); }
+	(rule__NorAtMostOneExpression__Group_4__0)*
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getGroup_4()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__5
+rule__NorAtMostOneExpression__Group__5
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group__5__Impl
+	rule__NorAtMostOneExpression__Group__5__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group__5__Impl
+rule__NorAtMostOneExpression__Group__5__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getRightParenthesisKeyword_5()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getRightParenthesisKeyword_5()); }
 	')'
-	{ after(grammarAccess.getNorExpressionAccess().getRightParenthesisKeyword_5()); }
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getRightParenthesisKeyword_5()); }
 )
 ;
 finally {
@@ -15788,53 +15788,53 @@ finally {
 }
 
 
-rule__NorExpression__Group_4__0
+rule__NorAtMostOneExpression__Group_4__0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group_4__0__Impl
-	rule__NorExpression__Group_4__1
+	rule__NorAtMostOneExpression__Group_4__0__Impl
+	rule__NorAtMostOneExpression__Group_4__1
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group_4__0__Impl
+rule__NorAtMostOneExpression__Group_4__0__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getCommaKeyword_4_0()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getCommaKeyword_4_0()); }
 	','
-	{ after(grammarAccess.getNorExpressionAccess().getCommaKeyword_4_0()); }
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getCommaKeyword_4_0()); }
 )
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group_4__1
+rule__NorAtMostOneExpression__Group_4__1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
-	rule__NorExpression__Group_4__1__Impl
+	rule__NorAtMostOneExpression__Group_4__1__Impl
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__Group_4__1__Impl
+rule__NorAtMostOneExpression__Group_4__1__Impl
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 (
-	{ before(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_4_1()); }
-	(rule__NorExpression__SubExpressionsAssignment_4_1)
-	{ after(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_4_1()); }
+	{ before(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_4_1()); }
+	(rule__NorAtMostOneExpression__SubExpressionsAssignment_4_1)
+	{ after(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_4_1()); }
 )
 ;
 finally {
@@ -33517,60 +33517,60 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__OperatorAssignment_1_0
+rule__NorAtMostOneExpression__OperatorAssignment_1_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
 		ruleAtMostOneOperator
-		{ after(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__OperatorAssignment_1_1
+rule__NorAtMostOneExpression__OperatorAssignment_1_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0()); }
 		ruleNorOperator
-		{ after(grammarAccess.getNorExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0()); }
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__SubExpressionsAssignment_3
+rule__NorAtMostOneExpression__SubExpressionsAssignment_3
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0()); }
 		ruleExpression
-		{ after(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0()); }
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0()); }
 	)
 ;
 finally {
 	restoreStackSize(stackSize);
 }
 
-rule__NorExpression__SubExpressionsAssignment_4_1
+rule__NorAtMostOneExpression__SubExpressionsAssignment_4_1
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0()); }
+		{ before(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0()); }
 		ruleExpression
-		{ after(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0()); }
+		{ after(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0()); }
 	)
 ;
 finally {

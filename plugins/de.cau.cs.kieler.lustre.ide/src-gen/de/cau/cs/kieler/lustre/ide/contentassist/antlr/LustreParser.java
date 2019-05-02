@@ -61,7 +61,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getInitExpressionAccess().getAlternatives(), "rule__InitExpression__Alternatives");
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
-			builder.put(grammarAccess.getNorExpressionAccess().getAlternatives_1(), "rule__NorExpression__Alternatives_1");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getAlternatives_1(), "rule__NorAtMostOneExpression__Alternatives_1");
 			builder.put(grammarAccess.getParamsAccess().getAlternatives_1(), "rule__Params__Alternatives_1");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives(), "rule__StaticParam__Alternatives");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives_2_1(), "rule__StaticParam__Alternatives_2_1");
@@ -237,8 +237,8 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_1(), "rule__LogicalAndExpression__Group_1_1__0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_2(), "rule__LogicalAndExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
-			builder.put(grammarAccess.getNorExpressionAccess().getGroup(), "rule__NorExpression__Group__0");
-			builder.put(grammarAccess.getNorExpressionAccess().getGroup_4(), "rule__NorExpression__Group_4__0");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup(), "rule__NorAtMostOneExpression__Group__0");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup_4(), "rule__NorAtMostOneExpression__Group_4__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup(), "rule__Params__Group__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0(), "rule__Params__Group_1_0__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0_1(), "rule__Params__Group_1_0_1__0");
@@ -624,10 +624,10 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getOperatorAssignment_1_1_0(), "rule__LogicalAndExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__LogicalAndExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__LogicalAndExpression__SubExpressionsAssignment_1_2_1");
-			builder.put(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_0(), "rule__NorExpression__OperatorAssignment_1_0");
-			builder.put(grammarAccess.getNorExpressionAccess().getOperatorAssignment_1_1(), "rule__NorExpression__OperatorAssignment_1_1");
-			builder.put(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_3(), "rule__NorExpression__SubExpressionsAssignment_3");
-			builder.put(grammarAccess.getNorExpressionAccess().getSubExpressionsAssignment_4_1(), "rule__NorExpression__SubExpressionsAssignment_4_1");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_0(), "rule__NorAtMostOneExpression__OperatorAssignment_1_0");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_1(), "rule__NorAtMostOneExpression__OperatorAssignment_1_1");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_3(), "rule__NorAtMostOneExpression__SubExpressionsAssignment_3");
+			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_4_1(), "rule__NorAtMostOneExpression__SubExpressionsAssignment_4_1");
 			builder.put(grammarAccess.getParamsAccess().getParameterAssignment_1_0_1_0(), "rule__Params__ParameterAssignment_1_0_1_0");
 			builder.put(grammarAccess.getParamsAccess().getParameterAssignment_1_0_1_1_1(), "rule__Params__ParameterAssignment_1_0_1_1_1");
 			builder.put(grammarAccess.getStaticParamAccess().getNameAssignment_0_1(), "rule__StaticParam__NameAssignment_0_1");

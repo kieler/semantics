@@ -42,10 +42,6 @@ class LustreToSCCharts extends CoreLustreToSCC {
     override ProcessorType getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-    
-    override protected reset() {
-        controlflowRegionCounter = 0
-    }
 
     override processEquation(Equation equation, State state) {
         // Search for a dataflow region within the state

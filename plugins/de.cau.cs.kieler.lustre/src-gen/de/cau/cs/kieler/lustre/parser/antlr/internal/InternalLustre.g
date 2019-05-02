@@ -4863,25 +4863,25 @@ ruleAtomicExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getNorExpressionParserRuleCall_4());
+			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getNorAtMostOneExpressionParserRuleCall_4());
 		}
-		this_NorExpression_6=ruleNorExpression
+		this_NorAtMostOneExpression_6=ruleNorAtMostOneExpression
 		{
-			$current = $this_NorExpression_6.current;
+			$current = $this_NorAtMostOneExpression_6.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleNorExpression
-entryRuleNorExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getNorExpressionRule()); }
-	iv_ruleNorExpression=ruleNorExpression
-	{ $current=$iv_ruleNorExpression.current; }
+// Entry rule entryRuleNorAtMostOneExpression
+entryRuleNorAtMostOneExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getNorAtMostOneExpressionRule()); }
+	iv_ruleNorAtMostOneExpression=ruleNorAtMostOneExpression
+	{ $current=$iv_ruleNorAtMostOneExpression.current; }
 	EOF;
 
-// Rule NorExpression
-ruleNorExpression returns [EObject current=null]
+// Rule NorAtMostOneExpression
+ruleNorAtMostOneExpression returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -4895,7 +4895,7 @@ ruleNorExpression returns [EObject current=null]
 			}
 			{
 				$current = forceCreateModelElement(
-					grammarAccess.getNorExpressionAccess().getOperatorExpressionAction_0(),
+					grammarAccess.getNorAtMostOneExpressionAccess().getOperatorExpressionAction_0(),
 					$current);
 			}
 		)
@@ -4903,12 +4903,12 @@ ruleNorExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0());
+						newCompositeNode(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAtMostOneOperatorEnumRuleCall_1_0_0());
 					}
 					lv_operator_1_0=ruleAtMostOneOperator
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getNorExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getNorAtMostOneExpressionRule());
 						}
 						set(
 							$current,
@@ -4923,12 +4923,12 @@ ruleNorExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getNorExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorNorOperatorEnumRuleCall_1_1_0());
 					}
 					lv_operator_2_0=ruleNorOperator
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getNorExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getNorAtMostOneExpressionRule());
 						}
 						set(
 							$current,
@@ -4942,17 +4942,17 @@ ruleNorExpression returns [EObject current=null]
 		)
 		otherlv_3='('
 		{
-			newLeafNode(otherlv_3, grammarAccess.getNorExpressionAccess().getLeftParenthesisKeyword_2());
+			newLeafNode(otherlv_3, grammarAccess.getNorAtMostOneExpressionAccess().getLeftParenthesisKeyword_2());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0());
+					newCompositeNode(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_3_0());
 				}
 				lv_subExpressions_4_0=ruleExpression
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getNorExpressionRule());
+						$current = createModelElementForParent(grammarAccess.getNorAtMostOneExpressionRule());
 					}
 					add(
 						$current,
@@ -4966,17 +4966,17 @@ ruleNorExpression returns [EObject current=null]
 		(
 			otherlv_5=','
 			{
-				newLeafNode(otherlv_5, grammarAccess.getNorExpressionAccess().getCommaKeyword_4_0());
+				newLeafNode(otherlv_5, grammarAccess.getNorAtMostOneExpressionAccess().getCommaKeyword_4_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getNorExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0());
+						newCompositeNode(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsExpressionParserRuleCall_4_1_0());
 					}
 					lv_subExpressions_6_0=ruleExpression
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getNorExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getNorAtMostOneExpressionRule());
 						}
 						add(
 							$current,
@@ -4990,7 +4990,7 @@ ruleNorExpression returns [EObject current=null]
 		)*
 		otherlv_7=')'
 		{
-			newLeafNode(otherlv_7, grammarAccess.getNorExpressionAccess().getRightParenthesisKeyword_5());
+			newLeafNode(otherlv_7, grammarAccess.getNorAtMostOneExpressionAccess().getRightParenthesisKeyword_5());
 		}
 	)
 ;

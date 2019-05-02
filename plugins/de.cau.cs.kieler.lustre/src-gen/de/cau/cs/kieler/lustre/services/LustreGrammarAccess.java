@@ -2922,7 +2922,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		private final RuleCall cNorExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cNorAtMostOneExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//@Override
 		//AtomicExpression kexpressions::Expression:
@@ -2930,10 +2930,10 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//	| ValuedObjectTestExpression
 		//	| '(' BoolExpression ')'
 		//	| ReferenceCall
-		//	| NorExpression;
+		//	| NorAtMostOneExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | NorExpression
+		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | NorAtMostOneExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//BoolValue
@@ -2957,11 +2957,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//ReferenceCall
 		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
 		
-		//NorExpression
-		public RuleCall getNorExpressionParserRuleCall_4() { return cNorExpressionParserRuleCall_4; }
+		//NorAtMostOneExpression
+		public RuleCall getNorAtMostOneExpressionParserRuleCall_4() { return cNorAtMostOneExpressionParserRuleCall_4; }
 	}
-	public class NorExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorExpression");
+	public class NorAtMostOneExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NorAtMostOneExpression");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cOperatorExpressionAction_0 = (Action)cGroup.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
@@ -2978,7 +2978,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsExpressionParserRuleCall_4_1_0 = (RuleCall)cSubExpressionsAssignment_4_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		//NorExpression kexpressions::Expression:
+		//NorAtMostOneExpression kexpressions::Expression:
 		//	{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator)
 		//	'('
 		//	subExpressions+=Expression (',' subExpressions+=Expression)*
@@ -4051,7 +4051,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final LogicalAndExpressionElements pLogicalAndExpression;
 	private final ValuedExpressionElements pValuedExpression;
 	private final AtomicExpressionElements pAtomicExpression;
-	private final NorExpressionElements pNorExpression;
+	private final NorAtMostOneExpressionElements pNorAtMostOneExpression;
 	private final AssignOperatorElements eAssignOperator;
 	private final CompareOperatorElements eCompareOperator;
 	private final LogicalOrOperatorElements eLogicalOrOperator;
@@ -4142,7 +4142,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pLogicalAndExpression = new LogicalAndExpressionElements();
 		this.pValuedExpression = new ValuedExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
-		this.pNorExpression = new NorExpressionElements();
+		this.pNorAtMostOneExpression = new NorAtMostOneExpressionElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.eLogicalOrOperator = new LogicalOrOperatorElements();
@@ -4680,7 +4680,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
-	//	| NorExpression;
+	//	| NorAtMostOneExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;
 	}
@@ -4689,17 +4689,17 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getAtomicExpressionAccess().getRule();
 	}
 	
-	//NorExpression kexpressions::Expression:
+	//NorAtMostOneExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} (operator=AtMostOneOperator | operator=NorOperator)
 	//	'('
 	//	subExpressions+=Expression (',' subExpressions+=Expression)*
 	//	')';
-	public NorExpressionElements getNorExpressionAccess() {
-		return pNorExpression;
+	public NorAtMostOneExpressionElements getNorAtMostOneExpressionAccess() {
+		return pNorAtMostOneExpression;
 	}
 	
-	public ParserRule getNorExpressionRule() {
-		return getNorExpressionAccess().getRule();
+	public ParserRule getNorAtMostOneExpressionRule() {
+		return getNorAtMostOneExpressionAccess().getRule();
 	}
 	
 	//@Override

@@ -428,8 +428,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // Assignments containing a when expression use a during action for transformation
         if (containingElement instanceof Assignment) {
-            var hasSideEffects = realExpression.checkOnSideEffects
-            if (hasSideEffects || environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
+            if (environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
                 
                 // Create during action for when expression
                 var duringAction = createDuringAction(state) => [
@@ -444,7 +443,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 ]
                 
                 // The trigger must be a conjunction with all previous clocks
-                var clockConjunction = createClockConjunction(clock, realExpression, state)
+                var clockConjunction = createClockConjunction(clock, state)
                 duringAction.trigger = clockConjunction
                 duringActionAssignment.expression = realExpression
                 duringAction.effects += duringActionAssignment
@@ -453,7 +452,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 // Create condition for when expression
                 val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
                 var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
-                var clockConjugation = createClockConjunction(clock, realExpression, state)
+                var clockConjugation = createClockConjunction(clock, state)
                 conditional.subExpressions.add(clockConjugation)
                 conditional.subExpressions.add(realExpression)
                 if (environment.getProperty(NO_PRE_IN_WHEN_TRANSFORMATION)) {
@@ -654,7 +653,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             val clockedVarDecl = scchartsToLustreValuedObjectMap.get(valObj).variableDeclaration.eContainer
             if (clockedVarDecl instanceof ClockedVariableDeclaration) {
                 if (clockedVarDecl.clockExpr !== null) {
-                    preExpression.subExpressions += clockedVarDecl.clockExpr.transformExpression(state)
+                    preExpression.subExpressions += createClockConjunction(clockedVarDecl.clockExpr.transformExpression(state) as ValuedObjectReference, state)
                 }
             }
             return preExpression
@@ -865,7 +864,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         return varDeclaration
     }
     
-    private def createClockConjunction(ValuedObjectReference sccClockVariable, Expression sccVariable, State state) {
+    private def createClockConjunction(ValuedObjectReference sccClockVariable, State state) {
         var clockList = newLinkedList(sccClockVariable)
         var clockVar = scchartsToLustreValuedObjectMap.get(sccClockVariable.valuedObject)
         
@@ -891,21 +890,16 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
         
         if (clockList.length > 1) {
-        var logicalAndExpression = createLogicalAndExpression
-        logicalAndExpression.subExpressions.add(sccVariable)
+            var logicalAndExpression = createLogicalAndExpression
         
-        for (ValuedObjectReference valObjRef : clockList) {
-            logicalAndExpression.subExpressions.add(valObjRef)
-        }
-        
-        return logicalAndExpression 
+            for (ValuedObjectReference valObjRef : clockList) {
+                logicalAndExpression.subExpressions.add(valObjRef)
+            }
+            
+            return logicalAndExpression 
         
         } else {
             return clockList.get(0)
         }       
-    }
-    
-    private def boolean checkOnSideEffects(Expression expr) {
-        return false       
     }
 }

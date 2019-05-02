@@ -405,15 +405,22 @@ AtomicExpression returns kexpressions::Expression:
     | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
-    | NorExpression
+    | NorAtMostOneExpression
     ;
 
-NorExpression returns kexpressions::Expression:
+NorAtMostOneExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression}
     (operator=AtMostOneOperator | operator=NorOperator)
     '('
     subExpressions+=Expression (',' subExpressions+=Expression)*
     ')'
+;
+
+// Exclude BitwiseNotExpression
+@Override 
+NotExpression returns kexpressions::Expression:
+    {OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
+    | AtomicExpression
 ;
 
 /**
