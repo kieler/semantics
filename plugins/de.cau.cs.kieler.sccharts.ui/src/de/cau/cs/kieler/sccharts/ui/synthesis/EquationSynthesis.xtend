@@ -100,8 +100,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension EquationStyles
     @Inject Injector injector
     
-    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
-        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
+//    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
+//        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.propagatedSkinPath", "");
 
     
     static val ANNOTATION_FIGURE = "figure"
@@ -409,11 +409,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
-            newNode.setProperty(PROPAGATED_SKINPATH, skinPath)
+            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
             if (newNode !== null) return newNode
         }
         if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
             val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable, wire)
+            newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
             if (newNode !== null) return newNode
         }
          
@@ -435,6 +436,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
 
         node.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
+        
+        node.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
 
         referenceNodes += node
         return node
@@ -465,7 +468,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected def KNode loadFigureFromKGT(EObject eObject, Object association, Annotatable annotationObject, Wire wire) {
         if (!annotationObject.hasAnnotation(ANNOTATION_FIGURE)) return null
         
-        val path = getSkinPath 
+        val path = getSkinPath(usedContext) 
         val kgt = path + if (!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE) 
         val sl = eObject.eResource.URI.segmentsList
         val nsl = sl.take(sl.length - 1).drop(1)

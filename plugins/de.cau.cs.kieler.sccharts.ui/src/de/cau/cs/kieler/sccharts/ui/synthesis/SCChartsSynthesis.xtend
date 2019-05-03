@@ -42,6 +42,9 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.klighd.ViewContext
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -67,6 +70,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject CommentSynthesis commentSynthesis
         
     @Inject SynthesisHooks hooks  
+    
+    public static final IProperty<String> SKINPATH = new Property<String>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
 
     static val PRAGMA_SYMBOLS = "symbols"       
     static val PRAGMA_SYMBOL = "symbol"       
@@ -79,8 +85,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_SKINPATH = "skinpath"
           
     val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
-    
-    @Accessors private var String skinPath = ""
     
     override getDisplayedActions() {
         return newLinkedList => [ list |
@@ -149,7 +153,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }
-        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
+        if (scc.hasPragma(PRAGMA_SKINPATH)) {
+            setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
+        }
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
@@ -216,6 +222,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 }                 
             }
         }
+    }
+    
+    def String getSkinPath(ViewContext context) {
+        val rootNode = context.viewModel
+        var sp = rootNode.getProperty(SKINPATH)
+        if (sp.nullOrEmpty) {
+            sp = context.getProperty(SKINPATH)
+            if (!sp.nullOrEmpty) {
+                sp.setSkinPath(context)
+            }
+        } 
+        return sp 
+    }
+    
+    def void setSkinPath(String sp, ViewContext context) {
+        val rootNode = context.viewModel
+        rootNode.setProperty(SKINPATH, sp) 
     }
    
 }

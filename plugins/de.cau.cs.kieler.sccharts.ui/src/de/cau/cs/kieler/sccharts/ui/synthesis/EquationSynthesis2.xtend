@@ -229,7 +229,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
         
         val reference = (vo.eContainer as ReferenceDeclaration).reference as State
         if (reference.hasAnnotation("actor")) {
-            val path = getSkinPath 
+            val path = getSkinPath(usedContext) 
             val kgt = path + if (!path.endsWith("/")) "/" + reference.getStringAnnotationValue("actor") 
             println(vo.eResource.URI)
             val sl = vo.eResource.URI.segmentsList
