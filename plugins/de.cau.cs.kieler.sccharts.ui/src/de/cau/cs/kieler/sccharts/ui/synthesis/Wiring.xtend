@@ -32,6 +32,9 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import java.util.Set
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import static extension  org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FloatValue
 
 /**
  * The class models a wiring instance if given a list of equations (assignments).
@@ -94,10 +97,16 @@ class Wiring {
      * As another example, if the source is a vector of values then create a wire for each of the values and 
      * connect them to the sink.
      */
-    private def Wire create(Expression source, Expression sink, Assignment equation) {
+    private def Wire create(Expression originalSource, Expression sink, Assignment equation) {
+        var source = originalSource
         if (source instanceof VectorValue) {
             // Vectors a treated differently because they potentially result in more than one wire.
             return source.resolveVectorValueSource(sink, equation)
+        }
+        if (source instanceof OperatorExpression) {
+            if (source.operator == OperatorType.SUB && source.subExpressions.size == 1) {
+                source = source.resolveSubOperatorExpressionPrefix(sink, equation)
+            }
         }
         
         val wire = createWire(source, sink)
@@ -264,6 +273,19 @@ class Wiring {
         
         return wire
     }
+    
+    protected def Expression resolveSubOperatorExpressionPrefix(OperatorExpression source, Expression sink, Assignment equation) {
+        val subExpression = source.subExpressions.head
+        if (subExpression instanceof IntValue) {
+            subExpression.value = -subExpression.value
+            return subExpression
+        } else if (subExpression instanceof FloatValue) {
+            subExpression.value = -subExpression.value
+            return subExpression
+        }
+        
+        return source
+    }    
     
     /** Retrieve an existing wire from the index. */
     def protected Wire getExistingWire(Expression source, Expression target) {

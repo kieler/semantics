@@ -118,6 +118,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     static val PADDING_OUTPUT_RIGHT = 2
     
     protected static val PORT_IN_PREFIX = "in"
+    protected static val PORT0_IN_PREFIX = "in0"
     protected static val PORT1_IN_PREFIX = "in1"
     protected static val PORT_OUT_PREFIX = "out"
     protected static val INPUT_ID = "Input"
@@ -539,8 +540,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             case CONDITIONAL, 
             case FBY: figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
             
+            case SUB: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY else ARITHMETICAL_FIGURE_KEY  
             case ADD,
-            case SUB,
             case MULT,
             case DIV,
             case SHIFT_LEFT,
@@ -564,51 +565,51 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         val node = createExtensionObject.createKGTNode(createExtensionObject2, createExtensionObject3, figureId)
         
-            for (p : node.ports) {
-                val id = p.getId
-                if (id !== null) {
-                    if (id.startsWith(PORT_IN_PREFIX)) {
-                        if (figureObject instanceof OperatorExpression) {
-                            try {
-                                val n = Integer.parseInt(id.substring(2))
-                                if (n < figureObject.subExpressions.size) {
-                                    val exp = figureObject.subExpressions.get(n)
-                                    if (exp instanceof ValuedObjectReference) {
-                                        val v = exp.valuedObject
-                                        val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
-                                        node.addPort(v, s, p)
+        for (p : node.ports) {
+            val id = p.getId
+            if (id !== null) {
+                if (id.startsWith(PORT_IN_PREFIX)) {
+                    if (figureObject instanceof OperatorExpression) {
+                        try {
+                            val n = Integer.parseInt(id.substring(2))
+                            if (n < figureObject.subExpressions.size) {
+                                val exp = figureObject.subExpressions.get(n)
+                                if (exp instanceof ValuedObjectReference) {
+                                    val v = exp.valuedObject
+                                    val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
+                                    node.addPort(v, s, p)
+                                }
+                            }
+                        } catch(NumberFormatException e) {
+                            // abort at convert issues
+                        }    
+                        if (!port1Label.nullOrEmpty) {     
+                            if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
+                                if (id == PORT1_IN_PREFIX) {
+                                    val label = p.labels.head
+                                    if (label !== null) {
+                                        label.text = port1Label 
                                     }
                                 }
-                            } catch(NumberFormatException e) {
-                                // abort at convert issues
-                            }    
-                            if (!port1Label.nullOrEmpty) {     
-                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
-                                    if (id == PORT1_IN_PREFIX) {
-                                        val label = p.labels.head
-                                        if (label !== null) {
-                                            label.text = port1Label 
-                                        }
-                                    }
-                                } else {
-                                    if (id.startsWith(PORT_IN_PREFIX)) {
-                                        val label = p.labels.head
-                                        if (label !== null) {
-                                            label.text = ""
-                                        }
+                            } else {
+                                if (id.startsWith(PORT_IN_PREFIX)) {
+                                    val label = p.labels.head
+                                    if (label !== null) {
+                                        label.text = ""
                                     }
                                 }
                             }
-                        } else {
-                            createExtensionObject.addPort(id, p)
                         }
-                    } 
-                    else if (id.startsWith(PORT_OUT_PREFIX)) {
-                        createExtensionObject.addPort(PORT_OUT_PREFIX, p)
-                        println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
-                    }                   
-                }
+                    } else {
+                        createExtensionObject.addPort(id, p)
+                    }
+                } 
+                else if (id.startsWith(PORT_OUT_PREFIX)) {
+                    createExtensionObject.addPort(PORT_OUT_PREFIX, p)
+                    println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
+                }                   
             }
+        }
         
         return node
     }
