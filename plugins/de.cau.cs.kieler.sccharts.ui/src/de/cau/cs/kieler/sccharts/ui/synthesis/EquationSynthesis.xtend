@@ -85,6 +85,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption("Show Expression Port Labels", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption("Show Referenced Port Labels", true).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption("Outside Referenced Port Labels", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
         
 
     @Inject extension KRenderingExtensions
@@ -145,7 +149,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected val referenceNodes = <KNode> newHashSet
     
     override getDisplayedSynthesisOptions() {
-        val options = newArrayList(ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, SHOW_EXPRESSION_PORT_LABELS)
+        val options = newArrayList(ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, SHOW_EXPRESSION_PORT_LABELS,
+            SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE
+        )
         
         return options
     }   
@@ -456,8 +462,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         addLayoutParam(CoreOptions::PORT_SIDE, portSide)
                     }
                     setPortSize(2, 2)
-                    addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
-                    createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
+                    if (SHOW_REFERENCED_PORT_LABELS.booleanValue) {
+                        if (REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
+                            createLabel().configureOutsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
+                        } else {
+                            addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
+                            createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
+                        }
+                    }
                     node.ports += it
                 ]          
                 port.associateWith(v)              
