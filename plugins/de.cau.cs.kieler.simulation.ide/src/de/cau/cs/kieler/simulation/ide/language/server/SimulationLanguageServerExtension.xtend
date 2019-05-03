@@ -96,6 +96,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             // Set simulation mode, default mode is manual mode
             setSimulationType(simulationType)
             // Start a new start which starts the simulation to be able to wait for the updates
+            // TODO add try catch block
             new Thread([currentSimulation.start(true)]).start
             // Wait for the update function to write the initial data pool
             wait()
