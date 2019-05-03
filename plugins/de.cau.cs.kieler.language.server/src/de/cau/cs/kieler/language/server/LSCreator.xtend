@@ -94,7 +94,7 @@ class LSCreator {
         }
         val launcher = new Builder<LanguageClient>()
                 .setLocalServices(iLanguageServerExtensions)
-                .setRemoteInterface(LanguageClient)
+                .setRemoteInterface(KeithLanguageClient)
                 .setInput(in)
                 .setOutput(out)
                 .setExecutorService(threadPool)
@@ -104,6 +104,11 @@ class LSCreator {
                 .create();
         val client = launcher.remoteProxy
         ls.connect(client)
+        for (Object ext : iLanguageServerExtensions) {
+            if (ext instanceof ILanguageClientProvider) {
+                ext.languageClient = client
+            }
+        }
         val future = launcher.startListening
         if (socket) {
             // nothing special to handle
