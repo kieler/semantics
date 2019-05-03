@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kicool.ide.language.server
 import java.util.concurrent.CompletableFuture
 import org.eclipse.lsp4j.jsonrpc.services.JsonRequest
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
+import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 
 /**
  * Interface to the LSP extension commands
@@ -28,8 +29,8 @@ interface CommandExtension {
     /**
      * Compiles file given by uri with compilationsystem given by command.
      */
-    @JsonRequest('compile')
-    def CompletableFuture<CompilationResults> compile(String uri, String clientId, String command, boolean inplace);
+    @JsonNotification('compile')
+    def void compile(String uri, String clientId, String command, boolean inplace);
     
     /**
      * Cancels the current compilation by stopping the current compilation thread.
@@ -57,4 +58,7 @@ interface CommandExtension {
      */
     @JsonRequest('cancel-get-systems')
     def CompletableFuture<Boolean> cancelGetSystems();
+    
+    @JsonNotification('progress')
+    def void progress();
 }

@@ -21,22 +21,26 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.Snapshots
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import de.cau.cs.kieler.language.server.ILanguageClientProvider
+import de.cau.cs.kieler.language.server.KeithLanguageClient
+import java.net.URLDecoder
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
 import java.util.Map
+import java.util.concurrent.CompletableFuture
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.lsp4j.jsonrpc.validation.NonNull
+import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
-import java.net.URLDecoder
-import java.util.ArrayList
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -45,7 +49,7 @@ import java.util.ArrayList
  * 
  */
 @Singleton
-class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
 
@@ -103,6 +107,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     
     private var EObject model
     
+    public KeithLanguageClient client
+    
     override compile(String uri, String clientId, String command, boolean inplace) {
 
         this.snapshotMap.put(uri, new LinkedList)
@@ -113,16 +119,18 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         for (iResult : context.processorInstancesSequence) {
             convertImpl(iResult.environment, uri, iResult.name)
         }
-        val result = requestManager.runRead [ cancelIndicator |
-            new CompilationResults(this.snapshotMap.get(uri))
-        ]
-        result.thenRun [
+        var future = new CompletableFuture()
+        future.complete(void)
+        future.thenAccept([
+            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri)
+        ])
+        future.thenRun [
             didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
         ].exceptionally [ throwable |
             LOG.error('Error while running additional compilation effects.', throwable)
             return null
         ]
-        return result
+        return
     }
 
     /**
@@ -277,4 +285,22 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             true
         ]
     }
+    
+    override progress() {
+        var future = new CompletableFuture()
+        future.complete(void)
+        future.thenAccept([
+            client.progress(false)
+        ])
+        return 
+    }
+    
+    override setLanguageClient(LanguageClient client) {
+        this.client = client as KeithLanguageClient
+    }
+    
+    override getLanguageClient() {
+        return this.client
+    }
+    
 }
