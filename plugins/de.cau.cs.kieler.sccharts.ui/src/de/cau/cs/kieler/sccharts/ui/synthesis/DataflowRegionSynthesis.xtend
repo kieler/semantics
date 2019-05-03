@@ -37,6 +37,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 
 /**
  * @author ssm
@@ -142,7 +143,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             if (sLabel.length > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
-                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+//                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
         ]
 
         // Collapsed
@@ -150,8 +152,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
-            if (CIRCUIT.booleanValue)
-                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            if (!CIRCUIT.booleanValue)
+//                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
         ]
         
         node.setSelectionStyle
