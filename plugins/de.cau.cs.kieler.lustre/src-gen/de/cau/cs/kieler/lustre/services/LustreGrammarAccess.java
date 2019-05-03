@@ -3044,16 +3044,16 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//@Override
 		//NotExpression kexpressions::Expression:
-		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+		//	{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+		//{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression
+		//{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=NotExpression
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{OperatorExpression}
+		//{kexpressions::OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
 		//operator=NotOperator
@@ -4746,7 +4746,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//NotExpression kexpressions::Expression:
-	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+	//	{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
 	public NotExpressionElements getNotExpressionAccess() {
 		return pNotExpression;
 	}

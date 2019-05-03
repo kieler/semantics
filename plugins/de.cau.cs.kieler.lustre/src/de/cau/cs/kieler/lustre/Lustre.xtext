@@ -419,7 +419,7 @@ NorAtMostOneExpression returns kexpressions::Expression:
 // Exclude BitwiseNotExpression
 @Override 
 NotExpression returns kexpressions::Expression:
-    {OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
+    {kexpressions::OperatorExpression} operator=NotOperator subExpressions+=(NotExpression)
     | AtomicExpression
 ;
 
