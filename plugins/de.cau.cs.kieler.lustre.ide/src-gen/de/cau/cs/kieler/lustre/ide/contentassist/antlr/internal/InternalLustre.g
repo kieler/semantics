@@ -965,6 +965,31 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+// Entry rule entryRuleNotExpression
+entryRuleNotExpression
+:
+{ before(grammarAccess.getNotExpressionRule()); }
+	 ruleNotExpression
+{ after(grammarAccess.getNotExpressionRule()); } 
+	 EOF 
+;
+
+// Rule NotExpression
+ruleNotExpression 
+	@init {
+		int stackSize = keepStackSize();
+	}
+	:
+	(
+		{ before(grammarAccess.getNotExpressionAccess().getAlternatives()); }
+		(rule__NotExpression__Alternatives)
+		{ after(grammarAccess.getNotExpressionAccess().getAlternatives()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 // Entry rule entryRuleParams
 entryRuleParams
 :
@@ -1984,31 +2009,6 @@ ruleBitwiseNotExpression
 		{ before(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
 		(rule__BitwiseNotExpression__Alternatives)
 		{ after(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-// Entry rule entryRuleNotExpression
-entryRuleNotExpression
-:
-{ before(grammarAccess.getNotExpressionRule()); }
-	 ruleNotExpression
-{ after(grammarAccess.getNotExpressionRule()); } 
-	 EOF 
-;
-
-// Rule NotExpression
-ruleNotExpression 
-	@init {
-		int stackSize = keepStackSize();
-	}
-	:
-	(
-		{ before(grammarAccess.getNotExpressionAccess().getAlternatives()); }
-		(rule__NotExpression__Alternatives)
-		{ after(grammarAccess.getNotExpressionAccess().getAlternatives()); }
 	)
 ;
 finally {
@@ -4614,6 +4614,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__NotExpression__Alternatives
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getNotExpressionAccess().getGroup_0()); }
+		(rule__NotExpression__Group_0__0)
+		{ after(grammarAccess.getNotExpressionAccess().getGroup_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
+		ruleAtomicExpression
+		{ after(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__Params__Alternatives_1
 	@init {
 		int stackSize = keepStackSize();
@@ -5139,27 +5160,6 @@ rule__BitwiseNotExpression__Alternatives
 		{ before(grammarAccess.getBitwiseNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
 		ruleAtomicExpression
 		{ after(grammarAccess.getBitwiseNotExpressionAccess().getAtomicExpressionParserRuleCall_1()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Alternatives
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getNotExpressionAccess().getGroup_0()); }
-		(rule__NotExpression__Group_0__0)
-		{ after(grammarAccess.getNotExpressionAccess().getGroup_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1()); }
-		ruleBitwiseNotExpression
-		{ after(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1()); }
 	)
 ;
 finally {
@@ -15842,6 +15842,87 @@ finally {
 }
 
 
+rule__NotExpression__Group_0__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__NotExpression__Group_0__0__Impl
+	rule__NotExpression__Group_0__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__Group_0__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0()); }
+	()
+	{ after(grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__Group_0__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__NotExpression__Group_0__1__Impl
+	rule__NotExpression__Group_0__2
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__Group_0__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1()); }
+	(rule__NotExpression__OperatorAssignment_0_1)
+	{ after(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__Group_0__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__NotExpression__Group_0__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__Group_0__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
+	(rule__NotExpression__SubExpressionsAssignment_0_2)
+	{ after(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
 rule__Params__Group__0
 	@init {
 		int stackSize = keepStackSize();
@@ -24726,87 +24807,6 @@ finally {
 }
 
 
-rule__NotExpression__Group_0__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__NotExpression__Group_0__0__Impl
-	rule__NotExpression__Group_0__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Group_0__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0()); }
-	()
-	{ after(grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Group_0__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__NotExpression__Group_0__1__Impl
-	rule__NotExpression__Group_0__2
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Group_0__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1()); }
-	(rule__NotExpression__OperatorAssignment_0_1)
-	{ after(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Group_0__2
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__NotExpression__Group_0__2__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__Group_0__2__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
-	(rule__NotExpression__SubExpressionsAssignment_0_2)
-	{ after(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
 rule__ShiftLeftRightExpression__Group__0
 	@init {
 		int stackSize = keepStackSize();
@@ -33577,6 +33577,36 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__NotExpression__OperatorAssignment_0_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); }
+		ruleNotOperator
+		{ after(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__NotExpression__SubExpressionsAssignment_0_2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); }
+		ruleNotExpression
+		{ after(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__Params__ParameterAssignment_1_0_1_0
 	@init {
 		int stackSize = keepStackSize();
@@ -36203,36 +36233,6 @@ rule__BitwiseNotExpression__SubExpressionsAssignment_0_2
 		{ before(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
 		ruleBitwiseNotExpression
 		{ after(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsBitwiseNotExpressionParserRuleCall_0_2_0()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__OperatorAssignment_0_1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); }
-		ruleNotOperator
-		{ after(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__NotExpression__SubExpressionsAssignment_0_2
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); }
-		ruleNotExpression
-		{ after(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0()); }
 	)
 ;
 finally {

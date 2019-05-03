@@ -62,6 +62,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getAlternatives_1(), "rule__NorAtMostOneExpression__Alternatives_1");
+			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 			builder.put(grammarAccess.getParamsAccess().getAlternatives_1(), "rule__Params__Alternatives_1");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives(), "rule__StaticParam__Alternatives");
 			builder.put(grammarAccess.getStaticParamAccess().getAlternatives_2_1(), "rule__StaticParam__Alternatives_2_1");
@@ -84,7 +85,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 			builder.put(grammarAccess.getNotOrValuedExpressionAccess().getAlternatives(), "rule__NotOrValuedExpression__Alternatives");
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
-			builder.put(grammarAccess.getNotExpressionAccess().getAlternatives(), "rule__NotExpression__Alternatives");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getAlternatives_1(), "rule__ShiftExpressions__Alternatives_1");
 			builder.put(grammarAccess.getShiftLeftRightExpressionAccess().getAlternatives_1(), "rule__ShiftLeftRightExpression__Alternatives_1");
 			builder.put(grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getAlternatives_1(), "rule__ShiftLeftRightUnsignedExpression__Alternatives_1");
@@ -239,6 +239,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup(), "rule__NorAtMostOneExpression__Group__0");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup_4(), "rule__NorAtMostOneExpression__Group_4__0");
+			builder.put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup(), "rule__Params__Group__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0(), "rule__Params__Group_1_0__0");
 			builder.put(grammarAccess.getParamsAccess().getGroup_1_0_1(), "rule__Params__Group_1_0_1__0");
@@ -344,7 +345,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperationAccess().getGroup(), "rule__CompareOperation__Group__0");
 			builder.put(grammarAccess.getCompareOperationAccess().getGroup_1(), "rule__CompareOperation__Group_1__0");
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getGroup_0(), "rule__BitwiseNotExpression__Group_0__0");
-			builder.put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getGroup(), "rule__ShiftExpressions__Group__0");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getGroup_1_0(), "rule__ShiftExpressions__Group_1_0__0");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getGroup_1_0_1(), "rule__ShiftExpressions__Group_1_0_1__0");
@@ -628,6 +628,8 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getOperatorAssignment_1_1(), "rule__NorAtMostOneExpression__OperatorAssignment_1_1");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_3(), "rule__NorAtMostOneExpression__SubExpressionsAssignment_3");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getSubExpressionsAssignment_4_1(), "rule__NorAtMostOneExpression__SubExpressionsAssignment_4_1");
+			builder.put(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1(), "rule__NotExpression__OperatorAssignment_0_1");
+			builder.put(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NotExpression__SubExpressionsAssignment_0_2");
 			builder.put(grammarAccess.getParamsAccess().getParameterAssignment_1_0_1_0(), "rule__Params__ParameterAssignment_1_0_1_0");
 			builder.put(grammarAccess.getParamsAccess().getParameterAssignment_1_0_1_1_1(), "rule__Params__ParameterAssignment_1_0_1_1_1");
 			builder.put(grammarAccess.getStaticParamAccess().getNameAssignment_0_1(), "rule__StaticParam__NameAssignment_0_1");
@@ -800,8 +802,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperationAccess().getSubExpressionsAssignment_1_2(), "rule__CompareOperation__SubExpressionsAssignment_1_2");
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getOperatorAssignment_0_1(), "rule__BitwiseNotExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__BitwiseNotExpression__SubExpressionsAssignment_0_2");
-			builder.put(grammarAccess.getNotExpressionAccess().getOperatorAssignment_0_1(), "rule__NotExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getNotExpressionAccess().getSubExpressionsAssignment_0_2(), "rule__NotExpression__SubExpressionsAssignment_0_2");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getOperatorAssignment_1_0_1_0(), "rule__ShiftExpressions__OperatorAssignment_1_0_1_0");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getSubExpressionsAssignment_1_0_1_1(), "rule__ShiftExpressions__SubExpressionsAssignment_1_0_1_1");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getSubExpressionsAssignment_1_0_2_1(), "rule__ShiftExpressions__SubExpressionsAssignment_1_0_2_1");

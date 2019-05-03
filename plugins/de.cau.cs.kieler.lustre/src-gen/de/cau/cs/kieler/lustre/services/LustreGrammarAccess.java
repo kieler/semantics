@@ -3031,6 +3031,46 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//')'
 		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
+	public class NotExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.NotExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cOperatorNotOperatorEnumRuleCall_0_1_0 = (RuleCall)cOperatorAssignment_0_1.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cSubExpressionsNotExpressionParserRuleCall_0_2_0 = (RuleCall)cSubExpressionsAssignment_0_2.eContents().get(0);
+		private final RuleCall cAtomicExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//NotExpression kexpressions::Expression:
+		//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{OperatorExpression} operator=NotOperator subExpressions+=NotExpression
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+		
+		//operator=NotOperator
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+		
+		//NotOperator
+		public RuleCall getOperatorNotOperatorEnumRuleCall_0_1_0() { return cOperatorNotOperatorEnumRuleCall_0_1_0; }
+		
+		//subExpressions+=NotExpression
+		public Assignment getSubExpressionsAssignment_0_2() { return cSubExpressionsAssignment_0_2; }
+		
+		//NotExpression
+		public RuleCall getSubExpressionsNotExpressionParserRuleCall_0_2_0() { return cSubExpressionsNotExpressionParserRuleCall_0_2_0; }
+		
+		//AtomicExpression
+		public RuleCall getAtomicExpressionParserRuleCall_1() { return cAtomicExpressionParserRuleCall_1; }
+	}
 	public class ParamsElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Params");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -4052,6 +4092,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final ValuedExpressionElements pValuedExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final NorAtMostOneExpressionElements pNorAtMostOneExpression;
+	private final NotExpressionElements pNotExpression;
 	private final AssignOperatorElements eAssignOperator;
 	private final CompareOperatorElements eCompareOperator;
 	private final LogicalOrOperatorElements eLogicalOrOperator;
@@ -4143,6 +4184,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pValuedExpression = new ValuedExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pNorAtMostOneExpression = new NorAtMostOneExpressionElements();
+		this.pNotExpression = new NotExpressionElements();
 		this.eAssignOperator = new AssignOperatorElements();
 		this.eCompareOperator = new CompareOperatorElements();
 		this.eLogicalOrOperator = new LogicalOrOperatorElements();
@@ -4700,6 +4742,17 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getNorAtMostOneExpressionRule() {
 		return getNorAtMostOneExpressionAccess().getRule();
+	}
+	
+	//@Override
+	//NotExpression kexpressions::Expression:
+	//	{OperatorExpression} operator=NotOperator subExpressions+=NotExpression | AtomicExpression;
+	public NotExpressionElements getNotExpressionAccess() {
+		return pNotExpression;
+	}
+	
+	public ParserRule getNotExpressionRule() {
+		return getNotExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -5574,7 +5627,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// ORDER IS IMPORTANT!
 	//NotOrValuedExpression Expression:
 	//	super::ValuedExpression
-	//	| NotExpression;
+	//	| super::NotExpression;
 	public KExpressionsGrammarAccess.NotOrValuedExpressionElements getNotOrValuedExpressionAccess() {
 		return gaKExpressions.getNotOrValuedExpressionAccess();
 	}
@@ -5591,20 +5644,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getBitwiseNotExpressionRule() {
 		return getBitwiseNotExpressionAccess().getRule();
-	}
-	
-	//// Not Expression Rule
-	//// Example: !A, !false, !(A or B)
-	//// At the latter we need the parents to indicate the right binding.
-	//// A 'not expression' can also redirect to an 'atomic expression' to maintain the rule chain.
-	//NotExpression Expression:
-	//	{OperatorExpression} operator=super::NotOperator subExpressions+=NotExpression | BitwiseNotExpression;
-	public KExpressionsGrammarAccess.NotExpressionElements getNotExpressionAccess() {
-		return gaKExpressions.getNotExpressionAccess();
-	}
-	
-	public ParserRule getNotExpressionRule() {
-		return getNotExpressionAccess().getRule();
 	}
 	
 	//ShiftExpressions Expression:

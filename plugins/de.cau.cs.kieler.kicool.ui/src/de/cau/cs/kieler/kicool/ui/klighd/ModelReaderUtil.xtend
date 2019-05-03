@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2019 by
@@ -19,18 +19,30 @@ import org.eclipse.ui.editors.text.TextEditor
 import org.eclipse.xtext.ui.editor.XtextEditor
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import org.eclipse.ui.IFileEditorInput
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 
 /**
  * @author als
  */
 class ModelReaderUtil {
-    
+
+    static val additionalReaders = KielerServiceLoader.load(IModelReader).toList
+
     static def Object readModelFromEditor(IEditorPart editor) {
         if (editor instanceof XtextEditor) { // Get model from XTextEditor
             return EditorUtil.readModelFromXtextEditor(editor as XtextEditor)
         } else if (editor instanceof IEditingDomainProvider) { // Get model from EMF TreeEditor
             return EditorUtil.readModelFromEMFEditor(editor as IEditingDomainProvider)
-        } else if (editor instanceof TextEditor) { // Get text and wrap into code container
+        } else {
+            for (reader : additionalReaders) {
+                val model = reader.readModel(editor)
+                if (model !== null) {
+                    return model
+                }
+            }
+        }
+    
+        if (editor instanceof TextEditor) { // Get text and wrap into code container
             val input = editor.getEditorInput()
             val doc = editor.getDocumentProvider().getDocument(input)
             return new CodeContainer() => [
@@ -40,9 +52,8 @@ class ModelReaderUtil {
                     add("unkown", doc.get())
                 }
             ]
-        } else {
-            return null
         }
+        return null
     }
 
 }

@@ -4995,6 +4995,87 @@ ruleNorAtMostOneExpression returns [EObject current=null]
 	)
 ;
 
+// Entry rule entryRuleNotExpression
+entryRuleNotExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getNotExpressionRule()); }
+	iv_ruleNotExpression=ruleNotExpression
+	{ $current=$iv_ruleNotExpression.current; }
+	EOF;
+
+// Rule NotExpression
+ruleNotExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					/* */
+				}
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0());
+					}
+					lv_operator_1_0=ruleNotOperator
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getNotExpressionRule());
+						}
+						set(
+							$current,
+							"operator",
+							lv_operator_1_0,
+							"de.cau.cs.kieler.lustre.Lustre.NotOperator");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0());
+					}
+					lv_subExpressions_2_0=ruleNotExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getNotExpressionRule());
+						}
+						add(
+							$current,
+							"subExpressions",
+							lv_subExpressions_2_0,
+							"de.cau.cs.kieler.lustre.Lustre.NotExpression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getNotExpressionAccess().getAtomicExpressionParserRuleCall_1());
+		}
+		this_AtomicExpression_3=ruleAtomicExpression
+		{
+			$current = $this_AtomicExpression_3.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
 // Entry rule entryRuleParams
 entryRuleParams returns [EObject current=null]:
 	{ newCompositeNode(grammarAccess.getParamsRule()); }
@@ -9827,87 +9908,6 @@ ruleBitwiseNotExpression returns [EObject current=null]
 		this_AtomicExpression_3=ruleAtomicExpression
 		{
 			$current = $this_AtomicExpression_3.current;
-			afterParserOrEnumRuleCall();
-		}
-	)
-;
-
-// Entry rule entryRuleNotExpression
-entryRuleNotExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getNotExpressionRule()); }
-	iv_ruleNotExpression=ruleNotExpression
-	{ $current=$iv_ruleNotExpression.current; }
-	EOF;
-
-// Rule NotExpression
-ruleNotExpression returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				{
-					/* */
-				}
-				{
-					$current = forceCreateModelElement(
-						grammarAccess.getNotExpressionAccess().getOperatorExpressionAction_0_0(),
-						$current);
-				}
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getNotExpressionAccess().getOperatorNotOperatorEnumRuleCall_0_1_0());
-					}
-					lv_operator_1_0=ruleNotOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getNotExpressionRule());
-						}
-						set(
-							$current,
-							"operator",
-							lv_operator_1_0,
-							"de.cau.cs.kieler.lustre.Lustre.NotOperator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getNotExpressionAccess().getSubExpressionsNotExpressionParserRuleCall_0_2_0());
-					}
-					lv_subExpressions_2_0=ruleNotExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getNotExpressionRule());
-						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_2_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.NotExpression");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getNotExpressionAccess().getBitwiseNotExpressionParserRuleCall_1());
-		}
-		this_BitwiseNotExpression_3=ruleBitwiseNotExpression
-		{
-			$current = $this_BitwiseNotExpression_3.current;
 			afterParserOrEnumRuleCall();
 		}
 	)

@@ -158,10 +158,10 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 for (SchedulingBlock sb : bb.schedulingBlocks) {
                     val nodes = sb.nodes;
                     sb.trace(nodes);
-                    sb.guards.head?.trace(nodes);
-                    sb.guards.head?.valuedObject?.trace(nodes);
+//                    sb.guards.head?.trace(nodes);
+//                    sb.guards.head?.valuedObject?.trace(nodes);
                     bb.trace(nodes);
-                    bb.predecessors.trace(nodes);
+//                    bb.predecessors.trace(nodes);
                 }
             }
         }

@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency;
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency;
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType;
 import de.cau.cs.kieler.kexpressions.keffects.Dependency;
@@ -127,6 +128,13 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass controlDependencyEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum assignOperatorEEnum = null;
 
     /**
@@ -206,6 +214,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEffect() {
         return effectEClass;
     }
@@ -215,6 +224,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAssignment() {
         return assignmentEClass;
     }
@@ -224,6 +234,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAssignment_Reference() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(0);
     }
@@ -233,6 +244,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAssignment_Expression() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(1);
     }
@@ -242,6 +254,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAssignment_Operator() {
         return (EAttribute)assignmentEClass.getEStructuralFeatures().get(2);
     }
@@ -251,6 +264,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAssignment_SubReference() {
         return (EReference)assignmentEClass.getEStructuralFeatures().get(3);
     }
@@ -260,6 +274,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEmission() {
         return emissionEClass;
     }
@@ -269,6 +284,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEmission_Reference() {
         return (EReference)emissionEClass.getEStructuralFeatures().get(0);
     }
@@ -278,6 +294,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEmission_NewValue() {
         return (EReference)emissionEClass.getEStructuralFeatures().get(1);
     }
@@ -287,6 +304,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getHostcodeEffect() {
         return hostcodeEffectEClass;
     }
@@ -296,6 +314,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceCallEffect() {
         return referenceCallEffectEClass;
     }
@@ -305,6 +324,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFunctionCallEffect() {
         return functionCallEffectEClass;
     }
@@ -314,6 +334,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPrintCallEffect() {
         return printCallEffectEClass;
     }
@@ -323,6 +344,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRandomizeCallEffect() {
         return randomizeCallEffectEClass;
     }
@@ -332,6 +354,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLinkable() {
         return linkableEClass;
     }
@@ -341,6 +364,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLinkable_OutgoingLinks() {
         return (EReference)linkableEClass.getEStructuralFeatures().get(0);
     }
@@ -350,6 +374,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLinkable_IncomingLinks() {
         return (EReference)linkableEClass.getEStructuralFeatures().get(1);
     }
@@ -359,6 +384,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLink() {
         return linkEClass;
     }
@@ -368,6 +394,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLink_Target() {
         return (EReference)linkEClass.getEStructuralFeatures().get(0);
     }
@@ -377,6 +404,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getLink_Tag() {
         return (EAttribute)linkEClass.getEStructuralFeatures().get(1);
     }
@@ -386,6 +414,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLink_Reference() {
         return (EReference)linkEClass.getEStructuralFeatures().get(2);
     }
@@ -395,6 +424,27 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EReference getLink_OriginalSource() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLink_OriginalTarget() {
+        return (EReference)linkEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getDependency() {
         return dependencyEClass;
     }
@@ -404,6 +454,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDataDependency() {
         return dataDependencyEClass;
     }
@@ -413,6 +464,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataDependency_Type() {
         return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(0);
     }
@@ -422,6 +474,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataDependency_Concurrent() {
         return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(1);
     }
@@ -431,6 +484,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDataDependency_Confluent() {
         return (EAttribute)dataDependencyEClass.getEStructuralFeatures().get(2);
     }
@@ -440,6 +494,17 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getControlDependency() {
+        return controlDependencyEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getAssignOperator() {
         return assignOperatorEEnum;
     }
@@ -449,6 +514,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getDataDependencyType() {
         return dataDependencyTypeEEnum;
     }
@@ -458,6 +524,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KEffectsFactory getKEffectsFactory() {
         return (KEffectsFactory)getEFactoryInstance();
     }
@@ -511,6 +578,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEReference(linkEClass, LINK__TARGET);
         createEAttribute(linkEClass, LINK__TAG);
         createEReference(linkEClass, LINK__REFERENCE);
+        createEReference(linkEClass, LINK__ORIGINAL_SOURCE);
+        createEReference(linkEClass, LINK__ORIGINAL_TARGET);
 
         dependencyEClass = createEClass(DEPENDENCY);
 
@@ -518,6 +587,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__TYPE);
         createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONCURRENT);
         createEAttribute(dataDependencyEClass, DATA_DEPENDENCY__CONFLUENT);
+
+        controlDependencyEClass = createEClass(CONTROL_DEPENDENCY);
 
         // Create enums
         assignOperatorEEnum = createEEnum(ASSIGN_OPERATOR);
@@ -574,6 +645,7 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         linkEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
         dependencyEClass.getESuperTypes().add(this.getLink());
         dataDependencyEClass.getESuperTypes().add(this.getDependency());
+        controlDependencyEClass.getESuperTypes().add(this.getDependency());
 
         // Initialize classes and features; add operations and parameters
         initEClass(effectEClass, Effect.class, "Effect", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -606,6 +678,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEReference(getLink_Target(), this.getLinkable(), this.getLinkable_IncomingLinks(), "target", null, 1, 1, Link.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getLink_Tag(), ecorePackage.getEString(), "tag", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getLink_Reference(), ecorePackage.getEObject(), null, "reference", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLink_OriginalSource(), ecorePackage.getEObject(), null, "originalSource", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLink_OriginalTarget(), ecorePackage.getEObject(), null, "originalTarget", null, 0, 1, Link.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dependencyEClass, Dependency.class, "Dependency", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -613,6 +687,8 @@ public class KEffectsPackageImpl extends EPackageImpl implements KEffectsPackage
         initEAttribute(getDataDependency_Type(), this.getDataDependencyType(), "type", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataDependency_Concurrent(), ecorePackage.getEBoolean(), "concurrent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataDependency_Confluent(), ecorePackage.getEBoolean(), "confluent", null, 0, 1, DataDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(controlDependencyEClass, ControlDependency.class, "ControlDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(assignOperatorEEnum, AssignOperator.class, "AssignOperator");

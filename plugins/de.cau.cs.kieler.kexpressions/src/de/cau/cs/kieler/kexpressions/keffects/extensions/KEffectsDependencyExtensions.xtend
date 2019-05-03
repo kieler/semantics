@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Value
 import java.util.EnumSet
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 
 /** 
  * Adapted from SCGDependencyExtensions.
@@ -58,6 +59,13 @@ class KEffectsDependencyExtensions {
     		source.outgoingLinks += it
     		it.target = target
     	]
+    }
+    
+    def ControlDependency createControlDependency(Linkable source, Linkable target) {
+        KEffectsFactory::eINSTANCE.createControlDependency => [ 
+            source.outgoingLinks += it
+            it.target = target
+        ]
     }
 
     def DataDependency checkAndSetConfluence(DataDependency dependency) {

@@ -15,6 +15,7 @@ import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.services.KEffectsGrammarAccess
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 
 class KEffectsFormatter extends KExpressionsFormatter {
 	
@@ -34,15 +35,13 @@ class KEffectsFormatter extends KExpressionsFormatter {
 			format(annotations, document);
 		}
 		
-//		assignment.regionFor.keywords(assignmentAccess.leftSquareBracketKeyword_2_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-//        assignment.regionFor.keywords(assignmentAccess.rightSquareBracketKeyword_2_2).forEach[prepend[ noSpace ]]
+		if(assignment.operator == AssignOperator.POSTFIXADD || assignment.operator == AssignOperator.POSTFIXSUB) {
+            assignment.regionFor.ruleCall(postfixEffectAccess.operatorPostfixOperatorEnumRuleCall_2_0)?.prepend[ noSpace ]
+        }
 		
-//		for (Expression indices : assignment.getIndices()) {
-//			format(indices, document);
-//		}
-		
-		format(assignment.getExpression(), document);
-		format(assignment.getSubReference(), document);
+		format(assignment.reference, document)
+		format(assignment.getExpression(), document)
+		format(assignment.getSubReference(), document)
 	}
 
 	def dispatch void format(HostcodeEffect hostcodeeffect, extension IFormattableDocument document) {

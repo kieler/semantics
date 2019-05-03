@@ -176,7 +176,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('(' ('('* '(')*)?
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -227,12 +226,10 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('('* '(')*
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) '(' (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) '(' (ambiguity) operator=ConditionalOperator
 	 *     (rule start) '(' (ambiguity) operator=NotOperator
 	 *     (rule start) '(' (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
@@ -247,7 +244,6 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     ('('* '(')+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=BitwiseNotOperator
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation

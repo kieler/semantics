@@ -73,6 +73,12 @@
       <Processor
             class="de.cau.cs.kieler.kicool.processors.Snapshot">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST">
+      </Processor>
    </extension>
    
 </plugin>

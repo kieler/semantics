@@ -124,6 +124,10 @@
     <genClasses ecoreClass="Lustre.ecore#//Assertion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//Assertion/expr"/>
     </genClasses>
+    <genClasses ecoreClass="Lustre.ecore#//OperatorExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//OperatorExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Lustre.ecore#//OperatorExpression/subExpressions"/>
+    </genClasses>
     <genClasses ecoreClass="Lustre.ecore#//LustreValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Lustre.ecore#//LustreValuedObject/type"/>
     </genClasses>

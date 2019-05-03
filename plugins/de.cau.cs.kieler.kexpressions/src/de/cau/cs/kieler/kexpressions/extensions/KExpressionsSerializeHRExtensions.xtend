@@ -121,9 +121,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		}
 		
 		if (expression.eContainer !== null && expression.eContainer instanceof OperatorExpression) {
-			val myPrecedence = expression.operator.precedence
-			val parentPrecedence = (expression.eContainer as OperatorExpression).operator.precedence
-			if (myPrecedence > parentPrecedence) {
+			val parent = expression.eContainer as OperatorExpression
+			if (expression.requiresParenthesis(parent)) {
 				return "(" + result + ")"
 			} else {
 				return result
@@ -131,6 +130,35 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		}
 
 		return result
+	}
+	
+	static val ALWAYS_OMIT_PARENTHESIS = newHashSet(OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND, OperatorType.NOT, OperatorType.ADD, OperatorType.SUB, OperatorType.MULT, OperatorType.BITWISE_AND, OperatorType.BITWISE_OR, OperatorType.BITWISE_XOR, OperatorType.BITWISE_NOT )
+	protected def boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
+	    val myPrecedence = expression.operator.precedence
+        val parentPrecedence = parent.operator.precedence
+        
+        if (myPrecedence > parentPrecedence) {
+            return true
+        }
+        // Same precedence is not always associative, such as div! KISEMA-1394
+        if (myPrecedence == parentPrecedence) {
+            val position = parent.subExpressions.indexOf(expression)
+            if (position == 0) { // redundant left associativity
+                return false
+            }
+            // This will ignore user forces right associativity
+            // TODO discuss if we really want this behavior
+            if (expression.operator == parent.operator && ALWAYS_OMIT_PARENTHESIS.contains(expression.operator)) {
+                return false
+            }
+            // This will ignore if user forces right associativity with + and -
+            // TODO discuss if we really want this behavior
+            if (expression.operator == OperatorType.ADD && parent.operator == OperatorType.SUB || expression.operator == OperatorType.SUB && parent.operator == OperatorType.ADD) {
+                return false
+            }
+            return true
+        }
+        return false
 	}
 	
 	protected def int precedence(OperatorType operatorType) {

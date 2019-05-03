@@ -285,7 +285,7 @@ public class PredecessorImpl extends MinimalEObjectImpl.Container implements Pre
 	public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (branchType: ");
         result.append(branchType);
         result.append(')');

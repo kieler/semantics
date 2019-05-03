@@ -33,7 +33,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
 import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
-import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 

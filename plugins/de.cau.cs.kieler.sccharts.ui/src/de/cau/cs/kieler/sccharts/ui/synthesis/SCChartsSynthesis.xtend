@@ -39,6 +39,9 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.alg.force.options.StressOptions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -92,7 +95,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS)
+        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS, SHOW_CAUSAL_DATAFLOW)
 
         // Adaptive Zoom
         options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
@@ -110,8 +113,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         return options.toList
     }
 
-    override transform(SCCharts scc) {
+    override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
+        
+        val scc = 
+            if (SHOW_CAUSAL_DATAFLOW.booleanValue) {
+                val compilationContext = Compile.createCompilationContext(sccharts, 
+                    #[ "de.cau.cs.kieler.sccharts.processors.controlDependencies" ]
+                )
+                compilationContext.compile
+//                val originalContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+//                originalContext.result.setProperty(RegionDependencies.REGION_DEPENDENCIES, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES))
+//                originalContext.result.setProperty(RegionDependencies.REGION_LCAF_MAP, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_LCAF_MAP))
+                this.usedContext.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
+                compilationContext.result.model as SCCharts
+            } else sccharts
         
         val rootNode = createNode
                 
