@@ -77,18 +77,20 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
                 else if (declaration instanceof ReferenceDeclaration) {
                     val myModule = parent as CCodeGeneratorModule
                     val module = codeGeneratorModuleMap.get(declaration.reference) as CCodeGeneratorModule
-                    code.append(indentation)
-                    code.append(module.struct.name)
-                    code.append(" ")
-                    code.append(valuedObject.name)
-                    code.append(";\n")
-                    
-                    myModule.reset.code.append(indentation)
-                    myModule.reset.code.append(module.reset.name)
-                    myModule.reset.code.append("(&")
-                    myModule.reset.code.append(getVariableName).append(separator)
-                    myModule.reset.code.append(valuedObject.name)
+                    if (module !== null) {
+                        code.append(indentation)
+                        code.append(module.struct.name)
+                        code.append(" ")
+                        code.append(valuedObject.name)
+                        code.append(";\n")
+                        
+                        myModule.reset.code.append(indentation)
+                        myModule.reset.code.append(module.reset.name)
+                        myModule.reset.code.append("(&")
+                        myModule.reset.code.append(getVariableName).append(separator)
+                        myModule.reset.code.append(valuedObject.name)
                     myModule.reset.code.append(");\n")
+                    }
                 }
             }
         }
