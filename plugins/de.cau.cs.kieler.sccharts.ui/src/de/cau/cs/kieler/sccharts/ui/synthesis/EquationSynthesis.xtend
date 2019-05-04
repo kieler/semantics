@@ -692,10 +692,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 parent.children += child
                 
                 child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
-                child.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
-                child.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
-                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d))
-                child.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
+//                child.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+//                child.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+//                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d))
+//                child.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
+                child.data.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach[
+                    placementData = null
+                ]
                 
                 val inputNames = <String, KNode> newHashMap
                 for (inputNode : child.children.filter(KNode).filter[ getProperty(INPUT_FLAG) ]) {
@@ -712,7 +715,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 for (port : node.ports.toList.reverseView) {
                     val portName = port.labels.head.text
                     val portSide = port.portSide
-
+                    
                     if ((portSide != PortSide.EAST && inputNames.containsKey(portName)) || 
                         (portSide == PortSide.EAST && outputNames.containsKey(portName))
                     ) {
