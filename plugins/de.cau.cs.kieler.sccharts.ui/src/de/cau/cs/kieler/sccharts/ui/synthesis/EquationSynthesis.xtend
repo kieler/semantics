@@ -61,10 +61,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import de.cau.cs.kieler.kexpressions.Value
 import org.eclipse.elk.core.options.Alignment
-import org.eclipse.elk.alg.layered.options.LayeringStrategy
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 
 /**
  * @author ssm
@@ -139,7 +136,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         UNARY_FIGURE_KEY -> 'OperatorExpressionUnary.kgt',
         ARITHMETICAL_FIGURE_KEY -> 'OperatorExpressionArithmetical.kgt',
         'OperatorExpressionCONDITIONAL' -> 'OperatorExpressionCONDITIONAL.kgt',
-        'OperatorExpressionFBY' -> 'OperatorExpressionFBY.kgt',
+        'OperatorExpressionINIT' -> 'OperatorExpressionINIT.kgt',
         'OperatorExpressionPRE' -> 'OperatorExpressionPRE.kgt',
         'Input' -> 'Input.kgt',
         'Output' -> 'Output.kgt',
@@ -199,7 +196,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 
                 if (wire.externalSourceReferenceCounter > 0) {
                     node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY
+                        wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY, ""
                     )                        
                 } else {
                     node = node.createReferenceNode(wire.semanticSource, wire.externalSourceReferenceCounter, 
@@ -210,14 +207,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             } else {
                 var text = wire.source.serializeHR.toString
                 if (wire.source instanceof OperatorExpression) {
+                    text = wire.semanticSource.asOperatorExpression.operator.toString
+                    if (wire.semanticSource.asOperatorExpression.operator == OperatorType.CONDITIONAL) {
+                        text = ""
+                    }
                     node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, wire.source
+                        wire.sourceIsEquationTarget, wire.source, text
                     )
                     node.associateWith(wire.semanticSource)
-                    text = wire.semanticSource.asOperatorExpression.operator.toString
-                    if (wire.semanticSource.asOperatorExpression.operator != OperatorType.CONDITIONAL) {
-                        node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
-                    }
                 } else {
                     node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter,
                         wire.sourceIsEquationTarget,  
@@ -526,10 +523,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
     
     protected def KNode createKGTNodeFromObject(Object createExtensionObject, Object createExtensionObject2, 
-        Object createExtensionObject3, Object figureObject
+        Object createExtensionObject3, Object figureObject, String labelText
     ) {
         var figureId = DEFAULT_FIGURE_KEY
         var port1Label = null as String
+        var text = labelText
         
         if (figureObject instanceof OperatorExpression) {
             switch(figureObject.operator) {
@@ -540,7 +538,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             case NOT: figureId = UNARY_FIGURE_KEY 
             
             case CONDITIONAL, 
-            case FBY: figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
+            case INIT: {
+                    figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
+                    text = ""
+                }
             
             case SUB: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY else ARITHMETICAL_FIGURE_KEY  
             case ADD,
@@ -611,6 +612,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
                 }                   
             }
+        }
+        
+        if (!text.nullOrEmpty) {
+            node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
         }
         
         return node

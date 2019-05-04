@@ -8,6 +8,27 @@ knode operator {
         styles: lineStyle = solid
               foreground = 190r, 190g, 190b 
             background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
+            
+      kpolyline{
+        gridData:
+          topLeftAnchor=left 10%, top 10%
+          bottomRightAnchor=right 13%, bottom 10%
+        styles: lineWidth = 1
+                foreground = 0r, 0g, 0b
+        points: right 90%,top 50%;
+                right 10%,top 50%
+      }            
+      kpolyline{
+        gridData:
+          topLeftAnchor=left 10%, top 10%
+          bottomRightAnchor=right 13%, bottom 10%
+        styles: lineWidth = 1
+                foreground = 0r, 0g, 0b
+        points: right 40%,top 35%;
+                right 10%,top 50%;
+                right 40%,top 65%
+      }            
+            
   }
 
   kport in1 {
