@@ -140,6 +140,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         ARITHMETICAL_FIGURE_KEY -> 'OperatorExpressionArithmetical.kgt',
         'OperatorExpressionCONDITIONAL' -> 'OperatorExpressionCONDITIONAL.kgt',
         'OperatorExpressionFBY' -> 'OperatorExpressionFBY.kgt',
+        'OperatorExpressionPRE' -> 'OperatorExpressionPRE.kgt',
         'Input' -> 'Input.kgt',
         'Output' -> 'Output.kgt',
         'InputOutput' -> 'InputOutput.kgt',
@@ -532,7 +533,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (figureObject instanceof OperatorExpression) {
             switch(figureObject.operator) {
-            case PRE,
+            case PRE: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY 
+                else DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
             case VAL,
             case NE,
             case NOT: figureId = UNARY_FIGURE_KEY 
