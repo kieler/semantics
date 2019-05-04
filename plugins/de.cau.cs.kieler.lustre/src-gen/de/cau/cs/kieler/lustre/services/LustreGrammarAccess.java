@@ -2341,7 +2341,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSubExpressionsAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
-		//@Override
+		//// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
 		//FBYExpression kexpressions::Expression:
 		//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
 		//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
@@ -2544,6 +2544,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsTernaryOperationParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
 		private final RuleCall cTernaryOperationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
+		//@Override
 		//InitExpression kexpressions::Expression:
 		//	{kexpressions::OperatorExpression} subExpressions+=TernaryOperation operator=InitOperator
 		//	subExpressions+=TernaryOperation
@@ -3890,7 +3891,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cFBYFbyKeyword_0 = (Keyword)cFBYEnumLiteralDeclaration.eContents().get(0);
 		
-		//@Override
 		//enum FBYOperator returns kexpressions::OperatorType:
 		//	FBY="fby";
 		public EnumRule getRule() { return rule; }
@@ -3952,6 +3952,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cINITEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cINITHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cINITEnumLiteralDeclaration.eContents().get(0);
 		
+		//@Override
 		//enum InitOperator returns kexpressions::OperatorType:
 		//	INIT="->";
 		public EnumRule getRule() { return rule; }
@@ -4577,7 +4578,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 	
-	//@Override
+	//// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
 	//FBYExpression kexpressions::Expression:
 	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
 	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
@@ -4634,6 +4635,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getBoolExpressionAccess().getRule();
 	}
 	
+	//@Override
 	//InitExpression kexpressions::Expression:
 	//	{kexpressions::OperatorExpression} subExpressions+=TernaryOperation operator=InitOperator
 	//	subExpressions+=TernaryOperation
@@ -4810,7 +4812,6 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOperatorAccess().getRule();
 	}
 	
-	//@Override
 	//enum FBYOperator returns kexpressions::OperatorType:
 	//	FBY="fby";
 	public FBYOperatorElements getFBYOperatorAccess() {
@@ -4852,6 +4853,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getWhenOperatorAccess().getRule();
 	}
 	
+	//@Override
 	//enum InitOperator returns kexpressions::OperatorType:
 	//	INIT="->";
 	public InitOperatorElements getInitOperatorAccess() {
