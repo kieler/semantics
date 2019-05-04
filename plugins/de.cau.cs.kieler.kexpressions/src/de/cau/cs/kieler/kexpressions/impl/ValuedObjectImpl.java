@@ -123,6 +123,7 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS);
@@ -135,6 +136,7 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getInitialValue() {
         return initialValue;
     }
@@ -159,6 +161,7 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInitialValue(Expression newInitialValue) {
         if (newInitialValue != initialValue) {
             NotificationChain msgs = null;
@@ -178,7 +181,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public EList<Expression> getCardinalities() {
+	@Override
+    public EList<Expression> getCardinalities() {
         if (cardinalities == null) {
             cardinalities = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT__CARDINALITIES);
         }
@@ -208,6 +212,7 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CombineOperator getCombineOperator() {
         return combineOperator;
     }
@@ -217,6 +222,7 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCombineOperator(CombineOperator newCombineOperator) {
         CombineOperator oldCombineOperator = combineOperator;
         combineOperator = newCombineOperator == null ? COMBINE_OPERATOR_EDEFAULT : newCombineOperator;

@@ -39,6 +39,7 @@
     <module>de.cau.cs.kieler.kivis.ide</module>
     <module>de.cau.cs.kieler.kivis</module>
     <module>de.cau.cs.kieler.language.server</module>
+    <module>de.cau.cs.kieler.lustre.compiler</module>
     <module>de.cau.cs.kieler.lustre.ide</module>
     <module>de.cau.cs.kieler.lustre.ui</module>
     <module>de.cau.cs.kieler.lustre</module>

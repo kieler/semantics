@@ -185,7 +185,15 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRUCT(13, "STRUCT", "STRUCT");
+    STRUCT(13, "STRUCT", "STRUCT"), /**
+     * The '<em><b>ENUM</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ENUM_VALUE
+     * @generated
+     * @ordered
+     */
+    ENUM(14, "ENUM", "ENUM");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -400,6 +408,21 @@ public enum ValueType implements Enumerator {
     public static final int STRUCT_VALUE = 13;
 
     /**
+     * The '<em><b>ENUM</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>ENUM</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #ENUM
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ENUM_VALUE = 14;
+
+    /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -421,6 +444,7 @@ public enum ValueType implements Enumerator {
             CLOCK,
             JSON,
             STRUCT,
+            ENUM,
         };
 
     /**
@@ -491,6 +515,7 @@ public enum ValueType implements Enumerator {
             case CLOCK_VALUE: return CLOCK;
             case JSON_VALUE: return JSON;
             case STRUCT_VALUE: return STRUCT;
+            case ENUM_VALUE: return ENUM;
         }
         return null;
     }
@@ -533,6 +558,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -542,6 +568,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -551,6 +578,7 @@ public enum ValueType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }
