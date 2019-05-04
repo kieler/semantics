@@ -495,7 +495,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         var bExpression = subExpressionList.pop
         while(!subExpressionList.isEmpty) {
             bExpression = processPreExpression(bExpression, state)
-            var aExpression = createOperatorExpression(OperatorType.FBY)
+            var aExpression = createOperatorExpression(OperatorType.INIT)
             aExpression.subExpressions += subExpressionList.pop
             aExpression.subExpressions += bExpression
             bExpression = aExpression
@@ -525,7 +525,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     // Equation transformation: Transform an init expression
     protected def processInitExpression(Stack<Expression> subExpressionList) {
         // x -> y <=> x fby y (in sccharts)
-        var convertedExpression = createOperatorExpression(OperatorType.FBY)
+        var convertedExpression = createOperatorExpression(OperatorType.INIT)
         convertedExpression.subExpressions += subExpressionList
 
         return convertedExpression
