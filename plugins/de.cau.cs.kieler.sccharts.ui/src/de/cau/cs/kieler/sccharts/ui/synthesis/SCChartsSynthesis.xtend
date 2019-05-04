@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import java.util.LinkedHashSet
-import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.klighd.krendering.Colors
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
@@ -41,7 +40,6 @@ import org.eclipse.elk.alg.force.options.StressOptions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
-import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.ViewContext

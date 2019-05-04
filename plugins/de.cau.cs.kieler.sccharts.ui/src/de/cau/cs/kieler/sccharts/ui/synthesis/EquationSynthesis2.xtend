@@ -62,6 +62,7 @@ import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KIdentifier
 import org.eclipse.elk.core.math.ElkPadding
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
 
 /**
  * @author ssm
@@ -69,6 +70,9 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
  */
 @ViewSynthesisShared
 class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
+    
+    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", true).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KEdgeExtensions
@@ -108,7 +112,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
         edge.target = node
         if (equation.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (equation.subReference != null) {
-                if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                if (AUTOMATIC_INLINE.booleanValue) {
                     println("Searching port " + equation.valuedObject + " / " + equation.subReference.valuedObject)
                     edge.targetPort = equation.valuedObject.getPort(equation.subReference.valuedObject)
                 } else {
@@ -188,7 +192,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
         edge.setLayoutOption(LayeredOptions.INSIDE_SELF_LOOPS_YO, true)
         if (reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
             if (reference.subReference != null) {
-                if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
+                if (AUTOMATIC_INLINE.booleanValue) {
                     edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
                 } else {
                     edge.sourcePort = reference.valuedObject.getPort(reference.subReference.valuedObject)
@@ -266,7 +270,7 @@ class EquationSynthesis2 extends SubSynthesis<Assignment, KNode> {
             }            
         }     
         
-        if (DataflowRegionSynthesis.AUTOMATIC_INLINE.booleanValue) {
+        if (AUTOMATIC_INLINE.booleanValue) {
             
             if (vo instanceof ValuedObject) {
                 val declaration = vo.eContainer

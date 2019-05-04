@@ -54,8 +54,6 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption("Circuit layout", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", true).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KRenderingExtensions
@@ -70,7 +68,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject EquationSynthesis equationSynthesis
     
     override getDisplayedSynthesisOptions() {
-        val options = newArrayList(CIRCUIT, AUTOMATIC_INLINE)
+        val options = newArrayList(CIRCUIT)
         
         options.addAll(equationSynthesis.displayedSynthesisOptions)
         
@@ -166,7 +164,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         }           
 
         // translate all direct dataflow equations
-        node.children += region.equations.performTranformation
+        node.children += region.equations.performTranformation(node)
 
         if (!CIRCUIT.booleanValue) {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));

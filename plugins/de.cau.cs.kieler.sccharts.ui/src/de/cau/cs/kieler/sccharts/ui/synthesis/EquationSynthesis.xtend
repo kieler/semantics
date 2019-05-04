@@ -62,6 +62,11 @@ import org.eclipse.elk.alg.layered.options.LayerConstraint
 import de.cau.cs.kieler.kexpressions.Value
 import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import de.cau.cs.kieler.sccharts.State
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.krendering.KText
 
 /**
  * @author ssm
@@ -72,6 +77,8 @@ import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 @ViewSynthesisShared
 class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
+    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)        
     public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption("Align inputs/outputs", true).
@@ -86,7 +93,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption("Outside Referenced Port Labels", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-        
+
+    public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);        
+    public static final IProperty<Boolean> INPUT_FLAG = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inputFlag", false);        
+    public static final IProperty<Boolean> OUTPUT_FLAG = new Property<Boolean>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.outputFlag", false);        
 
     @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
@@ -99,6 +112,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
+    @Inject extension StateSynthesis
+    @Inject StateSynthesis stateSynthesis
     @Inject Injector injector
     
 //    public static final IProperty<String> PROPAGATED_SKINPATH = new Property<String>(
@@ -148,8 +163,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected val referenceNodes = <KNode> newHashSet
     
     override getDisplayedSynthesisOptions() {
-        val options = newArrayList(ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, SHOW_EXPRESSION_PORT_LABELS,
-            SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE
+        val options = newArrayList(AUTOMATIC_INLINE, ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, 
+            SHOW_EXPRESSION_PORT_LABELS, SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE
         )
         
         return options
@@ -160,7 +175,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         null
     }
 
-    def performTranformation(List<Assignment> elements) {
+    def performTranformation(List<Assignment> elements, KNode rootNode) {
         val nodes = <KNode>newLinkedList
         val usedNodes = <KNode>newHashSet
         referenceNodes.clear
@@ -170,8 +185,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         wiring.createWires(elements)
 
         wiring.createSources(nodes)
-        wiring.createSinks(nodes, usedNodes)
-        wiring.connectWires(usedNodes)
+        wiring.createSinks(nodes)
+        wiring.connectWires()
+        if (AUTOMATIC_INLINE.booleanValue)
+            wiring.reWireInlining(nodes, rootNode)
 
         return nodes
     }
@@ -223,6 +240,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                     node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
+                    node.setProperty(INPUT_FLAG, true)
                     
                     val isConstant = wire.semanticSource instanceof Value
                     if(ALIGN_INPUTS_OUTPUTS.booleanValue && !isConstant) {
@@ -246,13 +264,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
 
     
-    protected def createSinks(Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {
+    protected def createSinks(Wiring wiring, List<KNode> nodes) {
         for (wire : wiring.wires) {
-            wire.createSink(wiring, nodes, usedNodes)
+            wire.createSink(wiring, nodes)
         }
     }
     
-    protected def createSink(Wire wire, Wiring wiring, List<KNode> nodes, Set<KNode> usedNodes) {     
+    protected def createSink(Wire wire, Wiring wiring, List<KNode> nodes) {     
         val nodeExists = wire.semanticSink.nodeExists(wire.externalSinkReferenceCounter, false)
         
         if (!nodeExists) {
@@ -279,6 +297,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 wire.semanticSink.addPort(IN_PORT, node.ports.head)
                 val text = wire.semanticSink.serializeHR.toString
                 node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_OUTPUT_LEFT, PADDING_OUTPUT_RIGHT)
+                node.setProperty(OUTPUT_FLAG, true)
                 
                 if(ALIGN_INPUTS_OUTPUTS.booleanValue) {
                     node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::LAST)
@@ -297,13 +316,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 
 
 
-    protected def connectWires(Wiring wiring, Set<KNode> usedNodes) {
+    protected def connectWires(Wiring wiring) {
         for (wire : wiring.wires) {
-            wire.connectWire(wiring, usedNodes)
+            wire.connectWire(wiring)
         }
     }
     
-    protected def connectWire(Wire wire, Wiring wiring, Set<KNode> usedNodes) {
+    protected def connectWire(Wire wire, Wiring wiring) {
         val sourceNode = wire.semanticSource.getExistingNode(wire.externalSourceReferenceCounter, wire.sourceIsEquationTarget)
         var sourcePort = wire.semanticSource.getPort(OUT_PORT)
         val targetNode = wire.semanticSink.getExistingNode(wire.externalSinkReferenceCounter, false)
@@ -398,6 +417,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (referenceNodes.contains(oldNode)) return oldNode
         }
         
+        var newNode = node
+        
         node.associateWith(association)
         
         node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy.SIMPLE)
@@ -405,47 +426,51 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         node.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(4d));
-//        node.setLayoutOption(CoreOptions::EXPAND_NODES, false);   
         node.addLayoutParam(KlighdProperties::EXPAND, false)      
-////        node.setLayoutOption(LayeredOptions::NODE_PLACEMENT_NETWORK_SIMPLEX_NODE_FLEXIBILITY, NodeFlexibility.NODE_SIZE)
         node.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
-//        node.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
   
         
         if (referenceDeclaration.hasAnnotation(ANNOTATION_FIGURE)) {
-            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
+            newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration, wire)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
-            if (newNode !== null) return newNode
+            if (newNode !== null) return newNode 
         }
         if (referenceDeclaration.reference !== null && referenceDeclaration.reference.asAnnotatable.hasAnnotation(ANNOTATION_FIGURE)) {
-            val newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable, wire)
+            newNode = loadFigureFromKGT(referenceDeclaration.reference as Annotatable, association, referenceDeclaration.reference as Annotatable, wire)
             newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
             if (newNode !== null) return newNode
         }
-         
-        node.addReferenceNodeFigure.associateWith(association) => [
-            setAsCollapsedView;
-            addDoubleClickAction(ReferenceExpandAction::ID)  
-        ]
-        node.addReferenceNodeFigure.associateWith(association) => [
-            setAsExpandedView;
-            addDoubleClickAction(ReferenceExpandAction::ID);
-        ]
-        node.addNodeLabel(label)
         
-        val vor = wire.sink
+        val associationVOR = association as ValuedObjectReference
+        val declaration = associationVOR.valuedObject.referenceDeclaration      
+        if (AUTOMATIC_INLINE.booleanValue && declaration.reference !== null) {
+            val state = declaration.reference as State
+            newNode = stateSynthesis.transform(state).head
+            newNode.setProperty(INLINED_REFERENCE, true)
+        } else { 
+            newNode.addReferenceNodeFigure.associateWith(association) => [
+                setAsCollapsedView;
+                addDoubleClickAction(ReferenceExpandAction::ID)  
+            ]
+            newNode.addReferenceNodeFigure.associateWith(association) => [
+                setAsExpandedView;
+                addDoubleClickAction(ReferenceExpandAction::ID);
+            ]
+            newNode.addNodeLabel(label)
+        }
         
+        val vor = wire.sink       
         if (referenceDeclaration.reference !== null) {
-            node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
-            node.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
+            newNode.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ input ], PortSide.WEST, true)
+            newNode.createReferenceNodePorts(referenceDeclaration.reference as Scope, vor, [ output ], PortSide.EAST, false)
         }
 
-        node.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
-        
-        node.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
+         
+        newNode.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
+        newNode.setProperty(SCChartsSynthesis.SKINPATH, getSkinPath(usedContext))
 
-        referenceNodes += node
-        return node
+        referenceNodes += newNode 
+        return newNode
     }
     
     protected def createReferenceNodePorts(KNode node, Scope scope, Object association, Function1<? super VariableDeclaration, Boolean> predicate, PortSide portSide, boolean reverse) {
@@ -465,13 +490,14 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         if (REFERENCED_PORT_LABELS_OUTSIDE.booleanValue) {
                             createLabel().configureOutsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                         } else {
-                            addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
+//                            addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, -3d)
                             createLabel().configureInsidePortLabel(v.serializeHR.removeCardinalities.toString, PORT_LABEL_FONT_SIZE)
                         }
                     }
                     node.ports += it
                 ]          
-                port.associateWith(v)              
+                port.associateWith(v)   
+                port.setProperty(if (portSide == PortSide.WEST) INPUT_FLAG else OUTPUT_FLAG, true)
             }
         }        
     }
@@ -657,6 +683,92 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         return result     
     } 
     
+    protected def void reWireInlining(Wiring wiring, List<KNode> nodes, KNode rootNode) {
+        val inlinedNodes = nodes.filter[ it.getProperty(INLINED_REFERENCE) ].toList
+        for (node : inlinedNodes) {
+            val parent = if (node.parent === null) rootNode else node.parent
+            
+            for (child : node.eContents.filter(KNode)) {
+                parent.children += child
+                
+                child.setLayoutOption(CoreOptions::PORT_CONSTRAINTS, PortConstraints::FIXED_ORDER) 
+                child.setLayoutOption(CoreOptions.PORT_LABELS_PLACEMENT, PortLabelPlacement.INSIDE) 
+                child.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
+                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d))
+                child.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
+                
+                val inputNames = <String, KNode> newHashMap
+                for (inputNode : child.children.filter(KNode).filter[ getProperty(INPUT_FLAG) ]) {
+                    val name = inputNode.data.filter(KPolygon).head.children.filter(KText).head.text
+                    inputNames.put(name, inputNode)                                        
+                }
+                val outputNames = <String, KNode> newHashMap
+                for (outputNode : child.children.filter(KNode).filter[ getProperty(OUTPUT_FLAG) ]) {
+                    val name = outputNode.data.filter(KPolygon).head.children.filter(KText).head.text
+                    outputNames.put(name, outputNode)                                        
+                }
+                
+                
+                for (port : node.ports.toList.reverseView) {
+                    val portName = port.labels.head.text
+                    val portSide = port.portSide
+
+                    if ((portSide != PortSide.EAST && inputNames.containsKey(portName)) || 
+                        (portSide == PortSide.EAST && outputNames.containsKey(portName))
+                    ) {
+                        val newPort = port.copy
+                        
+                        newPort.addLayoutParam(CoreOptions::PORT_BORDER_OFFSET, 0d)
+                        child.ports += newPort
+
+                        if (portSide != PortSide.EAST) {                    
+                            for (edge : node.incomingEdges.filter[ targetPort == port ]) {
+                                val newEdge = edge.copy
+                                edge.source.outgoingEdges += newEdge
+                                newEdge.target = child
+                                newEdge.targetPort = newPort
+                            }
+                            val inputNode = inputNames.get(portName)
+                            if (inputNode !== null) {
+                                for (edge : inputNode.outgoingEdges.immutableCopy) {
+                                    edge.source = child
+                                    edge.sourcePort = newPort
+                                }                            
+                                inputNode.remove
+                        }
+                        }
+                        
+                        else if (portSide == PortSide.EAST) {                    
+                            for (edge : node.outgoingEdges.filter[ sourcePort == port ]) {
+                                val newEdge = edge.copy
+                                newEdge.source = child
+                                newEdge.sourcePort = newPort
+                                newEdge.target = edge.target
+                            }
+                            val outputNode = outputNames.get(portName)
+                            if (outputNode !== null) {
+                                for (edge : outputNode.incomingEdges.immutableCopy) {
+                                    edge.target = child
+                                    edge.targetPort = newPort
+                                }                            
+                                outputNode.remove
+                            }
+                        }
+                        
+                    }
+                }
+                
+                child.setLayoutOption(LayeredOptions::NODE_SIZE_CONSTRAINTS, EnumSet.of(SizeConstraint.PORTS, SizeConstraint.MINIMUM_SIZE))
+            }
+        }
+        
+        for (node : inlinedNodes) {
+            node.incomingEdges.immutableCopy.forEach[ remove ]
+            node.outgoingEdges.immutableCopy.forEach[ remove ]
+            nodes.remove(node)
+        }
+    }
+    
     static def getId(KLabeledGraphElement node) {
         node.eContents?.filter(KIdentifier)?.head?.id
     }    
@@ -668,6 +780,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     
     static def KLabel getLabel(KNode node) {
         node.eContents.filter(KLabel).head
+    }
+    
+    static def PortSide getPortSide(KPort port) {
+        port.getProperty(CoreOptions::PORT_SIDE)
     }
     
 }
