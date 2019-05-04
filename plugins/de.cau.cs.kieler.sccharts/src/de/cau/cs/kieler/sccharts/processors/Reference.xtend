@@ -100,7 +100,12 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
         for(rootState : newArrayList(model.rootStates.head)) {
-            // Inherit from base states
+            // Handle inheritance
+            val statesWithInheritance = rootState.allContainedStates.filter[ !baseStates.nullOrEmpty ].toList
+            
+            for (state : statesWithInheritance) {
+                inheritanceProcessor?.inheritBaseStates(state)
+            }
             inheritanceProcessor?.inheritBaseStates(rootState)
             
             val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList

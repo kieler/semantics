@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * 
@@ -67,8 +68,18 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                     voNames.put(vo.name, vo)
                 }
             }
+            val implicitlyBoundInSuperState = newHashSet
+            var container = state.eContainer
+            while (container !== null) {
+                if (container instanceof State) {
+                    if (!container.baseStates.nullOrEmpty) {
+                        implicitlyBoundInSuperState.addAll(container.allInheritedStates.map[declarations].flatten.filter(VariableDeclaration).filter[input == true || output == true])
+                    }
+                }
+                container = container.eContainer
+            }
             val newDecls = newArrayList
-            for (baseDelc : allBaseStates.map[declarations].flatten) {
+            for (baseDelc : allBaseStates.map[declarations].flatten.filter[!implicitlyBoundInSuperState.contains(it)]) {
                 var newDecl = baseDelc.copy
                 
                 if (newDecl.access !== AccessModifier.PUBLIC) { // rename
@@ -103,7 +114,9 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             state.actions.forEach[replaceVOR(replacements)]
             
             // copy regions
+            val overrriders = state.regions.filter[override].toList
             state.regions.addAll(0, state.allVisibleInheritedRegions.map[copy].toList)
+            overrriders.forEach[override = false]
             // conflicts
             val regionNames = LinkedHashMultimap.<String, Region>create
             for (r : state.regions) {
@@ -119,7 +132,7 @@ class Inheritance extends SCChartsProcessor implements Traceable {
 
             // replace references in state regions
             state.regions.forEach[replaceVOR(replacements)]
-
+            
             // remove base states
             state.baseStates.clear
         }
