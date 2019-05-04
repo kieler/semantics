@@ -72,29 +72,29 @@ class InitOperator extends SCChartsProcessor implements Traceable {
     }
     
     def transformInitOperator(State rootState) {
-        val allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.FBY ].toList
+        val allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.INIT ].toList
         val initInitParents = <OperatorExpression, ValuedObject> newHashMap 
         
-        for (fby : allInits.indexed) {
-            val action = fby.value.enclosingAction
+        for (init : allInits.indexed) {
+            val action = init.value.enclosingAction
             val parent = if (action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
         
             if (parent !== null) {
-                val fbyTrigger = createValuedObject => [ name = GENERATED_PREFIX + fby.key + "t" initialValue = FALSE ]
+                val fbyTrigger = createValuedObject => [ name = GENERATED_PREFIX + init.key + "t" initialValue = FALSE ]
                 parent.declarations += createVariableDeclaration(ValueType.BOOL) => [ valuedObjects += fbyTrigger]
                 voStore.update(fbyTrigger, SCCHARTS_GENERATED)
                 
-                val second = fby.value.subExpressions.get(1)
+                val second = init.value.subExpressions.get(1)
                 val followingFby = if (second.isInitOperator) second else second.eAllContents.filter(OperatorExpression).filter[ isInitOperator ].head
                 if (followingFby !== null) {
                     initInitParents.put(followingFby as OperatorExpression, fbyTrigger)
                 }
                 
-                val localVariable = createValuedObject => [ name = GENERATED_PREFIX + fby.key ]
-                parent.declarations += createVariableDeclaration(fby.value.inferType) => [ valuedObjects += localVariable ]
+                val localVariable = createValuedObject => [ name = GENERATED_PREFIX + init.key ]
+                parent.declarations += createVariableDeclaration(init.value.inferType) => [ valuedObjects += localVariable ]
                 voStore.update(localVariable, SCCHARTS_GENERATED)
                 
-                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + fby.key) => [ final = true ]
+                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + init.key) => [ final = true ]
                 val initialState = fbyRegion.createInitialState("_Init")           
                 val delayState = fbyRegion.createState("_Delay")
                 val loopState = fbyRegion.createState("_Loop")     
@@ -103,16 +103,16 @@ class InitOperator extends SCChartsProcessor implements Traceable {
                 val delayTransition = delayState.createTransitionTo(loopState)
                 loopState.createImmediateTransitionTo(delayState)
                 
-                initialTransition.effects += createAssignment(localVariable, fby.value.subExpressions.head)
+                initialTransition.effects += createAssignment(localVariable, init.value.subExpressions.head)
                 delayTransition.effects += createAssignment(fbyTrigger, TRUE)
-                delayTransition.effects += createAssignment(localVariable, fby.value.subExpressions.head)
+                delayTransition.effects += createAssignment(localVariable, init.value.subExpressions.head)
                 
-                val myTrigger = initInitParents.get(fby.value)
+                val myTrigger = initInitParents.get(init.value)
                 if (myTrigger !== null) {
                     initialTransition.trigger = myTrigger.reference
                 }
                 
-                fby.value.replace(localVariable.reference)
+                init.value.replace(localVariable.reference)
             } 
         }
     }
