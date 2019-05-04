@@ -5345,23 +5345,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleTernaryOperation"
 
 
-    // $ANTLR start "entryRuleFBYExpression"
-    // InternalKiCool.g:1579:1: entryRuleFBYExpression : ruleFBYExpression EOF ;
-    public final void entryRuleFBYExpression() throws RecognitionException {
+    // $ANTLR start "entryRuleInitExpression"
+    // InternalKiCool.g:1579:1: entryRuleInitExpression : ruleInitExpression EOF ;
+    public final void entryRuleInitExpression() throws RecognitionException {
         try {
-            // InternalKiCool.g:1580:1: ( ruleFBYExpression EOF )
-            // InternalKiCool.g:1581:1: ruleFBYExpression EOF
+            // InternalKiCool.g:1580:1: ( ruleInitExpression EOF )
+            // InternalKiCool.g:1581:1: ruleInitExpression EOF
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionRule()); 
+               before(grammarAccess.getInitExpressionRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            ruleFBYExpression();
+            ruleInitExpression();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionRule()); 
+               after(grammarAccess.getInitExpressionRule()); 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -5376,30 +5376,30 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "entryRuleFBYExpression"
+    // $ANTLR end "entryRuleInitExpression"
 
 
-    // $ANTLR start "ruleFBYExpression"
-    // InternalKiCool.g:1588:1: ruleFBYExpression : ( ( rule__FBYExpression__Alternatives ) ) ;
-    public final void ruleFBYExpression() throws RecognitionException {
+    // $ANTLR start "ruleInitExpression"
+    // InternalKiCool.g:1588:1: ruleInitExpression : ( ( rule__InitExpression__Alternatives ) ) ;
+    public final void ruleInitExpression() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:1592:2: ( ( ( rule__FBYExpression__Alternatives ) ) )
-            // InternalKiCool.g:1593:2: ( ( rule__FBYExpression__Alternatives ) )
+            // InternalKiCool.g:1592:2: ( ( ( rule__InitExpression__Alternatives ) ) )
+            // InternalKiCool.g:1593:2: ( ( rule__InitExpression__Alternatives ) )
             {
-            // InternalKiCool.g:1593:2: ( ( rule__FBYExpression__Alternatives ) )
-            // InternalKiCool.g:1594:3: ( rule__FBYExpression__Alternatives )
+            // InternalKiCool.g:1593:2: ( ( rule__InitExpression__Alternatives ) )
+            // InternalKiCool.g:1594:3: ( rule__InitExpression__Alternatives )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getAlternatives()); 
+               before(grammarAccess.getInitExpressionAccess().getAlternatives()); 
             }
-            // InternalKiCool.g:1595:3: ( rule__FBYExpression__Alternatives )
-            // InternalKiCool.g:1595:4: rule__FBYExpression__Alternatives
+            // InternalKiCool.g:1595:3: ( rule__InitExpression__Alternatives )
+            // InternalKiCool.g:1595:4: rule__InitExpression__Alternatives
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__Alternatives();
+            rule__InitExpression__Alternatives();
 
             state._fsp--;
             if (state.failed) return ;
@@ -5407,7 +5407,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getAlternatives()); 
+               after(grammarAccess.getInitExpressionAccess().getAlternatives()); 
             }
 
             }
@@ -5427,7 +5427,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleFBYExpression"
+    // $ANTLR end "ruleInitExpression"
 
 
     // $ANTLR start "entryRuleAtomicExpression"
@@ -10900,9 +10900,9 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "ruleConditionalOperator"
 
 
-    // $ANTLR start "ruleFBYOperator"
-    // InternalKiCool.g:3256:1: ruleFBYOperator : ( ( '->' ) ) ;
-    public final void ruleFBYOperator() throws RecognitionException {
+    // $ANTLR start "ruleInitOperator"
+    // InternalKiCool.g:3256:1: ruleInitOperator : ( ( '->' ) ) ;
+    public final void ruleInitOperator() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -10914,7 +10914,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:3262:3: ( '->' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYOperatorAccess().getFBYEnumLiteralDeclaration()); 
+               before(grammarAccess.getInitOperatorAccess().getINITEnumLiteralDeclaration()); 
             }
             // InternalKiCool.g:3263:3: ( '->' )
             // InternalKiCool.g:3263:4: '->'
@@ -10924,7 +10924,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYOperatorAccess().getFBYEnumLiteralDeclaration()); 
+               after(grammarAccess.getInitOperatorAccess().getINITEnumLiteralDeclaration()); 
             }
 
             }
@@ -10944,7 +10944,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "ruleFBYOperator"
+    // $ANTLR end "ruleInitOperator"
 
 
     // $ANTLR start "ruleValueType"
@@ -14135,13 +14135,13 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__TernaryOperation__Alternatives"
-    // InternalKiCool.g:3983:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleFBYExpression ) );
+    // InternalKiCool.g:3983:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleInitExpression ) );
     public final void rule__TernaryOperation__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:3987:1: ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleFBYExpression ) )
+            // InternalKiCool.g:3987:1: ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleInitExpression ) )
             int alt27=2;
             alt27 = dfa27.predict(input);
             switch (alt27) {
@@ -14175,21 +14175,21 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalKiCool.g:3994:2: ( ruleFBYExpression )
+                    // InternalKiCool.g:3994:2: ( ruleInitExpression )
                     {
-                    // InternalKiCool.g:3994:2: ( ruleFBYExpression )
-                    // InternalKiCool.g:3995:3: ruleFBYExpression
+                    // InternalKiCool.g:3994:2: ( ruleInitExpression )
+                    // InternalKiCool.g:3995:3: ruleInitExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getTernaryOperationAccess().getFBYExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getTernaryOperationAccess().getInitExpressionParserRuleCall_1()); 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleFBYExpression();
+                    ruleInitExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getTernaryOperationAccess().getFBYExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getTernaryOperationAccess().getInitExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -14214,31 +14214,31 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TernaryOperation__Alternatives"
 
 
-    // $ANTLR start "rule__FBYExpression__Alternatives"
-    // InternalKiCool.g:4004:1: rule__FBYExpression__Alternatives : ( ( ( rule__FBYExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );
-    public final void rule__FBYExpression__Alternatives() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Alternatives"
+    // InternalKiCool.g:4004:1: rule__InitExpression__Alternatives : ( ( ( rule__InitExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );
+    public final void rule__InitExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:4008:1: ( ( ( rule__FBYExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) )
+            // InternalKiCool.g:4008:1: ( ( ( rule__InitExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) )
             int alt28=2;
             alt28 = dfa28.predict(input);
             switch (alt28) {
                 case 1 :
-                    // InternalKiCool.g:4009:2: ( ( rule__FBYExpression__Group_0__0 ) )
+                    // InternalKiCool.g:4009:2: ( ( rule__InitExpression__Group_0__0 ) )
                     {
-                    // InternalKiCool.g:4009:2: ( ( rule__FBYExpression__Group_0__0 ) )
-                    // InternalKiCool.g:4010:3: ( rule__FBYExpression__Group_0__0 )
+                    // InternalKiCool.g:4009:2: ( ( rule__InitExpression__Group_0__0 ) )
+                    // InternalKiCool.g:4010:3: ( rule__InitExpression__Group_0__0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getFBYExpressionAccess().getGroup_0()); 
+                       before(grammarAccess.getInitExpressionAccess().getGroup_0()); 
                     }
-                    // InternalKiCool.g:4011:3: ( rule__FBYExpression__Group_0__0 )
-                    // InternalKiCool.g:4011:4: rule__FBYExpression__Group_0__0
+                    // InternalKiCool.g:4011:3: ( rule__InitExpression__Group_0__0 )
+                    // InternalKiCool.g:4011:4: rule__InitExpression__Group_0__0
                     {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__FBYExpression__Group_0__0();
+                    rule__InitExpression__Group_0__0();
 
                     state._fsp--;
                     if (state.failed) return ;
@@ -14246,7 +14246,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                     }
 
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getFBYExpressionAccess().getGroup_0()); 
+                       after(grammarAccess.getInitExpressionAccess().getGroup_0()); 
                     }
 
                     }
@@ -14261,7 +14261,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                     // InternalKiCool.g:4016:3: ruleAtomicValuedExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getFBYExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getInitExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
                     ruleAtomicValuedExpression();
@@ -14269,7 +14269,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getFBYExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getInitExpressionAccess().getAtomicValuedExpressionParserRuleCall_1()); 
                     }
 
                     }
@@ -14291,7 +14291,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Alternatives"
+    // $ANTLR end "rule__InitExpression__Alternatives"
 
 
     // $ANTLR start "rule__AtomicExpression__Alternatives"
@@ -69056,23 +69056,23 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TernaryOperation__Group_0__5__Impl"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__0"
-    // InternalKiCool.g:20432:1: rule__FBYExpression__Group_0__0 : rule__FBYExpression__Group_0__0__Impl rule__FBYExpression__Group_0__1 ;
-    public final void rule__FBYExpression__Group_0__0() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__0"
+    // InternalKiCool.g:20432:1: rule__InitExpression__Group_0__0 : rule__InitExpression__Group_0__0__Impl rule__InitExpression__Group_0__1 ;
+    public final void rule__InitExpression__Group_0__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20436:1: ( rule__FBYExpression__Group_0__0__Impl rule__FBYExpression__Group_0__1 )
-            // InternalKiCool.g:20437:2: rule__FBYExpression__Group_0__0__Impl rule__FBYExpression__Group_0__1
+            // InternalKiCool.g:20436:1: ( rule__InitExpression__Group_0__0__Impl rule__InitExpression__Group_0__1 )
+            // InternalKiCool.g:20437:2: rule__InitExpression__Group_0__0__Impl rule__InitExpression__Group_0__1
             {
             pushFollow(FollowSets000.FOLLOW_104);
-            rule__FBYExpression__Group_0__0__Impl();
+            rule__InitExpression__Group_0__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__Group_0__1();
+            rule__InitExpression__Group_0__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69091,12 +69091,12 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__0"
+    // $ANTLR end "rule__InitExpression__Group_0__0"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__0__Impl"
-    // InternalKiCool.g:20444:1: rule__FBYExpression__Group_0__0__Impl : ( () ) ;
-    public final void rule__FBYExpression__Group_0__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__0__Impl"
+    // InternalKiCool.g:20444:1: rule__InitExpression__Group_0__0__Impl : ( () ) ;
+    public final void rule__InitExpression__Group_0__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -69108,7 +69108,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:20450:2: ()
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getOperatorExpressionAction_0_0()); 
+               before(grammarAccess.getInitExpressionAccess().getOperatorExpressionAction_0_0()); 
             }
             // InternalKiCool.g:20451:2: ()
             // InternalKiCool.g:20451:3: 
@@ -69116,7 +69116,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getOperatorExpressionAction_0_0()); 
+               after(grammarAccess.getInitExpressionAccess().getOperatorExpressionAction_0_0()); 
             }
 
             }
@@ -69132,26 +69132,26 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__0__Impl"
+    // $ANTLR end "rule__InitExpression__Group_0__0__Impl"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__1"
-    // InternalKiCool.g:20459:1: rule__FBYExpression__Group_0__1 : rule__FBYExpression__Group_0__1__Impl rule__FBYExpression__Group_0__2 ;
-    public final void rule__FBYExpression__Group_0__1() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__1"
+    // InternalKiCool.g:20459:1: rule__InitExpression__Group_0__1 : rule__InitExpression__Group_0__1__Impl rule__InitExpression__Group_0__2 ;
+    public final void rule__InitExpression__Group_0__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20463:1: ( rule__FBYExpression__Group_0__1__Impl rule__FBYExpression__Group_0__2 )
-            // InternalKiCool.g:20464:2: rule__FBYExpression__Group_0__1__Impl rule__FBYExpression__Group_0__2
+            // InternalKiCool.g:20463:1: ( rule__InitExpression__Group_0__1__Impl rule__InitExpression__Group_0__2 )
+            // InternalKiCool.g:20464:2: rule__InitExpression__Group_0__1__Impl rule__InitExpression__Group_0__2
             {
             pushFollow(FollowSets000.FOLLOW_106);
-            rule__FBYExpression__Group_0__1__Impl();
+            rule__InitExpression__Group_0__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__Group_0__2();
+            rule__InitExpression__Group_0__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69170,30 +69170,30 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__1"
+    // $ANTLR end "rule__InitExpression__Group_0__1"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__1__Impl"
-    // InternalKiCool.g:20471:1: rule__FBYExpression__Group_0__1__Impl : ( ( rule__FBYExpression__SubExpressionsAssignment_0_1 ) ) ;
-    public final void rule__FBYExpression__Group_0__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__1__Impl"
+    // InternalKiCool.g:20471:1: rule__InitExpression__Group_0__1__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_0_1 ) ) ;
+    public final void rule__InitExpression__Group_0__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20475:1: ( ( ( rule__FBYExpression__SubExpressionsAssignment_0_1 ) ) )
-            // InternalKiCool.g:20476:1: ( ( rule__FBYExpression__SubExpressionsAssignment_0_1 ) )
+            // InternalKiCool.g:20475:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_0_1 ) ) )
+            // InternalKiCool.g:20476:1: ( ( rule__InitExpression__SubExpressionsAssignment_0_1 ) )
             {
-            // InternalKiCool.g:20476:1: ( ( rule__FBYExpression__SubExpressionsAssignment_0_1 ) )
-            // InternalKiCool.g:20477:2: ( rule__FBYExpression__SubExpressionsAssignment_0_1 )
+            // InternalKiCool.g:20476:1: ( ( rule__InitExpression__SubExpressionsAssignment_0_1 ) )
+            // InternalKiCool.g:20477:2: ( rule__InitExpression__SubExpressionsAssignment_0_1 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_1()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1()); 
             }
-            // InternalKiCool.g:20478:2: ( rule__FBYExpression__SubExpressionsAssignment_0_1 )
-            // InternalKiCool.g:20478:3: rule__FBYExpression__SubExpressionsAssignment_0_1
+            // InternalKiCool.g:20478:2: ( rule__InitExpression__SubExpressionsAssignment_0_1 )
+            // InternalKiCool.g:20478:3: rule__InitExpression__SubExpressionsAssignment_0_1
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__SubExpressionsAssignment_0_1();
+            rule__InitExpression__SubExpressionsAssignment_0_1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69201,7 +69201,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_1()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1()); 
             }
 
             }
@@ -69221,26 +69221,26 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__1__Impl"
+    // $ANTLR end "rule__InitExpression__Group_0__1__Impl"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__2"
-    // InternalKiCool.g:20486:1: rule__FBYExpression__Group_0__2 : rule__FBYExpression__Group_0__2__Impl rule__FBYExpression__Group_0__3 ;
-    public final void rule__FBYExpression__Group_0__2() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__2"
+    // InternalKiCool.g:20486:1: rule__InitExpression__Group_0__2 : rule__InitExpression__Group_0__2__Impl rule__InitExpression__Group_0__3 ;
+    public final void rule__InitExpression__Group_0__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20490:1: ( rule__FBYExpression__Group_0__2__Impl rule__FBYExpression__Group_0__3 )
-            // InternalKiCool.g:20491:2: rule__FBYExpression__Group_0__2__Impl rule__FBYExpression__Group_0__3
+            // InternalKiCool.g:20490:1: ( rule__InitExpression__Group_0__2__Impl rule__InitExpression__Group_0__3 )
+            // InternalKiCool.g:20491:2: rule__InitExpression__Group_0__2__Impl rule__InitExpression__Group_0__3
             {
             pushFollow(FollowSets000.FOLLOW_104);
-            rule__FBYExpression__Group_0__2__Impl();
+            rule__InitExpression__Group_0__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__Group_0__3();
+            rule__InitExpression__Group_0__3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69259,30 +69259,30 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__2"
+    // $ANTLR end "rule__InitExpression__Group_0__2"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__2__Impl"
-    // InternalKiCool.g:20498:1: rule__FBYExpression__Group_0__2__Impl : ( ( rule__FBYExpression__OperatorAssignment_0_2 ) ) ;
-    public final void rule__FBYExpression__Group_0__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__2__Impl"
+    // InternalKiCool.g:20498:1: rule__InitExpression__Group_0__2__Impl : ( ( rule__InitExpression__OperatorAssignment_0_2 ) ) ;
+    public final void rule__InitExpression__Group_0__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20502:1: ( ( ( rule__FBYExpression__OperatorAssignment_0_2 ) ) )
-            // InternalKiCool.g:20503:1: ( ( rule__FBYExpression__OperatorAssignment_0_2 ) )
+            // InternalKiCool.g:20502:1: ( ( ( rule__InitExpression__OperatorAssignment_0_2 ) ) )
+            // InternalKiCool.g:20503:1: ( ( rule__InitExpression__OperatorAssignment_0_2 ) )
             {
-            // InternalKiCool.g:20503:1: ( ( rule__FBYExpression__OperatorAssignment_0_2 ) )
-            // InternalKiCool.g:20504:2: ( rule__FBYExpression__OperatorAssignment_0_2 )
+            // InternalKiCool.g:20503:1: ( ( rule__InitExpression__OperatorAssignment_0_2 ) )
+            // InternalKiCool.g:20504:2: ( rule__InitExpression__OperatorAssignment_0_2 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getOperatorAssignment_0_2()); 
+               before(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2()); 
             }
-            // InternalKiCool.g:20505:2: ( rule__FBYExpression__OperatorAssignment_0_2 )
-            // InternalKiCool.g:20505:3: rule__FBYExpression__OperatorAssignment_0_2
+            // InternalKiCool.g:20505:2: ( rule__InitExpression__OperatorAssignment_0_2 )
+            // InternalKiCool.g:20505:3: rule__InitExpression__OperatorAssignment_0_2
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__OperatorAssignment_0_2();
+            rule__InitExpression__OperatorAssignment_0_2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69290,7 +69290,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getOperatorAssignment_0_2()); 
+               after(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2()); 
             }
 
             }
@@ -69310,21 +69310,21 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__2__Impl"
+    // $ANTLR end "rule__InitExpression__Group_0__2__Impl"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__3"
-    // InternalKiCool.g:20513:1: rule__FBYExpression__Group_0__3 : rule__FBYExpression__Group_0__3__Impl ;
-    public final void rule__FBYExpression__Group_0__3() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__3"
+    // InternalKiCool.g:20513:1: rule__InitExpression__Group_0__3 : rule__InitExpression__Group_0__3__Impl ;
+    public final void rule__InitExpression__Group_0__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20517:1: ( rule__FBYExpression__Group_0__3__Impl )
-            // InternalKiCool.g:20518:2: rule__FBYExpression__Group_0__3__Impl
+            // InternalKiCool.g:20517:1: ( rule__InitExpression__Group_0__3__Impl )
+            // InternalKiCool.g:20518:2: rule__InitExpression__Group_0__3__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__Group_0__3__Impl();
+            rule__InitExpression__Group_0__3__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69343,30 +69343,30 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__3"
+    // $ANTLR end "rule__InitExpression__Group_0__3"
 
 
-    // $ANTLR start "rule__FBYExpression__Group_0__3__Impl"
-    // InternalKiCool.g:20524:1: rule__FBYExpression__Group_0__3__Impl : ( ( rule__FBYExpression__SubExpressionsAssignment_0_3 ) ) ;
-    public final void rule__FBYExpression__Group_0__3__Impl() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__Group_0__3__Impl"
+    // InternalKiCool.g:20524:1: rule__InitExpression__Group_0__3__Impl : ( ( rule__InitExpression__SubExpressionsAssignment_0_3 ) ) ;
+    public final void rule__InitExpression__Group_0__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:20528:1: ( ( ( rule__FBYExpression__SubExpressionsAssignment_0_3 ) ) )
-            // InternalKiCool.g:20529:1: ( ( rule__FBYExpression__SubExpressionsAssignment_0_3 ) )
+            // InternalKiCool.g:20528:1: ( ( ( rule__InitExpression__SubExpressionsAssignment_0_3 ) ) )
+            // InternalKiCool.g:20529:1: ( ( rule__InitExpression__SubExpressionsAssignment_0_3 ) )
             {
-            // InternalKiCool.g:20529:1: ( ( rule__FBYExpression__SubExpressionsAssignment_0_3 ) )
-            // InternalKiCool.g:20530:2: ( rule__FBYExpression__SubExpressionsAssignment_0_3 )
+            // InternalKiCool.g:20529:1: ( ( rule__InitExpression__SubExpressionsAssignment_0_3 ) )
+            // InternalKiCool.g:20530:2: ( rule__InitExpression__SubExpressionsAssignment_0_3 )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_3()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3()); 
             }
-            // InternalKiCool.g:20531:2: ( rule__FBYExpression__SubExpressionsAssignment_0_3 )
-            // InternalKiCool.g:20531:3: rule__FBYExpression__SubExpressionsAssignment_0_3
+            // InternalKiCool.g:20531:2: ( rule__InitExpression__SubExpressionsAssignment_0_3 )
+            // InternalKiCool.g:20531:3: rule__InitExpression__SubExpressionsAssignment_0_3
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__FBYExpression__SubExpressionsAssignment_0_3();
+            rule__InitExpression__SubExpressionsAssignment_0_3();
 
             state._fsp--;
             if (state.failed) return ;
@@ -69374,7 +69374,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_3()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3()); 
             }
 
             }
@@ -69394,7 +69394,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__Group_0__3__Impl"
+    // $ANTLR end "rule__InitExpression__Group_0__3__Impl"
 
 
     // $ANTLR start "rule__AtomicExpression__Group_2__0"
@@ -95543,9 +95543,9 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__TernaryOperation__SubExpressionsAssignment_0_5"
 
 
-    // $ANTLR start "rule__FBYExpression__SubExpressionsAssignment_0_1"
-    // InternalKiCool.g:29085:1: rule__FBYExpression__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
-    public final void rule__FBYExpression__SubExpressionsAssignment_0_1() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__SubExpressionsAssignment_0_1"
+    // InternalKiCool.g:29085:1: rule__InitExpression__SubExpressionsAssignment_0_1 : ( ruleAtomicValuedExpression ) ;
+    public final void rule__InitExpression__SubExpressionsAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -95557,7 +95557,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:29091:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleAtomicValuedExpression();
@@ -95565,7 +95565,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); 
             }
 
             }
@@ -95585,32 +95585,32 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__SubExpressionsAssignment_0_1"
+    // $ANTLR end "rule__InitExpression__SubExpressionsAssignment_0_1"
 
 
-    // $ANTLR start "rule__FBYExpression__OperatorAssignment_0_2"
-    // InternalKiCool.g:29100:1: rule__FBYExpression__OperatorAssignment_0_2 : ( ruleFBYOperator ) ;
-    public final void rule__FBYExpression__OperatorAssignment_0_2() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__OperatorAssignment_0_2"
+    // InternalKiCool.g:29100:1: rule__InitExpression__OperatorAssignment_0_2 : ( ruleInitOperator ) ;
+    public final void rule__InitExpression__OperatorAssignment_0_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKiCool.g:29104:1: ( ( ruleFBYOperator ) )
-            // InternalKiCool.g:29105:2: ( ruleFBYOperator )
+            // InternalKiCool.g:29104:1: ( ( ruleInitOperator ) )
+            // InternalKiCool.g:29105:2: ( ruleInitOperator )
             {
-            // InternalKiCool.g:29105:2: ( ruleFBYOperator )
-            // InternalKiCool.g:29106:3: ruleFBYOperator
+            // InternalKiCool.g:29105:2: ( ruleInitOperator )
+            // InternalKiCool.g:29106:3: ruleInitOperator
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getOperatorFBYOperatorEnumRuleCall_0_2_0()); 
+               before(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleFBYOperator();
+            ruleInitOperator();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getOperatorFBYOperatorEnumRuleCall_0_2_0()); 
+               after(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0()); 
             }
 
             }
@@ -95630,12 +95630,12 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__OperatorAssignment_0_2"
+    // $ANTLR end "rule__InitExpression__OperatorAssignment_0_2"
 
 
-    // $ANTLR start "rule__FBYExpression__SubExpressionsAssignment_0_3"
-    // InternalKiCool.g:29115:1: rule__FBYExpression__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
-    public final void rule__FBYExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
+    // $ANTLR start "rule__InitExpression__SubExpressionsAssignment_0_3"
+    // InternalKiCool.g:29115:1: rule__InitExpression__SubExpressionsAssignment_0_3 : ( ruleAtomicValuedExpression ) ;
+    public final void rule__InitExpression__SubExpressionsAssignment_0_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -95647,7 +95647,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             // InternalKiCool.g:29121:3: ruleAtomicValuedExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
+               before(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleAtomicValuedExpression();
@@ -95655,7 +95655,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
+               after(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); 
             }
 
             }
@@ -95675,7 +95675,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__FBYExpression__SubExpressionsAssignment_0_3"
+    // $ANTLR end "rule__InitExpression__SubExpressionsAssignment_0_3"
 
 
     // $ANTLR start "rule__ValuedObjectTestExpression__OperatorAssignment_0_1"
@@ -98990,20 +98990,20 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
 
     // $ANTLR start synpred45_InternalKiCool
     public final void synpred45_InternalKiCool_fragment() throws RecognitionException {   
-        // InternalKiCool.g:4009:2: ( ( ( rule__FBYExpression__Group_0__0 ) ) )
-        // InternalKiCool.g:4009:2: ( ( rule__FBYExpression__Group_0__0 ) )
+        // InternalKiCool.g:4009:2: ( ( ( rule__InitExpression__Group_0__0 ) ) )
+        // InternalKiCool.g:4009:2: ( ( rule__InitExpression__Group_0__0 ) )
         {
-        // InternalKiCool.g:4009:2: ( ( rule__FBYExpression__Group_0__0 ) )
-        // InternalKiCool.g:4010:3: ( rule__FBYExpression__Group_0__0 )
+        // InternalKiCool.g:4009:2: ( ( rule__InitExpression__Group_0__0 ) )
+        // InternalKiCool.g:4010:3: ( rule__InitExpression__Group_0__0 )
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getFBYExpressionAccess().getGroup_0()); 
+           before(grammarAccess.getInitExpressionAccess().getGroup_0()); 
         }
-        // InternalKiCool.g:4011:3: ( rule__FBYExpression__Group_0__0 )
-        // InternalKiCool.g:4011:4: rule__FBYExpression__Group_0__0
+        // InternalKiCool.g:4011:3: ( rule__InitExpression__Group_0__0 )
+        // InternalKiCool.g:4011:4: rule__InitExpression__Group_0__0
         {
         pushFollow(FollowSets000.FOLLOW_2);
-        rule__FBYExpression__Group_0__0();
+        rule__InitExpression__Group_0__0();
 
         state._fsp--;
         if (state.failed) return ;
@@ -101193,7 +101193,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_29;
         }
         public String getDescription() {
-            return "3983:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleFBYExpression ) );";
+            return "3983:1: rule__TernaryOperation__Alternatives : ( ( ( rule__TernaryOperation__Group_0__0 ) ) | ( ruleInitExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -101447,7 +101447,7 @@ public class InternalKiCoolParser extends AbstractInternalContentAssistParser {
             this.transition = dfa_29;
         }
         public String getDescription() {
-            return "4004:1: rule__FBYExpression__Alternatives : ( ( ( rule__FBYExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );";
+            return "4004:1: rule__InitExpression__Alternatives : ( ( ( rule__InitExpression__Group_0__0 ) ) | ( ruleAtomicValuedExpression ) );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;

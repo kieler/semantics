@@ -133,7 +133,7 @@
               class="de.cau.cs.kieler.sccharts.processors.UserSchedule">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.Fby">
+              class="de.cau.cs.kieler.sccharts.processors.InitOperator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.FinalRegion">

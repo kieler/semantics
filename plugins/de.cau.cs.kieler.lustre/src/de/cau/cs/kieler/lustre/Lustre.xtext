@@ -321,7 +321,6 @@ NegExpression returns kexpressions::Expression:
     | FBYExpression;
 
 // Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
-@Override 
 FBYExpression returns kexpressions::Expression:
     WhenExpression
     (
@@ -346,7 +345,8 @@ PreExpression returns kexpressions::Expression:
 @Override
 BoolExpression returns kexpressions::Expression: 
     InitExpression;
-    
+
+@Override    
 InitExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} subExpressions += TernaryOperation operator=InitOperator subExpressions += TernaryOperation
     | TernaryOperation;   
@@ -448,7 +448,6 @@ enum LogicalAndOperator returns kexpressions::OperatorType:
 enum NotOperator returns kexpressions::OperatorType:
     NOT="not";
 
-@Override 
 enum FBYOperator returns kexpressions::OperatorType:  
     FBY="fby";
 
@@ -463,6 +462,7 @@ enum CurrentOperator returns kexpressions::OperatorType:
 enum WhenOperator returns kexpressions::OperatorType:  
     WHEN="when";
 
+@Override 
 enum InitOperator returns kexpressions::OperatorType:  
     INIT="->";
 

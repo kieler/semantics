@@ -59,7 +59,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDivModExpressionAccess().getAlternatives_1(), "rule__DivModExpression__Alternatives_1");
 			builder.put(grammarAccess.getNegExpressionAccess().getAlternatives(), "rule__NegExpression__Alternatives");
 			builder.put(grammarAccess.getTernaryOperationAccess().getAlternatives(), "rule__TernaryOperation__Alternatives");
-			builder.put(grammarAccess.getFBYExpressionAccess().getAlternatives(), "rule__FBYExpression__Alternatives");
+			builder.put(grammarAccess.getInitExpressionAccess().getAlternatives(), "rule__InitExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
@@ -307,7 +307,7 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
 			builder.put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
-			builder.put(grammarAccess.getFBYExpressionAccess().getGroup_0(), "rule__FBYExpression__Group_0__0");
+			builder.put(grammarAccess.getInitExpressionAccess().getGroup_0(), "rule__InitExpression__Group_0__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
@@ -648,9 +648,9 @@ public class KiCoolParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_5(), "rule__TernaryOperation__SubExpressionsAssignment_0_5");
-			builder.put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__FBYExpression__SubExpressionsAssignment_0_1");
-			builder.put(grammarAccess.getFBYExpressionAccess().getOperatorAssignment_0_2(), "rule__FBYExpression__OperatorAssignment_0_2");
-			builder.put(grammarAccess.getFBYExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__FBYExpression__SubExpressionsAssignment_0_3");
+			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__InitExpression__SubExpressionsAssignment_0_1");
+			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2(), "rule__InitExpression__OperatorAssignment_0_2");
+			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__InitExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");

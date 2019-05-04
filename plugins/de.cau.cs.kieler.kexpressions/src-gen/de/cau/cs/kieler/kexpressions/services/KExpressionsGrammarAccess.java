@@ -2325,16 +2325,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
 		private final Assignment cSubExpressionsAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0 = (RuleCall)cSubExpressionsAssignment_0_5.eContents().get(0);
-		private final RuleCall cFBYExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cInitExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//TernaryOperation Expression:
 		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 		//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-		//	| FBYExpression;
+		//	| InitExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression | FBYExpression
+		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression | InitExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
@@ -2371,33 +2371,33 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicValuedExpression
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0; }
 		
-		//FBYExpression
-		public RuleCall getFBYExpressionParserRuleCall_1() { return cFBYExpressionParserRuleCall_1; }
+		//InitExpression
+		public RuleCall getInitExpressionParserRuleCall_1() { return cInitExpressionParserRuleCall_1; }
 	}
-	public class FBYExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FBYExpression");
+	public class InitExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0 = (RuleCall)cSubExpressionsAssignment_0_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cOperatorFBYOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
+		private final RuleCall cOperatorInitOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
 		private final RuleCall cAtomicValuedExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//FBYExpression Expression:
-		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+		//InitExpression Expression:
+		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
 		//	subExpressions+=AtomicValuedExpression
 		//	| AtomicValuedExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression
 		//| AtomicValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{OperatorExpression}
@@ -2409,11 +2409,11 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicValuedExpression
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
 		
-		//operator=FBYOperator
+		//operator=InitOperator
 		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
 		
-		//FBYOperator
-		public RuleCall getOperatorFBYOperatorEnumRuleCall_0_2_0() { return cOperatorFBYOperatorEnumRuleCall_0_2_0; }
+		//InitOperator
+		public RuleCall getOperatorInitOperatorEnumRuleCall_0_2_0() { return cOperatorInitOperatorEnumRuleCall_0_2_0; }
 		
 		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
@@ -3902,20 +3902,20 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//"?"
 		public Keyword getCONDITIONALQuestionMarkKeyword_0() { return cCONDITIONALQuestionMarkKeyword_0; }
 	}
-	public class FBYOperatorElements extends AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.FBYOperator");
-		private final EnumLiteralDeclaration cFBYEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cFBYHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cFBYEnumLiteralDeclaration.eContents().get(0);
+	public class InitOperatorElements extends AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.InitOperator");
+		private final EnumLiteralDeclaration cINITEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cINITHyphenMinusGreaterThanSignKeyword_0 = (Keyword)cINITEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum FBYOperator returns OperatorType:
-		//	FBY="->";
+		//enum InitOperator returns OperatorType:
+		//	INIT="->";
 		public EnumRule getRule() { return rule; }
 		
-		//FBY="->"
-		public EnumLiteralDeclaration getFBYEnumLiteralDeclaration() { return cFBYEnumLiteralDeclaration; }
+		//INIT="->"
+		public EnumLiteralDeclaration getINITEnumLiteralDeclaration() { return cINITEnumLiteralDeclaration; }
 		
 		//"->"
-		public Keyword getFBYHyphenMinusGreaterThanSignKeyword_0() { return cFBYHyphenMinusGreaterThanSignKeyword_0; }
+		public Keyword getINITHyphenMinusGreaterThanSignKeyword_0() { return cINITHyphenMinusGreaterThanSignKeyword_0; }
 	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ValueType");
@@ -4109,7 +4109,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final ModExpressionElements pModExpression;
 	private final NegExpressionElements pNegExpression;
 	private final TernaryOperationElements pTernaryOperation;
-	private final FBYExpressionElements pFBYExpression;
+	private final InitExpressionElements pInitExpression;
 	private final AtomicExpressionElements pAtomicExpression;
 	private final AtomicValuedExpressionElements pAtomicValuedExpression;
 	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
@@ -4152,7 +4152,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private final PostfixAddElements ePostfixAdd;
 	private final PostfixSubElements ePostfixSub;
 	private final ConditionalOperatorElements eConditionalOperator;
-	private final FBYOperatorElements eFBYOperator;
+	private final InitOperatorElements eInitOperator;
 	private final ValueTypeElements eValueType;
 	private final HostTypeElements eHostType;
 	private final StructTypeElements eStructType;
@@ -4215,7 +4215,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pModExpression = new ModExpressionElements();
 		this.pNegExpression = new NegExpressionElements();
 		this.pTernaryOperation = new TernaryOperationElements();
-		this.pFBYExpression = new FBYExpressionElements();
+		this.pInitExpression = new InitExpressionElements();
 		this.pAtomicExpression = new AtomicExpressionElements();
 		this.pAtomicValuedExpression = new AtomicValuedExpressionElements();
 		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
@@ -4258,7 +4258,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		this.ePostfixAdd = new PostfixAddElements();
 		this.ePostfixSub = new PostfixSubElements();
 		this.eConditionalOperator = new ConditionalOperatorElements();
-		this.eFBYOperator = new FBYOperatorElements();
+		this.eInitOperator = new InitOperatorElements();
 		this.eValueType = new ValueTypeElements();
 		this.eHostType = new HostTypeElements();
 		this.eStructType = new StructTypeElements();
@@ -4760,7 +4760,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
 	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| FBYExpression;
+	//	| InitExpression;
 	public TernaryOperationElements getTernaryOperationAccess() {
 		return pTernaryOperation;
 	}
@@ -4769,16 +4769,16 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//FBYExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//InitExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
 	//	subExpressions+=AtomicValuedExpression
 	//	| AtomicValuedExpression;
-	public FBYExpressionElements getFBYExpressionAccess() {
-		return pFBYExpression;
+	public InitExpressionElements getInitExpressionAccess() {
+		return pInitExpression;
 	}
 	
-	public ParserRule getFBYExpressionRule() {
-		return getFBYExpressionAccess().getRule();
+	public ParserRule getInitExpressionRule() {
+		return getInitExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -5255,14 +5255,14 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 	
-	//enum FBYOperator returns OperatorType:
-	//	FBY="->";
-	public FBYOperatorElements getFBYOperatorAccess() {
-		return eFBYOperator;
+	//enum InitOperator returns OperatorType:
+	//	INIT="->";
+	public InitOperatorElements getInitOperatorAccess() {
+		return eInitOperator;
 	}
 	
-	public EnumRule getFBYOperatorRule() {
-		return getFBYOperatorAccess().getRule();
+	public EnumRule getInitOperatorRule() {
+		return getInitOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

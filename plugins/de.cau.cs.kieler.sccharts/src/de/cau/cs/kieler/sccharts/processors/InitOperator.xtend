@@ -42,7 +42,7 @@ import de.cau.cs.kieler.kexpressions.Expression
  * @kieler.design 2018-01-29 proposed 
  * @kieler.rating 2018-01-29 proposed yellow
  */
-class Fby extends SCChartsProcessor implements Traceable {
+class InitOperator extends SCChartsProcessor implements Traceable {
     
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsStateExtensions
@@ -55,27 +55,27 @@ class Fby extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsTypeExtensions
     
     
-    static val GENERATED_PREFIX = "__fby_"
+    static val GENERATED_PREFIX = "__iop_"
     
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.fby"
+        "de.cau.cs.kieler.sccharts.processors.initOperator"
     }
     
     override getName() {
-        "Followed By"
+        "Init Operator"
     }
     
     override process() {
         for (rootState : getModel.rootStates) {
-            rootState.transformFby
+            rootState.transformInitOperator
         }
     }
     
-    def transformFby(State rootState) {
-        val allFbys = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.FBY ].toList
-        val fbyFbyParents = <OperatorExpression, ValuedObject> newHashMap 
+    def transformInitOperator(State rootState) {
+        val allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.FBY ].toList
+        val initInitParents = <OperatorExpression, ValuedObject> newHashMap 
         
-        for (fby : allFbys.indexed) {
+        for (fby : allInits.indexed) {
             val action = fby.value.enclosingAction
             val parent = if (action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
         
@@ -85,9 +85,9 @@ class Fby extends SCChartsProcessor implements Traceable {
                 voStore.update(fbyTrigger, SCCHARTS_GENERATED)
                 
                 val second = fby.value.subExpressions.get(1)
-                val followingFby = if (second.isFollowedBy) second else second.eAllContents.filter(OperatorExpression).filter[ isFollowedBy ].head
+                val followingFby = if (second.isInitOperator) second else second.eAllContents.filter(OperatorExpression).filter[ isInitOperator ].head
                 if (followingFby !== null) {
-                    fbyFbyParents.put(followingFby as OperatorExpression, fbyTrigger)
+                    initInitParents.put(followingFby as OperatorExpression, fbyTrigger)
                 }
                 
                 val localVariable = createValuedObject => [ name = GENERATED_PREFIX + fby.key ]
@@ -107,7 +107,7 @@ class Fby extends SCChartsProcessor implements Traceable {
                 delayTransition.effects += createAssignment(fbyTrigger, TRUE)
                 delayTransition.effects += createAssignment(localVariable, fby.value.subExpressions.head)
                 
-                val myTrigger = fbyFbyParents.get(fby.value)
+                val myTrigger = initInitParents.get(fby.value)
                 if (myTrigger !== null) {
                     initialTransition.trigger = myTrigger.reference
                 }
@@ -117,8 +117,8 @@ class Fby extends SCChartsProcessor implements Traceable {
         }
     }
     
-    private def boolean isFollowedBy(Expression expression) {
-        expression instanceof OperatorExpression && expression.asOperatorExpression.operator == OperatorType.FBY
+    private def boolean isInitOperator(Expression expression) {
+        expression instanceof OperatorExpression && expression.asOperatorExpression.operator == OperatorType.INIT
     }
     
 }
