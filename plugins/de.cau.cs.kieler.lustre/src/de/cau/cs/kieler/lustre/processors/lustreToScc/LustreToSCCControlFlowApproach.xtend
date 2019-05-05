@@ -184,6 +184,9 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 case INIT: {
                     return transformInit(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
+                case PRE: {
+                    return transformPre(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
+                }
                 case CONDITIONAL: {
                     return transformConditional(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
@@ -200,6 +203,42 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
             }
         }
 
+    }
+    
+    def transformPre(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("_v" + varNameIdx++, inferType(expression), varState)
+
+        val cfRegion = if(controlflowRegion === null) (createControlflowRegion(state, "_r" + regionNameIdx++)  => [label = it.ID]) else controlflowRegion
+        val initalState = cfRegion.createInitialState("_s" + stateNameIdx++)
+        val subExpressionState = cfRegion.createState("_s" + stateNameIdx++)
+
+        val transformedExpression = transformExpression(expression, state)
+
+        val firstTransition = createImmediateTransitionTo(initalState, subExpressionState)
+        var assignment = createAssignment => [
+            reference = newValObj.reference
+            it.expression = transformedExpression
+        ]
+
+        if (subExpressionState.isHierarchical) {
+            val lastState = cfRegion.createFinalState("_s" + stateNameIdx++)
+            var transition = createImmediateTransitionTo(subExpressionState, lastState)
+            transition.preemption = PreemptionType.TERMINATION
+            transition.addAssignment(assignment)
+            
+            if (state.eContainer === null) {
+                createTransitionTo(lastState, initalState)
+            }
+        } else {
+            if (state.eContainer !== null) {
+                subExpressionState.final = true
+            }
+            firstTransition.addAssignment(assignment)
+        
+            createTransitionTo(subExpressionState, initalState)
+        }
+
+        return newValObj.reference
     }
     
     private def Expression transformWhen(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
