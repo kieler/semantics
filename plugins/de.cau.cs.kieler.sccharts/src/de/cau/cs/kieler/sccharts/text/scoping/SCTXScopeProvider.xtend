@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 import de.cau.cs.kieler.sccharts.ClassDeclaration
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 /**
  * This class contains custom scoping description.
@@ -205,6 +206,24 @@ class SCTXScopeProvider extends KExtScopeProvider {
             return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
         }
         return IScope.NULLSCOPE
+    }
+    
+    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
+        Function1<? super VariableDeclaration, Boolean> predicate
+    ) {
+        if (declaration.reference === null) {
+            // IMPORTANT: This can happen if the resource that should be imported does not exist. 
+            // In this case, the scope given to the linker was null previously. This causes a NPE. 
+            // Return a NullScope instead.
+            return IScope.NULLSCOPE
+        }
+        
+        if (declaration.reference instanceof State) {
+            val state = declaration.reference as State
+            return Scopes.scopeFor(state.methods, super.getScopeForReferencedDeclarationObject(declaration, predicate))
+        } else {
+            return super.getScopeForReferencedDeclarationObject(declaration, predicate)
+        }
     }
 
 }
