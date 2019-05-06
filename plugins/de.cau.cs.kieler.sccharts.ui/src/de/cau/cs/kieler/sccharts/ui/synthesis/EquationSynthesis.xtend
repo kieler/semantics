@@ -294,6 +294,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //                    if (wire.wireIsLocal) LOCAL_ID else 
                         OUTPUT_ID
                 )
+//                wire.sourceIsEquationTarget = false
                 wire.semanticSink.addPort(IN_PORT, node.ports.head)
                 val text = wire.semanticSink.serializeHR.toString
                 node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_OUTPUT_LEFT, PADDING_OUTPUT_RIGHT)

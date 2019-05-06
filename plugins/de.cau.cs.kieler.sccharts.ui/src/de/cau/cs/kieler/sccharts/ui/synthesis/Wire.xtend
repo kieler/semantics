@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * @author ssm
@@ -44,6 +45,7 @@ class Wire {
     @Accessors var boolean sourceIsDeclaredInEquationScope = false
     @Accessors var boolean sinkIsDeclaredInEquationScope = false
     @Accessors var boolean sourceIsEquationTarget = false
+    @Accessors var Assignment equation = null
 
     new(Expression source, Expression sink, Wiring wiring) {
         this.wiring = wiring

@@ -123,6 +123,14 @@ class KExpressionsValuedObjectExtensions {
         valuedObjectReference.valuedObject.isScheduleReference
     }
     
+    def isInputVariableReference(ValuedObjectReference vor) {
+        vor.isVariableReference && vor.valuedObject.variableDeclaration.input
+    }
+    
+    def isOutputVariableReference(ValuedObjectReference vor) {
+        vor.isVariableReference && vor.valuedObject.variableDeclaration.output
+    }
+    
     def ValueType getType(ValuedObject valuedObject) {
         if (valuedObject.isModelReference) return ValueType::REFERENCE;
         if (valuedObject.isScheduleReference) return ValueType::SCHEDULE;
