@@ -172,6 +172,11 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 }
             }
             
+            // Methods in classes
+            if (declarationScope instanceof ClassDeclaration) {
+                candidates.addAll(declarationScope.methods)
+            }
+            
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)

@@ -29,6 +29,7 @@ import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.PeriodAction;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.Region;
@@ -189,6 +190,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass classDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass policyRegionEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -902,6 +910,26 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EReference getClassDeclaration_Policy() {
+        return (EReference)classDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getPolicyRegion() {
+        return policyRegionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -1067,6 +1095,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         classDeclarationEClass = createEClass(CLASS_DECLARATION);
         createEReference(classDeclarationEClass, CLASS_DECLARATION__METHODS);
         createEAttribute(classDeclarationEClass, CLASS_DECLARATION__HOST);
+        createEReference(classDeclarationEClass, CLASS_DECLARATION__POLICY);
+
+        policyRegionEClass = createEClass(POLICY_REGION);
 
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
@@ -1136,6 +1167,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         methodEClass.getESuperTypes().add(theSCLPackage.getScope());
         methodEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
         classDeclarationEClass.getESuperTypes().add(theKExtPackage.getStructDeclaration());
+        policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1220,6 +1252,9 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(classDeclarationEClass, ClassDeclaration.class, "ClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getClassDeclaration_Methods(), this.getMethod(), null, "methods", null, 0, -1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getClassDeclaration_Host(), ecorePackage.getEBoolean(), "host", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

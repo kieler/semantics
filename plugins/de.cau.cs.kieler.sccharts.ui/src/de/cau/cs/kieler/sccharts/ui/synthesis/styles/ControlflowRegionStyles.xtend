@@ -98,6 +98,14 @@ class ControlflowRegionStyles {
         ]
     }
     
+    def KRectangle addPolicyRegionStyle(KRectangle rect) {
+        return rect => [
+            background = REGION_BACKGROUND.color
+            foreground = USER_SCHEDULE_COLOR.color
+            lineWidth = 1.3f;
+        ]
+    }
+    
     def KRectangle addMethodFigure(KNode node) {
         return node.addRegionFigure => [
             background = METHOD_BACKGROUND.color

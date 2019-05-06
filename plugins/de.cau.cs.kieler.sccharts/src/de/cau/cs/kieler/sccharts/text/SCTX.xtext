@@ -246,6 +246,7 @@ ClassDeclaration returns sccharts::ClassDeclaration:
     type = ClassType
     (name = ID)?
     '{'
+        policy=PolicyRegion?
         declarations+=DeclarationWOSemicolon*
         methods+=(MethodDeclaration)*
     '}'
@@ -284,8 +285,31 @@ MethodImplementation returns sccharts::Method:
 
 @Override
 Statement returns scl::Statement:
-    SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | ScopeStatement | Return
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
 ;
+
+PolicyRegion returns sccharts::PolicyRegion:
+    'policy' name=ID label=STRING?
+    '{'
+    declarations+=DeclarationWOSemicolon*
+    states+=PolicyState+
+    '}';
+
+PolicyState returns sccharts::State:
+    annotations+=Annotation*
+    initial?='initial'?
+    'state' name=ID label=STRING?
+    outgoingTransitions+=PolicyTransition*;
+
+PolicyTransition returns sccharts::Transition:
+    {sccharts::Transition}
+    annotations+=RestrictedTypeAnnotation*
+    ('if' (trigger=LogicalOrExpression | trigger=ValuedObjectReference) 
+     (':' effects+=PureEmission (',' effects+=PureEmission)*)?
+    )?
+    'go to'
+    targetState=[sccharts::State|ID]    
+    ('label' label=STRING)?;
 
 // ------------ //
 //  Enum Rules  // 

@@ -2412,13 +2412,194 @@ public interface SCChartsPackage extends EPackage {
     int CLASS_DECLARATION__HOST = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 1;
 
     /**
+     * The feature id for the '<em><b>Policy</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__POLICY = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Class Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION_FEATURE_COUNT = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 2;
+    int CLASS_DECLARATION_FEATURE_COUNT = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 3;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
+     * @generated
+     */
+    int POLICY_REGION = 19;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ANNOTATIONS = CONTROLFLOW_REGION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__DECLARATIONS = CONTROLFLOW_REGION__DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__NAME = CONTROLFLOW_REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__SCHEDULE = CONTROLFLOW_REGION__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__OUTGOING_LINKS = CONTROLFLOW_REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__INCOMING_LINKS = CONTROLFLOW_REGION__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__LABEL = CONTROLFLOW_REGION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ACTIONS = CONTROLFLOW_REGION__ACTIONS;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__REFERENCE = CONTROLFLOW_REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__METHODS = CONTROLFLOW_REGION__METHODS;
+
+    /**
+     * The feature id for the '<em><b>Parent State</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__PARENT_STATE = CONTROLFLOW_REGION__PARENT_STATE;
+
+    /**
+     * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__COUNTER_VARIABLE = CONTROLFLOW_REGION__COUNTER_VARIABLE;
+
+    /**
+     * The feature id for the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FOR_START = CONTROLFLOW_REGION__FOR_START;
+
+    /**
+     * The feature id for the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FOR_END = CONTROLFLOW_REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__OVERRIDE = CONTROLFLOW_REGION__OVERRIDE;
+
+    /**
+     * The feature id for the '<em><b>States</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__STATES = CONTROLFLOW_REGION__STATES;
+
+    /**
+     * The feature id for the '<em><b>Final</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FINAL = CONTROLFLOW_REGION__FINAL;
+
+    /**
+     * The number of structural features of the '<em>Policy Region</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION_FEATURE_COUNT = CONTROLFLOW_REGION_FEATURE_COUNT + 0;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
@@ -2428,7 +2609,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 19;
+    int PREEMPTION_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2438,7 +2619,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 20;
+    int HISTORY_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2448,7 +2629,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 21;
+    int DELAY_TYPE = 22;
 
 
     /**
@@ -3137,6 +3318,27 @@ public interface SCChartsPackage extends EPackage {
     EAttribute getClassDeclaration_Host();
 
     /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy <em>Policy</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Policy</em>'.
+     * @see de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy()
+     * @see #getClassDeclaration()
+     * @generated
+     */
+    EReference getClassDeclaration_Policy();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Policy Region</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyRegion
+     * @generated
+     */
+    EClass getPolicyRegion();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3737,6 +3939,24 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EAttribute CLASS_DECLARATION__HOST = eINSTANCE.getClassDeclaration_Host();
+
+        /**
+         * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference CLASS_DECLARATION__POLICY = eINSTANCE.getClassDeclaration_Policy();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
+         * @generated
+         */
+        EClass POLICY_REGION = eINSTANCE.getPolicyRegion();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

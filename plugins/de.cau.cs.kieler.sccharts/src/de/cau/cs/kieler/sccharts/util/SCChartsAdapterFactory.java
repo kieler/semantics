@@ -175,6 +175,10 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createClassDeclarationAdapter();
             }
             @Override
+            public Adapter casePolicyRegion(PolicyRegion object) {
+                return createPolicyRegionAdapter();
+            }
+            @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
             }
@@ -507,6 +511,20 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createClassDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.sccharts.PolicyRegion
+     * @generated
+     */
+    public Adapter createPolicyRegionAdapter() {
         return null;
     }
 

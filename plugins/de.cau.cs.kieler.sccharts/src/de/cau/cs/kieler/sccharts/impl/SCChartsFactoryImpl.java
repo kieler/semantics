@@ -90,6 +90,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
             case SCChartsPackage.METHOD: return createMethod();
             case SCChartsPackage.CLASS_DECLARATION: return createClassDeclaration();
+            case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -274,6 +275,17 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public ClassDeclaration createClassDeclaration() {
         ClassDeclarationImpl classDeclaration = new ClassDeclarationImpl();
         return classDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PolicyRegion createPolicyRegion() {
+        PolicyRegionImpl policyRegion = new PolicyRegionImpl();
+        return policyRegion;
     }
 
     /**

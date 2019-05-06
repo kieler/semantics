@@ -101,6 +101,8 @@
     <genClasses ecoreClass="sccharts.ecore#//ClassDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ClassDeclaration/methods"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ClassDeclaration/host"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ClassDeclaration/policy"/>
     </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
   </genPackages>
 </genmodel:GenModel>

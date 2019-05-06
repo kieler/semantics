@@ -59,6 +59,7 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.PeriodAction;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -1401,6 +1402,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
 				return; 
+			case SCChartsPackage.POLICY_REGION:
+				sequence_PolicyRegion(context, (PolicyRegion) semanticObject); 
+				return; 
 			case SCChartsPackage.PRECEDING_ACTION:
 				sequence_PrecedingAction(context, (PrecedingAction) semanticObject); 
 				return; 
@@ -1413,6 +1417,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.STATE:
 				if (rule == grammarAccess.getImplicitStateRule()) {
 					sequence_ImplicitState(context, (State) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPolicyStateRule()) {
+					sequence_PolicyState(context, (State) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootStateRule()) {
@@ -1431,8 +1439,15 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				sequence_SuspendAction(context, (SuspendAction) semanticObject); 
 				return; 
 			case SCChartsPackage.TRANSITION:
-				sequence_Transition(context, (Transition) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getPolicyTransitionRule()) {
+					sequence_PolicyTransition(context, (Transition) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getTransitionRule()) {
+					sequence_Transition(context, (Transition) semanticObject); 
+					return; 
+				}
+				else break;
 			}
 		else if (epackage == SCLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
@@ -1451,12 +1466,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case SCLPackage.CONDITIONAL:
-				if (rule == grammarAccess.getConditionalRule()) {
+				if (rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStatementRule()) {
-					sequence_Conditional_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLegacyConditionalRule()) {
@@ -1760,6 +1772,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         static?='static'? 
 	 *         type=ClassType 
 	 *         name=ID? 
+	 *         policy=PolicyRegion? 
 	 *         declarations+=DeclarationWOSemicolon* 
 	 *         methods+=MethodDeclaration* 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
@@ -1966,6 +1979,47 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (annotations+=RestrictedTypeAnnotation* delay=DelayType? trigger=ValuedExpression label=STRING?)
 	 */
 	protected void sequence_PeriodAction(ISerializationContext context, PeriodAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PolicyRegion returns PolicyRegion
+	 *
+	 * Constraint:
+	 *     (name=ID label=STRING? declarations+=DeclarationWOSemicolon* states+=PolicyState+)
+	 */
+	protected void sequence_PolicyRegion(ISerializationContext context, PolicyRegion semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PolicyState returns State
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* initial?='initial'? name=ID label=STRING? outgoingTransitions+=PolicyTransition*)
+	 */
+	protected void sequence_PolicyState(ISerializationContext context, State semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PolicyTransition returns Transition
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=RestrictedTypeAnnotation* 
+	 *         ((trigger=LogicalOrExpression | trigger=ValuedObjectReference) (effects+=PureEmission effects+=PureEmission*)?)? 
+	 *         targetState=[State|ID] 
+	 *         label=STRING?
+	 *     )
+	 */
+	protected void sequence_PolicyTransition(ISerializationContext context, Transition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

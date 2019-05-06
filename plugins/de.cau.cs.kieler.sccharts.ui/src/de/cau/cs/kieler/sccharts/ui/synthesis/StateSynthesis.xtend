@@ -114,6 +114,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
+    @Inject extension PolicySynthesis
     @Inject extension MethodSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
@@ -299,6 +300,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
         }
         
+        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val policies = newArrayList
+            policies += state.declarations.filter(ClassDeclaration).map[policy].filterNull
+            policies += state.regions.map[declarations].flatten.filter(ClassDeclaration).map[policy].filterNull
+            for (policy : policies.reverseView) {
+                node.children.addAll(0, policy.transform)
+            }
+        }
+        
         if (regionDependencies) {
             state.drawRegionDependencies
         }
@@ -328,6 +338,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             associateWith(struct)
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
+        if (struct instanceof ClassDeclaration) {
+            if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
+                val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+                components += new Pair("policy", TextFormat.KEYWORD)
+                components += new Pair(if (struct.policy.label.nullOrEmpty) struct.policy.label else struct.policy.name, TextFormat.TEXT)
+                node.addDeclarationLabel(components, indent + 1)
+            }
+        }
         for (declaration : struct.declarations) {
             if (declaration instanceof StructDeclaration) {
                 node.addStructDeclarations(declaration, indent + 1)
@@ -349,14 +367,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     
     /** Configures the default layout of children (regions in the state) */
-    private def static void configureLayout(KNode node) {
+    def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
     
-    private def static void configureLayoutRegionDependencies(KNode node) {
+    def static void configureLayoutRegionDependencies(KNode node) {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5));
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")

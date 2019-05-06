@@ -17,6 +17,7 @@ import de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl;
 
 import de.cau.cs.kieler.sccharts.ClassDeclaration;
 import de.cau.cs.kieler.sccharts.Method;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
 import java.util.Collection;
@@ -43,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl#getMethods <em>Methods</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl#isHost <em>Host</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl#getPolicy <em>Policy</em>}</li>
  * </ul>
  *
  * @generated
@@ -84,6 +86,16 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
      * @ordered
      */
     protected boolean host = HOST_EDEFAULT;
+
+    /**
+     * The cached value of the '{@link #getPolicy() <em>Policy</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPolicy()
+     * @generated
+     * @ordered
+     */
+    protected PolicyRegion policy;
 
     /**
      * <!-- begin-user-doc -->
@@ -146,10 +158,57 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
      * @generated
      */
     @Override
+    public PolicyRegion getPolicy() {
+        return policy;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetPolicy(PolicyRegion newPolicy, NotificationChain msgs) {
+        PolicyRegion oldPolicy = policy;
+        policy = newPolicy;
+        if (eNotificationRequired()) {
+            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SCChartsPackage.CLASS_DECLARATION__POLICY, oldPolicy, newPolicy);
+            if (msgs == null) msgs = notification; else msgs.add(notification);
+        }
+        return msgs;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setPolicy(PolicyRegion newPolicy) {
+        if (newPolicy != policy) {
+            NotificationChain msgs = null;
+            if (policy != null)
+                msgs = ((InternalEObject)policy).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.CLASS_DECLARATION__POLICY, null, msgs);
+            if (newPolicy != null)
+                msgs = ((InternalEObject)newPolicy).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SCChartsPackage.CLASS_DECLARATION__POLICY, null, msgs);
+            msgs = basicSetPolicy(newPolicy, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, SCChartsPackage.CLASS_DECLARATION__POLICY, newPolicy, newPolicy));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case SCChartsPackage.CLASS_DECLARATION__METHODS:
                 return ((InternalEList<?>)getMethods()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.CLASS_DECLARATION__POLICY:
+                return basicSetPolicy(null, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -166,6 +225,8 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
                 return getMethods();
             case SCChartsPackage.CLASS_DECLARATION__HOST:
                 return isHost();
+            case SCChartsPackage.CLASS_DECLARATION__POLICY:
+                return getPolicy();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -186,6 +247,9 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
             case SCChartsPackage.CLASS_DECLARATION__HOST:
                 setHost((Boolean)newValue);
                 return;
+            case SCChartsPackage.CLASS_DECLARATION__POLICY:
+                setPolicy((PolicyRegion)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -204,6 +268,9 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
             case SCChartsPackage.CLASS_DECLARATION__HOST:
                 setHost(HOST_EDEFAULT);
                 return;
+            case SCChartsPackage.CLASS_DECLARATION__POLICY:
+                setPolicy((PolicyRegion)null);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -220,6 +287,8 @@ public class ClassDeclarationImpl extends StructDeclarationImpl implements Class
                 return methods != null && !methods.isEmpty();
             case SCChartsPackage.CLASS_DECLARATION__HOST:
                 return host != HOST_EDEFAULT;
+            case SCChartsPackage.CLASS_DECLARATION__POLICY:
+                return policy != null;
         }
         return super.eIsSet(featureID);
     }

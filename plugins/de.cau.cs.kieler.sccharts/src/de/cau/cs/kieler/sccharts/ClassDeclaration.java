@@ -28,6 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getMethods <em>Methods</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.ClassDeclaration#isHost <em>Host</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy <em>Policy</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getClassDeclaration()
@@ -75,5 +76,27 @@ public interface ClassDeclaration extends StructDeclaration {
      * @generated
      */
     void setHost(boolean value);
+
+    /**
+     * Returns the value of the '<em><b>Policy</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Policy</em>' containment reference.
+     * @see #setPolicy(PolicyRegion)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getClassDeclaration_Policy()
+     * @model containment="true"
+     * @generated
+     */
+    PolicyRegion getPolicy();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy <em>Policy</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Policy</em>' containment reference.
+     * @see #getPolicy()
+     * @generated
+     */
+    void setPolicy(PolicyRegion value);
 
 } // ClassDeclaration

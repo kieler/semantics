@@ -33,6 +33,10 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.sccharts.Method
+import de.cau.cs.kieler.sccharts.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -118,6 +122,43 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             ]
             edge.setUserScheduleStyle
         }
+        if (PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val calls = transition.eAllContents.filter(ReferenceCall).toList
+            val userSchedules = newHashSet
+            for (call : calls) {
+                var Method method = null
+                if (call.valuedObject instanceof Method) {
+                    method = call.valuedObject as Method
+                }
+                if (method === null) {
+                    var vor = call as ValuedObjectReference
+                    while (vor.subReference !== null && method === null) {
+                        if (vor.subReference.valuedObject instanceof Method) {
+                            method = vor.subReference.valuedObject as Method
+                        }
+                        vor = vor.subReference
+                    }
+                }
+                if (method !== null) {
+                    if (!method.schedule.nullOrEmpty) {
+                        userSchedules += method.schedule.map[valuedObject.name]
+                    }
+                    if (method.eContainer instanceof ClassDeclaration) {
+                        val classDecl = method.eContainer as ClassDeclaration
+                        if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
+                            userSchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
+                        }
+                    }
+                }
+            }
+            if (!userSchedules.empty) {
+//                edge.addTailLabel(userSchedules.join(", ")) => [
+//                    associateWith(transition)
+//                    configureLabelLOD(transition)
+//                ]
+                edge.setUserScheduleStyle
+            }
+        }
         
         switch (transition.history) {
             case SHALLOW: edge.addShallowHistoryDecorator
@@ -143,7 +184,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     configureLabelLOD(transition)
                 ]
             ]
-        }     
+        }    
         
         //Configure selection style
         edge.setSelectionStyle

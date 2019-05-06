@@ -304,6 +304,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCChartsPackage.POLICY_REGION: {
+                PolicyRegion policyRegion = (PolicyRegion)theEObject;
+                T result = casePolicyRegion(policyRegion);
+                if (result == null) result = caseControlflowRegion(policyRegion);
+                if (result == null) result = caseRegion(policyRegion);
+                if (result == null) result = caseScope(policyRegion);
+                if (result == null) result = caseAnnotatable(policyRegion);
+                if (result == null) result = caseDeclarationScope(policyRegion);
+                if (result == null) result = caseNamedObject(policyRegion);
+                if (result == null) result = caseSchedulable(policyRegion);
+                if (result == null) result = caseLinkable(policyRegion);
+                if (result == null) result = caseNameable(policyRegion);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -575,6 +590,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseClassDeclaration(ClassDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Policy Region</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Policy Region</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePolicyRegion(PolicyRegion object) {
         return null;
     }
 

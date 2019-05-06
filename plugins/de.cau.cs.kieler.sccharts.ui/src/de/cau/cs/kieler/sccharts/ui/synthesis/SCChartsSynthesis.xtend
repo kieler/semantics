@@ -67,6 +67,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject TransitionSynthesis transitionSynthesis
     @Inject CommentSynthesis commentSynthesis
     @Inject MethodSynthesis methodSynthesis
+    @Inject PolicySynthesis policySynthesis
         
     @Inject SynthesisHooks hooks  
 
@@ -97,7 +98,15 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_INHERITANCE_EDGES, SHOW_BINDINGS, SHOW_COMMENTS, SHOW_CAUSAL_DATAFLOW)
+        options.addAll(
+            USE_KLAY,
+            SHOW_ALL_SCCHARTS,
+            SHOW_INHERITANCE,
+            SHOW_INHERITANCE_EDGES,
+            SHOW_BINDINGS,
+            SHOW_COMMENTS,
+            SHOW_CAUSAL_DATAFLOW
+        )
 
         // Adaptive Zoom
         options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
@@ -109,6 +118,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(dataflowSynthesis.displayedSynthesisOptions)
         options.addAll(commentSynthesis.displayedSynthesisOptions)
         options.addAll(methodSynthesis.displayedSynthesisOptions)
+        options.addAll(policySynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]

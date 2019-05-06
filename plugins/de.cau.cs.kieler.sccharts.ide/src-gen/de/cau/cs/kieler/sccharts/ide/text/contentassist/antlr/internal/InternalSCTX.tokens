@@ -61,7 +61,7 @@
 'delayed'=45
 'do'=104
 'during'=113
-'else'=123
+'else'=124
 'end'=125
 'entry'=111
 'exit'=114
@@ -73,7 +73,7 @@
 'for'=108
 'global'=130
 'go to'=41
-'goto'=121
+'goto'=122
 'history'=50
 'host'=37
 'if'=102
@@ -90,7 +90,7 @@
 'method'=119
 'min'=84
 'min='=72
-'module'=120
+'module'=121
 'nondeterministic'=145
 'none'=82
 'null'=137
@@ -98,6 +98,7 @@
 'output'=152
 'override'=147
 'period'=118
+'policy'=120
 'pre'=18
 'preceding'=116
 'print'=132
@@ -110,7 +111,7 @@
 'ref'=128
 'region'=107
 'reset'=48
-'return'=122
+'return'=123
 'scchart'=89
 'schedule'=96
 'scope'=126
@@ -123,7 +124,6 @@
 'succeeding'=117
 'super.'=144
 'suspend'=115
-'then'=124
 'to'=99
 'undefined'=44
 'val'=29
