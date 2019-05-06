@@ -363,7 +363,7 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
     | InitExpression;
     
 InitExpression returns Expression:

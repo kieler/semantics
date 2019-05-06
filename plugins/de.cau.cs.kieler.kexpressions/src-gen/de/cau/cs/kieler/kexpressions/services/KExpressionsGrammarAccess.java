@@ -2322,23 +2322,24 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperatorConditionalOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
 		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
-		private final Keyword cColonKeyword_0_4 = (Keyword)cGroup_0.eContents().get(4);
-		private final Assignment cSubExpressionsAssignment_0_5 = (Assignment)cGroup_0.eContents().get(5);
-		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0 = (RuleCall)cSubExpressionsAssignment_0_5.eContents().get(0);
+		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
+		private final Keyword cColonKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0 = (RuleCall)cSubExpressionsAssignment_0_4_1.eContents().get(0);
 		private final RuleCall cInitExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//TernaryOperation Expression:
 		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+		//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 		//	| InitExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression | InitExpression
+		//subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)? | InitExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-		//subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+		//subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{OperatorExpression}
@@ -2362,14 +2363,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//AtomicValuedExpression
 		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
 		
+		//(':' subExpressions+=AtomicValuedExpression)?
+		public Group getGroup_0_4() { return cGroup_0_4; }
+		
 		//':'
-		public Keyword getColonKeyword_0_4() { return cColonKeyword_0_4; }
+		public Keyword getColonKeyword_0_4_0() { return cColonKeyword_0_4_0; }
 		
 		//subExpressions+=AtomicValuedExpression
-		public Assignment getSubExpressionsAssignment_0_5() { return cSubExpressionsAssignment_0_5; }
+		public Assignment getSubExpressionsAssignment_0_4_1() { return cSubExpressionsAssignment_0_4_1; }
 		
 		//AtomicValuedExpression
-		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_5_0; }
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0; }
 		
 		//InitExpression
 		public RuleCall getInitExpressionParserRuleCall_1() { return cInitExpressionParserRuleCall_1; }
@@ -4759,7 +4763,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
+	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 	//	| InitExpression;
 	public TernaryOperationElements getTernaryOperationAccess() {
 		return pTernaryOperation;

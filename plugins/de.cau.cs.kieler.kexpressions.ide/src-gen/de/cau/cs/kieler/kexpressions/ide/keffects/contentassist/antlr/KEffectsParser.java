@@ -229,6 +229,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
 			builder.put(grammarAccess.getNegExpressionAccess().getGroup_0(), "rule__NegExpression__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
+			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0_4(), "rule__TernaryOperation__Group_0_4__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup_0(), "rule__InitExpression__Group_0__0");
 			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
@@ -428,7 +429,7 @@ public class KEffectsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_1(), "rule__TernaryOperation__SubExpressionsAssignment_0_1");
 			builder.put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_5(), "rule__TernaryOperation__SubExpressionsAssignment_0_5");
+			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4_1(), "rule__TernaryOperation__SubExpressionsAssignment_0_4_1");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__InitExpression__SubExpressionsAssignment_0_1");
 			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2(), "rule__InitExpression__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__InitExpression__SubExpressionsAssignment_0_3");

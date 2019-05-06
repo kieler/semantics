@@ -594,6 +594,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDivModExpressionAccess().getGroup_1_1_1(), "rule__DivModExpression__Group_1_1_1__0");
 			builder.put(grammarAccess.getDivModExpressionAccess().getGroup_1_1_2(), "rule__DivModExpression__Group_1_1_2__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
+			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0_4(), "rule__TernaryOperation__Group_0_4__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup_0(), "rule__InitExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
@@ -1246,7 +1247,7 @@ public class SCEstParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_1(), "rule__TernaryOperation__SubExpressionsAssignment_0_1");
 			builder.put(grammarAccess.getTernaryOperationAccess().getOperatorAssignment_0_2(), "rule__TernaryOperation__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_3(), "rule__TernaryOperation__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_5(), "rule__TernaryOperation__SubExpressionsAssignment_0_5");
+			builder.put(grammarAccess.getTernaryOperationAccess().getSubExpressionsAssignment_0_4_1(), "rule__TernaryOperation__SubExpressionsAssignment_0_4_1");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_1(), "rule__InitExpression__SubExpressionsAssignment_0_1");
 			builder.put(grammarAccess.getInitExpressionAccess().getOperatorAssignment_0_2(), "rule__InitExpression__OperatorAssignment_0_2");
 			builder.put(grammarAccess.getInitExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__InitExpression__SubExpressionsAssignment_0_3");

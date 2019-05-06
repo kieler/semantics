@@ -1201,7 +1201,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression)
 	 *     )

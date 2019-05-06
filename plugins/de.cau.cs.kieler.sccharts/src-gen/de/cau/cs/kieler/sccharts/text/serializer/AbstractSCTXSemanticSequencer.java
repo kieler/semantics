@@ -1491,7 +1491,7 @@ public abstract class AbstractSCTXSemanticSequencer extends KExtSemanticSequence
 	 *                 subExpressions+=AtomicValuedExpression 
 	 *                 operator=ConditionalOperator 
 	 *                 subExpressions+=AtomicValuedExpression 
-	 *                 subExpressions+=AtomicValuedExpression
+	 *                 subExpressions+=AtomicValuedExpression?
 	 *             ) | 
 	 *             (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
 	 *             ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
