@@ -317,8 +317,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleDeclaration" eSuperTypes="#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="#//PriorityProtocol"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" upperBound="-1"
-        eType="#//PriorityProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" unique="false"
+        upperBound="-1" eType="#//PriorityProtocol"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PriorityProtocol">
     <eLiterals name="CONFLICT"/>

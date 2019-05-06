@@ -219,6 +219,19 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }          
         } else if (declaration instanceof ScheduleDeclaration) {
             components.addKeyword("schedule")
+            if (!declaration.priorities.nullOrEmpty) {
+                components.addText("{")
+                for (prioIdx : declaration.priorities.indexed) {
+                    switch (prioIdx.value) {
+                        case CONFLICT: components.addKeyword("conflict")
+                        case CONFLUENT: components.addKeyword("confluent")
+                    }
+                    if (prioIdx.key < declaration.priorities.size - 1) {
+                        components.addText(", ")
+                    }
+                }
+                components.addText("}")
+            }
             if (!declaration.name.nullOrEmpty) {
                 components.addHighlight(declaration.name)
             }
@@ -302,7 +315,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         if (!method.schedule.nullOrEmpty) {
             components.addKeyword("schedule")
             for (schedule : method.schedule) {
-                components.addHighlight(schedule.serialize)
+                components.addText(schedule.serialize)
+                components.addText(schedule.priority.toString)
             }
         }
 
