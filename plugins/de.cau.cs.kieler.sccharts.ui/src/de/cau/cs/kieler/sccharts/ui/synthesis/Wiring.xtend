@@ -74,9 +74,7 @@ class Wiring {
         }
         
         // Things that must be done after all wires were created are placed in postProcess.
-        for (wire : wires) {
-            wire.postProcess
-        }
+        postProcess
     }
     
     private def boolean unprocessedEquation(Assignment equation, Set<Assignment> processedEquations) {
@@ -171,19 +169,48 @@ class Wiring {
         wire 
     }
     
+    protected def void postProcess() {
+        for (wire : wires) {
+            wire.postProcess
+        }
+        
+        for (wire : wires.filter[ sourceIsEquationTarget ].toList) {
+            val semanticSinks = wires.filter[ semanticSink == wire.semanticSink ].toList
+            for (w : semanticSinks.filter[ it != wire ].toList) {
+                w.semanticSink = w.sink
+                w.semanticSinkReferenceDeclaration = null
+            }
+//            if (wire.source instanceof ValuedObjectReference) {
+//                wire.semanticSource = wire.source
+//            }
+        }
+        
+        for (wire : wires.filter[ sourceIsEquationTarget ].toList) {
+            // This looks weird without the declaredScope test. 
+            // If you want to improve this, compare DF-0018 and DX-03.
+            if (wire.source instanceof OperatorExpression || wire.isSourceIsDeclaredInEquationScope) {
+                wire.sourceIsEquationTarget = false
+            }
+//            if (!sourceWires.nullOrEmpty) {
+//                wire.sourceIsEquationTarget = false
+//            }
+        }
+    }
+    
     protected def void postProcess(Wire wire) {
         var src = wire.source
         if (src instanceof ValuedObjectReference) {
             val declaration = src.valuedObject.declaration
             if (declaration instanceof VariableDeclaration) {
 //                if (declaration.input) {
-                    if (src.isSelfReferencingEquation(wire.equation, wire)) {
+//                    if (src.isSelfReferencingEquation(wire.equation, wire)) {
 //                        if (!(wire.sink instanceof ValuedObjectReference) || (wire.sink.asValuedObjectReference.valuedObject == src.valuedObject))
-                            wire.sourceIsEquationTarget = true
+//                            wire.sourceIsEquationTarget = true
 //                    }
-                }
+                    src.markSelfReferencingEquation(wire)
+//                }
             }
-        }        
+        }                
     }
     
     /** 
@@ -309,29 +336,51 @@ class Wiring {
         return source
     }
     
-    protected def boolean isSelfReferencingEquation(Expression source, Assignment equation, Wire wire) {
-        val visited = <Expression> newHashSet
-        return source.isSelfReferencingEquation(equation, wire, visited)
+    protected def void markSelfReferencingEquation(ValuedObjectReference source, Wire wire) {
+        if (source.isSameValuedObjectInReference(wire.sink)) {
+            wire.sourceIsEquationTarget = true
+        } else {
+            val visited = <Wire> newHashSet
+            source.isSelfReferencingEquation(source, wire, visited)
+        }
     }
     
-    protected def boolean isSelfReferencingEquation(Expression source, Assignment equation, Wire wire, Set<Expression> visited) {
-        if (visited.contains(source)) return false;
-        visited += source
+    protected def boolean isSelfReferencingEquation(Expression source, ValuedObjectReference target, Wire wire, Set<Wire> visited) {
+        println(wire)
+        if (visited.contains(wire)) return false;
+        visited += wire
+
+        if (wire.sink != target && wire.sink.isSameValuedObjectInReference(target)) {
+            return true
+        }
         
         switch(source) {
             ValuedObjectReference: {
-                if (source.valuedObject == equation.reference.valuedObject) {
+                if (source != target && source.isSameValuedObjectInReference(target)) {
                     return true
                 } else {
                     val targetWires = wires.filter[ 
-                        (sink instanceof ValuedObjectReference) && 
-                        ((sink as ValuedObjectReference).valuedObject == source.valuedObject)
+                        it.source == wire.sink ||
+                        it.source.isSameValuedObjectInReference(wire.sink)
                     ].toList                    
-                    return targetWires.exists[ it.source.isSelfReferencingEquation(equation, wire) ]
+                    if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
+                        wire.sourceIsEquationTarget = true
+                    }
+                    return false
                 }
             }
             OperatorExpression: {
-                return source.subExpressions.exists[ isSelfReferencingEquation(equation, wire) ]
+//                for (sre : source.subExpressions) {
+                    val targetWires = wires.filter[ 
+                        it.source == wire.sink ||
+                        it.source.isSameValuedObjectInReference(wire.sink)
+                    ].toList
+                    println(targetWires)
+                    if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
+                        return true
+                    }
+//                }
+                return false
             }
             default: {}
         }

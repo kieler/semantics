@@ -346,6 +346,12 @@ class KExpressionsValuedObjectExtensions {
         }
     }    
     
+    def isSameValuedObjectInReference(Expression source, Expression target) {
+        source instanceof ValuedObjectReference &&
+            target instanceof ValuedObjectReference &&
+            source.asValuedObjectReference.valuedObject == target.asValuedObjectReference.valuedObject
+    }
+    
     def asValue(Expression expression) {
         expression as Value
     }

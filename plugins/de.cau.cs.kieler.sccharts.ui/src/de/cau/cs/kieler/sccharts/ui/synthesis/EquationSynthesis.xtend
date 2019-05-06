@@ -287,7 +287,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node = node.createReferenceNode(wire.semanticSink, wire.externalSinkReferenceCounter, 
                         wire, (wire.semanticSink as ValuedObjectReference).valuedObject.serializeHR.removeCardinalities.toString, wire.semanticSinkReferenceDeclaration
                     )
-                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, wire.sourceIsEquationTarget, node)
+//                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, wire.sourceIsEquationTarget, node)
+                    wire.semanticSink.addNode(wire.externalSinkReferenceCounter, false, node)
                 }
             } else { 
                 node = wire.semanticSink.createKGTNode(wire.externalSinkReferenceCounter, false, 
@@ -353,15 +354,19 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 ].head
 //            sourcePort = wire.semanticSource.getPort(OUT_PORT, p)
             sourcePort = p
-            println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)    
+            if (sourcePort == null) {
+                println("Port> NULL!")            
+            } else {
+                println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
+            }    
         }
         
         if (wire.semanticSink instanceof OperatorExpression) {
             val exp = wire.semanticSink.asOperatorExpression.subExpressions.get(wire.sinkIndex)
             if (exp instanceof ValuedObjectReference) {
                 val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
-                if (targetNode.portExists(exp.valuedObject, s)) {
-                    targetPort = targetNode.getPort(exp.valuedObject, s)
+                if (targetNode.portExists(exp.valuedObject, s, wire.sinkIndex)) {
+                    targetPort = targetNode.getPort(exp.valuedObject, s, wire.sinkIndex)
                 }
             }
             if (targetPort === null) {
@@ -389,11 +394,13 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             }
         }
         
-        println("Wire> KNode@" + sourceNode.hashCode + " " + 
-            "KPort@" + sourcePort.hashCode +
-            " - " + "KNode@" + targetNode.hashCode + " " +
-            "KPort@" + targetPort.hashCode +  
-             ": " + wire)
+        if (sourcePort !== null) {
+            println("Wire> KNode@" + sourceNode.hashCode + " " + 
+                "KPort@" + sourcePort.hashCode +
+                " - " + "KNode@" + targetNode.hashCode + " " +
+                "KPort@" + targetPort.hashCode +  
+                 ": " + wire)
+         }
         wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
     }
 
@@ -607,7 +614,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                                 if (exp instanceof ValuedObjectReference) {
                                     val v = exp.valuedObject
                                     val s = if (exp.subReference !== null) exp.subReference.valuedObject else null
-                                    node.addPort(v, s, p)
+                                    node.addPort(v, s, n, p)
                                 }
                             }
                         } catch(NumberFormatException e) {
