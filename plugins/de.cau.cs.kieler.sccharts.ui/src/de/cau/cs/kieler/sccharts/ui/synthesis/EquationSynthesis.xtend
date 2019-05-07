@@ -145,6 +145,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     protected static val UNARY_FIGURE_KEY = "OperatorExpressionUnary"
     protected static val ARITHMETICAL_FIGURE_KEY = "OperatorExpressionArithmetical"
     protected static val EXTERNAL_FUNCTION_KEY = "ExternalFunction"
+    protected static val UPDATE_FIGURE_KEY = "OperatorExpressionUPDATE"
     
     protected val defaultFigures = #{
         DEFAULT_FIGURE_KEY -> 'OperatorExpression.kgt',
@@ -157,7 +158,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         'Output' -> 'Output.kgt',
         'InputOutput' -> 'InputOutput.kgt',
         'Local' -> 'Local.kgt',
-        EXTERNAL_FUNCTION_KEY -> "OperatorExpressionUnary.kgt"
+        EXTERNAL_FUNCTION_KEY -> "OperatorExpressionUnary.kgt",
+        UPDATE_FIGURE_KEY -> "OperatorExpressionUPDATE.kgt"
     }
     
     protected val referenceNodes = <KNode> newHashSet
@@ -213,7 +215,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 
                 if (wire.externalSourceReferenceCounter > 0) {
                     node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY, ""
+                        wire.sourceIsEquationTarget, EXTERNAL_FUNCTION_KEY, "", wire
                     )                        
                 } else {
                     node = node.createReferenceNode(wire.semanticSource, wire.externalSourceReferenceCounter, 
@@ -229,7 +231,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         text = ""
                     }
                     node = wire.semanticSource.createKGTNodeFromObject(wire.externalSourceReferenceCounter, 
-                        wire.sourceIsEquationTarget, wire.source, text
+                        wire.sourceIsEquationTarget, wire.source, text, wire
                     )
                     node.associateWith(wire.semanticSource)
                 } else {
@@ -557,11 +559,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
     
     protected def KNode createKGTNodeFromObject(Object createExtensionObject, Object createExtensionObject2, 
-        Object createExtensionObject3, Object figureObject, String labelText
+        Object createExtensionObject3, Object figureObject, String labelText, Wire wire
     ) {
         var figureId = DEFAULT_FIGURE_KEY
-        var port1Label = null as String
         var text = labelText
+        val portLabels = <Integer, String> newHashMap
         
         if (figureObject instanceof OperatorExpression) {
             switch(figureObject.operator) {
@@ -571,7 +573,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             case NE,
             case NOT: figureId = UNARY_FIGURE_KEY 
             
-            case CONDITIONAL, 
+            case CONDITIONAL: {
+                if (figureObject.subExpressions.size == 2) {
+                    figureId = UPDATE_FIGURE_KEY
+                    if (wire.sink instanceof ValuedObjectReference) {
+                        portLabels.put(2, wire.sink.asValuedObjectReference.valuedObject.name)
+                    }
+                } else {
+                    figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
+                }
+                text = ""
+            } 
             case INIT: {
                     figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
                     text = ""
@@ -590,7 +602,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             case GT,
             case LEQ,
             case LT: {
-                figureId = ARITHMETICAL_FIGURE_KEY; port1Label = figureObject.operator.serializeHR.toString
+                figureId = ARITHMETICAL_FIGURE_KEY; portLabels.put(1, figureObject.operator.serializeHR.toString)
             }
             
             
@@ -619,17 +631,17 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             }
                         } catch(NumberFormatException e) {
                             // abort at convert issues
-                        }    
-                        if (!port1Label.nullOrEmpty) {     
-                            if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
-                                if (id == PORT1_IN_PREFIX) {
+                        }
+                        if (id.length > 2) {
+                            val portLabelNumber = Integer.parseInt(id.substring(2))
+                            val portLabel = portLabels.get(portLabelNumber)     
+                            if (!portLabel.nullOrEmpty) {     
+                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
                                     val label = p.labels.head
                                     if (label !== null) {
-                                        label.text = port1Label 
+                                        label.text = portLabel 
                                     }
-                                }
-                            } else {
-                                if (id.startsWith(PORT_IN_PREFIX)) {
+                                } else {
                                     val label = p.labels.head
                                     if (label !== null) {
                                         label.text = ""

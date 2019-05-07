@@ -303,10 +303,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }        
     
     protected def CharSequence serializeHROperatorExpressionConditional(OperatorExpression expression) {
-        if (expression.subExpressions.size == 3) {
+        if (expression.subExpressions.size == 2 || expression.subExpressions.size == 3 ) {
             return expression.subExpressions.head.serializeHR + " ? " +
-                expression.subExpressions.get(1).serializeHR + " : " + 
-                expression.subExpressions.get(2).serializeHR  
+                expression.subExpressions.get(1).serializeHR
+                + if (expression.subExpressions.size == 3) " : " + expression.subExpressions.get(2).serialize else ""
         } else {
             throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
                 expression.subExpressions.size + " arguments.")
