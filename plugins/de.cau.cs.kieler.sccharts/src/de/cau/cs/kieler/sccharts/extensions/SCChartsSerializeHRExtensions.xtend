@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sccharts.extensions
 import com.google.common.base.Function
 import com.google.common.base.Joiner
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
@@ -39,12 +40,11 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
-import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
-import de.cau.cs.kieler.sccharts.Method
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.sccharts.ClassDeclaration
 import de.cau.cs.kieler.sccharts.processors.For
+import java.lang.reflect.Method
+import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * @author ssm
@@ -147,7 +147,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
+    def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         // Modifiers
@@ -192,12 +192,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else if (type == ValueType.CLOCK) {
                 components.addKeyword("clock")
             }  else if (type == ValueType.STRUCT) {
-                if (declaration instanceof ClassDeclaration) {
-                    if (declaration.host) components.addKeyword("host")
-                    components.addKeyword("class")
-                } else {
-                    components.addKeyword("struct")
-                }
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
+                components.addKeyword("struct")
+            }  else if (type == ValueType.CLASS) {
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
+                components.addKeyword("class")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -238,7 +237,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         }
         
         
-        if (declaration instanceof StructDeclaration) {
+        if (declaration instanceof ClassDeclaration) {
             if (!declaration.name.nullOrEmpty) {
                 components.addText(declaration.name)
             }
@@ -280,7 +279,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return components;
     }
     
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Method method, boolean hr) {
+    def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(MethodDeclaration method, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
         
         if (method.access != AccessModifier.PUBLIC) {
@@ -297,7 +296,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             components.addKeyword("void")
         }
         
-        components.addText(method.name)
+        components.addText(method.valuedObjects.head.name)
         
         components.addText("(")
         for (para : method.parameterDeclarations.indexed) {

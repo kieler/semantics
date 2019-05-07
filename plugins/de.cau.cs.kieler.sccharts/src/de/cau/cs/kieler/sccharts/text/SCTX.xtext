@@ -33,9 +33,8 @@ RootState returns sccharts::State:
 	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationWOSemicolon*
-		methods+=MethodImplementation*
+		('method' declarations+=MethodDeclarationWOSemicolon)*
 		actions+=LocalAction*
-        methods+=MethodImplementation*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
     
@@ -55,9 +54,8 @@ State returns sccharts::State:
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationWOSemicolon*
-        methods+=MethodImplementation*
+        ('method' declarations+=MethodDeclarationWOSemicolon)*
 		actions+=LocalAction*
-        methods+=MethodImplementation*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	   '}')
 	)?
@@ -139,17 +137,15 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ((
             '{'
             declarations+=DeclarationWOSemicolon*
-            methods+=MethodImplementation*
+            ('method' declarations+=MethodDeclarationWOSemicolon)*
             actions+=LocalAction*
-            methods+=MethodImplementation*
             (states+=ImplicitState | states+=State+)
             '}'
         )|(
             ':'
             declarations+=DeclarationWOSemicolon*
-            methods+=MethodImplementation*
+            ('method' declarations+=MethodDeclarationWOSemicolon)*
             actions+=LocalAction*
-            methods+=MethodImplementation
             states+=State*
         ))
     ));
@@ -229,63 +225,24 @@ PeriodAction returns sccharts::PeriodAction:
 // --------------- //
 
 @Override
-DeclarationWOSemicolon returns kexpressions::Declaration:
-    super | ClassDeclaration
-;
-
-ClassDeclaration returns sccharts::ClassDeclaration:
-    {sccharts::ClassDeclaration}
+ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {sccharts::PolicyClassDeclaration}
     annotations+=Annotation*
     access=AccessModifier?
-    host?='host'?
     const?='const'?
     input?='input'? 
     output?='output'?
     global?='global'?
     static?='static'?
+    host?='host'?
     type = ClassType
     (name = ID)?
     '{'
         policy=PolicyRegion?
-        declarations+=DeclarationWOSemicolon*
-        methods+=(MethodDeclaration)*
+        declarations+=(DeclarationOrMethodWOSemicolon)*
     '}'
     (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     annotations+=CommentAnnotatonSL?
-;
-
-MethodDeclaration returns sccharts::Method:
-    {sccharts::Method}
-    annotations+=Annotation*
-    access=AccessModifier?
-    returnType=ReturnType?
-    name=ExtendedID
-    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
-    ('schedule' schedule+=ScheduleObjectReference+)?
-    ('{'
-        declarations+=DeclarationWOSemicolon*
-        statements+=Statement*
-    '}')?
-;
-
-MethodImplementation returns sccharts::Method:
-    {sccharts::Method}
-    annotations+=Annotation*
-    'method'
-    access=AccessModifier?
-    returnType=ReturnType?
-    name=ExtendedID
-    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
-    ('schedule' schedule+=ScheduleObjectReference+)?
-    '{'
-        declarations+=DeclarationWOSemicolon*
-        statements+=Statement*
-    '}'
-;
-
-@Override
-Statement returns scl::Statement:
-    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
 ;
 
 PolicyRegion returns sccharts::PolicyRegion:
@@ -330,14 +287,6 @@ enum ValueType returns kexpressions::ValueType:
     INT="int" | FLOAT="float" |
     STRING="string" |
     CLOCK="clock"; // als: added clock for timed automata
-    
-enum ReturnType returns kexpressions::ValueType:
-    VOID="void" |
-    BOOL="bool" | INT="int" | FLOAT="float" |
-    STRING="string";
-    
-enum ClassType returns kexpressions::ValueType:
-    STRUCT="class";
 	
 // -------------- //
 //  Helper Rules  // 

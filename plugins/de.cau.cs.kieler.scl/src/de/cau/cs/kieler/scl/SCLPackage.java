@@ -919,6 +919,98 @@ public interface SCLPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl <em>Method Implementation Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getMethodImplementationDeclaration()
+     * @generated
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION = 17;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__ANNOTATIONS = KExpressionsPackage.METHOD_DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.METHOD_DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__ACCESS = KExpressionsPackage.METHOD_DECLARATION__ACCESS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__SCHEDULE = KExpressionsPackage.METHOD_DECLARATION__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Return Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__RETURN_TYPE = KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__PARAMETER_DECLARATIONS = KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__DECLARATIONS = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__STATEMENTS = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Method Implementation Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION_FEATURE_COUNT = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 2;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.SCLProgram <em>Program</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1188,6 +1280,16 @@ public interface SCLPackage extends EPackage {
     EReference getReturn_Expression();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.MethodImplementationDeclaration <em>Method Implementation Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Method Implementation Declaration</em>'.
+     * @see de.cau.cs.kieler.scl.MethodImplementationDeclaration
+     * @generated
+     */
+    EClass getMethodImplementationDeclaration();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1450,6 +1552,16 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl <em>Method Implementation Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getMethodImplementationDeclaration()
+         * @generated
+         */
+        EClass METHOD_IMPLEMENTATION_DECLARATION = eINSTANCE.getMethodImplementationDeclaration();
 
     }
 

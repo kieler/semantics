@@ -3,19 +3,21 @@
 package de.cau.cs.kieler.kexpressions.kext.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtFactory;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -69,7 +71,7 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass structDeclarationEClass = null;
+    private EClass classDeclarationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -253,8 +255,18 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
      * @generated
      */
     @Override
-    public EClass getStructDeclaration() {
-        return structDeclarationEClass;
+    public EClass getClassDeclaration() {
+        return classDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getClassDeclaration_Host() {
+        return (EAttribute)classDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -302,7 +314,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         declarationScopeEClass = createEClass(DECLARATION_SCOPE);
         createEReference(declarationScopeEClass, DECLARATION_SCOPE__DECLARATIONS);
 
-        structDeclarationEClass = createEClass(STRUCT_DECLARATION);
+        classDeclarationEClass = createEClass(CLASS_DECLARATION);
+        createEAttribute(classDeclarationEClass, CLASS_DECLARATION__HOST);
     }
 
     /**
@@ -344,9 +357,9 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         kExtScopeEClass.getESuperTypes().add(theKExpressionsPackage.getReferenceable());
         kExtScopeEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
         annotatedExpressionEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotatable());
-        structDeclarationEClass.getESuperTypes().add(this.getDeclarationScope());
-        structDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getVariableDeclaration());
-        structDeclarationEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
+        classDeclarationEClass.getESuperTypes().add(this.getDeclarationScope());
+        classDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getVariableDeclaration());
+        classDeclarationEClass.getESuperTypes().add(theAnnotationsPackage.getNamedObject());
 
         // Initialize classes and features; add operations and parameters
         initEClass(kextEClass, Kext.class, "Kext", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -365,7 +378,8 @@ public class KExtPackageImpl extends EPackageImpl implements KExtPackage {
         initEClass(declarationScopeEClass, DeclarationScope.class, "DeclarationScope", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclarationScope_Declarations(), theKExpressionsPackage.getDeclaration(), null, "declarations", null, 0, -1, DeclarationScope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-        initEClass(structDeclarationEClass, StructDeclaration.class, "StructDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEClass(classDeclarationEClass, ClassDeclaration.class, "ClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getClassDeclaration_Host(), ecorePackage.getEBoolean(), "host", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

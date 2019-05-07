@@ -23,7 +23,7 @@ import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
@@ -45,9 +45,9 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.sccharts.ClassDeclaration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -67,6 +67,7 @@ import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -231,8 +232,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations) {
-                if (declaration instanceof StructDeclaration) {
+            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration)]) {
+                if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
@@ -266,7 +267,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.containsDataflowRegions
                 || state.isReferencedState
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
-                || !state.methods.empty
+                || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
                 node.addRegionsArea;
             }
@@ -286,7 +287,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
 
         // Transform methods
-        for (method : state.methods) {
+        for (method : state.declarations.filter(MethodImplementationDeclaration)) {
             node.children += method.transform
         }
 
@@ -302,8 +303,8 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
             val policies = newArrayList
-            policies += state.declarations.filter(ClassDeclaration).map[policy].filterNull
-            policies += state.regions.map[declarations].flatten.filter(ClassDeclaration).map[policy].filterNull
+            policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
+            policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
             for (policy : policies.reverseView) {
                 node.children.addAll(0, policy.transform)
             }
@@ -329,7 +330,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return returnNodes
     }
     
-    private def void addStructDeclarations(KNode node, StructDeclaration struct, int indent) {
+    private def void addStructDeclarations(KNode node, ClassDeclaration struct, int indent) {
         val segments = struct.serializeHighlighted(true)
         val head = segments.takeWhile[value !== TextFormat.CONTENT_PLACEHOLDER].toList;
         val tail = segments.dropWhile[value !== TextFormat.CONTENT_PLACEHOLDER].drop(1).toList;
@@ -338,7 +339,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             associateWith(struct)
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
-        if (struct instanceof ClassDeclaration) {
+        if (struct instanceof PolicyClassDeclaration) {
             if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
                 val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
                 components += new Pair("policy", TextFormat.KEYWORD)
@@ -347,7 +348,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             }
         }
         for (declaration : struct.declarations) {
-            if (declaration instanceof StructDeclaration) {
+            if (declaration instanceof ClassDeclaration) {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
                 node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
@@ -355,11 +356,6 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     associateWith(declaration)
                     eAllContents.filter(KRendering).forEach[associateWith(declaration)]
                 ]
-            }
-        }
-        if (struct instanceof ClassDeclaration) {
-            for (method : struct.methods) {
-                node.addDeclarationLabel(method.serializeHighlighted(true), indent + 1)
             }
         }
         node.addDeclarationLabel(tail, indent);

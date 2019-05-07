@@ -581,6 +581,9 @@ enum HostType returns ValueType:
 
 enum StructType returns ValueType:
     STRUCT="struct";
+    
+enum ClassType returns ValueType:
+    CLASS="class";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
@@ -588,6 +591,11 @@ enum CombineOperator returns CombineOperator:
     
 enum AccessModifier returns AccessModifier:
     PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
+    
+enum MethodReturnType returns ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string";
 
 // -------------------- //
 //  JSON                // 

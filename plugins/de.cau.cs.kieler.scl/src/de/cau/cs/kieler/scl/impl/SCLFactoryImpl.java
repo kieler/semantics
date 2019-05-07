@@ -7,7 +7,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
@@ -82,6 +82,7 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
             case SCLPackage.SCOPE_STATEMENT: return createScopeStatement();
             case SCLPackage.ELSE_SCOPE: return createElseScope();
             case SCLPackage.RETURN: return createReturn();
+            case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION: return createMethodImplementationDeclaration();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -228,6 +229,17 @@ public class SCLFactoryImpl extends EFactoryImpl implements SCLFactory {
     public Return createReturn() {
         ReturnImpl return_ = new ReturnImpl();
         return return_;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MethodImplementationDeclaration createMethodImplementationDeclaration() {
+        MethodImplementationDeclarationImpl methodImplementationDeclaration = new MethodImplementationDeclarationImpl();
+        return methodImplementationDeclaration;
     }
 
     /**

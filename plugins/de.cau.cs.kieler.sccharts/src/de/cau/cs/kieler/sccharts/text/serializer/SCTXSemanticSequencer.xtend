@@ -15,6 +15,7 @@ import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.parser.InternalSCTXParser
 import de.cau.cs.kieler.sccharts.text.services.SCTXGrammarAccess
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.xtext.serializer.ISerializationContext
 
 import static de.cau.cs.kieler.kexpressions.OperatorType.*
@@ -146,7 +147,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
             for (idxSchedule : region.schedule.indexed) {
                 feeder.accept(rg.scheduleScheduleObjectReferenceParserRuleCall_7_1_1_1_0, idxSchedule.value, idxSchedule.key)
             }
-            // Decide which variant should be used
+            // Decide wich variant schould be used
             val isImplicit = !region.states.nullOrEmpty
                 && region.states.size == 1
                 && InternalSCTXParser.IMPLICIT_STATE_NAME.equals(region.states.head.name)
@@ -158,16 +159,15 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 && !region.states.head.regions.nullOrEmpty
             val node = if (!region.states.nullOrEmpty) nodes.getNodeForMultiValue(pkg.controlflowRegion_States, 0, 0, region.states.head)
             // Prefer curly bracket version when model does not already has a textuel preference (user typed region:)
-            val prefersColon = node !== null && node.grammarElement === rg.statesStateParserRuleCall_7_1_2_1_5_0
+            val prefersColon = node !== null && node.grammarElement === rg.statesStateParserRuleCall_7_1_2_1_4_0
 
             if (isImplicit || !prefersColon) { // region {}
                 // declarations
-                for (idxDecl : region.declarations.indexed) {
+                for (idxDecl : region.declarations.filter[!(it instanceof MethodImplementationDeclaration)].indexed) {
                     feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_0_1_0, idxDecl.value, idxDecl.key)
                 }
-                // methods
-                for (idxAction : region.methods.indexed) {
-                    feeder.accept(rg.methodsMethodImplementationParserRuleCall_7_1_2_0_2_0, idxAction.value, idxAction.key)
+                for (idxDecl : region.declarations.filter(MethodImplementationDeclaration).indexed) {
+                    feeder.accept(rg.declarationsMethodDeclarationWOSemicolonParserRuleCall_7_1_2_0_2_1_0, idxDecl.value, idxDecl.key)
                 }
                 // actions
                 for (idxAction : region.actions.indexed) {
@@ -175,20 +175,19 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 }
                 // states
                 if (isImplicit) {
-                    feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_0_5_0_0, region.states.head, 0)
+                    feeder.accept(rg.statesImplicitStateParserRuleCall_7_1_2_0_4_0_0, region.states.head, 0)
                 } else {
                     for (idxState : region.states.indexed) {
-                        feeder.accept(rg.statesStateParserRuleCall_7_1_2_0_5_1_0, idxState.value, idxState.key)
+                        feeder.accept(rg.statesStateParserRuleCall_7_1_2_0_4_1_0, idxState.value, idxState.key)
                     }
                 }
             } else { // region:
                 // declarations
-                for (idxDecl : region.declarations.indexed) {
+                for (idxDecl : region.declarations.filter[!(it instanceof MethodImplementationDeclaration)].indexed) {
                     feeder.accept(rg.declarationsDeclarationWOSemicolonParserRuleCall_7_1_2_1_1_0, idxDecl.value, idxDecl.key)
                 }
-                // methods
-                for (idxAction : region.methods.indexed) {
-                    feeder.accept(rg.methodsMethodImplementationParserRuleCall_7_1_2_1_2_0, idxAction.value, idxAction.key)
+                for (idxDecl : region.declarations.filter(MethodImplementationDeclaration).indexed) {
+                    feeder.accept(rg.declarationsMethodDeclarationWOSemicolonParserRuleCall_7_1_2_1_2_1_0, idxDecl.value, idxDecl.key)
                 }
                 // actions
                 for (idxAction : region.actions.indexed) {
@@ -196,7 +195,7 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
                 }
                 // states
                 for (idxState : region.states.indexed) {
-                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_5_0, idxState.value, idxState.key)
+                    feeder.accept(rg.statesStateParserRuleCall_7_1_2_1_4_0, idxState.value, idxState.key)
                 }
             }
         }

@@ -139,6 +139,15 @@ public interface SCLFactory extends EFactory {
     Return createReturn();
 
     /**
+     * Returns a new object of class '<em>Method Implementation Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Method Implementation Declaration</em>'.
+     * @generated
+     */
+    MethodImplementationDeclaration createMethodImplementationDeclaration();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

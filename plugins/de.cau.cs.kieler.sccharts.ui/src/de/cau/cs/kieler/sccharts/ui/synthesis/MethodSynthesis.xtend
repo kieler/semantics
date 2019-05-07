@@ -14,8 +14,11 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.klighd.LightDiagramServices
+import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KRendering
@@ -23,25 +26,22 @@ import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
-import de.cau.cs.kieler.sccharts.Method
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Return
 import de.cau.cs.kieler.scl.SCLFactory
+import de.cau.cs.kieler.scl.Scope
+import java.lang.reflect.Method
 import java.util.List
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.MapPropertyHolder
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.scl.Scope
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.scl.Return
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Transforms {@link Method} into {@link KNode} diagram elements.
@@ -50,7 +50,7 @@ import org.eclipse.elk.core.math.ElkPadding
  * 
  */
 @ViewSynthesisShared
-class MethodSynthesis extends SubSynthesis<Method, KNode> {
+class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNode> {
 
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KRenderingExtensions
@@ -59,14 +59,14 @@ class MethodSynthesis extends SubSynthesis<Method, KNode> {
     @Inject extension AdaptiveZoom
     extension SCLFactory = SCLFactory.eINSTANCE
 
-    override List<KNode> performTranformation(Method method) {
+    override List<KNode> performTranformation(MethodImplementationDeclaration method) {
         val node = method.createNode().associateWith(method);
         
         //node.configureNodeLOD(method)
 
         // Set KIdentifier for use with incremental update
-        if (!method.name.nullOrEmpty) {
-            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = method.name]
+        if (!method.valuedObjects.head.name.nullOrEmpty) {
+            node.data += KGraphFactory::eINSTANCE.createKIdentifier => [it.id = method.valuedObjects.head.name]
         }
         
         node.initiallyCollapse
@@ -114,7 +114,7 @@ class MethodSynthesis extends SubSynthesis<Method, KNode> {
 
         // Add inner scg
         val module = createModule
-        module.name = method.name
+        module.name = method.valuedObjects.head.name
         val copier = new Copier()
         val copy = copier.copy(method) as Scope
         copier.copyReferences()

@@ -18,7 +18,6 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
-import de.cau.cs.kieler.sccharts.ClassDeclaration;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DelayType;
@@ -27,8 +26,8 @@ import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
-import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.PeriodAction;
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
@@ -182,14 +181,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass methodEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass classDeclarationEClass = null;
+    private EClass policyClassDeclarationEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -700,16 +692,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getScope_Methods() {
-        return (EReference)scopeEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
     public EClass getScopeCall() {
         return scopeCallEClass;
     }
@@ -840,8 +822,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EClass getMethod() {
-        return methodEClass;
+    public EClass getPolicyClassDeclaration() {
+        return policyClassDeclarationEClass;
     }
 
     /**
@@ -850,68 +832,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EAttribute getMethod_ReturnType() {
-        return (EAttribute)methodEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getMethod_ParameterDeclarations() {
-        return (EReference)methodEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getMethod_Access() {
-        return (EAttribute)methodEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EClass getClassDeclaration() {
-        return classDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getClassDeclaration_Methods() {
-        return (EReference)classDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EAttribute getClassDeclaration_Host() {
-        return (EAttribute)classDeclarationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    public EReference getClassDeclaration_Policy() {
-        return (EReference)classDeclarationEClass.getEStructuralFeatures().get(2);
+    public EReference getPolicyClassDeclaration_Policy() {
+        return (EReference)policyClassDeclarationEClass.getEStructuralFeatures().get(0);
     }
 
     /**
@@ -1021,7 +943,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(scopeEClass, SCOPE__LABEL);
         createEReference(scopeEClass, SCOPE__ACTIONS);
         createEReference(scopeEClass, SCOPE__REFERENCE);
-        createEReference(scopeEClass, SCOPE__METHODS);
 
         scopeCallEClass = createEClass(SCOPE_CALL);
         createEReference(scopeCallEClass, SCOPE_CALL__SCOPE);
@@ -1087,15 +1008,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         periodActionEClass = createEClass(PERIOD_ACTION);
 
-        methodEClass = createEClass(METHOD);
-        createEAttribute(methodEClass, METHOD__RETURN_TYPE);
-        createEReference(methodEClass, METHOD__PARAMETER_DECLARATIONS);
-        createEAttribute(methodEClass, METHOD__ACCESS);
-
-        classDeclarationEClass = createEClass(CLASS_DECLARATION);
-        createEReference(classDeclarationEClass, CLASS_DECLARATION__METHODS);
-        createEAttribute(classDeclarationEClass, CLASS_DECLARATION__HOST);
-        createEReference(classDeclarationEClass, CLASS_DECLARATION__POLICY);
+        policyClassDeclarationEClass = createEClass(POLICY_CLASS_DECLARATION);
+        createEReference(policyClassDeclarationEClass, POLICY_CLASS_DECLARATION__POLICY);
 
         policyRegionEClass = createEClass(POLICY_REGION);
 
@@ -1133,7 +1047,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
-        SCLPackage theSCLPackage = (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1163,10 +1076,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         precedingActionEClass.getESuperTypes().add(this.getLocalAction());
         succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
         periodActionEClass.getESuperTypes().add(this.getLocalAction());
-        methodEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
-        methodEClass.getESuperTypes().add(theSCLPackage.getScope());
-        methodEClass.getESuperTypes().add(theKExpressionsPackage.getSchedulable());
-        classDeclarationEClass.getESuperTypes().add(theKExtPackage.getStructDeclaration());
+        policyClassDeclarationEClass.getESuperTypes().add(theKExtPackage.getClassDeclaration());
         policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
 
         // Initialize classes and features; add operations and parameters
@@ -1178,7 +1088,6 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getScope_Label(), ecorePackage.getEString(), "label", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Actions(), this.getLocalAction(), null, "actions", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getScope_Reference(), this.getScopeCall(), null, "reference", null, 0, 1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getScope_Methods(), this.getMethod(), null, "methods", null, 0, -1, Scope.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scopeCallEClass, ScopeCall.class, "ScopeCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getScopeCall_Scope(), this.getScope(), null, "scope", null, 0, 1, ScopeCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1244,15 +1153,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-        initEClass(methodEClass, Method.class, "Method", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getMethod_ReturnType(), theKExpressionsPackage.getValueType(), "returnType", null, 0, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getMethod_ParameterDeclarations(), theKExpressionsPackage.getDeclaration(), null, "parameterDeclarations", null, 0, -1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getMethod_Access(), theKExpressionsPackage.getAccessModifier(), "access", null, 1, 1, Method.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-
-        initEClass(classDeclarationEClass, ClassDeclaration.class, "ClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getClassDeclaration_Methods(), this.getMethod(), null, "methods", null, 0, -1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getClassDeclaration_Host(), ecorePackage.getEBoolean(), "host", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEReference(getClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, ClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEClass(policyClassDeclarationEClass, PolicyClassDeclaration.class, "PolicyClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getPolicyClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, PolicyClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

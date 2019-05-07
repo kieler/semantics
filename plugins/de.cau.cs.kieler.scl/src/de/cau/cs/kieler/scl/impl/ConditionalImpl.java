@@ -7,9 +7,9 @@ import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.Scope;
-
 import de.cau.cs.kieler.scl.SequencePart;
 import de.cau.cs.kieler.scl.Statement;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 

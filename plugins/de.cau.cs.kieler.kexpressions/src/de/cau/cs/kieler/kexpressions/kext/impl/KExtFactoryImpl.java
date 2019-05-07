@@ -61,7 +61,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
             case KExtPackage.KEXT_SCOPE: return createKExtScope();
             case KExtPackage.TEST_ENTITY: return createTestEntity();
             case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-            case KExtPackage.STRUCT_DECLARATION: return createStructDeclaration();
+            case KExtPackage.CLASS_DECLARATION: return createClassDeclaration();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -117,9 +117,9 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * @generated
      */
     @Override
-    public StructDeclaration createStructDeclaration() {
-        StructDeclarationImpl structDeclaration = new StructDeclarationImpl();
-        return structDeclaration;
+    public ClassDeclaration createClassDeclaration() {
+        ClassDeclarationImpl classDeclaration = new ClassDeclarationImpl();
+        return classDeclaration;
     }
 
     /**

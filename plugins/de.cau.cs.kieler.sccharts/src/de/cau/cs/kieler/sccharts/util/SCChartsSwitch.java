@@ -20,15 +20,12 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.sccharts.*;
-import de.cau.cs.kieler.scl.StatementContainer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -276,31 +273,16 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case SCChartsPackage.METHOD: {
-                Method method = (Method)theEObject;
-                T result = caseMethod(method);
-                if (result == null) result = caseValuedObject(method);
-                if (result == null) result = caseSCL_Scope(method);
-                if (result == null) result = caseSchedulable(method);
-                if (result == null) result = caseNamedObject(method);
-                if (result == null) result = caseReferenceable(method);
-                if (result == null) result = caseDeclarationScope(method);
-                if (result == null) result = caseStatementContainer(method);
-                if (result == null) result = caseNameable(method);
-                if (result == null) result = caseAnnotatable(method);
-                if (result == null) result = defaultCase(theEObject);
-                return result;
-            }
-            case SCChartsPackage.CLASS_DECLARATION: {
-                ClassDeclaration classDeclaration = (ClassDeclaration)theEObject;
-                T result = caseClassDeclaration(classDeclaration);
-                if (result == null) result = caseStructDeclaration(classDeclaration);
-                if (result == null) result = caseDeclarationScope(classDeclaration);
-                if (result == null) result = caseVariableDeclaration(classDeclaration);
-                if (result == null) result = caseNamedObject(classDeclaration);
-                if (result == null) result = caseDeclaration(classDeclaration);
-                if (result == null) result = caseNameable(classDeclaration);
-                if (result == null) result = caseAnnotatable(classDeclaration);
+            case SCChartsPackage.POLICY_CLASS_DECLARATION: {
+                PolicyClassDeclaration policyClassDeclaration = (PolicyClassDeclaration)theEObject;
+                T result = casePolicyClassDeclaration(policyClassDeclaration);
+                if (result == null) result = caseClassDeclaration(policyClassDeclaration);
+                if (result == null) result = caseDeclarationScope(policyClassDeclaration);
+                if (result == null) result = caseVariableDeclaration(policyClassDeclaration);
+                if (result == null) result = caseNamedObject(policyClassDeclaration);
+                if (result == null) result = caseDeclaration(policyClassDeclaration);
+                if (result == null) result = caseNameable(policyClassDeclaration);
+                if (result == null) result = caseAnnotatable(policyClassDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -564,17 +546,17 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Method</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Policy Class Declaration</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Method</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Policy Class Declaration</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseMethod(Method object) {
+    public T casePolicyClassDeclaration(PolicyClassDeclaration object) {
         return null;
     }
 
@@ -759,66 +741,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
                 /**
-     * Returns the result of interpreting the object as an instance of '<em>Referenceable</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Referenceable</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseReferenceable(Referenceable object) {
-        return null;
-    }
-
-                /**
-     * Returns the result of interpreting the object as an instance of '<em>Valued Object</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Valued Object</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseValuedObject(ValuedObject object) {
-        return null;
-    }
-
-                /**
-     * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseStatementContainer(StatementContainer object) {
-        return null;
-    }
-
-                /**
-     * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseSCL_Scope(de.cau.cs.kieler.scl.Scope object) {
-        return null;
-    }
-
-                /**
      * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -845,21 +767,6 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseVariableDeclaration(VariableDeclaration object) {
-        return null;
-    }
-
-                /**
-     * Returns the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
-     * <!-- begin-user-doc -->
-     * This implementation returns null;
-     * returning a non-null result will terminate the switch.
-     * <!-- end-user-doc -->
-     * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
-     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-     * @generated
-     */
-    public T caseStructDeclaration(StructDeclaration object) {
         return null;
     }
 

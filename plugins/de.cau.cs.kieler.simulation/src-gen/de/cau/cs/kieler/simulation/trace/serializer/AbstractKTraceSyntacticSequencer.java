@@ -36,6 +36,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	protected AbstractElementAlias match_KTick_PauseKeyword_4_q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q;
 	protected AbstractElementAlias match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q;
+	protected AbstractElementAlias match_MethodDeclarationWOSemicolon_LeftParenthesisRightParenthesisKeyword_5_1_q;
+	protected AbstractElementAlias match_MethodDeclaration_LeftParenthesisRightParenthesisKeyword_5_1_q;
 	protected AbstractElementAlias match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	protected AbstractElementAlias match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q;
 	
@@ -56,6 +58,8 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 		match_KTick_PauseKeyword_4_q = new TokenAlias(false, true, grammarAccess.getKTickAccess().getPauseKeyword_4());
 		match_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_1_1()));
 		match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getKTracesAccess().getResetKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getKTracesAccess().getSemicolonKeyword_4_1()));
+		match_MethodDeclarationWOSemicolon_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getMethodDeclarationWOSemicolonAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
+		match_MethodDeclaration_LeftParenthesisRightParenthesisKeyword_5_1_q = new TokenAlias(false, true, grammarAccess.getMethodDeclarationAccess().getLeftParenthesisRightParenthesisKeyword_5_1());
 		match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 		match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q = new TokenAlias(false, true, grammarAccess.getRandomizeCallAccess().getLeftParenthesisRightParenthesisKeyword_2());
 	}
@@ -100,6 +104,10 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 				emit_KTraces___ResetKeyword_1_0_SemicolonKeyword_1_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q.equals(syntax))
 				emit_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_MethodDeclarationWOSemicolon_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_MethodDeclarationWOSemicolon_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_MethodDeclaration_LeftParenthesisRightParenthesisKeyword_5_1_q.equals(syntax))
+				emit_MethodDeclaration_LeftParenthesisRightParenthesisKeyword_5_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
 				emit_RandomCall_LeftParenthesisRightParenthesisKeyword_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_RandomizeCall_LeftParenthesisRightParenthesisKeyword_2_q.equals(syntax))
@@ -318,6 +326,32 @@ public abstract class AbstractKTraceSyntacticSequencer extends AbstractSyntactic
 	 *     traces+=KTrace (ambiguity) (rule end)
 	 */
 	protected void emit_KTraces___ResetKeyword_4_0_SemicolonKeyword_4_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) 'schedule' schedule+=ScheduleObjectReference
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) (rule end)
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) annotations+=CommentAnnotatonSL
+	 */
+	protected void emit_MethodDeclarationWOSemicolon_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '()'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) ';' (rule end)
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) ';' annotations+=CommentAnnotatonSL
+	 *     valuedObjects+=SimpleValuedObject (ambiguity) 'schedule' schedule+=ScheduleObjectReference
+	 */
+	protected void emit_MethodDeclaration_LeftParenthesisRightParenthesisKeyword_5_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

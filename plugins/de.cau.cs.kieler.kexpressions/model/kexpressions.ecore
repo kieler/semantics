@@ -194,7 +194,8 @@
     <eLiterals name="CLOCK" value="11" literal="clock"/>
     <eLiterals name="JSON" value="12" literal="json"/>
     <eLiterals name="STRUCT" value="13" literal="struct"/>
-    <eLiterals name="VOID" value="14" literal="void"/>
+    <eLiterals name="CLASS" value="14" literal="class"/>
+    <eLiterals name="VOID" value="15" literal="void"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -319,6 +320,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="#//PriorityProtocol"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" unique="false"
         upperBound="-1" eType="#//PriorityProtocol"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodDeclaration" eSuperTypes="#//Declaration #//Schedulable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="#//ValueType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDeclarations"
+        upperBound="-1" eType="#//Declaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PriorityProtocol">
     <eLiterals name="CONFLICT"/>

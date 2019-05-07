@@ -15,7 +15,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
@@ -161,6 +161,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     private EClass returnEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass methodImplementationDeclarationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -495,6 +502,16 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     @Override
+    public EClass getMethodImplementationDeclaration() {
+        return methodImplementationDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public SCLFactory getSCLFactory() {
         return (SCLFactory)getEFactoryInstance();
     }
@@ -560,6 +577,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         returnEClass = createEClass(RETURN);
         createEReference(returnEClass, RETURN__EXPRESSION);
+
+        methodImplementationDeclarationEClass = createEClass(METHOD_IMPLEMENTATION_DECLARATION);
     }
 
     /**
@@ -623,6 +642,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         elseScopeEClass.getESuperTypes().add(this.getScope());
         elseScopeEClass.getESuperTypes().add(this.getSequencePart());
         returnEClass.getESuperTypes().add(this.getStatement());
+        methodImplementationDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getMethodDeclaration());
+        methodImplementationDeclarationEClass.getESuperTypes().add(this.getScope());
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -667,6 +688,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
 
         initEClass(returnEClass, Return.class, "Return", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getReturn_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Return.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(methodImplementationDeclarationEClass, MethodImplementationDeclaration.class, "MethodImplementationDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Create resource
         createResource(eNS_URI);

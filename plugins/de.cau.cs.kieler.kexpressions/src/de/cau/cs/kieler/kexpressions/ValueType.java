@@ -185,7 +185,19 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    STRUCT(13, "STRUCT", "struct"), /**
+    STRUCT(13, "STRUCT", "struct"),
+
+    /**
+     * The '<em><b>CLASS</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CLASS_VALUE
+     * @generated
+     * @ordered
+     */
+    CLASS(14, "CLASS", "class"),
+
+    /**
      * The '<em><b>VOID</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -193,7 +205,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    VOID(14, "VOID", "void");
+    VOID(15, "VOID", "void");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -214,10 +226,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>BOOL</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>BOOL</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #BOOL
      * @model literal="bool"
@@ -244,10 +252,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>INT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #INT
      * @model literal="int"
@@ -259,10 +263,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>FLOAT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>FLOAT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #FLOAT
      * @model literal="float"
@@ -305,10 +305,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>STRING</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>STRING</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #STRING
      * @model literal="string"
@@ -320,10 +316,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>REFERENCE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>REFERENCE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #REFERENCE
      * @model literal="reference"
@@ -335,10 +327,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>SCHEDULE</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>SCHEDULE</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #SCHEDULE
      * @model literal="schedule"
@@ -350,10 +338,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>UNKNOWN</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>UNKNOWN</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #UNKNOWN
      * @model
@@ -365,10 +349,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>CLOCK</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>CLOCK</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #CLOCK
      * @model literal="clock"
@@ -380,10 +360,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>JSON</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>JSON</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #JSON
      * @model literal="json"
@@ -395,10 +371,6 @@ public enum ValueType implements Enumerator {
     /**
      * The '<em><b>STRUCT</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>STRUCT</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
      * @see #STRUCT
      * @model literal="struct"
@@ -406,6 +378,17 @@ public enum ValueType implements Enumerator {
      * @ordered
      */
     public static final int STRUCT_VALUE = 13;
+
+    /**
+     * The '<em><b>CLASS</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CLASS
+     * @model literal="class"
+     * @generated
+     * @ordered
+     */
+    public static final int CLASS_VALUE = 14;
 
     /**
      * The '<em><b>VOID</b></em>' literal value.
@@ -416,7 +399,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int VOID_VALUE = 14;
+    public static final int VOID_VALUE = 15;
 
     /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
@@ -440,6 +423,7 @@ public enum ValueType implements Enumerator {
             CLOCK,
             JSON,
             STRUCT,
+            CLASS,
             VOID,
         };
 
@@ -511,6 +495,7 @@ public enum ValueType implements Enumerator {
             case CLOCK_VALUE: return CLOCK;
             case JSON_VALUE: return JSON;
             case STRUCT_VALUE: return STRUCT;
+            case CLASS_VALUE: return CLASS;
             case VOID_VALUE: return VOID;
         }
         return null;

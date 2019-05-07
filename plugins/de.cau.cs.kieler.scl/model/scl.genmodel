@@ -41,5 +41,6 @@
     <genClasses ecoreClass="scl.ecore#//Return">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Return/expression"/>
     </genClasses>
+    <genClasses ecoreClass="scl.ecore#//MethodImplementationDeclaration"/>
   </genPackages>
 </genmodel:GenModel>

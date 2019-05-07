@@ -5,9 +5,9 @@ package de.cau.cs.kieler.kexpressions.kext.impl;
 import de.cau.cs.kieler.annotations.Annotatable;
 import de.cau.cs.kieler.annotations.Annotation;
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
-
 import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+
 import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
@@ -15,8 +15,8 @@ import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 
 import java.util.Collection;
 
@@ -35,31 +35,32 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Struct Declaration</b></em>'.
+ * An implementation of the model object '<em><b>Class Declaration</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getAnnotations <em>Annotations</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getAccess <em>Access</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isInput <em>Input</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isOutput <em>Output</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isStatic <em>Static</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isSignal <em>Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isConst <em>Const</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isExtern <em>Extern</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isVolatile <em>Volatile</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#isGlobal <em>Global</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getHostType <em>Host Type</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.StructDeclarationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getAnnotations <em>Annotations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getAccess <em>Access</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getType <em>Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isInput <em>Input</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isStatic <em>Static</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isConst <em>Const</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isExtern <em>Extern</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isVolatile <em>Volatile</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isGlobal <em>Global</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getHostType <em>Host Type</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl#isHost <em>Host</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class StructDeclarationImpl extends DeclarationScopeImpl implements StructDeclaration {
+public class ClassDeclarationImpl extends DeclarationScopeImpl implements ClassDeclaration {
     /**
      * The cached value of the '{@link #getAnnotations() <em>Annotations</em>}' containment reference list.
      * <!-- begin-user-doc -->
@@ -321,11 +322,31 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     protected String name = NAME_EDEFAULT;
 
     /**
+     * The default value of the '{@link #isHost() <em>Host</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHost()
+     * @generated
+     * @ordered
+     */
+    protected static final boolean HOST_EDEFAULT = false;
+
+    /**
+     * The cached value of the '{@link #isHost() <em>Host</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #isHost()
+     * @generated
+     * @ordered
+     */
+    protected boolean host = HOST_EDEFAULT;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    protected StructDeclarationImpl() {
+    protected ClassDeclarationImpl() {
         super();
     }
 
@@ -336,7 +357,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
      */
     @Override
     protected EClass eStaticClass() {
-        return KExtPackage.Literals.STRUCT_DECLARATION;
+        return KExtPackage.Literals.CLASS_DECLARATION;
     }
 
     /**
@@ -347,7 +368,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
-            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExtPackage.STRUCT_DECLARATION__ANNOTATIONS);
+            annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExtPackage.CLASS_DECLARATION__ANNOTATIONS);
         }
         return annotations;
     }
@@ -360,7 +381,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public EList<ValuedObject> getValuedObjects() {
         if (valuedObjects == null) {
-            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS);
+            valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS);
         }
         return valuedObjects;
     }
@@ -385,7 +406,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         AccessModifier oldAccess = access;
         access = newAccess == null ? ACCESS_EDEFAULT : newAccess;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__ACCESS, oldAccess, access));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__ACCESS, oldAccess, access));
     }
 
     /**
@@ -408,7 +429,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         ValueType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__TYPE, oldType, type));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__TYPE, oldType, type));
     }
 
     /**
@@ -431,7 +452,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldInput = input;
         input = newInput;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__INPUT, oldInput, input));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__INPUT, oldInput, input));
     }
 
     /**
@@ -454,7 +475,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldOutput = output;
         output = newOutput;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__OUTPUT, oldOutput, output));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__OUTPUT, oldOutput, output));
     }
 
     /**
@@ -477,7 +498,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldStatic = static_;
         static_ = newStatic;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__STATIC, oldStatic, static_));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__STATIC, oldStatic, static_));
     }
 
     /**
@@ -500,7 +521,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldSignal = signal;
         signal = newSignal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__SIGNAL, oldSignal, signal));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__SIGNAL, oldSignal, signal));
     }
 
     /**
@@ -523,7 +544,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldConst = const_;
         const_ = newConst;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__CONST, oldConst, const_));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__CONST, oldConst, const_));
     }
 
     /**
@@ -546,7 +567,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldExtern = extern;
         extern = newExtern;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__EXTERN, oldExtern, extern));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__EXTERN, oldExtern, extern));
     }
 
     /**
@@ -569,7 +590,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldVolatile = volatile_;
         volatile_ = newVolatile;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__VOLATILE, oldVolatile, volatile_));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__VOLATILE, oldVolatile, volatile_));
     }
 
     /**
@@ -592,7 +613,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         boolean oldGlobal = global;
         global = newGlobal;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__GLOBAL, oldGlobal, global));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__GLOBAL, oldGlobal, global));
     }
 
     /**
@@ -615,7 +636,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         String oldHostType = hostType;
         hostType = newHostType;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__HOST_TYPE, oldHostType, hostType));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__HOST_TYPE, oldHostType, hostType));
     }
 
     /**
@@ -638,7 +659,30 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         String oldName = name;
         name = newName;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.STRUCT_DECLARATION__NAME, oldName, name));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__NAME, oldName, name));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean isHost() {
+        return host;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setHost(boolean newHost) {
+        boolean oldHost = host;
+        host = newHost;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExtPackage.CLASS_DECLARATION__HOST, oldHost, host));
     }
 
     /**
@@ -649,9 +693,9 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS:
+            case KExtPackage.CLASS_DECLARATION__ANNOTATIONS:
                 return ((InternalEList<?>)getAnnotations()).basicRemove(otherEnd, msgs);
-            case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
+            case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS:
                 return ((InternalEList<?>)getValuedObjects()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -665,34 +709,36 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS:
+            case KExtPackage.CLASS_DECLARATION__ANNOTATIONS:
                 return getAnnotations();
-            case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
+            case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS:
                 return getValuedObjects();
-            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+            case KExtPackage.CLASS_DECLARATION__ACCESS:
                 return getAccess();
-            case KExtPackage.STRUCT_DECLARATION__TYPE:
+            case KExtPackage.CLASS_DECLARATION__TYPE:
                 return getType();
-            case KExtPackage.STRUCT_DECLARATION__INPUT:
+            case KExtPackage.CLASS_DECLARATION__INPUT:
                 return isInput();
-            case KExtPackage.STRUCT_DECLARATION__OUTPUT:
+            case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 return isOutput();
-            case KExtPackage.STRUCT_DECLARATION__STATIC:
+            case KExtPackage.CLASS_DECLARATION__STATIC:
                 return isStatic();
-            case KExtPackage.STRUCT_DECLARATION__SIGNAL:
+            case KExtPackage.CLASS_DECLARATION__SIGNAL:
                 return isSignal();
-            case KExtPackage.STRUCT_DECLARATION__CONST:
+            case KExtPackage.CLASS_DECLARATION__CONST:
                 return isConst();
-            case KExtPackage.STRUCT_DECLARATION__EXTERN:
+            case KExtPackage.CLASS_DECLARATION__EXTERN:
                 return isExtern();
-            case KExtPackage.STRUCT_DECLARATION__VOLATILE:
+            case KExtPackage.CLASS_DECLARATION__VOLATILE:
                 return isVolatile();
-            case KExtPackage.STRUCT_DECLARATION__GLOBAL:
+            case KExtPackage.CLASS_DECLARATION__GLOBAL:
                 return isGlobal();
-            case KExtPackage.STRUCT_DECLARATION__HOST_TYPE:
+            case KExtPackage.CLASS_DECLARATION__HOST_TYPE:
                 return getHostType();
-            case KExtPackage.STRUCT_DECLARATION__NAME:
+            case KExtPackage.CLASS_DECLARATION__NAME:
                 return getName();
+            case KExtPackage.CLASS_DECLARATION__HOST:
+                return isHost();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -706,49 +752,52 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS:
+            case KExtPackage.CLASS_DECLARATION__ANNOTATIONS:
                 getAnnotations().clear();
                 getAnnotations().addAll((Collection<? extends Annotation>)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
+            case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+            case KExtPackage.CLASS_DECLARATION__ACCESS:
                 setAccess((AccessModifier)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__TYPE:
+            case KExtPackage.CLASS_DECLARATION__TYPE:
                 setType((ValueType)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__INPUT:
+            case KExtPackage.CLASS_DECLARATION__INPUT:
                 setInput((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__OUTPUT:
+            case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 setOutput((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__STATIC:
+            case KExtPackage.CLASS_DECLARATION__STATIC:
                 setStatic((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__SIGNAL:
+            case KExtPackage.CLASS_DECLARATION__SIGNAL:
                 setSignal((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__CONST:
+            case KExtPackage.CLASS_DECLARATION__CONST:
                 setConst((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__EXTERN:
+            case KExtPackage.CLASS_DECLARATION__EXTERN:
                 setExtern((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__VOLATILE:
+            case KExtPackage.CLASS_DECLARATION__VOLATILE:
                 setVolatile((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__GLOBAL:
+            case KExtPackage.CLASS_DECLARATION__GLOBAL:
                 setGlobal((Boolean)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__HOST_TYPE:
+            case KExtPackage.CLASS_DECLARATION__HOST_TYPE:
                 setHostType((String)newValue);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__NAME:
+            case KExtPackage.CLASS_DECLARATION__NAME:
                 setName((String)newValue);
+                return;
+            case KExtPackage.CLASS_DECLARATION__HOST:
+                setHost((Boolean)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -762,47 +811,50 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS:
+            case KExtPackage.CLASS_DECLARATION__ANNOTATIONS:
                 getAnnotations().clear();
                 return;
-            case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
+            case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 return;
-            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+            case KExtPackage.CLASS_DECLARATION__ACCESS:
                 setAccess(ACCESS_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__TYPE:
+            case KExtPackage.CLASS_DECLARATION__TYPE:
                 setType(TYPE_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__INPUT:
+            case KExtPackage.CLASS_DECLARATION__INPUT:
                 setInput(INPUT_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__OUTPUT:
+            case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 setOutput(OUTPUT_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__STATIC:
+            case KExtPackage.CLASS_DECLARATION__STATIC:
                 setStatic(STATIC_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__SIGNAL:
+            case KExtPackage.CLASS_DECLARATION__SIGNAL:
                 setSignal(SIGNAL_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__CONST:
+            case KExtPackage.CLASS_DECLARATION__CONST:
                 setConst(CONST_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__EXTERN:
+            case KExtPackage.CLASS_DECLARATION__EXTERN:
                 setExtern(EXTERN_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__VOLATILE:
+            case KExtPackage.CLASS_DECLARATION__VOLATILE:
                 setVolatile(VOLATILE_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__GLOBAL:
+            case KExtPackage.CLASS_DECLARATION__GLOBAL:
                 setGlobal(GLOBAL_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__HOST_TYPE:
+            case KExtPackage.CLASS_DECLARATION__HOST_TYPE:
                 setHostType(HOST_TYPE_EDEFAULT);
                 return;
-            case KExtPackage.STRUCT_DECLARATION__NAME:
+            case KExtPackage.CLASS_DECLARATION__NAME:
                 setName(NAME_EDEFAULT);
+                return;
+            case KExtPackage.CLASS_DECLARATION__HOST:
+                setHost(HOST_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -816,34 +868,36 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS:
+            case KExtPackage.CLASS_DECLARATION__ANNOTATIONS:
                 return annotations != null && !annotations.isEmpty();
-            case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS:
+            case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS:
                 return valuedObjects != null && !valuedObjects.isEmpty();
-            case KExtPackage.STRUCT_DECLARATION__ACCESS:
+            case KExtPackage.CLASS_DECLARATION__ACCESS:
                 return access != ACCESS_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__TYPE:
+            case KExtPackage.CLASS_DECLARATION__TYPE:
                 return type != TYPE_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__INPUT:
+            case KExtPackage.CLASS_DECLARATION__INPUT:
                 return input != INPUT_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__OUTPUT:
+            case KExtPackage.CLASS_DECLARATION__OUTPUT:
                 return output != OUTPUT_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__STATIC:
+            case KExtPackage.CLASS_DECLARATION__STATIC:
                 return static_ != STATIC_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__SIGNAL:
+            case KExtPackage.CLASS_DECLARATION__SIGNAL:
                 return signal != SIGNAL_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__CONST:
+            case KExtPackage.CLASS_DECLARATION__CONST:
                 return const_ != CONST_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__EXTERN:
+            case KExtPackage.CLASS_DECLARATION__EXTERN:
                 return extern != EXTERN_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__VOLATILE:
+            case KExtPackage.CLASS_DECLARATION__VOLATILE:
                 return volatile_ != VOLATILE_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__GLOBAL:
+            case KExtPackage.CLASS_DECLARATION__GLOBAL:
                 return global != GLOBAL_EDEFAULT;
-            case KExtPackage.STRUCT_DECLARATION__HOST_TYPE:
+            case KExtPackage.CLASS_DECLARATION__HOST_TYPE:
                 return HOST_TYPE_EDEFAULT == null ? hostType != null : !HOST_TYPE_EDEFAULT.equals(hostType);
-            case KExtPackage.STRUCT_DECLARATION__NAME:
+            case KExtPackage.CLASS_DECLARATION__NAME:
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+            case KExtPackage.CLASS_DECLARATION__HOST:
+                return host != HOST_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -857,29 +911,29 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
         if (baseClass == Annotatable.class) {
             switch (derivedFeatureID) {
-                case KExtPackage.STRUCT_DECLARATION__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
+                case KExtPackage.CLASS_DECLARATION__ANNOTATIONS: return AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
                 default: return -1;
             }
         }
         if (baseClass == Declaration.class) {
             switch (derivedFeatureID) {
-                case KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS: return KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
-                case KExtPackage.STRUCT_DECLARATION__ACCESS: return KExpressionsPackage.DECLARATION__ACCESS;
+                case KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS: return KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
+                case KExtPackage.CLASS_DECLARATION__ACCESS: return KExpressionsPackage.DECLARATION__ACCESS;
                 default: return -1;
             }
         }
         if (baseClass == VariableDeclaration.class) {
             switch (derivedFeatureID) {
-                case KExtPackage.STRUCT_DECLARATION__TYPE: return KExpressionsPackage.VARIABLE_DECLARATION__TYPE;
-                case KExtPackage.STRUCT_DECLARATION__INPUT: return KExpressionsPackage.VARIABLE_DECLARATION__INPUT;
-                case KExtPackage.STRUCT_DECLARATION__OUTPUT: return KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT;
-                case KExtPackage.STRUCT_DECLARATION__STATIC: return KExpressionsPackage.VARIABLE_DECLARATION__STATIC;
-                case KExtPackage.STRUCT_DECLARATION__SIGNAL: return KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL;
-                case KExtPackage.STRUCT_DECLARATION__CONST: return KExpressionsPackage.VARIABLE_DECLARATION__CONST;
-                case KExtPackage.STRUCT_DECLARATION__EXTERN: return KExpressionsPackage.VARIABLE_DECLARATION__EXTERN;
-                case KExtPackage.STRUCT_DECLARATION__VOLATILE: return KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE;
-                case KExtPackage.STRUCT_DECLARATION__GLOBAL: return KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL;
-                case KExtPackage.STRUCT_DECLARATION__HOST_TYPE: return KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE;
+                case KExtPackage.CLASS_DECLARATION__TYPE: return KExpressionsPackage.VARIABLE_DECLARATION__TYPE;
+                case KExtPackage.CLASS_DECLARATION__INPUT: return KExpressionsPackage.VARIABLE_DECLARATION__INPUT;
+                case KExtPackage.CLASS_DECLARATION__OUTPUT: return KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT;
+                case KExtPackage.CLASS_DECLARATION__STATIC: return KExpressionsPackage.VARIABLE_DECLARATION__STATIC;
+                case KExtPackage.CLASS_DECLARATION__SIGNAL: return KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL;
+                case KExtPackage.CLASS_DECLARATION__CONST: return KExpressionsPackage.VARIABLE_DECLARATION__CONST;
+                case KExtPackage.CLASS_DECLARATION__EXTERN: return KExpressionsPackage.VARIABLE_DECLARATION__EXTERN;
+                case KExtPackage.CLASS_DECLARATION__VOLATILE: return KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE;
+                case KExtPackage.CLASS_DECLARATION__GLOBAL: return KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL;
+                case KExtPackage.CLASS_DECLARATION__HOST_TYPE: return KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE;
                 default: return -1;
             }
         }
@@ -890,7 +944,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
-                case KExtPackage.STRUCT_DECLARATION__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
+                case KExtPackage.CLASS_DECLARATION__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
                 default: return -1;
             }
         }
@@ -906,29 +960,29 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
         if (baseClass == Annotatable.class) {
             switch (baseFeatureID) {
-                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return KExtPackage.STRUCT_DECLARATION__ANNOTATIONS;
+                case AnnotationsPackage.ANNOTATABLE__ANNOTATIONS: return KExtPackage.CLASS_DECLARATION__ANNOTATIONS;
                 default: return -1;
             }
         }
         if (baseClass == Declaration.class) {
             switch (baseFeatureID) {
-                case KExpressionsPackage.DECLARATION__VALUED_OBJECTS: return KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS;
-                case KExpressionsPackage.DECLARATION__ACCESS: return KExtPackage.STRUCT_DECLARATION__ACCESS;
+                case KExpressionsPackage.DECLARATION__VALUED_OBJECTS: return KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS;
+                case KExpressionsPackage.DECLARATION__ACCESS: return KExtPackage.CLASS_DECLARATION__ACCESS;
                 default: return -1;
             }
         }
         if (baseClass == VariableDeclaration.class) {
             switch (baseFeatureID) {
-                case KExpressionsPackage.VARIABLE_DECLARATION__TYPE: return KExtPackage.STRUCT_DECLARATION__TYPE;
-                case KExpressionsPackage.VARIABLE_DECLARATION__INPUT: return KExtPackage.STRUCT_DECLARATION__INPUT;
-                case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT: return KExtPackage.STRUCT_DECLARATION__OUTPUT;
-                case KExpressionsPackage.VARIABLE_DECLARATION__STATIC: return KExtPackage.STRUCT_DECLARATION__STATIC;
-                case KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL: return KExtPackage.STRUCT_DECLARATION__SIGNAL;
-                case KExpressionsPackage.VARIABLE_DECLARATION__CONST: return KExtPackage.STRUCT_DECLARATION__CONST;
-                case KExpressionsPackage.VARIABLE_DECLARATION__EXTERN: return KExtPackage.STRUCT_DECLARATION__EXTERN;
-                case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE: return KExtPackage.STRUCT_DECLARATION__VOLATILE;
-                case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL: return KExtPackage.STRUCT_DECLARATION__GLOBAL;
-                case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE: return KExtPackage.STRUCT_DECLARATION__HOST_TYPE;
+                case KExpressionsPackage.VARIABLE_DECLARATION__TYPE: return KExtPackage.CLASS_DECLARATION__TYPE;
+                case KExpressionsPackage.VARIABLE_DECLARATION__INPUT: return KExtPackage.CLASS_DECLARATION__INPUT;
+                case KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT: return KExtPackage.CLASS_DECLARATION__OUTPUT;
+                case KExpressionsPackage.VARIABLE_DECLARATION__STATIC: return KExtPackage.CLASS_DECLARATION__STATIC;
+                case KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL: return KExtPackage.CLASS_DECLARATION__SIGNAL;
+                case KExpressionsPackage.VARIABLE_DECLARATION__CONST: return KExtPackage.CLASS_DECLARATION__CONST;
+                case KExpressionsPackage.VARIABLE_DECLARATION__EXTERN: return KExtPackage.CLASS_DECLARATION__EXTERN;
+                case KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE: return KExtPackage.CLASS_DECLARATION__VOLATILE;
+                case KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL: return KExtPackage.CLASS_DECLARATION__GLOBAL;
+                case KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE: return KExtPackage.CLASS_DECLARATION__HOST_TYPE;
                 default: return -1;
             }
         }
@@ -939,7 +993,7 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
-                case AnnotationsPackage.NAMED_OBJECT__NAME: return KExtPackage.STRUCT_DECLARATION__NAME;
+                case AnnotationsPackage.NAMED_OBJECT__NAME: return KExtPackage.CLASS_DECLARATION__NAME;
                 default: return -1;
             }
         }
@@ -980,8 +1034,10 @@ public class StructDeclarationImpl extends DeclarationScopeImpl implements Struc
         result.append(hostType);
         result.append(", name: ");
         result.append(name);
+        result.append(", host: ");
+        result.append(host);
         result.append(')');
         return result.toString();
     }
 
-} //StructDeclarationImpl
+} //ClassDeclarationImpl

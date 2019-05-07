@@ -20,15 +20,12 @@ import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.sccharts.*;
-import de.cau.cs.kieler.scl.StatementContainer;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -167,12 +164,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createPeriodActionAdapter();
             }
             @Override
-            public Adapter caseMethod(Method object) {
-                return createMethodAdapter();
-            }
-            @Override
-            public Adapter caseClassDeclaration(ClassDeclaration object) {
-                return createClassDeclarationAdapter();
+            public Adapter casePolicyClassDeclaration(PolicyClassDeclaration object) {
+                return createPolicyClassDeclarationAdapter();
             }
             @Override
             public Adapter casePolicyRegion(PolicyRegion object) {
@@ -215,22 +208,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createCallAdapter();
             }
             @Override
-            public Adapter caseReferenceable(Referenceable object) {
-                return createReferenceableAdapter();
-            }
-            @Override
-            public Adapter caseValuedObject(ValuedObject object) {
-                return createValuedObjectAdapter();
-            }
-            @Override
-            public Adapter caseStatementContainer(StatementContainer object) {
-                return createStatementContainerAdapter();
-            }
-            @Override
-            public Adapter caseSCL_Scope(de.cau.cs.kieler.scl.Scope object) {
-                return createSCL_ScopeAdapter();
-            }
-            @Override
             public Adapter caseDeclaration(Declaration object) {
                 return createDeclarationAdapter();
             }
@@ -239,8 +216,8 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
                 return createVariableDeclarationAdapter();
             }
             @Override
-            public Adapter caseStructDeclaration(StructDeclaration object) {
-                return createStructDeclarationAdapter();
+            public Adapter caseClassDeclaration(ClassDeclaration object) {
+                return createClassDeclarationAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -487,27 +464,27 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.Method <em>Method</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration <em>Policy Class Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.Method
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration
      * @generated
      */
-    public Adapter createMethodAdapter() {
+    public Adapter createPolicyClassDeclarationAdapter() {
         return null;
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sccharts.ClassDeclaration <em>Class Declaration</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.ClassDeclaration <em>Class Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.sccharts.ClassDeclaration
+     * @see de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
      * @generated
      */
     public Adapter createClassDeclarationAdapter() {
@@ -655,62 +632,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Referenceable <em>Referenceable</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.Referenceable
-     * @generated
-     */
-    public Adapter createReferenceableAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ValuedObject <em>Valued Object</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.ValuedObject
-     * @generated
-     */
-    public Adapter createValuedObjectAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.StatementContainer <em>Statement Container</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scl.StatementContainer
-     * @generated
-     */
-    public Adapter createStatementContainerAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Scope <em>Scope</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scl.Scope
-     * @generated
-     */
-    public Adapter createSCL_ScopeAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Declaration <em>Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -735,20 +656,6 @@ public class SCChartsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createVariableDeclarationAdapter() {
-        return null;
-    }
-
-    /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.StructDeclaration <em>Struct Declaration</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.kext.StructDeclaration
-     * @generated
-     */
-    public Adapter createStructDeclarationAdapter() {
         return null;
     }
 

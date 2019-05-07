@@ -9,11 +9,14 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsPackage
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -21,15 +24,11 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import de.cau.cs.kieler.sccharts.SCChartsPackage
-import org.eclipse.emf.ecore.resource.Resource
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
-import de.cau.cs.kieler.sccharts.ClassDeclaration
 import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -152,10 +151,6 @@ class SCTXScopeProvider extends KExtScopeProvider {
                 if (declarationScope.counterVariable !== null) {
                     candidates += declarationScope.counterVariable
                 }
-                // Methods
-                for (method : declarationScope.methods) {
-                    candidates += method
-                }
             }
             
             // Inherited VOs
@@ -167,31 +162,11 @@ class SCTXScopeProvider extends KExtScopeProvider {
                         }
                     }
                 }
-                // Methods
-                for (method : declarationScope.methods) {
-                    candidates += method
-                }
-            }
-            
-            // Methods in classes
-            if (declarationScope instanceof ClassDeclaration) {
-                candidates.addAll(declarationScope.methods)
             }
             
             declarationScope = declarationScope.nextDeclarationScope
         }
         return Scopes.scopeFor(candidates)
-    }
-    
-    override IScope getScopeForStruct(StructDeclaration struct) {
-        if (struct instanceof ClassDeclaration) {
-            val candidates = newArrayList()
-            candidates.addAll(struct.declarations.map[valuedObjects].flatten)
-            candidates.addAll(struct.methods)
-            return Scopes.scopeFor(candidates)
-        } else {
-            return super.getScopeForStruct(struct)
-        }
     }
     
     protected def getAllAvailableRootStates(Resource eResource) {
@@ -211,16 +186,9 @@ class SCTXScopeProvider extends KExtScopeProvider {
     override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
         Function1<? super VariableDeclaration, Boolean> predicate
     ) {
-        if (declaration.reference === null) {
-            // IMPORTANT: This can happen if the resource that should be imported does not exist. 
-            // In this case, the scope given to the linker was null previously. This causes a NPE. 
-            // Return a NullScope instead.
-            return IScope.NULLSCOPE
-        }
-        
         if (declaration.reference instanceof State) {
             val state = declaration.reference as State
-            return Scopes.scopeFor(state.methods, super.getScopeForReferencedDeclarationObject(declaration, predicate))
+            return Scopes.scopeFor(state.declarations.filter(MethodDeclaration).map[valuedObjects.head], super.getScopeForReferencedDeclarationObject(declaration, predicate))
         } else {
             return super.getScopeForReferencedDeclarationObject(declaration, predicate)
         }

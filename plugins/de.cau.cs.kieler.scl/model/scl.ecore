@@ -46,4 +46,5 @@
         eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodImplementationDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//MethodDeclaration #//Scope"/>
 </ecore:EPackage>

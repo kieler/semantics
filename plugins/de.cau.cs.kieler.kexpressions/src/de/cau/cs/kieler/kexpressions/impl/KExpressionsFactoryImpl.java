@@ -1,5 +1,4 @@
 /**
- * generated with EMF ecore
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
@@ -77,6 +76,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
             case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.METHOD_DECLARATION: return createMethodDeclaration();
             case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
@@ -343,6 +343,17 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
     public ScheduleDeclaration createScheduleDeclaration() {
         ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
         return scheduleDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MethodDeclaration createMethodDeclaration() {
+        MethodDeclarationImpl methodDeclaration = new MethodDeclarationImpl();
+        return methodDeclaration;
     }
 
     /**

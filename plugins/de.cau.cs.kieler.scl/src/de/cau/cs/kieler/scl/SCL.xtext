@@ -20,7 +20,7 @@ Module returns Module:
 ;
 
 Statement returns Statement:
-    SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement
+    SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall | ScopeStatement | Return
 ;
 
 Pause returns Pause:
@@ -150,4 +150,42 @@ Parameter returns kexpressions::Parameter:
     ((pureOutput ?= '!')? callByReference ?= '&')?
     expression = Expression
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?
-;    
+;
+
+@Override
+MethodDeclaration returns kexpressions::MethodDeclaration:
+    {MethodImplementationDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    (
+        ';'
+        |
+        '{'
+        annotations+=CommentAnnotatonSL?
+        declarations+=Declaration*
+        statements+=Statement*
+        '}'
+    )
+    annotations+=CommentAnnotatonSL?
+;
+
+@Override
+MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+    {MethodImplementationDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    ('{'
+        annotations+=CommentAnnotatonSL?
+        declarations+=DeclarationWOSemicolon*
+        statements+=Statement*
+    '}')?
+;
+    

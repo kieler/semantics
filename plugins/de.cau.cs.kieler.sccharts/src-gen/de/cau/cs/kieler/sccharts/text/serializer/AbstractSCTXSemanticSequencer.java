@@ -46,19 +46,18 @@ import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
-import de.cau.cs.kieler.sccharts.ClassDeclaration;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
 import de.cau.cs.kieler.sccharts.EntryAction;
 import de.cau.cs.kieler.sccharts.ExitAction;
-import de.cau.cs.kieler.sccharts.Method;
 import de.cau.cs.kieler.sccharts.PeriodAction;
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
 import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.SCCharts;
@@ -73,6 +72,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
@@ -951,12 +951,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				else break;
 			case KExpressionsPackage.REFERENCE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getKExtDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getReferenceDeclarationRule()) {
 					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
 					return; 
@@ -964,12 +965,13 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				else break;
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getKExtDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
 					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getScheduleDeclarationRule()) {
 					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
 					return; 
@@ -1145,6 +1147,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_CounterVariable(context, (ValuedObject) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getValuedObjectRule()) {
 					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
@@ -1234,13 +1240,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getKExtDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getVariableDeclarationRule()) {
+						|| rule == grammarAccess.getVariableDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -1331,6 +1338,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExtPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KExtPackage.CLASS_DECLARATION:
+				if (rule == grammarAccess.getClassDeclarationRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration_StructDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -1344,28 +1372,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
-			case KExtPackage.STRUCT_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getKExtDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
 			}
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
-			case SCChartsPackage.CLASS_DECLARATION:
-				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
 				if (rule == grammarAccess.getRegionRule()
 						|| rule == grammarAccess.getControlflowRegionRule()) {
@@ -1389,18 +1401,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCChartsPackage.EXIT_ACTION:
 				sequence_ExitAction(context, (ExitAction) semanticObject); 
 				return; 
-			case SCChartsPackage.METHOD:
-				if (rule == grammarAccess.getMethodDeclarationRule()) {
-					sequence_MethodDeclaration(context, (Method) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getMethodImplementationRule()) {
-					sequence_MethodImplementation(context, (Method) semanticObject); 
-					return; 
-				}
-				else break;
 			case SCChartsPackage.PERIOD_ACTION:
 				sequence_PeriodAction(context, (PeriodAction) semanticObject); 
+				return; 
+			case SCChartsPackage.POLICY_CLASS_DECLARATION:
+				sequence_ClassDeclarationWOSemicolon(context, (PolicyClassDeclaration) semanticObject); 
 				return; 
 			case SCChartsPackage.POLICY_REGION:
 				sequence_PolicyRegion(context, (PolicyRegion) semanticObject); 
@@ -1466,9 +1471,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case SCLPackage.CONDITIONAL:
-				if (rule == grammarAccess.getStatementRule()
-						|| rule == grammarAccess.getConditionalRule()) {
+				if (rule == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_Conditional_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLegacyConditionalRule()) {
@@ -1492,6 +1500,18 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
+				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_MethodDeclarationWOSemicolon(context, (MethodImplementationDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMethodDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_MethodDeclaration(context, (MethodImplementationDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.MODULE:
 				sequence_Module(context, (de.cau.cs.kieler.scl.Module) semanticObject); 
 				return; 
@@ -1757,29 +1777,29 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     DeclarationWOSemicolon returns ClassDeclaration
-	 *     ClassDeclaration returns ClassDeclaration
+	 *     ClassDeclarationWOSemicolon returns PolicyClassDeclaration
+	 *     DeclarationWOSemicolon returns PolicyClassDeclaration
+	 *     DeclarationOrMethodWOSemicolon returns PolicyClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         access=AccessModifier? 
-	 *         host?='host'? 
 	 *         const?='const'? 
 	 *         input?='input'? 
 	 *         output?='output'? 
 	 *         global?='global'? 
 	 *         static?='static'? 
+	 *         host?='host'? 
 	 *         type=ClassType 
 	 *         name=ID? 
 	 *         policy=PolicyRegion? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         methods+=MethodDeclaration* 
+	 *         declarations+=DeclarationOrMethodWOSemicolon* 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
-	protected void sequence_ClassDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
+	protected void sequence_ClassDeclarationWOSemicolon(ISerializationContext context, PolicyClassDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1804,12 +1824,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 (
 	 *                     (
 	 *                         declarations+=DeclarationWOSemicolon* 
-	 *                         methods+=MethodImplementation* 
+	 *                         declarations+=MethodDeclarationWOSemicolon* 
 	 *                         actions+=LocalAction* 
-	 *                         methods+=MethodImplementation* 
 	 *                         (states+=ImplicitState | states+=State+)
 	 *                     ) | 
-	 *                     (declarations+=DeclarationWOSemicolon* methods+=MethodImplementation* actions+=LocalAction* methods+=MethodImplementation states+=State*)
+	 *                     (declarations+=DeclarationWOSemicolon* declarations+=MethodDeclarationWOSemicolon* actions+=LocalAction* states+=State*)
 	 *                 )
 	 *             )
 	 *         )
@@ -1930,48 +1949,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
-	 *     MethodDeclaration returns Method
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         access=AccessModifier? 
-	 *         returnType=ReturnType? 
-	 *         name=ExtendedID 
-	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
-	 *         schedule+=ScheduleObjectReference* 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         statements+=Statement*
-	 *     )
-	 */
-	protected void sequence_MethodDeclaration(ISerializationContext context, Method semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MethodImplementation returns Method
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         access=AccessModifier? 
-	 *         returnType=ReturnType? 
-	 *         name=ExtendedID 
-	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
-	 *         schedule+=ScheduleObjectReference* 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         statements+=Statement*
-	 *     )
-	 */
-	protected void sequence_MethodImplementation(ISerializationContext context, Method semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     LocalAction returns PeriodAction
 	 *     PeriodAction returns PeriodAction
 	 *
@@ -2048,9 +2025,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         label=STRING? 
 	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *         declarations+=DeclarationWOSemicolon* 
-	 *         methods+=MethodImplementation* 
+	 *         declarations+=MethodDeclarationWOSemicolon* 
 	 *         actions+=LocalAction* 
-	 *         methods+=MethodImplementation* 
 	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *     )
 	 */
@@ -2114,9 +2090,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *                 schedule+=ScheduleObjectReference* 
 	 *                 declarations+=DeclarationWOSemicolon* 
-	 *                 methods+=MethodImplementation* 
+	 *                 declarations+=MethodDeclarationWOSemicolon* 
 	 *                 actions+=LocalAction* 
-	 *                 methods+=MethodImplementation* 
 	 *                 (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *             )
 	 *         ) 

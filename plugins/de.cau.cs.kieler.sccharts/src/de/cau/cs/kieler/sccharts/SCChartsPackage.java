@@ -217,22 +217,13 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int SCOPE__METHODS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
-
-    /**
      * The number of structural features of the '<em>Scope</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -599,15 +590,6 @@ public interface SCChartsPackage extends EPackage {
     int STATE__REFERENCE = SCOPE__REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int STATE__METHODS = SCOPE__METHODS;
-
-    /**
      * The feature id for the '<em><b>Parent Region</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -789,15 +771,6 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCE = SCOPE__REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__METHODS = SCOPE__METHODS;
-
-    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -941,15 +914,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__REFERENCE = REGION__REFERENCE;
-
-    /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROLFLOW_REGION__METHODS = REGION__METHODS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -1113,15 +1077,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__REFERENCE = REGION__REFERENCE;
-
-    /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__METHODS = REGION__METHODS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -2131,59 +2086,14 @@ public interface SCChartsPackage extends EPackage {
     int PERIOD_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.MethodImpl <em>Method</em>}' class.
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl <em>Policy Class Declaration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.MethodImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getMethod()
+     * @see de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyClassDeclaration()
      * @generated
      */
-    int METHOD = 17;
-
-    /**
-     * The feature id for the '<em><b>Name</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
-
-    /**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
-
-    /**
-     * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__COMBINE_OPERATOR = KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR;
-
-    /**
-     * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__INITIAL_VALUE = KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE;
-
-    /**
-     * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+    int POLICY_CLASS_DECLARATION = 17;
 
     /**
      * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
@@ -2192,80 +2102,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int METHOD__DECLARATIONS = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__STATEMENTS = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 1;
-
-    /**
-     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__SCHEDULE = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 2;
-
-    /**
-     * The feature id for the '<em><b>Return Type</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__RETURN_TYPE = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 3;
-
-    /**
-     * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__PARAMETER_DECLARATIONS = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 4;
-
-    /**
-     * The feature id for the '<em><b>Access</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD__ACCESS = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 5;
-
-    /**
-     * The number of structural features of the '<em>Method</em>' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int METHOD_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 6;
-
-    /**
-     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl <em>Class Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl
-     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getClassDeclaration()
-     * @generated
-     */
-    int CLASS_DECLARATION = 18;
-
-    /**
-     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CLASS_DECLARATION__DECLARATIONS = KExtPackage.STRUCT_DECLARATION__DECLARATIONS;
+    int POLICY_CLASS_DECLARATION__DECLARATIONS = KExtPackage.CLASS_DECLARATION__DECLARATIONS;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2274,7 +2111,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__ANNOTATIONS = KExtPackage.STRUCT_DECLARATION__ANNOTATIONS;
+    int POLICY_CLASS_DECLARATION__ANNOTATIONS = KExtPackage.CLASS_DECLARATION__ANNOTATIONS;
 
     /**
      * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
@@ -2283,7 +2120,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__VALUED_OBJECTS = KExtPackage.STRUCT_DECLARATION__VALUED_OBJECTS;
+    int POLICY_CLASS_DECLARATION__VALUED_OBJECTS = KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS;
 
     /**
      * The feature id for the '<em><b>Access</b></em>' attribute.
@@ -2292,7 +2129,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__ACCESS = KExtPackage.STRUCT_DECLARATION__ACCESS;
+    int POLICY_CLASS_DECLARATION__ACCESS = KExtPackage.CLASS_DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -2301,7 +2138,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__TYPE = KExtPackage.STRUCT_DECLARATION__TYPE;
+    int POLICY_CLASS_DECLARATION__TYPE = KExtPackage.CLASS_DECLARATION__TYPE;
 
     /**
      * The feature id for the '<em><b>Input</b></em>' attribute.
@@ -2310,7 +2147,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__INPUT = KExtPackage.STRUCT_DECLARATION__INPUT;
+    int POLICY_CLASS_DECLARATION__INPUT = KExtPackage.CLASS_DECLARATION__INPUT;
 
     /**
      * The feature id for the '<em><b>Output</b></em>' attribute.
@@ -2319,7 +2156,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__OUTPUT = KExtPackage.STRUCT_DECLARATION__OUTPUT;
+    int POLICY_CLASS_DECLARATION__OUTPUT = KExtPackage.CLASS_DECLARATION__OUTPUT;
 
     /**
      * The feature id for the '<em><b>Static</b></em>' attribute.
@@ -2328,7 +2165,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__STATIC = KExtPackage.STRUCT_DECLARATION__STATIC;
+    int POLICY_CLASS_DECLARATION__STATIC = KExtPackage.CLASS_DECLARATION__STATIC;
 
     /**
      * The feature id for the '<em><b>Signal</b></em>' attribute.
@@ -2337,7 +2174,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__SIGNAL = KExtPackage.STRUCT_DECLARATION__SIGNAL;
+    int POLICY_CLASS_DECLARATION__SIGNAL = KExtPackage.CLASS_DECLARATION__SIGNAL;
 
     /**
      * The feature id for the '<em><b>Const</b></em>' attribute.
@@ -2346,7 +2183,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__CONST = KExtPackage.STRUCT_DECLARATION__CONST;
+    int POLICY_CLASS_DECLARATION__CONST = KExtPackage.CLASS_DECLARATION__CONST;
 
     /**
      * The feature id for the '<em><b>Extern</b></em>' attribute.
@@ -2355,7 +2192,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__EXTERN = KExtPackage.STRUCT_DECLARATION__EXTERN;
+    int POLICY_CLASS_DECLARATION__EXTERN = KExtPackage.CLASS_DECLARATION__EXTERN;
 
     /**
      * The feature id for the '<em><b>Volatile</b></em>' attribute.
@@ -2364,7 +2201,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__VOLATILE = KExtPackage.STRUCT_DECLARATION__VOLATILE;
+    int POLICY_CLASS_DECLARATION__VOLATILE = KExtPackage.CLASS_DECLARATION__VOLATILE;
 
     /**
      * The feature id for the '<em><b>Global</b></em>' attribute.
@@ -2373,7 +2210,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__GLOBAL = KExtPackage.STRUCT_DECLARATION__GLOBAL;
+    int POLICY_CLASS_DECLARATION__GLOBAL = KExtPackage.CLASS_DECLARATION__GLOBAL;
 
     /**
      * The feature id for the '<em><b>Host Type</b></em>' attribute.
@@ -2382,7 +2219,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__HOST_TYPE = KExtPackage.STRUCT_DECLARATION__HOST_TYPE;
+    int POLICY_CLASS_DECLARATION__HOST_TYPE = KExtPackage.CLASS_DECLARATION__HOST_TYPE;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2391,16 +2228,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__NAME = KExtPackage.STRUCT_DECLARATION__NAME;
-
-    /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CLASS_DECLARATION__METHODS = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 0;
+    int POLICY_CLASS_DECLARATION__NAME = KExtPackage.CLASS_DECLARATION__NAME;
 
     /**
      * The feature id for the '<em><b>Host</b></em>' attribute.
@@ -2409,7 +2237,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__HOST = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 1;
+    int POLICY_CLASS_DECLARATION__HOST = KExtPackage.CLASS_DECLARATION__HOST;
 
     /**
      * The feature id for the '<em><b>Policy</b></em>' containment reference.
@@ -2418,16 +2246,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION__POLICY = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 2;
+    int POLICY_CLASS_DECLARATION__POLICY = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 0;
 
     /**
-     * The number of structural features of the '<em>Class Declaration</em>' class.
+     * The number of structural features of the '<em>Policy Class Declaration</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CLASS_DECLARATION_FEATURE_COUNT = KExtPackage.STRUCT_DECLARATION_FEATURE_COUNT + 3;
+    int POLICY_CLASS_DECLARATION_FEATURE_COUNT = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 1;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.
@@ -2437,7 +2265,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
      * @generated
      */
-    int POLICY_REGION = 19;
+    int POLICY_REGION = 18;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -2521,15 +2349,6 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION__REFERENCE = CONTROLFLOW_REGION__REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Methods</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int POLICY_REGION__METHODS = CONTROLFLOW_REGION__METHODS;
-
-    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2609,7 +2428,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 20;
+    int PREEMPTION_TYPE = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2619,7 +2438,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 21;
+    int HISTORY_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2629,7 +2448,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 22;
+    int DELAY_TYPE = 21;
 
 
     /**
@@ -2706,17 +2525,6 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getScope_Reference();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Scope#getMethods <em>Methods</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Methods</em>'.
-     * @see de.cau.cs.kieler.sccharts.Scope#getMethods()
-     * @see #getScope()
-     * @generated
-     */
-    EReference getScope_Methods();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ScopeCall <em>Scope Call</em>}'.
@@ -3243,90 +3051,25 @@ public interface SCChartsPackage extends EPackage {
     EClass getPeriodAction();
 
     /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Method <em>Method</em>}'.
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration <em>Policy Class Declaration</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Method</em>'.
-     * @see de.cau.cs.kieler.sccharts.Method
+     * @return the meta object for class '<em>Policy Class Declaration</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration
      * @generated
      */
-    EClass getMethod();
+    EClass getPolicyClassDeclaration();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Method#getReturnType <em>Return Type</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Return Type</em>'.
-     * @see de.cau.cs.kieler.sccharts.Method#getReturnType()
-     * @see #getMethod()
-     * @generated
-     */
-    EAttribute getMethod_ReturnType();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.Method#getParameterDeclarations <em>Parameter Declarations</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Parameter Declarations</em>'.
-     * @see de.cau.cs.kieler.sccharts.Method#getParameterDeclarations()
-     * @see #getMethod()
-     * @generated
-     */
-    EReference getMethod_ParameterDeclarations();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Method#getAccess <em>Access</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Access</em>'.
-     * @see de.cau.cs.kieler.sccharts.Method#getAccess()
-     * @see #getMethod()
-     * @generated
-     */
-    EAttribute getMethod_Access();
-
-    /**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ClassDeclaration <em>Class Declaration</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Class Declaration</em>'.
-     * @see de.cau.cs.kieler.sccharts.ClassDeclaration
-     * @generated
-     */
-    EClass getClassDeclaration();
-
-    /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getMethods <em>Methods</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Methods</em>'.
-     * @see de.cau.cs.kieler.sccharts.ClassDeclaration#getMethods()
-     * @see #getClassDeclaration()
-     * @generated
-     */
-    EReference getClassDeclaration_Methods();
-
-    /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ClassDeclaration#isHost <em>Host</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Host</em>'.
-     * @see de.cau.cs.kieler.sccharts.ClassDeclaration#isHost()
-     * @see #getClassDeclaration()
-     * @generated
-     */
-    EAttribute getClassDeclaration_Host();
-
-    /**
-     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy <em>Policy</em>}'.
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy <em>Policy</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @return the meta object for the containment reference '<em>Policy</em>'.
-     * @see de.cau.cs.kieler.sccharts.ClassDeclaration#getPolicy()
-     * @see #getClassDeclaration()
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy()
+     * @see #getPolicyClassDeclaration()
      * @generated
      */
-    EReference getClassDeclaration_Policy();
+    EReference getPolicyClassDeclaration_Policy();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
@@ -3449,14 +3192,6 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SCOPE__REFERENCE = eINSTANCE.getScope_Reference();
-
-        /**
-         * The meta object literal for the '<em><b>Methods</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference SCOPE__METHODS = eINSTANCE.getScope_Methods();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -3881,64 +3616,14 @@ public interface SCChartsPackage extends EPackage {
         EClass PERIOD_ACTION = eINSTANCE.getPeriodAction();
 
         /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.MethodImpl <em>Method</em>}' class.
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl <em>Policy Class Declaration</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.MethodImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getMethod()
+         * @see de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyClassDeclaration()
          * @generated
          */
-        EClass METHOD = eINSTANCE.getMethod();
-
-        /**
-         * The meta object literal for the '<em><b>Return Type</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute METHOD__RETURN_TYPE = eINSTANCE.getMethod_ReturnType();
-
-        /**
-         * The meta object literal for the '<em><b>Parameter Declarations</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference METHOD__PARAMETER_DECLARATIONS = eINSTANCE.getMethod_ParameterDeclarations();
-
-        /**
-         * The meta object literal for the '<em><b>Access</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute METHOD__ACCESS = eINSTANCE.getMethod_Access();
-
-        /**
-         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl <em>Class Declaration</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.sccharts.impl.ClassDeclarationImpl
-         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getClassDeclaration()
-         * @generated
-         */
-        EClass CLASS_DECLARATION = eINSTANCE.getClassDeclaration();
-
-        /**
-         * The meta object literal for the '<em><b>Methods</b></em>' containment reference list feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EReference CLASS_DECLARATION__METHODS = eINSTANCE.getClassDeclaration_Methods();
-
-        /**
-         * The meta object literal for the '<em><b>Host</b></em>' attribute feature.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @generated
-         */
-        EAttribute CLASS_DECLARATION__HOST = eINSTANCE.getClassDeclaration_Host();
+        EClass POLICY_CLASS_DECLARATION = eINSTANCE.getPolicyClassDeclaration();
 
         /**
          * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
@@ -3946,7 +3631,7 @@ public interface SCChartsPackage extends EPackage {
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference CLASS_DECLARATION__POLICY = eINSTANCE.getClassDeclaration_Policy();
+        EReference POLICY_CLASS_DECLARATION__POLICY = eINSTANCE.getPolicyClassDeclaration_Policy();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.

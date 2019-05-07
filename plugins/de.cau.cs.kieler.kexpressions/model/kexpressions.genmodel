@@ -60,6 +60,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLOCK"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/JSON"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/STRUCT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLASS"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/VOID"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">
@@ -149,6 +150,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/global"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/priorities"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//MethodDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/returnType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//MethodDeclaration/parameterDeclarations"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ScheduleObjectReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleObjectReference/priority"/>

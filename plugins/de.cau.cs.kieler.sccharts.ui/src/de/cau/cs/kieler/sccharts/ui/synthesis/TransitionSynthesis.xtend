@@ -15,12 +15,16 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.TransitionLabelSerializer
@@ -33,10 +37,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.sccharts.Method
-import de.cau.cs.kieler.sccharts.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * Transforms {@link Transition} into {@link KEdge} diagram elements.
@@ -126,15 +126,15 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
             val calls = transition.eAllContents.filter(ReferenceCall).toList
             val userSchedules = newHashSet
             for (call : calls) {
-                var Method method = null
-                if (call.valuedObject instanceof Method) {
-                    method = call.valuedObject as Method
+                var MethodDeclaration method = null
+                if (call.valuedObject.eContainer instanceof MethodDeclaration) {
+                    method = call.valuedObject.eContainer as MethodDeclaration
                 }
                 if (method === null) {
                     var vor = call as ValuedObjectReference
                     while (vor.subReference !== null && method === null) {
-                        if (vor.subReference.valuedObject instanceof Method) {
-                            method = vor.subReference.valuedObject as Method
+                        if (vor.subReference.valuedObject.eContainer instanceof MethodDeclaration) {
+                            method = vor.subReference.valuedObject.eContainer as MethodDeclaration
                         }
                         vor = vor.subReference
                     }
@@ -143,8 +143,8 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     if (!method.schedule.nullOrEmpty) {
                         userSchedules += method.schedule.map[valuedObject.name]
                     }
-                    if (method.eContainer instanceof ClassDeclaration) {
-                        val classDecl = method.eContainer as ClassDeclaration
+                    if (method.eContainer instanceof PolicyClassDeclaration) {
+                        val classDecl = method.eContainer as PolicyClassDeclaration
                         if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
                             userSchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
                         }

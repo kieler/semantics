@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.kext.Kext
 import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 
 //import org.eclipse.xtext.validation.Check
 
@@ -38,13 +37,7 @@ class KExtValidator extends AbstractKExtValidator {
     
     static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
     static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
-    
-    @Check
-    public def void checkStructDeclaration(StructDeclaration struct) {
-        // TODO remove when implemented
-        warning("Struct declarations are not yet supported", struct, null)
-    }
-    
+       
     @Check
     public def void checkCheckAnnotation(TestEntity testEntity) {
         val rootElement = EcoreUtil2.getRootContainer(testEntity) as Kext;
