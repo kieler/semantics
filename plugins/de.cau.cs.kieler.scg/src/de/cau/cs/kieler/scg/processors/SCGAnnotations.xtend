@@ -23,6 +23,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
+import de.cau.cs.kieler.annotations.TagAnnotation
+import de.cau.cs.kieler.scg.Node
 
 /** 
  * @author ssm
@@ -89,4 +91,8 @@ class SCGAnnotations {
     public static val ANNOTATION_SSA = 
         register("SSA", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
             "Marks an SCG as being in SSA form.")
+            
+    public static val ANNOTATION_RETURN_NODE = 
+        register("isReturn", AnnotationsType.SYSTEM, TagAnnotation, Assignment, 
+            "Marks an node as return node.")
 }

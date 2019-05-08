@@ -832,6 +832,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var assignmentStr = ""
                 if (assignment.hasAnnotation(ANNOTATION_LABEL)) {
                     assignmentStr = assignment.getStringAnnotationValue(ANNOTATION_LABEL)
+                } else if (assignment.hasAnnotation(ANNOTATION_RETURN_NODE)) {
+                    assignmentStr = "return " + serializeHR(assignment.expression)
                 } else {
                     assignmentStr = serializeHR(assignment) as String
                 }

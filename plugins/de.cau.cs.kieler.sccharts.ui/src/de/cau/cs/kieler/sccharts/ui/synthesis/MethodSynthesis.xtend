@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 
 /**
  * Transforms {@link Method} into {@link KNode} diagram elements.
@@ -58,6 +59,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
     @Inject extension ControlflowRegionStyles
     @Inject extension AdaptiveZoom
     extension SCLFactory = SCLFactory.eINSTANCE
+    @Inject extension SCLToSCGTransformation
 
     override List<KNode> performTranformation(MethodImplementationDeclaration method) {
         val node = method.createNode().associateWith(method);
@@ -112,41 +114,46 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
         
         node.setSelectionStyle
 
-        // Add inner scg
-        val module = createModule
-        module.name = method.valuedObjects.head.name
-        val copier = new Copier()
-        val copy = copier.copy(method) as Scope
-        copier.copyReferences()
-        module.statements.addAll(copy.statements)
-        module.statements.removeIf[it instanceof Return]
+//         Add inner scg
+//        val module = createModule
+//        module.name = method.valuedObjects.head.name
+//        val copier = new Copier()
+//        val copy = copier.copy(method) as Scope
+//        copier.copyReferences()
+//        module.statements.addAll(copy.statements)
+//        module.statements.removeIf[it instanceof Return]
+//        val vos = newHashMap
+//        for (entry : copier.entrySet) {
+//            if (entry.key instanceof ValuedObjectReference) {
+//                val vor = entry.key as ValuedObjectReference
+//                val vorCopy = entry.value as ValuedObjectReference
+//                if (!vos.containsKey(vor.valuedObject)) {
+//                    val declCopy = vor.valuedObject.eContainer.copy as Declaration
+//                    declCopy.valuedObjects.removeIf[!it.name.equals(vor.valuedObject.name)]
+//                    module.declarations += declCopy
+//                    vos.put(vor.valuedObject, declCopy.valuedObjects.head)
+//                }
+//                vorCopy.valuedObject = vos.get(vor.valuedObject)
+//            }
+//        }
+//        val program = createSCLProgram
+//        program.modules += module
+
         val vos = newHashMap
-        for (entry : copier.entrySet) {
-            if (entry.key instanceof ValuedObjectReference) {
-                val vor = entry.key as ValuedObjectReference
-                val vorCopy = entry.value as ValuedObjectReference
-                if (!vos.containsKey(vor.valuedObject)) {
-                    val declCopy = vor.valuedObject.eContainer.copy as Declaration
-                    declCopy.valuedObjects.removeIf[!it.name.equals(vor.valuedObject.name)]
-                    module.declarations += declCopy
-                    vos.put(vor.valuedObject, declCopy.valuedObjects.head)
-                }
-                vorCopy.valuedObject = vos.get(vor.valuedObject)
-            }
+        for (vo : method.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet) {
+            vos.put(vo,vo)
         }
-        val program = createSCLProgram
-        program.modules += module
         
         val diagram = LightDiagramServices.translateModel(
-            program,
+            method.transformMethod(vos),
             usedContext,
             new MapPropertyHolder => [ 
-                setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.SCLGraphSynthesis") 
+                setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg") 
             ]
         )
         node.children += diagram.children
-//        node.properties.addAll(diagram.properties)
-        node.addLayoutParam(CoreOptions.PADDING, new ElkPadding(10, -10, 0, -10))
+        node.properties.addAll(diagram.properties)
+//        node.addLayoutParam(CoreOptions.PADDING, new ElkPadding(10, -10, 0, -10))
             
         
         return newArrayList(node)
