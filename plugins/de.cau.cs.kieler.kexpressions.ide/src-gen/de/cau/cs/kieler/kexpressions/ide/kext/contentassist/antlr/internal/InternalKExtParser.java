@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExtParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'~'", "'^'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'<<'", "'>>'", "'>>>'", "'?'", "'->'", "'host'", "'struct'", "'class'", "'()'", "'.'", "'conflict'", "'confluent'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'scope'", "'{'", "'}'", "'expression'", "';'", "','", "'('", "')'", "'schedule'", "':'", "'ref'", "'extern'", "'global'", "'['", "']'", "'combine'", "'print'", "'randomize'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'const'", "'input'", "'output'", "'static'", "'signal'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'~'", "'^'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'<<'", "'>>'", "'>>>'", "'?'", "'->'", "'host'", "'struct'", "'class'", "'()'", "'.'", "'conflicting'", "'commuting'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'scope'", "'{'", "'}'", "'expression'", "';'", "','", "'('", "')'", "'schedule'", "':'", "'ref'", "'extern'", "'global'", "'['", "']'", "'combine'", "'print'", "'randomize'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'const'", "'input'", "'output'", "'static'", "'signal'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -16544,13 +16544,13 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PriorityProtocol__Alternatives"
-    // InternalKExt.g:4608:1: rule__PriorityProtocol__Alternatives : ( ( ( 'conflict' ) ) | ( ( 'confluent' ) ) );
+    // InternalKExt.g:4608:1: rule__PriorityProtocol__Alternatives : ( ( ( 'conflicting' ) ) | ( ( 'commuting' ) ) );
     public final void rule__PriorityProtocol__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalKExt.g:4612:1: ( ( ( 'conflict' ) ) | ( ( 'confluent' ) ) )
+            // InternalKExt.g:4612:1: ( ( ( 'conflicting' ) ) | ( ( 'commuting' ) ) )
             int alt50=2;
             int LA50_0 = input.LA(1);
 
@@ -16569,16 +16569,16 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
             }
             switch (alt50) {
                 case 1 :
-                    // InternalKExt.g:4613:2: ( ( 'conflict' ) )
+                    // InternalKExt.g:4613:2: ( ( 'conflicting' ) )
                     {
-                    // InternalKExt.g:4613:2: ( ( 'conflict' ) )
-                    // InternalKExt.g:4614:3: ( 'conflict' )
+                    // InternalKExt.g:4613:2: ( ( 'conflicting' ) )
+                    // InternalKExt.g:4614:3: ( 'conflicting' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0()); 
                     }
-                    // InternalKExt.g:4615:3: ( 'conflict' )
-                    // InternalKExt.g:4615:4: 'conflict'
+                    // InternalKExt.g:4615:3: ( 'conflicting' )
+                    // InternalKExt.g:4615:4: 'conflicting'
                     {
                     match(input,41,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -16594,16 +16594,16 @@ public class InternalKExtParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalKExt.g:4619:2: ( ( 'confluent' ) )
+                    // InternalKExt.g:4619:2: ( ( 'commuting' ) )
                     {
-                    // InternalKExt.g:4619:2: ( ( 'confluent' ) )
-                    // InternalKExt.g:4620:3: ( 'confluent' )
+                    // InternalKExt.g:4619:2: ( ( 'commuting' ) )
+                    // InternalKExt.g:4620:3: ( 'commuting' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1()); 
                     }
-                    // InternalKExt.g:4621:3: ( 'confluent' )
-                    // InternalKExt.g:4621:4: 'confluent'
+                    // InternalKExt.g:4621:3: ( 'commuting' )
+                    // InternalKExt.g:4621:4: 'commuting'
                     {
                     match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return ;
 

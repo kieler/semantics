@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKExtParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'scope'", "'{'", "'}'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "','", "';'", "'host'", "'('", "')'", "'()'", "'schedule'", "':'", "'ref'", "'extern'", "'['", "']'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'&'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'!'", "'_'", "'null'", "'#'", "'@'", "'conflict'", "'confluent'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'scope'", "'{'", "'}'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "','", "';'", "'host'", "'('", "')'", "'()'", "'schedule'", "':'", "'ref'", "'extern'", "'['", "']'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'&'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'!'", "'_'", "'null'", "'#'", "'@'", "'conflicting'", "'commuting'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -32243,7 +32243,7 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePriorityProtocol"
-    // InternalKExt.g:11659:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
+    // InternalKExt.g:11659:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
     public final Enumerator rulePriorityProtocol() throws RecognitionException {
         Enumerator current = null;
 
@@ -32254,10 +32254,10 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKExt.g:11665:2: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
-            // InternalKExt.g:11666:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalKExt.g:11665:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
+            // InternalKExt.g:11666:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
-            // InternalKExt.g:11666:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalKExt.g:11666:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             int alt266=2;
             int LA266_0 = input.LA(1);
 
@@ -32276,10 +32276,10 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
             }
             switch (alt266) {
                 case 1 :
-                    // InternalKExt.g:11667:3: (enumLiteral_0= 'conflict' )
+                    // InternalKExt.g:11667:3: (enumLiteral_0= 'conflicting' )
                     {
-                    // InternalKExt.g:11667:3: (enumLiteral_0= 'conflict' )
-                    // InternalKExt.g:11668:4: enumLiteral_0= 'conflict'
+                    // InternalKExt.g:11667:3: (enumLiteral_0= 'conflicting' )
+                    // InternalKExt.g:11668:4: enumLiteral_0= 'conflicting'
                     {
                     enumLiteral_0=(Token)match(input,64,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -32295,10 +32295,10 @@ public class InternalKExtParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalKExt.g:11675:3: (enumLiteral_1= 'confluent' )
+                    // InternalKExt.g:11675:3: (enumLiteral_1= 'commuting' )
                     {
-                    // InternalKExt.g:11675:3: (enumLiteral_1= 'confluent' )
-                    // InternalKExt.g:11676:4: enumLiteral_1= 'confluent'
+                    // InternalKExt.g:11675:3: (enumLiteral_1= 'commuting' )
+                    // InternalKExt.g:11676:4: enumLiteral_1= 'commuting'
                     {
                     enumLiteral_1=(Token)match(input,65,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {

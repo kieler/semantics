@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "'pause'", "';'", "'goto'", "'schedule'", "'return'", "'if'", "'{'", "'}'", "'else'", "'then'", "'end'", "'fork'", "'par'", "'join'", "'run'", "'('", "','", "')'", "'()'", "'!'", "'&'", "'to'", "'['", "']'", "'scope'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'ref'", "'extern'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'conflict'", "'confluent'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'module'", "':'", "'pause'", "';'", "'goto'", "'schedule'", "'return'", "'if'", "'{'", "'}'", "'else'", "'then'", "'end'", "'fork'", "'par'", "'join'", "'run'", "'('", "','", "')'", "'()'", "'!'", "'&'", "'to'", "'['", "']'", "'scope'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "'host'", "'ref'", "'extern'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'conflicting'", "'commuting'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -37639,7 +37639,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePriorityProtocol"
-    // InternalSCL.g:13555:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
+    // InternalSCL.g:13555:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
     public final Enumerator rulePriorityProtocol() throws RecognitionException {
         Enumerator current = null;
 
@@ -37650,10 +37650,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSCL.g:13561:2: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
-            // InternalSCL.g:13562:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCL.g:13561:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
+            // InternalSCL.g:13562:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
-            // InternalSCL.g:13562:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCL.g:13562:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             int alt326=2;
             int LA326_0 = input.LA(1);
 
@@ -37672,10 +37672,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt326) {
                 case 1 :
-                    // InternalSCL.g:13563:3: (enumLiteral_0= 'conflict' )
+                    // InternalSCL.g:13563:3: (enumLiteral_0= 'conflicting' )
                     {
-                    // InternalSCL.g:13563:3: (enumLiteral_0= 'conflict' )
-                    // InternalSCL.g:13564:4: enumLiteral_0= 'conflict'
+                    // InternalSCL.g:13563:3: (enumLiteral_0= 'conflicting' )
+                    // InternalSCL.g:13564:4: enumLiteral_0= 'conflicting'
                     {
                     enumLiteral_0=(Token)match(input,77,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37691,10 +37691,10 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:13571:3: (enumLiteral_1= 'confluent' )
+                    // InternalSCL.g:13571:3: (enumLiteral_1= 'commuting' )
                     {
-                    // InternalSCL.g:13571:3: (enumLiteral_1= 'confluent' )
-                    // InternalSCL.g:13572:4: enumLiteral_1= 'confluent'
+                    // InternalSCL.g:13571:3: (enumLiteral_1= 'commuting' )
+                    // InternalSCL.g:13572:4: enumLiteral_1= 'commuting'
                     {
                     enumLiteral_1=(Token)match(input,78,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {

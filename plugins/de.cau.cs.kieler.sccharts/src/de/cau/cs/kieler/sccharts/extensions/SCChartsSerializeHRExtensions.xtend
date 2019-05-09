@@ -45,6 +45,7 @@ import java.lang.reflect.Method
 import java.util.List
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.sccharts.PolicyRegion
 
 /**
  * @author ssm
@@ -324,6 +325,10 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     
     def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Region region, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (region instanceof PolicyRegion) {
+            components.addKeyword("policy")
+        }
         
         if (region.override) {
             components.addKeyword("override")

@@ -52,6 +52,7 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -142,7 +143,12 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                 }
                 // Add Button after area to assure correct overlapping
                 addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
-                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
+                if (!label.nullOrEmpty) eAllContents.filter(KText).toList.forEach[
+                    if (foreground?.color?.equals(Color.KEYWORD.color)) {
+                        foreground = Color.USER_SCHEDULE_COLOR.color
+                    }
+                    configureTextLOD(region)
+                ]
             ]
 
             // Collapsed
@@ -152,7 +158,12 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                 addPolicyRegionStyle
                 addDoubleClickAction(MemorizingExpandCollapseAction.ID)
                 addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
-                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
+                if (!label.nullOrEmpty) eAllContents.filter(KText).toList.forEach[
+                    if (foreground?.color?.equals(Color.KEYWORD.color)) {
+                        foreground = Color.USER_SCHEDULE_COLOR.color
+                    }
+                    configureTextLOD(region)
+                ]
             ]
             
             regionStyle.setSelectionStyle(node)

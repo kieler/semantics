@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCTXParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'scchart'", "'extends'", "','", "'{'", "'method'", "'}'", "'initial'", "'final'", "'violation'", "'connector'", "'state'", "'is'", "'schedule'", "'super.'", "'('", "')'", "'!'", "'&'", "'to'", "'['", "']'", "'if'", "'Pr='", "'nondeterministic'", "'do'", "';'", "'deferred'", "'label'", "'override'", "'region'", "'for'", "':'", "'dataflow'", "'once'", "'entry'", "'Pr'", "'during'", "'exit'", "'weak'", "'suspend'", "'preceding'", "'succeeding'", "'period'", "'const'", "'input'", "'output'", "'global'", "'static'", "'host'", "'policy'", "'go to'", "'module'", "'pause'", "'goto'", "'return'", "'else'", "'then'", "'end'", "'fork'", "'par'", "'join'", "'run'", "'()'", "'scope'", "'expression'", "'signal'", "'ref'", "'extern'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'abort to'", "'join to'", "'undefined'", "'delayed'", "'immediate'", "'auto'", "'reset'", "'shallow history'", "'history'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'clock'", "'conflict'", "'confluent'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'import'", "'scchart'", "'extends'", "','", "'{'", "'method'", "'}'", "'initial'", "'final'", "'violation'", "'connector'", "'state'", "'is'", "'schedule'", "'super.'", "'('", "')'", "'!'", "'&'", "'to'", "'['", "']'", "'if'", "'Pr='", "'nondeterministic'", "'do'", "';'", "'deferred'", "'label'", "'override'", "'region'", "'for'", "':'", "'dataflow'", "'once'", "'entry'", "'Pr'", "'during'", "'exit'", "'weak'", "'suspend'", "'preceding'", "'succeeding'", "'period'", "'const'", "'input'", "'output'", "'global'", "'static'", "'host'", "'policy'", "'go to'", "'module'", "'pause'", "'goto'", "'return'", "'else'", "'then'", "'end'", "'fork'", "'par'", "'join'", "'run'", "'()'", "'scope'", "'expression'", "'signal'", "'ref'", "'extern'", "'='", "'combine'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'abort to'", "'join to'", "'undefined'", "'delayed'", "'immediate'", "'auto'", "'reset'", "'shallow history'", "'history'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'clock'", "'conflicting'", "'commuting'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
     };
     public static final int T__144=144;
     public static final int T__143=143;
@@ -49382,7 +49382,7 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePriorityProtocol"
-    // InternalSCTX.g:17775:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) ;
+    // InternalSCTX.g:17775:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
     public final Enumerator rulePriorityProtocol() throws RecognitionException {
         Enumerator current = null;
 
@@ -49393,10 +49393,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSCTX.g:17781:2: ( ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) ) )
-            // InternalSCTX.g:17782:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCTX.g:17781:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
+            // InternalSCTX.g:17782:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
-            // InternalSCTX.g:17782:2: ( (enumLiteral_0= 'conflict' ) | (enumLiteral_1= 'confluent' ) )
+            // InternalSCTX.g:17782:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             int alt473=2;
             int LA473_0 = input.LA(1);
 
@@ -49415,10 +49415,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
             }
             switch (alt473) {
                 case 1 :
-                    // InternalSCTX.g:17783:3: (enumLiteral_0= 'conflict' )
+                    // InternalSCTX.g:17783:3: (enumLiteral_0= 'conflicting' )
                     {
-                    // InternalSCTX.g:17783:3: (enumLiteral_0= 'conflict' )
-                    // InternalSCTX.g:17784:4: enumLiteral_0= 'conflict'
+                    // InternalSCTX.g:17783:3: (enumLiteral_0= 'conflicting' )
+                    // InternalSCTX.g:17784:4: enumLiteral_0= 'conflicting'
                     {
                     enumLiteral_0=(Token)match(input,124,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -49434,10 +49434,10 @@ public class InternalSCTXParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCTX.g:17791:3: (enumLiteral_1= 'confluent' )
+                    // InternalSCTX.g:17791:3: (enumLiteral_1= 'commuting' )
                     {
-                    // InternalSCTX.g:17791:3: (enumLiteral_1= 'confluent' )
-                    // InternalSCTX.g:17792:4: enumLiteral_1= 'confluent'
+                    // InternalSCTX.g:17791:3: (enumLiteral_1= 'commuting' )
+                    // InternalSCTX.g:17792:4: enumLiteral_1= 'commuting'
                     {
                     enumLiteral_1=(Token)match(input,125,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {

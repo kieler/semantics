@@ -4042,7 +4042,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	//	CONFLICT="conflicting" | CONFLUENT="commuting";
 	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
 		return gaKExt.getPriorityProtocolAccess();
 	}

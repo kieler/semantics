@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSCLParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'~'", "'^'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'<<'", "'>>'", "'>>>'", "'?'", "'->'", "'host'", "'struct'", "'class'", "'()'", "';'", "'.'", "'conflict'", "'confluent'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'module'", "':'", "'pause'", "'goto'", "'schedule'", "'return'", "'if'", "'{'", "'}'", "'else'", "'then'", "'end'", "'fork'", "'join'", "'par'", "'run'", "'('", "')'", "','", "'to'", "'['", "']'", "'scope'", "'expression'", "'ref'", "'extern'", "'global'", "'combine'", "'print'", "'randomize'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'const'", "'input'", "'output'", "'static'", "'signal'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_STRING", "RULE_BOOLEAN", "RULE_ID", "RULE_INT", "RULE_FLOAT", "RULE_HOSTCODE", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'pre'", "'~'", "'^'", "'|'", "'&'", "'!'", "'+'", "'-'", "'*'", "'%'", "'/'", "'val'", "'||'", "'&&'", "'<<'", "'>>'", "'>>>'", "'?'", "'->'", "'host'", "'struct'", "'class'", "'()'", "';'", "'.'", "'conflicting'", "'commuting'", "'='", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'", "'module'", "':'", "'pause'", "'goto'", "'schedule'", "'return'", "'if'", "'{'", "'}'", "'else'", "'then'", "'end'", "'fork'", "'join'", "'par'", "'run'", "'('", "')'", "','", "'to'", "'['", "']'", "'scope'", "'expression'", "'ref'", "'extern'", "'global'", "'combine'", "'print'", "'randomize'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'const'", "'input'", "'output'", "'static'", "'signal'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -18841,13 +18841,13 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__PriorityProtocol__Alternatives"
-    // InternalSCL.g:5234:1: rule__PriorityProtocol__Alternatives : ( ( ( 'conflict' ) ) | ( ( 'confluent' ) ) );
+    // InternalSCL.g:5234:1: rule__PriorityProtocol__Alternatives : ( ( ( 'conflicting' ) ) | ( ( 'commuting' ) ) );
     public final void rule__PriorityProtocol__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:5238:1: ( ( ( 'conflict' ) ) | ( ( 'confluent' ) ) )
+            // InternalSCL.g:5238:1: ( ( ( 'conflicting' ) ) | ( ( 'commuting' ) ) )
             int alt58=2;
             int LA58_0 = input.LA(1);
 
@@ -18866,16 +18866,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             }
             switch (alt58) {
                 case 1 :
-                    // InternalSCL.g:5239:2: ( ( 'conflict' ) )
+                    // InternalSCL.g:5239:2: ( ( 'conflicting' ) )
                     {
-                    // InternalSCL.g:5239:2: ( ( 'conflict' ) )
-                    // InternalSCL.g:5240:3: ( 'conflict' )
+                    // InternalSCL.g:5239:2: ( ( 'conflicting' ) )
+                    // InternalSCL.g:5240:3: ( 'conflicting' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0()); 
                     }
-                    // InternalSCL.g:5241:3: ( 'conflict' )
-                    // InternalSCL.g:5241:4: 'conflict'
+                    // InternalSCL.g:5241:3: ( 'conflicting' )
+                    // InternalSCL.g:5241:4: 'conflicting'
                     {
                     match(input,42,FollowSets000.FOLLOW_2); if (state.failed) return ;
 
@@ -18891,16 +18891,16 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalSCL.g:5245:2: ( ( 'confluent' ) )
+                    // InternalSCL.g:5245:2: ( ( 'commuting' ) )
                     {
-                    // InternalSCL.g:5245:2: ( ( 'confluent' ) )
-                    // InternalSCL.g:5246:3: ( 'confluent' )
+                    // InternalSCL.g:5245:2: ( ( 'commuting' ) )
+                    // InternalSCL.g:5246:3: ( 'commuting' )
                     {
                     if ( state.backtracking==0 ) {
                        before(grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1()); 
                     }
-                    // InternalSCL.g:5247:3: ( 'confluent' )
-                    // InternalSCL.g:5247:4: 'confluent'
+                    // InternalSCL.g:5247:3: ( 'commuting' )
+                    // InternalSCL.g:5247:4: 'commuting'
                     {
                     match(input,43,FollowSets000.FOLLOW_2); if (state.failed) return ;
 

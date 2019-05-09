@@ -4612,13 +4612,13 @@ rule__PriorityProtocol__Alternatives
 :
 	(
 		{ before(grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0()); }
-		('conflict')
+		('conflicting')
 		{ after(grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0()); }
 	)
 	|
 	(
 		{ before(grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1()); }
-		('confluent')
+		('commuting')
 		{ after(grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1()); }
 	)
 ;

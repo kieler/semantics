@@ -17781,7 +17781,7 @@ rulePriorityProtocol returns [Enumerator current=null]
 }:
 	(
 		(
-			enumLiteral_0='conflict'
+			enumLiteral_0='conflicting'
 			{
 				$current = grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_0, grammarAccess.getPriorityProtocolAccess().getCONFLICTEnumLiteralDeclaration_0());
@@ -17789,7 +17789,7 @@ rulePriorityProtocol returns [Enumerator current=null]
 		)
 		    |
 		(
-			enumLiteral_1='confluent'
+			enumLiteral_1='commuting'
 			{
 				$current = grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_1, grammarAccess.getPriorityProtocolAccess().getCONFLUENTEnumLiteralDeclaration_1());

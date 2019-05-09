@@ -2272,28 +2272,28 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.PriorityProtocol");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cCONFLICTEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cCONFLICTConflictKeyword_0_0 = (Keyword)cCONFLICTEnumLiteralDeclaration_0.eContents().get(0);
+		private final Keyword cCONFLICTConflictingKeyword_0_0 = (Keyword)cCONFLICTEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cCONFLUENTEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cCONFLUENTConfluentKeyword_1_0 = (Keyword)cCONFLUENTEnumLiteralDeclaration_1.eContents().get(0);
+		private final Keyword cCONFLUENTCommutingKeyword_1_0 = (Keyword)cCONFLUENTEnumLiteralDeclaration_1.eContents().get(0);
 		
 		//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-		//	CONFLICT="conflict" | CONFLUENT="confluent";
+		//	CONFLICT="conflicting" | CONFLUENT="commuting";
 		public EnumRule getRule() { return rule; }
 		
-		//CONFLICT="conflict" | CONFLUENT="confluent"
+		//CONFLICT="conflicting" | CONFLUENT="commuting"
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//CONFLICT="conflict"
+		//CONFLICT="conflicting"
 		public EnumLiteralDeclaration getCONFLICTEnumLiteralDeclaration_0() { return cCONFLICTEnumLiteralDeclaration_0; }
 		
-		//"conflict"
-		public Keyword getCONFLICTConflictKeyword_0_0() { return cCONFLICTConflictKeyword_0_0; }
+		//"conflicting"
+		public Keyword getCONFLICTConflictingKeyword_0_0() { return cCONFLICTConflictingKeyword_0_0; }
 		
-		//CONFLUENT="confluent"
+		//CONFLUENT="commuting"
 		public EnumLiteralDeclaration getCONFLUENTEnumLiteralDeclaration_1() { return cCONFLUENTEnumLiteralDeclaration_1; }
 		
-		//"confluent"
-		public Keyword getCONFLUENTConfluentKeyword_1_0() { return cCONFLUENTConfluentKeyword_1_0; }
+		//"commuting"
+		public Keyword getCONFLUENTCommutingKeyword_1_0() { return cCONFLUENTCommutingKeyword_1_0; }
 	}
 	
 	private final KextElements pKext;
@@ -2773,7 +2773,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	//	CONFLICT="conflicting" | CONFLUENT="commuting";
 	public PriorityProtocolElements getPriorityProtocolAccess() {
 		return ePriorityProtocol;
 	}

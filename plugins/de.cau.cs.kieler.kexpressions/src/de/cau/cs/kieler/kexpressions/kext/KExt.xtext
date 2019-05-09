@@ -266,7 +266,7 @@ ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations+=CommentAnnotatonSL?;
     
 enum PriorityProtocol returns kexpressions::PriorityProtocol:
-    CONFLICT="conflict" | CONFLUENT="confluent";
+    CONFLICT="conflicting" | CONFLUENT="commuting";
     
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 
