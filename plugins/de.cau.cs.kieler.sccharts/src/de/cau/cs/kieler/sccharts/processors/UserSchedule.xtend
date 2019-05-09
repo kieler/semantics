@@ -13,19 +13,21 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.Schedulable
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Effect
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.Action
-import de.cau.cs.kieler.kexpressions.keffects.Effect
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import java.util.List
-import de.cau.cs.kieler.kexpressions.Schedulable
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import org.eclipse.emf.ecore.EObject
 
 /**
  * 
@@ -49,6 +51,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
         val model = getModel
         
         for (rootState : model.rootStates) {
+            rootState.transformContracts
             rootState.transformUserSchedule   
         }
     }
@@ -106,6 +109,46 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
             s.remove
         }
 
+    }
+    
+    def void transformContracts(State rootState) {
+        // TODO Analyze Policies
+        
+        // Apply SDs
+        val calls = rootState.eAllContents.filter(ReferenceCall).toList
+        for (call : calls) {
+            var MethodDeclaration method
+            if (call.subReference === null && call.valuedObject.eContainer instanceof MethodDeclaration) {
+                method = call.valuedObject.eContainer as MethodDeclaration
+            } else {
+                var sub = call.subReference
+                while (sub !== null) {
+                    if (sub.subReference !== null) {
+                        sub = sub.subReference
+                    } else if (sub.valuedObject.eContainer instanceof MethodDeclaration) {
+                        method = sub.valuedObject.eContainer as MethodDeclaration
+                        sub = null
+                    } else {
+                        sub = null
+                    }
+                }
+            }
+            
+            if (method !== null) {
+                // SDs
+                if (!method.schedule.nullOrEmpty) {
+                    var EObject attach = call
+                    while (!(attach instanceof Effect || attach instanceof Action)) {
+                        attach = attach.eContainer
+                    }
+                    if (attach instanceof Effect) {
+                        attach.addScheduleCopy(method.schedule)
+                    } else if(attach instanceof Action) {
+                        attach.trigger.addScheduleCopy(method.schedule)
+                    }
+                }
+            }
+        }
     }
     
     protected def void applyUserSchedule(Action action, List<ScheduleObjectReference> schedule) {
