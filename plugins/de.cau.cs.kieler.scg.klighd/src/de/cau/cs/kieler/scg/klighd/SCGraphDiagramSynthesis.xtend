@@ -827,7 +827,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
             // Straightforward rectangle drawing
             val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH) 
             if (assignment.expression instanceof ReferenceCall) {
-                figure.setBackgroundGradient("#f9f8fd".color , "#a23bba".color, 90.0f)
+                figure.setBackgroundGradient("#fcf7fc".color , "#e6cbf2".color, 90.0f)
             } else {
                 figure.background = "white".color;
             }
