@@ -51,6 +51,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Effect
 import java.lang.ref.Reference
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 
 /** 
  * @author ssm
@@ -206,62 +207,18 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         val vo = if (effect instanceof ReferenceCallEffect) {
             effect.valuedObject
         }
-//         else if (effect instanceof PrintCallEffect) {
-//            i
-//        }
-//        // Find readers.
-//        val readVOIs = assignment.processExpressionReader(assignment.expression, forkStack, valuedObjectAccessors)
-//
-//        // Examine the object that this assignment writes to (including potential array indices).        
-//        if (assignment.valuedObject === null) return;
-//        
+
         val writeVOI = if (effect instanceof ReferenceCallEffect) {
             new ValuedObjectIdentifier(effect)
-        }
-//        
-//        // If a writer was detected, remove previously registered read accesses,
-//        // because the access is recognized as write and we don't want another write-read
-//        // dependency to be created.
-//        for (readAccess : valuedObjectAccessors.getAccesses(writeVOI).filter[ node == assignment ].toList) {
-//            valuedObjectAccessors.removeAccess(writeVOI, readAccess)
-//        }        
-//        
-//        for(index : assignment.indices) {
-//            val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
-//            if (indexReaderVOIs.contains(writeVOI)) {
-//                environment.warnings.add("The index variable is written by the same assignment. However, the new assignment will only have effect afterwards.",
-//                    assignment, true)
-//            }
-//        }
+        } else if (effect instanceof PrintCallEffect) {
+            new ValuedObjectIdentifier(effect.parameters.head.expression.asValuedObjectReference)
+        } 
 
         // Respect user-defined schedules.
         for(sched : newLinkedList(GLOBAL_SCHEDULE) + effect.schedule) {
             var schedule = GLOBAL_SCHEDULE
             var ValuedObject scheduleObject = null       
             var priority = GLOBAL_WRITE
-            
-            // Detect relative writes.
-//            if (environment.getProperty(ALLOW_OLD_SC_SYNTAX)) {
-//                if (readVOIs.contains(writeVOI)) {
-//                    if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
-//                        priority = GLOBAL_RELATIVE_WRITE
-//                    } else {
-//                        if (readVOIs.filter[it == writeVOI].size == 1 && assignment.operator == AssignOperator.ASSIGN) {
-//                            priority = GLOBAL_RELATIVE_WRITE    
-//                        }
-//                    }
-//                }
-//            }
-            
-//            if (assignment.operator != AssignOperator.ASSIGN) {
-//                if (environment.getProperty(ALLOW_MULTIPLE_RELATIVE_READERS)) {
-//                    priority = GLOBAL_RELATIVE_WRITE
-//                } else {
-//                    if (!readVOIs.contains(writeVOI)) {
-//                        priority = GLOBAL_RELATIVE_WRITE    
-//                    }
-//                }
-//             }
             
             if (sched instanceof ScheduleObjectReference) {
                 schedule = sched.valuedObject.declaration as ScheduleDeclaration
@@ -270,6 +227,9 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             }
             
             if (writeVOI !== null) {
+                println(effect+ "\n  " + effect.association + "\n  " + schedule + "\n  " + scheduleObject + "\n  " +
+                    priority + "\n  " + forkStack
+                )
                 val writeAccess = new ValuedObjectAccess(effect, effect.association, schedule, scheduleObject, priority, forkStack, false)//writeVOI.isSpecificIdentifier)
                 writeAccess.isWriteAccess = true
                 valuedObjectAccessors.addAccess(writeVOI, writeAccess)

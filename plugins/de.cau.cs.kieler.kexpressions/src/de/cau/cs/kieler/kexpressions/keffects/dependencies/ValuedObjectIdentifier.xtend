@@ -51,6 +51,11 @@ class ValuedObjectIdentifier {
         this.indices = valuedObjectReference.indices.removeDynamicIndices
     }
     
+    new(ValuedObject valuedObjecT) {
+        this.valuedObject = valuedObject
+        this.indices = null
+    }
+    
     protected new() {}
     
     def getGenericIdentifier() {
