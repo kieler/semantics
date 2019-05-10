@@ -138,6 +138,10 @@ class ProjectInfrastructure {
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
                 }
+            } else if (inputModel instanceof CodeContainer) {
+                if (!inputModel.files.empty) {
+                    modelFile = inputModel.files.head.underlyingFile
+                }
             }
         }
         

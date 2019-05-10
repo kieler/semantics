@@ -94,6 +94,15 @@ public interface KEffectsFactory extends EFactory {
     DataDependency createDataDependency();
 
     /**
+     * Returns a new object of class '<em>Control Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Control Dependency</em>'.
+     * @generated
+     */
+    ControlDependency createControlDependency();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

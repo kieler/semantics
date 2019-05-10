@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.extensions
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.ScheduleDependency
 import de.cau.cs.kieler.scg.Node
@@ -31,7 +30,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.EnumSet
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
@@ -43,6 +41,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.scg.TickBoundaryDependency
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
  * The class is separated in several categories. If a category growths too big, it may be 
@@ -104,10 +104,10 @@ class SCGDependencyExtensions extends KEffectsDependencyExtensions {
     }
     
     def ControlDependency createControlDependency(Node source, Node target) {
-    	ScgFactory::eINSTANCE.createControlDependency => [ 
-    		source.dependencies += it
-    		it.target = target
-    	]
+        KEffectsFactory::eINSTANCE.createControlDependency => [
+            source.dependencies += it
+            it.target = target
+        ]
     }
     
     def ScheduleDependency createScheduleDependency(Node source, Node target) {

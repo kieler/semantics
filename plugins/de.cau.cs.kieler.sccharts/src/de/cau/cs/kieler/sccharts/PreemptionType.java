@@ -241,6 +241,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -250,6 +251,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -259,6 +261,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

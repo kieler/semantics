@@ -62,7 +62,7 @@ class PartialExpressionEvaluator {
     @Accessors var (ValuedObjectReference) => Value valueCallback
     
     new() {
-        this(emptyMap)
+        this(newHashMap)
     }
     
     new(Map<ValuedObject, Value> values) {
@@ -75,7 +75,7 @@ class PartialExpressionEvaluator {
     }
     
     new((ValuedObjectReference) => Value valueCallback) {
-        this(emptyMap)
+        this(newHashMap)
         this.valueCallback = valueCallback
     } 
     
