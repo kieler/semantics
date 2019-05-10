@@ -223,8 +223,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
                 components.addText("{")
                 for (prioIdx : declaration.priorities.indexed) {
                     switch (prioIdx.value) {
-                        case CONFLICT: components.addKeyword("conflict")
-                        case CONFLUENT: components.addKeyword("confluent")
+                        case CONFLICT: components.addKeyword("conflicting")
+                        case CONFLUENT: components.addKeyword("commuting")
                     }
                     if (prioIdx.key < declaration.priorities.size - 1) {
                         components.addText(", ")
