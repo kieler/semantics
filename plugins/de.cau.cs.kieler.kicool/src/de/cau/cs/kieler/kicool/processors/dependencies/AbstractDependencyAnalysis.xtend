@@ -212,10 +212,10 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             new ValuedObjectIdentifier(effect)
         } else if (effect instanceof PrintCallEffect) {
             new ValuedObjectIdentifier(effect.parameters.head.expression.asValuedObjectReference)
-        } 
+        }
 
         // Respect user-defined schedules.
-        for(sched : newLinkedList(GLOBAL_SCHEDULE) + effect.schedule) {
+        for(sched : effect.schedule) {
             var schedule = GLOBAL_SCHEDULE
             var ValuedObject scheduleObject = null       
             var priority = GLOBAL_WRITE
