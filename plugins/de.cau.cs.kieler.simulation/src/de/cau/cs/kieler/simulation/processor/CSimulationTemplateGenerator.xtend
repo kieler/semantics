@@ -86,12 +86,16 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
             #include "lib/cJSON.h"
             </#macro>
             
+            <#macro simulation_init position>
+            sendVariables(1);
+            </#macro>
+            
             <#macro simulation_in position>
             receiveVariables();
             </#macro>
             
             <#macro simulation_out position>
-            sendVariables();
+            sendVariables(0);
             </#macro>
             
             <#macro simulation_body position>
@@ -120,7 +124,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 cJSON_Delete(root);
             }
             
-            void sendVariables() {
+            void sendVariables(int send_interface) {
                 cJSON* root = cJSON_CreateObject();
                 «IF store.variables.values.exists[array]»
                     cJSON* array;
@@ -130,6 +134,24 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     // Send «v.key»
                     «v.serialize("root", "array")»
                 «ENDFOR»
+                
+                if (send_interface) {
+                    cJSON *interface = cJSON_CreateObject();
+                    cJSON *info, *properties;
+                    
+                    «FOR v : store.orderedVariables.dropBlacklisted»
+                        info = cJSON_CreateObject();
+                        properties = cJSON_CreateArray();
+                        «FOR p : v.value.properties»
+                        cJSON_AddItemToArray(properties, cJSON_CreateString("«p»"));
+                        «ENDFOR»
+                        cJSON_AddItemToObject(info, "type", cJSON_CreateString("«v.value.typeName»"));
+                        cJSON_AddItemToObject(info, "properties", properties);
+                        cJSON_AddItemToObject(interface, "«v.key»", info);
+                    «ENDFOR»
+                    
+                    cJSON_AddItemToObject(root, "#interface", interface);
+                }
             
                 // Get JSON object as string
                 char* outString = cJSON_Print(root);
@@ -148,7 +170,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         environment.addIncludeInjection(FILE_NAME.relativeTemplatePath)
         environment.addMacroInjection(HEADER, "simulation_imports")
         environment.addMacroInjection(BODY, "simulation_body")
-        environment.addMacroInjection(INIT, "simulation_out")
+        environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         

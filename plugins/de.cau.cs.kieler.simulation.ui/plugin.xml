@@ -466,6 +466,10 @@
              class="de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction"
              id="de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction">
        </action>
+       <action
+             class="de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction"
+             id="de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction">
+       </action>
     </extension>
     <extension
           point="de.cau.cs.kieler.kicool.processor">

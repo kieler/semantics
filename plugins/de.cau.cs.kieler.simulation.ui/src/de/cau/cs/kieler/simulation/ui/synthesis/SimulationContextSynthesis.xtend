@@ -15,13 +15,16 @@ package de.cau.cs.kieler.simulation.ui.synthesis
 import com.google.inject.Inject
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KImage
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.ui.view.syntheses.MessageModelSynthesis
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ui.synthesis.action.AddCoSimulationAction
 import de.cau.cs.kieler.simulation.ui.synthesis.action.StartSimulationAction
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
@@ -50,15 +53,20 @@ class SimulationContextSynthesis extends AbstractDiagramSynthesis<SimulationCont
     // Synthesis
     override KNode transform(SimulationContext model) {
         // create basic representation with message model synthesis
-        val rootNode = (new MessageModel("Simulation", null, KiCoolUiModule.PLUGIN_ID, "icons/play-button.png", 150)).transform
+        val message = "[Co-simulation]"
+        val rootNode = (new MessageModel("Simulation", message, KiCoolUiModule.PLUGIN_ID, "icons/play-button.png", 150)).transform
         // Add action
         if (rootNode !== null && !rootNode.children.empty) {
             rootNode.eAllContents.filter(KNode).forEach[it.suppressSelectability]
             val icon = rootNode.eAllContents.filter(KImage).head
             if (icon !== null) {
-                icon.addSingleClickAction(StartSimulationAction.ID);
-                icon.addDoubleClickAction(StartSimulationAction.ID);
+                icon.addSingleClickAction(StartSimulationAction.ID)
+                icon.addDoubleClickAction(StartSimulationAction.ID)
             }
+            val button = rootNode.eAllContents.filter(KText).filter[message.equals(text)].head
+            button.foreground = Colors.BLUE
+            button.addSingleClickAction(AddCoSimulationAction.ID)
+            button.addDoubleClickAction(AddCoSimulationAction.ID)
         }
         return rootNode;
     }
