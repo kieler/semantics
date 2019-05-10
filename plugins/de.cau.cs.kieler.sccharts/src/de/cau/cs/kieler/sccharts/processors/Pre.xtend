@@ -144,9 +144,7 @@ class Pre extends SCChartsProcessor implements Traceable {
         // Create assignments
         if(arrayIndexIterator === null) {
             if (pre.subExpressions.length == 2) {
-                if (pre.subExpressions.get(1) instanceof ValuedObjectReference) {
-                    duringAction.trigger = pre.subExpressions.get(1)
-                }
+                duringAction.trigger = pre.subExpressions.get(1)
             }
             duringAction.addEffectBefore(regVariable.createAssignment(valuedObject.reference))
             duringAction.addEffectBefore(preVariable.createAssignment(regVariable.reference))    
@@ -165,7 +163,7 @@ class Pre extends SCChartsProcessor implements Traceable {
                 preAssignment.indices.addAll(arrayIndex.convert)
                 duringAction.addEffectBefore(preAssignment)
                 
-                if (pre.subExpressions.length == 2 && pre.subExpressions.get(1) instanceof ValuedObjectReference) {
+                if (pre.subExpressions.length == 2) {
                     duringAction.trigger = pre.subExpressions.get(1)
                 }
             }
