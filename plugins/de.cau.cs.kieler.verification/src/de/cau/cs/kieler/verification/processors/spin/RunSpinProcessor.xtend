@@ -102,7 +102,11 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = process.readInputStream
-        return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
+        val processOutputWithCommand = processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
+        if(process.exitValue != 0) {
+            throw new Exception("SPIN terminated with non-zero exit code.")
+        }
+        return processOutputWithCommand
     }
     
     private def String runSpinTrailCommand(IFile pmlFile, VerificationProperty property, IFile processOutputFile) {
@@ -117,7 +121,11 @@ class RunSpinProcessor extends RunModelCheckerProcessorBase {
         process.waitForTermination([ return isCanceled() ])
         throwIfCanceled
         val processOutput = Files.toString(javaioProcessOutputFile, Charsets.UTF_8)
-        return processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
+        val processOutputWithCommand = processBuilder.command.toString.replace("\n", "\\n") + "\n" + processOutput
+        if(process.exitValue != 0) {
+            throw new Exception("SPIN trail command terminated with non-zero exit code.")
+        }
+        return processOutputWithCommand
     }
     
     private def void updateVerificationResult(IFile pmlFile, IFile processOutputFile, String processOutput, VerificationProperty property) {
