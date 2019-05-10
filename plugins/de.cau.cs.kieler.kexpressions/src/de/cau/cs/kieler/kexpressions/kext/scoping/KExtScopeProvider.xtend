@@ -75,7 +75,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 			if (declaration instanceof ReferenceDeclaration) {
 				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
 			}
-		} else if (contextContainer instanceof ValuedObjectReference) {
+		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
 		    // The context is a subreference!
 		    // If it is inside an assignment, it must point to the inputs of the referenced declarations (assignments).
 		    // Otherwise, use the outputs (subreferences).

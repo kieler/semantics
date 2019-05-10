@@ -1369,14 +1369,14 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	access=AccessModifier?
 		//	returnType=MethodReturnType?
 		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//	';'
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{kexpressions::MethodDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
 		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//';' annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 		
@@ -1407,8 +1407,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')?
+		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()'
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1498,13 +1498,13 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//	access=AccessModifier?
 		//	returnType=MethodReturnType?
 		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//	annotations+=CommentAnnotatonSL?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{kexpressions::MethodDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
 		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
 		
@@ -1535,8 +1535,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')?
+		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()'
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -2667,7 +2667,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	access=AccessModifier?
 	//	returnType=MethodReturnType?
 	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	';'
 	//	annotations+=CommentAnnotatonSL?;
 	public MethodDeclarationElements getMethodDeclarationAccess() {
@@ -2683,7 +2683,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//	access=AccessModifier?
 	//	returnType=MethodReturnType?
 	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	annotations+=CommentAnnotatonSL?;
 	public MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
 		return pMethodDeclarationWOSemicolon;
@@ -2936,7 +2936,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()');
+	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2963,7 +2963,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}

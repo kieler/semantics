@@ -48,9 +48,9 @@
 'bool'=66
 'class'=38
 'combine'=100
+'commuting'=42
 'config'=80
-'conflict'=41
-'confluent'=42
+'conflicting'=41
 'const'=112
 'developer'=109
 'expression'=90

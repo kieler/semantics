@@ -200,7 +200,7 @@ MethodDeclaration returns kexpressions::MethodDeclaration:
     access=AccessModifier?
     returnType=MethodReturnType?
     valuedObjects+=SimpleValuedObject
-    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
     ';'
     annotations+=CommentAnnotatonSL?
@@ -212,11 +212,11 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     access=AccessModifier?
     returnType=MethodReturnType?
     valuedObjects+=SimpleValuedObject
-    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')?
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
     ('schedule' schedule+=ScheduleObjectReference+)?
     annotations+=CommentAnnotatonSL?
 ;
-    
+
 NamespaceID returns ecore::EString:
   ExtendedID (':' PrimeID)*;    
     

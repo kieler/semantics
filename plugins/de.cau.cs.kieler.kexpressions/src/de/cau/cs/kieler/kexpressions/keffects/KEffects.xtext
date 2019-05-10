@@ -114,7 +114,8 @@ ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
     valuedObject=[kexpressions::ValuedObject|PrimeID]
     ('.' subReference=ValuedObjectReference)?
-    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
     
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
@@ -132,7 +133,8 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
 PrintCallEffect returns keffects::PrintCallEffect:
     (annotations+=Annotation)*
     'print' 
-    ('(' parameters += Parameter (',' parameters += Parameter)* ')');
+    ('(' parameters += Parameter (',' parameters += Parameter)* ')')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 RandomizeCallEffect returns keffects::RandomizeCallEffect:
     {keffects::RandomizeCallEffect}

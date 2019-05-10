@@ -1117,7 +1117,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	access=AccessModifier?
 		//	returnType=MethodReturnType?
 		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//	(';'
 		//	|
 		//	'{'
@@ -1129,7 +1129,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//{MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
 		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//(';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')
 		//annotations+=CommentAnnotatonSL?
 		public Group getGroup() { return cGroup; }
@@ -1161,8 +1161,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')?
+		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()'
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1290,7 +1290,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	access=AccessModifier?
 		//	returnType=MethodReturnType?
 		//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//	('{'
 		//	annotations+=CommentAnnotatonSL?
 		//	declarations+=DeclarationWOSemicolon*
@@ -1300,7 +1300,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//{MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
 		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//('{' annotations+=CommentAnnotatonSL? declarations+=DeclarationWOSemicolon* statements+=Statement* '}')?
 		public Group getGroup() { return cGroup; }
 		
@@ -1331,8 +1331,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()')?
+		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()'
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1756,7 +1756,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	access=AccessModifier?
 	//	returnType=MethodReturnType?
 	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	(';'
 	//	|
 	//	'{'
@@ -1778,7 +1778,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	access=AccessModifier?
 	//	returnType=MethodReturnType?
 	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
-	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()')? ('schedule' schedule+=ScheduleObjectReference+)?
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
 	//	declarations+=DeclarationWOSemicolon*
@@ -2286,7 +2286,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
 	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')' | '()');
+	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2314,7 +2315,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')');
+	//	'print' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
