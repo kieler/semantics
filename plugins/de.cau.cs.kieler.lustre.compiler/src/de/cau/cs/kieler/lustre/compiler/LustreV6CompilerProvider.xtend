@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.URI
 /**
  * Locate compiler binaries.
  * 
- * @author als
+ * @author lgr
  */
 class LustreV6CompilerProvider implements IExternalCompilerProvider {
     

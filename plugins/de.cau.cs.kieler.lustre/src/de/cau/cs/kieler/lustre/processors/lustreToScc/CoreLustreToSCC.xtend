@@ -72,9 +72,12 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
  * Basic class for Lustre to ScCharts transformations.
  * 
  * The following steps are taken here: 
- *  - create root state for each node
+ *  - create root state for each node with inputs/outputs
  *      - for automatons within node: interpret like ScCharts automatons
+ *      - for asserts within node: Add '@Assume' at root state with corresponding expression
  *  - extend state with another state containing constant declarations (if existent)
+ * 
+ * Additionally basic expression transformation to SCC is implemented.
  * 
  * @author lgr
  * 
@@ -94,7 +97,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsTypeExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
@@ -272,7 +274,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             controlflowRegion.states += newState
             lustreStateToScchartsStateMap.put(lusState, newState)
         }
-        
+
         for (AState lusState : automaton.states) {
             processState(lusState, lustreStateToScchartsStateMap.get(lusState))
         }
