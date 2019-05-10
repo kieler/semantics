@@ -38,11 +38,9 @@ import org.junit.runner.RunWith
 import static org.junit.Assert.*
 
 /**
- * Tests if all can be parsed and serialized.
+ * Tests if all Lustre models in repository can be parsed and serialized.
  * 
- * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
+ * @author lgr
  */
 @RunWith(ModelsRepositoryTestRunner)
 class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
@@ -50,7 +48,7 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
     /** Compiler configuration */
     val compilationSystemID = "de.cau.cs.kieler.kicool.identity"
         
-    /** Sct Parser Injector */
+    /** Lustre Parser Injector */
     static val lustreInjector = LustreStandaloneSetup.doSetup
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -67,10 +65,6 @@ class LustreParserTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("lustre")
-        && !modelData.modelProperties.contains("known-to-fail")
-        && (!modelData.modelProperties.contains("must-fail") 
-            || modelData.modelProperties.contains("must-fail-validation")
-        )
     }
     
     @Test
