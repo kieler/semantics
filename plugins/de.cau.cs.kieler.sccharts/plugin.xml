@@ -207,6 +207,9 @@
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.ValuedObjectRise">
         </Processor>
+        <Processor
+            class="de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer">
+        </Processor>
      </extension>
      <extension
            point="de.cau.cs.kieler.kicool.system">

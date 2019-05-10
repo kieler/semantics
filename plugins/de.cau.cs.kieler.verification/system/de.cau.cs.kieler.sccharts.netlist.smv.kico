@@ -1,0 +1,49 @@
+public system de.cau.cs.kieler.sccharts.netlist.smv
+	label "SCCharts to SMV (netlist ssa)"
+
+// Get verification properties from model, if none yet
+de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer
+
+system de.cau.cs.kieler.sccharts.extended.core
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process silent de.cau.cs.kieler.scg.processors.threadAnalyzer
+
+// sequentialize scg
+de.cau.cs.kieler.scg.processors.dependency config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": true
+}
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
+de.cau.cs.kieler.scg.processors.basicBlocks
+post process de.cau.cs.kieler.scg.processors.expressions
+de.cau.cs.kieler.scg.processors.guards config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies": true,
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false
+}
+de.cau.cs.kieler.scg.processors.scheduler
+de.cau.cs.kieler.scg.processors.sequentializer
+// SCG optimizations
+post process de.cau.cs.kieler.scg.processors.copyPropagation
+post process de.cau.cs.kieler.scg.processors.conditionalMerger
+post process de.cau.cs.kieler.scg.processors.haltStateRemover
+// smartRegisterAllocation is bad for smv translation, because we need an ssa-form
+//post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
+post process de.cau.cs.kieler.kicool.deploy.variable.store.clean
+// Store information about variable declarations (needed to create counterexample)
+de.cau.cs.kieler.scg.processors.storeVariableDeclarations
+// create SSA for SMV code generation
+de.cau.cs.kieler.scg.processors.basicBlocks
+de.cau.cs.kieler.scg.processors.ssa.sequential
+//de.cau.cs.kieler.scg.processors.ssa.optimizer.sccp // constant propagation on ssa. als: remove because it could break stuff
+de.cau.cs.kieler.scg.processors.ssa.dessa.sequential
+de.cau.cs.kieler.scg.processors.ssa.preOfFinalValues
+post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
+de.cau.cs.kieler.scg.processors.ssa.simpleNames
+de.cau.cs.kieler.scg.processors.ssa.defineUnbound
+// SCG optimizations
+//de.cau.cs.kieler.scg.processors.copyPropagation // copyPropagation messes up pre operands
+//de.cau.cs.kieler.scg.processors.conditionalMerger // has no effect (at least in the traffic-light example)
+//de.cau.cs.kieler.scg.processors.haltStateRemover // has no effect (at least in the traffic-light example)
+// create SMV code
+de.cau.cs.kieler.scg.processors.codegen.smv

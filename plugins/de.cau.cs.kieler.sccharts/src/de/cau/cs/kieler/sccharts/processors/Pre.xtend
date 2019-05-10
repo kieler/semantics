@@ -28,17 +28,19 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransformationExtension
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.verification.VerificationContext
 import java.util.HashMap
 import java.util.List
 import java.util.Stack
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.Transition
 
 /**
  * SCCharts Pre Transformation.
@@ -183,6 +185,12 @@ class Pre extends SCChartsProcessor implements Traceable {
         v.declaration2.input = false
         v.declaration2.output = false
         voStore.update(v, SCCHARTS_GENERATED, "pre")
+        
+        // Copy range assumptions for verification
+        if(compilationContext instanceof VerificationContext) {
+            (compilationContext as VerificationContext).copyAssumptions(v, source)
+        }
+        
         return v
     }
     

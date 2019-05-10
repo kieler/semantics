@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.nusmv.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.verification.spin.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.promela.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.smv.kico">
+      </TransformationSystem>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor">
+      </Processor>
+   </extension>
+
+</plugin>
