@@ -259,25 +259,20 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         sCGraph.trace(rootState)
         
         // Handle declarations
-        // for (valuedObject : state.valuedObjects) {
-        // val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
-        // valuedObjectSCG.applyAttributes(valuedObject)
-        // valuedObjectSCG.map(valuedObject)
-        // }
-        for (declaration : rootState.declarations) {
-            val newDeclaration = createDeclaration(declaration).trace(declaration)
-            declaration.copyAnnotations(newDeclaration)
-            declaration.valuedObjects.forEach [ oldVO |
-                val newValuedObject = oldVO.copy
-                newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(oldVO)
-                
-                // Fix VO association in VariableStore
-                val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
-                if (info !== null) info.valuedObject = newValuedObject
-            ]
-            sCGraph.declarations += newDeclaration
-        }
+        val declMapping = newHashMap
+        val voMapping = newHashMap
+        sCGraph.declarations += rootState.declarations.copyDeclarations(voMapping, declMapping)
+        declMapping.entrySet.forEach[
+            key.trace(value)
+        ]
+        voMapping.entrySet.forEach[
+            value.map(key)
+            
+            // Fix VO association in VariableStore
+            val oldVO = key
+            val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
+            if (info !== null) info.valuedObject = value
+        ]        
 
         val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach [
@@ -576,14 +571,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                         assignment.indices += it.convertToSCGExpression.trace(transition, effect)
                     ]
                 }
-                
-                if (!sCChartAssignment.schedule.nullOrEmpty) {
-                    sCChartAssignment.schedule.forEach[ s |
-                        assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-                            it.priority = s.priority
-                        ]
-                    ]
-                }
             } else if (effect instanceof HostcodeEffect) {
                 assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof FunctionCallEffect) {
@@ -594,6 +581,14 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             } else if (effect instanceof ReferenceCallEffect) {
                 assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+            }
+            
+            if (!effect.schedule.nullOrEmpty) {
+                for (s : effect.schedule) {
+                    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+                        it.priority = s.priority
+                    ]
+                }
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
@@ -772,6 +767,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ScheduleObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.createScheduleReference => [ sor |
             sor.trace(expression)
+            sor.handleSubReferences(expression)
             expression.indices.forEach [
                 sor.indices += it.convertToSCGExpression
             ]
@@ -785,6 +781,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.reference => [ vor |
             vor.trace(expression)
+            vor.handleSubReferences(expression)
             expression.indices.forEach [
                 vor.indices += it.convertToSCGExpression
             ]
@@ -875,8 +872,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ReferenceCall referenceCall) {
         createReferenceCall.trace(referenceCall) => [ rc |
             rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
+            rc.handleSubReferences(referenceCall)
             referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
+    }
+    
+    def void handleSubReferences(ValuedObjectReference dest, ValuedObjectReference src) {
+        if (src.subReference !== null) {
+            val ref =  src.subReference.valuedObject.SCGValuedObject.reference
+            dest.subReference = ref
+            dest.subReference.handleSubReferences(src.subReference)
+        }
     }
     
 // -------------------------------------------------------------------------   

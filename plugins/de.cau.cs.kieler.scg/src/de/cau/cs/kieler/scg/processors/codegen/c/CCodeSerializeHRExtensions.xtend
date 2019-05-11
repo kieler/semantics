@@ -251,14 +251,18 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     
     override dispatch CharSequence serialize(ReferenceCall referenceCall) {
         val declaration = referenceCall.valuedObject.referenceDeclaration
-        if (declaration.extern.nullOrEmpty) { 
-            return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
-        } else {
-            var code = declaration.extern.head.code
-            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+        if (declaration !== null) {
+            if (declaration.extern.nullOrEmpty) { 
+                return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+            } else {
+                var code = declaration.extern.head.code
+                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                return code + referenceCall.parameters.serializeParameters
             }
-            return code + referenceCall.parameters.serializeParameters
+        } else {
+            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
     

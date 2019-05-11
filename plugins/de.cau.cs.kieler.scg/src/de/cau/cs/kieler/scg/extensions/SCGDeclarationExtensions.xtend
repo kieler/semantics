@@ -116,18 +116,18 @@ class SCGDeclarationExtensions {
         return null
     }    
     
-    public def ValuedObjectMapping copyDeclarations(
-    	SCGraph source, SCGraph target) {
-    	val map = new ValuedObjectMapping
-    	for (declaration : source.declarations) {
-    		val newDeclaration = createDeclaration(declaration).trace(declaration)
-    		declaration.valuedObjects.forEach[ 
-    			map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
-    		]
-    		declaration.copyAnnotations(newDeclaration)
-    		target.declarations += newDeclaration
-    	}
-    	map
+    public def ValuedObjectMapping copyDeclarations(SCGraph source, SCGraph target) {
+        val map = new ValuedObjectMapping
+        val declMapping = newHashMap
+        val voMapping = newHashMap
+        target.declarations += source.declarations.copyDeclarations(voMapping, declMapping)
+        declMapping.entrySet.forEach[
+            key.trace(value)
+        ]
+        voMapping.entrySet.forEach[
+            map.put(key, <ValuedObject> newLinkedList(value))
+        ]
+    	return map
 	} 
 	
 	public def addValuedObjectMapping(ValuedObjectMapping map, ValuedObject source, ValuedObject target) {
