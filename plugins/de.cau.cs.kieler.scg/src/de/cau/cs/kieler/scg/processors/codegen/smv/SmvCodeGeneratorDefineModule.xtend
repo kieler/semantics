@@ -160,7 +160,8 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     private def void generateAssignment(ValuedObject valuedObject) {
         val assignments = valuedObjectToAssignments.get(valuedObject)
         if(assignments !== null) {
-            if(assignments.size == 1) {
+            if(assignments.size == 1
+                && nodeToParentConditional.get(assignments.head) === null) {
                 valuedObject.generateUnconditionalAssignment(assignments.head)
             } else {
                 valuedObject.generateConditionalAssignments(assignments)
