@@ -159,7 +159,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             it.trace(model)
             model.copyPragmas(it)
         ]
-        scGraphs.scgs.addAll(model.rootStates.map[transform])
+        scGraphs.scgs.addAll(0, model.rootStates.map[transform])
         setModel(scGraphs)
     }
 
