@@ -96,7 +96,6 @@ class VerificationView extends ViewPart {
     private static val CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID = "customSmvCommandsInvar"
     private static val CUSTOM_SPIN_COMMANDS_PREF_STORE_ID = "customSpinCommands"
     private static val SMV_USE_IVAR_PREF_STORE_ID = "smvModelsUseIVAR"
-    private static val SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID = "smvInitializePreVariables"
     private static val SMV_IGNORE_RANGE_ASSUMPTIONS = "smvIgnoreRangeAssumptions"
     private static val CREATE_COUNTEREXAMPLES_PREF_STORE_ID = "createCounterexamples"
     private static val CREATE_COUNTEREXAMPLES_WITH_OUTPUTS_PREF_STORE_ID = "createCounterexamplesWithOutputs"
@@ -212,13 +211,6 @@ class VerificationView extends ViewPart {
         useIVARinSmvModels.checked = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
         useIVARinSmvModels.toolTipText = "IVAR variables cannot be used everywhere, e.g., not in CTL"
         
-        val initializePreVariablesInSmvModels = new Action("Init. Pre-variables in SMV", IAction.AS_CHECK_BOX) {
-            override run() {
-                setBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, isChecked)
-            }
-        }
-        initializePreVariablesInSmvModels.checked = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, true)
-        
         val smvIgnoreRangeAssumptions = new Action("Ignore Range Assumptions for SMV", IAction.AS_CHECK_BOX) {
             override run() {
                 setBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, isChecked)
@@ -266,7 +258,6 @@ Example commands:
             add(createCounterexampleAction)
             add(writeOutputsToCounterexampleAction)
             add(useIVARinSmvModels)
-            add(initializePreVariablesInSmvModels)
             add(smvIgnoreRangeAssumptions)
             add(openEditSmvCommandsDialogAction)
             add(openEditSpinCommandsDialogAction)
@@ -612,7 +603,6 @@ Example commands:
         
         // Add SMV options
         verificationContext.smvUseIVAR = getBooleanOption(SMV_USE_IVAR_PREF_STORE_ID, false)
-        verificationContext.smvInitializePreVariables = getBooleanOption(SMV_INITIALIZE_PRE_VARIABLES_PREF_STORE_ID, true)
         verificationContext.smvIgnoreRangeAssumptions = getBooleanOption(SMV_IGNORE_RANGE_ASSUMPTIONS, false)
         
         val customSmvInvarCommandsList = getCustomCommands(CUSTOM_SMV_COMMANDS_INVAR_PREF_STORE_ID).split("\n").toList

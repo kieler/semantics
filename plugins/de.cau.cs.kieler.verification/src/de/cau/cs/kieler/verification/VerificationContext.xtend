@@ -41,7 +41,6 @@ class VerificationContext extends CompilationContext {
     @Accessors private boolean createCounterexamples = true
     
     // Options for SMV code generation
-    @Accessors private boolean smvInitializePreVariables = true
     @Accessors private boolean smvUseIVAR = false
     @Accessors private boolean smvIgnoreRangeAssumptions = false
     
