@@ -100,8 +100,20 @@ abstract class RunSmvProcessor extends RunModelCheckerProcessorBase {
                 customInteractiveCommands = verificationContext.customInteractiveSmvCtlCommands
         }
         // Remove whitespace in the custom interactive commands
-        val nonWhitespaceCustomInteractiveCommands =
-                customInteractiveCommands?.filter[!it.isNullOrEmpty && !it.matches('''\s+''')].toList
+        var List<String> nonWhitespaceCustomInteractiveCommands = null
+        if(customInteractiveCommands !== null) {
+            for(command : customInteractiveCommands) {
+                val trimmedCommand = command.trim
+                if(!trimmedCommand.isNullOrEmpty) {
+                    if(nonWhitespaceCustomInteractiveCommands === null) {
+                        nonWhitespaceCustomInteractiveCommands = newArrayList
+                    }
+                    nonWhitespaceCustomInteractiveCommands.add(trimmedCommand)
+                }
+            }
+        }
+
+        // Select commands to be used: default or custom        
         if (!nonWhitespaceCustomInteractiveCommands.isNullOrEmpty) {
             // Add "quit" as last command if this is missing
             if(nonWhitespaceCustomInteractiveCommands.last == "quit") {
