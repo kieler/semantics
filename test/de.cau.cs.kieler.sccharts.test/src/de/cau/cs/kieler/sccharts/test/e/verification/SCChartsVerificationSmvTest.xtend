@@ -17,7 +17,6 @@ import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.verification.VerificationContext
-import de.cau.cs.kieler.verification.VerificationPropertyType
 import java.util.List
 import org.junit.Rule
 import org.junit.Test
@@ -75,7 +74,6 @@ class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
         verificationContext.createCounterexamplesWithOutputs = createCounterexampleWithOutputs
         
         // Add SMV options
-        verificationContext.smvUseIVAR = smvUseIVAR
         val customSmvInvarCommands = getCustomSmvInvarCommands()
         verificationContext.customInteractiveSmvInvarCommands = customSmvInvarCommands
         val customSmvLtlCommands = getCustomSmvLtlCommands()
@@ -88,19 +86,10 @@ class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
         return "de.cau.cs.kieler.sccharts.verification.nuxmv"
     }
     
-    protected def boolean getSmvUseIVAR() {
-        // IVAR does not work when there are input variables in CTL properties
-        if(verificationProperties.exists[ it.type == VerificationPropertyType.CTL ]) {
-            return false
-        } else {
-            return true
-        }
-    }
-    
     protected def List<String> getCustomSmvInvarCommands() {
         if(verificationModelData.modelProperties.contains("unbounded-int")) {
             // Use algorithm that can handle infinite domains
-            return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}", "quit"]    
+            return #["go_msat", "check_invar_ic3 -i -P ${PROPERTY_NAME}"]    
         } else {
             return #[]
         }
@@ -109,7 +98,7 @@ class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
     protected def List<String> getCustomSmvLtlCommands() {
         if(verificationModelData.modelProperties.contains("unbounded-int")) {
             // Use algorithm that can handle infinite domains
-            return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}", "quit"]
+            return #["go_msat", "check_ltlspec_klive -i -P ${PROPERTY_NAME}"]
         } else {
             return #[]
         }
