@@ -18,9 +18,8 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.verification.VerificationPropertyType
 
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * Handles the declaration of variables.
@@ -89,7 +88,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     private def String toPmlLtlFormula(String ltlFormula) {
-        val pmlLtlFormula = ltlFormula.replaceAll('''\bG\b''', "[]").replaceAll('''\bF\b''', "<>").replaceAll('''\bR\b''', "\bV\b")
+        // Replace LTL-operators with SPIN syntax
+        val pmlLtlFormula = ltlFormula.replaceAll('''\bG\b''', "[]").replaceAll('''\bF\b''', "<>").replaceAll('''\bR\b''', " V ")
         // Promela needs one step for entering the tick loop. Thus an initial X has to be prepended to the formula.
         val pmlLtlFormulaAfterSetupDone = '''X( «pmlLtlFormula» )'''
         return pmlLtlFormulaAfterSetupDone
