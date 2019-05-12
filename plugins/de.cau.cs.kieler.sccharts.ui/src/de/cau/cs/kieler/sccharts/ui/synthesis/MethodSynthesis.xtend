@@ -145,7 +145,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
         }
         
         val diagram = LightDiagramServices.translateModel(
-            method.transformMethod(vos),
+            method.transformMethod(null, vos),
             usedContext,
             new MapPropertyHolder => [ 
                 setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg") 

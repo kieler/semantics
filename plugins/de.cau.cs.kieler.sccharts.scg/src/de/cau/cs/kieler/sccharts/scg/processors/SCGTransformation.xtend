@@ -29,6 +29,7 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
@@ -49,11 +50,13 @@ import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
@@ -82,13 +85,14 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.util.HashMap
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -113,6 +117,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension SCChartsFixExtensions
     @Inject extension PragmaExtensions
     
+    private var SCLToSCGTransformation methodProcessor;
+    
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     
     private static val Injector i = SCTXStandaloneSetup::doSetup();
@@ -125,6 +131,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     private static val String ANNOTATION_HOSTCODE = "hostcode"
 
     private var Entry rootStateEntry = null
+    private var SCGraphs scGraphs
 
     // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()
@@ -143,16 +150,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
     
     override process() {
+        methodProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scl.processors.transformators.scl2scg") as SCLToSCGTransformation
+        methodProcessor?.setEnvironment(sourceEnvironment, environment)
+        
         val model = getModel
-        val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
+        scGraphs = ScgFactory.eINSTANCE.createSCGraphs => [
             creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
             it.trace(model)
-            
             model.copyPragmas(it)
-            
-            scgs.addAll(model.rootStates.map[transform])
         ]
-        setModel(scgs)
+        scGraphs.scgs.addAll(model.rootStates.map[transform])
+        setModel(scGraphs)
     }
 
     def Node getMappedNode(State state) {
@@ -264,8 +272,16 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         sCGraph.declarations += rootState.declarations.copyDeclarations(voMapping, declMapping)
         declMapping.entrySet.forEach[
             key.trace(value)
+            // Convert method body
+            if (key instanceof MethodImplementationDeclaration) {
+                val method = key as MethodImplementationDeclaration
+                if (!method.statements.nullOrEmpty) {
+                    scGraphs.scgs += methodProcessor?.transformMethod(method, value as MethodDeclaration, voMapping)
+                }
+            }
         ]
         voMapping.entrySet.forEach[
+            key.trace(value)
             value.map(key)
             
             // Fix VO association in VariableStore
@@ -310,20 +326,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         rootState.mappedNode.createControlFlow.trace(rootState) => [rootStateEntry.setNext(it)]
 
-        // if (state.rootState.regions.size==1) {
-        // // Generate nodes and recursively traverse model
-        // state.transformSCGGenerateNodes(sCGraph)
-        // state.transformSCGConnectNodes(sCGraph)        
-        // } else {
-        // // Generate nodes and recursively traverse model
-        // for (region : state.rootState.regions) {
-        // region.transformSCGGenerateNodes(sCGraph)
-        // }
-        // // Generate nodes and recursively traverse model
-        // for (region : state.rootState.regions) {
-        // region.transformSCGConnectNodes(sCGraph)
-        // }
-        // }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
 
