@@ -23,11 +23,16 @@ class CompilationThread extends Thread {
     
     val CompilationContext context
     
+    public var boolean terminated
+    
     new(CompilationContext context) {
         this.context = context
+        terminated = false
     }
     
     override run()  {
+        this.name = "Compilation Thread"
         context.compile()
+        return
     }
 }
