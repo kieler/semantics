@@ -12,6 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import com.google.common.reflect.TypeToken
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
@@ -54,7 +56,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Set the environments after construction. 
      * However, preserve the enabled flag.
      */
-    public def setEnvironment(Environment environment, Environment environmentPrime) {
+    def setEnvironment(Environment environment, Environment environmentPrime) {
         if (environments !== null && environments.source !== null) {
             val enabledFlag = environments.source.getProperty(ENABLED)
             environment.setProperty(ENABLED, enabledFlag)
@@ -69,14 +71,14 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * Return the prime environment.
      */
-    public def Environment getEnvironment() {
+    def Environment getEnvironment() {
         return environments.target
     }
     
     /**
      * Return the source environment.
      */
-    public def Environment getSourceEnvironment() {
+    def Environment getSourceEnvironment() {
         return environments.source
     }
     
@@ -97,15 +99,29 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /** 
      * Directly return the compilation context of this processor.
      */
-    public def getCompilationContext() {
+    def getCompilationContext() {
         environments.source.getProperty(COMPILATION_CONTEXT)
     }
     
     /**
      * Directly return the meta processor of this processor instance.
      */
-    public def getProcessorReference() {
+    def getProcessorReference() {
         environments.source.getProperty(PROCESSOR_REFERENCE)
+    }
+    
+    /**
+     * Convenient getter to fetch properties from the environment.
+     */
+    def <T> T getProperty(IProperty<T> property) {
+        environment.getProperty(property)
+    }
+    
+    /**
+     * Convenient setter to change properties in the environment.
+     */
+    def <T> void setProperty(IProperty<? super T> property, T value) {
+        environment.setProperty(property, value)
     }
     
     /**
