@@ -26,7 +26,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
@@ -95,17 +94,41 @@ class KExpressionsValuedObjectExtensions {
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
     }    
+
+    def boolean isVariableReference(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.isVariableReference
+    }    
     
     def boolean isModelReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ReferenceDeclaration
+    }
+    
+    def boolean isModelReference(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.isModelReference
     }
     
     def boolean isExternalReference(ValuedObject valuedObject) {
         valuedObject.isModelReference && !valuedObject.declaration.asReferenceDeclaration.extern.nullOrEmpty
     }
     
+    def boolean isExternalReference(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.isExternalReference
+    }
+    
     def boolean isScheduleReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof ScheduleDeclaration
+    }
+    
+    def boolean isScheduleReference(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.isScheduleReference
+    }
+    
+    def isInputVariableReference(ValuedObjectReference vor) {
+        vor.isVariableReference && vor.valuedObject.variableDeclaration.input
+    }
+    
+    def isOutputVariableReference(ValuedObjectReference vor) {
+        vor.isVariableReference && vor.valuedObject.variableDeclaration.output
     }
     
     def ValueType getType(ValuedObject valuedObject) {
@@ -189,7 +212,7 @@ class KExpressionsValuedObjectExtensions {
         valuedObject.isSignal && valuedObject.type == ValueType::PURE
     }    
 
-    def public boolean isValuedSignal(ValuedObject valuedObject) {
+    def boolean isValuedSignal(ValuedObject valuedObject) {
         valuedObject.variableDeclaration.isSignal && valuedObject.type != ValueType::PURE
     }   
     
@@ -322,6 +345,12 @@ class KExpressionsValuedObjectExtensions {
             return l
         }
     }    
+    
+    def isSameValuedObjectInReference(Expression source, Expression target) {
+        source instanceof ValuedObjectReference &&
+            target instanceof ValuedObjectReference &&
+            source.asValuedObjectReference.valuedObject == target.asValuedObjectReference.valuedObject
+    }
     
     def asValue(Expression expression) {
         expression as Value

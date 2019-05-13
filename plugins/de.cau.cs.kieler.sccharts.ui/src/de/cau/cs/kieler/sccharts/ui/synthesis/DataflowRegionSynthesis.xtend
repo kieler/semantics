@@ -37,6 +37,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 
 /**
  * @author ssm
@@ -53,8 +54,6 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     
     public static val SynthesisOption CIRCUIT = SynthesisOption.createCheckOption("Circuit layout", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption AUTOMATIC_INLINE = SynthesisOption.createCheckOption("Automatic inline", false).
-        setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     @Inject extension KNodeExtensionsReplacement
     @Inject extension KRenderingExtensions
@@ -66,8 +65,14 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
     
+    @Inject EquationSynthesis equationSynthesis
+    
     override getDisplayedSynthesisOptions() {
-        return newArrayList(CIRCUIT, AUTOMATIC_INLINE)
+        val options = newArrayList(CIRCUIT)
+        
+        options.addAll(equationSynthesis.displayedSynthesisOptions)
+        
+        return options
     }   
     
     override performTranformation(DataflowRegion region) {
@@ -80,6 +85,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         node.addLayoutParam(LayeredOptions::NODE_PLACEMENT_STRATEGY, NodePlacementStrategy::NETWORK_SIMPLEX)
         node.addLayoutParam(CoreOptions::SEPARATE_CONNECTED_COMPONENTS, true)
         node.setLayoutOption(LayeredOptions::HIGH_DEGREE_NODES_TREATMENT, true)
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d)
+        node.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 10d)
         
         if (CIRCUIT.booleanValue) {
             node.addLayoutParam(LayeredOptions::CROSSING_MINIMIZATION_SEMI_INTERACTIVE, true)
@@ -90,6 +97,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 //            node.setLayoutOption(LayeredOptions::SPACING_EDGE_SPACING_FACTOR, 0.8f); // 0.7
 //            node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_SPACING_FACTOR, 0.75f); //1 //0.5
 //            node.setLayoutOption(LayeredOptions::SPACING_IN_LAYER_SPACING_FACTOR, 0.25f); //0.2 // 0.5
+        } else {
+            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(50d));
         }
             
         node.setLayoutOption(KlighdProperties::EXPAND, true)
@@ -117,7 +126,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsExpandedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
-                addStatesArea(label.nullOrEmpty);
+                addStatesArea(!label.nullOrEmpty);
             } else {
                 addStatesAndDeclarationsAndActionsArea(false, false);
                 // Add declarations
@@ -132,7 +141,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             if (sLabel.length > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
-                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+//                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
         ]
 
         // Collapsed
@@ -140,8 +150,9 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
-            if (CIRCUIT.booleanValue)
-                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+            if (!CIRCUIT.booleanValue)
+//                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
+                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
         ]
         
         node.setSelectionStyle
@@ -153,7 +164,11 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         }           
 
         // translate all direct dataflow equations
-        node.children += region.equations.performTranformation
+        node.children += region.equations.performTranformation(node)
+
+        if (!CIRCUIT.booleanValue) {
+            node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));
+        }
 
         return <KNode> newArrayList(node)
     }

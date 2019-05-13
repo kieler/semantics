@@ -363,11 +363,11 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
-    | FBYExpression;
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
+    | InitExpression;
     
-FBYExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
+InitExpression returns Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
     | AtomicValuedExpression;    
     
 // Atomic Expression Rule
@@ -403,7 +403,7 @@ AtomicValuedExpression returns Expression:
 // valued object reference.
 // Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 ValuedObjectTestExpression returns Expression:
-	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
+	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 	| ValuedObjectReference;
 
 // ID with primes
@@ -566,8 +566,8 @@ enum PostfixSub returns OperatorType:
 enum ConditionalOperator returns OperatorType:
     CONDITIONAL = "?";        
     
-enum FBYOperator returns OperatorType:
-    FBY = "->";
+enum InitOperator returns OperatorType:
+    INIT = "->";
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 

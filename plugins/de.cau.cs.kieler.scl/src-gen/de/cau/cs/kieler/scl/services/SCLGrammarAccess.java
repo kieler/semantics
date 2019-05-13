@@ -2142,8 +2142,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -2197,8 +2197,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//TernaryOperation Expression:
 	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-	//	subExpressions+=AtomicValuedExpression ':' subExpressions+=AtomicValuedExpression
-	//	| FBYExpression;
+	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
+	//	| InitExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
 	}
@@ -2207,16 +2207,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//FBYExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=FBYOperator
+	//InitExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
 	//	subExpressions+=AtomicValuedExpression
 	//	| AtomicValuedExpression;
-	public KExpressionsGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
-		return gaKExpressions.getFBYExpressionAccess();
+	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
+		return gaKExpressions.getInitExpressionAccess();
 	}
 	
-	public ParserRule getFBYExpressionRule() {
-		return getFBYExpressionAccess().getRule();
+	public ParserRule getInitExpressionRule() {
+		return getInitExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -2264,7 +2264,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued object reference.
 	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression ')'
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+	//	subExpressions+=ValuedObjectReference)? ')'
 	//	| ValuedObjectReference;
 	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
 		return gaKExpressions.getValuedObjectTestExpressionAccess();
@@ -2677,14 +2678,14 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getConditionalOperatorAccess().getRule();
 	}
 	
-	//enum FBYOperator returns OperatorType:
-	//	FBY="->";
-	public KExpressionsGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
-		return gaKExpressions.getFBYOperatorAccess();
+	//enum InitOperator returns OperatorType:
+	//	INIT="->";
+	public KExpressionsGrammarAccess.InitOperatorElements getInitOperatorAccess() {
+		return gaKExpressions.getInitOperatorAccess();
 	}
 	
-	public EnumRule getFBYOperatorRule() {
-		return getFBYOperatorAccess().getRule();
+	public EnumRule getInitOperatorRule() {
+		return getInitOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

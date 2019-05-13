@@ -91,6 +91,7 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getValuedObjects() {
         if (valuedObjects == null) {
             valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExpressionsPackage.DECLARATION__VALUED_OBJECTS);
@@ -103,6 +104,7 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isPrivate() {
         return private_;
     }
@@ -112,6 +114,7 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPrivate(boolean newPrivate) {
         boolean oldPrivate = private_;
         private_ = newPrivate;

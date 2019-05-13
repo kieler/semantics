@@ -88,6 +88,7 @@ public class StringValueImpl extends EObjectImpl implements StringValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.STRING_VALUE__SCHEDULE);
@@ -100,6 +101,7 @@ public class StringValueImpl extends EObjectImpl implements StringValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getValue() {
         return value;
     }
@@ -109,6 +111,7 @@ public class StringValueImpl extends EObjectImpl implements StringValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(String newValue) {
         String oldValue = value;
         value = newValue;

@@ -92,6 +92,10 @@ class SCChartsTransitionExtensions {
             sourceState.outgoingTransitions.add(index, it)
         ]
     }
+    
+    def createTerminationTo(State sourceState, State targetState) {
+        sourceState.createTransitionTo(targetState).setTypeTermination
+    }
 
     def setSourceState(Transition transition, State sourceState) {
         transition => [ sourceState.outgoingTransitions += it ]

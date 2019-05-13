@@ -18238,15 +18238,15 @@ ruleDivModExpression returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleFBYExpression
-entryRuleFBYExpression returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getFBYExpressionRule()); }
-	iv_ruleFBYExpression=ruleFBYExpression
-	{ $current=$iv_ruleFBYExpression.current; }
+// Entry rule entryRuleInitExpression
+entryRuleInitExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getInitExpressionRule()); }
+	iv_ruleInitExpression=ruleInitExpression
+	{ $current=$iv_ruleInitExpression.current; }
 	EOF;
 
-// Rule FBYExpression
-ruleFBYExpression returns [EObject current=null]
+// Rule InitExpression
+ruleInitExpression returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -18261,19 +18261,19 @@ ruleFBYExpression returns [EObject current=null]
 				}
 				{
 					$current = forceCreateModelElement(
-						grammarAccess.getFBYExpressionAccess().getOperatorExpressionAction_0_0(),
+						grammarAccess.getInitExpressionAccess().getOperatorExpressionAction_0_0(),
 						$current);
 				}
 			)
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0());
+						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0());
 					}
 					lv_subExpressions_1_0=ruleAtomicValuedExpression
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFBYExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
 						}
 						add(
 							$current,
@@ -18287,18 +18287,18 @@ ruleFBYExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getFBYExpressionAccess().getOperatorFBYOperatorEnumRuleCall_0_2_0());
+						newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0());
 					}
-					lv_operator_2_0=ruleFBYOperator
+					lv_operator_2_0=ruleInitOperator
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFBYExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
 						}
 						set(
 							$current,
 							"operator",
 							lv_operator_2_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.FBYOperator");
+							"de.cau.cs.kieler.kexpressions.KExpressions.InitOperator");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -18306,12 +18306,12 @@ ruleFBYExpression returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getFBYExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
 					}
 					lv_subExpressions_3_0=ruleAtomicValuedExpression
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFBYExpressionRule());
+							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
 						}
 						add(
 							$current,
@@ -18328,7 +18328,7 @@ ruleFBYExpression returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getFBYExpressionAccess().getAtomicValuedExpressionParserRuleCall_1());
+			newCompositeNode(grammarAccess.getInitExpressionAccess().getAtomicValuedExpressionParserRuleCall_1());
 		}
 		this_AtomicValuedExpression_4=ruleAtomicValuedExpression
 		{
@@ -18425,9 +18425,34 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 					}
 				)
 			)
-			otherlv_4=')'
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0());
+						}
+						lv_subExpressions_5_0=ruleValuedObjectReference
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getValuedObjectTestExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.ValuedObjectReference");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)?
+			otherlv_6=')'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_4());
+				newLeafNode(otherlv_6, grammarAccess.getValuedObjectTestExpressionAccess().getRightParenthesisKeyword_0_5());
 			}
 		)
 		    |
@@ -18437,9 +18462,9 @@ ruleValuedObjectTestExpression returns [EObject current=null]
 		{
 			newCompositeNode(grammarAccess.getValuedObjectTestExpressionAccess().getValuedObjectReferenceParserRuleCall_1());
 		}
-		this_ValuedObjectReference_5=ruleValuedObjectReference
+		this_ValuedObjectReference_7=ruleValuedObjectReference
 		{
-			$current = $this_ValuedObjectReference_5.current;
+			$current = $this_ValuedObjectReference_7.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -21586,8 +21611,8 @@ ruleConditionalOperator returns [Enumerator current=null]
 	)
 ;
 
-// Rule FBYOperator
-ruleFBYOperator returns [Enumerator current=null]
+// Rule InitOperator
+ruleInitOperator returns [Enumerator current=null]
 @init {
 	enterRule();
 }
@@ -21597,8 +21622,8 @@ ruleFBYOperator returns [Enumerator current=null]
 	(
 		enumLiteral_0='->'
 		{
-			$current = grammarAccess.getFBYOperatorAccess().getFBYEnumLiteralDeclaration().getEnumLiteral().getInstance();
-			newLeafNode(enumLiteral_0, grammarAccess.getFBYOperatorAccess().getFBYEnumLiteralDeclaration());
+			$current = grammarAccess.getInitOperatorAccess().getINITEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getInitOperatorAccess().getINITEnumLiteralDeclaration());
 		}
 	)
 ;

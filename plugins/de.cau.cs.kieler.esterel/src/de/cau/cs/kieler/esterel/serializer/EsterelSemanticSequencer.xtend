@@ -476,7 +476,7 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
      *         )
      *     )
      */
-    protected override sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+    protected override sequence_AddExpression_AndExpression_CompareOperation_DivExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
         context.sequenceValuedOperatorExpression(semanticObject)
     }
     

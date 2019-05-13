@@ -41,6 +41,10 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 
 /**
  * C Code Generator Logic Module
@@ -57,6 +61,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension KExtReferenceExtensions
     @Inject extension SCGControlFlowExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
@@ -132,8 +137,14 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 indent(conditionalStack.size + 1)
                 code.append((assignment.expression as FunctionCall).serialize).append(";\n")
             } else if (assignment.expression instanceof ReferenceCall) {
-                indent(conditionalStack.size + 1)
-                code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
+                val referenceCall = assignment.expression as ReferenceCall
+                 val declaration = referenceCall.valuedObject.referenceDeclaration
+                if (declaration.reference instanceof SCGraph) {
+                    code.append(callToSCG(referenceCall, declaration, conditionalStack.size + 1, serializer))
+                } else {
+                    indent(conditionalStack.size + 1)
+                    code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
+                }
             } else {
                 throw new NullPointerException("Assigned valued object is null or not supported")
             }
@@ -274,5 +285,48 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         }         
         assignments        
     }
+ 
+    protected def String callToSCG(ReferenceCall referenceCall, ReferenceDeclaration referenceDeclaration, 
+        int indentationDepth, extension CCodeSerializeHRExtensions serializer
+    ) {
+        val sb = new StringBuilder
+        val refSCG = referenceDeclaration.reference as SCGraph 
+        val module = codeGeneratorModuleMap.get(refSCG) as CCodeGeneratorModule
+        
+        val bindings = referenceCall.createBindings
+        
+        for (input : refSCG.declarations.filter(VariableDeclaration).filter[ input ].map[ valuedObjects ].flatten) {
+            for (n : 1..indentationDepth) sb.append(indentation)
+            sb.append(struct.getVariableName).append(struct.separator)
+            sb.append(referenceCall.valuedObject.name)
+            sb.append(".")
+            sb.append(input.name)
+            sb.append(" = ")
+            sb.append(bindings.filter[ it.targetValuedObject == input ].head.sourceExpression.serialize)
+            sb.append(";\n")    
+        }
+        
+        for (n : 1..indentationDepth) sb.append(indentation)
+        sb.append(module.tick.name)
+        sb.append("(&")
+        sb.append(struct.getVariableName).append(struct.separator)
+        sb.append(referenceCall.valuedObject.name)
+        sb.append(");\n")        
+
+        for (output : refSCG.declarations.filter(VariableDeclaration).filter[ output ].map[ valuedObjects ].flatten) {
+            for (n : 1..indentationDepth) sb.append(indentation)
+            sb.append(bindings.filter[ it.targetValuedObject == output ].head.sourceExpression.serialize)
+            sb.append(" = ")
+            sb.append(struct.getVariableName).append(struct.separator)
+            sb.append(referenceCall.valuedObject.name)
+            sb.append(".")
+            sb.append(output.name)
+            sb.append(";\n")               
+        }
+
+        
+        sb.toString
+    }
+     
     
 }

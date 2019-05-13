@@ -18,6 +18,7 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * C Code Generator Struct Module
@@ -72,6 +73,24 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
                         }
                     }
                     code.append(";\n")
+                }
+                else if (declaration instanceof ReferenceDeclaration) {
+                    val myModule = parent as CCodeGeneratorModule
+                    val module = codeGeneratorModuleMap.get(declaration.reference) as CCodeGeneratorModule
+                    if (module !== null) {
+                        code.append(indentation)
+                        code.append(module.struct.name)
+                        code.append(" ")
+                        code.append(valuedObject.name)
+                        code.append(";\n")
+                        
+                        myModule.reset.code.append(indentation)
+                        myModule.reset.code.append(module.reset.name)
+                        myModule.reset.code.append("(&")
+                        myModule.reset.code.append(getVariableName).append(separator)
+                        myModule.reset.code.append(valuedObject.name)
+                    myModule.reset.code.append(");\n")
+                    }
                 }
             }
         }

@@ -83,6 +83,7 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.VECTOR_VALUE__SCHEDULE);
@@ -95,6 +96,7 @@ public class VectorValueImpl extends EObjectImpl implements VectorValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getValues() {
         if (values == null) {
             values = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VECTOR_VALUE__VALUES);

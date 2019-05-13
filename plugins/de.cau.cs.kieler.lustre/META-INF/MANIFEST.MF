@@ -7,29 +7,32 @@ Bundle-SymbolicName: de.cau.cs.kieler.lustre;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.10.0",
  org.eclipse.xtext,
- org.eclipse.xtext.xbase,
- org.eclipse.equinox.common;bundle-version="3.5.0",
  org.eclipse.emf.ecore,
- org.eclipse.xtext.xbase.lib,
- org.antlr.runtime,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util,
- org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
  org.eclipse.emf.common,
  de.cau.cs.kieler.sccharts,
- de.cau.cs.kieler.kicool
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.scl;bundle-version="0.14.0",
+ org.eclipse.core.runtime;bundle-version="3.14.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.lustre,
+ de.cau.cs.kieler.lustre.compiler,
+ de.cau.cs.kieler.lustre.compiler.processors,
+ de.cau.cs.kieler.lustre.extensions,
  de.cau.cs.kieler.lustre.formatting2,
  de.cau.cs.kieler.lustre.lustre,
  de.cau.cs.kieler.lustre.lustre.impl,
  de.cau.cs.kieler.lustre.lustre.util,
  de.cau.cs.kieler.lustre.parser.antlr,
  de.cau.cs.kieler.lustre.parser.antlr.internal,
- de.cau.cs.kieler.lustre.processors,
+ de.cau.cs.kieler.lustre.processors.lustreToScc,
+ de.cau.cs.kieler.lustre.processors.sccToLustre,
  de.cau.cs.kieler.lustre.scoping,
  de.cau.cs.kieler.lustre.serializer,
  de.cau.cs.kieler.lustre.services,
- de.cau.cs.kieler.lustre.transformations,
- de.cau.cs.kieler.lustre.validation,
- de.cau.cs.kieler.lustre.validation.typing
+ de.cau.cs.kieler.lustre.validation
 Import-Package: org.apache.log4j

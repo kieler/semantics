@@ -1,7 +1,7 @@
 system de.cau.cs.kieler.sccharts.dataflow.lustre 
-	label "SCCharts to Lustre"
+	label "SCCharts Control-flow to Lustre"
     
 de.cau.cs.kieler.sccharts.processors.regionDependencies
 de.cau.cs.kieler.sccharts.processors.toHybridDataflow
 de.cau.cs.kieler.sccharts.processors.DeLoopRegions
-de.cau.cs.kieler.lustre.processors.SCCToLustre
+de.cau.cs.kieler.lustre.processors.SCCToLustre.controlFlow

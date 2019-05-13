@@ -109,6 +109,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -118,6 +119,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -130,6 +132,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PriorityProtocol getGlobal() {
         return global;
     }
@@ -139,6 +142,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setGlobal(PriorityProtocol newGlobal) {
         PriorityProtocol oldGlobal = global;
         global = newGlobal == null ? GLOBAL_EDEFAULT : newGlobal;
@@ -151,6 +155,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PriorityProtocol> getPriorities() {
         if (priorities == null) {
             priorities = new EDataTypeUniqueEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);

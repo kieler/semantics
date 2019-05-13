@@ -4,46 +4,78 @@
 package de.cau.cs.kieler.lustre.serializer;
 
 import com.google.inject.Inject;
+import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.CommentAnnotation;
+import de.cau.cs.kieler.annotations.Pragma;
+import de.cau.cs.kieler.annotations.StringAnnotation;
+import de.cau.cs.kieler.annotations.StringPragma;
+import de.cau.cs.kieler.annotations.TagAnnotation;
+import de.cau.cs.kieler.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.kexpressions.BoolValue;
+import de.cau.cs.kieler.kexpressions.ExternString;
+import de.cau.cs.kieler.kexpressions.FloatValue;
+import de.cau.cs.kieler.kexpressions.FunctionCall;
+import de.cau.cs.kieler.kexpressions.IgnoreValue;
+import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonAnnotation;
+import de.cau.cs.kieler.kexpressions.JsonArrayValue;
+import de.cau.cs.kieler.kexpressions.JsonObjectMember;
+import de.cau.cs.kieler.kexpressions.JsonObjectValue;
+import de.cau.cs.kieler.kexpressions.JsonPragma;
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.NullValue;
+import de.cau.cs.kieler.kexpressions.OperatorExpression;
+import de.cau.cs.kieler.kexpressions.RandomCall;
+import de.cau.cs.kieler.kexpressions.RandomizeCall;
+import de.cau.cs.kieler.kexpressions.ReferenceCall;
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration;
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
+import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.StringValue;
+import de.cau.cs.kieler.kexpressions.TextExpression;
+import de.cau.cs.kieler.kexpressions.ValuedObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.VectorValue;
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
+import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
+import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
+import de.cau.cs.kieler.kexpressions.kext.KExtScope;
+import de.cau.cs.kieler.kexpressions.kext.Kext;
+import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
+import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
-import de.cau.cs.kieler.lustre.lustre.And;
-import de.cau.cs.kieler.lustre.lustre.Array_Type;
-import de.cau.cs.kieler.lustre.lustre.Arrow;
+import de.cau.cs.kieler.lustre.lustre.Assertion;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
-import de.cau.cs.kieler.lustre.lustre.BoolConstant;
-import de.cau.cs.kieler.lustre.lustre.Comparison;
-import de.cau.cs.kieler.lustre.lustre.Constant_Declaration;
-import de.cau.cs.kieler.lustre.lustre.Current;
-import de.cau.cs.kieler.lustre.lustre.Div;
-import de.cau.cs.kieler.lustre.lustre.Equality;
+import de.cau.cs.kieler.lustre.lustre.ByNameStaticArg;
+import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
 import de.cau.cs.kieler.lustre.lustre.Equation;
-import de.cau.cs.kieler.lustre.lustre.Fby;
-import de.cau.cs.kieler.lustre.lustre.Field;
-import de.cau.cs.kieler.lustre.lustre.FloatConstant;
-import de.cau.cs.kieler.lustre.lustre.IfThenElse;
-import de.cau.cs.kieler.lustre.lustre.IntConstant;
-import de.cau.cs.kieler.lustre.lustre.Left;
-import de.cau.cs.kieler.lustre.lustre.Left_List;
+import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 import de.cau.cs.kieler.lustre.lustre.LustreProgram;
-import de.cau.cs.kieler.lustre.lustre.Minus;
-import de.cau.cs.kieler.lustre.lustre.Mod;
-import de.cau.cs.kieler.lustre.lustre.Mul;
-import de.cau.cs.kieler.lustre.lustre.Node_Declaration;
-import de.cau.cs.kieler.lustre.lustre.Not;
-import de.cau.cs.kieler.lustre.lustre.Or;
-import de.cau.cs.kieler.lustre.lustre.Package_Declaration;
-import de.cau.cs.kieler.lustre.lustre.Package_Provided;
-import de.cau.cs.kieler.lustre.lustre.Package_Provided_IO;
-import de.cau.cs.kieler.lustre.lustre.Plus;
-import de.cau.cs.kieler.lustre.lustre.Pre;
-import de.cau.cs.kieler.lustre.lustre.Record_Type;
-import de.cau.cs.kieler.lustre.lustre.Selector;
-import de.cau.cs.kieler.lustre.lustre.Type;
-import de.cau.cs.kieler.lustre.lustre.Type_Declaration;
-import de.cau.cs.kieler.lustre.lustre.UMinus;
-import de.cau.cs.kieler.lustre.lustre.VariableReference;
-import de.cau.cs.kieler.lustre.lustre.Variable_Declaration;
+import de.cau.cs.kieler.lustre.lustre.LustreValuedObject;
+import de.cau.cs.kieler.lustre.lustre.ModelDeclaration;
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
+import de.cau.cs.kieler.lustre.lustre.NodeReference;
+import de.cau.cs.kieler.lustre.lustre.NodeValuedObject;
+import de.cau.cs.kieler.lustre.lustre.PackBody;
+import de.cau.cs.kieler.lustre.lustre.PackList;
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
+import de.cau.cs.kieler.lustre.lustre.PackageEquation;
+import de.cau.cs.kieler.lustre.lustre.Params;
+import de.cau.cs.kieler.lustre.lustre.Provide;
+import de.cau.cs.kieler.lustre.lustre.StaticArg;
+import de.cau.cs.kieler.lustre.lustre.StaticParam;
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
@@ -53,11 +85,10 @@ import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
-import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractLustreSemanticSequencer extends AbstractDelegatingSemanticSequencer {
+public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequencer {
 
 	@Inject
 	private LustreGrammarAccess grammarAccess;
@@ -68,7 +99,422 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
-		if (epackage == LustrePackage.eINSTANCE)
+		if (epackage == AnnotationsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case AnnotationsPackage.COMMENT_ANNOTATION:
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getCommentAnnotationRule()) {
+					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
+					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.PRAGMA:
+				sequence_PragmaTag(context, (Pragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.STRING_ANNOTATION:
+				if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
+						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
+					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
+					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case AnnotationsPackage.STRING_PRAGMA:
+				sequence_StringPragma(context, (StringPragma) semanticObject); 
+				return; 
+			case AnnotationsPackage.TAG_ANNOTATION:
+				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
+				return; 
+			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
+				if (rule == grammarAccess.getQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsQuotedStringAnnotationRule()
+						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
+					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
+						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
+					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getAnnotationRule()
+						|| rule == grammarAccess.getValuedAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsAnnotationRule()
+						|| rule == grammarAccess.getAnnotationsValuedAnnotationRule()
+						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
+					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
+					return; 
+				}
+				else break;
+			}
+		else if (epackage == KEffectsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KEffectsPackage.ASSIGNMENT:
+				if (rule == grammarAccess.getAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.EMISSION:
+				if (rule == grammarAccess.getPureEmissionRule()) {
+					sequence_PureEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
+					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedEmissionRule()) {
+					sequence_ValuedEmission(context, (Emission) semanticObject); 
+					return; 
+				}
+				else break;
+			case KEffectsPackage.FUNCTION_CALL_EFFECT:
+				sequence_FunctionCallEffect(context, (FunctionCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.HOSTCODE_EFFECT:
+				sequence_HostcodeEffect(context, (HostcodeEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.PRINT_CALL_EFFECT:
+				sequence_PrintCallEffect(context, (PrintCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.RANDOMIZE_CALL_EFFECT:
+				sequence_RandomizeCallEffect(context, (RandomizeCallEffect) semanticObject); 
+				return; 
+			case KEffectsPackage.REFERENCE_CALL_EFFECT:
+				sequence_ReferenceCallEffect(context, (ReferenceCallEffect) semanticObject); 
+				return; 
+			}
+		else if (epackage == KExpressionsPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExpressionsPackage.BOOL_VALUE:
+				sequence_BoolValue(context, (BoolValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.EXTERN_STRING:
+				sequence_ExternString(context, (ExternString) semanticObject); 
+				return; 
+			case KExpressionsPackage.FLOAT_VALUE:
+				sequence_FloatValue(context, (FloatValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.FUNCTION_CALL:
+				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.IGNORE_VALUE:
+				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.INT_VALUE:
+				sequence_IntValue(context, (IntValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_ANNOTATION:
+				sequence_JsonAnnotation(context, (JsonAnnotation) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_ARRAY_VALUE:
+				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_MEMBER:
+				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_OBJECT_VALUE:
+				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.JSON_PRAGMA:
+				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
+				return; 
+			case KExpressionsPackage.NULL_VALUE:
+				sequence_NullValue(context, (NullValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.OPERATOR_EXPRESSION:
+				if (rule == grammarAccess.getAddExpressionRule()) {
+					sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBitwiseOrExpressionRule()) {
+					sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseXOrExpressionRule()) {
+					sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getBitwiseAndExpressionRule()) {
+					sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBitwiseNotExpressionRule()) {
+					sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDivExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDivModExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_DivModExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getModExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMultDivExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultDivExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMultExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMultModExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftExpressionsRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftLeftRightExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftLeftRightUnsignedExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftRightRightUnsignedExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSubExpressionRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| rule == grammarAccess.getIntDivExpressionRule()
+						|| action == grammarAccess.getIntDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNegExpressionRule()
+						|| rule == grammarAccess.getFBYExpressionRule()
+						|| action == grammarAccess.getFBYExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getWhenExpressionRule()
+						|| rule == grammarAccess.getCurrentExpressionRule()
+						|| rule == grammarAccess.getPreExpressionRule()
+						|| rule == grammarAccess.getBoolExpressionRule()
+						|| rule == grammarAccess.getInitExpressionRule()
+						|| rule == grammarAccess.getTernaryOperationRule()
+						|| rule == grammarAccess.getImpliesExpressionRule()
+						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalXorExpressionRule()
+						|| action == grammarAccess.getLogicalXorExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalOrExpressionRule()
+						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getLogicalAndExpressionRule()
+						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getValuedExpressionRule()
+						|| rule == grammarAccess.getAtomicExpressionRule()
+						|| rule == grammarAccess.getNotExpressionRule()
+						|| rule == grammarAccess.getRootRule()
+						|| rule == grammarAccess.getExpressionRule()
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getCompareOperationRule()
+						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getNotOrValuedExpressionRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
+						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtomicValuedExpressionRule()
+						|| rule == grammarAccess.getVectorValueMemberRule()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getNorAtMostOneExpressionRule()) {
+					sequence_NorAtMostOneExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
+					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.PARAMETER:
+				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+				return; 
+			case KExpressionsPackage.RANDOM_CALL:
+				sequence_RandomCall(context, (RandomCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.RANDOMIZE_CALL:
+				sequence_RandomizeCall(context, (RandomizeCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_CALL:
+				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
+				return; 
+			case KExpressionsPackage.REFERENCE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
+					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getReferenceDeclarationRule()) {
+					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
+					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getScheduleDeclarationRule()) {
+					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
+				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.STRING_VALUE:
+				sequence_StringValue(context, (StringValue) semanticObject); 
+				return; 
+			case KExpressionsPackage.TEXT_EXPRESSION:
+				sequence_TextExpression(context, (TextExpression) semanticObject); 
+				return; 
+			case KExpressionsPackage.VALUED_OBJECT:
+				if (rule == grammarAccess.getLustreValuedObjectListRule()) {
+					sequence_LustreValuedObjectList(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
+				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
+				return; 
+			case KExpressionsPackage.VARIABLE_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getVariableDeclarationRule()
+						|| rule == grammarAccess.getDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExpressionsPackage.VECTOR_VALUE:
+				sequence_VectorValue(context, (VectorValue) semanticObject); 
+				return; 
+			}
+		else if (epackage == KExtPackage.eINSTANCE)
+			switch (semanticObject.eClass().getClassifierID()) {
+			case KExtPackage.ANNOTATED_EXPRESSION:
+				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
+				return; 
+			case KExtPackage.KEXT_SCOPE:
+				if (rule == grammarAccess.getRootScopeRule()) {
+					sequence_RootScope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getScopeRule()) {
+					sequence_Scope(context, (KExtScope) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.KEXT:
+				sequence_Kext(context, (Kext) semanticObject); 
+				return; 
+			case KExtPackage.STRUCT_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
+					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getStructDeclarationRule()) {
+					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
+			case KExtPackage.TEST_ENTITY:
+				sequence_TestEntity(context, (TestEntity) semanticObject); 
+				return; 
+			}
+		else if (epackage == LustrePackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case LustrePackage.ASTATE:
 				sequence_AState(context, (AState) semanticObject); 
@@ -76,124 +522,68 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 			case LustrePackage.ATRANSITION:
 				sequence_ATransition(context, (ATransition) semanticObject); 
 				return; 
-			case LustrePackage.AND:
-				sequence_And(context, (And) semanticObject); 
-				return; 
-			case LustrePackage.ARRAY_TYPE:
-				sequence_Array_Type(context, (Array_Type) semanticObject); 
-				return; 
-			case LustrePackage.ARROW:
-				sequence_Arrow(context, (Arrow) semanticObject); 
+			case LustrePackage.ASSERTION:
+				sequence_Assertion(context, (Assertion) semanticObject); 
 				return; 
 			case LustrePackage.AUTOMATON:
 				sequence_Automaton(context, (Automaton) semanticObject); 
 				return; 
-			case LustrePackage.BOOL_CONSTANT:
-				sequence_ConstantExpression(context, (BoolConstant) semanticObject); 
+			case LustrePackage.BY_NAME_STATIC_ARG:
+				sequence_ByNameStaticArg(context, (ByNameStaticArg) semanticObject); 
 				return; 
-			case LustrePackage.COMPARISON:
-				sequence_Comparison(context, (Comparison) semanticObject); 
-				return; 
-			case LustrePackage.CONSTANT_DECLARATION:
-				if (rule == grammarAccess.getEntity_DeclarationRule()
-						|| rule == grammarAccess.getConstant_DeclarationRule()) {
-					sequence_Constant_Declaration(context, (Constant_Declaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getLocal_Constant_DeclarationRule()) {
-					sequence_Local_Constant_Declaration(context, (Constant_Declaration) semanticObject); 
-					return; 
-				}
-				else break;
-			case LustrePackage.CURRENT:
-				sequence_Primary(context, (Current) semanticObject); 
-				return; 
-			case LustrePackage.DIV:
-				sequence_MulOrDiv(context, (Div) semanticObject); 
-				return; 
-			case LustrePackage.EQUALITY:
-				sequence_Equality(context, (Equality) semanticObject); 
+			case LustrePackage.CLOCKED_VARIABLE_DECLARATION:
+				sequence_ClockedVariableDeclaration(context, (ClockedVariableDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.EQUATION:
 				sequence_Equation(context, (Equation) semanticObject); 
 				return; 
-			case LustrePackage.FBY:
-				sequence_Fby(context, (Fby) semanticObject); 
-				return; 
-			case LustrePackage.FIELD:
-				sequence_Field(context, (Field) semanticObject); 
-				return; 
-			case LustrePackage.FLOAT_CONSTANT:
-				sequence_ConstantExpression(context, (FloatConstant) semanticObject); 
-				return; 
-			case LustrePackage.IF_THEN_ELSE:
-				sequence_Expression(context, (IfThenElse) semanticObject); 
-				return; 
-			case LustrePackage.INT_CONSTANT:
-				sequence_ConstantExpression(context, (IntConstant) semanticObject); 
-				return; 
-			case LustrePackage.LEFT:
-				sequence_Left(context, (Left) semanticObject); 
-				return; 
-			case LustrePackage.LEFT_LIST:
-				sequence_Left_List(context, (Left_List) semanticObject); 
+			case LustrePackage.EXTERNAL_NODE_DECLARATION:
+				sequence_ExternalNodeDeclaration(context, (ExternalNodeDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.LUSTRE_PROGRAM:
 				sequence_LustreProgram(context, (LustreProgram) semanticObject); 
 				return; 
-			case LustrePackage.MINUS:
-				sequence_PlusOrMinus(context, (Minus) semanticObject); 
+			case LustrePackage.LUSTRE_VALUED_OBJECT:
+				sequence_LustreValuedObjectInit(context, (LustreValuedObject) semanticObject); 
 				return; 
-			case LustrePackage.MOD:
-				sequence_Mod(context, (Mod) semanticObject); 
-				return; 
-			case LustrePackage.MUL:
-				sequence_MulOrDiv(context, (Mul) semanticObject); 
+			case LustrePackage.MODEL_DECLARATION:
+				sequence_ModelDeclaration(context, (ModelDeclaration) semanticObject); 
 				return; 
 			case LustrePackage.NODE_DECLARATION:
-				sequence_Node_Declaration(context, (Node_Declaration) semanticObject); 
+				sequence_NodeDeclaration(context, (NodeDeclaration) semanticObject); 
 				return; 
-			case LustrePackage.NOT:
-				sequence_Primary(context, (Not) semanticObject); 
+			case LustrePackage.NODE_REFERENCE:
+				sequence_NodeReference(context, (NodeReference) semanticObject); 
 				return; 
-			case LustrePackage.OR:
-				sequence_Or(context, (Or) semanticObject); 
+			case LustrePackage.NODE_VALUED_OBJECT:
+				sequence_NodeValuedObject(context, (NodeValuedObject) semanticObject); 
+				return; 
+			case LustrePackage.PACK_BODY:
+				sequence_PackBody(context, (PackBody) semanticObject); 
+				return; 
+			case LustrePackage.PACK_LIST:
+				sequence_PackList(context, (PackList) semanticObject); 
 				return; 
 			case LustrePackage.PACKAGE_DECLARATION:
-				sequence_Package_Declaration(context, (Package_Declaration) semanticObject); 
+				sequence_PackageDeclaration(context, (PackageDeclaration) semanticObject); 
 				return; 
-			case LustrePackage.PACKAGE_PROVIDED:
-				sequence_Package_Provided(context, (Package_Provided) semanticObject); 
+			case LustrePackage.PACKAGE_EQUATION:
+				sequence_PackageEquation(context, (PackageEquation) semanticObject); 
 				return; 
-			case LustrePackage.PACKAGE_PROVIDED_IO:
-				sequence_Package_Provided_IO(context, (Package_Provided_IO) semanticObject); 
+			case LustrePackage.PARAMS:
+				sequence_Params(context, (Params) semanticObject); 
 				return; 
-			case LustrePackage.PLUS:
-				sequence_PlusOrMinus(context, (Plus) semanticObject); 
+			case LustrePackage.PROVIDE:
+				sequence_Provide(context, (Provide) semanticObject); 
 				return; 
-			case LustrePackage.PRE:
-				sequence_Primary(context, (Pre) semanticObject); 
+			case LustrePackage.STATIC_ARG:
+				sequence_StaticArg(context, (StaticArg) semanticObject); 
 				return; 
-			case LustrePackage.RECORD_TYPE:
-				sequence_Record_Type(context, (Record_Type) semanticObject); 
-				return; 
-			case LustrePackage.SELECTOR:
-				sequence_Selector(context, (Selector) semanticObject); 
-				return; 
-			case LustrePackage.TYPE:
-				sequence_Type(context, (Type) semanticObject); 
+			case LustrePackage.STATIC_PARAM:
+				sequence_StaticParam(context, (StaticParam) semanticObject); 
 				return; 
 			case LustrePackage.TYPE_DECLARATION:
-				sequence_Type_Declaration(context, (Type_Declaration) semanticObject); 
-				return; 
-			case LustrePackage.UMINUS:
-				sequence_Primary(context, (UMinus) semanticObject); 
-				return; 
-			case LustrePackage.VARIABLE_REFERENCE:
-				sequence_VariableReference(context, (VariableReference) semanticObject); 
-				return; 
-			case LustrePackage.VARIABLE_DECLARATION:
-				sequence_Variable_Declaration(context, (Variable_Declaration) semanticObject); 
+				sequence_TypeDeclaration(context, (TypeDeclaration) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -205,7 +595,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     AState returns AState
 	 *
 	 * Constraint:
-	 *     (name=IDENT (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition+)
+	 *     (name=ID (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition*)
 	 */
 	protected void sequence_AState(ISerializationContext context, AState semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -217,7 +607,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     ATransition returns ATransition
 	 *
 	 * Constraint:
-	 *     (strong?='unless'? condition=Expression history?='continue'? nextState=[AState|IDENT])
+	 *     (strong?='unless'? condition=Expression history?='continue'? nextState=[AState|ID])
 	 */
 	protected void sequence_ATransition(ISerializationContext context, ATransition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -226,94 +616,99 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns And
-	 *     SelTrancheEnd returns And
-	 *     Right_Part returns And
-	 *     Expression returns And
-	 *     Fby returns And
-	 *     Fby.Fby_1_0 returns And
-	 *     Arrow returns And
-	 *     Arrow.Arrow_1_0 returns And
-	 *     Or returns And
-	 *     Or.Or_1_0 returns And
-	 *     And returns And
-	 *     And.And_1_0 returns And
-	 *     Equality returns And
-	 *     Equality.Equality_1_0 returns And
-	 *     Comparison returns And
-	 *     Comparison.Comparison_1_0 returns And
-	 *     Mod returns And
-	 *     Mod.Mod_1_0 returns And
-	 *     PlusOrMinus returns And
-	 *     PlusOrMinus.Plus_1_0_0_0 returns And
-	 *     PlusOrMinus.Minus_1_0_1_0 returns And
-	 *     MulOrDiv returns And
-	 *     MulOrDiv.Mul_1_0_0_0 returns And
-	 *     MulOrDiv.Div_1_0_1_0 returns And
-	 *     Primary returns And
+	 *     AddExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (subExpressions+=And_And_1_0 subExpressions+=Equality+)
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
 	 */
-	protected void sequence_And(ISerializationContext context, And semanticObject) {
+	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Array_Type returns Array_Type
+	 *     Assertion returns Assertion
 	 *
 	 * Constraint:
-	 *     (type=[Type_Declaration|IDENT] length=INT)
+	 *     expr=Expression
 	 */
-	protected void sequence_Array_Type(ISerializationContext context, Array_Type semanticObject) {
+	protected void sequence_Assertion(ISerializationContext context, Assertion semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARRAY_TYPE__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARRAY_TYPE__TYPE));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ARRAY_TYPE__LENGTH) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ARRAY_TYPE__LENGTH));
+			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.ASSERTION__EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.ASSERTION__EXPR));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getArray_TypeAccess().getTypeType_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.ARRAY_TYPE__TYPE, false));
-		feeder.accept(grammarAccess.getArray_TypeAccess().getLengthINTTerminalRuleCall_2_0(), semanticObject.getLength());
+		feeder.accept(grammarAccess.getAssertionAccess().getExprExpressionParserRuleCall_2_0(), semanticObject.getExpr());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns Arrow
-	 *     SelTrancheEnd returns Arrow
-	 *     Right_Part returns Arrow
-	 *     Expression returns Arrow
-	 *     Fby returns Arrow
-	 *     Fby.Fby_1_0 returns Arrow
-	 *     Arrow returns Arrow
-	 *     Arrow.Arrow_1_0 returns Arrow
-	 *     Or returns Arrow
-	 *     Or.Or_1_0 returns Arrow
-	 *     And returns Arrow
-	 *     And.And_1_0 returns Arrow
-	 *     Equality returns Arrow
-	 *     Equality.Equality_1_0 returns Arrow
-	 *     Comparison returns Arrow
-	 *     Comparison.Comparison_1_0 returns Arrow
-	 *     Mod returns Arrow
-	 *     Mod.Mod_1_0 returns Arrow
-	 *     PlusOrMinus returns Arrow
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Arrow
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Arrow
-	 *     MulOrDiv returns Arrow
-	 *     MulOrDiv.Mul_1_0_0_0 returns Arrow
-	 *     MulOrDiv.Div_1_0_1_0 returns Arrow
-	 *     Primary returns Arrow
-	 *
-	 * Constraint:
-	 *     (subExpressions+=Arrow_Arrow_1_0 subExpressions+=Or+)
-	 */
-	protected void sequence_Arrow(ISerializationContext context, Arrow semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -331,217 +726,1735 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Comparison
-	 *     SelTrancheEnd returns Comparison
-	 *     Right_Part returns Comparison
-	 *     Expression returns Comparison
-	 *     Fby returns Comparison
-	 *     Fby.Fby_1_0 returns Comparison
-	 *     Arrow returns Comparison
-	 *     Arrow.Arrow_1_0 returns Comparison
-	 *     Or returns Comparison
-	 *     Or.Or_1_0 returns Comparison
-	 *     And returns Comparison
-	 *     And.And_1_0 returns Comparison
-	 *     Equality returns Comparison
-	 *     Equality.Equality_1_0 returns Comparison
-	 *     Comparison returns Comparison
-	 *     Comparison.Comparison_1_0 returns Comparison
-	 *     Mod returns Comparison
-	 *     Mod.Mod_1_0 returns Comparison
-	 *     PlusOrMinus returns Comparison
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Comparison
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Comparison
-	 *     MulOrDiv returns Comparison
-	 *     MulOrDiv.Mul_1_0_0_0 returns Comparison
-	 *     MulOrDiv.Div_1_0_1_0 returns Comparison
-	 *     Primary returns Comparison
+	 *     BitwiseOrExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (left=Comparison_Comparison_1_0 (op='>=' | op='<=' | op='>' | op='<') right=Mod)
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (
+	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseOrOperator 
+	 *             subExpressions+=BitwiseXOrExpression 
+	 *             subExpressions+=BitwiseXOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseXOrOperator 
+	 *             subExpressions+=BitwiseAndExpression 
+	 *             subExpressions+=BitwiseAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
 	 */
-	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns BoolConstant
-	 *     SelTrancheEnd returns BoolConstant
-	 *     Right_Part returns BoolConstant
-	 *     Expression returns BoolConstant
-	 *     Fby returns BoolConstant
-	 *     Fby.Fby_1_0 returns BoolConstant
-	 *     Arrow returns BoolConstant
-	 *     Arrow.Arrow_1_0 returns BoolConstant
-	 *     Or returns BoolConstant
-	 *     Or.Or_1_0 returns BoolConstant
-	 *     And returns BoolConstant
-	 *     And.And_1_0 returns BoolConstant
-	 *     Equality returns BoolConstant
-	 *     Equality.Equality_1_0 returns BoolConstant
-	 *     Comparison returns BoolConstant
-	 *     Comparison.Comparison_1_0 returns BoolConstant
-	 *     Mod returns BoolConstant
-	 *     Mod.Mod_1_0 returns BoolConstant
-	 *     PlusOrMinus returns BoolConstant
-	 *     PlusOrMinus.Plus_1_0_0_0 returns BoolConstant
-	 *     PlusOrMinus.Minus_1_0_1_0 returns BoolConstant
-	 *     MulOrDiv returns BoolConstant
-	 *     MulOrDiv.Mul_1_0_0_0 returns BoolConstant
-	 *     MulOrDiv.Div_1_0_1_0 returns BoolConstant
-	 *     Primary returns BoolConstant
-	 *     AtomicExpression returns BoolConstant
-	 *     ConstantExpression returns BoolConstant
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     BitwiseXOrExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     value=BOOL
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (
+	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseXOrOperator 
+	 *             subExpressions+=BitwiseAndExpression 
+	 *             subExpressions+=BitwiseAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
 	 */
-	protected void sequence_ConstantExpression(ISerializationContext context, BoolConstant semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.BOOL_CONSTANT__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.BOOL_CONSTANT__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstantExpressionAccess().getValueBOOLTerminalRuleCall_0_1_0(), semanticObject.isValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns FloatConstant
-	 *     SelTrancheEnd returns FloatConstant
-	 *     Right_Part returns FloatConstant
-	 *     Expression returns FloatConstant
-	 *     Fby returns FloatConstant
-	 *     Fby.Fby_1_0 returns FloatConstant
-	 *     Arrow returns FloatConstant
-	 *     Arrow.Arrow_1_0 returns FloatConstant
-	 *     Or returns FloatConstant
-	 *     Or.Or_1_0 returns FloatConstant
-	 *     And returns FloatConstant
-	 *     And.And_1_0 returns FloatConstant
-	 *     Equality returns FloatConstant
-	 *     Equality.Equality_1_0 returns FloatConstant
-	 *     Comparison returns FloatConstant
-	 *     Comparison.Comparison_1_0 returns FloatConstant
-	 *     Mod returns FloatConstant
-	 *     Mod.Mod_1_0 returns FloatConstant
-	 *     PlusOrMinus returns FloatConstant
-	 *     PlusOrMinus.Plus_1_0_0_0 returns FloatConstant
-	 *     PlusOrMinus.Minus_1_0_1_0 returns FloatConstant
-	 *     MulOrDiv returns FloatConstant
-	 *     MulOrDiv.Mul_1_0_0_0 returns FloatConstant
-	 *     MulOrDiv.Div_1_0_1_0 returns FloatConstant
-	 *     Primary returns FloatConstant
-	 *     AtomicExpression returns FloatConstant
-	 *     ConstantExpression returns FloatConstant
-	 *
-	 * Constraint:
-	 *     value=FLOAT
-	 */
-	protected void sequence_ConstantExpression(ISerializationContext context, FloatConstant semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.FLOAT_CONSTANT__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.FLOAT_CONSTANT__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstantExpressionAccess().getValueFLOATTerminalRuleCall_1_1_0(), semanticObject.getValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns IntConstant
-	 *     SelTrancheEnd returns IntConstant
-	 *     Right_Part returns IntConstant
-	 *     Expression returns IntConstant
-	 *     Fby returns IntConstant
-	 *     Fby.Fby_1_0 returns IntConstant
-	 *     Arrow returns IntConstant
-	 *     Arrow.Arrow_1_0 returns IntConstant
-	 *     Or returns IntConstant
-	 *     Or.Or_1_0 returns IntConstant
-	 *     And returns IntConstant
-	 *     And.And_1_0 returns IntConstant
-	 *     Equality returns IntConstant
-	 *     Equality.Equality_1_0 returns IntConstant
-	 *     Comparison returns IntConstant
-	 *     Comparison.Comparison_1_0 returns IntConstant
-	 *     Mod returns IntConstant
-	 *     Mod.Mod_1_0 returns IntConstant
-	 *     PlusOrMinus returns IntConstant
-	 *     PlusOrMinus.Plus_1_0_0_0 returns IntConstant
-	 *     PlusOrMinus.Minus_1_0_1_0 returns IntConstant
-	 *     MulOrDiv returns IntConstant
-	 *     MulOrDiv.Mul_1_0_0_0 returns IntConstant
-	 *     MulOrDiv.Div_1_0_1_0 returns IntConstant
-	 *     Primary returns IntConstant
-	 *     AtomicExpression returns IntConstant
-	 *     ConstantExpression returns IntConstant
-	 *
-	 * Constraint:
-	 *     value=INT
-	 */
-	protected void sequence_ConstantExpression(ISerializationContext context, IntConstant semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.INT_CONSTANT__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.INT_CONSTANT__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConstantExpressionAccess().getValueINTTerminalRuleCall_2_1_0(), semanticObject.getValue());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Entity_Declaration returns Constant_Declaration
-	 *     Constant_Declaration returns Constant_Declaration
-	 *
-	 * Constraint:
-	 *     ((name=IDENT type=Type) | (name=IDENT expr=ConstantExpression) | (name=IDENT type=Type expr=ConstantExpression))
-	 */
-	protected void sequence_Constant_Declaration(ISerializationContext context, Constant_Declaration semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Equality
-	 *     SelTrancheEnd returns Equality
-	 *     Right_Part returns Equality
-	 *     Expression returns Equality
-	 *     Fby returns Equality
-	 *     Fby.Fby_1_0 returns Equality
-	 *     Arrow returns Equality
-	 *     Arrow.Arrow_1_0 returns Equality
-	 *     Or returns Equality
-	 *     Or.Or_1_0 returns Equality
-	 *     And returns Equality
-	 *     And.And_1_0 returns Equality
-	 *     Equality returns Equality
-	 *     Equality.Equality_1_0 returns Equality
-	 *     Comparison returns Equality
-	 *     Comparison.Comparison_1_0 returns Equality
-	 *     Mod returns Equality
-	 *     Mod.Mod_1_0 returns Equality
-	 *     PlusOrMinus returns Equality
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Equality
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Equality
-	 *     MulOrDiv returns Equality
-	 *     MulOrDiv.Mul_1_0_0_0 returns Equality
-	 *     MulOrDiv.Div_1_0_1_0 returns Equality
-	 *     Primary returns Equality
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     BitwiseAndExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     (left=Equality_Equality_1_0 (op='=' | op='<>') right=Comparison)
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (
+	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
+	 *             operator=BitwiseAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
 	 */
-	protected void sequence_Equality(ISerializationContext context, Equality semanticObject) {
+	protected void sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BitwiseNotExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ByNameStaticArg returns ByNameStaticArg
+	 *
+	 * Constraint:
+	 *     ((name=ID type=ValueType) | (name=ID expr=Expression) | name=ID)
+	 */
+	protected void sequence_ByNameStaticArg(ISerializationContext context, ByNameStaticArg semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ClockedVariableDeclaration returns ClockedVariableDeclaration
+	 *
+	 * Constraint:
+	 *     (vardecl=VariableDeclaration clockExpr=BoolExpression?)
+	 */
+	protected void sequence_ClockedVariableDeclaration(ISerializationContext context, ClockedVariableDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DivExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DivModExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=DivModExpression_OperatorExpression_1_0_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=DivModExpression_OperatorExpression_1_1_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_DivModExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ModExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MultDivExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=MultDivExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=MultDivExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultDivExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MultExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MultModExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=MultModExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=MultModExpression_OperatorExpression_1_1_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftExpressions returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
+	 *             operator=ShiftLeftOperator 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
+	 *             operator=ShiftRightOperator 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
+	 *             operator=ShiftRightUnsignedOperator 
+	 *             subExpressions+=ShiftLeftRightExpression 
+	 *             subExpressions+=ShiftLeftRightExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftLeftExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
+	 *             operator=ShiftLeftOperator 
+	 *             subExpressions+=ShiftRightExpression 
+	 *             subExpressions+=ShiftRightExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftLeftRightExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_0_0 
+	 *             operator=ShiftLeftOperator 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_1_0 
+	 *             operator=ShiftRightOperator 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftLeftRightUnsignedExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_0_0 
+	 *             operator=ShiftLeftOperator 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression 
+	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_1_0 
+	 *             operator=ShiftRightUnsignedOperator 
+	 *             subExpressions+=ShiftLeftRightExpression 
+	 *             subExpressions+=ShiftLeftRightExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftRightExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftRightExpression_OperatorExpression_1_0 
+	 *             operator=ShiftRightOperator 
+	 *             subExpressions+=ShiftRightUnsignedExpression 
+	 *             subExpressions+=ShiftRightUnsignedExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftRightRightUnsignedExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_0_0 
+	 *             operator=ShiftRightOperator 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
+	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_1_0 
+	 *             operator=ShiftRightUnsignedOperator 
+	 *             subExpressions+=ShiftLeftRightExpression 
+	 *             subExpressions+=ShiftLeftRightExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShiftRightUnsignedExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (
+	 *             subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
+	 *             operator=ShiftRightUnsignedOperator 
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
+	 *         ) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SubExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ProductExpression returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
+	 *     MultDivExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     MultDivExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     MultModExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     MultModExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     DivModExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     DivModExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     IntDivExpression returns OperatorExpression
+	 *     IntDivExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     NegExpression returns OperatorExpression
+	 *     FBYExpression returns OperatorExpression
+	 *     FBYExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     WhenExpression returns OperatorExpression
+	 *     CurrentExpression returns OperatorExpression
+	 *     PreExpression returns OperatorExpression
+	 *     BoolExpression returns OperatorExpression
+	 *     InitExpression returns OperatorExpression
+	 *     TernaryOperation returns OperatorExpression
+	 *     ImpliesExpression returns OperatorExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalXorExpression returns OperatorExpression
+	 *     LogicalXorExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalOrExpression returns OperatorExpression
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalAndExpression returns OperatorExpression
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ValuedExpression returns OperatorExpression
+	 *     AtomicExpression returns OperatorExpression
+	 *     NotExpression returns OperatorExpression
+	 *     Root returns OperatorExpression
+	 *     Expression returns OperatorExpression
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     CompareOperation returns OperatorExpression
+	 *     CompareOperation.OperatorExpression_1_0 returns OperatorExpression
+	 *     NotOrValuedExpression returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
+	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SumExpression returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     MultExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     AtomicValuedExpression returns OperatorExpression
+	 *     VectorValueMember returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=DivModExpression 
+	 *             subExpressions+=DivModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=MultModExpression 
+	 *             subExpressions+=MultModExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=MultDivExpression 
+	 *             subExpressions+=MultDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
+	 *             operator=IntDivOperator 
+	 *             subExpressions+=NegExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (operator=SubOperator subExpressions+=NegExpression) | 
+	 *         (
+	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
+	 *             operator=FBYOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression*
+	 *         ) | 
+	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
+	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=LogicalXorExpression 
+	 *             subExpressions+=LogicalXorExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
+	 *             operator=LogicalXorOperator 
+	 *             subExpressions+=LogicalOrExpression 
+	 *             subExpressions+=LogicalOrExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
+	 *             operator=LogicalOrOperator 
+	 *             subExpressions+=LogicalAndExpression 
+	 *             subExpressions+=LogicalAndExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
+	 *             operator=LogicalAndOperator 
+	 *             subExpressions+=CompareOperation 
+	 *             subExpressions+=CompareOperation*
+	 *         ) | 
+	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
+	 *         (operator=NotOperator subExpressions+=NotExpression) | 
+	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
+	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
+	 *     )
+	 */
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -551,160 +2464,29 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     Equation returns Equation
 	 *
 	 * Constraint:
-	 *     (left=[Variable_Declaration|IDENT] right=Right_Part)
+	 *     (
+	 *         (
+	 *             (references+=ValuedObjectReference references+=ValuedObjectReference references+=ValuedObjectReference*) | 
+	 *             (references+=ValuedObjectReference references+=ValuedObjectReference references+=ValuedObjectReference*) | 
+	 *             reference=ValuedObjectReference
+	 *         ) 
+	 *         operator=AssignOperator 
+	 *         expression=Expression
+	 *     )
 	 */
 	protected void sequence_Equation(ISerializationContext context, Equation semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.EQUATION__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.EQUATION__LEFT));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.EQUATION__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.EQUATION__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEquationAccess().getLeftVariable_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.EQUATION__LEFT, false));
-		feeder.accept(grammarAccess.getEquationAccess().getRightRight_PartParserRuleCall_2_0(), semanticObject.getRight());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns IfThenElse
-	 *     SelTrancheEnd returns IfThenElse
-	 *     Right_Part returns IfThenElse
-	 *     Expression returns IfThenElse
-	 *     Fby returns IfThenElse
-	 *     Fby.Fby_1_0 returns IfThenElse
-	 *     Arrow returns IfThenElse
-	 *     Arrow.Arrow_1_0 returns IfThenElse
-	 *     Or returns IfThenElse
-	 *     Or.Or_1_0 returns IfThenElse
-	 *     And returns IfThenElse
-	 *     And.And_1_0 returns IfThenElse
-	 *     Equality returns IfThenElse
-	 *     Equality.Equality_1_0 returns IfThenElse
-	 *     Comparison returns IfThenElse
-	 *     Comparison.Comparison_1_0 returns IfThenElse
-	 *     Mod returns IfThenElse
-	 *     Mod.Mod_1_0 returns IfThenElse
-	 *     PlusOrMinus returns IfThenElse
-	 *     PlusOrMinus.Plus_1_0_0_0 returns IfThenElse
-	 *     PlusOrMinus.Minus_1_0_1_0 returns IfThenElse
-	 *     MulOrDiv returns IfThenElse
-	 *     MulOrDiv.Mul_1_0_0_0 returns IfThenElse
-	 *     MulOrDiv.Div_1_0_1_0 returns IfThenElse
-	 *     Primary returns IfThenElse
-	 *
-	 * Constraint:
-	 *     (ifexpr=Expression thenexpr=Expression elseexpr=Expression)
-	 */
-	protected void sequence_Expression(ISerializationContext context, IfThenElse semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__IFEXPR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__IFEXPR));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__THENEXPR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__THENEXPR));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__ELSEEXPR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.IF_THEN_ELSE__ELSEEXPR));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getExpressionAccess().getIfexprExpressionParserRuleCall_0_2_0(), semanticObject.getIfexpr());
-		feeder.accept(grammarAccess.getExpressionAccess().getThenexprExpressionParserRuleCall_0_4_0(), semanticObject.getThenexpr());
-		feeder.accept(grammarAccess.getExpressionAccess().getElseexprExpressionParserRuleCall_0_6_0(), semanticObject.getElseexpr());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns Fby
-	 *     SelTrancheEnd returns Fby
-	 *     Right_Part returns Fby
-	 *     Expression returns Fby
-	 *     Fby returns Fby
-	 *     Fby.Fby_1_0 returns Fby
-	 *     Arrow returns Fby
-	 *     Arrow.Arrow_1_0 returns Fby
-	 *     Or returns Fby
-	 *     Or.Or_1_0 returns Fby
-	 *     And returns Fby
-	 *     And.And_1_0 returns Fby
-	 *     Equality returns Fby
-	 *     Equality.Equality_1_0 returns Fby
-	 *     Comparison returns Fby
-	 *     Comparison.Comparison_1_0 returns Fby
-	 *     Mod returns Fby
-	 *     Mod.Mod_1_0 returns Fby
-	 *     PlusOrMinus returns Fby
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Fby
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Fby
-	 *     MulOrDiv returns Fby
-	 *     MulOrDiv.Mul_1_0_0_0 returns Fby
-	 *     MulOrDiv.Div_1_0_1_0 returns Fby
-	 *     Primary returns Fby
-	 *
-	 * Constraint:
-	 *     (subExpressions+=Fby_Fby_1_0 subExpressions+=Arrow+)
-	 */
-	protected void sequence_Fby(ISerializationContext context, Fby semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Field returns Field
+	 *     ExternalNodeDeclaration returns ExternalNodeDeclaration
 	 *
 	 * Constraint:
-	 *     (name=IDENT type=[Type|IDENT])
+	 *     (isUnsafe?='unsafe'? hasState?='node'? name=ID input=Params output=Params)
 	 */
-	protected void sequence_Field(ISerializationContext context, Field semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.FIELD__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.FIELD__NAME));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.FIELD__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.FIELD__TYPE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFieldAccess().getNameIDENTTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.accept(grammarAccess.getFieldAccess().getTypeTypeIDENTTerminalRuleCall_2_0_1(), semanticObject.eGet(LustrePackage.Literals.FIELD__TYPE, false));
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Left returns Left
-	 *
-	 * Constraint:
-	 *     (name=IDENT selector=Selector?)
-	 */
-	protected void sequence_Left(ISerializationContext context, Left semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Left_Part returns Left_List
-	 *     Left_List returns Left_List
-	 *
-	 * Constraint:
-	 *     (id+=Left id+=Left*)
-	 */
-	protected void sequence_Left_List(ISerializationContext context, Left_List semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Local_Constant_Declaration returns Constant_Declaration
-	 *
-	 * Constraint:
-	 *     ((name=IDENT expr=ConstantExpression) | (name=IDENT type=Type expr=ConstantExpression))
-	 */
-	protected void sequence_Local_Constant_Declaration(ISerializationContext context, Constant_Declaration semanticObject) {
+	protected void sequence_ExternalNodeDeclaration(ISerializationContext context, ExternalNodeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -714,7 +2496,7 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	 *     LustreProgram returns LustreProgram
 	 *
 	 * Constraint:
-	 *     nodes+=Node_Declaration+
+	 *     (includes+=STRING? (includes+=STRING? includes+=STRING?)* (packBody=PackBody | packList=PackList))
 	 */
 	protected void sequence_LustreProgram(ISerializationContext context, LustreProgram semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -723,572 +2505,253 @@ public abstract class AbstractLustreSemanticSequencer extends AbstractDelegating
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Mod
-	 *     SelTrancheEnd returns Mod
-	 *     Right_Part returns Mod
-	 *     Expression returns Mod
-	 *     Fby returns Mod
-	 *     Fby.Fby_1_0 returns Mod
-	 *     Arrow returns Mod
-	 *     Arrow.Arrow_1_0 returns Mod
-	 *     Or returns Mod
-	 *     Or.Or_1_0 returns Mod
-	 *     And returns Mod
-	 *     And.And_1_0 returns Mod
-	 *     Equality returns Mod
-	 *     Equality.Equality_1_0 returns Mod
-	 *     Comparison returns Mod
-	 *     Comparison.Comparison_1_0 returns Mod
-	 *     Mod returns Mod
-	 *     Mod.Mod_1_0 returns Mod
-	 *     PlusOrMinus returns Mod
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Mod
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Mod
-	 *     MulOrDiv returns Mod
-	 *     MulOrDiv.Mul_1_0_0_0 returns Mod
-	 *     MulOrDiv.Div_1_0_1_0 returns Mod
-	 *     Primary returns Mod
+	 *     LustreValuedObjectInit returns LustreValuedObject
 	 *
 	 * Constraint:
-	 *     (subExpressions+=Mod_Mod_1_0 subExpressions+=PlusOrMinus)
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=Expression* type=ValueType initialValue=Expression)
 	 */
-	protected void sequence_Mod(ISerializationContext context, Mod semanticObject) {
+	protected void sequence_LustreValuedObjectInit(ISerializationContext context, LustreValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Div
-	 *     SelTrancheEnd returns Div
-	 *     Right_Part returns Div
-	 *     Expression returns Div
-	 *     Fby returns Div
-	 *     Fby.Fby_1_0 returns Div
-	 *     Arrow returns Div
-	 *     Arrow.Arrow_1_0 returns Div
-	 *     Or returns Div
-	 *     Or.Or_1_0 returns Div
-	 *     And returns Div
-	 *     And.And_1_0 returns Div
-	 *     Equality returns Div
-	 *     Equality.Equality_1_0 returns Div
-	 *     Comparison returns Div
-	 *     Comparison.Comparison_1_0 returns Div
-	 *     Mod returns Div
-	 *     Mod.Mod_1_0 returns Div
-	 *     PlusOrMinus returns Div
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Div
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Div
-	 *     MulOrDiv returns Div
-	 *     MulOrDiv.Mul_1_0_0_0 returns Div
-	 *     MulOrDiv.Div_1_0_1_0 returns Div
-	 *     Primary returns Div
+	 *     LustreValuedObjectList returns ValuedObject
 	 *
 	 * Constraint:
-	 *     (subExpressions+=MulOrDiv_Div_1_0_1_0 subExpressions+=Primary)
+	 *     (annotations+=QuotedStringAnnotation* name=PrimeID cardinalities+=Expression*)
 	 */
-	protected void sequence_MulOrDiv(ISerializationContext context, Div semanticObject) {
+	protected void sequence_LustreValuedObjectList(ISerializationContext context, ValuedObject semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Mul
-	 *     SelTrancheEnd returns Mul
-	 *     Right_Part returns Mul
-	 *     Expression returns Mul
-	 *     Fby returns Mul
-	 *     Fby.Fby_1_0 returns Mul
-	 *     Arrow returns Mul
-	 *     Arrow.Arrow_1_0 returns Mul
-	 *     Or returns Mul
-	 *     Or.Or_1_0 returns Mul
-	 *     And returns Mul
-	 *     And.And_1_0 returns Mul
-	 *     Equality returns Mul
-	 *     Equality.Equality_1_0 returns Mul
-	 *     Comparison returns Mul
-	 *     Comparison.Comparison_1_0 returns Mul
-	 *     Mod returns Mul
-	 *     Mod.Mod_1_0 returns Mul
-	 *     PlusOrMinus returns Mul
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Mul
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Mul
-	 *     MulOrDiv returns Mul
-	 *     MulOrDiv.Mul_1_0_0_0 returns Mul
-	 *     MulOrDiv.Div_1_0_1_0 returns Mul
-	 *     Primary returns Mul
-	 *
-	 * Constraint:
-	 *     (subExpressions+=MulOrDiv_Mul_1_0_0_0 subExpressions+=Primary)
-	 */
-	protected void sequence_MulOrDiv(ISerializationContext context, Mul semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Entity_Declaration returns Node_Declaration
-	 *     Node_Declaration returns Node_Declaration
+	 *     ModelDeclaration returns ModelDeclaration
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=IDENT 
-	 *         (parameters+=Variable_Declaration parameters+=Variable_Declaration*)? 
-	 *         returned+=Variable_Declaration 
-	 *         returned+=Variable_Declaration* 
-	 *         variables+=Local_Variable_Declaration? 
-	 *         (constants+=Local_Constant_Declaration? variables+=Local_Variable_Declaration?)* 
-	 *         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+	 *         name=ID 
+	 *         (usesIds+=ID usesIds+=ID*)? 
+	 *         needsParams+=StaticParam 
+	 *         needsParams+=StaticParam* 
+	 *         (provisions+=Provide provisions+=Provide*)? 
+	 *         body=PackBody
 	 *     )
 	 */
-	protected void sequence_Node_Declaration(ISerializationContext context, Node_Declaration semanticObject) {
+	protected void sequence_ModelDeclaration(ISerializationContext context, ModelDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Or
-	 *     SelTrancheEnd returns Or
-	 *     Right_Part returns Or
-	 *     Expression returns Or
-	 *     Fby returns Or
-	 *     Fby.Fby_1_0 returns Or
-	 *     Arrow returns Or
-	 *     Arrow.Arrow_1_0 returns Or
-	 *     Or returns Or
-	 *     Or.Or_1_0 returns Or
-	 *     And returns Or
-	 *     And.And_1_0 returns Or
-	 *     Equality returns Or
-	 *     Equality.Equality_1_0 returns Or
-	 *     Comparison returns Or
-	 *     Comparison.Comparison_1_0 returns Or
-	 *     Mod returns Or
-	 *     Mod.Mod_1_0 returns Or
-	 *     PlusOrMinus returns Or
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Or
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Or
-	 *     MulOrDiv returns Or
-	 *     MulOrDiv.Mul_1_0_0_0 returns Or
-	 *     MulOrDiv.Div_1_0_1_0 returns Or
-	 *     Primary returns Or
-	 *
-	 * Constraint:
-	 *     (subExpressions+=Or_Or_1_0 subExpressions+=And+)
-	 */
-	protected void sequence_Or(ISerializationContext context, Or semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Package_Declaration returns Package_Declaration
+	 *     NodeDeclaration returns NodeDeclaration
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=IDENT 
-	 *         (uses+=IDENT uses+=IDENT*)? 
-	 *         provides+=Package_Provided+ 
-	 *         (nodes+=Node_Declaration | types+=Type_Declaration | constants+=Constant_Declaration)*
+	 *         isUnsafe?='unsafe'? 
+	 *         hasState?='node'? 
+	 *         valuedObjects+=NodeValuedObject 
+	 *         (staticParams+=StaticParam staticParams+=StaticParam*)? 
+	 *         (
+	 *             (
+	 *                 input=Params 
+	 *                 output=Params 
+	 *                 (
+	 *                     (effectiveNode=NodeReference (staticArgs+=StaticArg staticArgs+=StaticArg*)?) | 
+	 *                     (
+	 *                         (
+	 *                             (constants+=VariableDeclaration constants+=VariableDeclaration*) | 
+	 *                             (variables+=ClockedVariableDeclaration variables+=ClockedVariableDeclaration*)
+	 *                         )* 
+	 *                         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
+	 *                     )
+	 *                 )
+	 *             ) | 
+	 *             (effectiveNode=NodeReference (staticArgs+=StaticArg staticArgs+=StaticArg*)?)
+	 *         )
 	 *     )
 	 */
-	protected void sequence_Package_Declaration(ISerializationContext context, Package_Declaration semanticObject) {
+	protected void sequence_NodeDeclaration(ISerializationContext context, NodeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Package_Provided_IO returns Package_Provided_IO
+	 *     NodeReference returns NodeReference
 	 *
 	 * Constraint:
-	 *     (name=[Variable_Declaration|IDENT] type=IDENT)
+	 *     valuedObject=[NodeValuedObject|ID]
 	 */
-	protected void sequence_Package_Provided_IO(ISerializationContext context, Package_Provided_IO semanticObject) {
+	protected void sequence_NodeReference(ISerializationContext context, NodeReference semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME));
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__TYPE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PACKAGE_PROVIDED_IO__TYPE));
+			if (transientValues.isValueTransient(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPackage_Provided_IOAccess().getNameVariable_DeclarationIDENTTerminalRuleCall_0_0_1(), semanticObject.eGet(LustrePackage.Literals.PACKAGE_PROVIDED_IO__NAME, false));
-		feeder.accept(grammarAccess.getPackage_Provided_IOAccess().getTypeIDENTTerminalRuleCall_2_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getNodeReferenceAccess().getValuedObjectNodeValuedObjectIDTerminalRuleCall_1_0_1(), semanticObject.eGet(KExpressionsPackage.Literals.VALUED_OBJECT_REFERENCE__VALUED_OBJECT, false));
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Package_Provided returns Package_Provided
+	 *     NodeValuedObject returns NodeValuedObject
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_NodeValuedObject(ISerializationContext context, NodeValuedObject semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getNodeValuedObjectAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     NorAtMostOneExpression returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*)
+	 */
+	protected void sequence_NorAtMostOneExpression(ISerializationContext context, OperatorExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackBody returns PackBody
+	 *
+	 * Constraint:
+	 *     (constants+=VariableDeclaration | types+=TypeDeclaration | externals+=ExternalNodeDeclaration | nodes+=NodeDeclaration)*
+	 */
+	protected void sequence_PackBody(ISerializationContext context, PackBody semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackList returns PackList
+	 *
+	 * Constraint:
+	 *     (modelDeclarations+=ModelDeclaration | packageDeclarations+=PackageDeclaration | packageEquations+=PackageEquation)+
+	 */
+	protected void sequence_PackList(ISerializationContext context, PackList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageDeclaration returns PackageDeclaration
+	 *
+	 * Constraint:
+	 *     (name=ID (usesIds+=ID usesIds+=ID*)? (provisions+=Provide provisions+=Provide*)? body=PackBody)
+	 */
+	protected void sequence_PackageDeclaration(ISerializationContext context, PackageDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageEquation returns PackageEquation
+	 *
+	 * Constraint:
+	 *     (name=ID eqOrIs=ID byNameStaticArgs+=ByNameStaticArg byNameStaticArgs+=ByNameStaticArg*)
+	 */
+	protected void sequence_PackageEquation(ISerializationContext context, PackageEquation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Params returns Params
+	 *
+	 * Constraint:
+	 *     (parameter+=VariableDeclaration parameter+=VariableDeclaration*)?
+	 */
+	protected void sequence_Params(ISerializationContext context, Params semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Provide returns Provide
 	 *
 	 * Constraint:
 	 *     (
-	 *         name=[Node_Declaration|IDENT] 
-	 *         (parameters+=Package_Provided_IO parameters+=Package_Provided_IO*)? 
-	 *         returned+=Package_Provided_IO 
-	 *         returned+=Package_Provided_IO*
+	 *         (name=ID type=ValueType value=Expression?) | 
+	 *         types=TypeDeclaration | 
+	 *         (name=ID (staticParams+=StaticParam staticParams+=StaticParam*)? input=Params output=Params)
 	 *     )
 	 */
-	protected void sequence_Package_Provided(ISerializationContext context, Package_Provided semanticObject) {
+	protected void sequence_Provide(ISerializationContext context, Provide semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Minus
-	 *     SelTrancheEnd returns Minus
-	 *     Right_Part returns Minus
-	 *     Expression returns Minus
-	 *     Fby returns Minus
-	 *     Fby.Fby_1_0 returns Minus
-	 *     Arrow returns Minus
-	 *     Arrow.Arrow_1_0 returns Minus
-	 *     Or returns Minus
-	 *     Or.Or_1_0 returns Minus
-	 *     And returns Minus
-	 *     And.And_1_0 returns Minus
-	 *     Equality returns Minus
-	 *     Equality.Equality_1_0 returns Minus
-	 *     Comparison returns Minus
-	 *     Comparison.Comparison_1_0 returns Minus
-	 *     Mod returns Minus
-	 *     Mod.Mod_1_0 returns Minus
-	 *     PlusOrMinus returns Minus
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Minus
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Minus
-	 *     MulOrDiv returns Minus
-	 *     MulOrDiv.Mul_1_0_0_0 returns Minus
-	 *     MulOrDiv.Div_1_0_1_0 returns Minus
-	 *     Primary returns Minus
+	 *     StaticArg returns StaticArg
 	 *
 	 * Constraint:
-	 *     (subExpressions+=PlusOrMinus_Minus_1_0_1_0 subExpressions+=MulOrDiv)
+	 *     (type=ValueType | expr=Expression | (name=NodeReference (staticArgs+=StaticArg staticArgs+=StaticArg*)?))
 	 */
-	protected void sequence_PlusOrMinus(ISerializationContext context, Minus semanticObject) {
+	protected void sequence_StaticArg(ISerializationContext context, StaticArg semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Plus
-	 *     SelTrancheEnd returns Plus
-	 *     Right_Part returns Plus
-	 *     Expression returns Plus
-	 *     Fby returns Plus
-	 *     Fby.Fby_1_0 returns Plus
-	 *     Arrow returns Plus
-	 *     Arrow.Arrow_1_0 returns Plus
-	 *     Or returns Plus
-	 *     Or.Or_1_0 returns Plus
-	 *     And returns Plus
-	 *     And.And_1_0 returns Plus
-	 *     Equality returns Plus
-	 *     Equality.Equality_1_0 returns Plus
-	 *     Comparison returns Plus
-	 *     Comparison.Comparison_1_0 returns Plus
-	 *     Mod returns Plus
-	 *     Mod.Mod_1_0 returns Plus
-	 *     PlusOrMinus returns Plus
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Plus
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Plus
-	 *     MulOrDiv returns Plus
-	 *     MulOrDiv.Mul_1_0_0_0 returns Plus
-	 *     MulOrDiv.Div_1_0_1_0 returns Plus
-	 *     Primary returns Plus
+	 *     StaticParam returns StaticParam
 	 *
 	 * Constraint:
-	 *     (subExpressions+=PlusOrMinus_Plus_1_0_0_0 subExpressions+=MulOrDiv)
+	 *     (name=ID | (name=ID type=ValueType) | (name=ID nodeInput=Params nodeOutput=Params))
 	 */
-	protected void sequence_PlusOrMinus(ISerializationContext context, Plus semanticObject) {
+	protected void sequence_StaticParam(ISerializationContext context, StaticParam semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Assertion returns Current
-	 *     SelTrancheEnd returns Current
-	 *     Right_Part returns Current
-	 *     Expression returns Current
-	 *     Fby returns Current
-	 *     Fby.Fby_1_0 returns Current
-	 *     Arrow returns Current
-	 *     Arrow.Arrow_1_0 returns Current
-	 *     Or returns Current
-	 *     Or.Or_1_0 returns Current
-	 *     And returns Current
-	 *     And.And_1_0 returns Current
-	 *     Equality returns Current
-	 *     Equality.Equality_1_0 returns Current
-	 *     Comparison returns Current
-	 *     Comparison.Comparison_1_0 returns Current
-	 *     Mod returns Current
-	 *     Mod.Mod_1_0 returns Current
-	 *     PlusOrMinus returns Current
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Current
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Current
-	 *     MulOrDiv returns Current
-	 *     MulOrDiv.Mul_1_0_0_0 returns Current
-	 *     MulOrDiv.Div_1_0_1_0 returns Current
-	 *     Primary returns Current
+	 *     TypeDeclaration returns TypeDeclaration
 	 *
 	 * Constraint:
-	 *     expression=Primary
+	 *     (
+	 *         name=ID 
+	 *         (type=ValueType | (type=EnumType enums+=PrimeID enums+=PrimeID*) | (type=StructType variables=VariableDeclaration values+=VariableDeclaration*))?
+	 *     )
 	 */
-	protected void sequence_Primary(ISerializationContext context, Current semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.CURRENT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.CURRENT__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_4_2_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns Not
-	 *     SelTrancheEnd returns Not
-	 *     Right_Part returns Not
-	 *     Expression returns Not
-	 *     Fby returns Not
-	 *     Fby.Fby_1_0 returns Not
-	 *     Arrow returns Not
-	 *     Arrow.Arrow_1_0 returns Not
-	 *     Or returns Not
-	 *     Or.Or_1_0 returns Not
-	 *     And returns Not
-	 *     And.And_1_0 returns Not
-	 *     Equality returns Not
-	 *     Equality.Equality_1_0 returns Not
-	 *     Comparison returns Not
-	 *     Comparison.Comparison_1_0 returns Not
-	 *     Mod returns Not
-	 *     Mod.Mod_1_0 returns Not
-	 *     PlusOrMinus returns Not
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Not
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Not
-	 *     MulOrDiv returns Not
-	 *     MulOrDiv.Mul_1_0_0_0 returns Not
-	 *     MulOrDiv.Div_1_0_1_0 returns Not
-	 *     Primary returns Not
-	 *
-	 * Constraint:
-	 *     expression=Primary
-	 */
-	protected void sequence_Primary(ISerializationContext context, Not semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.NOT__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.NOT__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_1_2_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns Pre
-	 *     SelTrancheEnd returns Pre
-	 *     Right_Part returns Pre
-	 *     Expression returns Pre
-	 *     Fby returns Pre
-	 *     Fby.Fby_1_0 returns Pre
-	 *     Arrow returns Pre
-	 *     Arrow.Arrow_1_0 returns Pre
-	 *     Or returns Pre
-	 *     Or.Or_1_0 returns Pre
-	 *     And returns Pre
-	 *     And.And_1_0 returns Pre
-	 *     Equality returns Pre
-	 *     Equality.Equality_1_0 returns Pre
-	 *     Comparison returns Pre
-	 *     Comparison.Comparison_1_0 returns Pre
-	 *     Mod returns Pre
-	 *     Mod.Mod_1_0 returns Pre
-	 *     PlusOrMinus returns Pre
-	 *     PlusOrMinus.Plus_1_0_0_0 returns Pre
-	 *     PlusOrMinus.Minus_1_0_1_0 returns Pre
-	 *     MulOrDiv returns Pre
-	 *     MulOrDiv.Mul_1_0_0_0 returns Pre
-	 *     MulOrDiv.Div_1_0_1_0 returns Pre
-	 *     Primary returns Pre
-	 *
-	 * Constraint:
-	 *     expression=Primary
-	 */
-	protected void sequence_Primary(ISerializationContext context, Pre semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.PRE__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.PRE__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_3_2_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns UMinus
-	 *     SelTrancheEnd returns UMinus
-	 *     Right_Part returns UMinus
-	 *     Expression returns UMinus
-	 *     Fby returns UMinus
-	 *     Fby.Fby_1_0 returns UMinus
-	 *     Arrow returns UMinus
-	 *     Arrow.Arrow_1_0 returns UMinus
-	 *     Or returns UMinus
-	 *     Or.Or_1_0 returns UMinus
-	 *     And returns UMinus
-	 *     And.And_1_0 returns UMinus
-	 *     Equality returns UMinus
-	 *     Equality.Equality_1_0 returns UMinus
-	 *     Comparison returns UMinus
-	 *     Comparison.Comparison_1_0 returns UMinus
-	 *     Mod returns UMinus
-	 *     Mod.Mod_1_0 returns UMinus
-	 *     PlusOrMinus returns UMinus
-	 *     PlusOrMinus.Plus_1_0_0_0 returns UMinus
-	 *     PlusOrMinus.Minus_1_0_1_0 returns UMinus
-	 *     MulOrDiv returns UMinus
-	 *     MulOrDiv.Mul_1_0_0_0 returns UMinus
-	 *     MulOrDiv.Div_1_0_1_0 returns UMinus
-	 *     Primary returns UMinus
-	 *
-	 * Constraint:
-	 *     expression=Primary
-	 */
-	protected void sequence_Primary(ISerializationContext context, UMinus semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.UMINUS__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.UMINUS__EXPRESSION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_2_2_0(), semanticObject.getExpression());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Record_Type returns Record_Type
-	 *
-	 * Constraint:
-	 *     (fields+=Field fields+=Field*)
-	 */
-	protected void sequence_Record_Type(ISerializationContext context, Record_Type semanticObject) {
+	protected void sequence_TypeDeclaration(ISerializationContext context, TypeDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Selector returns Selector
+	 *     VariableDeclaration returns VariableDeclaration
+	 *     Declaration returns VariableDeclaration
 	 *
 	 * Constraint:
-	 *     (name=IDENT | (begin=Expression end=SelTrancheEnd?))
+	 *     (valuedObjects+=LustreValuedObjectInit | (valuedObjects+=LustreValuedObjectList valuedObjects+=LustreValuedObjectList* type=ValueType))
 	 */
-	protected void sequence_Selector(ISerializationContext context, Selector semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Entity_Declaration returns Type_Declaration
-	 *     Type_Declaration returns Type_Declaration
-	 *
-	 * Constraint:
-	 *     (name=IDENT | (name=IDENT type=Type))
-	 */
-	protected void sequence_Type_Declaration(ISerializationContext context, Type_Declaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Type returns Type
-	 *
-	 * Constraint:
-	 *     name=IDENT
-	 */
-	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.TYPE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.TYPE__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getTypeAccess().getNameIDENTTerminalRuleCall_0(), semanticObject.getName());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Assertion returns VariableReference
-	 *     SelTrancheEnd returns VariableReference
-	 *     Right_Part returns VariableReference
-	 *     Expression returns VariableReference
-	 *     Fby returns VariableReference
-	 *     Fby.Fby_1_0 returns VariableReference
-	 *     Arrow returns VariableReference
-	 *     Arrow.Arrow_1_0 returns VariableReference
-	 *     Or returns VariableReference
-	 *     Or.Or_1_0 returns VariableReference
-	 *     And returns VariableReference
-	 *     And.And_1_0 returns VariableReference
-	 *     Equality returns VariableReference
-	 *     Equality.Equality_1_0 returns VariableReference
-	 *     Comparison returns VariableReference
-	 *     Comparison.Comparison_1_0 returns VariableReference
-	 *     Mod returns VariableReference
-	 *     Mod.Mod_1_0 returns VariableReference
-	 *     PlusOrMinus returns VariableReference
-	 *     PlusOrMinus.Plus_1_0_0_0 returns VariableReference
-	 *     PlusOrMinus.Minus_1_0_1_0 returns VariableReference
-	 *     MulOrDiv returns VariableReference
-	 *     MulOrDiv.Mul_1_0_0_0 returns VariableReference
-	 *     MulOrDiv.Div_1_0_1_0 returns VariableReference
-	 *     Primary returns VariableReference
-	 *     AtomicExpression returns VariableReference
-	 *     VariableReference returns VariableReference
-	 *
-	 * Constraint:
-	 *     value=[Variable_Declaration|IDENT]
-	 */
-	protected void sequence_VariableReference(ISerializationContext context, VariableReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, LustrePackage.Literals.VARIABLE_REFERENCE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, LustrePackage.Literals.VARIABLE_REFERENCE__VALUE));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getVariableReferenceAccess().getValueVariable_DeclarationIDENTTerminalRuleCall_1_0_1(), semanticObject.eGet(LustrePackage.Literals.VARIABLE_REFERENCE__VALUE, false));
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Variable_Declaration returns Variable_Declaration
-	 *     Local_Variable_Declaration returns Variable_Declaration
-	 *
-	 * Constraint:
-	 *     (name=IDENT type=Type clock=IDENT?)
-	 */
-	protected void sequence_Variable_Declaration(ISerializationContext context, Variable_Declaration semanticObject) {
+	protected void sequence_VariableDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

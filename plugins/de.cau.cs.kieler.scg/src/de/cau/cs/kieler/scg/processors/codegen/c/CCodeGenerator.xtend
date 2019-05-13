@@ -48,12 +48,17 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     }
     
     override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
-        for (scg : rootModel.scgs) {
-            val generatorModule = createCodeGeneratorModule.configure(scg.name, rootModel, scg, this, moduleMap, 
-                scg.name, null, null
+        for (scg : rootModel.scgs.indexed) {
+            
+            if (scg.key > 0) {
+                environment.setProperty(CODE_NAMING_MAGIC, PRAGMA_CODE_NAMING_MAGIC_SUFFIX)
+            }
+            
+            val generatorModule = createCodeGeneratorModule.configure(scg.value.name, rootModel, scg.value, this, moduleMap, 
+                scg.value.name, null, null
             )
-            moduleMap.put(scg, generatorModule)
-            generatorModule.suffix = hostcodeSafeName(scg.name)
+            moduleMap.put(scg.value, generatorModule)
+            generatorModule.suffix = hostcodeSafeName(scg.value.name)
         }
     }
     

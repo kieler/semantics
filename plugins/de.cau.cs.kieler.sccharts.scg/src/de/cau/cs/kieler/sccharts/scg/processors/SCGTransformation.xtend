@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.scg.processors
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
@@ -61,12 +60,9 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.scg.PatternType
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -89,6 +85,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -108,27 +105,27 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsFixExtensions
     @Inject extension PragmaExtensions
+    
+    public static val PREFIX_REFERENCE_VALUED_OBJECT_NAME = "_r"
     
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     
-    private static val Injector i = SCTXStandaloneSetup::doSetup();
-    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
+    val stateTypeCache = <State, Set<PatternType>>newHashMap
+    val uniqueNameCache = new UniqueNameCache
 
-    private val stateTypeCache = <State, Set<PatternType>>newHashMap
-    private val uniqueNameCache = new UniqueNameCache
+    static val String ANNOTATION_REGIONNAME = "regionName"
+    static val String ANNOTATION_HOSTCODE = "hostcode"
 
-    private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-
-    private var Entry rootStateEntry = null
+    var Entry rootStateEntry = null
 
     // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()
     HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
+    val SCC2SCGMap = <State, SCGraph> newHashMap
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCG"
@@ -149,10 +146,36 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             it.trace(model)
             
             model.copyPragmas(it)
-            
-            scgs.addAll(model.rootStates.map[transform])
         ]
+
+        model.createSCGs        
+            
+        scgs.scgs.addAll(model.rootStates.map[transform])
+        
         setModel(scgs)
+    }
+    
+    def createSCGs(EObject obj) {
+        SCC2SCGMap.clear
+        switch (obj) {
+            SCGraph: { return }
+            State: {
+                ScgFactory::eINSTANCE.createSCGraph => [
+                    label = (obj as State).name; 
+                    name = (obj as State).name
+                    SCC2SCGMap.put(obj as State, it)
+                ]
+            }
+            SCCharts: {
+                for (rootState : obj.rootStates) {
+                    ScgFactory::eINSTANCE.createSCGraph => [
+                        label = rootState.name; 
+                        name = rootState.name
+                        SCC2SCGMap.put(rootState, it)
+                    ]
+                }
+            }            
+        }
     }
 
     def Node getMappedNode(State state) {
@@ -248,12 +271,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         stateTypeCache.clear
         uniqueNameCache.clear
 
-        // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
-            // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
-            label = rootState.name; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
-            name = rootState.name
-        ]
+        val sCGraph = SCC2SCGMap.get(rootState)
 
 //        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
@@ -366,7 +384,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     def boolean isAssignment(State state) {
         ((state.outgoingTransitions.filter [e|
-            e.isImplicitlyImmediate && e.trigger === null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
+            e.isImplicitlyImmediate && e.trigger === null && 
+            ((e.preemption != PreemptionType::TERMINATION && !e.effects.nullOrEmpty) || state.isReferencing)
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -556,44 +575,60 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             
             assignment.name = state.name
 
-            // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transition.effects.get(0) as Effect
-            if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
-                assignment.operator = effect.operator
-
-                // For hostcode e.g. there is no need for a valued object - it is allowed to be null
-                val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
-                if (sCChartAssignment.valuedObject !== null) {
-                    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-                }
-
-                // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-                if (!effect.isPostfixOperation) {
-                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
-                }
-                if (!sCChartAssignment.indices.nullOrEmpty) {
-                    sCChartAssignment.indices.forEach [
-                        assignment.indices += it.convertToSCGExpression.trace(transition, effect)
+            if (state.isReferencing) {
+                val referenceDeclaration = createReferenceDeclaration => [
+                    reference = SCC2SCGMap.get(state.reference.scope)
+                    sCGraph.declarations += it    
+                ]
+                val referenceCall = createReferenceCall.trace(state) => [ rc |
+                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
+                        referenceDeclaration.valuedObjects += it
                     ]
-                }
+                    rc.valuedObject = VOR
+                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+                ]    
                 
-                if (!sCChartAssignment.schedule.nullOrEmpty) {
-                    sCChartAssignment.schedule.forEach[ s |
-                        assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-                            it.priority = s.priority
+                assignment.expression = referenceCall
+            } else {
+                // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
+                val effect = transition.effects.get(0) as Effect
+                if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
+                    assignment.operator = effect.operator
+    
+                    // For hostcode e.g. there is no need for a valued object - it is allowed to be null
+                    val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
+                    if (sCChartAssignment.valuedObject !== null) {
+                        assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+                    }
+    
+                    // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+                    if (!effect.isPostfixOperation) {
+                        assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+                    }
+                    if (!sCChartAssignment.indices.nullOrEmpty) {
+                        sCChartAssignment.indices.forEach [
+                            assignment.indices += it.convertToSCGExpression.trace(transition, effect)
                         ]
-                    ]
+                    }
+                    
+                    if (!sCChartAssignment.schedule.nullOrEmpty) {
+                        sCChartAssignment.schedule.forEach[ s |
+                            assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+                                it.priority = s.priority
+                            ]
+                        ]
+                    }
+                } else if (effect instanceof HostcodeEffect) {
+                    assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+                } else if (effect instanceof FunctionCallEffect) {
+                    assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+                } else if (effect instanceof PrintCallEffect) {
+                    assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+                } else if (effect instanceof RandomizeCallEffect) {
+                    assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+                } else if (effect instanceof ReferenceCallEffect) {
+                    assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
                 }
-            } else if (effect instanceof HostcodeEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof FunctionCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof PrintCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof RandomizeCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof ReferenceCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
             }
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
