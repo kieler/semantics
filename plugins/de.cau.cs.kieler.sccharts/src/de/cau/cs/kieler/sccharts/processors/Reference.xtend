@@ -572,7 +572,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                         }
                     }
                     
-                    // Copy regions
+                    // Copy inner behavior
                     for (vo : classDecl.valuedObjects) {
                         for (region : newState.regions) {
                             val newRegion = region.copy
@@ -585,6 +585,17 @@ class Reference extends SCChartsProcessor implements Traceable {
                                 }
                             }
                             state.regions += newRegion
+                        }
+                        for (action : newState.actions) {
+                            val newAction = action.copy
+                            for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
+                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                    val newVOR = vo.reference
+                                    vor.replace(newVOR)
+                                    newVOR.subReference = vor
+                                }
+                            }
+                            state.actions += newAction
                         }
                     }
                 }
