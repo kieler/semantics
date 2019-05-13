@@ -99,8 +99,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     protected boolean lastInplace
     
-    protected Thread compilationThread
+    protected CompilationThread compilationThread
     protected Thread getSystemsThread
+    protected Thread compilationListenerThread
     
     private var EObject model
     
@@ -112,21 +113,34 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         this.objectMap.put(uri, new LinkedList)
         
         val eobject = getEObjectFromUri(uri)
+        // context is on object, hence only a reference to the object that will be completed
+        // TODO why not use a completable future for this?
         val context = compile(eobject, command, inplace)
-        for (iResult : context.processorInstancesSequence) {
-            convertImpl(iResult.environment , uri, iResult.name)
-        }
-        var future = new CompletableFuture()
-        future.complete(void)
-        future.thenAccept([
-            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri)
-        ])
-        future.thenRun [
-            didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
-        ].exceptionally [ throwable |
-            LOG.error('Error while running additional compilation effects.', throwable)
-            return null
-        ]
+        this.compilationListenerThread = new Thread([
+            compilationListenerThread.name = "compilationListenerThread"
+            this.compilationThread.join()
+            if (!compilationThread.terminated) {
+                this.compilationThread.terminated = false
+                println("Compilation fished, sending")
+                for (iResult : context.processorInstancesSequence) {
+                    convertImpl(iResult.environment, uri, iResult.name)
+                }
+                var future = new CompletableFuture()
+                future.complete(void)
+                future.thenAccept([
+                    client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri)
+                ])
+                future.thenRun [
+                    didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
+                ].exceptionally [ throwable |
+                    LOG.error('Error while running additional compilation effects.', throwable)
+                    return null
+                ]
+            } else {
+                println("Terminated thread")
+            }
+            return])
+        this.compilationListenerThread.start()
         return
     }
     
@@ -177,7 +191,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         this.compilationThread = new CompilationThread(context)
         this.compilationThread.start()
-        this.compilationThread.join()
         return context
     }
     
@@ -262,9 +275,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         
         println("Interrupt thread")
         if (compilationThread.alive) {
-            this.compilationThread.interrupt()
-            this.compilationThread.stop()
-            println(compilationThread.alive)
+            this.compilationThread.interrupt
+            // TODO safely do this
+            this.compilationThread.terminated = true
+            println("Set terminated to true")
         }
         return requestManager.runRead[ cancelIndicator |
             true
@@ -275,7 +289,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         println("Interrupt thread")
         if (getSystemsThread.alive) {
             this.getSystemsThread.interrupt()
-            this.compilationThread.stop()
             println(compilationThread.alive)
         }
         return requestManager.runRead[ cancelIndicator |
