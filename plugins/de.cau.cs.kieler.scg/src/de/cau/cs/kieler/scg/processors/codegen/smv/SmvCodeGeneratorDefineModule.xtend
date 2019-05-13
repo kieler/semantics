@@ -160,9 +160,13 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     private def void generateAssignment(ValuedObject valuedObject) {
         val assignments = valuedObjectToAssignments.get(valuedObject)
         if(assignments !== null) {
-            if(assignments.size == 1
-                && nodeToParentConditional.get(assignments.head) === null) {
-                valuedObject.generateUnconditionalAssignment(assignments.head)
+            if(assignments.size == 1) {
+                val conditionalTree = nodeToParentConditional.get(assignments.head)
+                if(conditionalTree === null) {
+                    valuedObject.generateUnconditionalAssignment(assignments.head, "")
+                } else {
+                    valuedObject.generateUnconditionalAssignment(assignments.head, conditionalTree)
+                }
             } else {
                 valuedObject.generateConditionalAssignments(assignments)
             }
@@ -175,11 +179,16 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         }
     }
 
-    private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment) {
+    private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment, ConditionalTree conditionalTree) {
+        val condition = conditionalTree.getFullyQualifiedConditionWithComment.condition
+        valuedObject.generateUnconditionalAssignment(assignment, ''' -- WARNING: Only defined in SCG if («condition») is true''')
+    }
+    
+    private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment, String comment) {
         val expression = assignment.expression.serializeHR
             .toSmvExpression
             .useBooleanInsteadIntegerIfNeeded(valuedObject)
-        appendIndentedLine('''«valuedObject.name» := «expression»;''')    
+        appendIndentedLine('''«valuedObject.name» := «expression»;«comment»''')    
     }
 
     private def void generateConditionalAssignments(ValuedObject valuedObject, List<Assignment> assignments) {
