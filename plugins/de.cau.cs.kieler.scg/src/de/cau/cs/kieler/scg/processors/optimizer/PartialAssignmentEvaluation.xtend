@@ -45,6 +45,8 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
 
+    public static val IProperty<Boolean> PARTIAL_ASSIGNMENT_EVALUATION_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation", false)
     public static val IProperty<Boolean> PAE_REMOVE_SOURCENODE = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeSourceNode", true) 
     public static val IProperty<Boolean> PAE_REMOVE_UNUSEDCONDITIONALBRANCHES = 
@@ -60,6 +62,8 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     
     
     override process() {
+        if (!environment.getProperty(PARTIAL_ASSIGNMENT_EVALUATION_ENABLED)) return;
+        
         model.scgs.forEach[ transform ]
         model = model
     }

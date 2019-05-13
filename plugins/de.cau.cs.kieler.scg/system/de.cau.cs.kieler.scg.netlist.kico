@@ -1,5 +1,13 @@
 system de.cau.cs.kieler.scg.netlist
 	label "SCG Netlist-based"
+    start config {
+       "de.cau.cs.kieler.scg.opt.copyPropagation":true,
+       "de.cau.cs.kieler.scg.opt.conditionalMerger":true,
+       "de.cau.cs.kieler.scg.opt.haltStateRemover":true,
+       "de.cau.cs.kieler.scg.opt.smartRegisterAllocation":true,
+       "de.cau.cs.kieler.scg.opt.persistentStateOptimizer":true,
+       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation":true
+    }
 
 de.cau.cs.kieler.scg.processors.dependency config {
     "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": true
@@ -18,13 +26,12 @@ de.cau.cs.kieler.scg.processors.guards config {
 // post process de.cau.cs.kieler.scg.processors.unobservableGuardRemover
 de.cau.cs.kieler.scg.processors.scheduler
 de.cau.cs.kieler.scg.processors.sequentializer
-//post process de.cau.cs.kieler.scg.processors.copyPropagation
-// post process de.cau.cs.kieler.scg.processors.conditionalMerger
-// post process de.cau.cs.kieler.scg.processors.haltStateRemover
-// post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
-//
-// post process de.cau.cs.kieler.scg.processors.persistentStateOptimizer
-// post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
-// post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+post process de.cau.cs.kieler.scg.processors.copyPropagation
+post process de.cau.cs.kieler.scg.processors.conditionalMerger
+post process de.cau.cs.kieler.scg.processors.haltStateRemover
+post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+post process de.cau.cs.kieler.scg.processors.persistentStateOptimizer
+post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
 post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
 post process de.cau.cs.kieler.kicool.deploy.variable.store.clean
