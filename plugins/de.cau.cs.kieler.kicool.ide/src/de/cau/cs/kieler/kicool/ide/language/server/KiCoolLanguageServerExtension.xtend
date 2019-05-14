@@ -41,6 +41,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -108,36 +109,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     public KeithLanguageClient client
     
     override compile(String uri, String clientId, String command, boolean inplace) {
-        
-        this.snapshotMap.put(uri, new LinkedList)
-        this.objectMap.put(uri, new LinkedList)
-        
         val eobject = getEObjectFromUri(uri)
-        // context is on object, hence only a reference to the object that will be completed
-        // TODO why not use a completable future for this?
         val context = compile(eobject, command, inplace)
-        this.compilationListenerThread = new Thread([
-            compilationListenerThread.name = "compilationListenerThread"
-            this.compilationThread.join()
-            if (!compilationThread.terminated) {
-                this.compilationThread.terminated = false
-                for (iResult : context.processorInstancesSequence) {
-                    convertImpl(iResult.environment, uri, iResult.name)
-                }
-                var future = new CompletableFuture()
-                future.complete(void)
-                future.thenAccept([
-                    client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri)
-                ])
-                future.thenRun [
-                    didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
-                ].exceptionally [ throwable |
-                    LOG.error('Error while running additional compilation effects.', throwable)
-                    return null
-                ]
-            }
-            return])
-        this.compilationListenerThread.start()
+        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace))
         return
     }
     
@@ -157,29 +131,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         lastUri = uri
         lastCommand = command
         lastInplace = inplace
-        return
-    }
-    
-    /**
-     * Add snapshot to list of snapshots for uri. Add description to be displayed in compiler view
-     */
-    def convertImpl(Environment environment, String uri, String processorName) {
-        val Snapshots snapshots = environment.getProperty(Environment.SNAPSHOTS)
-        val impl = environment.model // this is the result of the processor, e.g. the last snapshot of this step
-        val errors = environment.errors
-        val warnings = environment.warnings
-        val infos = environment.infos
-        val snapshotList = new ArrayList<SnapshotDescription>
-        for (snapshot : snapshots.indexed) {
-            this.objectMap.get(uri).add(snapshot.value.object)
-            // one has to be added to the index, since the first snapshot is already added here
-            snapshotList.add(new SnapshotDescription(processorName, snapshot.key, errors, warnings, infos))
-        }
-        // Add result snapshot
-        this.objectMap.get(uri).add(impl)
-        snapshotList.add(new SnapshotDescription(processorName, snapshotList.length, errors, warnings, infos))
-      
-        this.snapshotMap.get(uri).addAll(snapshotList)
         return
     }
     
@@ -293,21 +244,37 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         ]
     }
     
-    override progress() {
-        var future = new CompletableFuture()
-        future.complete(void)
-        future.thenAccept([
-            client.progress(false)
-        ])
-        return 
-    }
-    
     override setLanguageClient(LanguageClient client) {
         this.client = client as KeithLanguageClient
     }
     
     override getLanguageClient() {
         return this.client
+    }
+    
+    /**
+     * Send list of current snapshots in snapshotMap to the client.
+     * @param uri uri of model file
+     * @param context CompilationContext of current compilation
+     * @param clientId identifier used by the client to identify the diagram widget that should be updated. Only relevant if showSnapshot is true.
+     * @param command Compilation system. Only relevant of showSnapshot is true.
+     * @param inplace Whether the command was invoked with inplace compilation. Only relevant if showSnapshot is true.
+     * @param showSnapshot indicates whether diagram should be updated on client side.
+     */
+    def update(String uri, CompilationContext context, String clientId, String command, boolean inplace, boolean showSnapshot, boolean finished) {
+        var future = new CompletableFuture()
+        future.complete(void)
+        future.thenAccept([
+            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished)
+        ])
+        if (showSnapshot) {
+            future.thenRun [
+                didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
+            ].exceptionally [ throwable |
+                LOG.error('Error while running additional compilation effects.', throwable)
+                return null
+            ]
+        }
     }
     
 }
