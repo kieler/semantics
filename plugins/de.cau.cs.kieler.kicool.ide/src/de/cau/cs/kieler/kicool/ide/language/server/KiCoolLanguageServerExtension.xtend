@@ -16,17 +16,15 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.kicool.environments.Snapshots
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
 import java.net.URLDecoder
-import java.util.ArrayList
 import java.util.HashMap
-import java.util.LinkedList
 import java.util.List
 import java.util.Map
 import java.util.concurrent.CompletableFuture
@@ -41,7 +39,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
 
 /**
  * Implements methods to extend the LSP to allow compilation
