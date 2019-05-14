@@ -51,6 +51,10 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeSourceNode", true) 
     public static val IProperty<Boolean> PAE_REMOVE_UNUSEDCONDITIONALBRANCHES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeUnusedConditionalBranches", true) 
+    public static val IProperty<Boolean> PAE_REMOVE_INTERFACE_INPUT_VARIABLES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeInterfaceInputVariables", false) 
+    public static val IProperty<Boolean> PAE_REMOVE_INTERFACE_OUTPUT_VARIABLES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeInterfaceOutputVariables", false) 
 
     override getId() {
         return "de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation"
@@ -212,6 +216,13 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     //                    Assignments before the deletion
     private def isIneffective(Assignment assignment, SCGraph scg) {
         val valuedObject = assignment.reference.valuedObject
+        if (valuedObject !== null) {
+            if (valuedObject.isInput && !PAE_REMOVE_INTERFACE_INPUT_VARIABLES.property.booleanValue) return false;
+            if (valuedObject.isOutput && !PAE_REMOVE_INTERFACE_OUTPUT_VARIABLES.property.booleanValue) return false;
+        } else {
+            return false
+        }
+        
         for (n : scg.nodes) {
             if (n instanceof Assignment) {
                 if (n.reference.valuedObject == valuedObject) {
