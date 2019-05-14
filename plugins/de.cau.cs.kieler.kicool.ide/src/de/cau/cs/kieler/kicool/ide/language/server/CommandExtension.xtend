@@ -58,7 +58,4 @@ interface CommandExtension {
      */
     @JsonRequest('cancel-get-systems')
     def CompletableFuture<Boolean> cancelGetSystems();
-    
-    @JsonNotification('progress')
-    def void progress();
 }

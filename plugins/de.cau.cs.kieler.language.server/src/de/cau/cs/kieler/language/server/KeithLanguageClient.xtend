@@ -25,10 +25,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  @JsonSegment("keith")
 interface KeithLanguageClient extends LanguageClient {
     
-    @JsonNotification("kicool/progress")
-    def void progress(boolean test);
-    
     @JsonNotification("kicool/compile")
-    def void compile(Object results, String uri);
+    def void compile(Object results, String uri, boolean finished);
     
 }
