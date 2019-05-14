@@ -232,9 +232,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
                 iResult.cancelCompilation()
             }
         }
-        return requestManager.runRead[ cancelIndicator |
-            true
-        ]
+        return
     }
     
     override cancelGetSystems() {
@@ -271,13 +269,19 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         future.thenAccept([
             client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished)
         ])
-        if (showSnapshot) {
-            future.thenRun [
-                didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
-            ].exceptionally [ throwable |
-                LOG.error('Error while running additional compilation effects.', throwable)
-                return null
-            ]
+        if (finished && compilationThread.terminated) {
+            future.thenAccept([
+                client.cancelCompilation(true)
+            ])
+        } else {
+            if (showSnapshot) {
+                future.thenRun [
+                    didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
+                ].exceptionally [ throwable |
+                    LOG.error('Error while running additional compilation effects.', throwable)
+                    return null
+                ]
+            }
         }
     }
     

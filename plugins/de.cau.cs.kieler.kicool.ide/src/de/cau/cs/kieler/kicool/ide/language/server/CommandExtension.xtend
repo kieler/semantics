@@ -35,8 +35,8 @@ interface CommandExtension {
     /**
      * Cancels the current compilation by stopping the current compilation thread.
      */
-    @JsonRequest('cancel-compilation')
-    def CompletableFuture<Boolean> cancelCompilation();
+    @JsonNotification('cancel-compilation')
+    def void cancelCompilation();
     
     /**
      * Build diagram for snapshot with id index for file given by uri. Only works, if the file was already compiled.

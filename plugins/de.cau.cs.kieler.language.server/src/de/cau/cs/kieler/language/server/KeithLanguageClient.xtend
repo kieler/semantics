@@ -28,4 +28,7 @@ interface KeithLanguageClient extends LanguageClient {
     @JsonNotification("kicool/compile")
     def void compile(Object results, String uri, boolean finished);
     
+    @JsonNotification("kicool/cancel-compilation")
+    def void cancelCompilation(boolean success);
+    
 }
