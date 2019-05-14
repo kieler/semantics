@@ -139,8 +139,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
                     LOG.error('Error while running additional compilation effects.', throwable)
                     return null
                 ]
-            } else {
-                println("Terminated thread")
             }
             return])
         this.compilationListenerThread.start()
@@ -275,13 +273,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     override cancelCompilation() {
-        
-        println("Interrupt thread")
         if (compilationThread.alive) {
-            this.compilationThread.interrupt
-            // TODO safely do this
             this.compilationThread.terminated = true
-            println("Set terminated to true")
+            var context = this.compilationThread.context
+            context.startEnvironment.setProperty(Environment.CANCEL_COMPILATION, true)
+            for (iResult : context.processorInstancesSequence) {
+                iResult.cancelCompilation()
+            }
         }
         return requestManager.runRead[ cancelIndicator |
             true

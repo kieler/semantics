@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.ide.language.server
 
 import java.lang.Thread
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author sdo
@@ -21,7 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
  */
 class CompilationThread extends Thread {
     
-    val CompilationContext context
+    @Accessors val CompilationContext context
     
     public var boolean terminated
     
