@@ -121,7 +121,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             this.compilationThread.join()
             if (!compilationThread.terminated) {
                 this.compilationThread.terminated = false
-                println("Compilation fished, sending")
                 for (iResult : context.processorInstancesSequence) {
                     convertImpl(iResult.environment, uri, iResult.name)
                 }
