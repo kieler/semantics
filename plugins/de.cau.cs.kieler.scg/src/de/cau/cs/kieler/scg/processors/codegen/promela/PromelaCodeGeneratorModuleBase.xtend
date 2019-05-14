@@ -34,20 +34,9 @@ abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
         return vo.name.startsWith("_g") || vo.name.startsWith("_cg")
     }
     
-    protected def boolean isAssignedEveryTick(ValuedObject valuedObject, ScgConditionalAssignmentAnalyzer scgConditionalAssignmentAnalyzer) {
+    protected def boolean canBeDeclaredLocally(ValuedObject valuedObject) {
         if(valuedObject.isGuard) {
             return true
-        }
-        // Check if only one assignment that is used without conditional
-        val assignments = scgConditionalAssignmentAnalyzer.getAssignments(valuedObject)
-        if(!assignments.isNullOrEmpty) {
-            if(assignments.size == 1) {
-                val assignment = assignments.head
-                val conditionalTree = scgConditionalAssignmentAnalyzer.getConditionalTree(assignment)
-                if(conditionalTree === null) {
-                    return true
-                }
-            }
         }
         return false
     }

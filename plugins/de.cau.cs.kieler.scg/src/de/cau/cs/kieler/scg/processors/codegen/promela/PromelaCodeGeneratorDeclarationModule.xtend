@@ -14,11 +14,9 @@ package de.cau.cs.kieler.scg.processors.codegen.promela
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer
 import de.cau.cs.kieler.verification.VerificationPropertyType
 import org.eclipse.xtend.lib.annotations.Accessors
 
@@ -34,9 +32,7 @@ import static extension de.cau.cs.kieler.verification.extensions.VerificationCon
 class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBase {
     
     @Inject extension PromelaCodeSerializeHRExtensions
-    
-    private var ScgConditionalAssignmentAnalyzer scgConditionalAssignmentAnalyzer
-    
+        
     private static class ConditionalTree {
         @Accessors var Conditional conditional
         @Accessors var boolean branchOfConditional
@@ -61,8 +57,6 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     override generateInit() {
-        scgConditionalAssignmentAnalyzer = injector.getInstance(ScgConditionalAssignmentAnalyzer)
-        scgConditionalAssignmentAnalyzer.init(scg)
     }
     
     override generate() {
@@ -88,7 +82,7 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
                 if(valuedObject.name != "_GO" && valuedObject.name != "_TERM"
-                    && !valuedObject.isAssignedEveryTick(scgConditionalAssignmentAnalyzer)) {
+                    && !valuedObject.canBeDeclaredLocally) {
                     if (declaration instanceof VariableDeclaration) {
                         val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
                             declaration.type.serializeHR

@@ -65,13 +65,10 @@ class ScgConditionalAssignmentAnalyzer {
     }
     
     private def dispatch void analyze(Assignment assignment) {
-        if (assignment.valuedObject !== null) {
-            var assignments = valuedObjectToAssignments.get(assignment.valuedObject)
-            if(assignments === null) {
-                assignments = newLinkedList
-                valuedObjectToAssignments.put(assignment.valuedObject, assignments)
-            }
-            assignments.add(assignment)
+        val writtenValuedObject = assignment.valuedObject
+        if (writtenValuedObject !== null) {
+            // Remember the valued object that was written in this assignment
+            addValuedObjectAsWritten(writtenValuedObject, assignment)
         }
         if (assignment.next !== null) {
             nodeStack.push(assignment.next.targetNode)
@@ -115,6 +112,15 @@ class ScgConditionalAssignmentAnalyzer {
         if (incomingControlFlows.size > 1 && parentConditional !== null) {
             nodeToParentConditional.put(node, parentConditional.parent)    
         }
+    }
+    
+    private def void addValuedObjectAsWritten(ValuedObject valuedObject, Assignment assignment) {
+        var assignments = valuedObjectToAssignments.get(valuedObject)
+        if(assignments === null) {
+            assignments = newLinkedList
+            valuedObjectToAssignments.put(valuedObject, assignments)
+        }
+        assignments.add(assignment)
     }
     
     ///////////////////////////////////////////////////////////////////////
