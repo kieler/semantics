@@ -17,18 +17,13 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlFlow
-import de.cau.cs.kieler.scg.Entry
-import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer.ConditionalTree
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorExtensions.*
+import com.google.inject.Injector
 
 /**
  * @author aas
@@ -36,34 +31,12 @@ import static extension de.cau.cs.kieler.verification.codegen.SmvCodeGeneratorEx
  */
 class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
 
-    @Inject extension KEffectsExtensions
-    @Inject extension SCGControlFlowExtensions
+    @Inject Injector injector
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension SmvCodeSerializeHRExtensions serializer
+    @Inject extension SmvCodeSerializeHRExtensions
 
-    private val nodeToParentConditional = <Node, ConditionalTree>newHashMap
-    private val valuedObjectToAssignments = <ValuedObject, List<Assignment>>newHashMap
-    private val nodeStack = <Node> newLinkedList
-    
-    private static class ConditionalTree {
-        @Accessors var Conditional conditional
-        @Accessors var boolean branchOfConditional
-        @Accessors var ConditionalTree parent
-        new(ConditionalTree parent, boolean branchOfParent, Conditional conditional) {
-            this.parent = parent
-            this.branchOfConditional = branchOfParent
-            this.conditional = conditional
-        }
-        
-        override toString() {
-            if(parent !== null) {
-                return '''ConditionalTree@«hashCode»(«branchOfConditional» branch of «conditional.toString», parent:ConditionalTree@«parent.hashCode»)'''
-            } else {
-                return '''ConditionalTree@«hashCode»(«branchOfConditional» branch of «conditional.toString», no parent)'''
-            }
-        }
-    }
-    
+    private var ScgConditionalAssignmentAnalyzer scgConditionalAssignmentAnalyzer
+
     private static class FullyQualifiedConditionWithComment {
         @Accessors var String condition
         @Accessors var String comment
@@ -74,73 +47,8 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     }
 
     override generateInit() {
-        val processedNodes = <Node>newHashSet
-        nodeStack.clear
-        nodeToParentConditional.clear
-        valuedObjectToAssignments.clear
-        
-        nodeStack.add(scg.nodes.head)
-        while(!nodeStack.isEmpty) {
-            val node = nodeStack.pop
-            if (!processedNodes.contains(node)) {
-                node.handleConditionalNestingInInit
-                node.generateInInit
-                processedNodes.add(node)    
-            }
-        }
-    }
-
-    protected def dispatch void generateInInit(Assignment assignment) {
-        if (assignment.valuedObject !== null) {
-            var assignments = valuedObjectToAssignments.get(assignment.valuedObject)
-            if(assignments === null) {
-                assignments = newLinkedList
-                valuedObjectToAssignments.put(assignment.valuedObject, assignments)
-            }
-            assignments.add(assignment)
-        }
-        if (assignment.next !== null) {
-            nodeStack.push(assignment.next.targetNode)
-            assignment.assignParentConditionalToNextNode(assignment.next.targetNode)
-        }
-    }
-    
-    protected def dispatch void generateInInit(Entry entry) {
-        if (entry.next !== null) {
-            nodeStack.push(entry.next.targetNode)
-            entry.assignParentConditionalToNextNode(entry.next.targetNode)
-        }
-    }
-    
-    protected def dispatch void generateInInit(Exit entry) {
-        
-    }
-
-    protected def void assignParentConditionalToNextNode(Node currentNode, Node nextNode) {
-        if(!nodeToParentConditional.containsKey(nextNode)) {
-            val currentParentConditional = nodeToParentConditional.get(currentNode)
-            nodeToParentConditional.put(nextNode, currentParentConditional)    
-        }
-    }
-    
-    protected def dispatch void generateInInit(Conditional conditional) {
-        val parentConditional = nodeToParentConditional.get(conditional)
-        if (conditional.^else !== null) {
-            nodeStack.push(conditional.^else.targetNode)
-            nodeToParentConditional.put(conditional.^else.targetNode, new ConditionalTree(parentConditional, false, conditional))
-        }
-        if (conditional.^then !== null) {
-            nodeStack.push(conditional.^then.targetNode)
-            nodeToParentConditional.put(conditional.^then.targetNode, new ConditionalTree(parentConditional, true, conditional))
-        }
-    }
-    
-    protected def void handleConditionalNestingInInit(Node node) {
-        val parentConditional = nodeToParentConditional.get(node)
-        val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
-        if (incomingControlFlows.size > 1 && parentConditional !== null) {
-            nodeToParentConditional.put(node, parentConditional.parent)    
-        }
+        scgConditionalAssignmentAnalyzer = injector.getInstance(ScgConditionalAssignmentAnalyzer)
+        scgConditionalAssignmentAnalyzer.init(scg)
     }
     
     override generate() {
@@ -158,14 +66,16 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
     }
 
     private def void generateAssignment(ValuedObject valuedObject) {
-        val assignments = valuedObjectToAssignments.get(valuedObject)
+        val assignments = scgConditionalAssignmentAnalyzer.getAssignments(valuedObject)
         if(assignments !== null) {
             if(assignments.size == 1) {
-                val conditionalTree = nodeToParentConditional.get(assignments.head)
+                val assignment = assignments.head
+                val conditionalTree = scgConditionalAssignmentAnalyzer.getConditionalTree(assignment)
                 if(conditionalTree === null) {
-                    valuedObject.generateUnconditionalAssignment(assignments.head, "")
+                    valuedObject.generateUnconditionalAssignment(assignment, "")
                 } else {
-                    valuedObject.generateUnconditionalAssignment(assignments.head, conditionalTree)
+                    val condition = conditionalTree.getFullyQualifiedConditionWithComment.condition
+                    valuedObject.generateUnconditionalAssignment(assignment, ''' -- WARNING: Only defined in SCG if («condition») is true''')
                 }
             } else {
                 valuedObject.generateConditionalAssignments(assignments)
@@ -177,11 +87,6 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
                 appendIndentedLine('''«valuedObject.name» := FALSE; -- WARNING: This variable is undefined in the SCG''')
             }
         }
-    }
-
-    private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment, ConditionalTree conditionalTree) {
-        val condition = conditionalTree.getFullyQualifiedConditionWithComment.condition
-        valuedObject.generateUnconditionalAssignment(assignment, ''' -- WARNING: Only defined in SCG if («condition») is true''')
     }
     
     private def void generateUnconditionalAssignment(ValuedObject valuedObject, Assignment assignment, String comment) {
@@ -197,8 +102,8 @@ class SmvCodeGeneratorDefineModule extends SmvCodeGeneratorModuleBase {
         appendIndentedLine('''case''')
         incIndentationLevel
         for(assignment : assignments) {
-            val parentConditional = nodeToParentConditional.get(assignment)
-            val fullyQualifiedConditionWithComment = getFullyQualifiedConditionWithComment(parentConditional)
+            val conditionalTree = scgConditionalAssignmentAnalyzer.getConditionalTree(assignment)
+            val fullyQualifiedConditionWithComment = getFullyQualifiedConditionWithComment(conditionalTree)
             
             val expression = assignment.expression.serializeHR
                 .toSmvExpression

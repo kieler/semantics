@@ -12,8 +12,9 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.promela
 
-import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
+import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer
 
 /** 
  * @author aas
@@ -31,5 +32,23 @@ abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     
     protected def boolean isGuard(ValuedObject vo) {
         return vo.name.startsWith("_g") || vo.name.startsWith("_cg")
+    }
+    
+    protected def boolean isAssignedEveryTick(ValuedObject valuedObject, ScgConditionalAssignmentAnalyzer scgConditionalAssignmentAnalyzer) {
+        if(valuedObject.isGuard) {
+            return true
+        }
+        // Check if only one assignment that is used without conditional
+        val assignments = scgConditionalAssignmentAnalyzer.getAssignments(valuedObject)
+        if(!assignments.isNullOrEmpty) {
+            if(assignments.size == 1) {
+                val assignment = assignments.head
+                val conditionalTree = scgConditionalAssignmentAnalyzer.getConditionalTree(assignment)
+                if(conditionalTree === null) {
+                    return true
+                }
+            }
+        }
+        return false
     }
 }

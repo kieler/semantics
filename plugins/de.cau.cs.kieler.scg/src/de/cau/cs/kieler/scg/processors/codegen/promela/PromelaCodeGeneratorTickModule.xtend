@@ -33,6 +33,7 @@ import java.util.List
 
 import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import de.cau.cs.kieler.verification.InvariantAssumption
+import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer
 
 /**
  * Adds the code for the tick loop logic.
@@ -48,6 +49,8 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     @Inject extension SSACoreExtensions
     @Inject extension PromelaCodeSerializeHRExtensions serializer
 
+    private var ScgConditionalAssignmentAnalyzer scgConditionalAssignmentAnalyzer
+
     /** Stack of nodes to be serialized to code */
     protected val nodeStack = <Node> newLinkedList
     /** Conditional Stack that keeps track of the nesting depth of conditionals */
@@ -62,6 +65,9 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     override generateInit() {
         serializer.valuedObjectPrefix = ""
         serializer.prePrefix = PRE_GUARD_PREFIX
+        
+        scgConditionalAssignmentAnalyzer = injector.getInstance(ScgConditionalAssignmentAnalyzer)
+        scgConditionalAssignmentAnalyzer.init(scg)
     }
 
     override generate() {
@@ -81,14 +87,13 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
     }
     
     private def void generateTickLoop() {
-        // Start of tick loop
         appendIndentedLine("do")
         appendIndentedLine("::")
          
         appendIndentedLine("atomic { ")
         incIndentationLevel
-        // Add declarations
-        appendGuardDeclarations();
+        
+        appendLocalDeclarations();
         appendIndentedLine('''bool «TICK_END_FLAG_NAME»;''')
         code.append("\n")
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 0;''')
@@ -100,17 +105,17 @@ class PromelaCodeGeneratorTickModule extends PromelaCodeGeneratorModuleBase {
         code.append("\n")
         appendIndentedLine('''«TICK_END_FLAG_NAME» = 1;''')
         generateAssertions()
+        
         decIndentationLevel
         appendIndentedLine("}")
         
         appendIndentedLine("od")
-        // End of tick loop
     }
     
-    private def void appendGuardDeclarations() {
+    private def void appendLocalDeclarations() {
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
-                if(valuedObject.isGuard) {
+                if(valuedObject.isAssignedEveryTick(scgConditionalAssignmentAnalyzer)) {
                     if (declaration instanceof VariableDeclaration) {
                         val declarationType = declaration.type.serializeHR
                         appendIndentedLine('''«declarationType» «valuedObject.name»;''')
