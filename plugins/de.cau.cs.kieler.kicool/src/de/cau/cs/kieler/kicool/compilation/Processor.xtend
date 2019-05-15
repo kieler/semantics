@@ -170,10 +170,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * Protected convenient method to trigger a snapshot.
      */
-    protected def void snapshot(Object model) {
+    protected  def <T> T snapshot(T model) {
         val snapshotsEnabled = environment.getProperty(SNAPSHOTS_ENABLED) 
         val inplace = environment.getProperty(INPLACE)
-        if (inplace || !snapshotsEnabled) return
+        if (inplace || !snapshotsEnabled) return model;
         
         val snapshots = environment.getProperty(SNAPSHOTS)
         
@@ -181,7 +181,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         var Object snapshotModel = model
         var Copier copier = null 
         if (model instanceof EObject) {
-            val snapshotModelPair = model.copyEObjectAndReturnCopier
+            val snapshotModelPair = (model as EObject).copyEObjectAndReturnCopier
             snapshotModel = snapshotModelPair.key
             copier = snapshotModelPair.value
         }
@@ -194,6 +194,8 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         compilationContext.notify(
             new ProcessorSnapshot(snapshotModel, compilationContext, processorReference, this)
         )
+        
+        return model
     }
     
     /**
@@ -288,21 +290,21 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * ID of the processor.
      */
-    abstract public def String getId()
+    abstract def String getId()
     
     /**
      * Give a processor a name. A processor needs a name.
      */
-    abstract public def String getName()
+    abstract def String getName()
     
     /**
      * Type of the processor.
      */
-    abstract public def ProcessorType getType()
+    abstract def ProcessorType getType()
     
     /** 
      * The process method. It is called whenever the processor is invoked.
      */
-    abstract public def void process()
+    abstract def void process()
     
 }

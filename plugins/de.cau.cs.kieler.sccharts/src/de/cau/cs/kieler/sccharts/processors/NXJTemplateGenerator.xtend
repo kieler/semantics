@@ -31,12 +31,12 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author ssm
- * @kieler.design 2018-11-19 proposed
- * @kieler.rating 2018-11-19 proposed yellow
+ * @kieler.design 2019-05-15 proposed
+ * @kieler.rating 2019-05-15 proposed yellow
  */
-class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
+class NXJTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
 
-    public static val FILE_NAME = "arduino-deployment.ftl"
+    public static val FILE_NAME = "nxj-deployment.ftl"
      
     public static val ANNOTATION_PINMODE_NAME = "pin"
     public static val ANNOTATION_PULLUP_NAME = "pullup"
@@ -46,11 +46,11 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
         new Property<String>("de.cau.cs.kieler.c.struct.access", ".")
 
     override getId() {
-        "de.cau.cs.kieler.sccharts.arduino.template"
+        "de.cau.cs.kieler.sccharts.nxj.template"
     }
     
     override getName() {
-        "Arduino Deployment Template"
+        "NXJ Deployment Template"
     }
     
     override generateTemplate() {

@@ -58,7 +58,7 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
     @Accessors(PROTECTED_GETTER, PROTECTED_SETTER)
     var Boolean escapeOptions = true
         
-    protected val logger = new Logger()
+    protected var logger = new Logger()
     
     override getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR

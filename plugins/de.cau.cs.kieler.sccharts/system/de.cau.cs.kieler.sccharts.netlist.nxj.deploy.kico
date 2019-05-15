@@ -1,0 +1,39 @@
+public system de.cau.cs.kieler.sccharts.netlist.nxj.deploy
+    label "Netlist-based Deployment (NXJ)"
+
+system de.cau.cs.kieler.sccharts.netlist.java
+pre process de.cau.cs.kieler.kicool.deploy.model.includes
+de.cau.cs.kieler.kicool.deploy.setup config {
+    "de.cau.cs.kieler.kicool.deploy.setup.copy": {
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-main.ftl": "templates/nxj-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-light.ftl": "templates/nxj-light.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-motor.ftl": "templates/nxj-motor.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-print.ftl": "templates/nxj-print.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-sound.ftl": "templates/nxj-sound.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-timing.ftl": "templates/nxj-timing.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-touch_and_buttons.ftl": "templates/nxj-touch_and_buttons.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-ultrasonic.ftl": "templates/nxj-ultrasonic.ftl",
+        "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
+    }
+}
+pre process de.cau.cs.kieler.kicool.deploy.macroAnnotations
+pre process de.cau.cs.kieler.sccharts.nxj.template
+de.cau.cs.kieler.kicool.deploy.templates config {
+    "de.cau.cs.kieler.kicool.deploy.template.injection.includes" : [
+        "nxj-light.ftl",
+        "nxj-motor.ftl",
+        "nxj-print.ftl",
+        "nxj-sound.ftl",
+        "nxj-timing.ftl",
+        "nxj-touch_and_buttons.ftl",
+        "nxj-ultrasonic.ftl"
+    ],
+    "de.cau.cs.kieler.kicool.deploy.templates": {
+        "templates/nxj-main.ftl": "Main.java"
+    },
+    "de.cau.cs.kieler.c.struct.access": "."
+}
+de.cau.cs.kieler.kicool.deploy.compiler.nxj config {
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java"]
+}
+

@@ -65,6 +65,9 @@
             class="de.cau.cs.kieler.kicool.deploy.processor.ArduinoCompiler">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.NXJCompiler">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations">
       </Processor>
       <Processor

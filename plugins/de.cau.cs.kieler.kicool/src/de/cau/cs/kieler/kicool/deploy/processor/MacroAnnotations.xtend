@@ -28,8 +28,6 @@ import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
  */
 class MacroAnnotations extends AbstractDeploymentProcessor<Object> {
 
-    public static val FILE_NAME = "arduino-deployment.ftl"
-     
     public static val ANNOTATION_MACRO_NAME = "macro"
     
     public static val PARAMETER_VAR_NAME = "varName"
