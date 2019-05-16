@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.simulation.ui.visualization
+package de.cau.cs.kieler.simulation.ide.visualization
 
 import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
