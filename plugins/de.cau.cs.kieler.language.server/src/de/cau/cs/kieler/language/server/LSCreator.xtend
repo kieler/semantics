@@ -109,6 +109,9 @@ class LSCreator {
                 ext.languageClient = client
             }
         }
+        for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
+            iLSdhc.getHighlighter(injector)
+        }
         val future = launcher.startListening
         if (socket) {
             // nothing special to handle
