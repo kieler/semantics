@@ -71,10 +71,13 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         this.languageServerAccess = access
     }
     
+    new() {
+        registerObserver(this)
+    }
+    
     override synchronized start(String uri, String simulationType) {
         stepNumber = 0
         stopAndRemoveSimulation
-        registerObserver(this)
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
