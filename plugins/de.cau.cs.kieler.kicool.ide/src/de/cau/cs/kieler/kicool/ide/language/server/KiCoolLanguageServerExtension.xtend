@@ -83,6 +83,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     @Accessors(PUBLIC_GETTER)
     protected String lastCommand
+    
+    /**
+     * The clientId for the last compilation.
+     */
+    @Accessors(PUBLIC_GETTER)
+    protected String lastClientId
 
     /**
      * The index of the snapshot currently shown in the diagram view.
@@ -131,6 +137,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         }
         lastUri = uri
         lastCommand = command
+        lastClientId = clientId
         lastInplace = inplace
         return
     }
