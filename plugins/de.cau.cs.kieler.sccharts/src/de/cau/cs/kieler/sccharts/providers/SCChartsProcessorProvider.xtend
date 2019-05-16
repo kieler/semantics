@@ -58,6 +58,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.RegionActionsAndDeclarations,
             de.cau.cs.kieler.sccharts.processors.Inheritance,
             de.cau.cs.kieler.sccharts.processors.ModelSelect,
+            de.cau.cs.kieler.sccharts.processors.StateOriginMarker,
             de.cau.cs.kieler.sccharts.processors.statebased.DeSurfaceDepth,
             de.cau.cs.kieler.sccharts.processors.statebased.DeConditionalize,
             de.cau.cs.kieler.sccharts.processors.statebased.DeImmediateDelay,

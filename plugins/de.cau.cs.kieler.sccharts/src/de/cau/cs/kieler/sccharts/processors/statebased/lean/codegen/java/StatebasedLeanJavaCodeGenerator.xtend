@@ -77,8 +77,8 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
         val javaFilename = codeFilename + JAVA_EXTENSION
         val javaFile = new StringBuilder
 
-        javaFile.packageAdditions(scc)
         javaFile.append(addHeader)
+        javaFile.packageAdditions(scc)
         javaFile.hostcodeAdditions(scc, template)
         javaFile.append(template.source)
 
@@ -111,6 +111,7 @@ class StatebasedLeanJavaCodeGenerator extends ExogenousProcessor<SCCharts, CodeC
            *
            * http://rtsys.informatik.uni-kiel.de/kieler
            */
+
         '''
     }      
     

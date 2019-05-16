@@ -38,12 +38,14 @@ import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStat
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.annotations.CommentAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author wechselberg
  */
 class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
 
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
@@ -69,6 +71,8 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
         if (inputEventDeclarations.size > 0) {
             modifications.put("imports", "java.util.Arrays")
         }
+        modifications.put("imports", "java.util.stream.Stream")
+        modifications.put("imports", "java.util.stream.Collectors")
     
 
         scopes = <Scope>newLinkedList
@@ -126,6 +130,14 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
               « FOR r : rootState.regions.filter(ControlflowRegion) »
                 « r.uniqueContextMemberName » « r.uniqueName » = new « r.uniqueContextMemberName »();
               « ENDFOR »
+              
+              public Stream<String> getCurrentState() {
+                return Stream.of(
+                    « FOR r : rootState.regions.filter(ControlflowRegion) SEPARATOR ',' »
+                    « r.uniqueName ».getCurrentState()
+                    « ENDFOR »
+                  ).flatMap(i -> i);
+              }
             }
             « FOR r : scopes.filter(ControlflowRegion) »
 
@@ -134,8 +146,19 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
                */
               public enum « r.uniqueName »States {
                 « FOR s : r.states.indexed SEPARATOR ', ' 
-                  »« s.value.uniqueEnumName »« IF s.value.isHierarchical », « s.value.uniqueEnumName»RUNNING« ENDIF 
+                  »« s.value.uniqueEnumName »("« s.value.getStringAnnotationValue("SourceState") »")«
+                   IF s.value.isHierarchical », « s.value.uniqueEnumName»RUNNING("« s.value.getStringAnnotationValue("SourceState") »")« ENDIF 
                   »« ENDFOR »;
+
+                private String origin;
+
+                private « r.uniqueName »States(String origin) {
+                  this.origin = origin;
+                }
+                
+                public String getOrigin() {
+                  return origin;
+                }
               }
 
               /**
@@ -148,6 +171,22 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
                 « FOR c : r.states.map[ regions ].flatten.filter(ControlflowRegion) »
                   « c.uniqueContextMemberName » « c.uniqueContextName » = new « c.uniqueContextMemberName »();
                 « ENDFOR »
+                
+                public Stream<String> getCurrentState() {
+                  switch (activeState) {
+                  « FOR s : r.states.filter[isHierarchical] »
+                  case « s.uniqueEnumName »:
+                  case « s.uniqueEnumName »RUNNING:
+                    return Stream.of(
+                        « FOR subr : s.regions.filter(ControlflowRegion) SEPARATOR ',' »
+                        « subr.uniqueContextName ».getCurrentState()
+                        « ENDFOR »  
+                      ).flatMap(i -> i);
+                  « ENDFOR »
+                  default:
+                    return Stream.of(activeState.getOrigin());
+                  }
+                }
               }
             « ENDFOR »            
 
@@ -192,6 +231,10 @@ class StatebasedLeanJavaTemplate extends AbstractStatebasedLeanTemplate {
               tick();
             }
             « ENDIF»
+            
+            public String getCurrentState() {
+              return rootContext.getCurrentState().distinct().collect(Collectors.joining(","));
+            }
 
             public «rootState.uniqueName»(« IF needsContextInterface»«rootState.uniqueName»Context externalContext« ENDIF ») {
               « IF needsContextInterface»
