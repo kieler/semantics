@@ -114,7 +114,19 @@ abstract class AbstractExternalCompiler {
                     }
                 }
             }
-            if (!succeeded) {
+            var succeededOnMac = false
+            if (!succeeded && Platform.OS.equals("macosx")) {
+                succeededOnMac = true
+                for (exe : bin.listFiles) {
+                    if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
+                        if (!exe.canExecute) {
+                            Runtime.runtime.exec("chmod +x " +  exe.absolutePath)
+                        }
+                        succeededOnMac = succeededOnMac && exe.canExecute
+                     }
+                }
+            }
+            if (!succeeded && !succeededOnMac) {
                 environment.warnings.add("Failed to set executable flag of the esterel compiler")
             }
         }
