@@ -41,6 +41,10 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         if (Platform.isWindows) "nxjupload.bat" else "nxjupload")
     public static val IProperty<Boolean> NXJ_RUN_ON_UPLOAD = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.nxj.runOnUpload", true)
+    public static val IProperty<Boolean> NXJ_DIRECT_BLUETOOTH_UPLOAD = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.nxj.directBluetoothUpload", false)
+
+
    
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.compiler.nxj"
@@ -109,6 +113,7 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         
         val nxjupload = newArrayList(environment.getProperty(NXJ_PATH_NXJUPLOAD)?:NXJ_PATH_NXJUPLOAD.^default)
         if (environment.getProperty(NXJ_RUN_ON_UPLOAD)) nxjupload += "-r"
+        if (environment.getProperty(NXJ_DIRECT_BLUETOOTH_UPLOAD)) nxjupload += "-b"
         nxjupload += className + ".nxj"
         
         
