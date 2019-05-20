@@ -78,7 +78,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation")
+                new SimulationStartedMessage(false, "Last compilation command was no simulation command")
             ]
         }
         // Get simulation context and dataPool
@@ -103,7 +103,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             datapool = this.nextDataPool
         } else {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation")
+                new SimulationStartedMessage(false, "No simulation context could be found for this uri")
             ]
         }
         val finalPool = datapool
