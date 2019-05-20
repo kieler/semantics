@@ -12,13 +12,12 @@
  */
 package de.cau.cs.kieler.lustre.compiler.processors
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.deploy.processor.AbstractSystemCompilerProcessor
@@ -29,7 +28,6 @@ import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author lgr
@@ -191,13 +189,6 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
             }
             </#macro>
             
-            <#macro simulation_loop position>
-            while (1) {
-                while(getchar() != '\n');
-                sendVariables();
-            }
-            </#macro>
-            
             <#macro step_parameter position>«(inputs + outputReferences).join(", \n")»«IF hasState», ctx«ENDIF»</#macro>
             
             
@@ -222,7 +213,6 @@ class LustreSimulationTemplateGenerator extends AbstractTemplateGeneratorProcess
         environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
-        environment.addMacroInjection(END_MAIN, "simulation_loop")
         
         return cc
     }
