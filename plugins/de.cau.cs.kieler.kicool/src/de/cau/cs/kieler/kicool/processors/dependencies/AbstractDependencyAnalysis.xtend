@@ -20,6 +20,7 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.Schedulable
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -254,7 +255,11 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
             expression.allReferences.forEach [ readVOIs += new ValuedObjectIdentifier(it) ]
         ]
         for(readVOI : readVOIs) {
-            for(sched : newLinkedList(GLOBAL_SCHEDULE) + expression.schedule) {
+            val schedules = newLinkedList(GLOBAL_SCHEDULE)
+            schedules += expression.schedule
+            // In the SCG there are all schedules on the assignment
+            if (expression.eContainer instanceof Schedulable) schedules += (expression.eContainer as Schedulable).schedule
+            for(sched : schedules) {
                 var schedule = GLOBAL_SCHEDULE
                 var ValuedObject scheduleObject = null            
                 var priority = GLOBAL_READ

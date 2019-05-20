@@ -277,6 +277,7 @@ class UserSchedule extends SCChartsProcessor implements Traceable {
                 // SDs
                 if (!method.schedule.nullOrEmpty) {
                     var EObject attach = call
+                    //call.addScheduleCopy(method.schedule)
                     while (!(attach instanceof Effect || attach instanceof Action)) {
                         attach = attach.eContainer
                     }
