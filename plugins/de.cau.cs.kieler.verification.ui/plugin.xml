@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.verification.ui.view.VerificationView"
+            icon="icons/no_bugs.png"
+            id="de.cau.cs.kieler.verification.ui.verificationView"
+            name="Model Checking"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>

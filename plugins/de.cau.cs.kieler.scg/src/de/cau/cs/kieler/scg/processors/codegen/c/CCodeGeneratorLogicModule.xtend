@@ -234,7 +234,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected def void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-        val name = operatorExpression.serializeHR 
+        val name = operatorExpression.serializeHR
         if (preVariables.contains(name)) return;
     
         // Add the pre variable to the variables hashes to mark it handled.    

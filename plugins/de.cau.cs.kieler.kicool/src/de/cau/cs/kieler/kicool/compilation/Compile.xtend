@@ -40,12 +40,12 @@ class Compile {
     public static val ENV_PRAGMA = "KiCoEnv".toLowerCase
     
     /**
-     * Easily create a standard compilation context from a compilation system and a source model.
+     * Easily create a compilation context (or a subclass) from a compilation system and a source model.
      */
-    static def CompilationContext createCompilationContext(System system, Object sourceModel) {
+    static def <T extends CompilationContext> T createCompilationContext(System system, Object sourceModel, Class<T> clazz) {
         checkNotNull(system, "System is null")
         checkNotNull(sourceModel, "Source model is null")
-        val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
+        val context = KiCoolRegistration.getInjector.getInstance(clazz)
         context => [
             it.originalSystem = system
             it.transformSystem
@@ -63,12 +63,26 @@ class Compile {
     }
     
     /**
+     * Easily create a standard compilation context from a compilation system and a source model.
+     */
+    static def CompilationContext createCompilationContext(System system, Object sourceModel) {
+        createCompilationContext(system, sourceModel, CompilationContext)
+    }
+    
+    /**
      * Create a compilation context from a system id and a source model.
      */
     static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
-        createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel)
+        createCompilationContext(systemID, sourceModel, CompilationContext)
     }
 
+    /**
+     * Create a compilation context (or a subclass) from a system id and a source model.
+     */
+    static def <T extends CompilationContext> T createCompilationContext(String systemID, Object sourceModel, Class<T> clazz) {
+        createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel, clazz)
+    }
+    
     /**
      * Create a compilation context from a system id and a source model and additional processors
      */

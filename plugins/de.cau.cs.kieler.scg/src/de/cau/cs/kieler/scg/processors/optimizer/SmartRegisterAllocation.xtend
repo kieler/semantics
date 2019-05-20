@@ -44,7 +44,9 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
  *
  */
 class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
-    
+
+    public static val IProperty<Boolean> SMART_REGISTER_ALLOCATION_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.smartRegisterAllocation", false)
     public static val IProperty<Boolean> SMART_REGISTER_ALLLOCATION_CONSIDER_CONDITIONAL_GUARDS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.considerConditionalGuards", false)     
             
@@ -61,6 +63,8 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(SMART_REGISTER_ALLOCATION_ENABLED)) return;
+        
         val model = getModel
         
         for (scg : model.scgs) {
