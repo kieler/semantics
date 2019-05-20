@@ -15,6 +15,7 @@ package de.cau.cs.kieler.language.server
 import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
+import de.cau.cs.kieler.klighd.lsp.constraints.ConstraintsLanguageClient
 
 /**
  * LanguageClient that implements additional methods necessary for server client communication in KEITH.
@@ -23,7 +24,7 @@ import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
  *
  */
  @JsonSegment("keith")
-interface KeithLanguageClient extends LanguageClient {
+interface KeithLanguageClient extends LanguageClient, ConstraintsLanguageClient {
     
     @JsonNotification("kicool/compile")
     def void compile(Object results, String uri, boolean finished);
