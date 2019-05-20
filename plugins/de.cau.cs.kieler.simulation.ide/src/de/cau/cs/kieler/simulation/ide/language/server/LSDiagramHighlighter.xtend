@@ -42,6 +42,9 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
             if(diagramModel === null) {
                 return;
             }
+            // TODO apply update the correct way
+            startDiagramBatchUpdate
+            applyDiagramBatchUpdate
             show(lastUri, lastClientId, -1)
         }
     }
