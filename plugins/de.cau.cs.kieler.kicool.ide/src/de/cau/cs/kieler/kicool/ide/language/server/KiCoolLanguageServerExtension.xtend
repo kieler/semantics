@@ -50,48 +50,51 @@ import org.eclipse.xtext.util.CancelIndicator
 class KiCoolLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(KiCoolLanguageServerExtension)
-    
+
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
-    
+
     @Inject
     Injector injector
 
     @Inject
     extension KGraphLanguageServerExtension
-    
+
     extension IdeCompilerView compilerView = new IdeCompilerView
     protected extension ILanguageServerAccess languageServerAccess
-    
+
     /**
      * Holds compilation snapshots for every uri, which was compiled. Send to Theia client after compilation
      */
     protected Map<String, List<List<SnapshotDescription>>> snapshotMap = new HashMap<String, List<List<SnapshotDescription>>>
-    
+
     /**
      * Holds eObjects for every snapshot of every uri, which was compiled. Used to generate diagrams if requested 
      */
+    @Accessors(PUBLIC_GETTER)
     protected Map<String, List<Object>> objectMap = new HashMap<String, List<Object>>
-  
+
     /**
      * Used to filter the compilation system according to the compiler preferences
      */
     var Class<?> modelClassFilter
-    
+
     /**
      * The command that was compiled the last time.
      */
+    @Accessors(PUBLIC_GETTER)
     protected String lastCommand
-    
+
     /**
      * The index of the snapshot currently shown in the diagram view.
      */
-     protected int currentIndex
-    
+    protected int currentIndex
+
     /**
      * The uri for that was compiled the last time.
      */
+    @Accessors(PUBLIC_GETTER)
     protected String lastUri
-    
+
     /**
      * Indicates if the last compilation was done inplace.
      */
@@ -111,13 +114,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace))
         return
     }
-    
+
     /**
      * Called after the compilation function is done. Handles what needs to be updated when the compilation is done,
      * such as requesting a new diagram for the previously shown snapshot.
      */
-    protected def didCompile(String uri, String clientId, String command, boolean inplace, CancelIndicator cancelIndicator) {
-        if (command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace) {
+    protected def didCompile(String uri, boolean sameCompilation, String clientId, CancelIndicator cancelIndicator) {
+        if (sameCompilation) {
 
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
         } else {
@@ -125,12 +128,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
             currentIndex = newIndex
         }
-        lastUri = uri
-        lastCommand = command
-        lastInplace = inplace
         return
     }
-    
+
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
@@ -138,7 +138,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         this.compilationThread.start()
         return context
     }
-    
+
     override show(String uri, String clientId, int index) {
         var Object model
         if (index != -1) {
@@ -148,15 +148,15 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             model = getEObjectFromUri(uri)
         }
         val modelToSend = model
-        return requestManager.runRead[ cancelIndicator |
+        return requestManager.runRead [ cancelIndicator |
             currentIndex = index
             showSnapshot(uri, clientId, modelToSend, cancelIndicator, false)
         ]
     }
-    
+
     override getSystems(String uri, boolean filter) {
         // Reset the calculation of the current snapshot index.
-        lastUri = null
+//        lastUri = null cannot just be reset this way, since it was not compiled
         this.getSystemsThread = new GetSystemsThread([
             this.model = getEObjectFromUri(uri)
         ])
@@ -171,7 +171,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             systemDescriptions
         ]
     }
-    
+
     /**
      * Gets EObject for resource specified by given uri as String
      * 
@@ -179,16 +179,16 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @return EObject of specified resource
      */
     def EObject getEObjectFromUri(String uri) {
-        var fileUri = URLDecoder.decode( uri, "UTF-8" );
+        var fileUri = URLDecoder.decode(uri, "UTF-8");
         if (fileUri.startsWith("file://")) {
-            fileUri = fileUri.substring(7) 
+            fileUri = fileUri.substring(7)
         }
         val uriObject = URI.createFileURI(fileUri)
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
-        
+
         return resource.getContents().head
     }
-    
+
     /**
      * @param uri URI of file without file://
      * @return the correct XtextResourceSet for the given uri based in its file extension.
@@ -196,7 +196,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def XtextResourceSet getXtextResourceSet(@NonNull URI uri) {
         return injector.getInstance(XtextResourceSet);
     }
-    
+
     /**
      * Converts systems returned from language server to system description containing the information the Theia client
      * needs to display the available compilation systems
@@ -207,11 +207,11 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id, system.public))	
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public))
         }
         return systemDescription
     }
-    
+
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
@@ -257,6 +257,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param showSnapshot indicates whether diagram should be updated on client side.
      */
     def update(String uri, CompilationContext context, String clientId, String command, boolean inplace, boolean showSnapshot, boolean finished) {
+        val sameCompilation = command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace
         var future = new CompletableFuture()
         future.complete(void)
         future.thenAccept([
@@ -267,9 +268,12 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
                 client.cancelCompilation(true)
             ])
         } else {
-            if (showSnapshot) {
+            if (finished) {
+                lastUri = uri
+                lastCommand = command
+                lastInplace = inplace
                 future.thenRun [
-                    didCompile(uri, clientId, command, inplace, CancelIndicator.NullImpl)
+                    didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
                 ].exceptionally [ throwable |
                     LOG.error('Error while running additional compilation effects.', throwable)
                     return null
