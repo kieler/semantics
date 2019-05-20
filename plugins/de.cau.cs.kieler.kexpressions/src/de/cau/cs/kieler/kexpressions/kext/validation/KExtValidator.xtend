@@ -15,10 +15,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.Kext
 import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 //import org.eclipse.xtext.validation.Check
 
@@ -129,6 +131,16 @@ class KExtValidator extends AbstractKExtValidator {
         if (declaration.type == ValueType.PURE && (!declaration.signal)) {
             error("Pure types are only allowed if used in combination with signals.",
                 declaration, null, -1)
+        }
+    }
+    
+    @Check
+    def void checkReferenceAssignment(Assignment asm) {
+        val decl = asm.reference?.valuedObject?.eContainer
+        if (decl instanceof ClassDeclaration) {
+            if (asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
+                error("Assignments to class/struct types are not supported.", asm.reference, null, -1)
+            }
         }
     }
 }

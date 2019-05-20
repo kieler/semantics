@@ -55,6 +55,7 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 //import org.eclipse.xtext.validation.Check
 
@@ -137,6 +138,17 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_OVERRIDE_SUPERFLOUSE = "The is no region to override."  
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
 
+
+    @Check
+    override checkReferenceAssignment(Assignment asm) {
+        super.checkReferenceAssignment(asm)
+        val decl = asm.reference?.valuedObject?.eContainer
+        if (decl instanceof ReferenceDeclaration) {
+            if (asm.reference.subReference === null && decl.reference instanceof de.cau.cs.kieler.sccharts.State && !(asm.eContainer instanceof DataflowRegion)) {
+                error("Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region).", asm.reference, null, -1)
+            }
+        }
+    }
 
     /**
      * Checks for inconsistencies/conflicts in inheritance hierarchy.
