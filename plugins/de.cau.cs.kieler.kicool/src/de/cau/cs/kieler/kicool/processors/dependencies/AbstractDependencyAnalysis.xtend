@@ -153,9 +153,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                     val priority = sched.priority
                     
                     for (w : artificialWriters) {
-//                        println(effect+ "\n  " + effect.association + "\n  " + schedule + "\n  " + scheduleObject + "\n  " +
-//                            priority + "\n  " + forkStack
-//                        )
                         val writeAccess = new ValuedObjectAccess(assignment, assignment.association, schedule, scheduleObject, priority, forkStack, false)
                         writeAccess.isWriteAccess = true
                         valuedObjectAccessors.addAccess(w, writeAccess)
@@ -356,7 +353,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
         if (source.associatedNode == target.associatedNode) return
         val type = source.accessType(target)
-        if (type == IGNORE) return        
+        if (type == IGNORE) return
         val saveOnlyConflicting = environment.getProperty(SAVE_ONLY_CONFLICTING_DEPENDENCIES)
         val concurrent = source.isConcurrentTo(target)
         if (!concurrent && saveOnlyConflicting) return

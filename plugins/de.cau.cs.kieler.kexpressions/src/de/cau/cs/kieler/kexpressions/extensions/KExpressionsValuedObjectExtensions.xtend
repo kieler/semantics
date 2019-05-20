@@ -265,6 +265,11 @@ class KExpressionsValuedObjectExtensions {
         	if (expression === null) {
         	} else if (expression instanceof ValuedObjectReference) { 
         		l += expression
+        		var sub = expression.subReference
+        		while (sub !== null) {
+        		    l += sub
+        		    sub = sub.subReference
+        		}
         	} else { 
         		expression.eAllContents.filter(ValuedObjectReference).forEach[
         		    l += it   

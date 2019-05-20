@@ -76,8 +76,8 @@ class KExpressionsDeclarationExtensions {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration
     }
     
-    def VariableDeclaration createClassDeclaration() {
-        KExtFactory::eINSTANCE.createClassDeclaration
+    def ClassDeclaration createClassDeclaration() {
+        KExtFactory::eINSTANCE.createClassDeclaration => [type = ValueType.CLASS]
     } 
     
     def MethodDeclaration createMethodDeclaration() {
@@ -130,6 +130,8 @@ class KExpressionsDeclarationExtensions {
     
     def ClassDeclaration createClassDeclaration(ClassDeclaration declaration, boolean deep) {
         return (createClassDeclaration as ClassDeclaration) => [
+            name = declaration.name
+            
             type = declaration.type
             input = declaration.input
             output = declaration.output

@@ -562,6 +562,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
                 val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
                 if (sCChartAssignment.valuedObject !== null) {
                     assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+                    // Copy sub reference
+                    var scgRef = assignment.reference
+                    var sccSub = sCChartAssignment.reference.subReference
+                    while (sccSub !== null) {
+                        var ref = sccSub.valuedObject.SCGValuedObject.reference
+                        ref.indices += sccSub.indices.map[copy]
+                        ref.indices.filter(ValuedObjectReference).toList.forEach[valuedObject = valuedObject.SCGValuedObject]
+                        scgRef.subReference = ref
+                        scgRef = ref
+                        sccSub = sccSub.subReference
+                    }
                 }
 
                 // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))

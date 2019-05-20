@@ -19,15 +19,17 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.scg.SCGraph
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.SchedulingBlock
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -54,6 +56,7 @@ class SCGDeclarationExtensions {
     
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGCoreExtensions
 
@@ -231,7 +234,15 @@ class SCGDeclarationExtensions {
     		s.operator = assignment.operator
     		assignment.indices?.forEach[
     			s.indices += it.copySCGExpression(map)
-    		] 
+    		]
+    		var newVOR = s.reference
+    		var oldSub = assignment.reference?.subReference
+    		while (oldSub !== null) {
+    		    val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
+    		    newVOR.subReference = ref
+    		    newVOR = ref
+    		    oldSub = oldSub.subReference
+    		}
     	]
     } 
 

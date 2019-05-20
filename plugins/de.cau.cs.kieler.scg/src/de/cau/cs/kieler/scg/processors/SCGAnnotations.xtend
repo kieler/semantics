@@ -19,6 +19,7 @@ import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -98,7 +99,7 @@ class SCGAnnotations {
             "Marks an node as return node.")
             
     public static val ANNOTATION_METHOD_PARAMETER = 
-        register("methodParameter", AnnotationsType.SYSTEM, IntAnnotation, Assignment, 
+        register("methodParameter", AnnotationsType.SYSTEM, IntAnnotation, ValuedObject, 
             "Marks an node as method parameter assignment.")
             
     public static val ANNOTATION_METHOD_REFERENCE = 

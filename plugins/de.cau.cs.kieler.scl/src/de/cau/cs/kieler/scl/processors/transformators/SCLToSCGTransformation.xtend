@@ -317,19 +317,13 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val newVO = value
             oldVO.trace(newVO)
             valuedObjectMapping.put(oldVO, newVO)
+            newVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, method.parameterDeclarations.indexOf(oldVO.eContainer))
             // Fix VO association in VariableStore
             if (voStore !== null) {
                 val info = voStore.variables.get(oldVO.name).findFirst[it.valuedObject == oldVO]
                 if (info !== null) info.valuedObject = newVO
             }
-            // Always create iniit for paramter
-            method.statements.add(0,
-                SCLFactory::eINSTANCE.createAssignment => [
-                    it.trace(newVO)
-                    valuedObject = newVO
-                    expression = if (newVO.initialValue !== null) newVO.initialValue else newVO.reference
-                    addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, method.parameterDeclarations.indexOf(oldVO.eContainer))
-                ])
+            // Do not init paramter
         ]
     
 //        method.removeDoubleJumps
@@ -377,16 +371,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                             valuedObjects += selfVO
                             reference = classDecl
                         ]
-                        // Add parameter assignment
-                        val node = sCGFactory.createAssignment => [
-                            scg.nodes += it
-                            operator = AssignOperator.ASSIGN
-                            expression = selfVO.reference
-                            valuedObject = selfVO
-                            addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
-                        ]
-                        node.createControlFlow => [target = entry.next.target]
-                        entry.next.target = node
+                        selfVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
                         // Fix VOR
                         for (vor : VORtoInner) {
                             val wrapper = selfVO.reference

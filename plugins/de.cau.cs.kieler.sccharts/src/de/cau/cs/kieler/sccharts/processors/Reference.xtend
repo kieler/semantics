@@ -13,9 +13,9 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
@@ -47,11 +48,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -104,7 +104,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
         for(rootState : newArrayList(model.rootStates.head)) {
-            rootState.expandRoot
+            rootState.expandRoot(true)
         }
         
         val firstRoot = model.rootStates.head
@@ -113,7 +113,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         model.imports.clear
     }
     
-    protected def void expandRoot(State rootState) {
+    protected def void expandRoot(State rootState, boolean validate) {
         // Handle inheritance
         val statesWithInheritance = rootState.allContainedStates.filter[ !baseStates.nullOrEmpty ].toList
         
@@ -149,7 +149,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             }
         }
         
-        if (!rootState.validate) 
+        if (validate && !rootState.validate)
             throw new IllegalStateException("References objects are not contained in the resource!")
     }
     
@@ -549,15 +549,48 @@ class Reference extends SCChartsProcessor implements Traceable {
                 var refTarget = ref.reference
                 if (refTarget instanceof State) {
                     val newState = refTarget.copy as State
-                    newState.expandRoot
-                    val classDecl = createPolicyClassDeclaration => [
+                    newState.expandRoot(false)
+                    val classDecl = createClassDeclaration => [
                         name = newState.name
                         valuedObjects += ref.valuedObjects
                         declarations += newState.declarations
                     ]
                     ref.replace(classDecl)
                     
-                    // Fix VORs
+                    // Fix Methods
+                    for (method : classDecl.declarations.filter(MethodImplementationDeclaration)) {
+                        for (vor : method.eAllContents.filter(ValuedObjectReference).toIterable) {
+                            val oldDecl = vor.valuedObject.declaration
+                            if (oldDecl.eContainer instanceof State) {
+                                vor.valuedObject = classDecl.declarations.map[valuedObjects].flatten.findFirst[vor.valuedObject.name.equals(name)]
+                            }
+                        }
+                    }
+                    
+                    // Copy inner behavior
+                    for (vo : classDecl.valuedObjects) {
+                        for (region : newState.regions) {
+                            val newRegion = region.copy
+                            newRegion.name = vo.name + region.name
+                            for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
+                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                    vor.prependReferenceToVO(vo)
+                                }
+                            }
+                            state.regions += newRegion
+                        }
+                        for (action : newState.actions) {
+                            val newAction = action.copy
+                            for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
+                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                    vor.prependReferenceToVO(vo)
+                                }
+                            }
+                            state.actions += newAction
+                        }
+                    }
+                    
+                    // Fix (sub) VORs
                     for (vor : state.eAllContents.filter(ValuedObjectReference).filter[classDecl.valuedObjects.contains(it.valuedObject)].toList) {
                         var sub = vor.subReference
                         while (sub !== null) {
@@ -571,38 +604,17 @@ class Reference extends SCChartsProcessor implements Traceable {
                             sub = sub.subReference
                         }
                     }
-                    
-                    // Copy inner behavior
-                    for (vo : classDecl.valuedObjects) {
-                        for (region : newState.regions) {
-                            val newRegion = region.copy
-                            newRegion.name = vo.name + region.name
-                            for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
-                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
-                                    val newVOR = vo.reference
-                                    vor.replace(newVOR)
-                                    newVOR.subReference = vor
-                                }
-                            }
-                            state.regions += newRegion
-                        }
-                        for (action : newState.actions) {
-                            val newAction = action.copy
-                            for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
-                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
-                                    val newVOR = vo.reference
-                                    vor.replace(newVOR)
-                                    newVOR.subReference = vor
-                                }
-                            }
-                            state.actions += newAction
-                        }
-                    }
                 }
             }
-            
-            
         }
+    }
+    
+    protected def prependReferenceToVO(ValuedObjectReference vor, ValuedObject vo) {
+        val newSub = vor.valuedObject.reference
+        newSub.subReference = vor.subReference
+        newSub.indices += vor.indices
+        vor.valuedObject = vo
+        vor.subReference = newSub
     }
 
 }

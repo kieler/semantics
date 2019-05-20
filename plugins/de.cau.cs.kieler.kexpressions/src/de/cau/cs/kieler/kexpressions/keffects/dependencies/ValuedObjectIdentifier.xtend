@@ -42,7 +42,12 @@ class ValuedObjectIdentifier {
     static val KExpressionsCompareExtensions compare = new KExpressionsCompareExtensions
     
     new(Assignment assignment) {
-        this.valuedObject = assignment.reference.valuedObject
+        var ref = assignment.reference
+        this.valuedObject = ref.valuedObject
+        while (ref.subReference !== null) {
+            ref = ref.subReference
+            this.valuedObject = ref.valuedObject
+        }
         this.indices = assignment.reference.indices.removeDynamicIndices
     }
     

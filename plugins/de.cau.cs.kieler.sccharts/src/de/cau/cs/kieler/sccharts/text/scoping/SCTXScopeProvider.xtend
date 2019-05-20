@@ -29,6 +29,9 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * This class contains custom scoping description.
@@ -183,14 +186,27 @@ class SCTXScopeProvider extends KExtScopeProvider {
         return IScope.NULLSCOPE
     }
     
-    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
-        Function1<? super VariableDeclaration, Boolean> predicate
-    ) {
+    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+        Function1<? super VariableDeclaration, Boolean> predicate) {
+        var EObject region = context
+        while (region !== null && !(region instanceof Region)) {
+            region = region.eContainer
+        }
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
         if (declaration.reference instanceof State) {
             val state = declaration.reference as State
-            return Scopes.scopeFor(state.declarations.filter(MethodDeclaration).map[valuedObjects.head], super.getScopeForReferencedDeclarationObject(declaration, predicate))
+            val additionalCandidates = newArrayList
+            additionalCandidates += state.declarations.filter(MethodDeclaration).map[valuedObjects.head]
+            if (!state.baseStates.nullOrEmpty) {
+                for (decl : state.allVisibleInheritedDeclarations) {
+                    for(VO : decl.valuedObjects) {
+                        additionalCandidates += VO
+                    }
+                }
+            }
+            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate))
         } else {
-            return super.getScopeForReferencedDeclarationObject(declaration, predicate)
+            return super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate)
         }
     }
 

@@ -12,34 +12,37 @@
  */
 package de.cau.cs.kieler.scg.processors
 
-import com.google.common.collect.HashMultimap
+import com.google.common.collect.HashBasedTable
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.SCGraphs
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.annotations.ReferenceAnnotation
-import com.google.common.collect.HashBasedTable
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
-import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import java.util.Map
+import java.util.Set
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * 
@@ -69,12 +72,12 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
     }
     
     override process() {
-        val methodSCG = newHashMap
+        val methodSCGs = newHashMap
         val normalSCGs = newArrayList
         
         for (scg : model.scgs) {
             if (scg.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE)) {
-                methodSCG.put((scg.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE) as ReferenceAnnotation).object as MethodDeclaration, scg)
+                methodSCGs.put((scg.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE) as ReferenceAnnotation).object as MethodDeclaration, scg)
             } else {
                 normalSCGs += scg
             }
@@ -95,56 +98,71 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                     }
                 }
             }
-            for (cell : calls.cellSet) {
-                // Currently only inlining is available
-                methodSCG.get(cell.rowKey).inlineMethod(cell.value, cell.columnKey)
+            for (call : calls.cellSet) {
+                if (methodSCGs.containsKey(call.rowKey)) {
+                    // Currently only inlining is available
+                    call.rowKey.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet)
+                }
             }
         }
         
         // Remove inlined methods
-        model.scgs.removeAll(methodSCG.values)
+        model.scgs.removeAll(methodSCGs.values)
+        methodSCGs.keySet.forEach[remove]
     }
     
-    def void inlineMethod(SCGraph methodSCG, ReferenceCall call, Node callNode) {
+    def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack) {
+        val methodSCG = methodSCGs.get(method)
+        val voStore = VariableStore.get(environment)
         val callVOs = newLinkedList(call.valuedObject)
         var sub = call.subReference
         while (sub !== null) {
             callVOs += sub.valuedObject
             sub = sub.subReference
         }
+        
+        if (!callStack.add(method)) {
+            environment.errors.add("Cannot inline recursive function calls")
+            return
+        }
+        
+        if (!call.schedule.nullOrEmpty) {
+            environment.errors.add("User schedules are not supported in combination with method inlining!")
+            return
+        }
+        
         val prefix = GENERATED_PREFIX + "fn" + fnCouter + callVOs.join("_", "_", "_", [name])
+        fnCouter++
         val targetSCG = callNode.eContainer as SCGraph
         val scg = methodSCG.copy
         
         val entry = scg.nodes.filter(Entry).head
         val exit = scg.nodes.filter(Exit).head
-        val params = newHashMap
-        var ValuedObject returnVO
+        val returnVO = scg.nodes.filter(Assignment).findFirst[hasAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)]?.valuedObject
+        val params = scg.declarations.map[valuedObjects].flatten.filter[hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER)].toMap([it],
+            [(getAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER) as IntAnnotation).value])
         
-        for (node : scg.nodes.filter(Assignment)) {
-            if (node.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER)) {
-                params.put((node.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER) as IntAnnotation).value, node)
-            } else if (node.hasAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)) {
-                returnVO = node.valuedObject
-            }
-        }
-        
-        // Assign params
-        for (index : params.keySet) {
-            if (index == -1) { // self
-                var vor = callVOs.head.reference
-                params.get(-1).expression = vor
-                for (vo : callVOs.drop(1)) {
-                    if (vo !== callVOs.last) {
-                        sub = vo.reference
-                        vor.subReference = sub
-                        vor = sub
+        // Replace params
+        var Declaration selfDecl
+        for (vor : scg.nodes.map[eAllContents.filter(ValuedObjectReference).toIterable].flatten.toList) {
+            if (params.containsKey(vor.valuedObject)) {
+                val index = params.get(vor.valuedObject)
+                if (index == -1) { // self
+                    selfDecl = vor.valuedObject.declaration
+                    vor.valuedObject = callVOs.head
+                } else if (index < call.parameters.size) {
+                    val exp = call.parameters.get(index).expression
+                    if (exp instanceof ValuedObjectReference) {
+                        vor.valuedObject = exp.valuedObject
+                        vor.subReference = exp.subReference.copy
+                        vor.indices.addAll(0, exp.indices.map[copy])
+                    } else {
+                        vor.replace(exp.copy)
                     }
                 }
-            } else if (index < call.parameters.size) {
-                params.get(index).expression = call.parameters.get(index).expression
             }
-        }      
+        }
+        if (selfDecl !== null) selfDecl.remove
         
         // Rename VOs
         scg.declarations.map[valuedObjects].flatten.forEach[name = prefix + name]
@@ -156,6 +174,9 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         exit.allPrevious.toList.forEach[target = callNode]
         exit.remove
         
+        // Remove return tag
+        if (returnVO !== null) scg.nodes.filter(Assignment).forEach[removeAnnotations(SCGAnnotations.ANNOTATION_RETURN_NODE)]
+        
         // Move nodes
         targetSCG.declarations += scg.declarations
         targetSCG.nodes += scg.nodes
@@ -163,11 +184,13 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         // Insert return value or remove call node
         if (returnVO !== null) {
             call.replace(returnVO.reference)
+            voStore.update(returnVO, "method-inlining")
         } else if (callNode instanceof Assignment) {
             callNode.allPrevious.toList.forEach[target = callNode.next.target]
             callNode.next.target = null
             callNode.remove
         }
     }
+    
 
 }
