@@ -155,8 +155,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
 
     override getSystems(String uri, boolean filter) {
-        // Reset the calculation of the current snapshot index.
-//        lastUri = null cannot just be reset this way, since it was not compiled
         this.getSystemsThread = new GetSystemsThread([
             this.model = getEObjectFromUri(uri)
         ])
