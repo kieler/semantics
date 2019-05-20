@@ -11,7 +11,8 @@ de.cau.cs.kieler.kicool.deploy.setup config {
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-print.ftl": "templates/nxj-print.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-sound.ftl": "templates/nxj-sound.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-timing.ftl": "templates/nxj-timing.ftl",
-        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-touch_and_buttons.ftl": "templates/nxj-touch_and_buttons.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-buttons.ftl": "templates/nxj-buttons.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-touch.ftl": "templates/nxj-touch.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-ultrasonic.ftl": "templates/nxj-ultrasonic.ftl",
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
@@ -25,7 +26,8 @@ de.cau.cs.kieler.kicool.deploy.templates config {
         "nxj-print.ftl",
         "nxj-sound.ftl",
         "nxj-timing.ftl",
-        "nxj-touch_and_buttons.ftl",
+        "nxj-buttons.ftl",
+        "nxj-touch.ftl",
         "nxj-ultrasonic.ftl"
     ],
     "de.cau.cs.kieler.kicool.deploy.templates": {

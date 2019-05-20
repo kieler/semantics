@@ -4,7 +4,8 @@
          
      Example for SCCharts:
          output string 
-         @macro "Print" text; -->
+         @macro "Print" text
+-->
 <#macro Print position>
 <#if position=="output">
 <#list parameters["Print"] as parameters>
@@ -24,7 +25,8 @@ if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equal
          
      Example for SCCharts:
          output string 
-         @macro "DrawString" text; -->
+         @macro "DrawString" text
+-->
 <#macro DrawString position>
 <#if position=="output">
 <#list parameters["DrawString"] as parameters>
@@ -40,8 +42,11 @@ if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equal
 <#-- As output variable, print the variable to the display on the given coordinate.
          
      Example for SCCharts:
-         @Wrapper Print
-         output string text; -->
+         output string 
+         @macro "DrawInt", "0", "2" number
+     Optional: 
+         int: Sentinel value         
+-->
 <#macro DrawInt position>
 <#if position=="init">
 <#list parameters["DrawInt"] as parameters>

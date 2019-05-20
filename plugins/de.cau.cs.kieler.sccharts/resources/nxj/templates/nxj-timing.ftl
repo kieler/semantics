@@ -4,20 +4,25 @@
      Note that the ResetClock macro directly depends on this implementation. 
 
      Example for SCCharts:
-         @Wrapper Clock, "1000"
-         input bool clock; -->
-<#macro Clock millis>
-    <@init>
-        long ${varName}Counter = System.currentTimeMillis();
-    </@>
-    <@input>
+         input bool 
+         @macro "Clock", "1000" clock
+-->
+<#macro Clock position>
+<#if position=="init">
+<#list parameters["Clock"] as parameters>
+        long ${parameters.varName}Counter = System.currentTimeMillis();
+</#list>
+</#if>
+<#if position=="input">
+<#list parameters["Clock"] as parameters>
         // Clock
-        scchart.${varName} = false;
-        if ( ${varName}Counter + ${millis} < System.currentTimeMillis() ){
-            ${varName}Counter= System.currentTimeMillis();
-            scchart.${varName} = true;
+        scchart.${parameters.varName} = false;
+        if ( ${parameters.varName}Counter + ${parameters.parameter1!1000} < System.currentTimeMillis() ){
+            ${parameters.varName}Counter= System.currentTimeMillis();
+            scchart.${parameters.varName} = true;
         }
-    </@>
+</#list>
+</#if>
 </#macro>
 
 <#-- ResetClock -->
@@ -29,38 +34,43 @@
      Note that ResetClock directly depends on the implementation of the Clock annotation.
 
      Example for SCCharts:
-         @Wrapper Clock, "5000" 
-         input bool clockVariable;
+         input bool 
+         @macro "Clock", "5000" clockVariable
          
-         @Wrapper ResetClock, clockVariable;
-         output bool resetClock; -->
-<#macro ResetClock clockVariable autoFalse=true>
-    <@output>
+         output bool 
+         @macro "ResetClock", "clockVariable" resetClock
+-->
+<#macro ResetClock position>
+<#if position=="output">
+<#list parameters["ResetClock"] as parameters>
         // ResetClock
-        if(scchart.${varName}){
-            ${clockVariable}Counter = System.currentTimeMillis();
-            <#if autoFalse>
-            scchart.${varName} = false;
-            </#if>
-        }
-    </@>
+        if(scchart.${parameters.varName}){
+            ${parameters.parameter1}Counter = System.currentTimeMillis();
+            scchart.${parameters.varName} = false;
+</#list>
+</#if>
 </#macro>
 
 <#-- Time -->
 <#-- As input variable, contains the elapsed time since program start in milliseconds.
 
     Example:
-    @Wrapper Time
-    input int time; -->
-<#macro Time>
-    <@init>
+        input int 
+        @macro "Time" time
+-->
+<#macro Time position>
+<#if position=="init">
+<#list parameters["Time"] as parameters>
         // Timestamp of program start
         long startTime = System.currentTimeMillis();
-    </@>
-    <@input>
+</#list>
+</#if>
+<#if position=="init">
+<#list parameters["Time"] as parameters>
         // Time
-        scchart.${varName} = new Long(System.currentTimeMillis() - startTime).intValue();
-    </@>
+        scchart.${parameters.varName} = (int)(System.currentTimeMillis() - startTime);
+</#list>
+</#if>
 </#macro>
 
 <#-- TickLoopDuration -->
@@ -74,26 +84,29 @@
      The input variable that uses this macro should be the first in the model,
      so that waiting for the target duration is the last action in the tick loop.
      
-     Example for SCCharts:
-         @Wrapper TickLoopDuration, "50" // Tick function should be called every 50 milliseconds.
-         output int tickDuration; -->
-<#macro TickLoopDuration targetMillis=0>
-    <@init>
+     Example for SCCharts: // Tick function should be called every 50 milliseconds.
+         output int 
+         @macro "TickLoopDuration", "50" tickDuration; -->
+<#macro TickLoopDuration position>
+<#if position=="init">
+<#list parameters["TickLoopDuration"] as parameters>
         long tickDurationCounter = System.currentTimeMillis();
         boolean isFirstTick = true;
-    </@>
-    <@input>
+</#list>
+</#if>
+<#if position=="input">
+<#list parameters["TickLoopDuration"] as parameters>
         // Don't set tick duration in very first tick
         if(isFirstTick) {
             isFirstTick = false;
         } else {
             // Set actual tick duration
-            scchart.${varName} = new Long(System.currentTimeMillis() - tickDurationCounter).intValue();
-            <#if targetMillis != 0 >
+            scchart.${parameters.varName} = (int)(System.currentTimeMillis() - tickDurationCounter);
+            <#if (parameters.parameter1!0) != 0 >
             // Wait until target duration of tick reached
-            if ( tickDurationCounter + ${targetMillis} > System.currentTimeMillis() ) {
+            if ( tickDurationCounter + ${parameters.parameter1} > System.currentTimeMillis() ) {
                 try {
-                    Thread.sleep((tickDurationCounter + ${targetMillis}) - System.currentTimeMillis());
+                    Thread.sleep((tickDurationCounter + ${parameters.parameter1}) - System.currentTimeMillis());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -102,7 +115,8 @@
             // Remember tick duration
             tickDurationCounter = System.currentTimeMillis();
         }
-    </@>
+</#list>
+</#if>
 </#macro>
 
 <#-- TickWakeUp -->
@@ -117,13 +131,22 @@
      
      The time is always in milliseconds.
      
-     Example for SCCharts:
-         @Wrapper TickWakeUp
-         input output int wakeUpTime = 0;  -->
-<#macro TickWakeUp>
-    <@input>
+     Example for SCCharts:         
+         input output int 
+         @macro "TickWakeUp" wakeUpTime
+-->
+<#macro TickWakeUp position>
+<#if position=="output">
+<#list parameters["TickWakeUp"] as parameters>        
+        // Set input of model to new system time. This should be the old wake up time.
+        scchart.${parameters.varName} = (int)(System.currentTimeMillis());
+        // The tick function should come next...
+</#list>
+</#if>
+<#if position=="output">
+<#list parameters["TickWakeUp"] as parameters>
         // Wait until wake up time has been reached.
-        long wakeUpTime = scchart.${varName};
+        long wakeUpTime = scchart.${parameters.varName};
         if ( wakeUpTime > System.currentTimeMillis() ) {
             try {
                 Thread.sleep(wakeUpTime - System.currentTimeMillis());
@@ -131,10 +154,8 @@
                 e.printStackTrace();
             }
         }
-        // Set input of model to new system time. This should be the old wake up time.
-        scchart.${varName} = new Long(System.currentTimeMillis()).intValue();
-        // The tick function should come next...
-    </@>
+</#list>
+</#if>
 </#macro>
 
 <#-- Sleep -->
@@ -142,17 +163,20 @@
         blocks the running thread on the Mindstorms robot for the given time (in milliseconds).
      
      Example for SCCharts:
-         @Wrapper Sleep
-         output int sleepTime; -->
-<#macro Sleep>
-    <@output>
+         output int 
+         @macro "Sleep" sleepTime
+-->
+<#macro Sleep position>
+<#if position=="output">
+<#list parameters["Sleep"] as parameters>
         // Sleep
-        if(scchart.${varName} > 0) {
+        if(scchart.${parameters.varName} > 0) {
             try {
-                Thread.sleep(scchart.${varName});
+                Thread.sleep(scchart.${parameters.varName});
             } catch (InterruptedException e) { }
         }
-    </@>
+</#list>
+</#if>
 </#macro>
 
 <#-- TickCount -->
@@ -160,14 +184,19 @@
      The initial tick is tick 0, the following are tick 1, 2, 3, ...
      
      Example for SCCharts:
-         @Wrapper TickCount
-         input int tickCount; -->
-<#macro TickCount>
-    <@init>
-      scchart.${varName} = -1; // Start with -1 because increasing is done before each tick.
-    </@>
-    <@input>
+         input int 
+         @macro "TickCount" tickCount
+-->
+<#macro TickCount position>
+<#if position=="init">
+<#list parameters["Sleep"] as parameters>
+      scchart.${parameters.varName} = -1; // Start with -1 because increasing is done before each tick.
+</#list>
+</#if>
+<#if position=="input">
+<#list parameters["Sleep"] as parameters>
         // TickCount
-        scchart.${varName}++;
-    </@>
+        scchart.${parameters.varName}++;
+</#list>
+</#if>
 </#macro>

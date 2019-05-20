@@ -2,20 +2,27 @@
 <#-- As input variable, reads the value of the light sensor, that is attached to the given port.
 
      Example for SCCharts:
-         @Wrapper LightSensor, S3
-         input int light; -->
- <#macro LightSensor port getPerCentValue=false>
-    <@init>
-        LightSensor lightSensor${port} = new LightSensor(SensorPort.${port});
-    </@>
-    <@input>
+         input int 
+         @macro "LightSensor", "port" light
+     Optional:
+         boolean: Normalized value         
+-->
+<#macro LightSensor position>
+<#if position=="init">
+<#list parameters["LightSensor"] as parameters>
+        LightSensor lightSensor${parameters.parameter1} = new LightSensor(SensorPort.${parameters.parameter1});
+</#list>        
+</#if>
+<#if position=="input">
+<#list parameters["LightSensor"] as parameters>
         // Light
-        <#if getPerCentValue>
-        scchart.${varName} = lightSensor${port}.readNormalizedValue();
+        <#if (parameters.parameter2!"false")=="true">
+        scchart.${parameters.varName} = lightSensor${parameters.parameter1}.readNormalizedValue();
         <#else>
-        scchart.${varName} = lightSensor${port}.getLightValue();
+        scchart.${parameters.varName} = lightSensor${parameters.parameter1}.getLightValue();
         </#if>
-    </@>
+</#list>        
+</#if>
 </#macro>
 
 <#-- CalibrateLightSensor -->
@@ -26,16 +33,37 @@
      To calibrate, signal has to be either "High" or "Low". 
 
      Example for SCCharts:
-         @Wrapper CalibrateLightSensor, S3, High
-         output bool calibrateWhite; -->
- <#macro CalibrateLightSensor port signal>
-    <@output>
+         output bool 
+         @macro "CalibrateLightSensor", "S3", "High" calibrateWhite
+-->
+ <#macro CalibrateLightSensor position>
+<#if position=="output">
+<#list parameters["CalibrateLightSensor"] as parameters>
         // Calibrate light sensor
-        if (scchart.${varName}) {
-            scchart.${varName} = false;
-            lightSensor${port}.calibrate${signal}();
+        if (scchart.${parameters.varName}) {
+            scchart.${parameters.varName} = false;
+            lightSensor${parameters.parameter1}.calibrate${parameters.parameter2}();
         }
-    </@>
+</#list>        
+</#if>
+</#macro>
+
+<#-- GetFloodlight -->
+<#-- The Floodlight is the red lamp of a light sensor, that can be turned on and off.
+     As input variable, reads the Floodlight state (on or off), that is attached to the given port.
+     As output variable, turns the lamp on (true) or off (false).
+     
+     Example for SCCharts:
+         output bool 
+         @macro "Floodlight", "S3" floodlight
+-->
+<#macro Floodlight position>
+<#if position=="input">
+<#list parameters["Floodlight"] as parameters>
+        // Floodlight ${parameters.parameter1}
+        scchart.${parameters.varName} = lightSensorFloodlight${parameters.parameter1}.getFloodlight();
+</#list>        
+</#if>
 </#macro>
 
 <#-- Floodlight -->
@@ -44,20 +72,26 @@
      As output variable, turns the lamp on (true) or off (false).
      
      Example for SCCharts:
-         @Wrapper Floodlight, S3 
-         output bool floodlight; -->
-<#macro Floodlight port>
-    <@init>
-        LightSensor lightSensorFloodlight${port} = new LightSensor(SensorPort.${port});
-    </@>
-    <@input>
-        // Floodlight ${port}
-        scchart.${varName} = lightSensorFloodlight${port}.getFloodlight();
-    </@>
-    <@output>
-        // Floodlight ${port}
-        lightSensorFloodlight${port}.setFloodlight(scchart.${varName});
-    </@>
+         output bool 
+         @macro "Floodlight", "S3" floodlight
+-->
+<#macro Floodlight position>
+<#if position=="init">
+<#list parameters["Floodlight"] as parameters>
+        LightSensor lightSensorFloodlight${parameters.parameter1} = new LightSensor(SensorPort.${parameters.parameter1}, true);
+        boolean floodlightIsOn${parameters.parameter1} = false;
+</#list>        
+</#if>
+<#if position=="output">
+<#list parameters["Floodlight"] as parameters>
+        // Floodlight ${parameters.parameter1}
+        if (scchart.${parameters.varName} != floodlightIsOn${parameters.parameter1}) {
+            lightSensorFloodlight${parameters.parameter1}.setFloodlight(scchart.${parameters.varName});
+            System.out.println(scchart.${parameters.varName});
+            floodlightIsOn${parameters.parameter1} = scchart.${parameters.varName};
+        }
+</#list>        
+</#if>
 </#macro>
 
 <#-- RCXLamp -->
@@ -65,20 +99,25 @@
      RCX lamps can be connected to the ports A, B, C and D.
 
      Example for SCCharts:
-         @Wrapper RCXLamp, A 
-         output bool lamp; -->
-<#macro RCXLamp port>
-    <@init>
-        RCXMotor rcxMotor${port} = new RCXMotor(MotorPort.${port});
+         output bool 
+         @macro "RCXLamp", "A" lamp
+ -->
+<#macro RCXLamp position>
+<#if position=="init">
+<#list parameters["RCXLamp"] as parameters>
+        RCXMotor rcxMotor${parameters.parameter1} = new RCXMotor(MotorPort.${parameters.parameter1});
         // Provide base power for RCX lamp
-        rcxMotor${port}.setPower(100);
-        rcxMotor${port}.flt();
-    </@>
-    <@output>
-        // RCX lamp ${port}
-        if(scchart.${varName})
-            rcxMotor${port}.forward();
+        rcxMotor${parameters.parameter1}.setPower(100);
+        rcxMotor${parameters.parameter1}.flt();
+</#list>        
+</#if>
+<#if position=="output">
+<#list parameters["RCXLamp"] as parameters>
+        // RCX lamp ${parameters.parameter1}
+        if(scchart.${parameters.varName})
+            rcxMotor${parameters.parameter1}.forward();
         else
-            rcxMotor${port}.flt();
-    </@>
+            rcxMotor${parameters.parameter1}.flt();
+</#list>        
+</#if>
 </#macro>

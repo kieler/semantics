@@ -1,37 +1,47 @@
 <#-- Beep -->
 <#-- As output variable, plays a warning beep as long as the variable is true.
 
-     Example for SCCharts:
-         @Wrapper Beep
-         ouput bool warningBeep; -->
-<#macro Beep volume=10>
-    <@output>
+     Example for SCCharts:       
+         output bool 
+         @macro "Beep" warningBeep
+     Optional:
+         int: volume (10)
+-->
+<#macro Beep position>
+<#if position=="output">
+<#list parameters["Beep"] as parameters>
         // Play beep sound
-        if(scchart.${varName}) {
+        if(scchart.${parameters.varName}) {
             int lastVolume = Sound.getVolume();
-            Sound.setVolume(${volume});
+            Sound.setVolume(${parameters.parameter1!10});
             Sound.beep();
             Sound.setVolume(lastVolume);
         }
-    </@>
+</#list>        
+</#if>
 </#macro>
 
 <#-- Buzz -->
 <#-- As output variable, plays a low buzz sound as long as the variable is true.
 
      Example for SCCharts:
-         @Wrapper Beep
-         ouput bool warningBeep; -->
-<#macro Buzz volume="10">
-    <@output>
+         ouput bool 
+         @macro "Beep" warningBeep
+     Optional:
+         int: volume (10)
+-->
+<#macro Buzz position>
+<#if position=="output">
+<#list parameters["Buzz"] as parameters>
         // Play buzz sound
-        if(scchart.${varName}) {
+        if(scchart.${parameters.varName}) {
             int lastVolume = Sound.getVolume();
-            Sound.setVolume(${volume});
+            Sound.setVolume(${parameters.parameter1!10});
             Sound.buzz();
             Sound.setVolume(lastVolume);
         }
-    </@>
+</#list>        
+</#if>
 </#macro>
 
 <#-- BeepSequence -->
@@ -39,21 +49,26 @@
      The direction of the beep sequence can either be up or down.
      
      Example for SCCharts:
-         @Wrapper BeepSequence, Up
-         ouput bool playBeepSequence; -->
-<#macro BeepSequence direction="Down" volume=10>
-    <@output>
+         ouput bool 
+         @macro "BeepSequence", "up" playBeepSequence
+     Optional:
+         int: volume (10)
+-->
+<#macro BeepSequence position>
+<#if position=="output">
+<#list parameters["Buzz"] as parameters>
         // Play sequence of beep tones
-        if(scchart.${varName}) {
-            scchart.${varName} = false;
+        if(scchart.${parameters.varName}) {
+            scchart.${parameters.varName} = false;
             int lastVolume = Sound.getVolume();
-            Sound.setVolume(${volume});
-            <#if direction == "Up">
+            Sound.setVolume(${parameters.parameter2!10});
+            <#if (parameters.parameter1!"up")=="up">
             Sound.beepSequenceUp();
-            <#elseif direction == "Down">
+            <#else>
             Sound.beepSequence();
             </#if>
             Sound.setVolume(lastVolume);
         }
-    </@>
+</#list>        
+</#if>
 </#macro>
