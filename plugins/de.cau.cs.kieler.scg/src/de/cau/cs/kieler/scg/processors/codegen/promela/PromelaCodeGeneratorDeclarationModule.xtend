@@ -16,11 +16,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.verification.VerificationPropertyType
+import org.eclipse.xtend.lib.annotations.Accessors
 
-import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 import static extension de.cau.cs.kieler.verification.codegen.CodeGeneratorExtensions.*
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import static extension de.cau.cs.kieler.verification.extensions.VerificationContextExtensions.*
 
 /**
  * Handles the declaration of variables.
@@ -30,7 +31,26 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
  */
 class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBase {
     
-    @Inject extension PromelaCodeSerializeHRExtensions serializer
+    @Inject extension PromelaCodeSerializeHRExtensions
+        
+    private static class ConditionalTree {
+        @Accessors var Conditional conditional
+        @Accessors var boolean branchOfConditional
+        @Accessors var ConditionalTree parent
+        new(ConditionalTree parent, boolean branchOfParent, Conditional conditional) {
+            this.parent = parent
+            this.branchOfConditional = branchOfParent
+            this.conditional = conditional
+        }
+        
+        override toString() {
+            if(parent !== null) {
+                return '''ConditionalTree@«hashCode»(«branchOfConditional» branch of «conditional.toString», parent:ConditionalTree@«parent.hashCode»)'''
+            } else {
+                return '''ConditionalTree@«hashCode»(«branchOfConditional» branch of «conditional.toString», no parent)'''
+            }
+        }
+    }
     
     override getName() {
         return class.simpleName;
@@ -61,7 +81,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
         // Add the declarations of the model.
         for (declaration : scg.declarations) {
             for (valuedObject : declaration.valuedObjects) {
-                if(valuedObject.name != "_GO" && !valuedObject.isGuard) {
+                if(valuedObject.name != "_GO" && valuedObject.name != "_TERM"
+                    && !valuedObject.canBeDeclaredLocally) {
                     if (declaration instanceof VariableDeclaration) {
                         val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
                             declaration.type.serializeHR
@@ -89,7 +110,8 @@ class PromelaCodeGeneratorDeclarationModule extends PromelaCodeGeneratorModuleBa
     }
     
     private def String toPmlLtlFormula(String ltlFormula) {
-        val pmlLtlFormula = ltlFormula.replaceAll('''\bG\b''', "[]").replaceAll('''\bF\b''', "<>").replaceAll('''\bR\b''', "\bV\b")
+        // Replace LTL-operators with SPIN syntax
+        val pmlLtlFormula = ltlFormula.replaceAll('''\bG\b''', "[]").replaceAll('''\bF\b''', "<>").replaceAll('''\bR\b''', " V ")
         // Promela needs one step for entering the tick loop. Thus an initial X has to be prepended to the formula.
         val pmlLtlFormulaAfterSetupDone = '''X( «pmlLtlFormula» )'''
         return pmlLtlFormulaAfterSetupDone

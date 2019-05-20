@@ -3,11 +3,40 @@ public system de.cau.cs.kieler.sccharts.netlist.promela
 
 // Get verification properties from model, if none yet
 de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer
-	
+
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
 post process de.cau.cs.kieler.scg.processors.threadAnalyzer
-system de.cau.cs.kieler.scg.netlist
+
+// sequentialize scg
+de.cau.cs.kieler.scg.processors.dependency config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": true
+}
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
+de.cau.cs.kieler.scg.processors.basicBlocks
+post process de.cau.cs.kieler.scg.processors.expressions
+de.cau.cs.kieler.scg.processors.guards config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies": true,
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false
+}
+de.cau.cs.kieler.scg.processors.scheduler
+de.cau.cs.kieler.scg.processors.sequentializer
+// SCG optimizations
+post process de.cau.cs.kieler.scg.processors.copyPropagation
+post process de.cau.cs.kieler.scg.processors.conditionalMerger
+post process de.cau.cs.kieler.scg.processors.haltStateRemover
+// Advanced optimizations on seq. SCG
+de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+de.cau.cs.kieler.scg.processors.persistentStateOptimizer
+de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+// Clean up valued objects
+post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
+post process de.cau.cs.kieler.kicool.deploy.variable.store.clean
+
 // Store information about variable declarations (needed to create counterexample)
 de.cau.cs.kieler.scg.processors.storeVariableDeclarations
+
+// Create PROMELA code
 de.cau.cs.kieler.scg.processors.codegen.promela

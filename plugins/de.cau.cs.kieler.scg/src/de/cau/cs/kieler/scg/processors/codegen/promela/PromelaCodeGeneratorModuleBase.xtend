@@ -12,8 +12,9 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.promela
 
-import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scg.processors.codegen.CodeGeneratorModuleBase
+import de.cau.cs.kieler.scg.processors.codegen.smv.ScgConditionalAssignmentAnalyzer
 
 /** 
  * @author aas
@@ -31,5 +32,12 @@ abstract class PromelaCodeGeneratorModuleBase extends CodeGeneratorModuleBase {
     
     protected def boolean isGuard(ValuedObject vo) {
         return vo.name.startsWith("_g") || vo.name.startsWith("_cg")
+    }
+    
+    protected def boolean canBeDeclaredLocally(ValuedObject valuedObject) {
+        if(valuedObject.isGuard) {
+            return true
+        }
+        return false
     }
 }
