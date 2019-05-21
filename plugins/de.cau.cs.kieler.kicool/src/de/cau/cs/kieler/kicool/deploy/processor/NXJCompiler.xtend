@@ -20,7 +20,9 @@ import java.io.File
 import java.nio.file.Files
 import de.cau.cs.kieler.kicool.classes.GenericCompilationResult
 import de.cau.cs.kieler.core.Platform
+
 import static extension de.cau.cs.kieler.kicool.deploy.Logger.*
+import static extension de.cau.cs.kieler.kicool.deploy.InfrastructureMacroNames.*
 
 /**
  * @author ssm
@@ -71,7 +73,7 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         val sourcePaths = newLinkedHashSet
         val iDir = newLinkedHashSet
         
-        sources.addAll(environment.getProperty(SOURCES)?:emptyList)
+        sources.addAll(environment.getProperty(SOURCES)?.map[ resolveMacros(infra) ]?:emptyList)
         
         logger.println("Files:")
         for (source : sources) {

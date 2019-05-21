@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * Root C Code Generator Module
@@ -112,8 +113,14 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)        
-        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
+        codeContainer.addCCode(cFilename, cFile.toString) => [
+            naming.putAll(naming)
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
+        ]        
+        codeContainer.addCHeader(hFilename, hFile.toString) => [
+            naming.putAll(naming)   
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
+        ]
     }    
     
     /**

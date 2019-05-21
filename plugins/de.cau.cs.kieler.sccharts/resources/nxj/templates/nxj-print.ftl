@@ -28,12 +28,22 @@ if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equal
          @macro "DrawString" text
 -->
 <#macro DrawString position>
+<#if position=="init">
+<#list parameters["DrawString"] as parameters>
+        String lastDrawString${parameters.varName} = "";
+</#list>
+</#if>
 <#if position=="output">
 <#list parameters["DrawString"] as parameters>
 // Draw on display
-if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equals("")) {
-  LCD.drawString(scchart.${parameters.varName}, ${parameters.parameter1!0}, ${parameters.parameter2!0});
-}
+        if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equals(lastDrawString${parameters.varName})) {
+            for (int drawStringI = 0; drawStringI < lastDrawString${parameters.varName}.length() - 1; drawStringI++) {
+                LCD.drawString(" ", ${parameters.parameter1!0} + drawStringI, ${parameters.parameter2!0});
+            }
+        
+            lastDrawString${parameters.varName} = scchart.${parameters.varName};
+            LCD.drawString(scchart.${parameters.varName}, ${parameters.parameter1!0}, ${parameters.parameter2!0});
+        }
 </#list>
 </#if>
 </#macro>
@@ -44,20 +54,30 @@ if(scchart.${parameters.varName} != null && !scchart.${parameters.varName}.equal
      Example for SCCharts:
          output string 
          @macro "DrawInt", "0", "2" number
-     Optional: 
-         int: Sentinel value         
 -->
 <#macro DrawInt position>
 <#if position=="init">
+        String[] drawIntClear = new String[6];
+        drawIntClear[0] = "";
+        for (int drawIntI = 1; drawIntI < 6; drawIntI++) {
+            drawIntClear[drawIntI] = drawIntClear[drawIntI - 1] + " ";
+        }
 <#list parameters["DrawInt"] as parameters>
-        scchart.${parameters.varName} = ${parameters.parameter3!-9991};
+        int lastDrawInt${parameters.varName} = -99991;
+        int lastDrawIntLength${parameters.varName} = 0;
 </#list>        
 </#if>
 <#if position=="output">
 <#list parameters["DrawInt"] as parameters>
-if(scchart.${parameters.varName} != ${parameters.parameter3!-9991}) {
-  LCD.drawInt(scchart.${parameters.varName}, ${parameters.parameter1!0}, ${parameters.parameter2!0});
-}
+    if(scchart.${parameters.varName} != lastDrawInt${parameters.varName}) {
+        lastDrawInt${parameters.varName} = scchart.${parameters.varName};
+        if (lastDrawIntLength${parameters.varName} > 0) {
+            int drawIntClearIndex = lastDrawIntLength${parameters.varName} < 6 ? lastDrawIntLength${parameters.varName} : 5;
+            LCD.drawString(drawIntClear[drawIntClearIndex], ${parameters.parameter1!0}, ${parameters.parameter2!0});
+        }
+        LCD.drawInt(scchart.${parameters.varName}, ${parameters.parameter1!0}, ${parameters.parameter2!0});
+        lastDrawIntLength${parameters.varName} = ("" + scchart.${parameters.varName}).length();
+    }
 </#list>        
 </#if>
 </#macro>

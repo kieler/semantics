@@ -671,7 +671,8 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty && state.reference === null) {
+            val dataflowRegions = state.regions.filter(DataflowRegion)
+            if(regions.isEmpty && state.reference === null && dataflowRegions.isEmpty) {
                 val trans = terminationTransitions.get(0)
                 error(NO_REGION, trans, null, -1);
             }

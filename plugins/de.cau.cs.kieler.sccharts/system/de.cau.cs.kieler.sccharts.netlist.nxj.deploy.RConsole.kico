@@ -1,11 +1,11 @@
-public system de.cau.cs.kieler.sccharts.netlist.nxj.deploy
-    label "Netlist-based Deployment (NXJ)"
+public system de.cau.cs.kieler.sccharts.netlist.nxj.deploy.rconsole
+    label "Netlist-based Deployment (NXJ) via RConsole"
 
 system de.cau.cs.kieler.sccharts.netlist.java
 pre process de.cau.cs.kieler.kicool.deploy.model.includes
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
-        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-main.ftl": "templates/nxj-main.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-main.ftl": "templates/nxj-main-RConsole.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-light.ftl": "templates/nxj-light.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-motor.ftl": "templates/nxj-motor.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-print.ftl": "templates/nxj-print.ftl",
@@ -31,7 +31,7 @@ de.cau.cs.kieler.kicool.deploy.templates config {
         "nxj-ultrasonic.ftl"
     ],
     "de.cau.cs.kieler.kicool.deploy.templates": {
-        "templates/nxj-main.ftl": "Main$MODELNAME.java"
+        "templates/nxj-main-RConsole.ftl": "Main$MODELNAME.java"
     },
     "de.cau.cs.kieler.c.struct.access": ""
 }

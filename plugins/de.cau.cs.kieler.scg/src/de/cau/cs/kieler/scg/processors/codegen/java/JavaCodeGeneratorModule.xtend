@@ -23,6 +23,7 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * Root C Code Generator Module
@@ -83,7 +84,10 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
 
-        codeContainer.addJavaCode(cFilename, cFile.toString).naming.putAll(naming)        
+        codeContainer.addJavaCode(cFilename, cFile.toString) => [
+            naming.putAll(naming)   
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
+        ]        
     }    
     
     override def void addHeader(StringBuilder sb) {

@@ -20,8 +20,8 @@ public class Main${model_name} {
         
         // RConsole is meant to be used
         // together with the nxjconsoleviewer program in the leJOS bin directory.
-        // RConsole.openUSB(10000);
-        // RConsole.println("RConsole opened");
+//        RConsole.openUSB(10000);
+//        RConsole.println("RConsole opened");
 
         // Init SCChart
         <@inject position="local-decl" />
@@ -49,7 +49,7 @@ public class Main${model_name} {
         }
         <@inject position="end-loop" /><#nt>
         
-        // RConsole.close();
+//        RConsole.close();
     }
 }
 

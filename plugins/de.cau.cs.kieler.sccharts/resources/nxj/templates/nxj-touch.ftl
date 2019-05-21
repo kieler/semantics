@@ -5,7 +5,7 @@
          input bool 
          @macro "TouchSensor", "S3" isTouchSensorPressed
 -->
-<#macro TouchSensor port>
+<#macro TouchSensor position>
 <#if position=="init">
 <#list parameters["TouchSensor"] as parameters>
         TouchSensor touchSensor${parameters.parameter1} = new TouchSensor(SensorPort.${parameters.parameter1});

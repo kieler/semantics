@@ -268,7 +268,7 @@
               system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.kico">
         </TransformationSystem>
         <TransformationSystem
-              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.bluetooth.kico">
+              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.RConsole.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">

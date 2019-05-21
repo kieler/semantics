@@ -57,9 +57,9 @@
          output bool 
          @macro "Floodlight", "S3" floodlight
 -->
-<#macro Floodlight position>
+<#macro GetFloodlight position>
 <#if position=="input">
-<#list parameters["Floodlight"] as parameters>
+<#list parameters["GetFloodlight"] as parameters>
         // Floodlight ${parameters.parameter1}
         scchart.${parameters.varName} = lightSensorFloodlight${parameters.parameter1}.getFloodlight();
 </#list>        

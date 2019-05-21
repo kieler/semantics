@@ -1,8 +1,0 @@
-public system de.cau.cs.kieler.sccharts.netlist.nxj.deploy.bluetooth
-    label "Netlist-based Deployment (NXJ) Bluetooth"
-    start config {
-        "de.cau.cs.kieler.kicool.deploy.compiler.nxj.directBluetoothUpload": true
-    }
-
-system de.cau.cs.kieler.sccharts.netlist.nxj.deploy
-
