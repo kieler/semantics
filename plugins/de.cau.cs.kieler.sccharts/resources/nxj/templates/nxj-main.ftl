@@ -9,7 +9,7 @@ import lejos.nxt.*;
 import lejos.nxt.addon.*;
 import lejos.nxt.comm.RConsole;
 
-public class Main {
+public class Main${model_name} {
     // Instantiate SCChart
     public static ${tickdata_type} scchart = new ${tickdata_type}();
     

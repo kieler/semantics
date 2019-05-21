@@ -31,11 +31,11 @@ de.cau.cs.kieler.kicool.deploy.templates config {
         "nxj-ultrasonic.ftl"
     ],
     "de.cau.cs.kieler.kicool.deploy.templates": {
-        "templates/nxj-main.ftl": "Main.java"
+        "templates/nxj-main.ftl": "Main$MODELNAME.java"
     },
     "de.cau.cs.kieler.c.struct.access": ""
 }
 de.cau.cs.kieler.kicool.deploy.compiler.nxj config {
-    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main.java"]
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main$MODELNAME.java"]
 }
 
