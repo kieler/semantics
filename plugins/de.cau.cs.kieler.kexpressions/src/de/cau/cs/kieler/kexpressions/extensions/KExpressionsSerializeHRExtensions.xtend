@@ -146,7 +146,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         if (myPrecedence == parentPrecedence) {
             val position = parent.subExpressions.indexOf(expression)
             if (position == 0) { // redundant left associativity
-                return false
+                if (parent.subExpressions.size != 1) {
+                    // Exclude single minus 
+                    return false
+                }
             }
             // This will ignore user forces right associativity
             // TODO discuss if we really want this behavior
@@ -155,9 +158,9 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             }
             // This will ignore if user forces right associativity with + and -
             // TODO discuss if we really want this behavior
-            if (myOperator == OperatorType.ADD && parentOperator == OperatorType.SUB || myOperator == OperatorType.SUB && parentOperator == OperatorType.ADD) {
-                return false
-            }
+//            if (myOperator == OperatorType.ADD && parentOperator == OperatorType.SUB || myOperator == OperatorType.SUB && parentOperator == OperatorType.ADD) {
+//                return false
+//            }
             return true
         }
         return false
