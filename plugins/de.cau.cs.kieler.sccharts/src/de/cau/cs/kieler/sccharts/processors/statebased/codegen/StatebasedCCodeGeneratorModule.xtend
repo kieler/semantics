@@ -141,11 +141,11 @@ class StatebasedCCodeGeneratorModule extends SCChartsCodeGeneratorModule {
         naming.put(TICKDATA, struct.getName)
         
         codeContainer.addCCode(cFilename, cFile.toString) => [
-            naming.putAll(naming)
+            it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
         ]       
         codeContainer.addCHeader(hFilename, hFile.toString) => [
-            naming.putAll(naming)
+            it.naming.putAll(this.naming)
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
         ]
         
