@@ -341,6 +341,9 @@ class Signal extends SCChartsProcessor implements Traceable {
             // UNDEFINED
             return createIntValue(0);
         }
+        if (signal.type == ValueType::STRING) {
+            return createStringValue("");
+        }
     }
 
     def SCCharts transform(SCCharts sccharts) {
