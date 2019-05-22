@@ -146,7 +146,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         if (myPrecedence == parentPrecedence) {
             val position = parent.subExpressions.indexOf(expression)
             if (position == 0) { // redundant left associativity
-                if (parent.subExpressions.size != 1) {
+                if (parent.subExpressions.size != 1 || parent.operator != OperatorType.SUB) {
                     // Exclude single minus 
                     return false
                 }
