@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * 
@@ -106,6 +107,9 @@ class Inheritance extends SCChartsProcessor implements Traceable {
                 }
             }
             state.declarations.addAll(0, newDecls)
+            
+            // replace references in methods
+            state.declarations.filter(MethodImplementationDeclaration).forEach[replaceVOR(replacements)]
             
             // copy actions
             state.actions.addAll(0, allBaseStates.map[actions.map[copy]].flatten.toList)
