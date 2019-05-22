@@ -246,65 +246,15 @@ ATransition:
 // Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
 @Override 
 ProductExpression returns kexpressions::Expression:
-    IntDivExpression 
+    IntDivExpression  
     (
-    (  {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )|({kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('mod' subExpressions+=MultDivExpression)*
-    )
-    )?
+    ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)
+    )*  
 ;   
-
-// Needs override because IntDivExpressin comes next
-@Override 
-MultDivExpression returns kexpressions::Expression:
-    IntDivExpression 
-    (
-    (  {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )
-    )?
-;
-    
-// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
-@Override 
-MultModExpression returns kexpressions::Expression:
-    IntDivExpression 
-    (
-    (  {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('mod' subExpressions+=MultDivExpression)*
-    )
-    )?
-;
-    
-// Needs override because of mod operator is 'mod' not '%' and IntDivExpressin comes next
-@Override 
-DivModExpression returns kexpressions::Expression:
-    IntDivExpression 
-    (
-    (  {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )|({kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('mod' subExpressions+=MultDivExpression)*
-    )
-    )?
-;     
 
 IntDivExpression returns kexpressions::Expression:
     NegExpression 

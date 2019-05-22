@@ -35,7 +35,7 @@ class KExpressionsTypeExtensions {
     
     @Inject extension KExpressionsValuedObjectExtensions
     
-    def ValueType inferType(Expression expression) {
+    def ValueType inferTypeStrict(Expression expression) {
         if (expression.isBool) return ValueType.BOOL;
         if (expression.isInt) return ValueType.INT;
         if (expression.isFloat) return ValueType.FLOAT;
@@ -43,12 +43,38 @@ class KExpressionsTypeExtensions {
         return ValueType.UNKNOWN;
     }
     
+    def ValueType inferType(Expression expression) {
+        if (expression.arithmetic) {
+            if (expression.hasFloat) return ValueType.FLOAT
+        } 
+        return expression.inferTypeStrict
+    }
+    
+    def boolean isArithmetic(Expression expression) {
+        // TODO: Check for non variable valued objects?
+        if (!expression.hasBool && !expression.hasString &&
+            (expression.hasInt || expression.hasFloat)
+        ) return true
+        return false
+    }
+    
+    
+    def boolean isFloatExpression(Expression expression) {
+        expression.inferType == ValueType.FLOAT
+    }
+    
+    
+    
     def dispatch boolean isFloat(ValuedObject valuedObject) {
         valuedObject.type == ValueType.FLOAT
     }
     
     def dispatch boolean isFloat(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.type == ValueType.FLOAT
+    }
+    
+    def dispatch boolean isFloat(Value value) {
+        value instanceof FloatValue
     }
     
     def dispatch boolean isFloat(OperatorExpression operatorExpression) {
@@ -63,9 +89,36 @@ class KExpressionsTypeExtensions {
         return true;
     }
     
-    def dispatch boolean isFloat(Value value) {
+    
+
+    
+    def dispatch boolean hasFloat(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.FLOAT
+    }
+    
+    def dispatch boolean hasFloat(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.FLOAT
+    }
+    
+    def dispatch boolean hasFloat(Value value) {
         value instanceof FloatValue
     }
+    
+    def dispatch boolean hasFloat(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!skipFirst) {
+                if (subExpression.hasFloat) return true
+            } else {
+                skipFirst = false
+            }
+        }
+        return false
+    }
+    
+    
+    
+    
 
     def dispatch boolean isInt(ValuedObject valuedObject) {
         valuedObject.type == ValueType.INT
@@ -73,6 +126,10 @@ class KExpressionsTypeExtensions {
     
     def dispatch boolean isInt(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.type == ValueType.INT
+    }
+    
+    def dispatch boolean isInt(Value value) {
+        value instanceof IntValue
     }
     
     def dispatch boolean isInt(OperatorExpression operatorExpression) {
@@ -87,9 +144,34 @@ class KExpressionsTypeExtensions {
         return true;
     }
     
-    def dispatch boolean isInt(Value value) {
+    
+    def dispatch boolean hasInt(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.INT
+    }
+    
+    def dispatch boolean hasInt(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.INT
+    }
+    
+    def dispatch boolean hasInt(Value value) {
         value instanceof IntValue
     }
+    
+    def dispatch boolean hasInt(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!skipFirst) {
+                if (subExpression.hasInt) return true
+            } else {
+                skipFirst = false
+            }
+        }
+        return false
+    }
+
+    
+    
+    
     
     def dispatch boolean isBool(ValuedObject valuedObject) {
         valuedObject.type == ValueType.BOOL
@@ -97,6 +179,10 @@ class KExpressionsTypeExtensions {
     
     def dispatch boolean isBool(ValuedObjectReference valuedObjectReference) {
         valuedObjectReference.valuedObject.type == ValueType.BOOL
+    }
+    
+    def dispatch boolean isBool(Value value) {
+        value instanceof BoolValue
     }
     
     def dispatch boolean isBool(OperatorExpression operatorExpression) {
@@ -110,10 +196,35 @@ class KExpressionsTypeExtensions {
         }
         return true
     }
+
+
+    def dispatch boolean hasBool(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.BOOL
+    }
     
-    def dispatch boolean isBool(Value value) {
+    def dispatch boolean hasBool(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.BOOL
+    }
+    
+    def dispatch boolean hasBool(Value value) {
         value instanceof BoolValue
     }
+    
+    def dispatch boolean hasBool(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!skipFirst) {
+                if (subExpression.hasBool) return true
+            } else {
+                skipFirst = false
+            }
+        }
+        return false
+    }
+    
+    
+    
+    
     
     def dispatch boolean isString(ValuedObject valuedObject) {
         valuedObject.type == ValueType.STRING
@@ -123,20 +234,47 @@ class KExpressionsTypeExtensions {
         valuedObjectReference.valuedObject.type == ValueType.STRING
     }
     
+    def dispatch boolean isString(Value value) {
+        value instanceof StringValue
+    }
+    
     def dispatch boolean isString(OperatorExpression operatorExpression) {
         var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
         for (subExpression : operatorExpression.subExpressions) {
             if (!skipFirst) {
-                if (subExpression.isString) return true;
+                if (!subExpression.isString) return false
             } else {
                 skipFirst = false
             }
         }
-        return false;
+        return true
     }
     
-    def dispatch boolean isString(Value value) {
+    
+    
+    def dispatch boolean hasString(ValuedObject valuedObject) {
+        valuedObject.type == ValueType.STRING
+    }
+    
+    def dispatch boolean hasString(ValuedObjectReference valuedObjectReference) {
+        valuedObjectReference.valuedObject.type == ValueType.STRING
+    }
+    
+    def dispatch boolean hasString(Value value) {
         value instanceof StringValue
     }
+        
+    def dispatch boolean hasString(OperatorExpression operatorExpression) {
+        var skipFirst = operatorExpression.operator == OperatorType.CONDITIONAL
+        for (subExpression : operatorExpression.subExpressions) {
+            if (!skipFirst) {
+                if (subExpression.hasString) return true
+            } else {
+                skipFirst = false
+            }
+        }
+        return false
+    }
+    
         
 }

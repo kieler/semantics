@@ -134,8 +134,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 	
 	static val ALWAYS_OMIT_PARENTHESIS = newHashSet(OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND, OperatorType.NOT, OperatorType.ADD, OperatorType.SUB, OperatorType.MULT, OperatorType.BITWISE_AND, OperatorType.BITWISE_OR, OperatorType.BITWISE_XOR, OperatorType.BITWISE_NOT )
 	protected def boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
-	    val myPrecedence = expression.operator.precedence
-        val parentPrecedence = parent.operator.precedence
+        val myOperator = expression.operator
+        val parentOperator = parent.operator
+	    val myPrecedence = myOperator.precedence
+        val parentPrecedence = parentOperator.precedence
         
         if (myPrecedence > parentPrecedence) {
             return true
@@ -148,12 +150,12 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             }
             // This will ignore user forces right associativity
             // TODO discuss if we really want this behavior
-            if (expression.operator == parent.operator && ALWAYS_OMIT_PARENTHESIS.contains(expression.operator)) {
+            if (myOperator == parentOperator && ALWAYS_OMIT_PARENTHESIS.contains(myOperator)) {
                 return false
             }
             // This will ignore if user forces right associativity with + and -
             // TODO discuss if we really want this behavior
-            if (expression.operator == OperatorType.ADD && parent.operator == OperatorType.SUB || expression.operator == OperatorType.SUB && parent.operator == OperatorType.ADD) {
+            if (myOperator == OperatorType.ADD && parentOperator == OperatorType.SUB || myOperator == OperatorType.SUB && parentOperator == OperatorType.ADD) {
                 return false
             }
             return true

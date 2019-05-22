@@ -41,6 +41,8 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 
 /**
  * @author ssm
@@ -59,6 +61,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KEffectsExtensions    
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExpressionsTypeExtensions
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
@@ -144,7 +147,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         if (assignment.valuedObject !== null) {
             var CharSequence assignmentText = ""
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
-                assignmentText = serializeHR(assignment.expression)
+                assignmentText = serializeHRWithCasts(assignment)
             }
             var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
             if (!assignment.indices.nullOrEmpty) {
@@ -176,6 +179,21 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             (assignment.expression as PrintCall).serializeHR
         }
     }    
+    
+    protected def String serializeHRWithCasts(de.cau.cs.kieler.scg.Assignment assignment) {
+        if (assignment.valuedObject === null) return ""
+        if (!(assignment.expression.isFloatExpression)) {
+            return serializeHR(assignment.expression).toString
+        } 
+        val vo = assignment.valuedObject
+        val exp = assignment.expression
+        
+        var result = serializeHR(assignment.expression).toString
+        if (vo.declaration instanceof VariableDeclaration && vo.variableDeclaration.type == ValueType.INT && exp.isFloatExpression) {
+            result = "(int)(" + result + ")"
+        } 
+        return result
+    }
     
     protected override CharSequence serializeHRIndices(List<Expression> indices) {
         var String indicesStr = ""

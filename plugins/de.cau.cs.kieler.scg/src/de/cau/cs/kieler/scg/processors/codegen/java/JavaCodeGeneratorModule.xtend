@@ -85,12 +85,12 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         naming.put(TICKDATA, struct.getName)
 
         codeContainer.addJavaCode(cFilename, cFile.toString) => [
-            naming.putAll(naming)   
+            it.naming.putAll(this.naming)   
             modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
         ]        
     }    
     
-    override def void addHeader(StringBuilder sb) {
+    override void addHeader(StringBuilder sb) {
         sb.append(
             "/*\n" + " * Automatically generated Java code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
                 " *\n" + " * http://rtsys.informatik.uni-kiel.de/kieler\n" + " */\n\n")
@@ -100,7 +100,7 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         }
     }  
     
-    override def void hostcodeAdditions(StringBuilder sb) {
+    override void hostcodeAdditions(StringBuilder sb) {
         val includes = modifications.get(JavaCodeSerializeHRExtensions.INCLUDES)
         for (include : includes)  {
             sb.append("import " + include + "\n")
