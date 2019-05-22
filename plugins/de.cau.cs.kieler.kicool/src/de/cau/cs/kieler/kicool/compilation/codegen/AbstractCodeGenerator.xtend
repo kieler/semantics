@@ -26,6 +26,7 @@ import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Abstract Code Generation Processor
@@ -106,6 +107,9 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
                 generateWrite(result)
             ]
         }
+        
+        // Handle hierarchical VO declarations in VariableStore
+        VariableStore.get(environment)?.flattenAllHierarchicalObjects
         
         setModel(result)
     }
