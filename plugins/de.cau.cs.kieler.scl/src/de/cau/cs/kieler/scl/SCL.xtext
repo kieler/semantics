@@ -66,7 +66,7 @@ Return returns Return:
 
 Conditional returns Conditional: 
     (annotations += Annotation)*
-    'if' expression = BoolExpression
+    'if' expression = AtomicExpression
     '{'
     (declarations+=Declaration)*
     (statements += Statement)*
@@ -89,16 +89,16 @@ LegacyConditional returns Conditional:
     'if' expression = BoolExpression
     'then'
     (statements += Statement)*
-    ( 'end' semicolon?=';'? | (else = LegacyElseScope))
+    (else = LegacyElseScope)?
+    'end'
+    semicolon?=';'?
 ;
 
 LegacyElseScope returns ElseScope:
     {ElseScope}
     (annotations += Annotation)*
     'else'
-    (statements += Statement)*      
-    'end'
-    semicolon?=';'?
+    (statements += Statement)* 
 ;
 
 Thread returns Thread:
@@ -142,11 +142,11 @@ ModuleCall returns ModuleCall:
     (annotations += Annotation)*
     'run'
     module = [Module|ID]
-    ('(' parameters += Parameter (',' parameters += Parameter)* ')' | '()')?
+    ('(' parameters += ModuleCallParameter (',' parameters += ModuleCallParameter)* ')' | '()')?
     semicolon?=';'?
 ;
     
-Parameter returns kexpressions::Parameter:
+ModuleCallParameter returns kexpressions::Parameter:
     ((pureOutput ?= '!')? callByReference ?= '&')?
     expression = Expression
     ('to' explicitBinding = [kexpressions::ValuedObject|ID] ('[' explicitBindingIndices+=Expression ']')*)?

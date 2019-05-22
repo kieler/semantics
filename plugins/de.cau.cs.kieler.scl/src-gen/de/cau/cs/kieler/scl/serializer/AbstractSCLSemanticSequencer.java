@@ -363,8 +363,15 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getModuleCallParameterRule()) {
+					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
+					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.RANDOM_CALL:
 				sequence_RandomCall(context, (RandomCall) semanticObject); 
 				return; 
@@ -584,7 +591,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     Conditional returns Conditional
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* expression=BoolExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?)
+	 *     (annotations+=Annotation* expression=AtomicExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?)
 	 */
 	protected void sequence_Conditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -597,8 +604,8 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (annotations+=Annotation* expression=BoolExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?) | 
-	 *         (annotations+=Annotation* expression=BoolExpression statements+=Statement* (semicolon?=';' | else=LegacyElseScope)?)
+	 *         (annotations+=Annotation* expression=AtomicExpression declarations+=Declaration* statements+=Statement* (else=ElseScope | semicolon?=';')?) | 
+	 *         (annotations+=Annotation* expression=BoolExpression statements+=Statement* else=LegacyElseScope? semicolon?=';'?)
 	 *     )
 	 */
 	protected void sequence_Conditional_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
@@ -649,7 +656,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     LegacyConditional returns Conditional
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* expression=BoolExpression statements+=Statement* (semicolon?=';' | else=LegacyElseScope)?)
+	 *     (annotations+=Annotation* expression=BoolExpression statements+=Statement* else=LegacyElseScope? semicolon?=';'?)
 	 */
 	protected void sequence_LegacyConditional(ISerializationContext context, Conditional semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -661,7 +668,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     LegacyElseScope returns ElseScope
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* statements+=Statement* semicolon?=';'?)
+	 *     (annotations+=Annotation* statements+=Statement*)
 	 */
 	protected void sequence_LegacyElseScope(ISerializationContext context, ElseScope semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -717,11 +724,23 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     ModuleCallParameter returns Parameter
+	 *
+	 * Constraint:
+	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
+	 */
+	protected void sequence_ModuleCallParameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Statement returns ModuleCall
 	 *     ModuleCall returns ModuleCall
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* module=[Module|ID] (parameters+=Parameter parameters+=Parameter*)? semicolon?=';'?)
+	 *     (annotations+=Annotation* module=[Module|ID] (parameters+=ModuleCallParameter parameters+=ModuleCallParameter*)? semicolon?=';'?)
 	 */
 	protected void sequence_ModuleCall(ISerializationContext context, ModuleCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -749,18 +768,6 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     (threads+=Thread threads+=Thread* semicolon?=';'?)
 	 */
 	protected void sequence_Parallel(ISerializationContext context, Parallel semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Parameter returns Parameter
-	 *
-	 * Constraint:
-	 *     ((pureOutput?='!'? callByReference?='&')? expression=Expression (explicitBinding=[ValuedObject|ID] explicitBindingIndices+=Expression*)?)
-	 */
-	protected void sequence_Parameter(ISerializationContext context, de.cau.cs.kieler.kexpressions.Parameter semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

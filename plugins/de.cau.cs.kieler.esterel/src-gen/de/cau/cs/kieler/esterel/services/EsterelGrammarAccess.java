@@ -8962,7 +8962,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Conditional:
 	//	annotations+=super::Annotation*
-	//	'if' expression=BoolExpression
+	//	'if' expression=super::AtomicExpression
 	//	'{'
 	//	declarations+=Declaration*
 	//	statements+=Statement*
@@ -8994,7 +8994,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=super::Annotation*
 	//	'if' expression=BoolExpression
 	//	'then'
-	//	statements+=Statement* ('end' semicolon?=';'? | else=LegacyElseScope);
+	//	statements+=Statement*
+	//	else=LegacyElseScope?
+	//	'end'
+	//	semicolon?=';'?;
 	public SCLGrammarAccess.LegacyConditionalElements getLegacyConditionalAccess() {
 		return gaSCL.getLegacyConditionalAccess();
 	}
@@ -9006,9 +9009,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//LegacyElseScope ElseScope:
 	//	{ElseScope} annotations+=super::Annotation*
 	//	'else'
-	//	statements+=Statement*
-	//	'end'
-	//	semicolon?=';'?;
+	//	statements+=Statement*;
 	public SCLGrammarAccess.LegacyElseScopeElements getLegacyElseScopeAccess() {
 		return gaSCL.getLegacyElseScopeAccess();
 	}
@@ -9062,7 +9063,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//ModuleCall:
 	//	annotations+=super::Annotation*
 	//	'run'
-	//	module=[Module] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	module=[Module] ('(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')' | '()')?
 	//	semicolon?=';'?;
 	public SCLGrammarAccess.ModuleCallElements getModuleCallAccess() {
 		return gaSCL.getModuleCallAccess();
@@ -9072,16 +9073,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getModuleCallAccess().getRule();
 	}
 	
-	//Parameter kexpressions::Parameter:
+	//ModuleCallParameter kexpressions::Parameter:
 	//	(pureOutput?='!'? callByReference?='&')?
 	//	expression=super::Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('['
 	//	explicitBindingIndices+=super::Expression ']')*)?;
-	public SCLGrammarAccess.ParameterElements getParameterAccess() {
-		return gaSCL.getParameterAccess();
+	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
+		return gaSCL.getModuleCallParameterAccess();
 	}
 	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
+	public ParserRule getModuleCallParameterRule() {
+		return getModuleCallParameterAccess().getRule();
 	}
 	
 	//@Override
@@ -9619,9 +9620,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=super::Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')' | '()') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -9634,8 +9634,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=super::Annotation* ('extern' functionName=ID ('(' parameters+=super::Parameter (','
-	//	parameters+=super::Parameter)* ')'
+	//	annotations+=super::Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()'));
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
@@ -9649,8 +9648,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -9661,7 +9659,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//RandomizeCallEffect keffects::RandomizeCallEffect:
 	//	{keffects::RandomizeCallEffect} annotations+=super::Annotation*
-	//	'randomize' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
 		return gaKEffects.getRandomizeCallEffectAccess();
@@ -10066,7 +10064,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
 	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.' subReference=ValuedObjectReference)?
-	//	('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -10105,7 +10103,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
-	//	'extern' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
@@ -10113,6 +10111,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Parameter Rule
+	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
+	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
+	//Parameter:
+	//	(pureOutput?='!'? callByReference?='&')?
+	//	expression=super::Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKExpressions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 	
 	//// Text Expression Rule

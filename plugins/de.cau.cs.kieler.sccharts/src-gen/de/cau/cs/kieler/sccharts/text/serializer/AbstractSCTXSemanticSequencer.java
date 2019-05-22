@@ -700,7 +700,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				if (rule == grammarAccess.getParameterRule()) {
+				if (rule == grammarAccess.getModuleCallParameterRule()) {
+					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
 					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
 					return; 
 				}
@@ -1471,12 +1475,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case SCLPackage.CONDITIONAL:
-				if (rule == grammarAccess.getConditionalRule()) {
+				if (rule == grammarAccess.getStatementRule()
+						|| rule == grammarAccess.getConditionalRule()) {
 					sequence_Conditional(context, (Conditional) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStatementRule()) {
-					sequence_Conditional_LegacyConditional(context, (Conditional) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getLegacyConditionalRule()) {

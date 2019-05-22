@@ -696,8 +696,15 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getModuleCallParameterRule()) {
+					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
+					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.RANDOM_CALL:
 				sequence_RandomCall(context, (RandomCall) semanticObject); 
 				return; 

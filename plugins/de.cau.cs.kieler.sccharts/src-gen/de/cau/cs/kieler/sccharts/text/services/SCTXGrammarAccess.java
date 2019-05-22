@@ -2265,6 +2265,48 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
+	public class StatementElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Statement");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSclAssignmentParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cSclPostfixAssignmentParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cLabelParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cConditionalParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cGotoParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cScopeStatementParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		private final RuleCall cReturnParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		
+		//@Override
+		//Statement scl::Statement:
+		//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//// Only allow restricted set of SCL statements
+		//SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//// Only allow restricted set of SCL statements
+		//SclAssignment
+		public RuleCall getSclAssignmentParserRuleCall_0() { return cSclAssignmentParserRuleCall_0; }
+		
+		//SclPostfixAssignment
+		public RuleCall getSclPostfixAssignmentParserRuleCall_1() { return cSclPostfixAssignmentParserRuleCall_1; }
+		
+		//Label
+		public RuleCall getLabelParserRuleCall_2() { return cLabelParserRuleCall_2; }
+		
+		//Conditional
+		public RuleCall getConditionalParserRuleCall_3() { return cConditionalParserRuleCall_3; }
+		
+		//Goto
+		public RuleCall getGotoParserRuleCall_4() { return cGotoParserRuleCall_4; }
+		
+		//ScopeStatement
+		public RuleCall getScopeStatementParserRuleCall_5() { return cScopeStatementParserRuleCall_5; }
+		
+		//Return
+		public RuleCall getReturnParserRuleCall_6() { return cReturnParserRuleCall_6; }
+	}
 	public class ClassDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ClassDeclarationWOSemicolon");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2908,6 +2950,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final PrecedingActionElements pPrecedingAction;
 	private final SucceedingActionElements pSucceedingAction;
 	private final PeriodActionElements pPeriodAction;
+	private final StatementElements pStatement;
 	private final ClassDeclarationWOSemicolonElements pClassDeclarationWOSemicolon;
 	private final PolicyRegionElements pPolicyRegion;
 	private final PolicyStateElements pPolicyState;
@@ -2969,6 +3012,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pPrecedingAction = new PrecedingActionElements();
 		this.pSucceedingAction = new SucceedingActionElements();
 		this.pPeriodAction = new PeriodActionElements();
+		this.pStatement = new StatementElements();
 		this.pClassDeclarationWOSemicolon = new ClassDeclarationWOSemicolonElements();
 		this.pPolicyRegion = new PolicyRegionElements();
 		this.pPolicyState = new PolicyStateElements();
@@ -3337,6 +3381,17 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//@Override
+	//Statement scl::Statement:
+	//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return;
+	public StatementElements getStatementAccess() {
+		return pStatement;
+	}
+	
+	public ParserRule getStatementRule() {
+		return getStatementAccess().getRule();
+	}
+	
+	//@Override
 	//ClassDeclarationWOSemicolon kext::ClassDeclaration:
 	//	{sccharts::PolicyClassDeclaration} annotations+=Annotation*
 	//	access=AccessModifier?
@@ -3475,24 +3530,13 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	'module' name=ID ':'?
 	//	declarations+=Declaration*
-	//	statements+=Statement*;
+	//	statements+=super::Statement*;
 	public SCLGrammarAccess.ModuleElements getModuleAccess() {
 		return gaSCL.getModuleAccess();
 	}
 	
 	public ParserRule getModuleRule() {
 		return getModuleAccess().getRule();
-	}
-	
-	//Statement:
-	//	SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall
-	//	| ScopeStatement | Return;
-	public SCLGrammarAccess.StatementElements getStatementAccess() {
-		return gaSCL.getStatementAccess();
-	}
-	
-	public ParserRule getStatementRule() {
-		return getStatementAccess().getRule();
 	}
 	
 	//Pause:
@@ -3570,10 +3614,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//Conditional:
 	//	annotations+=Annotation*
-	//	'if' expression=BoolExpression
+	//	'if' expression=AtomicExpression
 	//	'{'
 	//	declarations+=Declaration*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}' (else=ElseScope | semicolon?=';')?;
 	public SCLGrammarAccess.ConditionalElements getConditionalAccess() {
 		return gaSCL.getConditionalAccess();
@@ -3587,7 +3631,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	{ElseScope} annotations+=Annotation*
 	//	'else' '{'
 	//	declarations+=Declaration*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}'
 	//	semicolon?=';'?;
 	public SCLGrammarAccess.ElseScopeElements getElseScopeAccess() {
@@ -3602,7 +3646,10 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	annotations+=Annotation*
 	//	'if' expression=BoolExpression
 	//	'then'
-	//	statements+=Statement* ('end' semicolon?=';'? | else=LegacyElseScope);
+	//	statements+=super::Statement*
+	//	else=LegacyElseScope?
+	//	'end'
+	//	semicolon?=';'?;
 	public SCLGrammarAccess.LegacyConditionalElements getLegacyConditionalAccess() {
 		return gaSCL.getLegacyConditionalAccess();
 	}
@@ -3614,9 +3661,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//LegacyElseScope ElseScope:
 	//	{ElseScope} annotations+=Annotation*
 	//	'else'
-	//	statements+=Statement*
-	//	'end'
-	//	semicolon?=';'?;
+	//	statements+=super::Statement*;
 	public SCLGrammarAccess.LegacyElseScopeElements getLegacyElseScopeAccess() {
 		return gaSCL.getLegacyElseScopeAccess();
 	}
@@ -3629,9 +3674,9 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	{Thread} (annotations+=Annotation*
 	//	'{'
 	//	declarations+=Declaration*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}'
-	//	| statements+=Statement*);
+	//	| statements+=super::Statement*);
 	public SCLGrammarAccess.ThreadElements getThreadAccess() {
 		return gaSCL.getThreadAccess();
 	}
@@ -3657,7 +3702,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	{ScopeStatement} annotations+=Annotation*
 	//	'{'
 	//	declarations+=Declaration*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}';
 	public SCLGrammarAccess.ScopeStatementElements getScopeStatementAccess() {
 		return gaSCL.getScopeStatementAccess();
@@ -3670,7 +3715,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//ModuleCall:
 	//	annotations+=Annotation*
 	//	'run'
-	//	module=[Module] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()')?
+	//	module=[Module] ('(' parameters+=ModuleCallParameter (',' parameters+=ModuleCallParameter)* ')' | '()')?
 	//	semicolon?=';'?;
 	public SCLGrammarAccess.ModuleCallElements getModuleCallAccess() {
 		return gaSCL.getModuleCallAccess();
@@ -3680,16 +3725,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		return getModuleCallAccess().getRule();
 	}
 	
-	//Parameter kexpressions::Parameter:
+	//ModuleCallParameter kexpressions::Parameter:
 	//	(pureOutput?='!'? callByReference?='&')?
 	//	expression=Expression ('to' explicitBinding=[kexpressions::ValuedObject] ('[' explicitBindingIndices+=Expression
 	//	']')*)?;
-	public SCLGrammarAccess.ParameterElements getParameterAccess() {
-		return gaSCL.getParameterAccess();
+	public SCLGrammarAccess.ModuleCallParameterElements getModuleCallParameterAccess() {
+		return gaSCL.getModuleCallParameterAccess();
 	}
 	
-	public ParserRule getParameterRule() {
-		return getParameterAccess().getRule();
+	public ParserRule getModuleCallParameterRule() {
+		return getModuleCallParameterAccess().getRule();
 	}
 	
 	//@Override
@@ -3704,7 +3749,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	'{'
 	//	annotations+=CommentAnnotatonSL?
 	//	declarations+=Declaration*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}') annotations+=CommentAnnotatonSL?;
 	public SCLGrammarAccess.MethodDeclarationElements getMethodDeclarationAccess() {
 		return gaSCL.getMethodDeclarationAccess();
@@ -3724,7 +3769,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
 	//	declarations+=DeclarationWOSemicolon*
-	//	statements+=Statement*
+	//	statements+=super::Statement*
 	//	'}')?;
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
 		return gaSCL.getMethodDeclarationWOSemicolonAccess();
@@ -4204,9 +4249,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')' | '()') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -4219,8 +4263,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// A function call effect works similar to the function call expression. Additionally, it may be
 	//// preceded by a list of annotations.
 	//FunctionCallEffect keffects::FunctionCallEffect:
-	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=super::Parameter (','
-	//	parameters+=super::Parameter)* ')'
+	//	annotations+=Annotation* ('extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()'));
 	public KEffectsGrammarAccess.FunctionCallEffectElements getFunctionCallEffectAccess() {
 		return gaKEffects.getFunctionCallEffectAccess();
@@ -4234,8 +4277,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -4246,7 +4288,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//RandomizeCallEffect keffects::RandomizeCallEffect:
 	//	{keffects::RandomizeCallEffect} annotations+=Annotation*
-	//	'randomize' ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	'randomize' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KEffectsGrammarAccess.RandomizeCallEffectElements getRandomizeCallEffectAccess() {
 		return gaKEffects.getRandomizeCallEffectAccess();
@@ -4845,7 +4887,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
 	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
-	//	parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -4884,7 +4926,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Function Call Rule
 	//// Calls to functions are indicated by angle brackets. They may include a parameter list. 
 	//FunctionCall:
-	//	'extern' functionName=ID ('(' parameters+=super::Parameter (',' parameters+=super::Parameter)* ')'
+	//	'extern' functionName=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.FunctionCallElements getFunctionCallAccess() {
 		return gaKExpressions.getFunctionCallAccess();
@@ -4892,6 +4934,21 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionCallRule() {
 		return getFunctionCallAccess().getRule();
+	}
+	
+	//// Parameter Rule
+	//// The parameter rule is used by the function call rule. Every expression may be a paramter.
+	//// Additionally, a parameter may be preceded by an ampersand to indicate a call by reference.
+	//// Analogously, an prefixed exclamation mark marks the parameter as pure output.
+	//Parameter:
+	//	(pureOutput?='!'? callByReference?='&')?
+	//	expression=Expression;
+	public KExpressionsGrammarAccess.ParameterElements getParameterAccess() {
+		return gaKExpressions.getParameterAccess();
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 	
 	//// Text Expression Rule

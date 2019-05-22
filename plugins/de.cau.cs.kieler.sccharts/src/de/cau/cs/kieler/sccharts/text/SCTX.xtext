@@ -26,7 +26,6 @@ SCCharts returns sccharts::SCCharts:
 //  State Rules  // 
 // ------------- //
 
-
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
@@ -219,6 +218,15 @@ PeriodAction returns sccharts::PeriodAction:
     annotations+=RestrictedTypeAnnotation*
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
+
+// ----- //
+//  SCL  // 
+// ----- //
+@Override
+Statement returns scl::Statement:
+    // Only allow restricted set of SCL statements
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+;
 
 // --------------- //
 //  Class/ Method  // 
