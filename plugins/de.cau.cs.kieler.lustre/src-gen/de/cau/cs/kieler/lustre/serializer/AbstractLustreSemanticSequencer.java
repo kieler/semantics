@@ -256,94 +256,69 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				sequence_NullValue(context, (NullValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if (rule == grammarAccess.getAddExpressionRule()) {
-					sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+				if (rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBitwiseOrExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseXOrExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getBitwiseAndExpressionRule()) {
-					sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBitwiseNotExpressionRule()) {
-					sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDivExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDivModExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_DivModExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getModExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getMultDivExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultDivExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getMultExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getMultModExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftExpressionsRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+				else if (rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftLeftRightExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftLeftRightUnsignedExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftRightRightUnsignedExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getSubExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+				else if (rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getProductExpressionRule()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| rule == grammarAccess.getIntDivExpressionRule()
 						|| action == grammarAccess.getIntDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
@@ -372,29 +347,18 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 						|| rule == grammarAccess.getCompareOperationRule()
 						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNotOrValuedExpressionRule()
-						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSumExpressionRule()
 						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
+					sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getNorAtMostOneExpressionRule()) {
@@ -558,6 +522,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case LustrePackage.NODE_VALUED_OBJECT:
 				sequence_NodeValuedObject(context, (NodeValuedObject) semanticObject); 
 				return; 
+			case LustrePackage.OPERATOR_EXPRESSION:
+				sequence_ProductExpression(context, (de.cau.cs.kieler.lustre.lustre.OperatorExpression) semanticObject); 
+				return; 
 			case LustrePackage.PACK_BODY:
 				sequence_PackBody(context, (PackBody) semanticObject); 
 				return; 
@@ -617,27 +584,10 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	/**
 	 * Contexts:
 	 *     AddExpression returns OperatorExpression
+	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -683,13 +633,23 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -730,24 +690,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -811,12 +753,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -828,24 +780,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -903,12 +837,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -920,24 +864,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -989,12 +915,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=CompareOperation*
 	 *         ) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1005,24 +941,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -1069,12 +987,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
 	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseNotExpression_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1110,24 +1038,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
 	 *             subExpressions+=NegExpression 
@@ -1172,104 +1082,23 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     DivModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_0_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_DivModExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_DivExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1281,24 +1110,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
 	 *             subExpressions+=NegExpression 
@@ -1343,104 +1154,23 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultDivExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultDivExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_ModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1452,24 +1182,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
 	 *             subExpressions+=NegExpression 
@@ -1514,104 +1226,23 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultModExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1619,27 +1250,12 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	/**
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -1688,27 +1304,37 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1719,24 +1345,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -1788,194 +1396,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=ShiftRightExpression 
 	 *             subExpressions+=ShiftRightExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1986,24 +1422,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -2055,103 +1473,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=ShiftRightUnsignedExpression 
 	 *             subExpressions+=ShiftRightUnsignedExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftRightRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FBYExpression_OperatorExpression_1_0 
-	 *             operator=FBYOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2162,24 +1499,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -2231,12 +1550,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *             subExpressions+=SumExpression 
 	 *             subExpressions+=SumExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2244,27 +1573,10 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	/**
 	 * Contexts:
 	 *     SubExpression returns OperatorExpression
+	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -2310,13 +1622,23 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2327,12 +1649,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     IntDivExpression returns OperatorExpression
 	 *     IntDivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     NegExpression returns OperatorExpression
@@ -2361,23 +1677,12 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     CompareOperation returns OperatorExpression
 	 *     CompareOperation.OperatorExpression_1_0 returns OperatorExpression
 	 *     NotOrValuedExpression returns OperatorExpression
-	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SumExpression returns OperatorExpression
 	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     MultExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2386,24 +1691,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *
 	 * Constraint:
 	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
 	 *         (
 	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
 	 *             operator=IntDivOperator 
@@ -2449,12 +1736,22 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
 	 *         (operator=NotOperator subExpressions+=NotExpression) | 
 	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_CompareOperation_CurrentExpression_FBYExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2684,6 +1981,99 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     (parameter+=VariableDeclaration parameter+=VariableDeclaration*)?
 	 */
 	protected void sequence_Params(ISerializationContext context, Params semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ProductExpression returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
+	 *     IntDivExpression returns OperatorExpression
+	 *     IntDivExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     NegExpression returns OperatorExpression
+	 *     FBYExpression returns OperatorExpression
+	 *     FBYExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     WhenExpression returns OperatorExpression
+	 *     CurrentExpression returns OperatorExpression
+	 *     PreExpression returns OperatorExpression
+	 *     BoolExpression returns OperatorExpression
+	 *     InitExpression returns OperatorExpression
+	 *     TernaryOperation returns OperatorExpression
+	 *     ImpliesExpression returns OperatorExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalXorExpression returns OperatorExpression
+	 *     LogicalXorExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalOrExpression returns OperatorExpression
+	 *     LogicalOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     LogicalAndExpression returns OperatorExpression
+	 *     LogicalAndExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ValuedExpression returns OperatorExpression
+	 *     AtomicExpression returns OperatorExpression
+	 *     NotExpression returns OperatorExpression
+	 *     Root returns OperatorExpression
+	 *     Expression returns OperatorExpression
+	 *     BitwiseOrExpression returns OperatorExpression
+	 *     BitwiseOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     BitwiseXOrExpression returns OperatorExpression
+	 *     BitwiseXOrExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     BitwiseAndExpression returns OperatorExpression
+	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     CompareOperation returns OperatorExpression
+	 *     CompareOperation.OperatorExpression_1_0 returns OperatorExpression
+	 *     NotOrValuedExpression returns OperatorExpression
+	 *     BitwiseNotExpression returns OperatorExpression
+	 *     ShiftExpressions returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
+	 *     ShiftLeftExpression returns OperatorExpression
+	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightExpression returns OperatorExpression
+	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ShiftRightUnsignedExpression returns OperatorExpression
+	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SumExpression returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     AddExpression returns OperatorExpression
+	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     SubExpression returns OperatorExpression
+	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     MultExpression returns OperatorExpression
+	 *     MultExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     DivExpression returns OperatorExpression
+	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     ModExpression returns OperatorExpression
+	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
+	 *     AtomicValuedExpression returns OperatorExpression
+	 *     VectorValueMember returns OperatorExpression
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
+	 *             operator=MultOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
+	 *             operator=DivOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         ) | 
+	 *         (
+	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
+	 *             operator=ModOperator 
+	 *             subExpressions+=IntDivExpression 
+	 *             subExpressions+=IntDivExpression*
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ProductExpression(ISerializationContext context, de.cau.cs.kieler.lustre.lustre.OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

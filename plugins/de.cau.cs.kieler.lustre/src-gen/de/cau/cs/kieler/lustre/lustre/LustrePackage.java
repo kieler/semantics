@@ -1307,6 +1307,52 @@ public interface LustrePackage extends EPackage
   int ASSERTION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.lustre.impl.OperatorExpressionImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getOperatorExpression()
+   * @generated
+   */
+  int OPERATOR_EXPRESSION = 21;
+
+  /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
+   * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Operator Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1314,7 +1360,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
    * @generated
    */
-  int LUSTRE_VALUED_OBJECT = 21;
+  int LUSTRE_VALUED_OBJECT = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1387,7 +1433,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeReference()
    * @generated
    */
-  int NODE_REFERENCE = 22;
+  int NODE_REFERENCE = 23;
 
   /**
    * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -2493,6 +2539,38 @@ public interface LustrePackage extends EPackage
   EReference getAssertion_Expr();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.OperatorExpression <em>Operator Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Operator Expression</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.OperatorExpression
+   * @generated
+   */
+  EClass getOperatorExpression();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.OperatorExpression#getSubExpressions()
+   * @see #getOperatorExpression()
+   * @generated
+   */
+  EReference getOperatorExpression_SubExpressions();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.OperatorExpression#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.OperatorExpression#getOperator()
+   * @see #getOperatorExpression()
+   * @generated
+   */
+  EAttribute getOperatorExpression_Operator();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject <em>Valued Object</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3371,6 +3449,32 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EReference ASSERTION__EXPR = eINSTANCE.getAssertion_Expr();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.lustre.impl.OperatorExpressionImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getOperatorExpression()
+     * @generated
+     */
+    EClass OPERATOR_EXPRESSION = eINSTANCE.getOperatorExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OPERATOR_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getOperatorExpression_SubExpressions();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OPERATOR_EXPRESSION__OPERATOR = eINSTANCE.getOperatorExpression_Operator();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.

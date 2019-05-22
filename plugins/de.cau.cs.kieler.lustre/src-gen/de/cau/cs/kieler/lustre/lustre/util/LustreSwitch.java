@@ -249,6 +249,15 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LustrePackage.OPERATOR_EXPRESSION:
+      {
+        OperatorExpression operatorExpression = (OperatorExpression)theEObject;
+        T result = caseOperatorExpression(operatorExpression);
+        if (result == null) result = caseExpression(operatorExpression);
+        if (result == null) result = caseSchedulable(operatorExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LustrePackage.LUSTRE_VALUED_OBJECT:
       {
         LustreValuedObject lustreValuedObject = (LustreValuedObject)theEObject;
@@ -607,6 +616,22 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAssertion(Assertion object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Operator Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOperatorExpression(OperatorExpression object)
   {
     return null;
   }

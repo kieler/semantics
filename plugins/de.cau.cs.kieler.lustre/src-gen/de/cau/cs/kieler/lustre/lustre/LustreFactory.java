@@ -213,6 +213,15 @@ public interface LustreFactory extends EFactory
   Assertion createAssertion();
 
   /**
+   * Returns a new object of class '<em>Operator Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Operator Expression</em>'.
+   * @generated
+   */
+  OperatorExpression createOperatorExpression();
+
+  /**
    * Returns a new object of class '<em>Valued Object</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
