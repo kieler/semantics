@@ -243,12 +243,20 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     global?='global'?
     static?='static'?
     host?='host'?
-    type = ClassType
-    (name = ID)?
-    '{'
-        policy=PolicyRegion?
-        declarations+=(DeclarationOrMethodWOSemicolon)*
-    '}'
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            policy=PolicyRegion?
+            declarations+=DeclarationOrMethodWOSemicolon*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationWOSemicolon*
+        '}'
+    ))
     (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     annotations+=CommentAnnotatonSL?
 ;

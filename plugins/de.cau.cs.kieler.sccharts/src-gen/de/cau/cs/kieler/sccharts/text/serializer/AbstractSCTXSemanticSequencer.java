@@ -1343,26 +1343,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KExtPackage.CLASS_DECLARATION:
-				if (rule == grammarAccess.getClassDeclarationRule()) {
-					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
-					sequence_ClassDeclaration_StructDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
+				sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+				return; 
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -1792,10 +1774,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         host?='host'? 
-	 *         type=ClassType 
-	 *         name=ID? 
-	 *         policy=PolicyRegion? 
-	 *         declarations+=DeclarationOrMethodWOSemicolon* 
+	 *         (
+	 *             (type=ClassType name=ID? policy=PolicyRegion? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *             (type=StructType name=ID? declarations+=DeclarationWOSemicolon*)
+	 *         ) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )

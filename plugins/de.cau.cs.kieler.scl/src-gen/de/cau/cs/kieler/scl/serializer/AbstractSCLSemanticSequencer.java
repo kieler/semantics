@@ -455,30 +455,16 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KExtPackage.CLASS_DECLARATION:
-				if (rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
-					sequence_ClassDeclarationWOSemicolon_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getClassDeclarationRule()) {
-					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()
 						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
-					sequence_ClassDeclaration_StructDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (ClassDeclaration) semanticObject); 
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;

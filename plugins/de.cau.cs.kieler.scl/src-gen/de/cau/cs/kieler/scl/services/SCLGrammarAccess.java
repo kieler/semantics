@@ -1855,7 +1855,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration | ClassDeclaration;
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -1866,7 +1866,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DeclarationWOSemicolon kexpressions::Declaration:
 	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
-	//	StructDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
+	//	ClassDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -1911,53 +1911,6 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//StructDeclaration kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'?
-	//	type=StructType
-	//	name=ID?
-	//	'{'
-	//	declarations+=Declaration*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	';'
-	//	annotations+=CommentAnnotatonSL?;
-	public KExtGrammarAccess.StructDeclarationElements getStructDeclarationAccess() {
-		return gaKExt.getStructDeclarationAccess();
-	}
-	
-	public ParserRule getStructDeclarationRule() {
-		return getStructDeclarationAccess().getRule();
-	}
-	
-	//StructDeclarationWOSemicolon kext::ClassDeclaration:
-	//	{kext::ClassDeclaration} annotations+=Annotation*
-	//	access=AccessModifier?
-	//	const?='const'?
-	//	input?='input'?
-	//	output?='output'?
-	//	global?='global'?
-	//	static?='static'?
-	//	host?='host'?
-	//	type=StructType
-	//	name=ID?
-	//	'{'
-	//	declarations+=DeclarationWOSemicolon*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-	//	annotations+=CommentAnnotatonSL?;
-	public KExtGrammarAccess.StructDeclarationWOSemicolonElements getStructDeclarationWOSemicolonAccess() {
-		return gaKExt.getStructDeclarationWOSemicolonAccess();
-	}
-	
-	public ParserRule getStructDeclarationWOSemicolonRule() {
-		return getStructDeclarationWOSemicolonAccess().getRule();
-	}
-	
 	//ClassDeclaration kext::ClassDeclaration:
 	//	{kext::ClassDeclaration} annotations+=Annotation*
 	//	access=AccessModifier?
@@ -1966,12 +1919,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	global?='global'?
 	//	static?='static'?
-	//	host?='host'?
-	//	type=ClassType
+	//	host?='host'? (type=ClassType
 	//	name=ID?
 	//	'{'
 	//	declarations+=DeclarationOrMethod*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	'}'
+	//	| type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=Declaration*
+	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
 	//	';'
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ClassDeclarationElements getClassDeclarationAccess() {
@@ -2000,12 +1957,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	output?='output'?
 	//	global?='global'?
 	//	static?='static'?
-	//	host?='host'?
-	//	type=ClassType
+	//	host?='host'? (type=ClassType
 	//	name=ID?
 	//	'{'
 	//	declarations+=DeclarationOrMethodWOSemicolon*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	'}'
+	//	| type=StructType
+	//	name=ID?
+	//	'{'
+	//	declarations+=DeclarationWOSemicolon*
+	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
 	//	annotations+=CommentAnnotatonSL?;
 	public KExtGrammarAccess.ClassDeclarationWOSemicolonElements getClassDeclarationWOSemicolonAccess() {
 		return gaKExt.getClassDeclarationWOSemicolonAccess();

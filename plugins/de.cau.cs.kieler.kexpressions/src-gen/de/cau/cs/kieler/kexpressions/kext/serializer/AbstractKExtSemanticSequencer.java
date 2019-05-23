@@ -449,30 +449,16 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
 			case KExtPackage.CLASS_DECLARATION:
-				if (rule == grammarAccess.getClassDeclarationWOSemicolonRule()) {
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
-					sequence_ClassDeclarationWOSemicolon_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getClassDeclarationRule()) {
-					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()
 						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
-					sequence_ClassDeclaration_StructDeclaration(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (ClassDeclaration) semanticObject); 
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -511,7 +497,9 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     DeclarationWOSemicolon returns ClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns ClassDeclaration
+	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
@@ -523,9 +511,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         host?='host'? 
-	 *         type=ClassType 
-	 *         name=ID? 
-	 *         declarations+=DeclarationOrMethodWOSemicolon* 
+	 *         ((type=ClassType name=ID? declarations+=DeclarationOrMethodWOSemicolon*) | (type=StructType name=ID? declarations+=DeclarationWOSemicolon*)) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
@@ -537,51 +523,9 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     DeclarationWOSemicolon returns ClassDeclaration
-	 *     DeclarationOrMethodWOSemicolon returns ClassDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
-	 *             host?='host'? 
-	 *             type=StructType 
-	 *             name=ID? 
-	 *             declarations+=DeclarationWOSemicolon* 
-	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
-	 *             host?='host'? 
-	 *             type=ClassType 
-	 *             name=ID? 
-	 *             declarations+=DeclarationOrMethodWOSemicolon* 
-	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         )
-	 *     )
-	 */
-	protected void sequence_ClassDeclarationWOSemicolon_StructDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
+	 *     Declaration returns ClassDeclaration
 	 *     ClassDeclaration returns ClassDeclaration
+	 *     DeclarationOrMethod returns ClassDeclaration
 	 *
 	 * Constraint:
 	 *     (
@@ -593,58 +537,12 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         host?='host'? 
-	 *         type=ClassType 
-	 *         name=ID? 
-	 *         declarations+=DeclarationOrMethod* 
+	 *         ((type=ClassType name=ID? declarations+=DeclarationOrMethod*) | (type=StructType name=ID? declarations+=Declaration*)) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
 	 */
 	protected void sequence_ClassDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Declaration returns ClassDeclaration
-	 *     DeclarationOrMethod returns ClassDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
-	 *             host?='host'? 
-	 *             type=StructType 
-	 *             name=ID? 
-	 *             declarations+=Declaration* 
-	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         ) | 
-	 *         (
-	 *             annotations+=Annotation* 
-	 *             access=AccessModifier? 
-	 *             const?='const'? 
-	 *             input?='input'? 
-	 *             output?='output'? 
-	 *             global?='global'? 
-	 *             static?='static'? 
-	 *             host?='host'? 
-	 *             type=ClassType 
-	 *             name=ID? 
-	 *             declarations+=DeclarationOrMethod* 
-	 *             (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *             annotations+=CommentAnnotatonSL?
-	 *         )
-	 *     )
-	 */
-	protected void sequence_ClassDeclaration_StructDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -835,58 +733,6 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *     (annotations+=QuotedStringAnnotation* name=PrimeID)
 	 */
 	protected void sequence_SimpleValuedObject(ISerializationContext context, ValuedObject semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     StructDeclarationWOSemicolon returns ClassDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
-	 *         host?='host'? 
-	 *         type=StructType 
-	 *         name=ID? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *         annotations+=CommentAnnotatonSL?
-	 *     )
-	 */
-	protected void sequence_StructDeclarationWOSemicolon(ISerializationContext context, ClassDeclaration semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     StructDeclaration returns ClassDeclaration
-	 *
-	 * Constraint:
-	 *     (
-	 *         annotations+=Annotation* 
-	 *         access=AccessModifier? 
-	 *         const?='const'? 
-	 *         input?='input'? 
-	 *         output?='output'? 
-	 *         global?='global'? 
-	 *         static?='static'? 
-	 *         host?='host'? 
-	 *         type=StructType 
-	 *         name=ID? 
-	 *         declarations+=Declaration* 
-	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
-	 *         annotations+=CommentAnnotatonSL?
-	 *     )
-	 */
-	protected void sequence_StructDeclaration(ISerializationContext context, ClassDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

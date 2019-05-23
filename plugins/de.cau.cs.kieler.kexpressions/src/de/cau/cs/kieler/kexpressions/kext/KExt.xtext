@@ -74,10 +74,10 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration | ClassDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | StructDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
@@ -109,43 +109,6 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?; 
-
-StructDeclaration returns kext::ClassDeclaration:
-    {kext::ClassDeclaration}
-    annotations+=Annotation*
-    access=AccessModifier?
-    const?='const'?
-    input?='input'?
-    output?='output'?
-    global?='global'?
-    static?='static'?
-    host?='host'?
-    type = StructType
-    (name = ID)?
-    '{'
-        declarations+=Declaration*
-    '}'
-    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-    ';'
-    annotations+=CommentAnnotatonSL?;
-    
-StructDeclarationWOSemicolon returns kext::ClassDeclaration:
-    {kext::ClassDeclaration}
-    annotations+=Annotation*
-    access=AccessModifier?
-    const?='const'?
-    input?='input'? 
-    output?='output'?
-    global?='global'?
-    static?='static'?
-    host?='host'?
-    type = StructType
-    (name = ID)?
-    '{'
-        declarations+=DeclarationWOSemicolon*
-    '}'
-    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-    annotations+=CommentAnnotatonSL?;
     
 ClassDeclaration returns kext::ClassDeclaration:
     {kext::ClassDeclaration}
@@ -157,11 +120,19 @@ ClassDeclaration returns kext::ClassDeclaration:
     global?='global'?
     static?='static'?
     host?='host'?
-    type = ClassType
-    (name = ID)?
-    '{'
-        declarations+=(DeclarationOrMethod)*
-    '}'
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationOrMethod*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=Declaration*
+        '}'
+    ))
     (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     ';'
     annotations+=CommentAnnotatonSL?
@@ -181,11 +152,19 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     global?='global'?
     static?='static'?
     host?='host'?
-    type = ClassType
-    (name = ID)?
-    '{'
-        declarations+=(DeclarationOrMethodWOSemicolon)*
-    '}'
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationOrMethodWOSemicolon*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationWOSemicolon*
+        '}'
+    ))
     (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
     annotations+=CommentAnnotatonSL?
 ;

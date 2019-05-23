@@ -52,6 +52,7 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -550,7 +551,8 @@ class Reference extends SCChartsProcessor implements Traceable {
                 if (refTarget instanceof State) {
                     val newState = refTarget.copy as State
                     newState.expandRoot(false)
-                    val classDecl = createClassDeclaration => [
+                    val classDecl = createPolicyClassDeclaration => [
+                        type = ValueType.CLASS
                         name = newState.name
                         valuedObjects += ref.valuedObjects
                         declarations += newState.declarations
