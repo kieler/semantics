@@ -47,6 +47,7 @@
         if(scchart.${parameters.varName}){
             ${parameters.parameter1}Counter = System.currentTimeMillis();
             scchart.${parameters.varName} = false;
+        }
 </#list>
 </#if>
 </#macro>
