@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.codegen.cpp.StatebasedCppCodeSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Code generator template for lean statebased C++ code.
@@ -36,6 +37,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
 
+    @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
@@ -44,8 +46,11 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
     @Accessors val header = new StringBuilder
     @Accessors val source = new StringBuilder
 
-    @Accessors var boolean debug = false;
+    @Accessors var boolean debug = false
 
+    @Accessors var String namespace = null
+    @Accessors var String superClass = null
+    
     def void create(State rootState) {
         this.rootState = rootState
 
@@ -63,7 +68,11 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
 
     protected def void createHeader() {
         header.append('''
-            class « rootState.uniqueName »
+            « IF namespace !== null »
+                namespace « namespace » {
+
+            « ENDIF »
+            class « rootState.uniqueName »« IF superClass !== null » : public « superClass »« ENDIF »
             {
               public:
                 // The chosen scheduling regime (IUR) uses four states to maintain the statuses of threads.
@@ -92,6 +101,8 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
                       »« IF s.value.isHierarchical », « s.value.uniqueEnumName »RUNNING« ENDIF »«
                       ENDFOR »
                     };
+                    
+                    String « r.uniqueName »States_toSourceState(« r.uniqueName »States state);
 
                     // The thread data of « r.name »
                     class « r.uniqueContextMemberName »
@@ -118,6 +129,9 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
 
                 Iface iface;
                 TickData rootContext;
+                « IF rootState.hasAnnotation("ContextType") »
+                « rootState.getStringAnnotationValue("ContextType") » externalContext;
+                « ENDIF »
 
                 void reset(); 
 
@@ -137,12 +151,23 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
                 void logic_« s.uniqueName »(« s.uniqueContextMemberName » &context);
                 « ENDIF »
                 « ENDFOR »
+
+              private:
+                String toSourceState(
             };
+            « IF namespace !== null »
+
+                } // namespace
+            « ENDIF »
         ''')
     }
 
     protected def void createSource() {
         source.append('''
+            « IF namespace !== null »
+                namespace « namespace » {
+
+            « ENDIF »        
             « FOR s : scopes »
             « IF s instanceof State »
                 « createSourceState(s) »
@@ -182,6 +207,10 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
                 « ENDIF »
               « ENDFOR »
             }
+            « IF namespace !== null »
+
+                } // namespace
+            « ENDIF »
         ''')
     }
 
@@ -206,7 +235,7 @@ class StatebasedLeanCppTemplate extends AbstractStatebasedLeanTemplate {
               « addSuperstateCode(state) »
 
             « ENDIF »
-              «addSimpleStateCode(state)»
+              « addSimpleStateCode(state) »
             }
         '''
     }

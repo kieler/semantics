@@ -40,6 +40,9 @@ class StatebasedLeanCppCodeGenerator extends ExogenousProcessor<SCCharts, CodeCo
   @Inject protected Injector injector
 
   protected static val HOSTCODE = PragmaRegistry.register("hostcode", StringPragma, "Allows additional hostcode to be included (e.g. includes).")
+  protected static val NAMESPACE = PragmaRegistry.register("namespace", StringPragma, "The namespace to use for the generated code.")
+  protected static val SUPERCLASS = PragmaRegistry.register("superclass", StringPragma, "Superclass to use for the generated class file.")
+  protected static val IMPORTS = PragmaRegistry.register("include", StringPragma, "Includes additional files in the header.")
 
   public static val C_EXTENSION = ".cpp"
   public static val H_EXTENSION = ".h"
@@ -59,6 +62,14 @@ class StatebasedLeanCppCodeGenerator extends ExogenousProcessor<SCCharts, CodeCo
   override process() {
     val template = injector.getInstance(StatebasedLeanCppTemplate) as StatebasedLeanCppTemplate
 
+    if (model.hasPragma(NAMESPACE)) {
+        template.namespace = (model.getPragma(NAMESPACE) as StringPragma).values.head
+    }
+
+    if (model.hasPragma(SUPERCLASS)) {
+        template.superClass = (model.getPragma(SUPERCLASS) as StringPragma).values.head
+    }
+    
     template.create(model.rootStates.head)
 
     val cc = new CodeContainer
@@ -87,6 +98,9 @@ class StatebasedLeanCppCodeGenerator extends ExogenousProcessor<SCCharts, CodeCo
          */
         « FOR include : template.findModifications.get(INCLUDES) »
             #include « include »
+        « ENDFOR »
+        « FOR include : scc.getStringPragmas(IMPORTS) »
+            #include "« include.values.head »"
         « ENDFOR »
         « FOR hostcode : scc.getStringPragmas(HOSTCODE) »
             « hostcode.values.head »

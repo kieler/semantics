@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /**
  * @author ssm
@@ -232,11 +233,17 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
         if (declaration.extern.nullOrEmpty) { 
             return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
         } else {
+            val contextCall = if (declaration.annotations.exists['Context'.equalsIgnoreCase(name)]) {
+                'externalContext.'
+            } else {
+                ''
+            }
+                        
             var code = declaration.extern.head.code
             if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
                 code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
             }
-            return code + referenceCall.parameters.serializeHRParameters
+            return contextCall + code + referenceCall.parameters.serializeHRParameters
         }
     }    
     
@@ -245,11 +252,55 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
         if (declaration.extern.nullOrEmpty) { 
             return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
         } else {
+            val contextCall = if (declaration.annotations.exists['Context'.equalsIgnoreCase(name)]) {
+                'externalContext.'
+            } else {
+                ''
+            }
+                        
             var code = declaration.extern.head.code
             if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
                 code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
             }
-            return code + referenceCall.parameters.serializeParameters
+            return contextCall + code + referenceCall.parameters.serializeParameters
+        }
+    }    
+
+    override dispatch CharSequence serializeHR(ReferenceCallEffect referenceCall) {
+        val declaration = referenceCall.valuedObject.referenceDeclaration
+        if (declaration.extern.nullOrEmpty) {
+            return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+        } else {
+            val contextCall = if (declaration.annotations.exists['Context'.equalsIgnoreCase(name)]) {
+                'externalContext.'
+            } else {
+                ''
+            }
+                        
+            var code = declaration.extern.head.code
+            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+            }
+            return contextCall + code + referenceCall.parameters.serializeHRParameters
+        }
+    }
+    
+    override dispatch CharSequence serialize(ReferenceCallEffect referenceCall) {
+        val declaration = referenceCall.valuedObject.referenceDeclaration
+        if (declaration.extern.nullOrEmpty) { 
+            return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+        } else {
+            val contextCall = if (declaration.annotations.exists['Context'.equalsIgnoreCase(name)]) {
+                'externalContext.'
+            } else {
+                ''
+            }
+                        
+            var code = declaration.extern.head.code
+            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+            }
+            return contextCall + code + referenceCall.parameters.serializeParameters
         }
     }    
     
