@@ -66,7 +66,7 @@
         long startTime = System.currentTimeMillis();
 </#list>
 </#if>
-<#if position=="init">
+<#if position=="input">
 <#list parameters["Time"] as parameters>
         // Time
         scchart.${parameters.varName} = (int)(System.currentTimeMillis() - startTime);
