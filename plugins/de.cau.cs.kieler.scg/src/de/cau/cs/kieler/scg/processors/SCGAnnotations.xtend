@@ -19,6 +19,7 @@ import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -105,4 +106,8 @@ class SCGAnnotations {
     public static val ANNOTATION_METHOD_REFERENCE = 
         register("method", AnnotationsType.SYSTEM, ReferenceAnnotation, SCGraph, 
             "Marks an SCG as a method, referencing its declaration.")
+            
+    public static val ANNOTATION_METHOD_INLINING = 
+        register("inline", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
+            "Marks a method/method call to be always inlined.")
 }
