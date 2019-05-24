@@ -108,8 +108,8 @@ class Inheritance extends SCChartsProcessor implements Traceable {
             }
             state.declarations.addAll(0, newDecls)
             
-            // replace references in methods
-            state.declarations.filter(MethodImplementationDeclaration).forEach[replaceVOR(replacements)]
+            // replace references in declarations/methods
+            state.declarations.forEach[replaceVOR(replacements)]
             
             // copy actions
             state.actions.addAll(0, allBaseStates.map[actions.map[copy]].flatten.toList)
