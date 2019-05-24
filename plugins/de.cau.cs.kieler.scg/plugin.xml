@@ -100,6 +100,9 @@
             class="de.cau.cs.kieler.scg.processors.priority.SCLPTransformation">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGenerator">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.scg.processors.analyzer.ThreadAnalyzer">
       </Processor>
       <Processor
@@ -188,6 +191,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.priority.new.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.priority.java.kico">

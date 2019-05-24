@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.processors.codegen.c
 
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * C Code Generator Tick Module
@@ -27,8 +28,8 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
  */
 class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
     
-    var CCodeGeneratorStructModule struct
-    var CCodeGeneratorLogicModule logic
+    @Accessors var CCodeGeneratorStructModule struct
+    @Accessors var CCodeGeneratorLogicModule logic
     
     override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
@@ -44,17 +45,15 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
         struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
-        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
-        code.append("\n")
     }
     
     override generate() {
-
+        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
+        indent 
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
     }
     
     override generateDone() {
-        indent 
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
         code.append("}\n")
     }
     

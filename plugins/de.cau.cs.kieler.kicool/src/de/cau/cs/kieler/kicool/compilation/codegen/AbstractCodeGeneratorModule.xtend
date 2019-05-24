@@ -29,7 +29,7 @@ abstract class AbstractCodeGeneratorModule {
     
     @Inject protected Injector injector
         
-    @Accessors val StringBuilder code = new StringBuilder
+    @Accessors(PUBLIC_GETTER) var StringBuilder code = new StringBuilder
     @Accessors var String baseName = ""
     @Accessors var String prefix = ""
     @Accessors var String suffix = ""
@@ -240,4 +240,8 @@ abstract class AbstractCodeGeneratorModule {
         sb.append(" */\n")
         return sb.toString
     }    
+    
+    protected def void setNewCodeStringBuilder(StringBuilder sb) {
+        this.code = sb
+    }
 }
