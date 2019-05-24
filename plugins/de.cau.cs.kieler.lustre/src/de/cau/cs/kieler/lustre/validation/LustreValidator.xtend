@@ -218,6 +218,15 @@ class LustreValidator extends AbstractLustreValidator {
             } else if (valObj !== null) {
                 valuedObjectSet.add(valObj)
             }
+            if (equation instanceof Equation) {
+                for (vo : equation.references.filterNull.map[valuedObject].filterNull) {
+                    if (valuedObjectSet.contains(vo)) {
+                        warning(MULTIPLE_DEFINITIONS, vo, null)
+                    } else {
+                        valuedObjectSet.add(vo)
+                    }
+                }
+            }
         }
         
         var currAutomatons = new LinkedList(node.automatons)
