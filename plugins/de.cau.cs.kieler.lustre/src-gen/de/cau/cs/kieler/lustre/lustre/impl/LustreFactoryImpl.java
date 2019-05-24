@@ -86,7 +86,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.NODE_VALUED_OBJECT: return createNodeValuedObject();
       case LustrePackage.EQUATION: return createEquation();
       case LustrePackage.ASSERTION: return createAssertion();
-      case LustrePackage.OPERATOR_EXPRESSION: return createOperatorExpression();
       case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
       case LustrePackage.NODE_REFERENCE: return createNodeReference();
       default:
@@ -323,17 +322,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     AssertionImpl assertion = new AssertionImpl();
     return assertion;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public OperatorExpression createOperatorExpression()
-  {
-    OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-    return operatorExpression;
   }
 
   /**

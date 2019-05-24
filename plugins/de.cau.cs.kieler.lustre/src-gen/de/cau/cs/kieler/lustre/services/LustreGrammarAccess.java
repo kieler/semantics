@@ -1739,35 +1739,35 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//@Override
 		//ProductExpression kexpressions::Expression:
-		//	IntDivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression
-		//	('*' subExpressions+=IntDivExpression)* | {OperatorExpression.subExpressions+=current} operator=DivOperator
-		//	subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//	{OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//	subExpressions+=IntDivExpression)*)*;
+		//	IntDivExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator
+		//	subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)* |
+		//	{kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
+		//	subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator
+		//	subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//IntDivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression
-		//('*' subExpressions+=IntDivExpression)* | {OperatorExpression.subExpressions+=current} operator=DivOperator
-		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//subExpressions+=IntDivExpression)*)*
+		//IntDivExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator
+		//subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)* |
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
+		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator
+		//subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)*
 		public Group getGroup() { return cGroup; }
 		
 		//IntDivExpression
 		public RuleCall getIntDivExpressionParserRuleCall_0() { return cIntDivExpressionParserRuleCall_0; }
 		
-		//({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
-		//subExpressions+=IntDivExpression)* | {OperatorExpression.subExpressions+=current} operator=DivOperator
+		//({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
+		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator
 		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//subExpressions+=IntDivExpression)*)*
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression
+		//('mod' subExpressions+=IntDivExpression)*)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
-		//{OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
 		//subExpressions+=IntDivExpression)*
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_0_0() { return cOperatorExpressionSubExpressionsAction_1_0_0; }
 		
 		//operator=MultOperator
@@ -1794,11 +1794,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//IntDivExpression
 		public RuleCall getSubExpressionsIntDivExpressionParserRuleCall_1_0_3_1_0() { return cSubExpressionsIntDivExpressionParserRuleCall_1_0_3_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
 		//subExpressions+=IntDivExpression)*
 		public Group getGroup_1_1() { return cGroup_1_1; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_1_0() { return cOperatorExpressionSubExpressionsAction_1_1_0; }
 		
 		//operator=DivOperator
@@ -1825,11 +1825,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//IntDivExpression
 		public RuleCall getSubExpressionsIntDivExpressionParserRuleCall_1_1_3_1_0() { return cSubExpressionsIntDivExpressionParserRuleCall_1_1_3_1_0; }
 		
-		//{OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
 		//subExpressions+=IntDivExpression)*
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
-		//{OperatorExpression.subExpressions+=current}
+		//{kexpressions::OperatorExpression.subExpressions+=current}
 		public Action getOperatorExpressionSubExpressionsAction_1_2_0() { return cOperatorExpressionSubExpressionsAction_1_2_0; }
 		
 		//operator=ModOperator
@@ -4127,11 +4127,11 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//ProductExpression kexpressions::Expression:
-	//	IntDivExpression ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression
-	//	('*' subExpressions+=IntDivExpression)* | {OperatorExpression.subExpressions+=current} operator=DivOperator
-	//	subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-	//	subExpressions+=IntDivExpression)*)*;
+	//	IntDivExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator
+	//	subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)* |
+	//	{kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/'
+	//	subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator
+	//	subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)*;
 	public ProductExpressionElements getProductExpressionAccess() {
 		return pProductExpression;
 	}
