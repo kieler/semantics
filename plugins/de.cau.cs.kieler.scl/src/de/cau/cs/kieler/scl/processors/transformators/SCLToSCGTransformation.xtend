@@ -154,7 +154,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             val declMapping = newHashMap
             scg.declarations += module.declarations.copyDeclarations(valuedObjectMapping, declMapping)
             declMapping.entrySet.forEach[
-                key.trace(value)
+                value.trace(key)
                 // Convert method body
                 if (key instanceof MethodImplementationDeclaration) {
                     val method = key as MethodImplementationDeclaration
@@ -164,7 +164,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 }
             ]
             valuedObjectMapping.entrySet.forEach[
-                key.trace(value)
+                value.trace(key)
                 
                 // Fix VO association in VariableStore
                 if (voStore !== null) {
@@ -281,7 +281,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         // Inner declarations
         scg.declarations += method.declarations.copyDeclarations(declVOMapping, declMapping)
         declMapping.entrySet.forEach[
-            key.trace(value)
+            value.trace(key)
             // Convert method body
             if (key instanceof MethodImplementationDeclaration) {
                 throw new IllegalArgumentException("Cannot handle method declarations in methods")
@@ -290,7 +290,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         declVOMapping.entrySet.forEach[
             val oldVO = key
             val newVO = value
-            oldVO.trace(newVO)
+            newVO.trace(oldVO)
             valuedObjectMapping.put(oldVO, newVO)
             // Fix VO association in VariableStore
             if (voStore !== null) {
@@ -315,7 +315,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         declVOMapping.entrySet.forEach[
             val oldVO = key
             val newVO = value
-            oldVO.trace(newVO)
+            newVO.trace(oldVO)
             valuedObjectMapping.put(oldVO, newVO)
             newVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, method.parameterDeclarations.indexOf(oldVO.eContainer))
             // Fix VO association in VariableStore

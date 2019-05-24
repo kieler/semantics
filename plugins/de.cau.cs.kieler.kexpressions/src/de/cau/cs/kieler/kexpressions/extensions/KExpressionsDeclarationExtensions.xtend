@@ -232,6 +232,9 @@ class KExpressionsDeclarationExtensions {
         return declaratins.copyDeclarations(null, null)
     }
     
+    /**
+     * Mappings are old -> new
+     */
     def List<Declaration> copyDeclarations(List<Declaration> declaratins, Map<ValuedObject, ValuedObject> voMapping, Map<Declaration, Declaration> declMapping) {
         val newDecls = newArrayList
         for (decl : declaratins) {
