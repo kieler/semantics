@@ -153,6 +153,24 @@
       <Processor
             class="de.cau.cs.kieler.scg.processors.MethodProcessor">
       </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.SmvCodeGenerator">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.SimplifyNamesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.DefineUnboundVariablesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.codegen.smv.PreFinalVariableValuesOfSSA">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.scg.processors.StoreVariableDeclarations">
+      </Processor>
    </extension>
    <extension
          point="de.cau.cs.kieler.kicool.system">
@@ -164,6 +182,9 @@
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.kico">
+      </TransformationSystem>
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.netlist.ref.kico">
       </TransformationSystem>
       <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.netlist.java.kico">

@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.util.List
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * C Code Generator Struct Module
@@ -101,6 +102,26 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
                         }
                     }
                     code.append(";\n")
+                }
+            } else if (declaration instanceof ReferenceDeclaration) {
+                for (valuedObject : declaration.valuedObjects) {
+                    val myModule = parent as CCodeGeneratorModule
+                    val module = codeGeneratorModuleMap.get(declaration.reference) as CCodeGeneratorModule
+                    if (module !== null) {
+                        code.append(indentation)
+                        code.append(module.struct.name)
+                        code.append(" ")
+                        code.append(valuedObject.name)
+                        code.append(";\n")
+                        
+                        myModule.reset.code.append(indentation)
+                        myModule.reset.code.append(module.reset.name)
+                        myModule.reset.code.append("(&")
+                        myModule.reset.code.append(getVariableName).append(separator)
+                        myModule.reset.code.append(valuedObject.name)
+                        myModule.reset.code.append(");\n")
+                    }
+                
                 }
             }
         }

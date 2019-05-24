@@ -218,6 +218,13 @@ class SimulationUI {
         }
     }
     
+    static def removeObserver(SimulationListener listener) {
+        listeners -= listener
+        if (currentSimulation !== null) {
+            currentSimulation.deleteObserver(listener)
+        }
+    }
+    
     static def getObservers() {
         listeners.unmodifiableView
     }    

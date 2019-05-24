@@ -19,6 +19,10 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.scg.SCGraph
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -30,6 +34,8 @@ import de.cau.cs.kieler.scg.SchedulingBlock
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import java.util.Map
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -118,14 +124,21 @@ class SCGDeclarationExtensions {
         }
         return null
     }    
-    
+
     public def ValuedObjectMapping copyDeclarations(SCGraph source, SCGraph target) {
+        copyDeclarations(source, target, null)
+    }
+    
+    public def ValuedObjectMapping copyDeclarations(SCGraph source, SCGraph target, Map<SCGraph, SCGraph> scgMap) {
         val map = new ValuedObjectMapping
         val declMapping = newHashMap
         val voMapping = newHashMap
         target.declarations += source.declarations.copyDeclarations(voMapping, declMapping)
         declMapping.entrySet.forEach[
-            key.trace(value)
+            value.trace(key)
+            if (key instanceof ReferenceDeclaration && scgMap !== null) {
+                (value as ReferenceDeclaration).reference = scgMap.get((key as ReferenceDeclaration).reference)
+            }
         ]
         voMapping.entrySet.forEach[
             map.put(key, <ValuedObject> newLinkedList(value))
@@ -235,14 +248,14 @@ class SCGDeclarationExtensions {
     		assignment.indices?.forEach[
     			s.indices += it.copySCGExpression(map)
     		]
-    		var newVOR = s.reference
-    		var oldSub = assignment.reference?.subReference
-    		while (oldSub !== null) {
-    		    val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
-    		    newVOR.subReference = ref
-    		    newVOR = ref
-    		    oldSub = oldSub.subReference
-    		}
+            var newVOR = s.reference
+            var oldSub = assignment.reference?.subReference
+            while (oldSub !== null) {
+                val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
+                newVOR.subReference = ref
+                newVOR = ref
+                oldSub = oldSub.subReference
+            }
     	]
     } 
 

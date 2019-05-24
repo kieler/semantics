@@ -65,6 +65,9 @@
             class="de.cau.cs.kieler.kicool.deploy.processor.ArduinoCompiler">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.kicool.deploy.processor.NXJCompiler">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations">
       </Processor>
       <Processor
@@ -72,6 +75,12 @@
       </Processor>
       <Processor
             class="de.cau.cs.kieler.kicool.processors.Snapshot">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST">
+      </Processor>
+      <Processor
+            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST">
       </Processor>
    </extension>
    

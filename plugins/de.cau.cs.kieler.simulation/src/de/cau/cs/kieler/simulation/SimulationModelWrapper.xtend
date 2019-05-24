@@ -46,7 +46,7 @@ class SimulationModelWrapper implements Simulatable {
     var String id
     @Accessors(PUBLIC_GETTER)
     var SimulationContext context
-    var SimulationVariableStore variables
+    protected var SimulationVariableStore variables
 
     // Internal Process
     private val timeLimiter = new SimpleTimeLimiter

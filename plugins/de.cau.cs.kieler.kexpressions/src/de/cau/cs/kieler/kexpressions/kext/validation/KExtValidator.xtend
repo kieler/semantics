@@ -103,28 +103,28 @@ class KExtValidator extends AbstractKExtValidator {
         }
     }
 
-   @Check
-   def void checkConstBinding(VariableDeclaration declaration) {
-       if (declaration.isConst) {
-           for (valuedObject : declaration.getValuedObjects) {
-               val initialValue = valuedObject.getInitialValue
-               if (initialValue != null) {
-                   var ok = false
-                   // If it is a literal, it's ok.
-                   if (initialValue instanceof Value) ok = true
-                   
-                   // If it is an subtraction operator expression with a single literal, it's ok. E.g., -12
-                   if (initialValue instanceof OperatorExpression) {
-                       if (initialValue.operator == OperatorType.SUB) {
-                           if (initialValue.subExpressions.size == 1 &&
-                               initialValue.subExpressions.head instanceof Value) ok = true
-                       } 
-                   }
-                   if (!ok) error(NO_CONST_LITERAL, valuedObject, null, -1);
-               }
-           }
-       }
-    }
+//   @Check
+//   def void checkConstBinding(VariableDeclaration declaration) {
+//       if (declaration.isConst) {
+//           for (valuedObject : declaration.getValuedObjects) {
+//               val initialValue = valuedObject.getInitialValue
+//               if (initialValue != null) {
+//                   var ok = false
+//                   // If it is a literal, it's ok.
+//                   if (initialValue instanceof Value) ok = true
+//                   
+//                   // If it is an subtraction operator expression with a single literal, it's ok. E.g., -12
+//                   if (initialValue instanceof OperatorExpression) {
+//                       if (initialValue.operator == OperatorType.SUB) {
+//                           if (initialValue.subExpressions.size == 1 &&
+//                               initialValue.subExpressions.head instanceof Value) ok = true
+//                       } 
+//                   }
+//                   if (!ok) error(NO_CONST_LITERAL, valuedObject, null, -1);
+//               }
+//           }
+//       }
+//    }
     
     @Check
     def void checkPureSignal(VariableDeclaration declaration) {

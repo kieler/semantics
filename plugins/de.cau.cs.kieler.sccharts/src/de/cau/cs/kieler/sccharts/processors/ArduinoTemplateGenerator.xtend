@@ -50,7 +50,7 @@ class ArduinoTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object
     }
     
     override getName() {
-        "Generate Arduino Deployment Template"
+        "Arduino Deployment Template"
     }
     
     override generateTemplate() {

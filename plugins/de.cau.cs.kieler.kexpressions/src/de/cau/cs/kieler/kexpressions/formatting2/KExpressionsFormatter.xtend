@@ -36,7 +36,7 @@ class KExpressionsFormatter extends AnnotationsFormatter {
             case PRE,
             case VAL: {
         		operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.leftParenthesisKeyword_0_2)?.prepend[ noSpace ].append[ noSpace ]
-                operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.rightParenthesisKeyword_0_4)?.prepend[ noSpace ] 
+                operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.rightParenthesisKeyword_0_5)?.prepend[ noSpace ] 
             }
             default: {
                 // Nothing

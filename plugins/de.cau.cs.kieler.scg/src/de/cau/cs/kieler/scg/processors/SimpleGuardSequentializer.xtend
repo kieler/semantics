@@ -39,6 +39,8 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import java.util.Map
 
 /** 
  * @author ssm
@@ -73,9 +75,17 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             model.copyPragmas(it)
         ]
         creationalTransformation(model, SCGGraphs)
+        
+        
+        val SCGMap = <SCGraph, SCGraph> newHashMap
         for (scg : model.scgs) {
-            SCGGraphs.scgs += scg.transform                           
-        }        
+            SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
+        }
+        
+        for (scg : model.scgs) {
+            SCGGraphs.scgs += scg.transform(SCGMap.get(scg), SCGMap)                           
+        }    
+            
         setModel(SCGGraphs)
     }
     
@@ -83,14 +93,14 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
 
-    def SCGraph transform(SCGraph scg) {
+    def SCGraph transform(SCGraph scg, SCGraph newSCG, Map<SCGraph, SCGraph> SCGMap) {
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
          * Therefore, we only copy the interface and extend the declaration by the guards of the 
          * basic blocks.
          */
-        val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
+         newSCG => [
         	annotations += createStringAnnotation(SCGFeatures.SEQUENTIALIZE_ID, SCGFeatures.SEQUENTIALIZE_NAME)
         	label = scg.label
         	name = scg.name
@@ -103,8 +113,8 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         hostcodeAnnotations.forEach[
             newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
-        val valuedObjectMap = scg.copyDeclarations(newSCG)
-        
+        val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
+                
         // Fix VO association in VariableStore
         val voStore = VariableStore.get(environment)
         valuedObjectMap.entrySet.forEach[ entry |

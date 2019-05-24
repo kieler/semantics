@@ -3,7 +3,11 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
-import org.eclipse.emf.ecore.EObject;
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
+
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,66 +18,29 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Equation#getLeft <em>Left</em>}</li>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.Equation#getRight <em>Right</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.Equation#getReferences <em>References</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation()
  * @model
  * @generated
  */
-public interface Equation extends EObject
+public interface Equation extends Assignment
 {
   /**
-   * Returns the value of the '<em><b>Left</b></em>' reference.
+   * Returns the value of the '<em><b>References</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObjectReference}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Left</em>' reference isn't clear,
+   * If the meaning of the '<em>References</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Left</em>' reference.
-   * @see #setLeft(Variable_Declaration)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_Left()
-   * @model
-   * @generated
-   */
-  Variable_Declaration getLeft();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#getLeft <em>Left</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Left</em>' reference.
-   * @see #getLeft()
-   * @generated
-   */
-  void setLeft(Variable_Declaration value);
-
-  /**
-   * Returns the value of the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Right</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Right</em>' containment reference.
-   * @see #setRight(Expression)
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_Right()
+   * @return the value of the '<em>References</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getEquation_References()
    * @model containment="true"
    * @generated
    */
-  Expression getRight();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.Equation#getRight <em>Right</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Right</em>' containment reference.
-   * @see #getRight()
-   * @generated
-   */
-  void setRight(Expression value);
+  EList<ValuedObjectReference> getReferences();
 
 } // Equation

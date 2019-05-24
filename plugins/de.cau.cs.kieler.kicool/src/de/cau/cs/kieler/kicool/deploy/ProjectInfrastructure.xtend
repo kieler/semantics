@@ -69,6 +69,11 @@ class ProjectInfrastructure {
 
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
+        
+    public static val IProperty<Boolean> USE_SHORT_DIRECTORY_NAMES = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.useShortNames", 
+            de.cau.cs.kieler.core.Platform.isWindows)
+        
 
     public static val Set<IProject> createdTemporaryProjects = newHashSet
 
@@ -138,6 +143,10 @@ class ProjectInfrastructure {
                 if (resource !== null) {
                     modelFile = resource.findResourceLocation
                 }
+            } else if (inputModel instanceof CodeContainer) {
+                if (!inputModel.files.empty) {
+                    modelFile = inputModel.files.head.underlyingFile
+                }
             }
         }
         
@@ -151,6 +160,10 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (resource !== null && resource.URI !== null && resource.URI.file) {
                 name = resource.URI.toFileString
+                if (environment.getProperty(USE_SHORT_DIRECTORY_NAMES)) {
+                    val nameSplits = name.split("\\\\")
+                    name = nameSplits.get(nameSplits.length - 1)
+                }
             } else if (modelFile !== null) {
                 name = modelFile.toString
             } else if (inputModel instanceof Nameable) {

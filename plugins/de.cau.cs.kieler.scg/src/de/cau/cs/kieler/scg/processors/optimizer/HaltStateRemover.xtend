@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
@@ -44,6 +46,9 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
     
+    public static val IProperty<Boolean> HALT_STATE_REMOVER_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.haltStateRemover", false)    
+    
     override getId() {
         "de.cau.cs.kieler.scg.processors.haltStateRemover"
     }
@@ -53,6 +58,8 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(HALT_STATE_REMOVER_ENABLED)) return;
+        
         val model = getModel
         
         for (scg : model.scgs) {

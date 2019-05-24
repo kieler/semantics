@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -33,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.Action
@@ -42,7 +44,6 @@ import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.Replacements
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
@@ -52,7 +53,6 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -74,12 +74,14 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsCoreExtensions
     extension SCChartsFactory = SCChartsFactory.eINSTANCE
     
+    public static val IProperty<Boolean> EXPAND_REFERENCED_STATES = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.expandStates", true)
     public static val IProperty<Boolean> RENAME_SHADOWED_VARIABLES = 
-       new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
     public static val IProperty<String> VARIABLE_RENAME_PREFIX =
-       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenamePrefix", "_")      
+        new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenamePrefix", "_")      
     public static val IProperty<String> VARIABLE_RENAME_SUFFIX =
-       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenameSuffix", "_")      
+        new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenameSuffix", "_")      
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null
@@ -103,15 +105,22 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         val model = getModel
         
-        // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
-        for(rootState : newArrayList(model.rootStates.head)) {
+        // Process root states depending on expansion is triggered or not.
+        val rootStateList = if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+            newArrayList(model.rootStates.head)
+        } else {
+            model.rootStates.immutableCopy
+        }
+        for(rootState : rootStateList) {
             rootState.expandRoot(true)
         }
         
-        val firstRoot = model.rootStates.head
-        model.rootStates.removeIf[it !== firstRoot]
-        
-        model.imports.clear
+        if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+            val firstRoot = model.rootStates.head
+            model.rootStates.removeIf[ it !== firstRoot ]
+            
+            model.imports.clear
+        }
     }
     
     protected def void expandRoot(State rootState, boolean validate) {
@@ -123,15 +132,17 @@ class Reference extends SCChartsProcessor implements Traceable {
         }
         inheritanceProcessor?.inheritBaseStates(rootState)
         
-        val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList
-        val regionsWithReferences = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+        if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+            val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            val regionsWithReferences = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
         
-        for (state : statesWithReferences) {
-            state.expandReferencedScope(new Replacements)
-        }
+            for (state : statesWithReferences) {
+                state.expandReferencedScope(new Replacements)
+            }
         
-        for (region : regionsWithReferences) {
-            region.expandReferencedScope(new Replacements)
+            for (region : regionsWithReferences) {
+                region.expandReferencedScope(new Replacements)
+            }
         }
         
         if (dataflowProcessor !== null) {
@@ -140,13 +151,15 @@ class Reference extends SCChartsProcessor implements Traceable {
             // Handle reference declarations not handled by dataflow
             rootState.handleSCChartsDatatype
             
-            val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-            val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
-            for (state : statesWithReferences2.toList) {
-                state.expandReferencedScope(new Replacements)
-            }
-            for (region : regionsWithReferences2) {
-                region.expandReferencedScope(new Replacements)
+            if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
+                val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+                for (state : statesWithReferences2.toList) {
+                    state.expandReferencedScope(new Replacements)
+                }
+                for (region : regionsWithReferences2) {
+                    region.expandReferencedScope(new Replacements)
+                }
             }
         }
         

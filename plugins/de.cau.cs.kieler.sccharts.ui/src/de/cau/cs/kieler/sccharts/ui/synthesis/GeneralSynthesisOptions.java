@@ -72,6 +72,6 @@ public final class GeneralSynthesisOptions {
 
     /** inherited declarations and regions synthesis option */
     public static final SynthesisOption SHOW_CAUSAL_DATAFLOW =
-            SynthesisOption.createCheckOption("Causal Dataflow", true).setCategory(DEBUGGING);
+            SynthesisOption.createCheckOption("Causal Dataflow", false).setCategory(DEBUGGING);
 
 }

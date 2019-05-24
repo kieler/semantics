@@ -1679,6 +1679,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(operatorTypeEEnum, OperatorType.BITWISE_NOT);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.CONDITIONAL);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.FBY);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.CURRENT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.WHEN);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INIT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INTDIV);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_XOR);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.IMPLIES);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.ATMOSTONEOF);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.NOR);
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
@@ -1696,6 +1704,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.JSON);
         addEEnumLiteral(valueTypeEEnum, ValueType.STRUCT);
         addEEnumLiteral(valueTypeEEnum, ValueType.CLASS);
+        addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
         addEEnumLiteral(valueTypeEEnum, ValueType.VOID);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");

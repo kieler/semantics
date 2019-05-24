@@ -27,6 +27,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
+import java.util.Map
 
 /**
  * @author ssm
@@ -235,5 +236,28 @@ class KExtDeclarationExtensions {
             ] 
         ]
     } 
+    
+
+    def ValuedObject getValuedObjectByName(DeclarationScope scope, String name) {
+        for(vo : scope.valuedObjects) {
+            if (vo.name.equals(name)) return vo
+        }
+        if (scope.eContainer !== null && scope.eContainer instanceof DeclarationScope) 
+            return (scope.eContainer as DeclarationScope).getValuedObjectByName(name)
+        return null
+    }
+    
+    def Map<String, ValuedObject> getValuedObjectNameMap(DeclarationScope scope) {
+        scope.getValuedObjectNameMap(<String, ValuedObject> newHashMap)
+    }
+    
+    private def Map<String, ValuedObject> getValuedObjectNameMap(DeclarationScope scope, Map<String, ValuedObject> map) {
+        for(vo : scope.valuedObjects) {
+            if (!map.containsKey(vo.name)) map.put(vo.name, vo)
+        }
+        if (scope.eContainer !== null && scope.eContainer instanceof DeclarationScope) 
+            return (scope.eContainer as DeclarationScope).getValuedObjectNameMap(map)
+        map
+    }    
     
 }

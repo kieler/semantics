@@ -28,13 +28,13 @@ import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
  */
 class MacroAnnotations extends AbstractDeploymentProcessor<Object> {
 
-    public static val FILE_NAME = "arduino-deployment.ftl"
-     
     public static val ANNOTATION_MACRO_NAME = "macro"
     
     public static val PARAMETER_VAR_NAME = "varName"
     public static val PARAMETER_VO_NAME = "voName"
     public static val PARAMETER_PARAMETER_NAME = "parameter"
+    public static val PARAMETER_PORT_NAME = "port"
+    public static val PARAMETER_SELF_NAME = "self"
 
     public static val IProperty<String> STRUCT_ACCESS = 
         new Property<String>("de.cau.cs.kieler.c.struct.access", ".")
@@ -61,6 +61,12 @@ class MacroAnnotations extends AbstractDeploymentProcessor<Object> {
                 // TODO: add other macro parameter to hash map.
                 for (par : anno.values.indexed) {
                     parameter.put(PARAMETER_PARAMETER_NAME + par.key, par.value)
+                    
+                    if (par.key == 0) {
+                        parameter.put(PARAMETER_SELF_NAME, par.value)
+                    } else if (par.key == 1) {
+                        parameter.put(PARAMETER_PORT_NAME, par.value)
+                    }
                 }
                                 
                 macros.put(macroName, parameter)                 

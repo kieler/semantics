@@ -44,6 +44,14 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/BITWISE_NOT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/CONDITIONAL"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/FBY"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/CURRENT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/WHEN"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INIT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INTDIV"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LOGICAL_XOR"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/IMPLIES"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/ATMOSTONEOF"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOR"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ValueType">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/PURE"/>
@@ -61,6 +69,7 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/JSON"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/STRUCT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLASS"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/ENUM"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/VOID"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">

@@ -133,7 +133,7 @@
               class="de.cau.cs.kieler.sccharts.processors.UserSchedule">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.Fby">
+              class="de.cau.cs.kieler.sccharts.processors.InitOperator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.FinalRegion">
@@ -205,7 +205,13 @@
               class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.ValuedObjectRise">
+        </Processor>
+        <Processor
+            class="de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer">
         </Processor>
      </extension>
      <extension
@@ -259,6 +265,12 @@
               system="system/de.cau.cs.kieler.sccharts.netlist.arduino.deploy.kico">
         </TransformationSystem>
         <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.RConsole.kico">
+        </TransformationSystem>
+        <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
         </TransformationSystem>
         <TransformationSystem
@@ -296,6 +308,9 @@
         </TransformationSystem>
         <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.c.sccharts.dataflow.kico">
         </TransformationSystem>
      </extension>
 

@@ -198,6 +198,16 @@ public enum ValueType implements Enumerator {
     CLASS(14, "CLASS", "class"),
 
     /**
+     * The '<em><b>ENUM</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ENUM_VALUE
+     * @generated
+     * @ordered
+     */
+    ENUM(15, "ENUM", "enum"),
+
+    /**
      * The '<em><b>VOID</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -205,7 +215,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    VOID(15, "VOID", "void");
+    VOID(16, "VOID", "void");
 
     /**
      * The '<em><b>PURE</b></em>' literal value.
@@ -391,6 +401,17 @@ public enum ValueType implements Enumerator {
     public static final int CLASS_VALUE = 14;
 
     /**
+     * The '<em><b>ENUM</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ENUM
+     * @model literal="enum"
+     * @generated
+     * @ordered
+     */
+    public static final int ENUM_VALUE = 15;
+
+    /**
      * The '<em><b>VOID</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -399,7 +420,7 @@ public enum ValueType implements Enumerator {
      * @generated
      * @ordered
      */
-    public static final int VOID_VALUE = 15;
+    public static final int VOID_VALUE = 16;
 
     /**
      * An array of all the '<em><b>Value Type</b></em>' enumerators.
@@ -424,6 +445,7 @@ public enum ValueType implements Enumerator {
             JSON,
             STRUCT,
             CLASS,
+            ENUM,
             VOID,
         };
 
@@ -496,6 +518,7 @@ public enum ValueType implements Enumerator {
             case JSON_VALUE: return JSON;
             case STRUCT_VALUE: return STRUCT;
             case CLASS_VALUE: return CLASS;
+            case ENUM_VALUE: return ENUM;
             case VOID_VALUE: return VOID;
         }
         return null;

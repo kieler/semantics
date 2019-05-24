@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**

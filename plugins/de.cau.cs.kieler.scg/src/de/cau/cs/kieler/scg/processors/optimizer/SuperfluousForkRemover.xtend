@@ -84,7 +84,7 @@ class SuperfluousForkRemover {
                 forkPreviousControlflows.trace(fork.next)
                 exitPreviousControlflows.trace(fork.join.next, entry.exit.next)
                 ancestorEntry.trace(entry, fork)
-                ancestorEntry.exit.trace(entry.exit, fork.join)
+//                ancestorEntry.exit.trace(entry.exit, fork.join)
             }
 
             // Add superfluous control flows to the remove list.
