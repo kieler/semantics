@@ -355,7 +355,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
 
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
@@ -366,7 +366,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
@@ -379,7 +379,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
         var res = ""
         if (assignment.reference !== null && assignment.reference.valuedObject !== null) {
-            res = assignment.reference.valuedObject.name.applySymbolTable
+            res = assignment.reference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
             if (!assignment.reference.indices.nullOrEmpty) {
                 for(index : assignment.reference.indices) {
                     res = res + "[" + index.serialize + "]"
@@ -399,9 +399,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         val objectContainer = emission.reference.valuedObject.eContainer
         if (objectContainer instanceof VariableDeclaration) {
             if (objectContainer.type != ValueType::PURE) {
-                return (emission.reference.valuedObject.name + "(" + emission.newValue.serialize + ")")             
+                return (emission.reference.valuedObject?.name?:"<BROKEN_REFERENCE>" + "(" + emission.newValue.serialize + ")")             
             } else {
-                return emission.reference.valuedObject.name.applySymbolTable
+                return emission.reference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
             }
         } else {
             return emission.reference.valuedObject.name.applySymbolTable
