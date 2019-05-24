@@ -18,14 +18,15 @@ import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -42,7 +43,6 @@ import java.util.Map
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * 
@@ -108,6 +108,10 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         
         // Remove inlined methods
         model.scgs.removeAll(methodSCGs.values)
+        // Remove classes without content
+        for (scg : model.scgs) {
+            scg.declarations.removeIf[it instanceof ClassDeclaration && (it as ClassDeclaration).declarations.nullOrEmpty]
+        }
         methodSCGs.keySet.forEach[remove]
     }
     
