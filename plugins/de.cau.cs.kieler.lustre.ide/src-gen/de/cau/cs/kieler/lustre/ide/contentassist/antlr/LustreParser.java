@@ -214,7 +214,7 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1(), "rule__LogicalAndExpression__Group_1__0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_1(), "rule__LogicalAndExpression__Group_1_1__0");
 			builder.put(grammarAccess.getLogicalAndExpressionAccess().getGroup_1_2(), "rule__LogicalAndExpression__Group_1_2__0");
-			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
+			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup(), "rule__NorAtMostOneExpression__Group__0");
 			builder.put(grammarAccess.getNorAtMostOneExpressionAccess().getGroup_4(), "rule__NorAtMostOneExpression__Group_4__0");
 			builder.put(grammarAccess.getNotExpressionAccess().getGroup_0(), "rule__NotExpression__Group_0__0");

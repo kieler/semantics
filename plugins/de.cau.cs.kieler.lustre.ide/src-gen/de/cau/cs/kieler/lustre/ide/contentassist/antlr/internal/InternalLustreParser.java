@@ -15716,13 +15716,13 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__AtomicExpression__Alternatives"
-    // InternalLustre.g:4467:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleNorAtMostOneExpression ) );
+    // InternalLustre.g:4467:1: rule__AtomicExpression__Alternatives : ( ( ruleBoolValue ) | ( ( rule__AtomicExpression__Group_1__0 ) ) | ( ruleReferenceCall ) | ( ruleValuedObjectTestExpression ) | ( ruleNorAtMostOneExpression ) );
     public final void rule__AtomicExpression__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:4471:1: ( ( ruleBoolValue ) | ( ruleValuedObjectTestExpression ) | ( ( rule__AtomicExpression__Group_2__0 ) ) | ( ruleReferenceCall ) | ( ruleNorAtMostOneExpression ) )
+            // InternalLustre.g:4471:1: ( ( ruleBoolValue ) | ( ( rule__AtomicExpression__Group_1__0 ) ) | ( ruleReferenceCall ) | ( ruleValuedObjectTestExpression ) | ( ruleNorAtMostOneExpression ) )
             int alt29=5;
             switch ( input.LA(1) ) {
             case RULE_BOOLEAN:
@@ -15730,18 +15730,17 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                 alt29=1;
                 }
                 break;
-            case 33:
-            case 42:
+            case 91:
                 {
                 alt29=2;
                 }
                 break;
             case RULE_ID:
                 {
-                int LA29_4 = input.LA(2);
+                int LA29_3 = input.LA(2);
 
-                if ( (synpred39_InternalLustre()) ) {
-                    alt29=2;
+                if ( (synpred40_InternalLustre()) ) {
+                    alt29=3;
                 }
                 else if ( (synpred41_InternalLustre()) ) {
                     alt29=4;
@@ -15749,15 +15748,16 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                 else {
                     if (state.backtracking>0) {state.failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 29, 4, input);
+                        new NoViableAltException("", 29, 3, input);
 
                     throw nvae;
                 }
                 }
                 break;
-            case 91:
+            case 33:
+            case 42:
                 {
-                alt29=3;
+                alt29=4;
                 }
                 break;
             case 31:
@@ -15799,21 +15799,27 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:4478:2: ( ruleValuedObjectTestExpression )
+                    // InternalLustre.g:4478:2: ( ( rule__AtomicExpression__Group_1__0 ) )
                     {
-                    // InternalLustre.g:4478:2: ( ruleValuedObjectTestExpression )
-                    // InternalLustre.g:4479:3: ruleValuedObjectTestExpression
+                    // InternalLustre.g:4478:2: ( ( rule__AtomicExpression__Group_1__0 ) )
+                    // InternalLustre.g:4479:3: ( rule__AtomicExpression__Group_1__0 )
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1()); 
+                       before(grammarAccess.getAtomicExpressionAccess().getGroup_1()); 
                     }
+                    // InternalLustre.g:4480:3: ( rule__AtomicExpression__Group_1__0 )
+                    // InternalLustre.g:4480:4: rule__AtomicExpression__Group_1__0
+                    {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleValuedObjectTestExpression();
+                    rule__AtomicExpression__Group_1__0();
 
                     state._fsp--;
                     if (state.failed) return ;
+
+                    }
+
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1()); 
+                       after(grammarAccess.getAtomicExpressionAccess().getGroup_1()); 
                     }
 
                     }
@@ -15822,27 +15828,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:4484:2: ( ( rule__AtomicExpression__Group_2__0 ) )
+                    // InternalLustre.g:4484:2: ( ruleReferenceCall )
                     {
-                    // InternalLustre.g:4484:2: ( ( rule__AtomicExpression__Group_2__0 ) )
-                    // InternalLustre.g:4485:3: ( rule__AtomicExpression__Group_2__0 )
+                    // InternalLustre.g:4484:2: ( ruleReferenceCall )
+                    // InternalLustre.g:4485:3: ruleReferenceCall
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getAtomicExpressionAccess().getGroup_2()); 
+                       before(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_2()); 
                     }
-                    // InternalLustre.g:4486:3: ( rule__AtomicExpression__Group_2__0 )
-                    // InternalLustre.g:4486:4: rule__AtomicExpression__Group_2__0
-                    {
                     pushFollow(FollowSets000.FOLLOW_2);
-                    rule__AtomicExpression__Group_2__0();
+                    ruleReferenceCall();
 
                     state._fsp--;
                     if (state.failed) return ;
-
-                    }
-
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getAtomicExpressionAccess().getGroup_2()); 
+                       after(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_2()); 
                     }
 
                     }
@@ -15851,21 +15851,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:4490:2: ( ruleReferenceCall )
+                    // InternalLustre.g:4490:2: ( ruleValuedObjectTestExpression )
                     {
-                    // InternalLustre.g:4490:2: ( ruleReferenceCall )
-                    // InternalLustre.g:4491:3: ruleReferenceCall
+                    // InternalLustre.g:4490:2: ( ruleValuedObjectTestExpression )
+                    // InternalLustre.g:4491:3: ruleValuedObjectTestExpression
                     {
                     if ( state.backtracking==0 ) {
-                       before(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_3()); 
+                       before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3()); 
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    ruleReferenceCall();
+                    ruleValuedObjectTestExpression();
 
                     state._fsp--;
                     if (state.failed) return ;
                     if ( state.backtracking==0 ) {
-                       after(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_3()); 
+                       after(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3()); 
                     }
 
                     }
@@ -30199,7 +30199,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8463:1: ( rule__TypeDeclaration__Group_1_1_1__1__Impl rule__TypeDeclaration__Group_1_1_1__2 )
             // InternalLustre.g:8464:2: rule__TypeDeclaration__Group_1_1_1__1__Impl rule__TypeDeclaration__Group_1_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__TypeDeclaration__Group_1_1_1__1__Impl();
 
             state._fsp--;
@@ -30278,7 +30278,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8490:1: ( rule__TypeDeclaration__Group_1_1_1__2__Impl rule__TypeDeclaration__Group_1_1_1__3 )
             // InternalLustre.g:8491:2: rule__TypeDeclaration__Group_1_1_1__2__Impl rule__TypeDeclaration__Group_1_1_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__TypeDeclaration__Group_1_1_1__2__Impl();
 
             state._fsp--;
@@ -30367,7 +30367,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8517:1: ( rule__TypeDeclaration__Group_1_1_1__3__Impl rule__TypeDeclaration__Group_1_1_1__4 )
             // InternalLustre.g:8518:2: rule__TypeDeclaration__Group_1_1_1__3__Impl rule__TypeDeclaration__Group_1_1_1__4
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__TypeDeclaration__Group_1_1_1__3__Impl();
 
             state._fsp--;
@@ -30548,7 +30548,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8571:1: ( rule__TypeDeclaration__Group_1_1_1_3__0__Impl rule__TypeDeclaration__Group_1_1_1_3__1 )
             // InternalLustre.g:8572:2: rule__TypeDeclaration__Group_1_1_1_3__0__Impl rule__TypeDeclaration__Group_1_1_1_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__TypeDeclaration__Group_1_1_1_3__0__Impl();
 
             state._fsp--;
@@ -30879,7 +30879,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8679:1: ( rule__TypeDeclaration__Group_1_1_2__2__Impl rule__TypeDeclaration__Group_1_1_2__3 )
             // InternalLustre.g:8680:2: rule__TypeDeclaration__Group_1_1_2__2__Impl rule__TypeDeclaration__Group_1_1_2__3
             {
-            pushFollow(FollowSets000.FOLLOW_39);
+            pushFollow(FollowSets000.FOLLOW_38);
             rule__TypeDeclaration__Group_1_1_2__2__Impl();
 
             state._fsp--;
@@ -30968,7 +30968,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8706:1: ( rule__TypeDeclaration__Group_1_1_2__3__Impl rule__TypeDeclaration__Group_1_1_2__4 )
             // InternalLustre.g:8707:2: rule__TypeDeclaration__Group_1_1_2__3__Impl rule__TypeDeclaration__Group_1_1_2__4
             {
-            pushFollow(FollowSets000.FOLLOW_39);
+            pushFollow(FollowSets000.FOLLOW_38);
             rule__TypeDeclaration__Group_1_1_2__3__Impl();
 
             state._fsp--;
@@ -31081,7 +31081,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8733:1: ( rule__TypeDeclaration__Group_1_1_2__4__Impl rule__TypeDeclaration__Group_1_1_2__5 )
             // InternalLustre.g:8734:2: rule__TypeDeclaration__Group_1_1_2__4__Impl rule__TypeDeclaration__Group_1_1_2__5
             {
-            pushFollow(FollowSets000.FOLLOW_39);
+            pushFollow(FollowSets000.FOLLOW_38);
             rule__TypeDeclaration__Group_1_1_2__4__Impl();
 
             state._fsp--;
@@ -31414,7 +31414,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8841:1: ( rule__ExternalNodeDeclaration__Group__0__Impl rule__ExternalNodeDeclaration__Group__1 )
             // InternalLustre.g:8842:2: rule__ExternalNodeDeclaration__Group__0__Impl rule__ExternalNodeDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_40);
+            pushFollow(FollowSets000.FOLLOW_39);
             rule__ExternalNodeDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -31514,7 +31514,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:8868:1: ( rule__ExternalNodeDeclaration__Group__1__Impl rule__ExternalNodeDeclaration__Group__2 )
             // InternalLustre.g:8869:2: rule__ExternalNodeDeclaration__Group__1__Impl rule__ExternalNodeDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_41);
+            pushFollow(FollowSets000.FOLLOW_40);
             rule__ExternalNodeDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -32387,7 +32387,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9138:1: ( rule__NodeDeclaration__Group__3__Impl rule__NodeDeclaration__Group__4 )
             // InternalLustre.g:9139:2: rule__NodeDeclaration__Group__3__Impl rule__NodeDeclaration__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_42);
+            pushFollow(FollowSets000.FOLLOW_41);
             rule__NodeDeclaration__Group__3__Impl();
 
             state._fsp--;
@@ -32476,7 +32476,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9165:1: ( rule__NodeDeclaration__Group__4__Impl rule__NodeDeclaration__Group__5 )
             // InternalLustre.g:9166:2: rule__NodeDeclaration__Group__4__Impl rule__NodeDeclaration__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_42);
+            pushFollow(FollowSets000.FOLLOW_41);
             rule__NodeDeclaration__Group__4__Impl();
 
             state._fsp--;
@@ -33340,7 +33340,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9435:1: ( rule__NodeDeclaration__Group_5_0__2__Impl rule__NodeDeclaration__Group_5_0__3 )
             // InternalLustre.g:9436:2: rule__NodeDeclaration__Group_5_0__2__Impl rule__NodeDeclaration__Group_5_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_43);
+            pushFollow(FollowSets000.FOLLOW_42);
             rule__NodeDeclaration__Group_5_0__2__Impl();
 
             state._fsp--;
@@ -33592,7 +33592,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9516:1: ( rule__NodeDeclaration__Group_5_0_3_0__1__Impl rule__NodeDeclaration__Group_5_0_3_0__2 )
             // InternalLustre.g:9517:2: rule__NodeDeclaration__Group_5_0_3_0__1__Impl rule__NodeDeclaration__Group_5_0_3_0__2
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_43);
             rule__NodeDeclaration__Group_5_0_3_0__1__Impl();
 
             state._fsp--;
@@ -33776,7 +33776,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9570:1: ( rule__NodeDeclaration__Group_5_0_3_0_2__0__Impl rule__NodeDeclaration__Group_5_0_3_0_2__1 )
             // InternalLustre.g:9571:2: rule__NodeDeclaration__Group_5_0_3_0_2__0__Impl rule__NodeDeclaration__Group_5_0_3_0_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__NodeDeclaration__Group_5_0_3_0_2__0__Impl();
 
             state._fsp--;
@@ -34125,7 +34125,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9678:1: ( rule__NodeDeclaration__Group_5_0_3_0_2_2__0__Impl rule__NodeDeclaration__Group_5_0_3_0_2_2__1 )
             // InternalLustre.g:9679:2: rule__NodeDeclaration__Group_5_0_3_0_2_2__0__Impl rule__NodeDeclaration__Group_5_0_3_0_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__NodeDeclaration__Group_5_0_3_0_2_2__0__Impl();
 
             state._fsp--;
@@ -34288,7 +34288,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9732:1: ( rule__NodeDeclaration__Group_5_0_3_1__0__Impl rule__NodeDeclaration__Group_5_0_3_1__1 )
             // InternalLustre.g:9733:2: rule__NodeDeclaration__Group_5_0_3_1__0__Impl rule__NodeDeclaration__Group_5_0_3_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_43);
+            pushFollow(FollowSets000.FOLLOW_42);
             rule__NodeDeclaration__Group_5_0_3_1__0__Impl();
 
             state._fsp--;
@@ -34384,7 +34384,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9759:1: ( rule__NodeDeclaration__Group_5_0_3_1__1__Impl rule__NodeDeclaration__Group_5_0_3_1__2 )
             // InternalLustre.g:9760:2: rule__NodeDeclaration__Group_5_0_3_1__1__Impl rule__NodeDeclaration__Group_5_0_3_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_43);
+            pushFollow(FollowSets000.FOLLOW_42);
             rule__NodeDeclaration__Group_5_0_3_1__1__Impl();
 
             state._fsp--;
@@ -34443,7 +34443,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:9774:3: rule__NodeDeclaration__Alternatives_5_0_3_1_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_46);
+            	    pushFollow(FollowSets000.FOLLOW_45);
             	    rule__NodeDeclaration__Alternatives_5_0_3_1_1();
 
             	    state._fsp--;
@@ -34491,7 +34491,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9786:1: ( rule__NodeDeclaration__Group_5_0_3_1__2__Impl rule__NodeDeclaration__Group_5_0_3_1__3 )
             // InternalLustre.g:9787:2: rule__NodeDeclaration__Group_5_0_3_1__2__Impl rule__NodeDeclaration__Group_5_0_3_1__3
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__NodeDeclaration__Group_5_0_3_1__2__Impl();
 
             state._fsp--;
@@ -34570,7 +34570,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9813:1: ( rule__NodeDeclaration__Group_5_0_3_1__3__Impl rule__NodeDeclaration__Group_5_0_3_1__4 )
             // InternalLustre.g:9814:2: rule__NodeDeclaration__Group_5_0_3_1__3__Impl rule__NodeDeclaration__Group_5_0_3_1__4
             {
-            pushFollow(FollowSets000.FOLLOW_47);
+            pushFollow(FollowSets000.FOLLOW_46);
             rule__NodeDeclaration__Group_5_0_3_1__3__Impl();
 
             state._fsp--;
@@ -34629,7 +34629,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:9828:3: rule__NodeDeclaration__Alternatives_5_0_3_1_3
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_48);
+            	    pushFollow(FollowSets000.FOLLOW_47);
             	    rule__NodeDeclaration__Alternatives_5_0_3_1_3();
 
             	    state._fsp--;
@@ -34677,7 +34677,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:9840:1: ( rule__NodeDeclaration__Group_5_0_3_1__4__Impl rule__NodeDeclaration__Group_5_0_3_1__5 )
             // InternalLustre.g:9841:2: rule__NodeDeclaration__Group_5_0_3_1__4__Impl rule__NodeDeclaration__Group_5_0_3_1__5
             {
-            pushFollow(FollowSets000.FOLLOW_49);
+            pushFollow(FollowSets000.FOLLOW_48);
             rule__NodeDeclaration__Group_5_0_3_1__4__Impl();
 
             state._fsp--;
@@ -35949,7 +35949,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10245:1: ( rule__NodeDeclaration__Group_5_1__1__Impl rule__NodeDeclaration__Group_5_1__2 )
             // InternalLustre.g:10246:2: rule__NodeDeclaration__Group_5_1__1__Impl rule__NodeDeclaration__Group_5_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_43);
             rule__NodeDeclaration__Group_5_1__1__Impl();
 
             state._fsp--;
@@ -36133,7 +36133,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10299:1: ( rule__NodeDeclaration__Group_5_1_2__0__Impl rule__NodeDeclaration__Group_5_1_2__1 )
             // InternalLustre.g:10300:2: rule__NodeDeclaration__Group_5_1_2__0__Impl rule__NodeDeclaration__Group_5_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__NodeDeclaration__Group_5_1_2__0__Impl();
 
             state._fsp--;
@@ -36482,7 +36482,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10407:1: ( rule__NodeDeclaration__Group_5_1_2_2__0__Impl rule__NodeDeclaration__Group_5_1_2_2__1 )
             // InternalLustre.g:10408:2: rule__NodeDeclaration__Group_5_1_2_2__0__Impl rule__NodeDeclaration__Group_5_1_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__NodeDeclaration__Group_5_1_2_2__0__Impl();
 
             state._fsp--;
@@ -36808,7 +36808,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10515:1: ( rule__Equation__Group__0__Impl rule__Equation__Group__1 )
             // InternalLustre.g:10516:2: rule__Equation__Group__0__Impl rule__Equation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_50);
+            pushFollow(FollowSets000.FOLLOW_49);
             rule__Equation__Group__0__Impl();
 
             state._fsp--;
@@ -37228,7 +37228,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10650:1: ( rule__Equation__Group_1_0__0__Impl rule__Equation__Group_1_0__1 )
             // InternalLustre.g:10651:2: rule__Equation__Group_1_0__0__Impl rule__Equation__Group_1_0__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__Equation__Group_1_0__0__Impl();
 
             state._fsp--;
@@ -37396,7 +37396,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10704:1: ( rule__Equation__Group_1_0__2__Impl rule__Equation__Group_1_0__3 )
             // InternalLustre.g:10705:2: rule__Equation__Group_1_0__2__Impl rule__Equation__Group_1_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__Equation__Group_1_0__2__Impl();
 
             state._fsp--;
@@ -37745,7 +37745,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10812:1: ( rule__Equation__Group_1_0_4__0__Impl rule__Equation__Group_1_0_4__1 )
             // InternalLustre.g:10813:2: rule__Equation__Group_1_0_4__0__Impl rule__Equation__Group_1_0_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__Equation__Group_1_0_4__0__Impl();
 
             state._fsp--;
@@ -37997,7 +37997,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10893:1: ( rule__Equation__Group_1_1__1__Impl rule__Equation__Group_1_1__2 )
             // InternalLustre.g:10894:2: rule__Equation__Group_1_1__1__Impl rule__Equation__Group_1_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__Equation__Group_1_1__1__Impl();
 
             state._fsp--;
@@ -38267,7 +38267,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:10974:1: ( rule__Equation__Group_1_1_3__0__Impl rule__Equation__Group_1_1_3__1 )
             // InternalLustre.g:10975:2: rule__Equation__Group_1_1_3__0__Impl rule__Equation__Group_1_1_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__Equation__Group_1_1_3__0__Impl();
 
             state._fsp--;
@@ -39569,7 +39569,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:11394:3: rule__AState__Alternatives_2
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_48);
+            	    pushFollow(FollowSets000.FOLLOW_47);
             	    rule__AState__Alternatives_2();
 
             	    state._fsp--;
@@ -48602,23 +48602,23 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__LogicalAndExpression__Group_1_2__1__Impl"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__0"
-    // InternalLustre.g:14210:1: rule__AtomicExpression__Group_2__0 : rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 ;
-    public final void rule__AtomicExpression__Group_2__0() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__0"
+    // InternalLustre.g:14210:1: rule__AtomicExpression__Group_1__0 : rule__AtomicExpression__Group_1__0__Impl rule__AtomicExpression__Group_1__1 ;
+    public final void rule__AtomicExpression__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:14214:1: ( rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1 )
-            // InternalLustre.g:14215:2: rule__AtomicExpression__Group_2__0__Impl rule__AtomicExpression__Group_2__1
+            // InternalLustre.g:14214:1: ( rule__AtomicExpression__Group_1__0__Impl rule__AtomicExpression__Group_1__1 )
+            // InternalLustre.g:14215:2: rule__AtomicExpression__Group_1__0__Impl rule__AtomicExpression__Group_1__1
             {
             pushFollow(FollowSets000.FOLLOW_21);
-            rule__AtomicExpression__Group_2__0__Impl();
+            rule__AtomicExpression__Group_1__0__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__AtomicExpression__Group_2__1();
+            rule__AtomicExpression__Group_1__1();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48637,12 +48637,12 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__0"
+    // $ANTLR end "rule__AtomicExpression__Group_1__0"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__0__Impl"
-    // InternalLustre.g:14222:1: rule__AtomicExpression__Group_2__0__Impl : ( '(' ) ;
-    public final void rule__AtomicExpression__Group_2__0__Impl() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__0__Impl"
+    // InternalLustre.g:14222:1: rule__AtomicExpression__Group_1__0__Impl : ( '(' ) ;
+    public final void rule__AtomicExpression__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -48654,11 +48654,11 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:14228:2: '('
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
+               before(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()); 
             }
             match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()); 
+               after(grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()); 
             }
 
             }
@@ -48678,26 +48678,26 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__0__Impl"
+    // $ANTLR end "rule__AtomicExpression__Group_1__0__Impl"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__1"
-    // InternalLustre.g:14237:1: rule__AtomicExpression__Group_2__1 : rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 ;
-    public final void rule__AtomicExpression__Group_2__1() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__1"
+    // InternalLustre.g:14237:1: rule__AtomicExpression__Group_1__1 : rule__AtomicExpression__Group_1__1__Impl rule__AtomicExpression__Group_1__2 ;
+    public final void rule__AtomicExpression__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:14241:1: ( rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2 )
-            // InternalLustre.g:14242:2: rule__AtomicExpression__Group_2__1__Impl rule__AtomicExpression__Group_2__2
+            // InternalLustre.g:14241:1: ( rule__AtomicExpression__Group_1__1__Impl rule__AtomicExpression__Group_1__2 )
+            // InternalLustre.g:14242:2: rule__AtomicExpression__Group_1__1__Impl rule__AtomicExpression__Group_1__2
             {
             pushFollow(FollowSets000.FOLLOW_89);
-            rule__AtomicExpression__Group_2__1__Impl();
+            rule__AtomicExpression__Group_1__1__Impl();
 
             state._fsp--;
             if (state.failed) return ;
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__AtomicExpression__Group_2__2();
+            rule__AtomicExpression__Group_1__2();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48716,12 +48716,12 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__1"
+    // $ANTLR end "rule__AtomicExpression__Group_1__1"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__1__Impl"
-    // InternalLustre.g:14249:1: rule__AtomicExpression__Group_2__1__Impl : ( ruleBoolExpression ) ;
-    public final void rule__AtomicExpression__Group_2__1__Impl() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__1__Impl"
+    // InternalLustre.g:14249:1: rule__AtomicExpression__Group_1__1__Impl : ( ruleBoolExpression ) ;
+    public final void rule__AtomicExpression__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -48733,7 +48733,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:14255:2: ruleBoolExpression
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1()); 
+               before(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_1_1()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
             ruleBoolExpression();
@@ -48741,7 +48741,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1()); 
+               after(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_1_1()); 
             }
 
             }
@@ -48761,21 +48761,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__1__Impl"
+    // $ANTLR end "rule__AtomicExpression__Group_1__1__Impl"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__2"
-    // InternalLustre.g:14264:1: rule__AtomicExpression__Group_2__2 : rule__AtomicExpression__Group_2__2__Impl ;
-    public final void rule__AtomicExpression__Group_2__2() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__2"
+    // InternalLustre.g:14264:1: rule__AtomicExpression__Group_1__2 : rule__AtomicExpression__Group_1__2__Impl ;
+    public final void rule__AtomicExpression__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalLustre.g:14268:1: ( rule__AtomicExpression__Group_2__2__Impl )
-            // InternalLustre.g:14269:2: rule__AtomicExpression__Group_2__2__Impl
+            // InternalLustre.g:14268:1: ( rule__AtomicExpression__Group_1__2__Impl )
+            // InternalLustre.g:14269:2: rule__AtomicExpression__Group_1__2__Impl
             {
             pushFollow(FollowSets000.FOLLOW_2);
-            rule__AtomicExpression__Group_2__2__Impl();
+            rule__AtomicExpression__Group_1__2__Impl();
 
             state._fsp--;
             if (state.failed) return ;
@@ -48794,12 +48794,12 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__2"
+    // $ANTLR end "rule__AtomicExpression__Group_1__2"
 
 
-    // $ANTLR start "rule__AtomicExpression__Group_2__2__Impl"
-    // InternalLustre.g:14275:1: rule__AtomicExpression__Group_2__2__Impl : ( ')' ) ;
-    public final void rule__AtomicExpression__Group_2__2__Impl() throws RecognitionException {
+    // $ANTLR start "rule__AtomicExpression__Group_1__2__Impl"
+    // InternalLustre.g:14275:1: rule__AtomicExpression__Group_1__2__Impl : ( ')' ) ;
+    public final void rule__AtomicExpression__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
@@ -48811,11 +48811,11 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:14281:2: ')'
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
+               before(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_1_2()); 
             }
             match(input,92,FollowSets000.FOLLOW_2); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2()); 
+               after(grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_1_2()); 
             }
 
             }
@@ -48835,7 +48835,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__AtomicExpression__Group_2__2__Impl"
+    // $ANTLR end "rule__AtomicExpression__Group_1__2__Impl"
 
 
     // $ANTLR start "rule__NorAtMostOneExpression__Group__0"
@@ -51985,7 +51985,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:15294:1: ( rule__StaticArg__Group_2__1__Impl rule__StaticArg__Group_2__2 )
             // InternalLustre.g:15295:2: rule__StaticArg__Group_2__1__Impl rule__StaticArg__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_44);
+            pushFollow(FollowSets000.FOLLOW_43);
             rule__StaticArg__Group_2__1__Impl();
 
             state._fsp--;
@@ -52169,7 +52169,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:15348:1: ( rule__StaticArg__Group_2_2__0__Impl rule__StaticArg__Group_2_2__1 )
             // InternalLustre.g:15349:2: rule__StaticArg__Group_2_2__0__Impl rule__StaticArg__Group_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__StaticArg__Group_2_2__0__Impl();
 
             state._fsp--;
@@ -52518,7 +52518,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:15456:1: ( rule__StaticArg__Group_2_2_2__0__Impl rule__StaticArg__Group_2_2_2__1 )
             // InternalLustre.g:15457:2: rule__StaticArg__Group_2_2_2__0__Impl rule__StaticArg__Group_2_2_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_45);
+            pushFollow(FollowSets000.FOLLOW_44);
             rule__StaticArg__Group_2_2_2__0__Impl();
 
             state._fsp--;
@@ -65576,7 +65576,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19344:1: ( rule__MethodDeclaration__Group_6__0__Impl rule__MethodDeclaration__Group_6__1 )
             // InternalLustre.g:19345:2: rule__MethodDeclaration__Group_6__0__Impl rule__MethodDeclaration__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__MethodDeclaration__Group_6__0__Impl();
 
             state._fsp--;
@@ -65700,7 +65700,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19386:3: ( rule__MethodDeclaration__ScheduleAssignment_6_1 )
             // InternalLustre.g:19386:4: rule__MethodDeclaration__ScheduleAssignment_6_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__MethodDeclaration__ScheduleAssignment_6_1();
 
             state._fsp--;
@@ -65735,7 +65735,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:19391:4: rule__MethodDeclaration__ScheduleAssignment_6_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__MethodDeclaration__ScheduleAssignment_6_1();
 
             	    state._fsp--;
@@ -66282,7 +66282,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19540:1: ( rule__MethodDeclarationWOSemicolon__Group__5__Impl rule__MethodDeclarationWOSemicolon__Group__6 )
             // InternalLustre.g:19541:2: rule__MethodDeclarationWOSemicolon__Group__5__Impl rule__MethodDeclarationWOSemicolon__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_123);
+            pushFollow(FollowSets000.FOLLOW_122);
             rule__MethodDeclarationWOSemicolon__Group__5__Impl();
 
             state._fsp--;
@@ -66371,7 +66371,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19567:1: ( rule__MethodDeclarationWOSemicolon__Group__6__Impl rule__MethodDeclarationWOSemicolon__Group__7 )
             // InternalLustre.g:19568:2: rule__MethodDeclarationWOSemicolon__Group__6__Impl rule__MethodDeclarationWOSemicolon__Group__7
             {
-            pushFollow(FollowSets000.FOLLOW_123);
+            pushFollow(FollowSets000.FOLLOW_122);
             rule__MethodDeclarationWOSemicolon__Group__6__Impl();
 
             state._fsp--;
@@ -67074,7 +67074,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19783:1: ( rule__MethodDeclarationWOSemicolon__Group_6__0__Impl rule__MethodDeclarationWOSemicolon__Group_6__1 )
             // InternalLustre.g:19784:2: rule__MethodDeclarationWOSemicolon__Group_6__0__Impl rule__MethodDeclarationWOSemicolon__Group_6__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__MethodDeclarationWOSemicolon__Group_6__0__Impl();
 
             state._fsp--;
@@ -67198,7 +67198,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19825:3: ( rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1 )
             // InternalLustre.g:19825:4: rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1();
 
             state._fsp--;
@@ -67227,7 +67227,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:19830:4: rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__MethodDeclarationWOSemicolon__ScheduleAssignment_6_1();
 
             	    state._fsp--;
@@ -67415,7 +67415,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:19885:3: rule__NamespaceID__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_124);
+            	    pushFollow(FollowSets000.FOLLOW_123);
             	    rule__NamespaceID__Group_1__0();
 
             	    state._fsp--;
@@ -67463,7 +67463,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19898:1: ( rule__NamespaceID__Group_1__0__Impl rule__NamespaceID__Group_1__1 )
             // InternalLustre.g:19899:2: rule__NamespaceID__Group_1__0__Impl rule__NamespaceID__Group_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__NamespaceID__Group_1__0__Impl();
 
             state._fsp--;
@@ -67620,7 +67620,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19952:1: ( rule__ReferenceDeclaration__Group__0__Impl rule__ReferenceDeclaration__Group__1 )
             // InternalLustre.g:19953:2: rule__ReferenceDeclaration__Group__0__Impl rule__ReferenceDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_124);
             rule__ReferenceDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -67727,7 +67727,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:19979:1: ( rule__ReferenceDeclaration__Group__1__Impl rule__ReferenceDeclaration__Group__2 )
             // InternalLustre.g:19980:2: rule__ReferenceDeclaration__Group__1__Impl rule__ReferenceDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_124);
             rule__ReferenceDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -68449,7 +68449,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20195:1: ( rule__ReferenceDeclaration__Group_2_1__0__Impl rule__ReferenceDeclaration__Group_2_1__1 )
             // InternalLustre.g:20196:2: rule__ReferenceDeclaration__Group_2_1__0__Impl rule__ReferenceDeclaration__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_125);
             rule__ReferenceDeclaration__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -68719,7 +68719,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20276:1: ( rule__ReferenceDeclaration__Group_2_1_2__0__Impl rule__ReferenceDeclaration__Group_2_1_2__1 )
             // InternalLustre.g:20277:2: rule__ReferenceDeclaration__Group_2_1_2__0__Impl rule__ReferenceDeclaration__Group_2_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_125);
             rule__ReferenceDeclaration__Group_2_1_2__0__Impl();
 
             state._fsp--;
@@ -69045,7 +69045,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20384:1: ( rule__ReferenceDeclarationWOSemicolon__Group__0__Impl rule__ReferenceDeclarationWOSemicolon__Group__1 )
             // InternalLustre.g:20385:2: rule__ReferenceDeclarationWOSemicolon__Group__0__Impl rule__ReferenceDeclarationWOSemicolon__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_124);
             rule__ReferenceDeclarationWOSemicolon__Group__0__Impl();
 
             state._fsp--;
@@ -69152,7 +69152,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20411:1: ( rule__ReferenceDeclarationWOSemicolon__Group__1__Impl rule__ReferenceDeclarationWOSemicolon__Group__2 )
             // InternalLustre.g:20412:2: rule__ReferenceDeclarationWOSemicolon__Group__1__Impl rule__ReferenceDeclarationWOSemicolon__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_125);
+            pushFollow(FollowSets000.FOLLOW_124);
             rule__ReferenceDeclarationWOSemicolon__Group__1__Impl();
 
             state._fsp--;
@@ -69795,7 +69795,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20600:1: ( rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__1 )
             // InternalLustre.g:20601:2: rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_125);
             rule__ReferenceDeclarationWOSemicolon__Group_2_1__0__Impl();
 
             state._fsp--;
@@ -70065,7 +70065,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20681:1: ( rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__1 )
             // InternalLustre.g:20682:2: rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_125);
             rule__ReferenceDeclarationWOSemicolon__Group_2_1_2__0__Impl();
 
             state._fsp--;
@@ -70391,7 +70391,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20789:1: ( rule__ExternString__Group__0__Impl rule__ExternString__Group__1 )
             // InternalLustre.g:20790:2: rule__ExternString__Group__0__Impl rule__ExternString__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_125);
             rule__ExternString__Group__0__Impl();
 
             state._fsp--;
@@ -70582,7 +70582,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20843:1: ( rule__ScheduleDeclaration__Group__0__Impl rule__ScheduleDeclaration__Group__1 )
             // InternalLustre.g:20844:2: rule__ScheduleDeclaration__Group__0__Impl rule__ScheduleDeclaration__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_127);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ScheduleDeclaration__Group__0__Impl();
 
             state._fsp--;
@@ -70689,7 +70689,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20870:1: ( rule__ScheduleDeclaration__Group__1__Impl rule__ScheduleDeclaration__Group__2 )
             // InternalLustre.g:20871:2: rule__ScheduleDeclaration__Group__1__Impl rule__ScheduleDeclaration__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_127);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ScheduleDeclaration__Group__1__Impl();
 
             state._fsp--;
@@ -70789,7 +70789,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20897:1: ( rule__ScheduleDeclaration__Group__2__Impl rule__ScheduleDeclaration__Group__3 )
             // InternalLustre.g:20898:2: rule__ScheduleDeclaration__Group__2__Impl rule__ScheduleDeclaration__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclaration__Group__2__Impl();
 
             state._fsp--;
@@ -70868,7 +70868,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20924:1: ( rule__ScheduleDeclaration__Group__3__Impl rule__ScheduleDeclaration__Group__4 )
             // InternalLustre.g:20925:2: rule__ScheduleDeclaration__Group__3__Impl rule__ScheduleDeclaration__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclaration__Group__3__Impl();
 
             state._fsp--;
@@ -70968,7 +70968,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20951:1: ( rule__ScheduleDeclaration__Group__4__Impl rule__ScheduleDeclaration__Group__5 )
             // InternalLustre.g:20952:2: rule__ScheduleDeclaration__Group__4__Impl rule__ScheduleDeclaration__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclaration__Group__4__Impl();
 
             state._fsp--;
@@ -71068,7 +71068,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:20978:1: ( rule__ScheduleDeclaration__Group__5__Impl rule__ScheduleDeclaration__Group__6 )
             // InternalLustre.g:20979:2: rule__ScheduleDeclaration__Group__5__Impl rule__ScheduleDeclaration__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclaration__Group__5__Impl();
 
             state._fsp--;
@@ -71538,7 +71538,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21113:1: ( rule__ScheduleDeclaration__Group_4__0__Impl rule__ScheduleDeclaration__Group_4__1 )
             // InternalLustre.g:21114:2: rule__ScheduleDeclaration__Group_4__0__Impl rule__ScheduleDeclaration__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclaration__Group_4__0__Impl();
 
             state._fsp--;
@@ -71701,7 +71701,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21167:1: ( rule__ScheduleDeclaration__Group_5__0__Impl rule__ScheduleDeclaration__Group_5__1 )
             // InternalLustre.g:21168:2: rule__ScheduleDeclaration__Group_5__0__Impl rule__ScheduleDeclaration__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclaration__Group_5__0__Impl();
 
             state._fsp--;
@@ -71780,7 +71780,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21194:1: ( rule__ScheduleDeclaration__Group_5__1__Impl rule__ScheduleDeclaration__Group_5__2 )
             // InternalLustre.g:21195:2: rule__ScheduleDeclaration__Group_5__1__Impl rule__ScheduleDeclaration__Group_5__2
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__ScheduleDeclaration__Group_5__1__Impl();
 
             state._fsp--;
@@ -71869,7 +71869,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21221:1: ( rule__ScheduleDeclaration__Group_5__2__Impl rule__ScheduleDeclaration__Group_5__3 )
             // InternalLustre.g:21222:2: rule__ScheduleDeclaration__Group_5__2__Impl rule__ScheduleDeclaration__Group_5__3
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__ScheduleDeclaration__Group_5__2__Impl();
 
             state._fsp--;
@@ -72050,7 +72050,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21275:1: ( rule__ScheduleDeclaration__Group_5_2__0__Impl rule__ScheduleDeclaration__Group_5_2__1 )
             // InternalLustre.g:21276:2: rule__ScheduleDeclaration__Group_5_2__0__Impl rule__ScheduleDeclaration__Group_5_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclaration__Group_5_2__0__Impl();
 
             state._fsp--;
@@ -72376,7 +72376,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21383:1: ( rule__ScheduleDeclarationWOSemicolon__Group__0__Impl rule__ScheduleDeclarationWOSemicolon__Group__1 )
             // InternalLustre.g:21384:2: rule__ScheduleDeclarationWOSemicolon__Group__0__Impl rule__ScheduleDeclarationWOSemicolon__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_127);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ScheduleDeclarationWOSemicolon__Group__0__Impl();
 
             state._fsp--;
@@ -72483,7 +72483,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21410:1: ( rule__ScheduleDeclarationWOSemicolon__Group__1__Impl rule__ScheduleDeclarationWOSemicolon__Group__2 )
             // InternalLustre.g:21411:2: rule__ScheduleDeclarationWOSemicolon__Group__1__Impl rule__ScheduleDeclarationWOSemicolon__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_127);
+            pushFollow(FollowSets000.FOLLOW_126);
             rule__ScheduleDeclarationWOSemicolon__Group__1__Impl();
 
             state._fsp--;
@@ -72583,7 +72583,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21437:1: ( rule__ScheduleDeclarationWOSemicolon__Group__2__Impl rule__ScheduleDeclarationWOSemicolon__Group__3 )
             // InternalLustre.g:21438:2: rule__ScheduleDeclarationWOSemicolon__Group__2__Impl rule__ScheduleDeclarationWOSemicolon__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclarationWOSemicolon__Group__2__Impl();
 
             state._fsp--;
@@ -72662,7 +72662,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21464:1: ( rule__ScheduleDeclarationWOSemicolon__Group__3__Impl rule__ScheduleDeclarationWOSemicolon__Group__4 )
             // InternalLustre.g:21465:2: rule__ScheduleDeclarationWOSemicolon__Group__3__Impl rule__ScheduleDeclarationWOSemicolon__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclarationWOSemicolon__Group__3__Impl();
 
             state._fsp--;
@@ -72762,7 +72762,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21491:1: ( rule__ScheduleDeclarationWOSemicolon__Group__4__Impl rule__ScheduleDeclarationWOSemicolon__Group__5 )
             // InternalLustre.g:21492:2: rule__ScheduleDeclarationWOSemicolon__Group__4__Impl rule__ScheduleDeclarationWOSemicolon__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclarationWOSemicolon__Group__4__Impl();
 
             state._fsp--;
@@ -72862,7 +72862,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21518:1: ( rule__ScheduleDeclarationWOSemicolon__Group__5__Impl rule__ScheduleDeclarationWOSemicolon__Group__6 )
             // InternalLustre.g:21519:2: rule__ScheduleDeclarationWOSemicolon__Group__5__Impl rule__ScheduleDeclarationWOSemicolon__Group__6
             {
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_127);
             rule__ScheduleDeclarationWOSemicolon__Group__5__Impl();
 
             state._fsp--;
@@ -73253,7 +73253,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21626:1: ( rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_4__1 )
             // InternalLustre.g:21627:2: rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclarationWOSemicolon__Group_4__0__Impl();
 
             state._fsp--;
@@ -73416,7 +73416,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21680:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__1 )
             // InternalLustre.g:21681:2: rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclarationWOSemicolon__Group_5__0__Impl();
 
             state._fsp--;
@@ -73495,7 +73495,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21707:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__2 )
             // InternalLustre.g:21708:2: rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__2
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__ScheduleDeclarationWOSemicolon__Group_5__1__Impl();
 
             state._fsp--;
@@ -73584,7 +73584,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21734:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__3 )
             // InternalLustre.g:21735:2: rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl rule__ScheduleDeclarationWOSemicolon__Group_5__3
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__ScheduleDeclarationWOSemicolon__Group_5__2__Impl();
 
             state._fsp--;
@@ -73765,7 +73765,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21788:1: ( rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5_2__1 )
             // InternalLustre.g:21789:2: rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl rule__ScheduleDeclarationWOSemicolon__Group_5_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_129);
+            pushFollow(FollowSets000.FOLLOW_128);
             rule__ScheduleDeclarationWOSemicolon__Group_5_2__0__Impl();
 
             state._fsp--;
@@ -74198,7 +74198,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21923:1: ( rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2 )
             // InternalLustre.g:21924:2: rule__ValuedObject__Group__1__Impl rule__ValuedObject__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_130);
+            pushFollow(FollowSets000.FOLLOW_129);
             rule__ValuedObject__Group__1__Impl();
 
             state._fsp--;
@@ -74287,7 +74287,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21950:1: ( rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3 )
             // InternalLustre.g:21951:2: rule__ValuedObject__Group__2__Impl rule__ValuedObject__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_130);
+            pushFollow(FollowSets000.FOLLOW_129);
             rule__ValuedObject__Group__2__Impl();
 
             state._fsp--;
@@ -74346,7 +74346,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:21965:3: rule__ValuedObject__Group_2__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_131);
+            	    pushFollow(FollowSets000.FOLLOW_130);
             	    rule__ValuedObject__Group_2__0();
 
             	    state._fsp--;
@@ -74394,7 +74394,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:21977:1: ( rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4 )
             // InternalLustre.g:21978:2: rule__ValuedObject__Group__3__Impl rule__ValuedObject__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_130);
+            pushFollow(FollowSets000.FOLLOW_129);
             rule__ValuedObject__Group__3__Impl();
 
             state._fsp--;
@@ -74668,7 +74668,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22058:1: ( rule__ValuedObject__Group_2__1__Impl rule__ValuedObject__Group_2__2 )
             // InternalLustre.g:22059:2: rule__ValuedObject__Group_2__1__Impl rule__ValuedObject__Group_2__2
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__ValuedObject__Group_2__1__Impl();
 
             state._fsp--;
@@ -74994,7 +74994,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22166:1: ( rule__ValuedObject__Group_4__0__Impl rule__ValuedObject__Group_4__1 )
             // InternalLustre.g:22167:2: rule__ValuedObject__Group_4__0__Impl rule__ValuedObject__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_132);
             rule__ValuedObject__Group_4__0__Impl();
 
             state._fsp--;
@@ -75348,7 +75348,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22274:1: ( rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1 )
             // InternalLustre.g:22275:2: rule__PureEmission__Group__0__Impl rule__PureEmission__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_133);
             rule__PureEmission__Group__0__Impl();
 
             state._fsp--;
@@ -75455,7 +75455,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22301:1: ( rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2 )
             // InternalLustre.g:22302:2: rule__PureEmission__Group__1__Impl rule__PureEmission__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__PureEmission__Group__1__Impl();
 
             state._fsp--;
@@ -75639,7 +75639,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22355:1: ( rule__PureEmission__Group_2__0__Impl rule__PureEmission__Group_2__1 )
             // InternalLustre.g:22356:2: rule__PureEmission__Group_2__0__Impl rule__PureEmission__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__PureEmission__Group_2__0__Impl();
 
             state._fsp--;
@@ -75763,7 +75763,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22397:3: ( rule__PureEmission__ScheduleAssignment_2_1 )
             // InternalLustre.g:22397:4: rule__PureEmission__ScheduleAssignment_2_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__PureEmission__ScheduleAssignment_2_1();
 
             state._fsp--;
@@ -75792,7 +75792,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:22402:4: rule__PureEmission__ScheduleAssignment_2_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__PureEmission__ScheduleAssignment_2_1();
 
             	    state._fsp--;
@@ -75843,7 +75843,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22416:1: ( rule__ValuedEmission__Group__0__Impl rule__ValuedEmission__Group__1 )
             // InternalLustre.g:22417:2: rule__ValuedEmission__Group__0__Impl rule__ValuedEmission__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_31);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__ValuedEmission__Group__0__Impl();
 
             state._fsp--;
@@ -76207,7 +76207,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22524:1: ( rule__ValuedEmission__Group__4__Impl rule__ValuedEmission__Group__5 )
             // InternalLustre.g:22525:2: rule__ValuedEmission__Group__4__Impl rule__ValuedEmission__Group__5
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__ValuedEmission__Group__4__Impl();
 
             state._fsp--;
@@ -76381,7 +76381,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22578:1: ( rule__ValuedEmission__Group_5__0__Impl rule__ValuedEmission__Group_5__1 )
             // InternalLustre.g:22579:2: rule__ValuedEmission__Group_5__0__Impl rule__ValuedEmission__Group_5__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__ValuedEmission__Group_5__0__Impl();
 
             state._fsp--;
@@ -76505,7 +76505,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22620:3: ( rule__ValuedEmission__ScheduleAssignment_5_1 )
             // InternalLustre.g:22620:4: rule__ValuedEmission__ScheduleAssignment_5_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__ValuedEmission__ScheduleAssignment_5_1();
 
             state._fsp--;
@@ -76534,7 +76534,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:22625:4: rule__ValuedEmission__ScheduleAssignment_5_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__ValuedEmission__ScheduleAssignment_5_1();
 
             	    state._fsp--;
@@ -76585,7 +76585,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22639:1: ( rule__Assignment__Group__0__Impl rule__Assignment__Group__1 )
             // InternalLustre.g:22640:2: rule__Assignment__Group__0__Impl rule__Assignment__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_31);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__Assignment__Group__0__Impl();
 
             state._fsp--;
@@ -76870,7 +76870,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22720:1: ( rule__Assignment__Group__3__Impl rule__Assignment__Group__4 )
             // InternalLustre.g:22721:2: rule__Assignment__Group__3__Impl rule__Assignment__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__Assignment__Group__3__Impl();
 
             state._fsp--;
@@ -77054,7 +77054,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22774:1: ( rule__Assignment__Group_4__0__Impl rule__Assignment__Group_4__1 )
             // InternalLustre.g:22775:2: rule__Assignment__Group_4__0__Impl rule__Assignment__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__Assignment__Group_4__0__Impl();
 
             state._fsp--;
@@ -77178,7 +77178,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22816:3: ( rule__Assignment__ScheduleAssignment_4_1 )
             // InternalLustre.g:22816:4: rule__Assignment__ScheduleAssignment_4_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__Assignment__ScheduleAssignment_4_1();
 
             state._fsp--;
@@ -77207,7 +77207,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:22821:4: rule__Assignment__ScheduleAssignment_4_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__Assignment__ScheduleAssignment_4_1();
 
             	    state._fsp--;
@@ -77258,7 +77258,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22835:1: ( rule__PostfixEffect__Group__0__Impl rule__PostfixEffect__Group__1 )
             // InternalLustre.g:22836:2: rule__PostfixEffect__Group__0__Impl rule__PostfixEffect__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_31);
+            pushFollow(FollowSets000.FOLLOW_135);
             rule__PostfixEffect__Group__0__Impl();
 
             state._fsp--;
@@ -77454,7 +77454,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22889:1: ( rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3 )
             // InternalLustre.g:22890:2: rule__PostfixEffect__Group__2__Impl rule__PostfixEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__PostfixEffect__Group__2__Impl();
 
             state._fsp--;
@@ -77638,7 +77638,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22943:1: ( rule__PostfixEffect__Group_3__0__Impl rule__PostfixEffect__Group_3__1 )
             // InternalLustre.g:22944:2: rule__PostfixEffect__Group_3__0__Impl rule__PostfixEffect__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__PostfixEffect__Group_3__0__Impl();
 
             state._fsp--;
@@ -77762,7 +77762,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:22985:3: ( rule__PostfixEffect__ScheduleAssignment_3_1 )
             // InternalLustre.g:22985:4: rule__PostfixEffect__ScheduleAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__PostfixEffect__ScheduleAssignment_3_1();
 
             state._fsp--;
@@ -77791,7 +77791,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:22990:4: rule__PostfixEffect__ScheduleAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__PostfixEffect__ScheduleAssignment_3_1();
 
             	    state._fsp--;
@@ -78329,7 +78329,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:23139:1: ( rule__ReferenceCallEffect__Group__3__Impl rule__ReferenceCallEffect__Group__4 )
             // InternalLustre.g:23140:2: rule__ReferenceCallEffect__Group__3__Impl rule__ReferenceCallEffect__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__ReferenceCallEffect__Group__3__Impl();
 
             state._fsp--;
@@ -78513,7 +78513,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:23193:1: ( rule__ReferenceCallEffect__Group_2__0__Impl rule__ReferenceCallEffect__Group_2__1 )
             // InternalLustre.g:23194:2: rule__ReferenceCallEffect__Group_2__0__Impl rule__ReferenceCallEffect__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ReferenceCallEffect__Group_2__0__Impl();
 
             state._fsp--;
@@ -79188,7 +79188,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:23409:1: ( rule__ReferenceCallEffect__Group_4__0__Impl rule__ReferenceCallEffect__Group_4__1 )
             // InternalLustre.g:23410:2: rule__ReferenceCallEffect__Group_4__0__Impl rule__ReferenceCallEffect__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__ReferenceCallEffect__Group_4__0__Impl();
 
             state._fsp--;
@@ -79312,7 +79312,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:23451:3: ( rule__ReferenceCallEffect__ScheduleAssignment_4_1 )
             // InternalLustre.g:23451:4: rule__ReferenceCallEffect__ScheduleAssignment_4_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__ReferenceCallEffect__ScheduleAssignment_4_1();
 
             state._fsp--;
@@ -79341,7 +79341,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:23456:4: rule__ReferenceCallEffect__ScheduleAssignment_4_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__ReferenceCallEffect__ScheduleAssignment_4_1();
 
             	    state._fsp--;
@@ -80533,7 +80533,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:23821:1: ( rule__PrintCallEffect__Group__2__Impl rule__PrintCallEffect__Group__3 )
             // InternalLustre.g:23822:2: rule__PrintCallEffect__Group__2__Impl rule__PrintCallEffect__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_134);
             rule__PrintCallEffect__Group__2__Impl();
 
             state._fsp--;
@@ -81229,7 +81229,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:24037:1: ( rule__PrintCallEffect__Group_3__0__Impl rule__PrintCallEffect__Group_3__1 )
             // InternalLustre.g:24038:2: rule__PrintCallEffect__Group_3__0__Impl rule__PrintCallEffect__Group_3__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_7);
             rule__PrintCallEffect__Group_3__0__Impl();
 
             state._fsp--;
@@ -81353,7 +81353,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:24079:3: ( rule__PrintCallEffect__ScheduleAssignment_3_1 )
             // InternalLustre.g:24079:4: rule__PrintCallEffect__ScheduleAssignment_3_1
             {
-            pushFollow(FollowSets000.FOLLOW_122);
+            pushFollow(FollowSets000.FOLLOW_33);
             rule__PrintCallEffect__ScheduleAssignment_3_1();
 
             state._fsp--;
@@ -81382,7 +81382,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:24084:4: rule__PrintCallEffect__ScheduleAssignment_3_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_122);
+            	    pushFollow(FollowSets000.FOLLOW_33);
             	    rule__PrintCallEffect__ScheduleAssignment_3_1();
 
             	    state._fsp--;
@@ -87733,7 +87733,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26069:1: ( rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3 )
             // InternalLustre.g:26070:2: rule__ValuedObjectTestExpression__Group_0__2__Impl rule__ValuedObjectTestExpression__Group_0__3
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ValuedObjectTestExpression__Group_0__2__Impl();
 
             state._fsp--;
@@ -88075,7 +88075,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26177:1: ( rule__ValuedObjectTestExpression__Group_0_4__0__Impl rule__ValuedObjectTestExpression__Group_0_4__1 )
             // InternalLustre.g:26178:2: rule__ValuedObjectTestExpression__Group_0_4__0__Impl rule__ValuedObjectTestExpression__Group_0_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ValuedObjectTestExpression__Group_0_4__0__Impl();
 
             state._fsp--;
@@ -88563,7 +88563,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:26327:3: rule__ValuedObjectReference__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_131);
+            	    pushFollow(FollowSets000.FOLLOW_130);
             	    rule__ValuedObjectReference__Group_1__0();
 
             	    state._fsp--;
@@ -88785,7 +88785,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26393:1: ( rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2 )
             // InternalLustre.g:26394:2: rule__ValuedObjectReference__Group_1__1__Impl rule__ValuedObjectReference__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__ValuedObjectReference__Group_1__1__Impl();
 
             state._fsp--;
@@ -88948,7 +88948,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26447:1: ( rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1 )
             // InternalLustre.g:26448:2: rule__ValuedObjectReference__Group_2__0__Impl rule__ValuedObjectReference__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ValuedObjectReference__Group_2__0__Impl();
 
             state._fsp--;
@@ -89432,7 +89432,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             	case 1 :
             	    // InternalLustre.g:26597:3: rule__ReferenceCall__Group_1__0
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_131);
+            	    pushFollow(FollowSets000.FOLLOW_130);
             	    rule__ReferenceCall__Group_1__0();
 
             	    state._fsp--;
@@ -89743,7 +89743,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26690:1: ( rule__ReferenceCall__Group_1__1__Impl rule__ReferenceCall__Group_1__2 )
             // InternalLustre.g:26691:2: rule__ReferenceCall__Group_1__1__Impl rule__ReferenceCall__Group_1__2
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__ReferenceCall__Group_1__1__Impl();
 
             state._fsp--;
@@ -89906,7 +89906,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:26744:1: ( rule__ReferenceCall__Group_2__0__Impl rule__ReferenceCall__Group_2__1 )
             // InternalLustre.g:26745:2: rule__ReferenceCall__Group_2__0__Impl rule__ReferenceCall__Group_2__1
             {
-            pushFollow(FollowSets000.FOLLOW_37);
+            pushFollow(FollowSets000.FOLLOW_50);
             rule__ReferenceCall__Group_2__0__Impl();
 
             state._fsp--;
@@ -91028,7 +91028,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27095:1: ( rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2 )
             // InternalLustre.g:27096:2: rule__VectorValue__Group__1__Impl rule__VectorValue__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__VectorValue__Group__1__Impl();
 
             state._fsp--;
@@ -91117,7 +91117,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:27122:1: ( rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3 )
             // InternalLustre.g:27123:2: rule__VectorValue__Group__2__Impl rule__VectorValue__Group__3
             {
-            pushFollow(FollowSets000.FOLLOW_38);
+            pushFollow(FollowSets000.FOLLOW_37);
             rule__VectorValue__Group__2__Impl();
 
             state._fsp--;
@@ -96034,7 +96034,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28688:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
             // InternalLustre.g:28689:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__TypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -96803,7 +96803,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:28931:1: ( rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4 )
             // InternalLustre.g:28932:2: rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl rule__RestrictedTypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__RestrictedTypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -98094,7 +98094,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:29336:1: ( rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4 )
             // InternalLustre.g:29337:2: rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl rule__QuotedTypedKeyStringValueAnnotation__Group__4
             {
-            pushFollow(FollowSets000.FOLLOW_132);
+            pushFollow(FollowSets000.FOLLOW_131);
             rule__QuotedTypedKeyStringValueAnnotation__Group__3__Impl();
 
             state._fsp--;
@@ -118326,19 +118326,19 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     }
     // $ANTLR end synpred36_InternalLustre
 
-    // $ANTLR start synpred39_InternalLustre
-    public final void synpred39_InternalLustre_fragment() throws RecognitionException {   
-        // InternalLustre.g:4478:2: ( ( ruleValuedObjectTestExpression ) )
-        // InternalLustre.g:4478:2: ( ruleValuedObjectTestExpression )
+    // $ANTLR start synpred40_InternalLustre
+    public final void synpred40_InternalLustre_fragment() throws RecognitionException {   
+        // InternalLustre.g:4484:2: ( ( ruleReferenceCall ) )
+        // InternalLustre.g:4484:2: ( ruleReferenceCall )
         {
-        // InternalLustre.g:4478:2: ( ruleValuedObjectTestExpression )
-        // InternalLustre.g:4479:3: ruleValuedObjectTestExpression
+        // InternalLustre.g:4484:2: ( ruleReferenceCall )
+        // InternalLustre.g:4485:3: ruleReferenceCall
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1()); 
+           before(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_2()); 
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        ruleValuedObjectTestExpression();
+        ruleReferenceCall();
 
         state._fsp--;
         if (state.failed) return ;
@@ -118348,21 +118348,21 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
 
         }
     }
-    // $ANTLR end synpred39_InternalLustre
+    // $ANTLR end synpred40_InternalLustre
 
     // $ANTLR start synpred41_InternalLustre
     public final void synpred41_InternalLustre_fragment() throws RecognitionException {   
-        // InternalLustre.g:4490:2: ( ( ruleReferenceCall ) )
-        // InternalLustre.g:4490:2: ( ruleReferenceCall )
+        // InternalLustre.g:4490:2: ( ( ruleValuedObjectTestExpression ) )
+        // InternalLustre.g:4490:2: ( ruleValuedObjectTestExpression )
         {
-        // InternalLustre.g:4490:2: ( ruleReferenceCall )
-        // InternalLustre.g:4491:3: ruleReferenceCall
+        // InternalLustre.g:4490:2: ( ruleValuedObjectTestExpression )
+        // InternalLustre.g:4491:3: ruleValuedObjectTestExpression
         {
         if ( state.backtracking==0 ) {
-           before(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_3()); 
+           before(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3()); 
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        ruleReferenceCall();
+        ruleValuedObjectTestExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -119275,6 +119275,20 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred40_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred40_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred343_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -119695,20 +119709,6 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred39_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred39_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred260_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -119766,7 +119766,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     static final String dfa_4s = "\14\uffff\1\2\1\1";
     static final String dfa_5s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
     static final String[] dfa_6s = {
-            "\1\3\1\6\1\11\1\1\1\2\17\uffff\1\14\6\uffff\1\12\1\13\1\7\10\uffff\1\10\60\uffff\1\5\1\uffff\1\4",
+            "\1\3\1\6\1\7\1\1\1\2\17\uffff\1\14\6\uffff\1\12\1\13\1\10\10\uffff\1\11\60\uffff\1\5\1\uffff\1\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -120059,7 +120059,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     static final String dfa_16s = "\20\uffff\1\1\1\2";
     static final String dfa_17s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\2\uffff}>";
     static final String[] dfa_18s = {
-            "\1\5\1\10\1\13\1\3\1\4\14\uffff\1\17\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\11\5\uffff\1\2\2\uffff\1\12\60\uffff\1\7\1\uffff\1\6",
+            "\1\5\1\10\1\11\1\3\1\4\14\uffff\1\17\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\12\5\uffff\1\2\2\uffff\1\13\60\uffff\1\7\1\uffff\1\6",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -121202,7 +121202,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     static final String dfa_50s = "\1\uffff\1\1\16\uffff\1\2";
     static final String dfa_51s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_52s = {
-            "\1\5\1\10\1\13\1\3\1\4\14\uffff\1\1\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\11\5\uffff\1\2\2\uffff\1\12\60\uffff\1\7\1\uffff\1\6",
+            "\1\5\1\10\1\11\1\3\1\4\14\uffff\1\1\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\12\5\uffff\1\2\2\uffff\1\13\60\uffff\1\7\1\uffff\1\6",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -121457,7 +121457,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     static final String dfa_56s = "\1\uffff\1\1\14\uffff\1\2";
     static final String dfa_57s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\2\uffff}>";
     static final String[] dfa_58s = {
-            "\1\1\1\7\1\12\2\1\14\uffff\1\16\2\uffff\1\1\6\uffff\1\13\1\14\1\10\5\uffff\1\1\2\uffff\1\11\60\uffff\1\6\1\uffff\1\1",
+            "\1\1\1\7\1\10\2\1\14\uffff\1\16\2\uffff\1\1\6\uffff\1\13\1\14\1\11\5\uffff\1\1\2\uffff\1\12\60\uffff\1\6\1\uffff\1\1",
             "",
             "",
             "",
@@ -121687,7 +121687,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
     static final String dfa_66s = "\1\uffff\1\1\16\uffff\1\3\1\2";
     static final String dfa_67s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
     static final String[] dfa_68s = {
-            "\1\5\1\10\1\13\1\3\1\4\14\uffff\1\1\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\11\5\uffff\1\2\2\uffff\1\12\60\uffff\1\7\1\uffff\1\6\23\uffff\1\20",
+            "\1\5\1\10\1\11\1\3\1\4\14\uffff\1\1\2\uffff\1\16\5\uffff\1\1\1\14\1\15\1\12\5\uffff\1\2\2\uffff\1\13\60\uffff\1\7\1\uffff\1\6\23\uffff\1\20",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -123503,26 +123503,26 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0018000000000000L,0x0000000010000000L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x0018000000000002L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0006000000000002L,0x0000000081A00000L});
-        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000040200000440L,0x0008000000000000L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000040200000442L,0x0008000000000000L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x0000000000000440L,0x0008000000000000L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000000000442L,0x0008000000000000L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000000042L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0010000000040000L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0E00800000020000L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000000000L,0x0000000020000000L});
-        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000040200000040L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0008000000000000L,0x0000000040000000L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0010000000000000L,0x0000000040000000L});
-        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000000000L,0x0000000081000000L});
-        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0006000000000000L});
-        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0100080000040000L,0x0000000008000000L});
-        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0010000000040000L,0x0000000500200000L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0000080000000000L});
-        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0006000000000000L,0x0000000000A00000L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000000000000002L,0x0000000400200000L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000040200000040L,0x0000001A08000000L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000040200000042L,0x0000001808000000L});
-        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0030000000000000L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000040200000040L,0x0000000008000000L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0008000000000000L,0x0000000040000000L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0010000000000000L,0x0000000040000000L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000000000L,0x0000000081000000L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0006000000000000L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0100080000040000L,0x0000000008000000L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0010000000040000L,0x0000000500200000L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000080000000000L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0006000000000000L,0x0000000000A00000L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x0000000000000002L,0x0000000400200000L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000040200000040L,0x0000001A08000000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000040200000042L,0x0000001808000000L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0030000000000000L});
+        public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000040200000040L,0x0000000008000000L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000040200000040L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0008000000000000L});
         public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0008000000000000L,0x0000000010000000L});
         public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
@@ -123563,7 +123563,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_88 = new BitSet(new long[]{0x0000000000100002L});
         public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000000000L,0x0000000010000000L});
         public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000200000L});
-        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000040200000440L,0x0008000010000000L});
+        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x0000000000000440L,0x0008000010000000L});
         public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0018100000000000L});
         public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0008000000000000L,0x0000000000400000L});
         public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000000402L,0x0008000000000000L});
@@ -123571,7 +123571,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000800000002L});
         public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000800000000L});
         public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0E01C40200020640L,0x01C8C7C080200700L});
-        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0E01C40200020442L,0x01C8070080200700L});
+        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0E01C00000020442L,0x01C8070080200700L});
         public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000040200000642L,0x0008C08080000000L});
         public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000000002L,0x0000004000000000L});
         public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000000000040L,0x0000000020000000L});
@@ -123580,34 +123580,34 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0E00400000000000L,0x03C0040000200700L});
         public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0008000000000800L});
         public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0E00000000000000L,0x0200000000000000L});
-        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0E01C40200020440L,0x01C8070080200700L});
-        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0010040200000440L,0x0008000000000000L});
+        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0E01C00000020440L,0x01C8070080200700L});
+        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0010000000000440L,0x0008000000000000L});
         public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000800L});
-        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0E01C40200020440L,0x01C80700C0203F00L});
-        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0E01C40200020442L,0x01C8070080203F00L});
-        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0E01C40200020440L,0x01C80700C0200700L});
+        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0E01C00000020440L,0x01C80700C0203F00L});
+        public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0E01C00000020442L,0x01C8070080203F00L});
+        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0E01C00000020440L,0x01C80700C0200700L});
         public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0E01C00000020400L,0x01C8040000200700L});
-        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000040200000C40L,0x0008000000000000L});
+        public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000C40L,0x0008000000000000L});
         public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0E01C00000020400L,0x01C80700C0200700L});
         public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0E01C00000020402L,0x01C8070080200700L});
-        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0E01C40200020440L,0x01C8070080203F00L});
+        public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0E01C00000020440L,0x01C8070080203F00L});
         public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0100000000000000L,0x0000000008000000L});
         public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0010000000000000L,0x0000010000000000L});
         public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000000400L,0x0008000000000000L});
-        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000040200000042L});
-        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000000800L,0x0000010000000000L});
-        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
-        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000400L,0x0008020080000700L});
-        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000410L,0x0008000000000000L});
-        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000400L,0x0008010000000700L});
-        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000040200000450L,0x0008040020000000L});
-        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000006L});
-        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000040000L,0x0000280000000000L});
-        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000000002L,0x0000080000000000L});
-        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000000L,0x0000100000000000L});
-        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000417000000000L,0x00000000000000E0L});
-        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000040200000640L,0x0008C08080000000L});
-        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000000000000L,0x0000010000000000L});
+        public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000800L,0x0000010000000000L});
+        public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
+        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000400L,0x0008020080000700L});
+        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000410L,0x0008000000000000L});
+        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000400L,0x0008010000000700L});
+        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000450L,0x0008040020000000L});
+        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000006L});
+        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000000000040000L,0x0000280000000000L});
+        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000000000000002L,0x0000080000000000L});
+        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000000000L,0x0000100000000000L});
+        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000417000000000L,0x00000000000000E0L});
+        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000040200000640L,0x0008C08080000000L});
+        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000000000000L,0x0000010000000000L});
+        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000040200000440L,0x0008000000000000L});
         public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000018L});
         public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000600L,0x0008000000000000L});
         public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0120000000000000L,0x0000000008000000L});

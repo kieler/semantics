@@ -3360,7 +3360,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                             }
 
-                            otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_6); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               						newLeafNode(otherlv_4, grammarAccess.getTypeDeclarationAccess().getLeftCurlyBracketKeyword_1_1_1_1());
@@ -3377,7 +3377,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                               								newCompositeNode(grammarAccess.getTypeDeclarationAccess().getEnumsPrimeIDParserRuleCall_1_1_1_2_0());
                               							
                             }
-                            pushFollow(FollowSets000.FOLLOW_36);
+                            pushFollow(FollowSets000.FOLLOW_35);
                             lv_enums_5_0=rulePrimeID();
 
                             state._fsp--;
@@ -3416,7 +3416,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // InternalLustre.g:1267:7: otherlv_6= ',' ( (lv_enums_7_0= rulePrimeID ) )
                             	    {
-                            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_6); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	      							newLeafNode(otherlv_6, grammarAccess.getTypeDeclarationAccess().getCommaKeyword_1_1_1_3_0());
@@ -3433,7 +3433,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      									newCompositeNode(grammarAccess.getTypeDeclarationAccess().getEnumsPrimeIDParserRuleCall_1_1_1_3_1_0());
                             	      								
                             	    }
-                            	    pushFollow(FollowSets000.FOLLOW_36);
+                            	    pushFollow(FollowSets000.FOLLOW_35);
                             	    lv_enums_7_0=rulePrimeID();
 
                             	    state._fsp--;
@@ -3536,7 +3536,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                               								newCompositeNode(grammarAccess.getTypeDeclarationAccess().getVariablesVariableDeclarationParserRuleCall_1_1_2_2_0());
                               							
                             }
-                            pushFollow(FollowSets000.FOLLOW_37);
+                            pushFollow(FollowSets000.FOLLOW_36);
                             lv_variables_11_0=ruleVariableDeclaration();
 
                             state._fsp--;
@@ -3598,7 +3598,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      									newCompositeNode(grammarAccess.getTypeDeclarationAccess().getValuesVariableDeclarationParserRuleCall_1_1_2_3_1_0());
                             	      								
                             	    }
-                            	    pushFollow(FollowSets000.FOLLOW_37);
+                            	    pushFollow(FollowSets000.FOLLOW_36);
                             	    lv_values_13_0=ruleVariableDeclaration();
 
                             	    state._fsp--;
@@ -3642,7 +3642,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                 case 1 :
                                     // InternalLustre.g:1366:7: otherlv_14= ';'
                                     {
-                                    otherlv_14=(Token)match(input,21,FollowSets000.FOLLOW_38); if (state.failed) return current;
+                                    otherlv_14=(Token)match(input,21,FollowSets000.FOLLOW_37); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                       							newLeafNode(otherlv_14, grammarAccess.getTypeDeclarationAccess().getSemicolonKeyword_1_1_2_4());
@@ -3786,7 +3786,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:1402:4: (lv_isUnsafe_0_0= 'unsafe' )
                     // InternalLustre.g:1403:5: lv_isUnsafe_0_0= 'unsafe'
                     {
-                    lv_isUnsafe_0_0=(Token)match(input,30,FollowSets000.FOLLOW_39); if (state.failed) return current;
+                    lv_isUnsafe_0_0=(Token)match(input,30,FollowSets000.FOLLOW_38); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(lv_isUnsafe_0_0, grammarAccess.getExternalNodeDeclarationAccess().getIsUnsafeUnsafeKeyword_0_0());
@@ -3962,7 +3962,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getExternalNodeDeclarationAccess().getOutputParamsParserRuleCall_6_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_40);
+            pushFollow(FollowSets000.FOLLOW_39);
             lv_output_7_0=ruleParams();
 
             state._fsp--;
@@ -4282,7 +4282,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getNodeDeclarationAccess().getValuedObjectsNodeValuedObjectParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_41);
+            pushFollow(FollowSets000.FOLLOW_40);
             lv_valuedObjects_4_0=ruleNodeValuedObject();
 
             state._fsp--;
@@ -4423,7 +4423,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_9=(Token)match(input,34,FollowSets000.FOLLOW_41); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,34,FollowSets000.FOLLOW_40); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_9, grammarAccess.getNodeDeclarationAccess().getGreaterThanSignGreaterThanSignKeyword_4_3());
@@ -4511,7 +4511,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getNodeDeclarationAccess().getOutputParamsParserRuleCall_5_0_2_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_42);
+                    pushFollow(FollowSets000.FOLLOW_41);
                     lv_output_12_0=ruleParams();
 
                     state._fsp--;
@@ -4576,7 +4576,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                               									newCompositeNode(grammarAccess.getNodeDeclarationAccess().getEffectiveNodeNodeReferenceParserRuleCall_5_0_3_0_1_0());
                               								
                             }
-                            pushFollow(FollowSets000.FOLLOW_43);
+                            pushFollow(FollowSets000.FOLLOW_42);
                             lv_effectiveNode_14_0=ruleNodeReference();
 
                             state._fsp--;
@@ -4611,7 +4611,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                 case 1 :
                                     // InternalLustre.g:1713:8: otherlv_15= '<<' ( (lv_staticArgs_16_0= ruleStaticArg ) ) (otherlv_17= ';' ( (lv_staticArgs_18_0= ruleStaticArg ) ) )* otherlv_19= '>>'
                                     {
-                                    otherlv_15=(Token)match(input,33,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                                    otherlv_15=(Token)match(input,33,FollowSets000.FOLLOW_43); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                       								newLeafNode(otherlv_15, grammarAccess.getNodeDeclarationAccess().getLessThanSignLessThanSignKeyword_5_0_3_0_2_0());
@@ -4667,7 +4667,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                     	case 1 :
                                     	    // InternalLustre.g:1737:9: otherlv_17= ';' ( (lv_staticArgs_18_0= ruleStaticArg ) )
                                     	    {
-                                    	    otherlv_17=(Token)match(input,21,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                                    	    otherlv_17=(Token)match(input,21,FollowSets000.FOLLOW_43); if (state.failed) return current;
                                     	    if ( state.backtracking==0 ) {
 
                                     	      									newLeafNode(otherlv_17, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_0_2_2_0());
@@ -4752,7 +4752,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                 case 1 :
                                     // InternalLustre.g:1770:8: otherlv_20= ';'
                                     {
-                                    otherlv_20=(Token)match(input,21,FollowSets000.FOLLOW_45); if (state.failed) return current;
+                                    otherlv_20=(Token)match(input,21,FollowSets000.FOLLOW_44); if (state.failed) return current;
                                     if ( state.backtracking==0 ) {
 
                                       								newLeafNode(otherlv_20, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_0());
@@ -4826,7 +4826,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                             	    }
 
-                            	    otherlv_23=(Token)match(input,21,FollowSets000.FOLLOW_46); if (state.failed) return current;
+                            	    otherlv_23=(Token)match(input,21,FollowSets000.FOLLOW_45); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	      									newLeafNode(otherlv_23, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_1_0_2());
@@ -4882,7 +4882,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                             	    	    }
 
-                            	    	    otherlv_25=(Token)match(input,21,FollowSets000.FOLLOW_46); if (state.failed) return current;
+                            	    	    otherlv_25=(Token)match(input,21,FollowSets000.FOLLOW_45); if (state.failed) return current;
                             	    	    if ( state.backtracking==0 ) {
 
                             	    	      										newLeafNode(otherlv_25, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_1_0_3_1());
@@ -5021,7 +5021,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	        }
                             	    } while (true);
 
-                            	    otherlv_30=(Token)match(input,21,FollowSets000.FOLLOW_45); if (state.failed) return current;
+                            	    otherlv_30=(Token)match(input,21,FollowSets000.FOLLOW_44); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	      									newLeafNode(otherlv_30, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_1_1_3());
@@ -5039,7 +5039,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                 }
                             } while (true);
 
-                            otherlv_31=(Token)match(input,43,FollowSets000.FOLLOW_47); if (state.failed) return current;
+                            otherlv_31=(Token)match(input,43,FollowSets000.FOLLOW_46); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							newLeafNode(otherlv_31, grammarAccess.getNodeDeclarationAccess().getLetKeyword_5_0_3_1_2());
@@ -5084,7 +5084,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      										newCompositeNode(grammarAccess.getNodeDeclarationAccess().getEquationsEquationParserRuleCall_5_0_3_1_3_0_0());
                             	      									
                             	    }
-                            	    pushFollow(FollowSets000.FOLLOW_47);
+                            	    pushFollow(FollowSets000.FOLLOW_46);
                             	    lv_equations_32_0=ruleEquation();
 
                             	    state._fsp--;
@@ -5125,7 +5125,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      										newCompositeNode(grammarAccess.getNodeDeclarationAccess().getAssertionsAssertionParserRuleCall_5_0_3_1_3_1_0());
                             	      									
                             	    }
-                            	    pushFollow(FollowSets000.FOLLOW_47);
+                            	    pushFollow(FollowSets000.FOLLOW_46);
                             	    lv_assertions_33_0=ruleAssertion();
 
                             	    state._fsp--;
@@ -5166,7 +5166,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	      										newCompositeNode(grammarAccess.getNodeDeclarationAccess().getAutomatonsAutomatonParserRuleCall_5_0_3_1_3_2_0());
                             	      									
                             	    }
-                            	    pushFollow(FollowSets000.FOLLOW_47);
+                            	    pushFollow(FollowSets000.FOLLOW_46);
                             	    lv_automatons_34_0=ruleAutomaton();
 
                             	    state._fsp--;
@@ -5199,7 +5199,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                                 }
                             } while (true);
 
-                            otherlv_35=(Token)match(input,44,FollowSets000.FOLLOW_48); if (state.failed) return current;
+                            otherlv_35=(Token)match(input,44,FollowSets000.FOLLOW_47); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               							newLeafNode(otherlv_35, grammarAccess.getNodeDeclarationAccess().getTelKeyword_5_0_3_1_4());
@@ -5305,7 +5305,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getNodeDeclarationAccess().getEffectiveNodeNodeReferenceParserRuleCall_5_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_43);
+                    pushFollow(FollowSets000.FOLLOW_42);
                     lv_effectiveNode_39_0=ruleNodeReference();
 
                     state._fsp--;
@@ -5340,7 +5340,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         case 1 :
                             // InternalLustre.g:1997:6: otherlv_40= '<<' ( (lv_staticArgs_41_0= ruleStaticArg ) ) (otherlv_42= ';' ( (lv_staticArgs_43_0= ruleStaticArg ) ) )* otherlv_44= '>>'
                             {
-                            otherlv_40=(Token)match(input,33,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                            otherlv_40=(Token)match(input,33,FollowSets000.FOLLOW_43); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               						newLeafNode(otherlv_40, grammarAccess.getNodeDeclarationAccess().getLessThanSignLessThanSignKeyword_5_1_2_0());
@@ -5396,7 +5396,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	case 1 :
                             	    // InternalLustre.g:2021:7: otherlv_42= ';' ( (lv_staticArgs_43_0= ruleStaticArg ) )
                             	    {
-                            	    otherlv_42=(Token)match(input,21,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                            	    otherlv_42=(Token)match(input,21,FollowSets000.FOLLOW_43); if (state.failed) return current;
                             	    if ( state.backtracking==0 ) {
 
                             	      							newLeafNode(otherlv_42, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_1_2_2_0());
@@ -5757,7 +5757,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:2129:4: (otherlv_1= '(' ( (lv_references_2_0= ruleValuedObjectReference ) ) otherlv_3= ',' ( (lv_references_4_0= ruleValuedObjectReference ) ) (otherlv_5= ',' ( (lv_references_6_0= ruleValuedObjectReference ) ) )* otherlv_7= ')' )
                     // InternalLustre.g:2130:5: otherlv_1= '(' ( (lv_references_2_0= ruleValuedObjectReference ) ) otherlv_3= ',' ( (lv_references_4_0= ruleValuedObjectReference ) ) (otherlv_5= ',' ( (lv_references_6_0= ruleValuedObjectReference ) ) )* otherlv_7= ')'
                     {
-                    otherlv_1=(Token)match(input,37,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,37,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_1, grammarAccess.getEquationAccess().getLeftParenthesisKeyword_1_0_0());
@@ -5798,7 +5798,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_3, grammarAccess.getEquationAccess().getCommaKeyword_1_0_2());
@@ -5854,7 +5854,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:2177:6: otherlv_5= ',' ( (lv_references_6_0= ruleValuedObjectReference ) )
                     	    {
-                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_5, grammarAccess.getEquationAccess().getCommaKeyword_1_0_4_0());
@@ -5957,7 +5957,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_9=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_9, grammarAccess.getEquationAccess().getCommaKeyword_1_1_1());
@@ -6013,7 +6013,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:2251:6: otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) )
                     	    {
-                    	    otherlv_11=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    	    otherlv_11=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_11, grammarAccess.getEquationAccess().getCommaKeyword_1_1_3_0());
@@ -11260,19 +11260,19 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomicExpression"
-    // InternalLustre.g:4229:1: ruleAtomicExpression returns [EObject current=null] : (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression ) ;
+    // InternalLustre.g:4229:1: ruleAtomicExpression returns [EObject current=null] : (this_BoolValue_0= ruleBoolValue | (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' ) | this_ReferenceCall_4= ruleReferenceCall | this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression ) ;
     public final EObject ruleAtomicExpression() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_2=null;
-        Token otherlv_4=null;
+        Token otherlv_1=null;
+        Token otherlv_3=null;
         EObject this_BoolValue_0 = null;
 
-        EObject this_ValuedObjectTestExpression_1 = null;
+        EObject this_BoolExpression_2 = null;
 
-        EObject this_BoolExpression_3 = null;
+        EObject this_ReferenceCall_4 = null;
 
-        EObject this_ReferenceCall_5 = null;
+        EObject this_ValuedObjectTestExpression_5 = null;
 
         EObject this_NorAtMostOneExpression_6 = null;
 
@@ -11281,10 +11281,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:4235:2: ( (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression ) )
-            // InternalLustre.g:4236:2: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression )
+            // InternalLustre.g:4235:2: ( (this_BoolValue_0= ruleBoolValue | (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' ) | this_ReferenceCall_4= ruleReferenceCall | this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression ) )
+            // InternalLustre.g:4236:2: (this_BoolValue_0= ruleBoolValue | (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' ) | this_ReferenceCall_4= ruleReferenceCall | this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression )
             {
-            // InternalLustre.g:4236:2: (this_BoolValue_0= ruleBoolValue | this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression | (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' ) | this_ReferenceCall_5= ruleReferenceCall | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression )
+            // InternalLustre.g:4236:2: (this_BoolValue_0= ruleBoolValue | (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' ) | this_ReferenceCall_4= ruleReferenceCall | this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression | this_NorAtMostOneExpression_6= ruleNorAtMostOneExpression )
             int alt80=5;
             switch ( input.LA(1) ) {
             case RULE_BOOLEAN:
@@ -11292,18 +11292,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 alt80=1;
                 }
                 break;
-            case 109:
-            case 111:
+            case 37:
                 {
                 alt80=2;
                 }
                 break;
             case RULE_ID:
                 {
-                int LA80_4 = input.LA(2);
+                int LA80_3 = input.LA(2);
 
-                if ( (synpred96_InternalLustre()) ) {
-                    alt80=2;
+                if ( (synpred97_InternalLustre()) ) {
+                    alt80=3;
                 }
                 else if ( (synpred98_InternalLustre()) ) {
                     alt80=4;
@@ -11311,15 +11310,16 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 80, 4, input);
+                        new NoViableAltException("", 80, 3, input);
 
                     throw nvae;
                 }
                 }
                 break;
-            case 37:
+            case 109:
+            case 111:
                 {
-                alt80=3;
+                alt80=4;
                 }
                 break;
             case 90:
@@ -11365,42 +11365,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:4249:3: this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression
+                    // InternalLustre.g:4249:3: (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' )
                     {
-                    if ( state.backtracking==0 ) {
-
-                      			/* */
-                      		
-                    }
-                    if ( state.backtracking==0 ) {
-
-                      			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_1());
-                      		
-                    }
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    this_ValuedObjectTestExpression_1=ruleValuedObjectTestExpression();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      			current = this_ValuedObjectTestExpression_1;
-                      			afterParserOrEnumRuleCall();
-                      		
-                    }
-
-                    }
-                    break;
-                case 3 :
-                    // InternalLustre.g:4261:3: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
+                    // InternalLustre.g:4249:3: (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' )
+                    // InternalLustre.g:4250:4: otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')'
                     {
-                    // InternalLustre.g:4261:3: (otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')' )
-                    // InternalLustre.g:4262:4: otherlv_2= '(' this_BoolExpression_3= ruleBoolExpression otherlv_4= ')'
-                    {
-                    otherlv_2=(Token)match(input,37,FollowSets000.FOLLOW_19); if (state.failed) return current;
+                    otherlv_1=(Token)match(input,37,FollowSets000.FOLLOW_19); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      				newLeafNode(otherlv_2, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0());
+                      				newLeafNode(otherlv_1, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0());
                       			
                     }
                     if ( state.backtracking==0 ) {
@@ -11410,24 +11383,24 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
 
-                      				newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_2_1());
+                      				newCompositeNode(grammarAccess.getAtomicExpressionAccess().getBoolExpressionParserRuleCall_1_1());
                       			
                     }
                     pushFollow(FollowSets000.FOLLOW_70);
-                    this_BoolExpression_3=ruleBoolExpression();
+                    this_BoolExpression_2=ruleBoolExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      				current = this_BoolExpression_3;
+                      				current = this_BoolExpression_2;
                       				afterParserOrEnumRuleCall();
                       			
                     }
-                    otherlv_4=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,38,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      				newLeafNode(otherlv_4, grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_2_2());
+                      				newLeafNode(otherlv_3, grammarAccess.getAtomicExpressionAccess().getRightParenthesisKeyword_1_2());
                       			
                     }
 
@@ -11436,8 +11409,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
                     break;
-                case 4 :
-                    // InternalLustre.g:4283:3: this_ReferenceCall_5= ruleReferenceCall
+                case 3 :
+                    // InternalLustre.g:4271:3: this_ReferenceCall_4= ruleReferenceCall
                     {
                     if ( state.backtracking==0 ) {
 
@@ -11446,17 +11419,44 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     if ( state.backtracking==0 ) {
 
-                      			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_3());
+                      			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getReferenceCallParserRuleCall_2());
                       		
                     }
                     pushFollow(FollowSets000.FOLLOW_2);
-                    this_ReferenceCall_5=ruleReferenceCall();
+                    this_ReferenceCall_4=ruleReferenceCall();
 
                     state._fsp--;
                     if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
-                      			current = this_ReferenceCall_5;
+                      			current = this_ReferenceCall_4;
+                      			afterParserOrEnumRuleCall();
+                      		
+                    }
+
+                    }
+                    break;
+                case 4 :
+                    // InternalLustre.g:4283:3: this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression
+                    {
+                    if ( state.backtracking==0 ) {
+
+                      			/* */
+                      		
+                    }
+                    if ( state.backtracking==0 ) {
+
+                      			newCompositeNode(grammarAccess.getAtomicExpressionAccess().getValuedObjectTestExpressionParserRuleCall_3());
+                      		
+                    }
+                    pushFollow(FollowSets000.FOLLOW_2);
+                    this_ValuedObjectTestExpression_5=ruleValuedObjectTestExpression();
+
+                    state._fsp--;
+                    if (state.failed) return current;
+                    if ( state.backtracking==0 ) {
+
+                      			current = this_ValuedObjectTestExpression_5;
                       			afterParserOrEnumRuleCall();
                       		
                     }
@@ -13058,7 +13058,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getStaticArgAccess().getNameNodeReferenceParserRuleCall_2_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_43);
+                    pushFollow(FollowSets000.FOLLOW_42);
                     lv_name_6_0=ruleNodeReference();
 
                     state._fsp--;
@@ -13093,7 +13093,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         case 1 :
                             // InternalLustre.g:4875:5: otherlv_7= '<<' ( (lv_staticArgs_8_0= ruleStaticArg ) ) ( (otherlv_9= ';' | otherlv_10= ',' ) ( (lv_staticArgs_11_0= ruleStaticArg ) ) )* otherlv_12= '>>'
                             {
-                            otherlv_7=(Token)match(input,33,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                            otherlv_7=(Token)match(input,33,FollowSets000.FOLLOW_43); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               					newLeafNode(otherlv_7, grammarAccess.getStaticArgAccess().getLessThanSignLessThanSignKeyword_2_2_0());
@@ -13170,7 +13170,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	        case 1 :
                             	            // InternalLustre.g:4900:7: otherlv_9= ';'
                             	            {
-                            	            otherlv_9=(Token)match(input,21,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                            	            otherlv_9=(Token)match(input,21,FollowSets000.FOLLOW_43); if (state.failed) return current;
                             	            if ( state.backtracking==0 ) {
 
                             	              							newLeafNode(otherlv_9, grammarAccess.getStaticArgAccess().getSemicolonKeyword_2_2_2_0_0());
@@ -13182,7 +13182,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             	        case 2 :
                             	            // InternalLustre.g:4905:7: otherlv_10= ','
                             	            {
-                            	            otherlv_10=(Token)match(input,20,FollowSets000.FOLLOW_44); if (state.failed) return current;
+                            	            otherlv_10=(Token)match(input,20,FollowSets000.FOLLOW_43); if (state.failed) return current;
                             	            if ( state.backtracking==0 ) {
 
                             	              							newLeafNode(otherlv_10, grammarAccess.getStaticArgAccess().getCommaKeyword_2_2_2_0_1());
@@ -19665,7 +19665,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:7215:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_11=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_11, grammarAccess.getMethodDeclarationAccess().getScheduleKeyword_6_0());
@@ -20272,7 +20272,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:7429:4: otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_11=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_11=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_11, grammarAccess.getMethodDeclarationWOSemicolonAccess().getScheduleKeyword_6_0());
@@ -20503,7 +20503,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:7502:4: kw= ':' this_PrimeID_2= rulePrimeID
             	    {
-            	    kw=(Token)match(input,27,FollowSets000.FOLLOW_35); if (state.failed) return current;
+            	    kw=(Token)match(input,27,FollowSets000.FOLLOW_6); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(kw);
@@ -22126,7 +22126,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_36);
+                    pushFollow(FollowSets000.FOLLOW_35);
                     lv_priorities_7_0=rulePriorityProtocol();
 
                     state._fsp--;
@@ -22182,7 +22182,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getScheduleDeclarationAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_36);
+                    	    pushFollow(FollowSets000.FOLLOW_35);
                     	    lv_priorities_9_0=rulePriorityProtocol();
 
                     	    state._fsp--;
@@ -22714,7 +22714,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_36);
+                    pushFollow(FollowSets000.FOLLOW_35);
                     lv_priorities_7_0=rulePriorityProtocol();
 
                     state._fsp--;
@@ -22770,7 +22770,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getScheduleDeclarationWOSemicolonAccess().getPrioritiesPriorityProtocolEnumRuleCall_5_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_36);
+                    	    pushFollow(FollowSets000.FOLLOW_35);
                     	    lv_priorities_9_0=rulePriorityProtocol();
 
                     	    state._fsp--;
@@ -23954,7 +23954,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getPureEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_28);
+            	    pushFollow(FollowSets000.FOLLOW_124);
             	    lv_annotations_0_0=ruleQuotedStringAnnotation();
 
             	    state._fsp--;
@@ -23995,7 +23995,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getPureEmissionAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_124);
+            pushFollow(FollowSets000.FOLLOW_125);
             lv_reference_1_0=ruleValuedObjectReference();
 
             state._fsp--;
@@ -24030,7 +24030,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:8797:4: otherlv_2= 'schedule' ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_2=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getPureEmissionAccess().getScheduleKeyword_2_0());
@@ -24054,7 +24054,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getPureEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_2_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_3_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -24209,7 +24209,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getValuedEmissionAccess().getAnnotationsQuotedStringAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_28);
+            	    pushFollow(FollowSets000.FOLLOW_124);
             	    lv_annotations_0_0=ruleQuotedStringAnnotation();
 
             	    state._fsp--;
@@ -24315,7 +24315,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,38,FollowSets000.FOLLOW_124); if (state.failed) return current;
+            otherlv_4=(Token)match(input,38,FollowSets000.FOLLOW_125); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getValuedEmissionAccess().getRightParenthesisKeyword_4());
@@ -24332,7 +24332,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:8906:4: otherlv_5= 'schedule' ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_5=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_5=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_5, grammarAccess.getValuedEmissionAccess().getScheduleKeyword_5_0());
@@ -24356,7 +24356,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getValuedEmissionAccess().getScheduleScheduleObjectReferenceParserRuleCall_5_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_6_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -24511,7 +24511,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getAssignmentAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_28);
+            	    pushFollow(FollowSets000.FOLLOW_124);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -24622,7 +24622,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getAssignmentAccess().getExpressionExpressionParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_124);
+            pushFollow(FollowSets000.FOLLOW_125);
             lv_expression_3_0=ruleExpression();
 
             state._fsp--;
@@ -24657,7 +24657,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:9026:4: otherlv_4= 'schedule' ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getAssignmentAccess().getScheduleKeyword_4_0());
@@ -24681,7 +24681,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getAssignmentAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_5_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -24834,7 +24834,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getPostfixEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_28);
+            	    pushFollow(FollowSets000.FOLLOW_124);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -24875,7 +24875,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getPostfixEffectAccess().getReferenceValuedObjectReferenceParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_126);
+            pushFollow(FollowSets000.FOLLOW_127);
             lv_reference_1_0=ruleValuedObjectReference();
 
             state._fsp--;
@@ -24910,7 +24910,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getPostfixEffectAccess().getOperatorPostfixOperatorEnumRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_124);
+            pushFollow(FollowSets000.FOLLOW_125);
             lv_operator_2_0=rulePostfixOperator();
 
             state._fsp--;
@@ -24945,7 +24945,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:9127:4: otherlv_3= 'schedule' ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_3=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_3, grammarAccess.getPostfixEffectAccess().getScheduleKeyword_3_0());
@@ -24969,7 +24969,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getPostfixEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_4_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -25116,7 +25116,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getHostcodeEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_127);
+            	    pushFollow(FollowSets000.FOLLOW_128);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -25348,7 +25348,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getValuedObjectValuedObjectCrossReference_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_128);
+            pushFollow(FollowSets000.FOLLOW_129);
             rulePrimeID();
 
             state._fsp--;
@@ -25375,7 +25375,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:9265:4: otherlv_2= '.' ( (lv_subReference_3_0= ruleValuedObjectReference ) )
                     {
-                    otherlv_2=(Token)match(input,45,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,45,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getReferenceCallEffectAccess().getFullStopKeyword_2_0());
@@ -25446,7 +25446,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:9290:4: (otherlv_4= '(' ( (lv_parameters_5_0= ruleParameter ) ) (otherlv_6= ',' ( (lv_parameters_7_0= ruleParameter ) ) )* otherlv_8= ')' )
                     // InternalLustre.g:9291:5: otherlv_4= '(' ( (lv_parameters_5_0= ruleParameter ) ) (otherlv_6= ',' ( (lv_parameters_7_0= ruleParameter ) ) )* otherlv_8= ')'
                     {
-                    otherlv_4=(Token)match(input,37,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,37,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_4, grammarAccess.getReferenceCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
@@ -25502,7 +25502,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:9315:6: otherlv_6= ',' ( (lv_parameters_7_0= ruleParameter ) )
                     	    {
-                    	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_6, grammarAccess.getReferenceCallEffectAccess().getCommaKeyword_3_0_2_0());
@@ -25552,7 +25552,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         }
                     } while (true);
 
-                    otherlv_8=(Token)match(input,38,FollowSets000.FOLLOW_124); if (state.failed) return current;
+                    otherlv_8=(Token)match(input,38,FollowSets000.FOLLOW_125); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_8, grammarAccess.getReferenceCallEffectAccess().getRightParenthesisKeyword_3_0_3());
@@ -25567,7 +25567,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 2 :
                     // InternalLustre.g:9345:4: otherlv_9= '()'
                     {
-                    otherlv_9=(Token)match(input,64,FollowSets000.FOLLOW_124); if (state.failed) return current;
+                    otherlv_9=(Token)match(input,64,FollowSets000.FOLLOW_125); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_9, grammarAccess.getReferenceCallEffectAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
@@ -25590,7 +25590,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:9351:4: otherlv_10= 'schedule' ( (lv_schedule_11_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_10=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_10=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_10, grammarAccess.getReferenceCallEffectAccess().getScheduleKeyword_4_0());
@@ -25614,7 +25614,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getReferenceCallEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_4_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_11_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -25770,7 +25770,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_130);
+            	    pushFollow(FollowSets000.FOLLOW_131);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -25863,7 +25863,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:9437:5: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
                     // InternalLustre.g:9438:6: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,37,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,37,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       						newLeafNode(otherlv_3, grammarAccess.getFunctionCallEffectAccess().getLeftParenthesisKeyword_1_2_0_0());
@@ -25919,7 +25919,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:9462:7: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
                     	    {
-                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      							newLeafNode(otherlv_5, grammarAccess.getFunctionCallEffectAccess().getCommaKeyword_1_2_0_2_0());
@@ -26115,7 +26115,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getPrintCallEffectAccess().getAnnotationsAnnotationParserRuleCall_0_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_131);
+            	    pushFollow(FollowSets000.FOLLOW_132);
             	    lv_annotations_0_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -26154,7 +26154,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:9540:3: (otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')' )
             // InternalLustre.g:9541:4: otherlv_2= '(' ( (lv_parameters_3_0= ruleParameter ) ) (otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) ) )* otherlv_6= ')'
             {
-            otherlv_2=(Token)match(input,37,FollowSets000.FOLLOW_129); if (state.failed) return current;
+            otherlv_2=(Token)match(input,37,FollowSets000.FOLLOW_130); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               				newLeafNode(otherlv_2, grammarAccess.getPrintCallEffectAccess().getLeftParenthesisKeyword_2_0());
@@ -26210,7 +26210,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:9565:5: otherlv_4= ',' ( (lv_parameters_5_0= ruleParameter ) )
             	    {
-            	    otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_129); if (state.failed) return current;
+            	    otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_130); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      					newLeafNode(otherlv_4, grammarAccess.getPrintCallEffectAccess().getCommaKeyword_2_2_0());
@@ -26260,7 +26260,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_6=(Token)match(input,38,FollowSets000.FOLLOW_124); if (state.failed) return current;
+            otherlv_6=(Token)match(input,38,FollowSets000.FOLLOW_125); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               				newLeafNode(otherlv_6, grammarAccess.getPrintCallEffectAccess().getRightParenthesisKeyword_2_3());
@@ -26280,7 +26280,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:9595:4: otherlv_7= 'schedule' ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+
                     {
-                    otherlv_7=(Token)match(input,75,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_7=(Token)match(input,75,FollowSets000.FOLLOW_6); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_7, grammarAccess.getPrintCallEffectAccess().getScheduleKeyword_3_0());
@@ -26304,7 +26304,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newCompositeNode(grammarAccess.getPrintCallEffectAccess().getScheduleScheduleObjectReferenceParserRuleCall_3_1_0());
                     	      					
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_125);
+                    	    pushFollow(FollowSets000.FOLLOW_126);
                     	    lv_schedule_8_0=ruleScheduleObjectReference();
 
                     	    state._fsp--;
@@ -26477,7 +26477,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      					newCompositeNode(grammarAccess.getRandomizeCallEffectAccess().getAnnotationsAnnotationParserRuleCall_1_0());
             	      				
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_132);
+            	    pushFollow(FollowSets000.FOLLOW_133);
             	    lv_annotations_1_0=ruleAnnotation();
 
             	    state._fsp--;
@@ -26537,7 +26537,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:9672:4: (otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')' )
                     // InternalLustre.g:9673:5: otherlv_3= '(' ( (lv_parameters_4_0= ruleParameter ) ) (otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) ) )* otherlv_7= ')'
                     {
-                    otherlv_3=(Token)match(input,37,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    otherlv_3=(Token)match(input,37,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_3, grammarAccess.getRandomizeCallEffectAccess().getLeftParenthesisKeyword_3_0_0());
@@ -26593,7 +26593,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:9697:6: otherlv_5= ',' ( (lv_parameters_6_0= ruleParameter ) )
                     	    {
-                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    	    otherlv_5=(Token)match(input,20,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_5, grammarAccess.getRandomizeCallEffectAccess().getCommaKeyword_3_0_2_0());
@@ -27194,7 +27194,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getCompareOperationParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_134);
             this_CompareOperation_0=ruleCompareOperation();
 
             state._fsp--;
@@ -27283,7 +27283,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_133);
+                    pushFollow(FollowSets000.FOLLOW_134);
                     lv_subExpressions_3_0=ruleCompareOperation();
 
                     state._fsp--;
@@ -27342,7 +27342,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getBitwiseAndExpressionAccess().getSubExpressionsCompareOperationParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_133);
+                    	    pushFollow(FollowSets000.FOLLOW_134);
                     	    lv_subExpressions_5_0=ruleCompareOperation();
 
                     	    state._fsp--;
@@ -27477,7 +27477,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_134);
+            pushFollow(FollowSets000.FOLLOW_135);
             this_NotOrValuedExpression_0=ruleNotOrValuedExpression();
 
             state._fsp--;
@@ -27868,7 +27868,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getBitwiseNotExpressionAccess().getOperatorBitwiseNotOperatorEnumRuleCall_0_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_135);
+                    pushFollow(FollowSets000.FOLLOW_136);
                     lv_operator_1_0=ruleBitwiseNotOperator();
 
                     state._fsp--;
@@ -28059,7 +28059,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSumExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_136);
+            pushFollow(FollowSets000.FOLLOW_137);
             this_SumExpression_0=ruleSumExpression();
 
             state._fsp--;
@@ -28148,7 +28148,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_136);
+                    pushFollow(FollowSets000.FOLLOW_137);
                     lv_subExpressions_3_0=ruleShiftRightUnsignedExpression();
 
                     state._fsp--;
@@ -28207,7 +28207,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getShiftRightExpressionAccess().getSubExpressionsShiftRightUnsignedExpressionParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_136);
+                    	    pushFollow(FollowSets000.FOLLOW_137);
                     	    lv_subExpressions_5_0=ruleShiftRightUnsignedExpression();
 
                     	    state._fsp--;
@@ -28345,7 +28345,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSumExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_137);
+            pushFollow(FollowSets000.FOLLOW_138);
             this_SumExpression_0=ruleSumExpression();
 
             state._fsp--;
@@ -28434,7 +28434,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       							newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_1_1_0());
                       						
                     }
-                    pushFollow(FollowSets000.FOLLOW_137);
+                    pushFollow(FollowSets000.FOLLOW_138);
                     lv_subExpressions_3_0=ruleSumExpression();
 
                     state._fsp--;
@@ -28493,7 +28493,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getShiftRightUnsignedExpressionAccess().getSubExpressionsSumExpressionParserRuleCall_1_2_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_137);
+                    	    pushFollow(FollowSets000.FOLLOW_138);
                     	    lv_subExpressions_5_0=ruleSumExpression();
 
                     	    state._fsp--;
@@ -28638,7 +28638,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newCompositeNode(grammarAccess.getSumExpressionAccess().getProductExpressionParserRuleCall_0());
               		
             }
-            pushFollow(FollowSets000.FOLLOW_138);
+            pushFollow(FollowSets000.FOLLOW_139);
             this_ProductExpression_0=ruleProductExpression();
 
             state._fsp--;
@@ -28734,7 +28734,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      							newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_0_2_0());
             	      						
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_138);
+            	    pushFollow(FollowSets000.FOLLOW_139);
             	    lv_subExpressions_3_0=ruleProductExpression();
 
             	    state._fsp--;
@@ -28784,7 +28784,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    	      								newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_0_3_1_0());
             	    	      							
             	    	    }
-            	    	    pushFollow(FollowSets000.FOLLOW_138);
+            	    	    pushFollow(FollowSets000.FOLLOW_139);
             	    	    lv_subExpressions_5_0=ruleProductExpression();
 
             	    	    state._fsp--;
@@ -28893,7 +28893,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      							newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_2_0());
             	      						
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_138);
+            	    pushFollow(FollowSets000.FOLLOW_139);
             	    lv_subExpressions_8_0=ruleProductExpression();
 
             	    state._fsp--;
@@ -28943,7 +28943,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    	      								newCompositeNode(grammarAccess.getSumExpressionAccess().getSubExpressionsProductExpressionParserRuleCall_1_1_3_1_0());
             	    	      							
             	    	    }
-            	    	    pushFollow(FollowSets000.FOLLOW_138);
+            	    	    pushFollow(FollowSets000.FOLLOW_139);
             	    	    lv_subExpressions_10_0=ruleProductExpression();
 
             	    	    state._fsp--;
@@ -29486,7 +29486,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,37,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,37,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2());
@@ -29538,7 +29538,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                         case 1 :
                             // InternalLustre.g:10779:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) )
                             {
-                            otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                            otherlv_4=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               					newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0());
@@ -29706,7 +29706,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:10838:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
             // InternalLustre.g:10839:3: this_ID_0= RULE_ID (kw= '\\'' )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_139); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_140); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -29732,7 +29732,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:10847:4: kw= '\\''
             	    {
-            	    kw=(Token)match(input,86,FollowSets000.FOLLOW_139); if (state.failed) return current;
+            	    kw=(Token)match(input,86,FollowSets000.FOLLOW_140); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(kw);
@@ -29858,7 +29858,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_140);
+            pushFollow(FollowSets000.FOLLOW_141);
             rulePrimeID();
 
             state._fsp--;
@@ -29930,7 +29930,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_3=(Token)match(input,78,FollowSets000.FOLLOW_140); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,78,FollowSets000.FOLLOW_141); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
@@ -29956,7 +29956,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:10921:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
-                    otherlv_4=(Token)match(input,45,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,45,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0());
@@ -30107,7 +30107,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_141);
+            pushFollow(FollowSets000.FOLLOW_142);
             rulePrimeID();
 
             state._fsp--;
@@ -30271,7 +30271,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getReferenceCallAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_142);
+            pushFollow(FollowSets000.FOLLOW_143);
             rulePrimeID();
 
             state._fsp--;
@@ -30343,7 +30343,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_3=(Token)match(input,78,FollowSets000.FOLLOW_142); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,78,FollowSets000.FOLLOW_143); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getReferenceCallAccess().getRightSquareBracketKeyword_1_2());
@@ -30369,7 +30369,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:11069:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
-                    otherlv_4=(Token)match(input,45,FollowSets000.FOLLOW_35); if (state.failed) return current;
+                    otherlv_4=(Token)match(input,45,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_4, grammarAccess.getReferenceCallAccess().getFullStopKeyword_2_0());
@@ -30440,7 +30440,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     // InternalLustre.g:11094:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
                     // InternalLustre.g:11095:5: otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')'
                     {
-                    otherlv_6=(Token)match(input,37,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    otherlv_6=(Token)match(input,37,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       					newLeafNode(otherlv_6, grammarAccess.getReferenceCallAccess().getLeftParenthesisKeyword_3_0_0());
@@ -30496,7 +30496,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:11119:6: otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) )
                     	    {
-                    	    otherlv_8=(Token)match(input,20,FollowSets000.FOLLOW_129); if (state.failed) return current;
+                    	    otherlv_8=(Token)match(input,20,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      						newLeafNode(otherlv_8, grammarAccess.getReferenceCallAccess().getCommaKeyword_3_0_2_0());
@@ -30682,7 +30682,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             // InternalLustre.g:11175:5: (lv_pureOutput_0_0= '!' )
                             // InternalLustre.g:11176:6: lv_pureOutput_0_0= '!'
                             {
-                            lv_pureOutput_0_0=(Token)match(input,87,FollowSets000.FOLLOW_143); if (state.failed) return current;
+                            lv_pureOutput_0_0=(Token)match(input,87,FollowSets000.FOLLOW_144); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               						newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
@@ -31279,7 +31279,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:11380:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             // InternalLustre.g:11381:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,39,FollowSets000.FOLLOW_144); if (state.failed) return current;
+            otherlv_0=(Token)match(input,39,FollowSets000.FOLLOW_145); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
@@ -31296,7 +31296,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_36);
+            pushFollow(FollowSets000.FOLLOW_35);
             lv_values_1_0=ruleVectorValueMember();
 
             state._fsp--;
@@ -31335,7 +31335,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:11405:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
-            	    otherlv_2=(Token)match(input,20,FollowSets000.FOLLOW_144); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,20,FollowSets000.FOLLOW_145); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
@@ -31352,7 +31352,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getVectorValueAccess().getValuesVectorValueMemberParserRuleCall_2_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_36);
+            	    pushFollow(FollowSets000.FOLLOW_35);
             	    lv_values_3_0=ruleVectorValueMember();
 
             	    state._fsp--;
@@ -31994,7 +31994,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,39,FollowSets000.FOLLOW_145); if (state.failed) return current;
+            otherlv_1=(Token)match(input,39,FollowSets000.FOLLOW_146); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1());
@@ -32022,7 +32022,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_0_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_36);
+                    pushFollow(FollowSets000.FOLLOW_35);
                     lv_members_2_0=ruleJsonObjectMember();
 
                     state._fsp--;
@@ -32078,7 +32078,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getJsonObjectValueAccess().getMembersJsonObjectMemberParserRuleCall_2_1_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_36);
+                    	    pushFollow(FollowSets000.FOLLOW_35);
                     	    lv_members_4_0=ruleJsonObjectMember();
 
                     	    state._fsp--;
@@ -32237,7 +32237,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_146); if (state.failed) return current;
+            otherlv_1=(Token)match(input,27,FollowSets000.FOLLOW_147); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1());
@@ -32383,7 +32383,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,77,FollowSets000.FOLLOW_147); if (state.failed) return current;
+            otherlv_1=(Token)match(input,77,FollowSets000.FOLLOW_148); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1());
@@ -32411,7 +32411,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_0_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_148);
+                    pushFollow(FollowSets000.FOLLOW_149);
                     lv_elements_2_0=ruleJsonValue();
 
                     state._fsp--;
@@ -32450,7 +32450,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalLustre.g:11783:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_146); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_147); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0());
@@ -32467,7 +32467,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_1_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_148);
+                    	    pushFollow(FollowSets000.FOLLOW_149);
                     	    lv_elements_4_0=ruleJsonValue();
 
                     	    state._fsp--;
@@ -34709,7 +34709,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_149);
+            pushFollow(FollowSets000.FOLLOW_150);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -34744,7 +34744,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_150);
+            pushFollow(FollowSets000.FOLLOW_151);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -34783,7 +34783,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:12561:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_149); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_150); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -34800,7 +34800,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_150);
+            	    pushFollow(FollowSets000.FOLLOW_151);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -34938,7 +34938,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_151);
+            pushFollow(FollowSets000.FOLLOW_152);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -34973,7 +34973,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_150);
+            pushFollow(FollowSets000.FOLLOW_151);
             lv_values_2_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -35012,7 +35012,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:12647:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_151); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_152); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -35029,7 +35029,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_150);
+            	    pushFollow(FollowSets000.FOLLOW_151);
             	    lv_values_4_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -35167,7 +35167,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_149);
+            pushFollow(FollowSets000.FOLLOW_150);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -35202,7 +35202,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_150);
+            pushFollow(FollowSets000.FOLLOW_151);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -35241,7 +35241,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:12733:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_149); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,20,FollowSets000.FOLLOW_150); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
@@ -35258,7 +35258,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_150);
+            	    pushFollow(FollowSets000.FOLLOW_151);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -35400,7 +35400,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_152);
+            pushFollow(FollowSets000.FOLLOW_153);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -35465,7 +35465,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,78,FollowSets000.FOLLOW_149); if (state.failed) return current;
+            otherlv_4=(Token)match(input,78,FollowSets000.FOLLOW_150); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -35482,7 +35482,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_150);
+            pushFollow(FollowSets000.FOLLOW_151);
             lv_values_5_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -35521,7 +35521,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:12846:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_149); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_150); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -35538,7 +35538,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_150);
+            	    pushFollow(FollowSets000.FOLLOW_151);
             	    lv_values_7_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -35680,7 +35680,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_152);
+            pushFollow(FollowSets000.FOLLOW_153);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -35745,7 +35745,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,78,FollowSets000.FOLLOW_151); if (state.failed) return current;
+            otherlv_4=(Token)match(input,78,FollowSets000.FOLLOW_152); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -35762,7 +35762,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_150);
+            pushFollow(FollowSets000.FOLLOW_151);
             lv_values_5_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -35801,7 +35801,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalLustre.g:12959:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_151); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,20,FollowSets000.FOLLOW_152); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -35818,7 +35818,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_150);
+            	    pushFollow(FollowSets000.FOLLOW_151);
             	    lv_values_7_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -35984,7 +35984,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13026:4: (lv_values_2_0= RULE_STRING )
             // InternalLustre.g:13027:5: lv_values_2_0= RULE_STRING
             {
-            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_150); if (state.failed) return current;
+            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_151); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
@@ -36035,7 +36035,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    // InternalLustre.g:13049:5: (lv_values_4_0= RULE_STRING )
             	    // InternalLustre.g:13050:6: lv_values_4_0= RULE_STRING
             	    {
-            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_150); if (state.failed) return current;
+            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_151); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
@@ -36175,7 +36175,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_152);
+            pushFollow(FollowSets000.FOLLOW_153);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -36252,7 +36252,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13137:4: (lv_values_5_0= RULE_STRING )
             // InternalLustre.g:13138:5: lv_values_5_0= RULE_STRING
             {
-            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_150); if (state.failed) return current;
+            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_151); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
@@ -36303,7 +36303,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    // InternalLustre.g:13160:5: (lv_values_7_0= RULE_STRING )
             	    // InternalLustre.g:13161:6: lv_values_7_0= RULE_STRING
             	    {
-            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_150); if (state.failed) return current;
+            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_151); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
@@ -36841,7 +36841,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             // InternalLustre.g:13308:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             // InternalLustre.g:13309:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_153); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_154); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -36923,7 +36923,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_153); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_154); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(this_ID_3);
@@ -36954,7 +36954,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:13339:4: kw= '#' this_INT_5= RULE_INT
                     {
-                    kw=(Token)match(input,90,FollowSets000.FOLLOW_141); if (state.failed) return current;
+                    kw=(Token)match(input,90,FollowSets000.FOLLOW_142); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -37071,7 +37071,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:13372:4: kw= '-'
                     {
-                    kw=(Token)match(input,85,FollowSets000.FOLLOW_141); if (state.failed) return current;
+                    kw=(Token)match(input,85,FollowSets000.FOLLOW_142); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -37188,7 +37188,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalLustre.g:13405:4: kw= '-'
                     {
-                    kw=(Token)match(input,85,FollowSets000.FOLLOW_154); if (state.failed) return current;
+                    kw=(Token)match(input,85,FollowSets000.FOLLOW_155); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -39895,7 +39895,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
 
-        otherlv_9=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return ;
+        otherlv_9=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return ;
         // InternalLustre.g:2231:5: ( (lv_references_10_0= ruleValuedObjectReference ) )
         // InternalLustre.g:2232:6: (lv_references_10_0= ruleValuedObjectReference )
         {
@@ -39907,7 +39907,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
           							newCompositeNode(grammarAccess.getEquationAccess().getReferencesValuedObjectReferenceParserRuleCall_1_1_2_0());
           						
         }
-        pushFollow(FollowSets000.FOLLOW_150);
+        pushFollow(FollowSets000.FOLLOW_151);
         lv_references_10_0=ruleValuedObjectReference();
 
         state._fsp--;
@@ -39933,7 +39933,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	case 1 :
         	    // InternalLustre.g:2251:6: otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) )
         	    {
-        	    otherlv_11=(Token)match(input,20,FollowSets000.FOLLOW_35); if (state.failed) return ;
+        	    otherlv_11=(Token)match(input,20,FollowSets000.FOLLOW_48); if (state.failed) return ;
         	    // InternalLustre.g:2255:6: ( (lv_references_12_0= ruleValuedObjectReference ) )
         	    // InternalLustre.g:2256:7: (lv_references_12_0= ruleValuedObjectReference )
         	    {
@@ -39945,7 +39945,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	      								newCompositeNode(grammarAccess.getEquationAccess().getReferencesValuedObjectReferenceParserRuleCall_1_1_3_1_0());
         	      							
         	    }
-        	    pushFollow(FollowSets000.FOLLOW_150);
+        	    pushFollow(FollowSets000.FOLLOW_151);
         	    lv_references_12_0=ruleValuedObjectReference();
 
         	    state._fsp--;
@@ -40360,13 +40360,13 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred85_InternalLustre
 
-    // $ANTLR start synpred96_InternalLustre
-    public final void synpred96_InternalLustre_fragment() throws RecognitionException {   
-        EObject this_ValuedObjectTestExpression_1 = null;
+    // $ANTLR start synpred97_InternalLustre
+    public final void synpred97_InternalLustre_fragment() throws RecognitionException {   
+        EObject this_ReferenceCall_4 = null;
 
 
-        // InternalLustre.g:4249:3: (this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression )
-        // InternalLustre.g:4249:3: this_ValuedObjectTestExpression_1= ruleValuedObjectTestExpression
+        // InternalLustre.g:4271:3: (this_ReferenceCall_4= ruleReferenceCall )
+        // InternalLustre.g:4271:3: this_ReferenceCall_4= ruleReferenceCall
         {
         if ( state.backtracking==0 ) {
 
@@ -40374,22 +40374,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
           		
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        this_ValuedObjectTestExpression_1=ruleValuedObjectTestExpression();
+        this_ReferenceCall_4=ruleReferenceCall();
 
         state._fsp--;
         if (state.failed) return ;
 
         }
     }
-    // $ANTLR end synpred96_InternalLustre
+    // $ANTLR end synpred97_InternalLustre
 
     // $ANTLR start synpred98_InternalLustre
     public final void synpred98_InternalLustre_fragment() throws RecognitionException {   
-        EObject this_ReferenceCall_5 = null;
+        EObject this_ValuedObjectTestExpression_5 = null;
 
 
-        // InternalLustre.g:4283:3: (this_ReferenceCall_5= ruleReferenceCall )
-        // InternalLustre.g:4283:3: this_ReferenceCall_5= ruleReferenceCall
+        // InternalLustre.g:4283:3: (this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression )
+        // InternalLustre.g:4283:3: this_ValuedObjectTestExpression_5= ruleValuedObjectTestExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40397,7 +40397,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
           		
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        this_ReferenceCall_5=ruleReferenceCall();
+        this_ValuedObjectTestExpression_5=ruleValuedObjectTestExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -40754,7 +40754,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_0_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_150);
+        pushFollow(FollowSets000.FOLLOW_151);
         lv_valuedObjects_19_0=ruleValuedObject();
 
         state._fsp--;
@@ -40792,7 +40792,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	      							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_1_1_0());
         	      						
         	    }
-        	    pushFollow(FollowSets000.FOLLOW_150);
+        	    pushFollow(FollowSets000.FOLLOW_151);
         	    lv_valuedObjects_21_0=ruleValuedObject();
 
         	    state._fsp--;
@@ -41385,20 +41385,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred96_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred96_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred117_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -41628,6 +41614,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred133_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred97_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred97_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -42290,7 +42290,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_19s = "\14\uffff\1\2\1\1";
     static final String dfa_20s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
     static final String[] dfa_21s = {
-            "\1\3\1\11\1\uffff\1\1\1\2\1\6\33\uffff\1\5\1\uffff\1\4\62\uffff\1\12\13\uffff\1\14\1\uffff\1\13\4\uffff\1\7\1\uffff\1\10",
+            "\1\3\1\7\1\uffff\1\1\1\2\1\6\33\uffff\1\5\1\uffff\1\4\62\uffff\1\12\13\uffff\1\14\1\uffff\1\13\4\uffff\1\10\1\uffff\1\11",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -42583,7 +42583,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_31s = "\20\uffff\1\1\1\2";
     static final String dfa_32s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\2\uffff}>";
     static final String[] dfa_33s = {
-            "\1\5\1\13\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\4\uffff\1\14\12\uffff\1\17\1\16\1\1\1\15\4\uffff\1\11\1\uffff\1\12",
+            "\1\5\1\11\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\4\uffff\1\14\12\uffff\1\17\1\16\1\1\1\15\4\uffff\1\12\1\uffff\1\13",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -44382,7 +44382,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_105s = "\1\uffff\1\1\16\uffff\1\2";
     static final String dfa_106s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\2\uffff}>";
     static final String[] dfa_107s = {
-            "\1\5\1\13\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\4\uffff\1\14\12\uffff\1\1\1\16\1\1\1\15\4\uffff\1\11\1\uffff\1\12",
+            "\1\5\1\11\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\4\uffff\1\14\12\uffff\1\1\1\16\1\1\1\15\4\uffff\1\12\1\uffff\1\13",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -44637,7 +44637,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_111s = "\1\uffff\1\1\14\uffff\1\2";
     static final String dfa_112s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\2\uffff}>";
     static final String[] dfa_113s = {
-            "\1\1\1\12\1\uffff\2\1\1\7\33\uffff\1\6\1\uffff\1\1\55\uffff\1\1\4\uffff\1\13\12\uffff\1\16\1\1\1\uffff\1\14\4\uffff\1\10\1\uffff\1\11",
+            "\1\1\1\10\1\uffff\2\1\1\7\33\uffff\1\6\1\uffff\1\1\55\uffff\1\1\4\uffff\1\13\12\uffff\1\16\1\1\1\uffff\1\14\4\uffff\1\11\1\uffff\1\12",
             "",
             "",
             "",
@@ -45102,7 +45102,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     static final String dfa_132s = "\1\uffff\1\1\16\uffff\1\3\1\2";
     static final String dfa_133s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
     static final String[] dfa_134s = {
-            "\1\5\1\13\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\2\uffff\1\20\1\uffff\1\14\12\uffff\1\1\1\16\1\1\1\15\4\uffff\1\11\1\uffff\1\12",
+            "\1\5\1\11\1\uffff\1\3\1\4\1\10\33\uffff\1\7\1\uffff\1\6\55\uffff\1\2\2\uffff\1\20\1\uffff\1\14\12\uffff\1\1\1\16\1\1\1\15\4\uffff\1\12\1\uffff\1\13",
             "",
             "\1\uffff",
             "\1\uffff",
@@ -45668,27 +45668,27 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000002000000000L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000024000020L});
         public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0000004000300000L});
-        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000420L,0x0000A00008000000L});
-        public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x00000201E4000422L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x0000000000000420L,0x0000000008000000L});
+        public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x00000201E4000422L,0x0000000008000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x00000201E4000022L});
         public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x00000201E4000002L});
         public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000000010200000L});
         public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000000000000000L,0x00010000F0000000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000008000000000L});
-        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000000000000020L,0x0000A00000000000L});
-        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000010000100000L});
-        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000010000200000L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000010000000000L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000020000000000L});
-        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000200002L});
-        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0000002210000000L,0x0000000000000001L});
-        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x00000C0014200000L});
-        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0000000200000002L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x00000001A4000000L});
-        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x00000C0004000000L});
-        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x00000C0004000420L,0x0000A00008000000L});
-        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000D02000000020L,0x0000A00000000000L});
-        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000200000200002L});
+        public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000010000100000L});
+        public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000010000200000L});
+        public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000010000000000L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0000020000000000L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0000000000200002L});
+        public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000002210000000L,0x0000000000000001L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x00000C0014200000L});
+        public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000200000002L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x00000001A4000000L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x00000C0004000000L});
+        public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x00000C0004000420L,0x0000000008000000L});
+        public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000D02000000020L,0x0000A00000000000L});
+        public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000200000200002L});
+        public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000000000000020L,0x0000A00000000000L});
         public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000100000L});
         public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000004000100000L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000000010000000L});
@@ -45711,7 +45711,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_68 = new BitSet(new long[]{0x4000000000000002L});
         public static final BitSet FOLLOW_69 = new BitSet(new long[]{0x8000000000000002L});
         public static final BitSet FOLLOW_70 = new BitSet(new long[]{0x0000004000000000L});
-        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000004000000420L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000004000000420L,0x0000000008000000L});
         public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000004000200000L});
         public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x0000000400300000L});
         public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x0000000008100000L});
@@ -45738,63 +45738,64 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000000L,0x00030000F0000400L});
         public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000000L,0x00030000F0000000L});
         public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000030004000460L,0x07E3A000F8031DF8L});
-        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000200420L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000200420L,0x0000000008000000L});
         public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000802L});
         public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000030004000460L,0x07E3A000F8031FF8L});
-        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000000C22L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0000000000000C22L,0x0000000008000000L});
         public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000030004000400L,0x00E30000F8001FE0L});
         public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000020004000460L,0x07E3A000F8031DF8L});
         public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x0000002000000000L,0x0000000000000001L});
         public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0000000000200000L,0x0000000000000800L});
-        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000200020L,0x0000A00000000000L});
+        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000000000200020L});
         public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000802L,0x0000000000000800L});
-        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000822L,0x0000A00000000000L});
+        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000822L});
         public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000000008000002L});
         public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000020000000400L,0x00E0000008001000L});
         public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000020000000000L,0x0000000000001000L});
         public static final BitSet FOLLOW_112 = new BitSet(new long[]{0x0000000000000410L,0x0000000008000000L});
-        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000000100420L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_113 = new BitSet(new long[]{0x0000000000100420L,0x0000000008000000L});
         public static final BitSet FOLLOW_114 = new BitSet(new long[]{0x0000000000000400L,0x00E0000008000800L});
         public static final BitSet FOLLOW_115 = new BitSet(new long[]{0x0000000000000000L,0x0000000000000800L});
-        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000008000000430L,0x0000A00008000080L});
-        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000008000000420L,0x0000A00008000080L});
+        public static final BitSet FOLLOW_116 = new BitSet(new long[]{0x0000008000000430L,0x0000000008000080L});
+        public static final BitSet FOLLOW_117 = new BitSet(new long[]{0x0000008000000420L,0x0000000008000080L});
         public static final BitSet FOLLOW_118 = new BitSet(new long[]{0x0000000000000000L,0x0000060000000000L});
-        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000008000000420L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_119 = new BitSet(new long[]{0x0000008000000420L,0x0000000008000000L});
         public static final BitSet FOLLOW_120 = new BitSet(new long[]{0x0000000010000002L,0x000000000000A000L});
         public static final BitSet FOLLOW_121 = new BitSet(new long[]{0x0000000000000000L,0x0000000000004000L});
         public static final BitSet FOLLOW_122 = new BitSet(new long[]{0x0000000000000002L,0x0000000000008000L});
         public static final BitSet FOLLOW_123 = new BitSet(new long[]{0x0041000000000000L,0x001C000000140400L});
-        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
-        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000022L,0x0000A00000000000L});
-        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000000L,0x0000180000000000L});
-        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000440L,0x0000000008000000L});
-        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000202000000000L,0x0000000000000001L});
-        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x000000A0000003B0L,0x0000A1E004A40000L});
-        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x0000020000000400L,0x0000000008000000L});
-        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000000000000400L,0x0000000008010000L});
-        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000400L,0x0000000008020000L});
-        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000002L,0x0000000000040000L});
-        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000010000002L,0x0000001F00000000L});
-        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x000000A0000003B0L,0x0000E10004000000L});
-        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x0000000400000002L});
-        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
-        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000002L,0x0000000000300000L});
-        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
-        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000200000000002L,0x0000000000002000L});
-        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000202000000000L,0x0000000000002001L});
-        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
-        public static final BitSet FOLLOW_144 = new BitSet(new long[]{0x000000A0000003B0L,0x0000A1E005200000L});
-        public static final BitSet FOLLOW_145 = new BitSet(new long[]{0x0000010000000010L});
-        public static final BitSet FOLLOW_146 = new BitSet(new long[]{0x0000008000000390L,0x0000000002002000L});
-        public static final BitSet FOLLOW_147 = new BitSet(new long[]{0x0000008000000390L,0x0000000002006000L});
-        public static final BitSet FOLLOW_148 = new BitSet(new long[]{0x0000000000100000L,0x0000000000004000L});
-        public static final BitSet FOLLOW_149 = new BitSet(new long[]{0x00000000000003B0L,0x0000000000200000L});
-        public static final BitSet FOLLOW_150 = new BitSet(new long[]{0x0000000000100002L});
-        public static final BitSet FOLLOW_151 = new BitSet(new long[]{0x0000000000000230L});
-        public static final BitSet FOLLOW_152 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
-        public static final BitSet FOLLOW_153 = new BitSet(new long[]{0x0000200000000002L,0x0000000004200000L});
-        public static final BitSet FOLLOW_154 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_124 = new BitSet(new long[]{0x0000000000000420L,0x0000A00008000000L});
+        public static final BitSet FOLLOW_125 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000800L});
+        public static final BitSet FOLLOW_126 = new BitSet(new long[]{0x0000000000000022L});
+        public static final BitSet FOLLOW_127 = new BitSet(new long[]{0x0000000000000000L,0x0000180000000000L});
+        public static final BitSet FOLLOW_128 = new BitSet(new long[]{0x0000000000000440L,0x0000000008000000L});
+        public static final BitSet FOLLOW_129 = new BitSet(new long[]{0x0000202000000000L,0x0000000000000001L});
+        public static final BitSet FOLLOW_130 = new BitSet(new long[]{0x000000A0000003B0L,0x0000A1E004A40000L});
+        public static final BitSet FOLLOW_131 = new BitSet(new long[]{0x0000020000000400L,0x0000000008000000L});
+        public static final BitSet FOLLOW_132 = new BitSet(new long[]{0x0000000000000400L,0x0000000008010000L});
+        public static final BitSet FOLLOW_133 = new BitSet(new long[]{0x0000000000000400L,0x0000000008020000L});
+        public static final BitSet FOLLOW_134 = new BitSet(new long[]{0x0000000000000002L,0x0000000000040000L});
+        public static final BitSet FOLLOW_135 = new BitSet(new long[]{0x0000000010000002L,0x0000001F00000000L});
+        public static final BitSet FOLLOW_136 = new BitSet(new long[]{0x000000A0000003B0L,0x0000E10004000000L});
+        public static final BitSet FOLLOW_137 = new BitSet(new long[]{0x0000000400000002L});
+        public static final BitSet FOLLOW_138 = new BitSet(new long[]{0x0000000000000002L,0x0000000000080000L});
+        public static final BitSet FOLLOW_139 = new BitSet(new long[]{0x0000000000000002L,0x0000000000300000L});
+        public static final BitSet FOLLOW_140 = new BitSet(new long[]{0x0000000000000002L,0x0000000000400000L});
+        public static final BitSet FOLLOW_141 = new BitSet(new long[]{0x0000200000000002L,0x0000000000002000L});
+        public static final BitSet FOLLOW_142 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_143 = new BitSet(new long[]{0x0000202000000000L,0x0000000000002001L});
+        public static final BitSet FOLLOW_144 = new BitSet(new long[]{0x0000000000000000L,0x0000000000040000L});
+        public static final BitSet FOLLOW_145 = new BitSet(new long[]{0x000000A0000003B0L,0x0000A1E005200000L});
+        public static final BitSet FOLLOW_146 = new BitSet(new long[]{0x0000010000000010L});
+        public static final BitSet FOLLOW_147 = new BitSet(new long[]{0x0000008000000390L,0x0000000002002000L});
+        public static final BitSet FOLLOW_148 = new BitSet(new long[]{0x0000008000000390L,0x0000000002006000L});
+        public static final BitSet FOLLOW_149 = new BitSet(new long[]{0x0000000000100000L,0x0000000000004000L});
+        public static final BitSet FOLLOW_150 = new BitSet(new long[]{0x00000000000003B0L,0x0000000000200000L});
+        public static final BitSet FOLLOW_151 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_152 = new BitSet(new long[]{0x0000000000000230L});
+        public static final BitSet FOLLOW_153 = new BitSet(new long[]{0x0000000000000000L,0x0000000000002000L});
+        public static final BitSet FOLLOW_154 = new BitSet(new long[]{0x0000200000000002L,0x0000000004200000L});
+        public static final BitSet FOLLOW_155 = new BitSet(new long[]{0x0000000000000100L});
     }
 
 

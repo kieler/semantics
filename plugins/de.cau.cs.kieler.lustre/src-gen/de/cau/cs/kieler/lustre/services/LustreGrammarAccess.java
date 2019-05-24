@@ -2550,46 +2550,47 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cBoolValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cValuedObjectTestExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
-		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final RuleCall cBoolExpressionParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final RuleCall cReferenceCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cBoolExpressionParserRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final RuleCall cReferenceCallParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cValuedObjectTestExpressionParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cNorAtMostOneExpressionParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//@Override
 		//AtomicExpression kexpressions::Expression:
 		//	BoolValue
-		//	| ValuedObjectTestExpression
 		//	| '(' BoolExpression ')'
 		//	| ReferenceCall
+		//	| ValuedObjectTestExpression // Last to allow detection of calls
 		//	| NorAtMostOneExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//BoolValue | ValuedObjectTestExpression | '(' BoolExpression ')' | ReferenceCall | NorAtMostOneExpression
+		//BoolValue | '(' BoolExpression ')' | ReferenceCall | ValuedObjectTestExpression // Last to allow detection of calls
+		//| NorAtMostOneExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//BoolValue
 		public RuleCall getBoolValueParserRuleCall_0() { return cBoolValueParserRuleCall_0; }
 		
-		//ValuedObjectTestExpression
-		public RuleCall getValuedObjectTestExpressionParserRuleCall_1() { return cValuedObjectTestExpressionParserRuleCall_1; }
-		
 		//'(' BoolExpression ')'
-		public Group getGroup_2() { return cGroup_2; }
+		public Group getGroup_1() { return cGroup_1; }
 		
 		//'('
-		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		public Keyword getLeftParenthesisKeyword_1_0() { return cLeftParenthesisKeyword_1_0; }
 		
 		//BoolExpression
-		public RuleCall getBoolExpressionParserRuleCall_2_1() { return cBoolExpressionParserRuleCall_2_1; }
+		public RuleCall getBoolExpressionParserRuleCall_1_1() { return cBoolExpressionParserRuleCall_1_1; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
+		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
 		
 		//ReferenceCall
-		public RuleCall getReferenceCallParserRuleCall_3() { return cReferenceCallParserRuleCall_3; }
+		public RuleCall getReferenceCallParserRuleCall_2() { return cReferenceCallParserRuleCall_2; }
+		
+		//ValuedObjectTestExpression
+		public RuleCall getValuedObjectTestExpressionParserRuleCall_3() { return cValuedObjectTestExpressionParserRuleCall_3; }
 		
 		//NorAtMostOneExpression
 		public RuleCall getNorAtMostOneExpressionParserRuleCall_4() { return cNorAtMostOneExpressionParserRuleCall_4; }
@@ -4305,9 +4306,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//@Override
 	//AtomicExpression kexpressions::Expression:
 	//	BoolValue
-	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
+	//	| ValuedObjectTestExpression // Last to allow detection of calls
 	//	| NorAtMostOneExpression;
 	public AtomicExpressionElements getAtomicExpressionAccess() {
 		return pAtomicExpression;

@@ -212,10 +212,10 @@ class LustreValidator extends AbstractLustreValidator {
         
         // Save all variables from assignments
         for (Assignment equation : node.equations) {
-            val valObj = equation.reference.valuedObject
+            val valObj = equation.reference?.valuedObject
             if (valuedObjectSet.contains(valObj)) {
                 warning(MULTIPLE_DEFINITIONS, valObj, null)
-            } else {
+            } else if (valObj !== null) {
                 valuedObjectSet.add(valObj)
             }
         }
