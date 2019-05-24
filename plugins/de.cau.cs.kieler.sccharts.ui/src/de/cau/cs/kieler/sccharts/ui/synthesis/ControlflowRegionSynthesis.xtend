@@ -228,7 +228,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            addCollapseButton(label?:"").addDoubleClickAction(ReferenceExpandAction::ID)
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
@@ -236,7 +236,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addRegionFigure => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(label?:"").addDoubleClickAction(ReferenceExpandAction::ID)
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
