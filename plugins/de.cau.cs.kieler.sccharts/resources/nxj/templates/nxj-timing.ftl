@@ -47,6 +47,7 @@
         if(scchart.${parameters.varName}){
             ${parameters.parameter1}Counter = System.currentTimeMillis();
             scchart.${parameters.varName} = false;
+        }
 </#list>
 </#if>
 </#macro>
@@ -65,7 +66,7 @@
         long startTime = System.currentTimeMillis();
 </#list>
 </#if>
-<#if position=="init">
+<#if position=="input">
 <#list parameters["Time"] as parameters>
         // Time
         scchart.${parameters.varName} = (int)(System.currentTimeMillis() - startTime);

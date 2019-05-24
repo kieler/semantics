@@ -25,7 +25,6 @@ import de.cau.cs.kieler.lustre.lustre.ModelDeclaration;
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration;
 import de.cau.cs.kieler.lustre.lustre.NodeReference;
 import de.cau.cs.kieler.lustre.lustre.NodeValuedObject;
-import de.cau.cs.kieler.lustre.lustre.OperatorExpression;
 import de.cau.cs.kieler.lustre.lustre.PackBody;
 import de.cau.cs.kieler.lustre.lustre.PackList;
 import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
@@ -197,13 +196,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * @generated
    */
   private EClass assertionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass operatorExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1272,36 +1264,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getOperatorExpression()
-  {
-    return operatorExpressionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getOperatorExpression_SubExpressions()
-  {
-    return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getOperatorExpression_Operator()
-  {
-    return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getLustreValuedObject()
   {
     return lustreValuedObjectEClass;
@@ -1476,10 +1438,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     assertionEClass = createEClass(ASSERTION);
     createEReference(assertionEClass, ASSERTION__EXPR);
 
-    operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
-    createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
-    createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
-
     lustreValuedObjectEClass = createEClass(LUSTRE_VALUED_OBJECT);
     createEAttribute(lustreValuedObjectEClass, LUSTRE_VALUED_OBJECT__TYPE);
 
@@ -1523,7 +1481,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
     nodeValuedObjectEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     equationEClass.getESuperTypes().add(theKEffectsPackage.getAssignment());
     assertionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
-    operatorExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
     lustreValuedObjectEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());
     nodeReferenceEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObjectReference());
 
@@ -1646,10 +1603,6 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
 
     initEClass(assertionEClass, Assertion.class, "Assertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssertion_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Assertion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getOperatorExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getOperatorExpression_Operator(), theKExpressionsPackage.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(lustreValuedObjectEClass, LustreValuedObject.class, "LustreValuedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLustreValuedObject_Type(), theKExpressionsPackage.getValueType(), "type", null, 0, 1, LustreValuedObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
