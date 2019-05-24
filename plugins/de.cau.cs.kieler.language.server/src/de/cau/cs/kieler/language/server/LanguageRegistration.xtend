@@ -26,10 +26,7 @@ import org.eclipse.xtext.util.Modules2
  */
 class LanguageRegistration {
     
-    def bindAndRegisterLanguages() {
-        // The injector containing all diagram related bindings
-        val injectorDiagram = LSPSetup.doLSSetup
-        
+    def bindAndRegisterLanguages() {        
         // Bind and register all needed languages.
         KGraphLSSetup.doLSSetup
         new ElkGraphStandaloneSetup {
@@ -42,6 +39,5 @@ class LanguageRegistration {
         for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
             contribution.LSSetup.doLSSetup()
         }
-        return injectorDiagram
     }
 }

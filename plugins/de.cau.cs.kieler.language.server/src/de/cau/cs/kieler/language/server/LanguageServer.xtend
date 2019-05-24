@@ -69,10 +69,10 @@ class LanguageServer implements IApplication {
             println("Connection to: " + host + ":" + port)
             // Register all languages
             println("Starting language server socket")
-            val kgraphExt = bindAndRegisterLanguages()
+            bindAndRegisterLanguages()
             
-            val injector = Guice.createInjector(createLSModules(kgraphExt, true))
-            this.run(injector, host, port, kgraphExt)
+            val injector = Guice.createInjector(createLSModules(true))
+            this.run(injector, host, port)
             return EXIT_OK 
         } else {
             LanguageServerLauncher.main(#[])
@@ -87,14 +87,14 @@ class LanguageServer implements IApplication {
     /**
      * Starts the language server (has to be separate method, since start method must have a "reachable" return
      */
-    def run(Injector injector, String host,  int port, Injector lsInjector) {
+    def run(Injector injector, String host,  int port) {
         val serverSocket = AsynchronousServerSocketChannel.open.bind(new InetSocketAddress(host, port))
         val threadPool = Executors.newCachedThreadPool()
         while (true) {
             val socketChannel = serverSocket.accept.get
             val in = Channels.newInputStream(socketChannel)
             val out = Channels.newOutputStream(socketChannel)
-            val ls = lsInjector.getInstance(LanguageServerImpl)
+            val ls = injector.getInstance(LanguageServerImpl)
             buildAndStartLS(injector, ls, in, out, threadPool, [it], true)
             LOG.info("Started language server for client " + socketChannel.remoteAddress)
         }

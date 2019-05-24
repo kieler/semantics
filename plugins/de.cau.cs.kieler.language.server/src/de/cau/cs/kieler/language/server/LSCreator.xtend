@@ -14,9 +14,9 @@ package de.cau.cs.kieler.language.server
 
 import com.google.gson.GsonBuilder
 import com.google.inject.Injector
-import com.google.inject.Provider
 import de.cau.cs.kieler.core.services.KielerServiceLoader
-import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramModule
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramServerModule
 import de.cau.cs.kieler.klighd.lsp.gson_utils.KGraphTypeAdapterUtil
 import java.io.InputStream
 import java.io.OutputStream
@@ -46,26 +46,26 @@ class LSCreator {
     
     /**
      * Binds all necessary classes to start the LS.
-     * @param lsInjector Injector to inject LSExtensions.
      * @param socket boolean whether modules for socket or stdio case are generated.
      */
-    def createLSModules(Injector lsInjector, boolean socket) {
-        return Modules2.mixin(new KeithServerModule, [
-            if (socket) {
-                // nothing special to bind
-            } else {
-                bind(ServerLauncher).to(LanguageServerLauncher)
-            }
-            bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
-            // the KGraphLSExtension is bound to make it accessible via injection
-            bind(KGraphLanguageServerExtension).toProvider(new Provider<KGraphLanguageServerExtension>() {
-                override get() {
-                    lsInjector.getInstance(KGraphLanguageServerExtension)
+    def createLSModules(boolean socket) {
+        return Modules2.mixin(
+            new KeithServerModule,
+            [
+                if (socket) {
+                    // nothing special to bind
+                } else {
+                    bind(ServerLauncher).to(LanguageServerLauncher)
                 }
-            })
-            // the WorkspaceConfigFactory is overridden to disable the creation of a folder with xtext nature.
-            bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
-        ])
+                bind(IResourceServiceProvider.Registry).toProvider(IResourceServiceProvider.Registry.RegistryProvider)
+    
+                // the WorkspaceConfigFactory is overridden to disable the creation of a folder with xtext nature.
+                bind(IWorkspaceConfigFactory).to(KeithProjectWorkspaceConfigFactory)
+            ],
+            // Diagram related bindings
+            new KGraphDiagramModule(),
+            new KGraphDiagramServerModule()
+        )
     }
     
     /**
