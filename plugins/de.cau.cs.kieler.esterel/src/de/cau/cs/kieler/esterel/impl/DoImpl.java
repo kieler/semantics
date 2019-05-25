@@ -121,6 +121,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.DO__STATEMENTS);
@@ -133,6 +134,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getWatchingAnnotations() {
         if (watchingAnnotations == null) {
             watchingAnnotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, EsterelPackage.DO__WATCHING_ANNOTATIONS);
@@ -145,6 +147,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getWatching() {
         return watching;
     }
@@ -169,6 +172,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWatching(DelayExpression newWatching) {
         if (newWatching != watching) {
             NotificationChain msgs = null;
@@ -188,6 +192,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -212,6 +217,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
@@ -231,6 +237,7 @@ public class DoImpl extends StatementImpl implements Do {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getWatchingStatements() {
         if (watchingStatements == null) {
             watchingStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.DO__WATCHING_STATEMENTS);

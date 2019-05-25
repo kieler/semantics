@@ -68,6 +68,7 @@ public class RenamingsImpl extends AnnotatableImpl implements Renamings {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Renaming> getRenamings() {
         if (renamings == null) {
             renamings = new EObjectContainmentEList<Renaming>(Renaming.class, this, EsterelPackage.RENAMINGS__RENAMINGS);

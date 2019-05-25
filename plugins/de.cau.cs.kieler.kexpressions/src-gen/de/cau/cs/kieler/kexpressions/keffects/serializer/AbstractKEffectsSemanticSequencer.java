@@ -403,7 +403,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     PrintCallEffect returns PrintCallEffect
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* parameters+=Parameter parameters+=Parameter*)
+	 *     (annotations+=Annotation* parameters+=Parameter parameters+=Parameter* schedule+=ScheduleObjectReference*)
 	 */
 	protected void sequence_PrintCallEffect(ISerializationContext context, PrintCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -457,7 +457,13 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     ReferenceCallEffect returns ReferenceCallEffect
 	 *
 	 * Constraint:
-	 *     (annotations+=Annotation* valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         subReference=ValuedObjectReference? 
+	 *         (parameters+=Parameter parameters+=Parameter*)? 
+	 *         schedule+=ScheduleObjectReference*
+	 *     )
 	 */
 	protected void sequence_ReferenceCallEffect(ISerializationContext context, ReferenceCallEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

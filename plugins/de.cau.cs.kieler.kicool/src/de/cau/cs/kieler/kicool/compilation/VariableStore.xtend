@@ -34,6 +34,8 @@ import org.eclipse.xtend.lib.annotations.ToString
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author als
@@ -140,7 +142,7 @@ class VariableStore implements IKiCoolCloneable {
         }
     }
 
-    // -- Convenance for Valued Objects --
+    // -- Convenience for Valued Objects --
         
     def VariableInformation update(ValuedObject vo, String... properties) {
         var info = variables.get(vo.name).findFirst[valuedObject == vo]
@@ -204,12 +206,24 @@ class VariableStore implements IKiCoolCloneable {
             info.annotations += it.copy
         ]
         
+        val classDecl = if (decl.eContainer instanceof ClassDeclaration) decl.eContainer as ClassDeclaration
+        info.encapsulated = classDecl !== null
+        
         variables.put(vo.name, info)
         return info
     }
     
-    def remove(ValuedObject vo) {
-        variables.values.removeIf[valuedObject == vo]
+    def boolean remove(ValuedObject vo) {
+        val removed = variables.values.removeIf[valuedObject == vo]
+        if (removed) {
+            val container = vo.eContainer
+            if (container instanceof ClassDeclaration) {
+                if (container.valuedObjects.size == 1) {
+                    container.declarations.map[valuedObjects].flatten.forEach[this.remove(it)]
+                }
+            }
+        }
+        return removed
     }
 
     def void removeAllUncontainedVO(EObject eObject, Environment env) {
@@ -241,6 +255,48 @@ class VariableStore implements IKiCoolCloneable {
         Sets.difference(markedVOs, containedVOs).forEach[
             (if (error) env.errors else env.warnings).add("ValuedObject with name " + it.name + " is registered in the VariableStore but not contained in the model.")
         ]        
+    }
+    
+    /**
+     * Depends on correct association to valued objects
+     */
+    def void flattenAllHierarchicalObjects() {
+        val classDecl = newHashSet
+        val encapsulatedVOs = newHashSet
+        for (info : variables.values) {
+            if (info.valuedObject !== null) {
+                if (info.valuedObject.eContainer instanceof ClassDeclaration) {
+                    classDecl += info
+                } else if (info.encapsulated) {
+                    encapsulatedVOs += info
+                }
+            }
+        }
+        variables.values.removeAll(classDecl)
+        variables.values.removeAll(encapsulatedVOs)
+        for (info: encapsulatedVOs) {
+            val nameHierarchy = <List<String>>newArrayList
+            var decl = info.valuedObject.eContainer
+            if (decl instanceof Declaration) decl = decl.eContainer // ignore self (sibling VOs)
+            while (decl instanceof ClassDeclaration) {
+                nameHierarchy += decl.valuedObjects.map[name].toList
+                decl = decl.eContainer
+            }
+            var List<String> names = newArrayList(info.valuedObject.name)
+            for (level : nameHierarchy) {
+                val currentNames = newArrayList
+                currentNames.addAll(names)
+                names.clear
+                for (name : level) {
+                    for (subName : currentNames) {
+                        names += name + "." + subName
+                    }
+                }
+            }
+            for (name : names) {
+                variables.put(name, info.clone)
+            }
+        }
     }
     
     // Functions without VO
@@ -326,6 +382,10 @@ class VariableInformation {
     @Accessors
     val List<Annotation> annotations = newLinkedList
     
+    /** Sub variable in class */
+    @Accessors
+    var boolean encapsulated = false
+    
     override VariableInformation clone() {
         val clone = new VariableInformation
         clone.valuedObject = valuedObject
@@ -334,6 +394,7 @@ class VariableInformation {
         clone.typeName = typeName
         clone.format = format
         clone.properties.addAll(properties)
+        clone.encapsulated = encapsulated
         annotations.forEach[ clone.annotations += it.copy ]
         return clone
     }

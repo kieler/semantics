@@ -27,6 +27,8 @@ import de.cau.cs.kieler.sccharts.ExitAction;
 import de.cau.cs.kieler.sccharts.HistoryType;
 import de.cau.cs.kieler.sccharts.LocalAction;
 import de.cau.cs.kieler.sccharts.PeriodAction;
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration;
+import de.cau.cs.kieler.sccharts.PolicyRegion;
 import de.cau.cs.kieler.sccharts.PrecedingAction;
 import de.cau.cs.kieler.sccharts.PreemptionType;
 import de.cau.cs.kieler.sccharts.Region;
@@ -39,6 +41,7 @@ import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.SucceedingAction;
 import de.cau.cs.kieler.sccharts.SuspendAction;
 import de.cau.cs.kieler.sccharts.Transition;
+import de.cau.cs.kieler.scl.SCLPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -178,6 +181,20 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass policyClassDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass policyRegionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EEnum preemptionTypeEEnum = null;
 
     /**
@@ -253,6 +270,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         KEffectsPackage.eINSTANCE.eClass();
         KExpressionsPackage.eINSTANCE.eClass();
         KExtPackage.eINSTANCE.eClass();
+        SCLPackage.eINSTANCE.eClass();
 
         // Create package meta-data objects
         theSCChartsPackage.createPackageContents();
@@ -804,6 +822,36 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
+    public EClass getPolicyClassDeclaration() {
+        return policyClassDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getPolicyClassDeclaration_Policy() {
+        return (EReference)policyClassDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getPolicyRegion() {
+        return policyRegionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
     }
@@ -960,6 +1008,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         periodActionEClass = createEClass(PERIOD_ACTION);
 
+        policyClassDeclarationEClass = createEClass(POLICY_CLASS_DECLARATION);
+        createEReference(policyClassDeclarationEClass, POLICY_CLASS_DECLARATION__POLICY);
+
+        policyRegionEClass = createEClass(POLICY_REGION);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -1023,6 +1076,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         precedingActionEClass.getESuperTypes().add(this.getLocalAction());
         succeedingActionEClass.getESuperTypes().add(this.getLocalAction());
         periodActionEClass.getESuperTypes().add(this.getLocalAction());
+        policyClassDeclarationEClass.getESuperTypes().add(theKExtPackage.getClassDeclaration());
+        policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1097,6 +1152,11 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEClass(succeedingActionEClass, SucceedingAction.class, "SucceedingAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(periodActionEClass, PeriodAction.class, "PeriodAction", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(policyClassDeclarationEClass, PolicyClassDeclaration.class, "PolicyClassDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getPolicyClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, PolicyClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

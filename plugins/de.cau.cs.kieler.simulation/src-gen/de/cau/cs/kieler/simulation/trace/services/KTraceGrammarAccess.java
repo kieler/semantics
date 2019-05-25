@@ -689,7 +689,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// valued objects that follow.
 	//// Examples: const float pi = 3.14, input signal I, output bool z  
 	//Declaration kexpressions::Declaration:
-	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
+	//	VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 	public KExtGrammarAccess.DeclarationElements getDeclarationAccess() {
 		return gaKExt.getDeclarationAccess();
 	}
@@ -700,7 +700,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//DeclarationWOSemicolon kexpressions::Declaration:
 	//	VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon |
-	//	StructDeclarationWOSemicolon;
+	//	ClassDeclarationWOSemicolon;
 	public KExtGrammarAccess.DeclarationWOSemicolonElements getDeclarationWOSemicolonAccess() {
 		return gaKExt.getDeclarationWOSemicolonAccess();
 	}
@@ -711,7 +711,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclaration kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -729,7 +729,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//VariableDeclarationWOSemicolon kexpressions::VariableDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
@@ -745,49 +745,110 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationWOSemicolonAccess().getRule();
 	}
 	
-	//StructDeclaration kext::StructDeclaration:
-	//	{kext::StructDeclaration} annotations+=Annotation*
-	//	private?='private'?
+	//ClassDeclaration kext::ClassDeclaration:
+	//	{kext::ClassDeclaration} annotations+=Annotation*
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
 	//	global?='global'?
 	//	static?='static'?
-	//	type=StructType
+	//	host?='host'? (type=ClassType
+	//	name=ID?
+	//	'{'
+	//	declarations+=DeclarationOrMethod*
+	//	'}'
+	//	| type=StructType
 	//	name=ID?
 	//	'{'
 	//	declarations+=Declaration*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
 	//	';'
 	//	annotations+=CommentAnnotatonSL?;
-	public KExtGrammarAccess.StructDeclarationElements getStructDeclarationAccess() {
-		return gaKExt.getStructDeclarationAccess();
+	public KExtGrammarAccess.ClassDeclarationElements getClassDeclarationAccess() {
+		return gaKExt.getClassDeclarationAccess();
 	}
 	
-	public ParserRule getStructDeclarationRule() {
-		return getStructDeclarationAccess().getRule();
+	public ParserRule getClassDeclarationRule() {
+		return getClassDeclarationAccess().getRule();
 	}
 	
-	//StructDeclarationWOSemicolon kext::StructDeclaration:
-	//	{kext::StructDeclaration} annotations+=Annotation*
-	//	private?='private'?
+	//DeclarationOrMethod kexpressions::Declaration:
+	//	Declaration | MethodDeclaration;
+	public KExtGrammarAccess.DeclarationOrMethodElements getDeclarationOrMethodAccess() {
+		return gaKExt.getDeclarationOrMethodAccess();
+	}
+	
+	public ParserRule getDeclarationOrMethodRule() {
+		return getDeclarationOrMethodAccess().getRule();
+	}
+	
+	//ClassDeclarationWOSemicolon kext::ClassDeclaration:
+	//	{kext::ClassDeclaration} annotations+=Annotation*
+	//	access=AccessModifier?
 	//	const?='const'?
 	//	input?='input'?
 	//	output?='output'?
 	//	global?='global'?
 	//	static?='static'?
-	//	type=StructType
+	//	host?='host'? (type=ClassType
+	//	name=ID?
+	//	'{'
+	//	declarations+=DeclarationOrMethodWOSemicolon*
+	//	'}'
+	//	| type=StructType
 	//	name=ID?
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
-	//	'}' (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
 	//	annotations+=CommentAnnotatonSL?;
-	public KExtGrammarAccess.StructDeclarationWOSemicolonElements getStructDeclarationWOSemicolonAccess() {
-		return gaKExt.getStructDeclarationWOSemicolonAccess();
+	public KExtGrammarAccess.ClassDeclarationWOSemicolonElements getClassDeclarationWOSemicolonAccess() {
+		return gaKExt.getClassDeclarationWOSemicolonAccess();
 	}
 	
-	public ParserRule getStructDeclarationWOSemicolonRule() {
-		return getStructDeclarationWOSemicolonAccess().getRule();
+	public ParserRule getClassDeclarationWOSemicolonRule() {
+		return getClassDeclarationWOSemicolonAccess().getRule();
+	}
+	
+	//DeclarationOrMethodWOSemicolon kexpressions::Declaration:
+	//	DeclarationWOSemicolon | MethodDeclarationWOSemicolon;
+	public KExtGrammarAccess.DeclarationOrMethodWOSemicolonElements getDeclarationOrMethodWOSemicolonAccess() {
+		return gaKExt.getDeclarationOrMethodWOSemicolonAccess();
+	}
+	
+	public ParserRule getDeclarationOrMethodWOSemicolonRule() {
+		return getDeclarationOrMethodWOSemicolonAccess().getRule();
+	}
+	
+	//MethodDeclaration kexpressions::MethodDeclaration:
+	//	{kexpressions::MethodDeclaration} annotations+=Annotation*
+	//	access=AccessModifier?
+	//	returnType=MethodReturnType?
+	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
+	//	';'
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.MethodDeclarationElements getMethodDeclarationAccess() {
+		return gaKExt.getMethodDeclarationAccess();
+	}
+	
+	public ParserRule getMethodDeclarationRule() {
+		return getMethodDeclarationAccess().getRule();
+	}
+	
+	//MethodDeclarationWOSemicolon kexpressions::MethodDeclaration:
+	//	{kexpressions::MethodDeclaration} annotations+=Annotation*
+	//	access=AccessModifier?
+	//	returnType=MethodReturnType?
+	//	valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
+	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
+	//	annotations+=CommentAnnotatonSL?;
+	public KExtGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
+		return gaKExt.getMethodDeclarationWOSemicolonAccess();
+	}
+	
+	public ParserRule getMethodDeclarationWOSemicolonRule() {
+		return getMethodDeclarationWOSemicolonAccess().getRule();
 	}
 	
 	//NamespaceID:
@@ -802,7 +863,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclaration kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)* ';'
 	//	annotations+=CommentAnnotatonSL?;
@@ -816,7 +877,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ReferenceDeclarationWOSemicolon kexpressions::ReferenceDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'? ('ref' reference=[annotations::NamedObject|NamespaceID] |
+	//	access=AccessModifier? ('ref' reference=[annotations::NamedObject|NamespaceID] |
 	//	'extern' extern+=ExternString (',' extern+=ExternString)*) valuedObjects+=ValuedObject (','
 	//	valuedObjects+=ValuedObject)*
 	//	annotations+=CommentAnnotatonSL?;
@@ -841,7 +902,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclaration kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)* ';'
@@ -856,7 +917,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//ScheduleDeclarationWOSemicolon kexpressions::ScheduleDeclaration:
 	//	annotations+=Annotation*
-	//	private?='private'?
+	//	access=AccessModifier?
 	//	'schedule' name=STRING? ('global' global=PriorityProtocol)? ('{' priorities+=PriorityProtocol (','
 	//	priorities+=PriorityProtocol)* '}')?
 	//	valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
@@ -870,7 +931,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum PriorityProtocol returns kexpressions::PriorityProtocol:
-	//	CONFLICT="conflict" | CONFLUENT="confluent";
+	//	CONFLICT="conflicting" | CONFLUENT="commuting";
 	public KExtGrammarAccess.PriorityProtocolElements getPriorityProtocolAccess() {
 		return gaKExt.getPriorityProtocolAccess();
 	}
@@ -893,6 +954,17 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getValuedObjectRule() {
 		return getValuedObjectAccess().getRule();
+	}
+	
+	//SimpleValuedObject kexpressions::ValuedObject:
+	//	annotations+=QuotedStringAnnotation*
+	//	name=PrimeID;
+	public KExtGrammarAccess.SimpleValuedObjectElements getSimpleValuedObjectAccess() {
+		return gaKExt.getSimpleValuedObjectAccess();
+	}
+	
+	public ParserRule getSimpleValuedObjectRule() {
+		return getSimpleValuedObjectAccess().getRule();
 	}
 	
 	///**
@@ -1021,8 +1093,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' |
-	//	'()');
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
+	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -1049,7 +1121,7 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')');
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -1347,10 +1419,9 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -1407,8 +1478,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -1490,12 +1561,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Basically, the rule chain may start over again at this point.     
 	//AtomicExpression Expression:
 	//	BoolValue
-	//	| ValuedObjectTestExpression
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
 	//	| FunctionCall
 	//	| RandomCall
 	//	| RandomizeCall
+	//	| ValuedObjectTestExpression // Last to allow detection of calls
 	//	| TextExpression;
 	public KExpressionsGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaKExpressions.getAtomicExpressionAccess();
@@ -1577,7 +1648,8 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//// Reference Call Rule
 	//// Calls to references. They may include a parameter list. 
 	//ReferenceCall:
-	//	valuedObject=[ValuedObject|PrimeID] ('(' parameters+=Parameter (',' parameters+=Parameter)* ')'
+	//	valuedObject=[ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.' subReference=ValuedObjectReference)? ('('
+	//	parameters+=Parameter (',' parameters+=Parameter)* ')'
 	//	| '()');
 	public KExpressionsGrammarAccess.ReferenceCallElements getReferenceCallAccess() {
 		return gaKExpressions.getReferenceCallAccess();
@@ -2000,6 +2072,16 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 		return getStructTypeAccess().getRule();
 	}
 	
+	//enum ClassType returns ValueType:
+	//	CLASS="class";
+	public KExpressionsGrammarAccess.ClassTypeElements getClassTypeAccess() {
+		return gaKExpressions.getClassTypeAccess();
+	}
+	
+	public EnumRule getClassTypeRule() {
+		return getClassTypeAccess().getRule();
+	}
+	
 	//enum CombineOperator:
 	//	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	//	MIN="min" | OR="|" | AND="&" | HOST="host";
@@ -2009,6 +2091,28 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getCombineOperatorRule() {
 		return getCombineOperatorAccess().getRule();
+	}
+	
+	//enum AccessModifier:
+	//	PUBLIC='public' | PROTECTED='protected' | PRIVATE='private';
+	public KExpressionsGrammarAccess.AccessModifierElements getAccessModifierAccess() {
+		return gaKExpressions.getAccessModifierAccess();
+	}
+	
+	public EnumRule getAccessModifierRule() {
+		return getAccessModifierAccess().getRule();
+	}
+	
+	//enum MethodReturnType returns ValueType:
+	//	VOID="void" |
+	//	BOOL="bool" | INT="int" | FLOAT="float" |
+	//	STRING="string";
+	public KExpressionsGrammarAccess.MethodReturnTypeElements getMethodReturnTypeAccess() {
+		return gaKExpressions.getMethodReturnTypeAccess();
+	}
+	
+	public EnumRule getMethodReturnTypeRule() {
+		return getMethodReturnTypeAccess().getRule();
 	}
 	
 	//// -------------------- //

@@ -88,6 +88,7 @@ public class EsterelThreadImpl extends StatementImpl implements EsterelThread {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ESTEREL_THREAD__STATEMENTS);
@@ -100,6 +101,7 @@ public class EsterelThreadImpl extends StatementImpl implements EsterelThread {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, EsterelPackage.ESTEREL_THREAD__DECLARATIONS);

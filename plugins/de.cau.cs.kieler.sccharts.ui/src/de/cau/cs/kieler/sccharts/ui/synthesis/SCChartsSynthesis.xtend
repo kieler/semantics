@@ -12,37 +12,38 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
-import java.util.LinkedHashSet
-import de.cau.cs.kieler.klighd.krendering.Colors
-
-import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.HashMap
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
-import org.eclipse.elk.core.options.CoreOptions
+import java.util.HashMap
+import java.util.LinkedHashSet
 import org.eclipse.elk.alg.force.options.StressOptions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.ViewContext
+
+import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -61,11 +62,14 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
+    @Inject extension KPolylineExtensions
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
     @Inject TransitionSynthesis transitionSynthesis
     @Inject CommentSynthesis commentSynthesis
+    @Inject MethodSynthesis methodSynthesis
+    @Inject PolicySynthesis policySynthesis
         
     @Inject SynthesisHooks hooks  
     
@@ -97,7 +101,15 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS, SHOW_CAUSAL_DATAFLOW)
+        options.addAll(
+            USE_KLAY,
+            SHOW_ALL_SCCHARTS,
+            SHOW_INHERITANCE,
+            SHOW_INHERITANCE_EDGES,
+            SHOW_BINDINGS,
+            SHOW_COMMENTS,
+            SHOW_CAUSAL_DATAFLOW
+        )
 
         // Adaptive Zoom
         options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
@@ -108,6 +120,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(controlflowSynthesis.displayedSynthesisOptions)
         options.addAll(dataflowSynthesis.displayedSynthesisOptions)
         options.addAll(commentSynthesis.displayedSynthesisOptions)
+        options.addAll(methodSynthesis.displayedSynthesisOptions)
+        options.addAll(policySynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
@@ -173,6 +187,20 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             rootNode.children.addAll(rootStateNodes.values)
             if (scc.rootStates.size > 1) {
 //                rootNode.configureInterChartCommunication(scc, rootStateNodes)
+            }
+            if (SHOW_INHERITANCE_EDGES.booleanValue) {
+                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
+                for(state : scc.rootStates) {
+                    for (base : state.baseStates) {
+                        val edge = createEdge
+                        edge.source = rootStateNodes.get(state)
+                        edge.target = rootStateNodes.get(base)
+                        edge.addPolyline => [
+                            lineWidth = 1
+                            addInheritanceTriangleArrowDecorator
+                        ]
+                    }
+                }
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)

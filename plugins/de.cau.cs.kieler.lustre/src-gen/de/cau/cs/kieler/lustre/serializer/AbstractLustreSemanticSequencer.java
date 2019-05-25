@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.JsonObjectMember;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.RandomCall;
@@ -46,10 +47,10 @@ import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.lustre.lustre.AState;
@@ -252,6 +253,18 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case KExpressionsPackage.JSON_PRAGMA:
 				sequence_JsonPragma(context, (JsonPragma) semanticObject); 
 				return; 
+			case KExpressionsPackage.METHOD_DECLARATION:
+				if (rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
+						|| rule == grammarAccess.getMethodDeclarationWOSemicolonRule()) {
+					sequence_MethodDeclarationWOSemicolon(context, (MethodDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationOrMethodRule()
+						|| rule == grammarAccess.getMethodDeclarationRule()) {
+					sequence_MethodDeclaration(context, (MethodDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.NULL_VALUE:
 				sequence_NullValue(context, (NullValue) semanticObject); 
 				return; 
@@ -384,11 +397,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				return; 
 			case KExpressionsPackage.REFERENCE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getReferenceDeclarationRule()) {
 					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
 					return; 
@@ -396,11 +411,13 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				else break;
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
 					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getScheduleDeclarationRule()) {
 					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
 					return; 
@@ -420,6 +437,10 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 					sequence_LustreValuedObjectList(context, (ValuedObject) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getValuedObjectRule()) {
 					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
 					return; 
@@ -430,12 +451,14 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getVariableDeclarationRule()
-						|| rule == grammarAccess.getDeclarationRule()) {
+						|| rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -449,6 +472,20 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case KExtPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KExtPackage.CLASS_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -462,18 +499,6 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
-			case KExtPackage.STRUCT_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
@@ -2293,6 +2318,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 * Contexts:
 	 *     VariableDeclaration returns VariableDeclaration
 	 *     Declaration returns VariableDeclaration
+	 *     DeclarationOrMethod returns VariableDeclaration
 	 *
 	 * Constraint:
 	 *     (valuedObjects+=LustreValuedObjectInit | (valuedObjects+=LustreValuedObjectList valuedObjects+=LustreValuedObjectList* type=ValueType))

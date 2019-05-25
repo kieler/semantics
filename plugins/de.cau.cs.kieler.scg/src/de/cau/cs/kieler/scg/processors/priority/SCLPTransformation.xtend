@@ -46,6 +46,12 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+import de.cau.cs.kieler.kexpressions.Declaration
+import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -59,6 +65,7 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
      
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
@@ -128,6 +135,10 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     override process() {
         val code = new CodeContainer
         transform(getModel.scgs.head, code)
+        
+        // Handle hierarchical VO declarations in VariableStore
+        VariableStore.get(environment)?.flattenAllHierarchicalObjects
+        
         setModel(code)
     }
     
@@ -229,27 +240,54 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.appendInd("typedef struct {\n")
         currentIndentation += DEFAULT_INDENTATION
         
-        for(declaration : scg.variableDeclarations) {
-            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
-                declaration.type.serializeHR
-                else declaration.hostType
-            sb.appendInd(declarationType.toString)
-
-            for(variables : declaration.valuedObjects) {
-                if(!(variables.equals(declaration.valuedObjects.head))) {
-                    sb.append(",")
-                }
-                sb.append(" ")
-                sb.append(variables.name)    
-                for(card : variables.cardinalities) {
-                    sb.append("[" + card.serializeHR + "]")
-                }            
-            }
-            sb.append(";\n")
-        }
+        scg.declarations.generateDeclarations(sb, 0)
         currentIndentation = currentIndentation.substring(0, currentIndentation.length - DEFAULT_INDENTATION.length)
         sb.appendInd("} "+TICK_DATA+";\n")
         sb.append("\n")
+    }
+    
+    protected def void generateDeclarations(List<Declaration> declarations, StringBuilder code, int depth) {
+        val indentation = "  "
+        for (declaration : declarations) {
+            if (declaration instanceof ClassDeclaration) {
+                (0..depth).forEach[code.append(indentation)]
+                code.append("struct ")
+                code.append(declaration.name)
+                if (!declaration.host) {
+                    code.append(" {\n")
+                    declaration.declarations.generateDeclarations(code, depth + 1)
+                    (0..depth).forEach[code.append(indentation)]
+                    code.append("}")
+                }
+                for (valuedObject : declaration.valuedObjects) {
+                    code.append(" ")
+                    code.append(valuedObject.name)
+                    if (valuedObject.isArray) {
+                        for (cardinality : valuedObject.cardinalities) {
+                            code.append("[" + cardinality.serializeHR + "]")
+                        }
+                    }
+                    if (valuedObject !== declaration.valuedObjects.last) code.append(", ")
+                }
+                code.append(";\n")
+            } else if (declaration instanceof VariableDeclaration) {
+                for (valuedObject : declaration.valuedObjects) {
+                    (0..depth).forEach[code.append(indentation)]
+                    val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                        declaration.type.serializeHR
+                        else declaration.hostType
+                    code.append(declarationType)
+                    code.append(" ")
+                    code.append(valuedObject.name)
+                    if (valuedObject.isArray) {
+                        for (cardinality : valuedObject.cardinalities) {
+                            code.append("[" + cardinality.serializeHR + "]")
+                        }
+                    }
+                    code.append(";\n")
+                }
+            }
+        }
     }
 
 

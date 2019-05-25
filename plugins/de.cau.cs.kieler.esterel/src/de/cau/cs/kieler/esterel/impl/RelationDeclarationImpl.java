@@ -68,6 +68,7 @@ public class RelationDeclarationImpl extends DeclarationImpl implements Relation
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Relation> getRelations() {
         if (relations == null) {
             relations = new EObjectContainmentEList<Relation>(Relation.class, this, EsterelPackage.RELATION_DECLARATION__RELATIONS);

@@ -31,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import de.cau.cs.kieler.kexpressions.keffects.Emission
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 
 /**
  * @author ssm
@@ -74,7 +75,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
 			if (declaration instanceof ReferenceDeclaration) {
 				return Scopes.scopeFor(<ValuedObject> newArrayList(declaration.valuedObjects))
 			}
-		} else if (contextContainer instanceof ValuedObjectReference) {
+		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
 		    // The context is a subreference!
 		    // If it is inside an assignment, it must point to the inputs of the referenced declarations (assignments).
 		    // Otherwise, use the outputs (subreferences).
@@ -112,7 +113,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                 if (context.reference.valuedObject.eContainer != null) {
                     if (context.reference.valuedObject.eContainer instanceof ReferenceDeclaration) {
                         return (context.reference.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject[ input ]
+                            getScopeForReferencedDeclarationObject(context.reference)[ input ]
                     }
                 }
             }
@@ -130,7 +131,10 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
                     }
                     if (parentVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
-                            getScopeForReferencedDeclarationObject[ output || input ]
+                            getScopeForReferencedDeclarationObject(context)[ output || input ]
+                    }
+                    if (parentVO.valuedObject.eContainer instanceof ClassDeclaration) {
+                        return (parentVO.valuedObject.eContainer as ClassDeclaration).getScopeForStruct
                     }
                 }
             }
@@ -138,9 +142,12 @@ import de.cau.cs.kieler.kexpressions.keffects.Emission
         return context.getScopeHierarchical(reference)	    
 	}
 	
-	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration,
-	    Function1<? super VariableDeclaration, Boolean> predicate
-	) {
+	protected def IScope getScopeForStruct(ClassDeclaration struct) {
+	    return Scopes.scopeFor(struct.declarations.map[valuedObjects].flatten)
+	}
+	
+	protected def IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+	    Function1<? super VariableDeclaration, Boolean> predicate) {
 	    if (declaration.reference === null) {
 	        // IMPORTANT: This can happen if the resource that should be imported does not exist. 
 	        // In this case, the scope given to the linker was null previously. This causes a NPE. 

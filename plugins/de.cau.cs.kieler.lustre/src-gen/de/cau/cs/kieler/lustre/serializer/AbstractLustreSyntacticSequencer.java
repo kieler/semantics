@@ -22,13 +22,13 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LustreGrammarAccess grammarAccess;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a;
-	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a;
+	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p;
 	protected AbstractElementAlias match_ExternalNodeDeclaration_SemicolonKeyword_7_q;
 	protected AbstractElementAlias match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q;
 	protected AbstractElementAlias match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q;
@@ -49,13 +49,13 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LustreGrammarAccess) access;
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0())));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
-		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_2_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0())));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a = new AlternativeAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p = new AlternativeAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(false, false, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a = new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
+		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p = new GroupAlias(true, false, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()));
 		match_ExternalNodeDeclaration_SemicolonKeyword_7_q = new TokenAlias(false, true, grammarAccess.getExternalNodeDeclarationAccess().getSemicolonKeyword_7());
 		match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q = new TokenAlias(false, true, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_0());
 		match_NodeDeclaration___FullStopKeyword_5_0_3_1_5_0_or_SemicolonKeyword_5_0_3_1_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getFullStopKeyword_5_0_3_1_5_0()), new TokenAlias(false, false, grammarAccess.getNodeDeclarationAccess().getSemicolonKeyword_5_0_3_1_5_1()));
@@ -86,20 +86,20 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
-			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p.equals(syntax))
-				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p.equals(syntax))
+				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ExternalNodeDeclaration_SemicolonKeyword_7_q.equals(syntax))
 				emit_ExternalNodeDeclaration_SemicolonKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_NodeDeclaration_SemicolonKeyword_5_0_3_1_0_q.equals(syntax))
@@ -148,7 +148,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -167,7 +167,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) value=STRING
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_LeftParenthesisKeyword_4_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -178,7 +178,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=NotOperator
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -202,7 +202,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) valuedObject=[ValuedObject|PrimeID]
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -217,7 +217,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_2_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -235,7 +235,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
@@ -249,7 +249,7 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
-	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_2_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	
