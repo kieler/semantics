@@ -61,7 +61,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
             case KExtPackage.KEXT_SCOPE: return createKExtScope();
             case KExtPackage.TEST_ENTITY: return createTestEntity();
             case KExtPackage.ANNOTATED_EXPRESSION: return createAnnotatedExpression();
-            case KExtPackage.STRUCT_DECLARATION: return createStructDeclaration();
+            case KExtPackage.CLASS_DECLARATION: return createClassDeclaration();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -72,6 +72,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Kext createKext() {
         KextImpl kext = new KextImpl();
         return kext;
@@ -82,6 +83,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExtScope createKExtScope() {
         KExtScopeImpl kExtScope = new KExtScopeImpl();
         return kExtScope;
@@ -92,6 +94,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TestEntity createTestEntity() {
         TestEntityImpl testEntity = new TestEntityImpl();
         return testEntity;
@@ -102,6 +105,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AnnotatedExpression createAnnotatedExpression() {
         AnnotatedExpressionImpl annotatedExpression = new AnnotatedExpressionImpl();
         return annotatedExpression;
@@ -112,9 +116,10 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
-    public StructDeclaration createStructDeclaration() {
-        StructDeclarationImpl structDeclaration = new StructDeclarationImpl();
-        return structDeclaration;
+    @Override
+    public ClassDeclaration createClassDeclaration() {
+        ClassDeclarationImpl classDeclaration = new ClassDeclarationImpl();
+        return classDeclaration;
     }
 
     /**
@@ -122,6 +127,7 @@ public class KExtFactoryImpl extends EFactoryImpl implements KExtFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KExtPackage getKExtPackage() {
         return (KExtPackage)getEPackage();
     }

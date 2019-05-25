@@ -3,3 +3,4 @@ system de.cau.cs.kieler.scg.priority
 
 de.cau.cs.kieler.scg.processors.dependency
 de.cau.cs.kieler.scg.processors.priorities
+post process de.cau.cs.kieler.kicool.deploy.variable.store.clean

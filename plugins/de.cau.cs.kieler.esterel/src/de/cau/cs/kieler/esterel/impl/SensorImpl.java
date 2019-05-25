@@ -64,6 +64,7 @@ public class SensorImpl extends ValuedObjectImpl implements Sensor {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeIdentifier getType() {
         return type;
     }
@@ -88,6 +89,7 @@ public class SensorImpl extends ValuedObjectImpl implements Sensor {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(TypeIdentifier newType) {
         if (newType != type) {
             NotificationChain msgs = null;

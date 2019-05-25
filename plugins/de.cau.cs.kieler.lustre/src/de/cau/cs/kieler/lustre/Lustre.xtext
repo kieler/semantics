@@ -248,11 +248,11 @@ ATransition:
 ProductExpression returns kexpressions::Expression:
     IntDivExpression  
     (
-    ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)*)
+    ({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*' subExpressions+=IntDivExpression)*)
     |
-    ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)*)
+    ({kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)*)
     |
-    ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)
+    ({kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod' subExpressions+=IntDivExpression)*)
     )*  
 ;   
 
@@ -352,9 +352,9 @@ ValuedExpression returns kexpressions::Expression:
 @Override
 AtomicExpression returns kexpressions::Expression:
     BoolValue
-    | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
     | NorAtMostOneExpression
     ;
 

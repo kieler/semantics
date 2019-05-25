@@ -167,6 +167,8 @@ class RegionDependencies extends AbstractDependencyAnalysis<SCCharts, State> {
         for (effect : action.effects) {
             if (effect instanceof Assignment) {
                 effect.processAssignment(forkStack, valuedObjectAccessors)
+            } else {
+                effect.processEffect(forkStack, valuedObjectAccessors)
             }
         }            
     }

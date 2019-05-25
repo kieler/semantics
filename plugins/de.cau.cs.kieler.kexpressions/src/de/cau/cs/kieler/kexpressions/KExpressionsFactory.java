@@ -193,6 +193,15 @@ public interface KExpressionsFactory extends EFactory {
     ScheduleDeclaration createScheduleDeclaration();
 
     /**
+     * Returns a new object of class '<em>Method Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Method Declaration</em>'.
+     * @generated
+     */
+    MethodDeclaration createMethodDeclaration();
+
+    /**
      * Returns a new object of class '<em>Schedule Object Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

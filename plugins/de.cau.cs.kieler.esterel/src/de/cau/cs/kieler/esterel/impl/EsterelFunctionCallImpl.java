@@ -95,6 +95,7 @@ public class EsterelFunctionCallImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.ESTEREL_FUNCTION_CALL__SCHEDULE);
@@ -107,6 +108,7 @@ public class EsterelFunctionCallImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Function getFunction() {
         if (function != null && function.eIsProxy()) {
             InternalEObject oldFunction = (InternalEObject)function;
@@ -133,6 +135,7 @@ public class EsterelFunctionCallImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFunction(Function newFunction) {
         Function oldFunction = function;
         function = newFunction;
@@ -145,6 +148,7 @@ public class EsterelFunctionCallImpl extends MinimalEObjectImpl.Container implem
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getParameter() {
         if (parameter == null) {
             parameter = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.ESTEREL_FUNCTION_CALL__PARAMETER);

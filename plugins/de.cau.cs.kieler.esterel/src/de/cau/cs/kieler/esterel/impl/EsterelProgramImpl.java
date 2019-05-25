@@ -85,6 +85,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<de.cau.cs.kieler.scl.Module> getModules() {
         if (modules == null) {
             modules = new EObjectContainmentEList<de.cau.cs.kieler.scl.Module>(de.cau.cs.kieler.scl.Module.class, this, EsterelPackage.ESTEREL_PROGRAM__MODULES);
@@ -97,6 +98,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getTick() {
         return tick;
     }
@@ -121,6 +123,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTick(ValuedObject newTick) {
         if (newTick != tick) {
             NotificationChain msgs = null;

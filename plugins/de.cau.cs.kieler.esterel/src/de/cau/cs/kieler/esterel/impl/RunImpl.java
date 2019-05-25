@@ -83,6 +83,7 @@ public class RunImpl extends StatementImpl implements Run {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ModuleRenaming getModule() {
         return module;
     }
@@ -107,6 +108,7 @@ public class RunImpl extends StatementImpl implements Run {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setModule(ModuleRenaming newModule) {
         if (newModule != module) {
             NotificationChain msgs = null;
@@ -126,6 +128,7 @@ public class RunImpl extends StatementImpl implements Run {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Renamings> getRenamings() {
         if (renamings == null) {
             renamings = new EObjectContainmentEList<Renamings>(Renamings.class, this, EsterelPackage.RUN__RENAMINGS);

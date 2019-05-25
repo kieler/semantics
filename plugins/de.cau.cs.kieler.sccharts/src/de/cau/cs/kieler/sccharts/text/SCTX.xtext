@@ -1,10 +1,11 @@
-grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.kexpressions.kext.KExt
+grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.scl.SCL
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 
 //generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
@@ -25,13 +26,13 @@ SCCharts returns sccharts::SCCharts:
 //  State Rules  // 
 // ------------- //
 
-
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
 	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
 		declarations+=DeclarationWOSemicolon*
+		('method' declarations+=MethodDeclarationWOSemicolon)*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
@@ -52,6 +53,7 @@ State returns sccharts::State:
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
 		declarations+=DeclarationWOSemicolon*
+        ('method' declarations+=MethodDeclarationWOSemicolon)*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	   '}')
@@ -134,12 +136,14 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ((
             '{'
             declarations+=DeclarationWOSemicolon*
+            ('method' declarations+=MethodDeclarationWOSemicolon)*
             actions+=LocalAction*
             (states+=ImplicitState | states+=State+)
             '}'
         )|(
             ':'
             declarations+=DeclarationWOSemicolon*
+            ('method' declarations+=MethodDeclarationWOSemicolon)*
             actions+=LocalAction*
             states+=State*
         ))
@@ -214,7 +218,72 @@ PeriodAction returns sccharts::PeriodAction:
     annotations+=RestrictedTypeAnnotation*
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
-    
+
+// ----- //
+//  SCL  // 
+// ----- //
+@Override
+Statement returns scl::Statement:
+    // Only allow restricted set of SCL statements
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+;
+
+// --------------- //
+//  Class/ Method  // 
+// --------------- //
+
+@Override
+ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {sccharts::PolicyClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    host?='host'?
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            policy=PolicyRegion?
+            declarations+=DeclarationOrMethodWOSemicolon*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationWOSemicolon*
+        '}'
+    ))
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    annotations+=CommentAnnotatonSL?
+;
+
+PolicyRegion returns sccharts::PolicyRegion:
+    'policy' name=ID label=STRING?
+    '{'
+    declarations+=DeclarationWOSemicolon*
+    states+=PolicyState+
+    '}';
+
+PolicyState returns sccharts::State:
+    annotations+=Annotation*
+    initial?='initial'?
+    'state' name=ID label=STRING?
+    outgoingTransitions+=PolicyTransition*;
+
+PolicyTransition returns sccharts::Transition:
+    {sccharts::Transition}
+    annotations+=RestrictedTypeAnnotation*
+    ('if' (trigger=LogicalOrExpression | trigger=ValuedObjectReference) 
+     (':' effects+=PureEmission (',' effects+=PureEmission)*)?
+    )?
+    'go to'
+    targetState=[sccharts::State|ID]    
+    ('label' label=STRING)?;
+
 // ------------ //
 //  Enum Rules  // 
 // ------------ //

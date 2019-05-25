@@ -1,5 +1,4 @@
 /**
- * generated with EMF ecore
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
@@ -77,6 +76,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
             case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.METHOD_DECLARATION: return createMethodDeclaration();
             case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
@@ -106,6 +106,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return createValueTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return createPriorityProtocolFromString(eDataType, initialValue);
+            case KExpressionsPackage.ACCESS_MODIFIER:
+                return createAccessModifierFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -127,6 +129,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return convertValueTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return convertPriorityProtocolToString(eDataType, instanceValue);
+            case KExpressionsPackage.ACCESS_MODIFIER:
+                return convertAccessModifierToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -347,6 +351,17 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * @generated
      */
     @Override
+    public MethodDeclaration createMethodDeclaration() {
+        MethodDeclarationImpl methodDeclaration = new MethodDeclarationImpl();
+        return methodDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public ScheduleObjectReference createScheduleObjectReference() {
         ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
         return scheduleObjectReference;
@@ -506,6 +521,26 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * @generated
      */
     public String convertPriorityProtocolToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public AccessModifier createAccessModifierFromString(EDataType eDataType, String initialValue) {
+        AccessModifier result = AccessModifier.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertAccessModifierToString(EDataType eDataType, Object instanceValue) {
         return instanceValue == null ? null : instanceValue.toString();
     }
 

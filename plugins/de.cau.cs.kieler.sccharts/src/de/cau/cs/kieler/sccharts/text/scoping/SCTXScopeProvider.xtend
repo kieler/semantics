@@ -9,11 +9,14 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.SCChartsPackage
+import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -21,12 +24,14 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
+import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import de.cau.cs.kieler.sccharts.SCChartsPackage
-import org.eclipse.emf.ecore.resource.Resource
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.sccharts.Scope
+import org.eclipse.xtext.xbase.lib.Functions.Function1
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * This class contains custom scoping description.
@@ -179,6 +184,30 @@ class SCTXScopeProvider extends KExtScopeProvider {
             return SCTXScopes.scopeFor(scchartsInScope.map[rootStates].flatten)
         }
         return IScope.NULLSCOPE
+    }
+    
+    override IScope getScopeForReferencedDeclarationObject(ReferenceDeclaration declaration, ValuedObjectReference context,
+        Function1<? super VariableDeclaration, Boolean> predicate) {
+        var EObject region = context
+        while (region !== null && !(region instanceof Region)) {
+            region = region.eContainer
+        }
+        val adjustedPredicate = if (region instanceof DataflowRegion) predicate else [VariableDeclaration vd | vd.access == AccessModifier.PUBLIC]
+        if (declaration.reference instanceof State) {
+            val state = declaration.reference as State
+            val additionalCandidates = newArrayList
+            additionalCandidates += state.declarations.filter(MethodDeclaration).map[valuedObjects.head]
+            if (!state.baseStates.nullOrEmpty) {
+                for (decl : state.allVisibleInheritedDeclarations) {
+                    for(VO : decl.valuedObjects) {
+                        additionalCandidates += VO
+                    }
+                }
+            }
+            return Scopes.scopeFor(additionalCandidates, super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate))
+        } else {
+            return super.getScopeForReferencedDeclarationObject(declaration, context, adjustedPredicate)
+        }
     }
 
 }

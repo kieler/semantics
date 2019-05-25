@@ -95,6 +95,7 @@ public class TrapImpl extends StatementImpl implements Trap {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.TRAP__STATEMENTS);
@@ -107,6 +108,7 @@ public class TrapImpl extends StatementImpl implements Trap {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Signal> getTrapSignals() {
         if (trapSignals == null) {
             trapSignals = new EObjectContainmentEList<Signal>(Signal.class, this, EsterelPackage.TRAP__TRAP_SIGNALS);
@@ -119,6 +121,7 @@ public class TrapImpl extends StatementImpl implements Trap {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TrapHandler> getTrapHandler() {
         if (trapHandler == null) {
             trapHandler = new EObjectContainmentEList<TrapHandler>(TrapHandler.class, this, EsterelPackage.TRAP__TRAP_HANDLER);

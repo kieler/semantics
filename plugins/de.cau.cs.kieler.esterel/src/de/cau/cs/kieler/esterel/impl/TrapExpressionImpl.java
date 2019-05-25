@@ -83,6 +83,7 @@ public class TrapExpressionImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.TRAP_EXPRESSION__SCHEDULE);
@@ -95,6 +96,7 @@ public class TrapExpressionImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getTrap() {
         if (trap != null && trap.eIsProxy()) {
             InternalEObject oldTrap = (InternalEObject)trap;
@@ -121,6 +123,7 @@ public class TrapExpressionImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTrap(Signal newTrap) {
         Signal oldTrap = trap;
         trap = newTrap;

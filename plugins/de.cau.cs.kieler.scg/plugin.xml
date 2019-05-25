@@ -151,6 +151,9 @@
             class="de.cau.cs.kieler.scg.processors.optimizer.SimpleGuardOptimization">
       </Processor>
       <Processor
+            class="de.cau.cs.kieler.scg.processors.MethodProcessor">
+      </Processor>
+      <Processor
             class="de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator">
       </Processor>
       <Processor

@@ -107,6 +107,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValueType getType() {
         return type;
     }
@@ -116,6 +117,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(ValueType newType) {
         ValueType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -128,6 +130,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getIdType() {
         return idType;
     }
@@ -137,6 +140,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIdType(String newIdType) {
         String oldIdType = idType;
         idType = newIdType;
@@ -149,6 +153,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Function getCombineFunction() {
         if (combineFunction != null && combineFunction.eIsProxy()) {
             InternalEObject oldCombineFunction = (InternalEObject)combineFunction;
@@ -175,6 +180,7 @@ public class SignalImpl extends ValuedObjectImpl implements Signal {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCombineFunction(Function newCombineFunction) {
         Function oldCombineFunction = combineFunction;
         combineFunction = newCombineFunction;

@@ -61,6 +61,7 @@ public class GotoImpl extends StatementImpl implements Goto {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Label getTarget() {
         if (target != null && target.eIsProxy()) {
             InternalEObject oldTarget = (InternalEObject)target;
@@ -87,6 +88,7 @@ public class GotoImpl extends StatementImpl implements Goto {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTarget(Label newTarget) {
         Label oldTarget = target;
         target = newTarget;

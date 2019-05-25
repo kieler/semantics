@@ -95,6 +95,7 @@ public class ConstantExpressionImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, EsterelPackage.CONSTANT_EXPRESSION__SCHEDULE);
@@ -107,6 +108,7 @@ public class ConstantExpressionImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Constant getConstant() {
         if (constant != null && constant.eIsProxy()) {
             InternalEObject oldConstant = (InternalEObject)constant;
@@ -133,6 +135,7 @@ public class ConstantExpressionImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConstant(Constant newConstant) {
         Constant oldConstant = constant;
         constant = newConstant;
@@ -145,6 +148,7 @@ public class ConstantExpressionImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Value getValue() {
         return value;
     }
@@ -169,6 +173,7 @@ public class ConstantExpressionImpl extends MinimalEObjectImpl.Container impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(Value newValue) {
         if (newValue != value) {
             NotificationChain msgs = null;
