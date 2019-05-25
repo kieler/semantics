@@ -66,7 +66,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     def CharSequence serializeVOR(ValuedObjectReference valuedObjectReference) {
         if (valuedObjectReference.valuedObject === null) {
             System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
-            return ""
+            return "<BROKEN_REFERENCE>"
         }
         var vo = valuedObjectReference.valuedObject.name
         for (index : valuedObjectReference.indices) {

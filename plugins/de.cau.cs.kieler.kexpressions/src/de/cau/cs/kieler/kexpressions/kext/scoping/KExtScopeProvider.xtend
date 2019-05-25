@@ -123,13 +123,13 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 	
 	protected def IScope getScopeForReferencedDeclarationFromSubReference(EObject context, EReference reference) {
 	    if (context instanceof ValuedObjectReference) {
-	        if (context.valuedObject != null) {
-    	        if (context.eContainer != null) {
+	        if (context.valuedObject !== null) {
+    	        if (context.eContainer !== null) {
                     var parentVO = context as ValuedObjectReference
                     while(parentVO.eContainer instanceof ValuedObjectReference) {
                         parentVO = parentVO.eContainer as ValuedObjectReference
                     }
-                    if (parentVO.valuedObject.eContainer instanceof ReferenceDeclaration) {
+                    if (parentVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
                         return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
                             getScopeForReferencedDeclarationObject(context)[ output || input ]
                     }
