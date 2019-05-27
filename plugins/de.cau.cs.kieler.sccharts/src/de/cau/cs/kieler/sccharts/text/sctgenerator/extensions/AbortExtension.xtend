@@ -26,8 +26,8 @@ import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerat
 import org.eclipse.core.resources.IProject
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 /**
  * Abort extension for the SCT Generator

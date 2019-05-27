@@ -15,7 +15,7 @@ package de.cau.cs.kieler.kicool
 import de.cau.cs.kieler.kicool.registration.ISystemProvider
 
 /**
- * Provider to make systems available to KiCool.
+ * Provider to make processors available to KiCool.
  * 
  * @author Wechselberg
  */

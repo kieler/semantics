@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.KiCoolActivator
+import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -25,7 +25,6 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.

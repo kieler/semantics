@@ -15,18 +15,22 @@ package de.cau.cs.kieler.sccharts.text.sctgenerator
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
-import de.cau.cs.kieler.core.Platform
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.sccharts.SCCharts
 import java.io.IOException
 import java.util.List
 import java.util.Map
 import java.util.logging.Logger
-import javax.net.ssl.SSLEngineResult.Status
+import org.eclipse.core.resources.IProject
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
-import de.cau.cs.kieler.core.properties.Property
+import org.eclipse.core.runtime.Platform
+import org.eclipse.core.runtime.CoreException
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.core.runtime.Status
+import org.eclipse.elk.graph.properties.MapPropertyHolder
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 /**
  * Main SCT Generator class  

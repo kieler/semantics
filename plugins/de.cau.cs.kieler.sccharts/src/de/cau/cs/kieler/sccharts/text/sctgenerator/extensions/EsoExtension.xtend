@@ -15,8 +15,9 @@ package de.cau.cs.kieler.sccharts.text.sctgenerator.extensions
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
@@ -26,12 +27,9 @@ import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import java.io.IOException
 import java.io.PrintWriter
 import org.eclipse.core.resources.IProject
-import de.cau.cs.kieler.core.properties.Property
-import org.eclipse.emf.common.util.EList
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 import org.eclipse.emf.common.util.URI
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.core.properties.IProperty
 
 /**
  * @author lpe
@@ -134,7 +132,7 @@ class EsoExtension implements ISCTGeneratorExtension {
         
         for(in : inputs.head.valuedObjects) {
             val inputname = in.name
-            if(inputname != null) {
+            if(inputname !== null) {
                 if(CHANCE_FOR_BOOL_VALUE.random == 1) {
                     builder.append(inputname + "(true) ")
                 } else {
