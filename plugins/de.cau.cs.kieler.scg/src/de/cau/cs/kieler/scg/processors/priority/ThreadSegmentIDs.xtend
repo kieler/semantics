@@ -19,9 +19,9 @@ import de.cau.cs.kieler.scg.Node
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import javax.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import com.google.inject.Inject
 
 /**
  * Calculates the Thread Segment IDs of the nodes in an SCG

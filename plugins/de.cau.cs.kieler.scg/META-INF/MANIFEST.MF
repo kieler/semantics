@@ -7,10 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.scg.SCGPlugin
 Bundle-Vendor: Kiel University
 Bundle-Localization: plugin
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.core.resources,
- org.eclipse.emf.ecore;visibility:=reexport,
- org.eclipse.elk.graph,
+Require-Bundle: org.eclipse.emf.ecore;visibility:=reexport,
  de.cau.cs.kieler.annotations;visibility:=reexport,
  de.cau.cs.kieler.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.scg;visibility:=reexport,

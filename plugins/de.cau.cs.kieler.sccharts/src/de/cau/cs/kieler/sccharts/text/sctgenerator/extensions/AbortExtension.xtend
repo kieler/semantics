@@ -13,8 +13,6 @@
 package de.cau.cs.kieler.sccharts.text.sctgenerator.extensions
 
 import de.cau.cs.kieler.sccharts.text.sctgenerator.SCTGenerator
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import de.cau.cs.kieler.sccharts.text.sctgenerator.ISCTGeneratorExtension
 import de.cau.cs.kieler.sccharts.State
@@ -28,6 +26,8 @@ import static extension de.cau.cs.kieler.sccharts.text.sctgenerator.ModelGenerat
 import org.eclipse.core.resources.IProject
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * Abort extension for the SCT Generator

@@ -26,12 +26,12 @@ import de.cau.cs.kieler.sccharts.text.sctgenerator.Value
 import java.io.IOException
 import java.io.PrintWriter
 import org.eclipse.core.resources.IProject
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
+import de.cau.cs.kieler.core.properties.Property
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.common.util.URI
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.core.properties.IProperty
 
 /**
  * @author lpe
