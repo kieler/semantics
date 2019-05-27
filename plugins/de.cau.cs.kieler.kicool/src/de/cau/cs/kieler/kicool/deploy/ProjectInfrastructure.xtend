@@ -284,9 +284,9 @@ class ProjectInfrastructure {
         val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).join("/")
         val entries = bundle.findEntries(path, "*", true)
-        val content = entries.asIterator.toList
-        if (!content.nullOrEmpty) {
-            for (fileUrl : content) {
+        if (entries.hasMoreElements) {
+            while (entries.hasMoreElements) {
+                val fileUrl = entries.nextElement
                 val fileUrlPath = fileUrl.toString
                 if (!fileUrlPath.endsWith("/")) { // is file
                     val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
