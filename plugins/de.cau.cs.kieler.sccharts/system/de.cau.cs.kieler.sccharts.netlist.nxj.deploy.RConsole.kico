@@ -36,6 +36,7 @@ de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.c.struct.access": ""
 }
 de.cau.cs.kieler.kicool.deploy.compiler.nxj config {
-    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main$MODELNAME.java"]
+    "de.cau.cs.kieler.kicool.deploy.compiler.sources": ["Main$MODELNAME.java"],
+    "de.cau.cs.kieler.kicool.deploy.compiler.nxj.linkRConsole": true
 }
 
