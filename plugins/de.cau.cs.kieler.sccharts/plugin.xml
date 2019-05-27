@@ -23,32 +23,5 @@
             class="de.cau.cs.kieler.sccharts.SCChartsPackage"
             genModel="model/sccharts.genmodel"/>
    </extension>
-   
-   <extension-point id="text.generator.extension" 
-        name="SCT Generator Extension" 
-        schema="schema/de.cau.cs.kieler.sccharts.text.generator.extension.exsd"/>
-   <extension
-         point="de.cau.cs.kieler.sccharts.text.generator.extension">
-      <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.AbortExtension">
-      </SCTGeneratorExtension>
-      <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.text.sctgenerator.extensions.ActionExtension">
-      </SCTGeneratorExtension>
-      <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.text.sct.sctgenerator.extensions.EsoExtension">
-      </SCTGeneratorExtension>      
-   </extension>   
-
-     <extension
-           point="de.cau.cs.kieler.kicool.resource.extension">
-        <ExtensionInformation
-              ePackageName="sccharts"
-              editor_id="de.cau.cs.kieler.sccharts.text.SCTX"
-              extensionName="sctx"
-              isXMI="true">
-        </ExtensionInformation>
-     </extension>
-
 
 </plugin>
