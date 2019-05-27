@@ -5,7 +5,7 @@ system de.cau.cs.kieler.sccharts.netlist.java
 pre process de.cau.cs.kieler.kicool.deploy.model.includes
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
-        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-main.ftl": "templates/nxj-main-RConsole.ftl",
+        "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-main-RConsole.ftl": "templates/nxj-main-RConsole.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-light.ftl": "templates/nxj-light.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-motor.ftl": "templates/nxj-motor.ftl",
         "platform:/plugin/de.cau.cs.kieler.sccharts/resources/nxj/templates/nxj-print.ftl": "templates/nxj-print.ftl",
