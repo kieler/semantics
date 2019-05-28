@@ -564,6 +564,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         var figureId = DEFAULT_FIGURE_KEY
         var text = labelText
         val portLabels = <Integer, String> newHashMap
+        val fixedPortLabels = <Integer> newHashSet
         
         if (figureObject instanceof OperatorExpression) {
             switch(figureObject.operator) {
@@ -578,6 +579,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     figureId = UPDATE_FIGURE_KEY
                     if (wire.sink instanceof ValuedObjectReference) {
                         portLabels.put(2, wire.sink.asValuedObjectReference.valuedObject.name)
+                        fixedPortLabels.add(2)
                     }
                 } else {
                     figureId = DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
@@ -638,7 +640,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                             val portLabelNumber = Integer.parseInt(id.substring(2))
                             val portLabel = portLabels.get(portLabelNumber)     
                             if (!portLabel.nullOrEmpty) {     
-                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue) {               
+                                if (SHOW_EXPRESSION_PORT_LABELS.booleanValue || fixedPortLabels.contains(portLabelNumber)) {               
                                     val label = p.labels.head
                                     if (label !== null) {
                                         label.text = portLabel 
