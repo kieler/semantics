@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.lustre
+package de.cau.cs.kieler.verification.providers
 
 import de.cau.cs.kieler.kicool.registration.ISystemProvider
 
@@ -19,19 +19,19 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
  * 
  * @author Wechselberg
  */
-class LustreSystemProvider implements ISystemProvider{
+class VerificationSystemProvider implements ISystemProvider {
     
     override getBundleId() {
-        "de.cau.cs.kieler.lustre"
+        "de.cau.cs.kieler.verification"
     }
     
     override getSystems() {
         #[
-            "system/de.cau.cs.kieler.lustre.scc.controlflow.kico",
-            "system/de.cau.cs.kieler.lustre.scc.kico",
-            "system/de.cau.cs.kieler.lustre.c.controlflow.kico",
-            "system/de.cau.cs.kieler.lustre.c.kico",
-            "system/de.cau.cs.kieler.lustre.v6.simulation.kico"
+            "system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico",
+            "system/de.cau.cs.kieler.sccharts.verification.nusmv.kico",
+            "system/de.cau.cs.kieler.sccharts.verification.spin.kico",
+            "system/de.cau.cs.kieler.sccharts.netlist.promela.kico",
+            "system/de.cau.cs.kieler.sccharts.netlist.smv.kico"
         ]
     }
     

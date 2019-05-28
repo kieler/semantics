@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.c.sccharts
+package de.cau.cs.kieler.kivis.providers
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
@@ -19,12 +19,13 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
  * 
  * @author Wechselberg
  */
-class CSCChartsProcessorProvider implements IProcessorProvider {
+class KiVisProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.c.sccharts.processors.CDTProcessor,
-            de.cau.cs.kieler.c.sccharts.processors.CParserProcessor
+            de.cau.cs.kieler.kivis.processor.KiVisJSGenerator,
+            de.cau.cs.kieler.kivis.processor.VisualizationGenerator,
+            de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
         ]
     }
     

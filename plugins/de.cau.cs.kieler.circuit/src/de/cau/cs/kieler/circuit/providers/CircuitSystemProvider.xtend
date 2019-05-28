@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.verification
+package de.cau.cs.kieler.circuit.providers
 
 import de.cau.cs.kieler.kicool.registration.ISystemProvider
 
@@ -19,19 +19,15 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
  * 
  * @author Wechselberg
  */
-class VerificationSystemProvider implements ISystemProvider {
+class CircuitSystemProvider implements ISystemProvider {
     
     override getBundleId() {
-        "de.cau.cs.kieler.verification"
+        "de.cau.cs.kieler.circuit"
     }
     
     override getSystems() {
         #[
-            "system/de.cau.cs.kieler.sccharts.verification.nuxmv.kico",
-            "system/de.cau.cs.kieler.sccharts.verification.nusmv.kico",
-            "system/de.cau.cs.kieler.sccharts.verification.spin.kico",
-            "system/de.cau.cs.kieler.sccharts.netlist.promela.kico",
-            "system/de.cau.cs.kieler.sccharts.netlist.smv.kico"
+            "system/de.cau.cs.kieler.sccharts.circuit.kico"
         ]
     }
     

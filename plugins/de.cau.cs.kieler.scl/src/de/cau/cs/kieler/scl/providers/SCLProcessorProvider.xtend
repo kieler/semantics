@@ -10,21 +10,24 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.circuit
+package de.cau.cs.kieler.scl.providers
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
 /**
  * Provider to make processors available to KiCool.
- *  
+ * 
  * @author Wechselberg
  */
-class CircuitProcessorProvider implements IProcessorProvider {
+class SCLProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.circuit.processors.SeqSCG2SSA_SCGTransformation,
-            de.cau.cs.kieler.circuit.processors.SSA_SCG2CircuitTransformation
+            de.cau.cs.kieler.scl.processors.transformators.SCGToSCLTransformation,
+            de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation,
+            de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL,
+            de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL
         ]
     }
+    
 }

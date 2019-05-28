@@ -10,24 +10,21 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kivis
+package de.cau.cs.kieler.c.sccharts.providers
 
-import de.cau.cs.kieler.kicool.registration.ISystemProvider
+import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
 /**
- * Provider to make systems available to KiCool.
+ * Provider to make processors available to KiCool.
  * 
  * @author Wechselberg
  */
-class KiVisSystemProvider implements ISystemProvider {
+class CSCChartsProcessorProvider implements IProcessorProvider {
     
-    override getBundleId() {
-        "de.cau.cs.kieler.kivis"
-    }
-    
-    override getSystems() {
+    override getProcessors() {
         #[
-            "system/de.cau.cs.kieler.kivis.js.kico"
+            de.cau.cs.kieler.c.sccharts.processors.CDTProcessor,
+            de.cau.cs.kieler.c.sccharts.processors.CParserProcessor
         ]
     }
     

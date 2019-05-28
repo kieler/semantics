@@ -32,28 +32,4 @@
            predicate="de.cau.cs.kieler.esterel.scest.SCEstPredicate">
      </ExtensionInformation>
   </extension>
-  <!--extension
-        point="org.eclipse.ui.menus">
-     <menuContribution
-           locationURI="popup:de.cau.cs.kieler">
-        <command
-              commandId="de.cau.cs.kieler.kies.basicTransformation"
-              label="Esterel to SyncChart Transformation"
-              style="push">
-           <visibleWhen
-                 checkEnabled="false">
-              <iterate>
-                 <adapt
-                       type="org.eclipse.core.resources.IResource">
-                    <test
-                          forcePluginActivation="false"
-                          property="org.eclipse.core.resources.name"
-                          value="*.strl">
-                    </test>
-                 </adapt>
-              </iterate>
-           </visibleWhen>
-        </command>
-     </menuContribution>
-  </extension-->
 </plugin>

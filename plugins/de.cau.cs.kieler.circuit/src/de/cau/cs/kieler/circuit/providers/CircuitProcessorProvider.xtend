@@ -10,23 +10,21 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.verification
+package de.cau.cs.kieler.circuit.providers
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
 /**
  * Provider to make processors available to KiCool.
- * 
+ *  
  * @author Wechselberg
  */
-class VerificationProcessorProvider implements IProcessorProvider {
+class CircuitProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor,
-            de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor,
-            de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor
+            de.cau.cs.kieler.circuit.processors.SeqSCG2SSA_SCGTransformation,
+            de.cau.cs.kieler.circuit.processors.SSA_SCG2CircuitTransformation
         ]
     }
-    
 }

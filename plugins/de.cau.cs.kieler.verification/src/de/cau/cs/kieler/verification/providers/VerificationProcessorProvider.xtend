@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scl
+package de.cau.cs.kieler.verification.providers
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
@@ -19,14 +19,13 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
  * 
  * @author Wechselberg
  */
-class SCLProcessorProvider implements IProcessorProvider {
+class VerificationProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.scl.processors.transformators.SCGToSCLTransformation,
-            de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation,
-            de.cau.cs.kieler.scl.processors.transformators.RestrictedSCG2SCL,
-            de.cau.cs.kieler.scl.processors.transformators.ssa.SSASCG2SSASCL
+            de.cau.cs.kieler.verification.processors.nuxmv.RunNuxmvProcessor,
+            de.cau.cs.kieler.verification.processors.nuxmv.RunNusmvProcessor,
+            de.cau.cs.kieler.verification.processors.spin.RunSpinProcessor
         ]
     }
     

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool
+package de.cau.cs.kieler.kicool.providers
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 

@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.circuit
+package de.cau.cs.kieler.kivis.providers
 
 import de.cau.cs.kieler.kicool.registration.ISystemProvider
 
@@ -19,15 +19,15 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
  * 
  * @author Wechselberg
  */
-class CircuitSystemProvider implements ISystemProvider {
+class KiVisSystemProvider implements ISystemProvider {
     
     override getBundleId() {
-        "de.cau.cs.kieler.circuit"
+        "de.cau.cs.kieler.kivis"
     }
     
     override getSystems() {
         #[
-            "system/de.cau.cs.kieler.sccharts.circuit.kico"
+            "system/de.cau.cs.kieler.kivis.js.kico"
         ]
     }
     
