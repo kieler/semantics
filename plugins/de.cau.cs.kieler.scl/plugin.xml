@@ -11,14 +11,5 @@
             class="de.cau.cs.kieler.scl.SCLPackage"
             genModel="model/scl.genmodel"/>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.resource.extension">
-      <ExtensionInformation
-            ePackageName="scl"
-            editor_id="de.cau.cs.kieler.scl.SCL"
-            extensionName="scl"
-            isXMI="false">
-      </ExtensionInformation>
-   </extension>
 
 </plugin>

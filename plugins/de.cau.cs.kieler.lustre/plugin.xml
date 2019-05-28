@@ -9,14 +9,5 @@
             uri="http://www.cau.de/cs/kieler/lustre/Lustre">
       </package>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.resource.extension">
-      <ExtensionInformation
-            ePackageName="lustre"
-            editor_id="de.cau.cs.kieler.lustre.Lustre"
-            extensionName="lus"
-            isXMI="false">
-      </ExtensionInformation>
-   </extension>
 
 </plugin>

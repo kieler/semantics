@@ -10,22 +10,23 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest
+package de.cau.cs.kieler.lustre.providers
 
-import de.cau.cs.kieler.esterel.EsterelProgram
+import de.cau.cs.kieler.kicool.registration.IModelInformationProvider
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class EsterelPredicate extends SCEstPredicate {
+class LustreModelInformationProvider implements IModelInformationProvider {
     
-    override apply(Object input) {
-        if (input instanceof EsterelProgram) {
-            return !super.apply(input)
+    override getResourceExtension(Object model) {
+        if (model instanceof LustreProgram) {
+            return "lus"
         }
-        return false
+        return null
     }
     
 }

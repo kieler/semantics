@@ -5,7 +5,6 @@
 -->
 
 <plugin>
-   <extension-point id="de.cau.cs.kieler.kicool.resource.extension" name="KIELER Compiler Resource Extension Information" schema="schema/de.cau.cs.kieler.kicool.resource.extension.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KiCool -->

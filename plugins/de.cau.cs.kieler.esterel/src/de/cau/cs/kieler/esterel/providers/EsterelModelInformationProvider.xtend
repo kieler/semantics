@@ -10,17 +10,17 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.esterel.scest
+package de.cau.cs.kieler.esterel.providers
 
-import com.google.common.base.Predicate
 import de.cau.cs.kieler.esterel.EsterelProgram
-import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.Goto
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.esterel.SCEstStatement
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kicool.registration.IModelInformationProvider
+import de.cau.cs.kieler.scl.Goto
+import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.ScopeStatement
+import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Conditional
 import de.cau.cs.kieler.scl.Assignment
 
 /**
@@ -28,11 +28,11 @@ import de.cau.cs.kieler.scl.Assignment
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SCEstPredicate implements Predicate<Object> {
+class EsterelModelInformationProvider implements IModelInformationProvider {
     
-    override apply(Object input) {
-        if (input instanceof EsterelProgram) {
-            return input.eAllContents.exists[
+    override getResourceExtension(Object model) {
+        if (model instanceof EsterelProgram) {
+            if (model.eAllContents.exists[
                 switch (it) {
                     SCEstStatement,
                     VariableDeclaration,
@@ -44,9 +44,13 @@ class SCEstPredicate implements Predicate<Object> {
                     Assignment : true
                     default : false
                 }
-            ]
+            ]) {
+                return "scest"
+            } else {
+                return "strl"
+            }
         }
-        return false
+        return null
     }
     
 }

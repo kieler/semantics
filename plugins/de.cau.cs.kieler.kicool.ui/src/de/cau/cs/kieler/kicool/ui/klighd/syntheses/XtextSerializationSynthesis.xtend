@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.kicool.ui.klighd.syntheses
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.klighd.models.CodePlaceHolder
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -25,6 +24,7 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.XtextResourceSet
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Diagram synthesis for Ecore models based on a XText grammar.
@@ -54,9 +54,9 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
             val outputStream = new ByteArrayOutputStream
             model.eResource?.save(outputStream, emptyMap)
             serialized = outputStream.toString
-        } else if (ResourceExtension.getResourceExtension(model) !== null){
+        } else if (ModelInformation.getResourceExtension(model) !== null){
             val outputStream = new ByteArrayOutputStream
-            val ext = ResourceExtension.getResourceExtension(model).fileExtension
+            val ext = ModelInformation.getResourceExtension(model)
             val uri = URI.createURI(#["inmemory:/", model.hashCode, ".", ext].join)
             val provider = xtextRegistry.getResourceServiceProvider(uri)
             val rset = provider.get(XtextResourceSet)
@@ -80,17 +80,17 @@ class XtextSerializationSynthesis extends AbstractDiagramSynthesis<EObject> {
             } else if (model.eResource != null && model.eResource.getURI != null) {
                 title = model.eResource.getURI.lastSegment;
             }
-            val resourceExtension = ResourceExtension.getResourceExtension(model);
+            val resourceExtension = ModelInformation.getResourceExtension(model);
             var fileExtension = "txt";
-            if (resourceExtension != null) {
-                fileExtension = resourceExtension.getFileExtension();
+            if (resourceExtension !== null) {
+                fileExtension = resourceExtension;
             }
             // TODO Cannot open xtext editor because it fails to create a resource for
             // the special StringEditorInput because it has no path
             var String editorID = null;
-            if (resourceExtension != null) {
-                editorID = resourceExtension.getEditorID();
-            }
+//            if (resourceExtension !== null) {
+//                editorID = resourceExtension.getEditorID();
+//            }
             return LightDiagramServices::translateModel(new CodePlaceHolder(title, serialized, editorID, fileExtension),
                 usedContext);
         }

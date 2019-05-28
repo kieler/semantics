@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2019 by
@@ -10,16 +10,15 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kicool.registration;
+package de.cau.cs.kieler.kicool.registration
 
-/**
- * Provider to make systems available to KiCool.
- * 
+import de.cau.cs.kieler.kicool.compilation.Processor
+
+/** 
+ * Provider to make processors available to KiCool.
  * @author Wechselberg
  */
-public interface ISystemProvider {
+interface IProcessorProvider {
+    def Iterable<Class<? extends Processor<?, ?>>> getProcessors()
 
-	Iterable<String> getSystems();
-	
-	String getBundleId();
 }
