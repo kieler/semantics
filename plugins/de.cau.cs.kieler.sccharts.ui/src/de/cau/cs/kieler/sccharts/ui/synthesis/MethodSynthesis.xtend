@@ -139,13 +139,14 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 //        val program = createSCLProgram
 //        program.modules += module
 
+        val methodCopy = method.copy // To prevent mutation of model in editor
         val vos = newHashMap
-        for (vo : method.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet) {
+        for (vo : methodCopy.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet) {
             vos.put(vo,vo)
         }
         
         val diagram = LightDiagramServices.translateModel(
-            method.transformMethod(null, vos),
+            methodCopy.transformMethod(null, vos),
             usedContext,
             new MapPropertyHolder => [ 
                 setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg") 

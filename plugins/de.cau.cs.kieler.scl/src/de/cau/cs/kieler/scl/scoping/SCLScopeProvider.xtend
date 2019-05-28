@@ -17,6 +17,8 @@ import org.eclipse.xtext.resource.EObjectDescription
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.scl.Loop
 
 /**
  * This class contains custom scoping description.
@@ -53,5 +55,27 @@ class SCLScopeProvider extends KExtScopeProvider {
             }
             program = program.eContainer
         }
+    }
+    
+    override IScope getScopeHierarchical(EObject context, EReference reference) {
+        val candidates = <ValuedObject> newArrayList
+        var declarationScope = context.nextDeclarationScope
+        while (declarationScope !== null) {
+            for(declaration : declarationScope.declarations) {
+                for(VO : declaration.valuedObjects) {
+                    candidates += VO
+                }
+            }
+            
+            // Add for loop counter variable            
+            if (declarationScope instanceof Loop) {
+                if (declarationScope.initializationDeclaration !== null) {
+                    candidates += declarationScope.initializationDeclaration.valuedObjects
+                }
+            }
+            
+            declarationScope = declarationScope.nextDeclarationScope
+        }
+        return Scopes.scopeFor(candidates)
     }
 }

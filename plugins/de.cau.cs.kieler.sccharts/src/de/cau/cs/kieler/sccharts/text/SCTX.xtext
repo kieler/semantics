@@ -225,7 +225,7 @@ PeriodAction returns sccharts::PeriodAction:
 @Override
 Statement returns scl::Statement:
     // Only allow restricted set of SCL statements
-    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
 ;
 
 // --------------- //

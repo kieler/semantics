@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.kexpressions.AccessModifier
+import de.cau.cs.kieler.scl.Loop
 
 /**
  * This class contains custom scoping description.
@@ -153,6 +154,13 @@ class SCTXScopeProvider extends KExtScopeProvider {
             if (declarationScope instanceof Region) {
                 if (declarationScope.counterVariable !== null) {
                     candidates += declarationScope.counterVariable
+                }
+            }
+            
+            // Add for loop counter variable            
+            if (declarationScope instanceof Loop) {
+                if (declarationScope.initializationDeclaration !== null) {
+                    candidates += declarationScope.initializationDeclaration.valuedObjects
                 }
             }
             

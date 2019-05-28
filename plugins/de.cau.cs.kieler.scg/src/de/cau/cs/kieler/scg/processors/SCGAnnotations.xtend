@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
+import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
@@ -110,4 +111,8 @@ class SCGAnnotations {
     public static val ANNOTATION_METHOD_INLINING = 
         register("inline", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
             "Marks a method/method call to be always inlined.")
+            
+    public static val ANNOTATION_LOOP = 
+        register("loop", AnnotationsType.SYSTEM, StringAnnotation, Node, 
+            "Marks a node as a result of a for/while loop.")
 }

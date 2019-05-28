@@ -2275,14 +2275,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cGotoParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cScopeStatementParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cReturnParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cForLoopParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cWhileLoopParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//@Override
 		//Statement scl::Statement:
-		//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return;
+		//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//// Only allow restricted set of SCL statements
-		//SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+		//SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//// Only allow restricted set of SCL statements
@@ -2306,6 +2308,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//Return
 		public RuleCall getReturnParserRuleCall_6() { return cReturnParserRuleCall_6; }
+		
+		//ForLoop
+		public RuleCall getForLoopParserRuleCall_7() { return cForLoopParserRuleCall_7; }
+		
+		//WhileLoop
+		public RuleCall getWhileLoopParserRuleCall_8() { return cWhileLoopParserRuleCall_8; }
 	}
 	public class ClassDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ClassDeclarationWOSemicolon");
@@ -3431,7 +3439,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//Statement scl::Statement:
-	//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return;
+	//	SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop;
 	public StatementElements getStatementAccess() {
 		return pStatement;
 	}
@@ -3763,6 +3771,56 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getScopeStatementRule() {
 		return getScopeStatementAccess().getRule();
+	}
+	
+	//ForLoop Loop:
+	//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+	//	';'
+	//	condition=BoolExpression
+	//	';'
+	//	afterthought=EffectOrAssignment?
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.ForLoopElements getForLoopAccess() {
+		return gaSCL.getForLoopAccess();
+	}
+	
+	public ParserRule getForLoopRule() {
+		return getForLoopAccess().getRule();
+	}
+	
+	//EffectOrAssignment keffects::Assignment:
+	//	annotations+=Annotation* (reference=ValuedObjectReference
+	//	operator=PostfixOperator
+	//	| reference=ValuedObjectReference
+	//	operator=AssignOperator
+	//	expression=Expression
+	//	| expression=Expression);
+	public SCLGrammarAccess.EffectOrAssignmentElements getEffectOrAssignmentAccess() {
+		return gaSCL.getEffectOrAssignmentAccess();
+	}
+	
+	public ParserRule getEffectOrAssignmentRule() {
+		return getEffectOrAssignmentAccess().getRule();
+	}
+	
+	//WhileLoop Loop:
+	//	'while' '('
+	//	condition=BoolExpression
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.WhileLoopElements getWhileLoopAccess() {
+		return gaSCL.getWhileLoopAccess();
+	}
+	
+	public ParserRule getWhileLoopRule() {
+		return getWhileLoopAccess().getRule();
 	}
 	
 	//ModuleCall:
