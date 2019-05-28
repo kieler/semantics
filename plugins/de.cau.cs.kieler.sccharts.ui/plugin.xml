@@ -93,12 +93,6 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook">
       </hook>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.sccharts.text.generator.extension">
-      <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.ui.text.sctgenerator.extensions.KGXExtension">
-      </SCTGeneratorExtension>
-   </extension>
     <extension
             point="org.eclipse.ui.editors">
         <editor

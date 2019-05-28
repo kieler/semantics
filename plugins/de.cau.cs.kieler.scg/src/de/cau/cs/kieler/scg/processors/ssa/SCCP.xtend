@@ -14,6 +14,7 @@ package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -30,6 +31,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValueExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.compilation.VariableStore
@@ -45,23 +47,17 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSATransformation
-import de.cau.cs.kieler.scg.processors.ssa.SimpleSCSSATransformation
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.processors.ssa.DominatorTree
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import java.util.Map
-import javax.inject.Inject
 
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAParameterProperty.*
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The Sparse Conditional Constant Propagation for SCGs.

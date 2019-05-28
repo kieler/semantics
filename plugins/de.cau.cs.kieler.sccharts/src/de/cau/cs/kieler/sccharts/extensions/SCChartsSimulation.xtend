@@ -20,7 +20,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.sccharts.SCChartsPlugin
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
 
@@ -77,8 +76,8 @@ class SCChartsSimulation {
           // there must be a mapping that keeps track which valuedObject (name) belongs to
           // which original S statement.
           // General method to create the enriched SyncCharts simulation models.
-          var AUXILIARY_VARIABLE_TAG_STATE =  SCChartsPlugin::AUXILIARY_VARIABLE_TAG_STATE
-          var AUXILIARY_VARIABLE_TAG_TRANSITION = SCChartsPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
+          var AUXILIARY_VARIABLE_TAG_STATE =  "_S"
+          var AUXILIARY_VARIABLE_TAG_TRANSITION = "_T"
 
           // Clone the complete SyncCharts region 
           var targetRootRegion = rootState.copy;
