@@ -39,11 +39,11 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
- * Shows or hides state actions.
+ * Shows actions as dataflow regions.
  * 
- * @author als
- * @kieler.design 2015-08-13 proposed
- * @kieler.rating 2015-08-13 proposed yellow
+ * @author ssm
+ * @kieler.design 2019-05-28 proposed
+ * @kieler.rating 2019-05-28 proposed yellow
  * 
  */
 @ViewSynthesisShared
