@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -49,6 +50,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class ActionsAsDataflowHook extends SynthesisHook {
 
     @Inject extension AnnotationsExtensions
+    @Inject extension KExpressionsCreateExtensions
     @Inject extension StateStyles
     @Inject extension KRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
@@ -106,6 +108,10 @@ class ActionsAsDataflowHook extends SynthesisHook {
         for (action : actions) {
             for (effect : action.effects.filter(Assignment)) {
                 val effectCopy = effect.copy
+                if (action.trigger !== null) {
+                    val triggerCopy = action.trigger.copy
+                    effectCopy.expression = createConditionalExpression(triggerCopy, effectCopy.expression)
+                }
                 switch (action) {
                     EntryAction: dfEntry.equations += effectCopy
                     DuringAction: dfDuring.equations += effectCopy
