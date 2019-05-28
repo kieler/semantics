@@ -602,7 +602,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             case GT,
             case LEQ,
             case LT: {
-                figureId = ARITHMETICAL_FIGURE_KEY; portLabels.put(1, figureObject.operator.serializeHR.toString)
+                figureId = ARITHMETICAL_FIGURE_KEY; 
+                portLabels.put(0, figureObject.operator.serializeHR.toString)
+                portLabels.put(1, figureObject.operator.serializeHR.toString)
             }
             
             

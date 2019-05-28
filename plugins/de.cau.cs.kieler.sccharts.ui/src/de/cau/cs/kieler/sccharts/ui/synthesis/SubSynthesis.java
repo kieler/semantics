@@ -20,7 +20,6 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.klighd.kgraph.KGraphElement;
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ISynthesisHooks;
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks;
 
 /**
  * Abstract class for partial syntheses, delegating helper methods.
