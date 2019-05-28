@@ -29,7 +29,7 @@ UI_PROPERTY = 'Eclipse-UI'
 UI_REGEX = '.*\\.ui'
 BANNED_REGEX = '.*\\.ui'
 BANNED = []
-TOLERATED_EXTENSIONS = ['org.eclipse.emf.ecore.generated_package']
+TOLERATED_EXTENSIONS = ['org.eclipse.emf.ecore.generated_package','org.eclipse.core.runtime.applications']
 
 def main(args):
     print('-- Checking plugin dependencies --')

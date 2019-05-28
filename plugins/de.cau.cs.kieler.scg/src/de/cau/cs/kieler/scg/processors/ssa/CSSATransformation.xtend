@@ -14,11 +14,14 @@ package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
@@ -28,19 +31,13 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
-import de.cau.cs.kieler.scg.processors.ssa.DominatorTree
-import javax.inject.Inject
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 
 import static com.google.common.collect.Maps.*
 import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 
 /**
  * The SSA transformation for SCGs.
