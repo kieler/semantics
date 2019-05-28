@@ -77,6 +77,7 @@ public class ExitImpl extends StatementImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TrapSignal getTrap() {
         if (trap != null && trap.eIsProxy()) {
             InternalEObject oldTrap = (InternalEObject)trap;
@@ -103,6 +104,7 @@ public class ExitImpl extends StatementImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTrap(TrapSignal newTrap) {
         TrapSignal oldTrap = trap;
         trap = newTrap;
@@ -115,6 +117,7 @@ public class ExitImpl extends StatementImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -139,6 +142,7 @@ public class ExitImpl extends StatementImpl implements Exit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;

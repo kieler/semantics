@@ -17,9 +17,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
@@ -34,6 +39,7 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
@@ -41,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -49,14 +56,18 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSearchExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -65,7 +76,6 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
@@ -89,6 +99,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
     @Inject extension KPolylineExtensions
+    @Inject extension KColorExtensions
     @Inject extension KContainerRenderingExtensions
     @Inject extension AnnotationsExtensions
     @Inject extension PragmaExtensions
@@ -99,9 +110,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension SCChartsTransitionExtensions
+    @Inject extension SCChartsSearchExtensions
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
+    @Inject extension PolicySynthesis
+    @Inject extension MethodSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
@@ -205,7 +220,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(state)
                         if (it instanceof KText) configureTextLOD(state)
                     ]
@@ -217,14 +232,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations) {
-                if (declaration instanceof StructDeclaration) {
+            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration)]) {
+                if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).forEach[
+                        eAllContents.filter(KRendering).toList.forEach[
                             associateWith(declaration)
                             if (it instanceof KText) configureTextLOD(declaration)
                         ]
@@ -239,7 +254,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(action)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(action)
                         if (it instanceof KText) configureTextLOD(action)
                     ]
@@ -252,6 +267,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.containsDataflowRegions
                 || state.isReferencedState
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
+                || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
                 node.addRegionsArea;
             }
@@ -270,6 +286,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ];
         }
 
+        // Transform methods
+        for (method : state.declarations.filter(MethodImplementationDeclaration)) {
+            node.children += method.transform
+        }
+
         // Transform regions
         val regions = new ArrayList<Region>(state.regions)
         if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
@@ -277,6 +298,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             switch region {
                 ControlflowRegion: node.children += region.transform
                 DataflowRegion: node.children += region.transform
+            }
+        }
+        
+        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val policies = newArrayList
+            policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
+            policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
+            for (policy : policies.reverseView) {
+                node.children.addAll(0, policy.transform)
             }
         }
         
@@ -300,7 +330,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return returnNodes
     }
     
-    private def void addStructDeclarations(KNode node, StructDeclaration struct, int indent) {
+    private def void addStructDeclarations(KNode node, ClassDeclaration struct, int indent) {
         val segments = struct.serializeHighlighted(true)
         val head = segments.takeWhile[value !== TextFormat.CONTENT_PLACEHOLDER].toList;
         val tail = segments.dropWhile[value !== TextFormat.CONTENT_PLACEHOLDER].drop(1).toList;
@@ -309,8 +339,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             associateWith(struct)
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
+        if (struct instanceof PolicyClassDeclaration) {
+            if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
+                val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+                components += new Pair("policy", TextFormat.KEYWORD)
+                components += new Pair(if (struct.policy.label.nullOrEmpty) struct.policy.label else struct.policy.name, TextFormat.TEXT)
+                node.addDeclarationLabel(components, indent + 1)
+            }
+        }
         for (declaration : struct.declarations) {
-            if (declaration instanceof StructDeclaration) {
+            if (declaration instanceof ClassDeclaration) {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
                 node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
@@ -325,21 +363,21 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     
     /** Configures the default layout of children (regions in the state) */
-    private def static void configureLayout(KNode node) {
+    def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
     
-    private def static void configureLayoutRegionDependencies(KNode node) {
-        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(10));
-        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
+    def static void configureLayoutRegionDependencies(KNode node) {
+        node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5));
+//        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
         node.setLayoutOption(CoreOptions::DIRECTION, Direction.RIGHT)
         node.setLayoutOption(LayeredOptions::FEEDBACK_EDGES, true);
-        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0);
-        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 20.0);
+        node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10.0);
+        node.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10.0);
     }    
 
     /** Checks if given state should be visualized as macro state */
@@ -360,7 +398,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         
         // Fetch the least common ancestor fork (lcaf) data from the compilation environment. 
         val lcafMap = result.getProperty(RegionDependencies.REGION_LCAF_MAP) 
-        val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(DataDependency).toList
+        val dependencies = state.regions.map[ outgoingLinks ].flatten.filter(Dependency).toList
         if (dependencies.empty) {
             val simpleStates = state.regions.filter(ControlflowRegion).map[ states ].flatten.filter[ !isHierarchical ].toList
             for (simpleState : simpleStates) {
@@ -369,13 +407,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
         
         dependencyEdges.clear
-        for (dependency : dependencies.filter(DataDependency)) {
-            dependency.synthesizeDataDependency(lcafMap, state)
+        for (dependency : dependencies) {
+            switch(dependency) {
+                DataDependency: dependency.synthesizeDataDependency(lcafMap, state, result)
+                ControlDependency: dependency.synthesizeControlDependency(lcafMap, state)
+            }
         }
     }
     
     /** Synthesize one dependency using the least common ancestor fork (lcaf) data. */
-    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
+    private def void synthesizeDataDependency(DataDependency dependency, RegionLCAFMap regionLCAFMap, State state, Environment environment) {
         // Don't show confluent dependencies.
         if (dependency.type == DataDependencyType.WRITE_WRITE && dependency.confluent) return;
         if (!dependency.concurrent) return;
@@ -386,12 +427,13 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
         val sourceNode = cfrs.key.node
         val targetNode = cfrs.value.node
-
-
-        println(dependency.eContainer + " " + dependency.target)
         
         if (regionDependency) {
-            dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+            if (isOnCausalLoop(dependency, environment)) {
+                dependency.createDependencyEdge(sourceNode, targetNode, "#f00".color).associateWith(dependency)
+            } else {
+                dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency)    
+            }
         } else {
             val source = cfrs.key.getEdgeableParent
             val target = cfrs.value.getEdgeableParent
@@ -402,10 +444,26 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         }
     }
     
-    
+    private def void synthesizeControlDependency(ControlDependency dependency, RegionLCAFMap regionLCAFMap, State state) {
+
+        val regionDependency = dependency.eContainer instanceof ControlflowRegion && dependency.target instanceof ControlflowRegion
+        
+        // Elevate the control flow regions to the same hierarchy level. Use the lcaf data for this. 
+        val cfrs = if (regionDependency) regionLCAFMap.levelRegions(dependency) else new Pair<EObject, EObject>(dependency.eContainer, dependency.target)
+        val sourceNode = cfrs.key.node
+        val targetNode = cfrs.value.node
+        if (regionDependency) {
+            dependency.createDependencyEdge(sourceNode, targetNode).associateWith(dependency) 
+        } else {
+            val source = cfrs.key.getEdgeableParent
+            val target = cfrs.value.getEdgeableParent
+            val edge = createLooseDependencyEdge(dependencyEdges, source.node, source, target, dependency, false)
+            edge.associateWith(dependency)
+        }
+    }    
     
     private def KEdge createLooseDependencyEdge(Map<Pair<EObject, EObject>, KEdge> edges, KNode attachNode,
-        EObject source, EObject target, DataDependency dependency, boolean ignoreFirstCollapsibleParent) {
+        EObject source, EObject target, Dependency dependency, boolean ignoreFirstCollapsibleParent) {
         val sourceTargetPair = new Pair(source, target);
         val targetSourcePair = new Pair(target, source);
         var opposite = false;
@@ -443,15 +501,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             
             edges.put(sourceTargetPair, edge);
             edge.setProperty(CoreOptions.NO_LAYOUT, true);
-            
-//            edge.getContainer.
-            edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
+
+            if (dependency instanceof DataDependency) {            
+                edge.setProperty(ToggleDependencyAction.DATA_DEPENDENCY, dependency)
+            }
         }
         edge
     }    
     
-    
-   
     protected def EObject getEdgeableParent(EObject eObject) {
         if (eObject instanceof ControlflowRegion) 
             return eObject as ControlflowRegion
@@ -471,4 +528,19 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         edge.getData(KContainerRendering) as KContainerRendering
     }
         
+    protected def boolean isOnCausalLoop(Dependency dependency, Environment environment) {
+        if (dependency === null || dependency.reference === null || !(dependency.reference instanceof ValuedObject)) 
+            return false
+            
+        val loopData = environment.getProperty(ControlDependencies.LOOP_DATA) 
+        if (loopData === null) 
+            return false
+
+        return loopData.criticalNodes.filter(State).exists[
+            incomingTransitions.map[ effects ].flatten.filter(Assignment).exists[
+                it.reference.valuedObject == dependency.reference                
+            ]
+        ]
+    }         
+       
 }

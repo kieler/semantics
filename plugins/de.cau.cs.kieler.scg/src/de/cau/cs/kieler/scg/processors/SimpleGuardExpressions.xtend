@@ -53,6 +53,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -176,7 +177,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
                 conditionalDeclaration.valuedObjects += newVO
                 voStore.update(newVO, "guard", "conditionalGuard")
                 
-                ScgFactory::eINSTANCE.createControlDependency => [
+                KEffectsFactory::eINSTANCE.createControlDependency => [
 	                conditional.dependencies += it
 	                it.target = newGuard
                 ] 
@@ -280,13 +281,13 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 
     // --- CREATE GUARDS: GO BLOCK 
     protected def void createGoBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         guard.expression = scg.findValuedObjectByName(GO_GUARD_NAME).reference
     }
 
     // --- CREATE GUARDS: DEPTH BLOCK 
     protected def void createDepthBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         val firstExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression => [
             setOperator(OperatorType::PRE)
             subExpressions.add(schedulingBlock.basicBlock.preGuard.reference)
@@ -337,7 +338,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 
     // --- CREATE GUARDS: SYNCHRONIZER BLOCK 
     protected def void createSynchronizerBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         // The simple scheduler uses the SurfaceSynchronizer. 
         // The result of the synchronizer is stored in the synchronizerData class joinData.
         val join = schedulingBlock.nodes.head as Join
@@ -359,7 +360,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
 
     // --- CREATE GUARDS: STANDARD BLOCK 
     protected def void createStandardBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock, SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         val basicBlock = schedulingBlock.basicBlock
 
         val relevantPredecessors = <Predecessor>newLinkedList
@@ -401,7 +402,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     // --- CREATE GUARDS: SUBSEQUENT SCHEDULING BLOCK 
     protected def void createSubsequentSchedulingBlockGuardExpression(Guard guard, SchedulingBlock schedulingBlock,
         SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         guard.expression = schedulingBlock.basicBlock.schedulingBlocks.head.guards.head.valuedObject.reference
     }
 
@@ -419,7 +420,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
      */
     protected def Expression predecessorExpression(Guard guard, Predecessor predecessor, SchedulingBlock schedulingBlock,
         SCGraph scg) {
-        guard.setDefaultTrace
+//        guard.setDefaultTrace
         // Return a solely reference as expression if the predecessor is not a conditional
         if (predecessor.branchType == BranchType::NORMAL) {
             return predecessor.basicBlock.schedulingBlocks.last.guards.head.valuedObject.reference

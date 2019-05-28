@@ -87,6 +87,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isWeak() {
         return weak;
     }
@@ -96,6 +97,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWeak(boolean newWeak) {
         boolean oldWeak = weak;
         weak = newWeak;

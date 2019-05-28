@@ -66,6 +66,7 @@ public class ScheduleObjectReferenceImpl extends ValuedObjectReferenceImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getPriority() {
         return priority;
     }
@@ -75,6 +76,7 @@ public class ScheduleObjectReferenceImpl extends ValuedObjectReferenceImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPriority(int newPriority) {
         int oldPriority = priority;
         priority = newPriority;

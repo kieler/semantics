@@ -133,7 +133,7 @@
               class="de.cau.cs.kieler.sccharts.processors.UserSchedule">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.Fby">
+              class="de.cau.cs.kieler.sccharts.processors.InitOperator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.FinalRegion">
@@ -172,7 +172,10 @@
               class="de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeGenerator">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.StatebasedLeanCCodeGenerator">
+              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c.StatebasedLeanCCodeGenerator">
+        </Processor>
+        <Processor
+              class="de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.java.StatebasedLeanJavaCodeGenerator">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.dataflow.ToHybridDataflow">
@@ -193,13 +196,22 @@
               class="de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.csv.CSVToSCTX">
         </Processor>
         <Processor
               class="de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator">
         </Processor>
         <Processor
+              class="de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator">
+        </Processor>
+        <Processor
               class="de.cau.cs.kieler.sccharts.processors.ValuedObjectRise">
+        </Processor>
+        <Processor
+            class="de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer">
         </Processor>
      </extension>
      <extension
@@ -223,6 +235,9 @@
               system="system/de.cau.cs.kieler.sccharts.dataflow.kico">
         </TransformationSystem>
         <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.causalView.kico">
+        </TransformationSystem>
+        <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.dataflow.lustre.kico">
         </TransformationSystem>
         <TransformationSystem
@@ -235,7 +250,10 @@
               system="system/de.cau.cs.kieler.sccharts.statebased.lean.kico">
         </TransformationSystem>
         <TransformationSystem
-              system="system/de.cau.cs.kieler.sccharts.statebased.lean.template.kico">
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.c.template.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.statebased.lean.java.template.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.csv.kico">
@@ -245,6 +263,12 @@
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.netlist.arduino.deploy.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.kico">
+        </TransformationSystem>
+        <TransformationSystem
+              system="system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.RConsole.kico">
         </TransformationSystem>
         <TransformationSystem
               system="system/de.cau.cs.kieler.sccharts.expansion.only.kico">
@@ -284,6 +308,9 @@
         </TransformationSystem>
         <TransformationSystem
             system="system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico">
+        </TransformationSystem>
+        <TransformationSystem
+            system="system/de.cau.cs.kieler.c.sccharts.dataflow.kico">
         </TransformationSystem>
      </extension>
 

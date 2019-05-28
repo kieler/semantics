@@ -14,18 +14,18 @@
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/TRUEBRANCH"/>
       <genEnumLiterals ecoreEnumLiteral="scg.ecore#//BranchType/ELSEBRANCH"/>
     </genEnums>
+    <genClasses ecoreClass="scg.ecore#//SCGraphs">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraphs/scgs"/>
+    </genClasses>
     <genClasses ecoreClass="scg.ecore#//SCGraph">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/nodes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/declarations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/basicBlocks"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/schedules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//SCGraph/guards"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//SCGraph/label"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Node">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Node/incoming"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/isInitial"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Node/dependencies"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Node/schizophrenic"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Conditional">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Conditional/then"/>
@@ -41,10 +41,6 @@
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Assignment">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Assignment/next"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Assignment/assignment"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Assignment/valuedObject"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Assignment/indices"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Assignment/Operator"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Fork">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Fork/join"/>
@@ -54,9 +50,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Join/fork"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Join/next"/>
     </genClasses>
-    <genClasses ecoreClass="scg.ecore#//Link">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Link/target"/>
-    </genClasses>
     <genClasses ecoreClass="scg.ecore#//Entry">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/exit"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Entry/next"/>
@@ -64,32 +57,25 @@
     <genClasses ecoreClass="scg.ecore#//Exit">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Exit/entry"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Exit/next"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Exit/final"/>
     </genClasses>
-    <genClasses ecoreClass="scg.ecore#//ControlFlow"/>
-    <genClasses ecoreClass="scg.ecore#//Dependency"/>
-    <genClasses ecoreClass="scg.ecore#//DataDependency">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//DataDependency/concurrent"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//DataDependency/confluent"/>
-    </genClasses>
-    <genClasses ecoreClass="scg.ecore#//ControlDependency"/>
-    <genClasses ecoreClass="scg.ecore#//AbsoluteWrite_Read"/>
-    <genClasses ecoreClass="scg.ecore#//RelativeWrite_Read"/>
-    <genClasses ecoreClass="scg.ecore#//AbsoluteWrite_RelativeWrite"/>
-    <genClasses ecoreClass="scg.ecore#//Write_Write"/>
     <genClasses ecoreClass="scg.ecore#//BasicBlock">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//BasicBlock/schedulingBlocks"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//BasicBlock/predecessors"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//BasicBlock/threadEntry"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/goBlock"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/depthBlock"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/synchronizerBlock"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/entryBlock"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/deadBlock"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/termBlock"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//BasicBlock/preGuard"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//BasicBlock/finalBlock"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//SchedulingBlock">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//SchedulingBlock/nodes"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//SchedulingBlock/dependencies"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//SchedulingBlock/guard"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//SchedulingBlock/guards"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//SchedulingBlock/label"/>
     </genClasses>
     <genClasses ecoreClass="scg.ecore#//Predecessor">
@@ -97,21 +83,11 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Predecessor/conditional"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Predecessor/branchType"/>
     </genClasses>
-    <genClasses ecoreClass="scg.ecore#//ScheduleBlock">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//ScheduleBlock/schedulingBlock"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//ScheduleBlock/additionalGuards"/>
-    </genClasses>
-    <genClasses ecoreClass="scg.ecore#//Schedule">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Schedule/scheduleBlocks"/>
-    </genClasses>
-    <genClasses ecoreClass="scg.ecore#//Guard">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Guard/valuedObject"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scg.ecore#//Guard/expression"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Guard/schizophrenic"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Guard/schedulingBlockLink"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scg.ecore#//Guard/originalObject"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Guard/sequentialize"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute scg.ecore#//Guard/dead"/>
-    </genClasses>
+    <genClasses ecoreClass="scg.ecore#//Guard"/>
+    <genClasses ecoreClass="scg.ecore#//ControlFlow"/>
+    <genClasses ecoreClass="scg.ecore#//ExpressionDependency"/>
+    <genClasses ecoreClass="scg.ecore#//GuardDependency"/>
+    <genClasses ecoreClass="scg.ecore#//ScheduleDependency"/>
+    <genClasses ecoreClass="scg.ecore#//TickBoundaryDependency"/>
   </genPackages>
 </genmodel:GenModel>

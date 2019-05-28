@@ -68,7 +68,7 @@ class SRTGControlflowRegionSynthesis extends SRTGSubSynthesis<ControlflowRegion,
         
         val label = if(region.label.nullOrEmpty) "" else " " + region.label;
 
-        node.addRegionFigure(region.final) => [
+        node.addRegionFigure => [
             associateWith(region)
             addText(label)
         ]

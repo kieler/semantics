@@ -30,10 +30,7 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
                 assignmentText = serialize(assignment.expression)
             }
-            var valuedObjectName = assignment.valuedObject.name
-            if (!assignment.indices.nullOrEmpty) {
-                valuedObjectName = valuedObjectName + serializeIndices(assignment.indices)
-            }
+            var valuedObjectName = assignment.reference.serializeVOR.toString
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).text
             }
@@ -58,10 +55,7 @@ class SCGSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
                 assignmentText = assignment.expression.serializeHR
             }
-            var valuedObjectName = assignment.valuedObject.name
-            if (!assignment.indices.nullOrEmpty) {
-                valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
-            }
+            var valuedObjectName = assignment.reference.serializeVOR.toString
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).text
             }

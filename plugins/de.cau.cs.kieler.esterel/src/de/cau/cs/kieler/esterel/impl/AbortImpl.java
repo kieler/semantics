@@ -130,6 +130,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ABORT__STATEMENTS);
@@ -142,6 +143,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isWeak() {
         return weak;
     }
@@ -151,6 +153,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWeak(boolean newWeak) {
         boolean oldWeak = weak;
         weak = newWeak;
@@ -163,6 +166,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -187,6 +191,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
@@ -206,6 +211,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getDoStatements() {
         if (doStatements == null) {
             doStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ABORT__DO_STATEMENTS);
@@ -218,6 +224,7 @@ public class AbortImpl extends StatementImpl implements Abort {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Case> getCases() {
         if (cases == null) {
             cases = new EObjectContainmentEList<Case>(Case.class, this, EsterelPackage.ABORT__CASES);

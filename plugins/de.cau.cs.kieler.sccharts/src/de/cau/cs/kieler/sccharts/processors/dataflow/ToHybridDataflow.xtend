@@ -25,8 +25,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.Linkable
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.kicool.processors.AbstractDependencyAnalysis
-import de.cau.cs.kieler.kicool.processors.LinkableInterfaceData
+import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
+import de.cau.cs.kieler.kicool.processors.dependencies.LinkableInterfaceData
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.SCCharts

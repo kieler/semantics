@@ -10,6 +10,10 @@ Workflow {
 	component =  @de.cau.cs.kieler.kexpressions.keffects.KEffects auto-inject {}
 	
 	component =  @de.cau.cs.kieler.kexpressions.kext.KExt auto-inject {}
+	
+    component =  @de.cau.cs.kieler.scl.SCL auto-inject {}
+
+	component =  @de.cau.cs.kieler.kicool.KiCool auto-inject {}
 
     component =  @de.cau.cs.kieler.sccharts.text.SCTX auto-inject {}	
 }

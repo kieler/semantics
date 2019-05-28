@@ -69,6 +69,7 @@ public abstract class DeclarationScopeImpl extends MinimalEObjectImpl.Container 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, KExtPackage.DECLARATION_SCOPE__DECLARATIONS);

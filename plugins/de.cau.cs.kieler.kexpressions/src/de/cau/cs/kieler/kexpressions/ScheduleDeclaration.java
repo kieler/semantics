@@ -91,7 +91,7 @@ public interface ScheduleDeclaration extends Declaration {
      * @return the value of the '<em>Priorities</em>' attribute list.
      * @see de.cau.cs.kieler.kexpressions.PriorityProtocol
      * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getScheduleDeclaration_Priorities()
-     * @model
+     * @model unique="false"
      * @generated
      */
     EList<PriorityProtocol> getPriorities();

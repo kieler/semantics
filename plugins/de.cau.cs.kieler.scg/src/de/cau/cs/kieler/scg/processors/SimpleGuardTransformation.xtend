@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -53,6 +52,8 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import java.util.Map
 
 /** 
  * @author ssm
@@ -95,9 +96,16 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 it.pragmas += pragma.copy
             }              
         ] 
+        creationalTransformation(model, SCGGraphs)    
+        
+        val SCGMap = <SCGraph, SCGraph> newHashMap
+        for (scg : model.scgs) {
+            SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
+        }        
+            
         for (scg : model.scgs) {
             SCGGraphs.scgs += 
-            scg.createGuards => [
+            scg.createGuards(SCGMap.get(scg), SCGMap) => [
                 label = scg.label
                 name = scg.name
                 SCGGraphs.scgs += it    
@@ -109,28 +117,28 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
 	/**
 	 * {@inherited}
 	 */
-    def SCGraph createGuards(SCGraph scg) {
+    def SCGraph createGuards(SCGraph scg, SCGraph newSCG, Map<SCGraph, SCGraph> SCGMap) {
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
          * Therefore, we only copy the interface and extend the declaration by the guards of the 
          * basic blocks.
          */
-        val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
+        newSCG => [
             annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
             label = scg.label
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
-        creationalTransformation(scg,newSCG)
-        scg.setDefaultTrace
+//        creationalTransformation(scg,newSCG)
+//        scg.setDefaultTrace
         newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
             newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
-        val valuedObjectMap = scg.copyDeclarations(newSCG)
+        val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
         val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap

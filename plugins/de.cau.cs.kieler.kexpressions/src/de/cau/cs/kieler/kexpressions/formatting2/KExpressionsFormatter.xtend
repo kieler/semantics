@@ -13,6 +13,7 @@ import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess
 import org.eclipse.xtext.formatting2.IFormattableDocument
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 class KExpressionsFormatter extends AnnotationsFormatter {
 	
@@ -22,6 +23,8 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
 		switch(operatorexpression.operator) {
+		    case POSTFIX_ADD: operatorexpression.regionFor.keyword(postfixAddAccess.POSTFIX_ADDPlusSignPlusSignKeyword_0)?.prepend[ noSpace ]
+            case POSTFIX_SUB: operatorexpression.regionFor.keyword(postfixSubAccess.POSTFIX_SUBHyphenMinusHyphenMinusKeyword_0)?.prepend[ noSpace ]
             case SUB: {
                 if (operatorexpression.subExpressions.size == 1) {
                     operatorexpression.regionFor.ruleCall(negExpressionAccess.operatorSubOperatorEnumRuleCall_0_1_0)?.append[ noSpace ]
@@ -33,7 +36,7 @@ class KExpressionsFormatter extends AnnotationsFormatter {
             case PRE,
             case VAL: {
         		operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.leftParenthesisKeyword_0_2)?.prepend[ noSpace ].append[ noSpace ]
-                operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.rightParenthesisKeyword_0_4)?.prepend[ noSpace ] 
+                operatorexpression.regionFor.keyword(valuedObjectTestExpressionAccess.rightParenthesisKeyword_0_5)?.prepend[ noSpace ] 
             }
             default: {
                 // Nothing
@@ -51,13 +54,12 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 	def dispatch void format(ValuedObjectReference valuedobjectreference, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
-		valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.leftSquareBracketKeyword_1_0).forEach[prepend[ noSpace ].append[ noSpace ]]
-        valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.rightSquareBracketKeyword_1_2).forEach[prepend[ noSpace ]]
-        
 		for (Expression indices : valuedobjectreference.getIndices()) {
 			format(indices, document);
 		}
 		
+        valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.leftSquareBracketKeyword_1_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        valuedobjectreference.regionFor.keywords(valuedObjectReferenceAccess.rightSquareBracketKeyword_1_2).forEach[prepend[ noSpace ]]
 		valuedobjectreference.regionFor.keyword(valuedObjectReferenceAccess.fullStopKeyword_2_0)?.prepend[ noSpace ].append[ noSpace ]
 		
 		format(valuedobjectreference.getSubReference(), document);
@@ -66,8 +68,8 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 	def dispatch void format(ReferenceCall referencecall, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		
-        referencecall.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_1_0_0)?.prepend[ noSpace ].append[ noSpace ]
-        referencecall.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_1_0_3)?.prepend[ noSpace ]
+        referencecall.regionFor.keyword(referenceCallAccess.leftParenthesisKeyword_3_0_0)?.prepend[ noSpace ].append[ noSpace ]
+        referencecall.regionFor.keyword(referenceCallAccess.rightParenthesisKeyword_3_0_3)?.prepend[ noSpace ]
 		
 		for (Parameter parameters : referencecall.getParameters()) {
 			format(parameters, document);
@@ -90,4 +92,15 @@ class KExpressionsFormatter extends AnnotationsFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		format(parameter.getExpression(), document);
 	}
+
+    def dispatch void format(VectorValue vectorValue, extension IFormattableDocument document) {
+        // TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
+
+        vectorValue.regionFor.keywords(vectorValueAccess.leftCurlyBracketKeyword_0).forEach[prepend[ noSpace ].append[ noSpace ]]
+        vectorValue.regionFor.keywords(vectorValueAccess.rightCurlyBracketKeyword_3).forEach[prepend[ noSpace ]]
+        
+        for (member : vectorValue.values) {
+            format(member, document);
+        }
+    }
 }

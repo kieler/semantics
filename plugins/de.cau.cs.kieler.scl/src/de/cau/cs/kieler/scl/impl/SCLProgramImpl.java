@@ -67,6 +67,7 @@ public class SCLProgramImpl extends PragmatableImpl implements SCLProgram {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<de.cau.cs.kieler.scl.Module> getModules() {
         if (modules == null) {
             modules = new EObjectContainmentEList<de.cau.cs.kieler.scl.Module>(de.cau.cs.kieler.scl.Module.class, this, SCLPackage.SCL_PROGRAM__MODULES);

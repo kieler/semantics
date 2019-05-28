@@ -39,6 +39,8 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.swt.graphics.Color
+import org.eclipse.swt.widgets.Display
 
 /**
  * Class that impelments the filter for the data pool view.
@@ -49,6 +51,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class DataPoolFilter extends ViewerFilter {
 
     private var Text searchField
+    private var Color searchFieldFg
     
     @Accessors
     private var Composite viewComposite
@@ -160,9 +163,10 @@ class DataPoolFilter extends ViewerFilter {
                 var matches = true
                 try {
                     matches = element.name.matches(".*("+searchField.text+").*")
+                    searchField.foreground = searchFieldFg
                 } catch (PatternSyntaxException e) {
-                    StatusManager.getManager().handle(new Status(IStatus.ERROR,
-                            SimulationUIPlugin.PLUGIN_ID, e.getMessage(), e), StatusManager.SHOW)
+                    val display = Display.getCurrent()
+                    searchField.foreground = display.getSystemColor(SWT.COLOR_RED)
                 }
                 visible = visible && matches
             }
@@ -193,6 +197,7 @@ class DataPoolFilter extends ViewerFilter {
                 searchField = new Text(container, SWT.SINGLE.bitwiseOr(SWT.BORDER).bitwiseOr(SWT.SEARCH).bitwiseOr(SWT.ICON_SEARCH).bitwiseOr(SWT.ICON_CANCEL))
                 searchField.text = "XXXXXXXXXXXXXXXXXXX"
                 searchField.toolTipText = "Filter for Variable Names"
+                searchFieldFg = searchField.foreground
             
                 searchField.addModifyListener(new ModifyListener(){
                     override modifyText(ModifyEvent e) {

@@ -95,8 +95,8 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
                 return createDeclarationScopeAdapter();
             }
             @Override
-            public Adapter caseStructDeclaration(StructDeclaration object) {
-                return createStructDeclarationAdapter();
+            public Adapter caseClassDeclaration(ClassDeclaration object) {
+                return createClassDeclarationAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -213,16 +213,16 @@ public class KExtAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.StructDeclaration <em>Struct Declaration</em>}'.
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.kext.ClassDeclaration <em>Class Declaration</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
      * it's useful to ignore a case when inheritance will catch all the cases anyway.
      * <!-- end-user-doc -->
      * @return the new adapter.
-     * @see de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+     * @see de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
      * @generated
      */
-    public Adapter createStructDeclarationAdapter() {
+    public Adapter createClassDeclarationAdapter() {
         return null;
     }
 
