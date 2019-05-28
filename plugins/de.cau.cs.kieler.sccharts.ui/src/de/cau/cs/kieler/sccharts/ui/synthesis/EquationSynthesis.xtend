@@ -81,15 +81,15 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption UNIQUE_WIRES = SynthesisOption.createCheckOption("Unique Wires", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)        
-    public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption("Align inputs/outputs", true).
+    public static val SynthesisOption ALIGN_INPUTS_OUTPUTS = SynthesisOption.createCheckOption("Inputs/Outputs Alignment", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Align constants", false).
+    public static val SynthesisOption ALIGN_CONSTANTS = SynthesisOption.createCheckOption("Constant Alignment", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Show Wire Labels", true).
+    public static val SynthesisOption SHOW_WIRE_LABELS = SynthesisOption.createCheckOption("Wire Labels", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption("Show Expression Port Labels", false).
+    public static val SynthesisOption SHOW_EXPRESSION_PORT_LABELS = SynthesisOption.createCheckOption("Expression Port Labels", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
-    public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption("Show Referenced Port Labels", true).
+    public static val SynthesisOption SHOW_REFERENCED_PORT_LABELS = SynthesisOption.createCheckOption("Referenced Port Labels", true).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption("Outside Referenced Port Labels", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)

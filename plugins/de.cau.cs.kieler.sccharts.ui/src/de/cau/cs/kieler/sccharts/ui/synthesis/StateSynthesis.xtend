@@ -80,7 +80,12 @@ import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.DuringAction
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -120,11 +125,19 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
+
+    public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption("Actions as Dataflow", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
     
     // als magic: this should never reach the master (11.09.2018)! ;-)
     // but probably will. (10.10.2018) ;-)
-    private val actionRectangleMap = <Action, KRectangle> newHashMap 
+    val actionRectangleMap = <Action, KRectangle> newHashMap 
     
+    override getDisplayedSynthesisOptions() {
+        val options = newArrayList(SHOW_ACTIONS_AS_DATAFLOW)
+        
+        return options
+    }     
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
@@ -250,16 +263,23 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add actions
             val actions = new ArrayList<Action>(state.actions)
             if (SHOW_INHERITANCE.booleanValue) actions.addAll(0, state.allVisibleInheritedActions.toList)
-            for (action : actions) {
-                node.addActionLabel(action.serializeHighlighted(true)) => [
-                    setProperty(TracingVisualizationProperties.TRACING_NODE, true)
-                    associateWith(action)
-                    eAllContents.filter(KRendering).toList.forEach[
+            if (SHOW_ACTIONS_AS_DATAFLOW.booleanValue) {
+                node.addRegionsArea
+                if (!actions.empty) {
+                    node.addActionsAsDataflow(actions, state)
+                }
+            } else {
+                for (action : actions) {
+                    node.addActionLabel(action.serializeHighlighted(true)) => [
+                        setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                         associateWith(action)
-                        if (it instanceof KText) configureTextLOD(action)
+                        eAllContents.filter(KRendering).toList.forEach[
+                            associateWith(action)
+                            if (it instanceof KText) configureTextLOD(action)
+                        ]
+                        actionRectangleMap.put(action, it)
                     ]
-                    actionRectangleMap.put(action, it)
-                ]
+                }
             }
 
             // Add child area for regions
@@ -542,5 +562,60 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ]
         ]
     }         
+
+    protected def void addActionsAsDataflow(KNode node, List<Action> actions, State parentState) {
+        
+        val container = "dfDeclarations".getNode(parentState) 
+        container.addRectangle() => [
+                invisible = true;
+        ]
+        container.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
+        container.setLayoutOption(CoreOptions::EXPAND_NODES, true);
+        container.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
+        container.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
+        container.setLayoutOption(CoreOptions.PRIORITY, 1000)
+        container.setLayoutOption(CoreOptions::ASPECT_RATIO, 10.0)
+                
+        val hasEntryActions = actions.exists[it instanceof EntryAction]
+        val hasDuringActions = actions.exists[it instanceof DuringAction]
+        val hasExitActions = actions.exists[it instanceof ExitAction]
+        
+        val dfEntry = createDataflowRegion("Entry", "entry") => [ addStringAnnotation("style", "entry") ]
+        val dfDuring = createDataflowRegion("During", "during") => [ addStringAnnotation("style", "during") ]
+        val dfExit = createDataflowRegion("Exit", "exit") => [ addStringAnnotation("style", "exit") ]
+        
+        for (action : actions) {
+            for (effect : action.effects.filter(Assignment)) {
+                val effectCopy = effect.copy
+                switch (action) {
+                    EntryAction: dfEntry.equations += effectCopy
+                    DuringAction: dfDuring.equations += effectCopy
+                    ExitAction: dfExit.equations += effectCopy
+                }
+            }
+        }
+        
+        val entriesNode = if (hasEntryActions) dfEntry.transform.head else null
+        val duringsNode = if (hasDuringActions) dfDuring.transform.head else null
+        val exitsNode = if (hasExitActions) dfExit.transform.head else null 
+        
+        if (hasEntryActions) {
+            container.children += entriesNode => [
+                setLayoutOption(CoreOptions.PRIORITY, 3)        
+            ]
+        }
+        if (hasDuringActions) {
+            container.children += duringsNode => [
+                setLayoutOption(CoreOptions.PRIORITY, 2)
+            ]
+        }
+        if (hasExitActions) {
+            container.children += exitsNode => [
+                setLayoutOption(CoreOptions.PRIORITY, 1)
+            ]
+        }     
+        
+        node.children += container   
+    }
        
 }
