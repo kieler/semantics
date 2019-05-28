@@ -14,38 +14,28 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.hooks
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.krendering.KContainerRendering
-import de.cau.cs.kieler.klighd.krendering.KGridPlacement
-import de.cau.cs.kieler.klighd.krendering.KRectangle
-import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
-import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
-import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisActionHook
-import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
-import java.util.List
 import de.cau.cs.kieler.sccharts.Action
-import org.eclipse.elk.core.options.CoreOptions
-import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
-import org.eclipse.elk.core.math.ElkPadding
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.DuringAction
+import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.sccharts.ui.synthesis.DataflowRegionSynthesis
+import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
+import de.cau.cs.kieler.sccharts.ui.synthesis.KNodeExtensionsReplacement
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import java.util.List
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.CoreOptions
+
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Shows or hides state actions.
@@ -61,36 +51,35 @@ class ActionsAsDataflowHook extends SynthesisHook {
     @Inject extension AnnotationsExtensions
     @Inject extension StateStyles
     @Inject extension KRenderingExtensions
-    @Inject extension KContainerRenderingExtensions
     @Inject extension KNodeExtensionsReplacement
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension DataflowRegionSynthesis
 
     /** Action ID */
-    public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.StateActionsHook"
+    public static final String ID = "de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionAsDataflow"
     /** The related synthesis option */
     
     public static val SynthesisOption SHOW_ACTIONS_AS_DATAFLOW = SynthesisOption.createCheckOption("Actions as Dataflow", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     override getDisplayedSynthesisOptions() {
-//        return newLinkedList(SHOW_ACTIONS_AS_DATAFLOW)
+        return newLinkedList(SHOW_ACTIONS_AS_DATAFLOW)
     }
 
     override processState(State state, KNode node) {
-//        val container = node.contentContainer
-//        val actionContainer = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
-//
-//        if (actionContainer === null) return;
-//        
-        // Hide actions
-//        if (SHOW_ACTIONS_AS_DATAFLOW.booleanValue) {
-//            container.children.remove(actionContainer)
-//            
-//            val actions = <Action> newArrayList(state.actions)
-//            
-//            node.addActionsAsDataflow(actions, state)
-//        }
+        val container = node.contentContainer
+        val actionContainer = container?.getProperty(StateStyles::ACTIONS_CONTAINER)
+
+        if (actionContainer === null) return;
+        
+        if (SHOW_ACTIONS_AS_DATAFLOW.booleanValue) {
+            container.children.remove(actionContainer)
+            node.addRegionsArea
+            
+            val actions = <Action> newArrayList(state.actions)
+            
+            node.addActionsAsDataflow(actions, state)
+        }
     }
     
     protected def void addActionsAsDataflow(KNode node, List<Action> actions, State parentState) {
@@ -125,12 +114,9 @@ class ActionsAsDataflowHook extends SynthesisHook {
             }
         }
         
-//        val entriesNode = if (hasEntryActions) dfEntry.transform.head else null
-//        val duringsNode = if (hasDuringActions) dfDuring.transform.head else null
-//        val exitsNode = if (hasExitActions) dfExit.transform.head else null 
-        val entriesNode = null
-        val duringsNode = null
-        val exitsNode = null 
+        val entriesNode = if (hasEntryActions) dfEntry.transform.head else null
+        val duringsNode = if (hasDuringActions) dfDuring.transform.head else null
+        val exitsNode = if (hasExitActions) dfExit.transform.head else null 
         
         if (hasEntryActions) {
             container.children += entriesNode => [
