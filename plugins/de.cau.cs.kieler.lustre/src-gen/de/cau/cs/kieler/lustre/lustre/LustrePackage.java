@@ -980,13 +980,13 @@ public interface LustrePackage extends EPackage
   int NODE_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
 
   /**
-   * The feature id for the '<em><b>Private</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__PRIVATE = KExpressionsPackage.DECLARATION__PRIVATE;
+  int NODE_DECLARATION__ACCESS = KExpressionsPackage.DECLARATION__ACCESS;
 
   /**
    * The feature id for the '<em><b>Is Unsafe</b></em>' attribute.

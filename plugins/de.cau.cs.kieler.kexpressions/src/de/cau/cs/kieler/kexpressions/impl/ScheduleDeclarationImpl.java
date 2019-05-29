@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 
 /**
@@ -158,7 +159,7 @@ public class ScheduleDeclarationImpl extends DeclarationImpl implements Schedule
     @Override
     public EList<PriorityProtocol> getPriorities() {
         if (priorities == null) {
-            priorities = new EDataTypeUniqueEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
+            priorities = new EDataTypeEList<PriorityProtocol>(PriorityProtocol.class, this, KExpressionsPackage.SCHEDULE_DECLARATION__PRIORITIES);
         }
         return priorities;
     }

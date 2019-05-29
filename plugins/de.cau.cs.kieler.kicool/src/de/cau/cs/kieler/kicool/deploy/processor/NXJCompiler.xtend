@@ -45,6 +45,8 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.nxj.runOnUpload", true)
     public static val IProperty<Boolean> NXJ_DIRECT_BLUETOOTH_UPLOAD = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.nxj.directBluetoothUpload", false)
+    public static val IProperty<Boolean> NXJ_LINK_RCONSOLE = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.compiler.nxj.linkRConsole", false)
 
 
    
@@ -109,6 +111,9 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
         
         val className = sourcePaths.head.replaceAll("\\.java$", "")
         val nxjlink = newArrayList(environment.getProperty(NXJ_PATH_NXJLINK)?:NXJ_PATH_NXJLINK.^default)
+        if (getProperty(NXJ_LINK_RCONSOLE)) {
+            nxjlink += "-gr"
+        }
         nxjlink += "-o"
         nxjlink += className + ".nxj"
         nxjlink += className

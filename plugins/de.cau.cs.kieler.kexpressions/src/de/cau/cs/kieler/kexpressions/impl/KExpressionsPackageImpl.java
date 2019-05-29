@@ -1,10 +1,10 @@
 /**
- * generated with EMF ecore
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
+import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.CombineOperator;
@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.JsonObjectValue;
 import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
@@ -221,6 +222,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass methodDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass scheduleObjectReferenceEClass = null;
 
     /**
@@ -320,6 +328,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EEnum priorityProtocolEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum accessModifierEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -791,7 +806,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
-    public EAttribute getDeclaration_Private() {
+    public EAttribute getDeclaration_Access() {
         return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
     }
 
@@ -983,6 +998,36 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
     @Override
     public EAttribute getScheduleDeclaration_Priorities() {
         return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getMethodDeclaration() {
+        return methodDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMethodDeclaration_ReturnType() {
+        return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMethodDeclaration_ParameterDeclarations() {
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(1);
     }
 
     /**
@@ -1241,6 +1286,16 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     @Override
+    public EEnum getAccessModifier() {
+        return accessModifierEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public KExpressionsFactory getKExpressionsFactory() {
         return (KExpressionsFactory)getEFactoryInstance();
     }
@@ -1322,7 +1377,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         declarationEClass = createEClass(DECLARATION);
         createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
-        createEAttribute(declarationEClass, DECLARATION__PRIVATE);
+        createEAttribute(declarationEClass, DECLARATION__ACCESS);
 
         variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
@@ -1345,6 +1400,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
+
+        methodDeclarationEClass = createEClass(METHOD_DECLARATION);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
+        createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleObjectReferenceEClass = createEClass(SCHEDULE_OBJECT_REFERENCE);
         createEAttribute(scheduleObjectReferenceEClass, SCHEDULE_OBJECT_REFERENCE__PRIORITY);
@@ -1383,6 +1442,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
         valueTypeEEnum = createEEnum(VALUE_TYPE);
         priorityProtocolEEnum = createEEnum(PRIORITY_PROTOCOL);
+        accessModifierEEnum = createEEnum(ACCESS_MODIFIER);
     }
 
     /**
@@ -1441,6 +1501,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         variableDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         referenceDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         scheduleDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        methodDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        methodDeclarationEClass.getESuperTypes().add(this.getSchedulable());
         scheduleObjectReferenceEClass.getESuperTypes().add(this.getValuedObjectReference());
         callEClass.getESuperTypes().add(this.getExpression());
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
@@ -1518,7 +1580,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(declarationEClass, Declaration.class, "Declaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclaration_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getDeclaration_Private(), ecorePackage.getEBoolean(), "private", null, 1, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Access(), this.getAccessModifier(), "access", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getVariableDeclaration_Type(), this.getValueType(), "type", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1540,7 +1602,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScheduleDeclaration_Global(), this.getPriorityProtocol(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleObjectReferenceEClass, ScheduleObjectReference.class, "ScheduleObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleObjectReference_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, ScheduleObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1637,11 +1703,18 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.CLOCK);
         addEEnumLiteral(valueTypeEEnum, ValueType.JSON);
         addEEnumLiteral(valueTypeEEnum, ValueType.STRUCT);
+        addEEnumLiteral(valueTypeEEnum, ValueType.CLASS);
         addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
+        addEEnumLiteral(valueTypeEEnum, ValueType.VOID);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLUENT);
+
+        initEEnum(accessModifierEEnum, AccessModifier.class, "AccessModifier");
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PRIVATE);
 
         // Create resource
         createResource(eNS_URI);

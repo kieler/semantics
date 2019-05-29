@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.sccharts.text.scoping;
 
-import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
+import de.cau.cs.kieler.scl.scoping.SCLScopeProvider;
 
-public abstract class AbstractSCTXScopeProvider extends KExtScopeProvider {
+public abstract class AbstractSCTXScopeProvider extends SCLScopeProvider {
 }

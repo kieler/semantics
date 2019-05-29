@@ -33,10 +33,12 @@ import com.google.inject.Singleton
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
@@ -51,6 +53,7 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
     
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions    
+    @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     
     @Accessors var String valuedObjectPrefix
@@ -228,28 +231,36 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
     }
     
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.referenceDeclaration
-        if (declaration.extern.nullOrEmpty) { 
-            return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
-        } else {
-            var code = declaration.extern.head.code
-            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+        val declaration = referenceCall.valuedObject.declaration
+        if (declaration instanceof ReferenceDeclaration) {
+            if (declaration.extern.nullOrEmpty) { 
+                return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+            } else {
+                var code = declaration.extern.head.code
+                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                return code + referenceCall.parameters.serializeHRParameters
             }
-            return code + referenceCall.parameters.serializeHRParameters
+        } else {
+            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
     
     override dispatch CharSequence serialize(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.referenceDeclaration
-        if (declaration.extern.nullOrEmpty) { 
-            return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
-        } else {
-            var code = declaration.extern.head.code
-            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+        val declaration = referenceCall.valuedObject.declaration
+        if (declaration instanceof ReferenceDeclaration) {
+            if (declaration.extern.nullOrEmpty) { 
+                return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+            } else {
+                var code = declaration.extern.head.code
+                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                return code + referenceCall.parameters.serializeParameters
             }
-            return code + referenceCall.parameters.serializeParameters
+        } else {
+            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
     

@@ -136,6 +136,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.EXEC__STATEMENTS);
@@ -148,6 +149,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Task getTask() {
         if (task != null && task.eIsProxy()) {
             InternalEObject oldTask = (InternalEObject)task;
@@ -174,6 +176,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTask(Task newTask) {
         Task oldTask = task;
         task = newTask;
@@ -186,6 +189,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Variable> getReferenceParameters() {
         if (referenceParameters == null) {
             referenceParameters = new EObjectResolvingEList<Variable>(Variable.class, this, EsterelPackage.EXEC__REFERENCE_PARAMETERS);
@@ -198,6 +202,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getValueParameters() {
         if (valueParameters == null) {
             valueParameters = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC__VALUE_PARAMETERS);
@@ -210,6 +215,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getReturnSignal() {
         if (returnSignal != null && returnSignal.eIsProxy()) {
             InternalEObject oldReturnSignal = (InternalEObject)returnSignal;
@@ -236,6 +242,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReturnSignal(Signal newReturnSignal) {
         Signal oldReturnSignal = returnSignal;
         returnSignal = newReturnSignal;
@@ -248,6 +255,7 @@ public class ExecImpl extends StatementImpl implements Exec {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ExecCase> getExecCaseList() {
         if (execCaseList == null) {
             execCaseList = new EObjectContainmentEList<ExecCase>(ExecCase.class, this, EsterelPackage.EXEC__EXEC_CASE_LIST);

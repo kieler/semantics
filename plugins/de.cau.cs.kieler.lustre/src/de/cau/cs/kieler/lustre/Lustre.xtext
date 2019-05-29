@@ -352,9 +352,9 @@ ValuedExpression returns kexpressions::Expression:
 @Override
 AtomicExpression returns kexpressions::Expression:
     BoolValue
-    | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
     | NorAtMostOneExpression
     ;
 

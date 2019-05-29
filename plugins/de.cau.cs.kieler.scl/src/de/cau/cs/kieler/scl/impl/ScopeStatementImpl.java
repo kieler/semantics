@@ -84,6 +84,7 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCLPackage.SCOPE_STATEMENT__DECLARATIONS);
@@ -96,6 +97,7 @@ public class ScopeStatementImpl extends StatementImpl implements ScopeStatement 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, SCLPackage.SCOPE_STATEMENT__STATEMENTS);

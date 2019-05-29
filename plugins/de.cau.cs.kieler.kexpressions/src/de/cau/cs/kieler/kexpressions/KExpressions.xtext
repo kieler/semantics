@@ -288,12 +288,12 @@ InitExpression returns Expression:
 // Basically, the rule chain may start over again at this point.     
 AtomicExpression returns Expression:
     BoolValue
-    | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
     | FunctionCall
     | RandomCall
     | RandomizeCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -338,6 +338,8 @@ ScheduleObjectReference returns ScheduleObjectReference:
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
     valuedObject=[ValuedObject|PrimeID] 
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
     (
         ('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
@@ -491,10 +493,21 @@ enum HostType returns ValueType:
 
 enum StructType returns ValueType:
     STRUCT="struct";
+    
+enum ClassType returns ValueType:
+    CLASS="class";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
+    
+enum AccessModifier returns AccessModifier:
+    PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
+    
+enum MethodReturnType returns ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string";
 
 // -------------------- //
 //  JSON                // 

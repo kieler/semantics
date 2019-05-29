@@ -45,7 +45,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
-			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_1(), "rule__ReferenceCall__Alternatives_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
 			builder.put(grammarAccess.getAnyTypeAccess().getAlternatives(), "rule__AnyType__Alternatives");
@@ -67,6 +67,8 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCompareOperatorAccess().getAlternatives(), "rule__CompareOperator__Alternatives");
 			builder.put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
+			builder.put(grammarAccess.getAccessModifierAccess().getAlternatives(), "rule__AccessModifier__Alternatives");
+			builder.put(grammarAccess.getMethodReturnTypeAccess().getAlternatives(), "rule__MethodReturnType__Alternatives");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getGroup(), "rule__LogicalOrExpression__Group__0");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1(), "rule__LogicalOrExpression__Group_1__0");
 			builder.put(grammarAccess.getLogicalOrExpressionAccess().getGroup_1_1(), "rule__LogicalOrExpression__Group_1_1__0");
@@ -142,7 +144,7 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0(), "rule__TernaryOperation__Group_0__0");
 			builder.put(grammarAccess.getTernaryOperationAccess().getGroup_0_4(), "rule__TernaryOperation__Group_0_4__0");
 			builder.put(grammarAccess.getInitExpressionAccess().getGroup_0(), "rule__InitExpression__Group_0__0");
-			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_2(), "rule__AtomicExpression__Group_2__0");
+			builder.put(grammarAccess.getAtomicExpressionAccess().getGroup_1(), "rule__AtomicExpression__Group_1__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
@@ -152,8 +154,10 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_2(), "rule__ValuedObjectReference__Group_2__0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getGroup(), "rule__ScheduleObjectReference__Group__0");
 			builder.put(grammarAccess.getReferenceCallAccess().getGroup(), "rule__ReferenceCall__Group__0");
-			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1_0(), "rule__ReferenceCall__Group_1_0__0");
-			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1_0_2(), "rule__ReferenceCall__Group_1_0_2__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_1(), "rule__ReferenceCall__Group_1__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_2(), "rule__ReferenceCall__Group_2__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_3_0(), "rule__ReferenceCall__Group_3_0__0");
+			builder.put(grammarAccess.getReferenceCallAccess().getGroup_3_0_2(), "rule__ReferenceCall__Group_3_0_2__0");
 			builder.put(grammarAccess.getRandomCallAccess().getGroup(), "rule__RandomCall__Group__0");
 			builder.put(grammarAccess.getRandomizeCallAccess().getGroup(), "rule__RandomizeCall__Group__0");
 			builder.put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
@@ -283,8 +287,10 @@ public class KExpressionsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ScheduleObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getScheduleObjectReferenceAccess().getPriorityAssignment_1(), "rule__ScheduleObjectReference__PriorityAssignment_1");
 			builder.put(grammarAccess.getReferenceCallAccess().getValuedObjectAssignment_0(), "rule__ReferenceCall__ValuedObjectAssignment_0");
-			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_1(), "rule__ReferenceCall__ParametersAssignment_1_0_1");
-			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_1_0_2_1(), "rule__ReferenceCall__ParametersAssignment_1_0_2_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getIndicesAssignment_1_1(), "rule__ReferenceCall__IndicesAssignment_1_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getSubReferenceAssignment_2_1(), "rule__ReferenceCall__SubReferenceAssignment_2_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_3_0_1(), "rule__ReferenceCall__ParametersAssignment_3_0_1");
+			builder.put(grammarAccess.getReferenceCallAccess().getParametersAssignment_3_0_2_1(), "rule__ReferenceCall__ParametersAssignment_3_0_2_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getFunctionNameAssignment_1(), "rule__FunctionCall__FunctionNameAssignment_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_1(), "rule__FunctionCall__ParametersAssignment_2_0_1");
 			builder.put(grammarAccess.getFunctionCallAccess().getParametersAssignment_2_0_2_1(), "rule__FunctionCall__ParametersAssignment_2_0_2_1");

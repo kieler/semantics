@@ -73,6 +73,7 @@ public class ProcedureRenamingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Procedure getNewName() {
         if (newName != null && newName.eIsProxy()) {
             InternalEObject oldNewName = (InternalEObject)newName;
@@ -99,6 +100,7 @@ public class ProcedureRenamingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(Procedure newNewName) {
         Procedure oldNewName = newName;
         newName = newNewName;
@@ -111,6 +113,7 @@ public class ProcedureRenamingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Procedure getOldName() {
         if (oldName != null && oldName.eIsProxy()) {
             InternalEObject oldOldName = (InternalEObject)oldName;
@@ -137,6 +140,7 @@ public class ProcedureRenamingImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(Procedure newOldName) {
         Procedure oldOldName = oldName;
         oldName = newOldName;
