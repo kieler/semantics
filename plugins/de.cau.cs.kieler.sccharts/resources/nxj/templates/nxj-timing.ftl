@@ -190,12 +190,12 @@
 -->
 <#macro TickCount position>
 <#if position=="init">
-<#list parameters["Sleep"] as parameters>
+<#list parameters["TickCount"] as parameters>
       scchart.${parameters.varName} = -1; // Start with -1 because increasing is done before each tick.
 </#list>
 </#if>
 <#if position=="input">
-<#list parameters["Sleep"] as parameters>
+<#list parameters["TickCount"] as parameters>
         // TickCount
         scchart.${parameters.varName}++;
 </#list>
