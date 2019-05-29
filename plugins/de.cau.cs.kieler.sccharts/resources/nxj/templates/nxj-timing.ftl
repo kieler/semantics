@@ -103,7 +103,6 @@
         } else {
             // Set actual tick duration
             scchart.${parameters.varName} = (int)(System.currentTimeMillis() - tickDurationCounter);
-            <#if (parameters.parameter1!0) != 0 >
             // Wait until target duration of tick reached
             if ( tickDurationCounter + ${parameters.parameter1} > System.currentTimeMillis() ) {
                 try {
@@ -112,7 +111,6 @@
                     e.printStackTrace();
                 }
             }
-            </#if>
             // Remember tick duration
             tickDurationCounter = System.currentTimeMillis();
         }
