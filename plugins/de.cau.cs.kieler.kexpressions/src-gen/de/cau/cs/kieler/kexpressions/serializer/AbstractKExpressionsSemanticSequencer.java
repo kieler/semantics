@@ -163,60 +163,38 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 				sequence_NullValue(context, (NullValue) semanticObject); 
 				return; 
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if (rule == grammarAccess.getAddExpressionRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+				if (rule == grammarAccess.getAddExpressionRule()
+						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDivExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDivModExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivModExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getModExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getMultDivExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultDivExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getMultExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getMultModExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftLeftRightExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftLeftRightUnsignedExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftRightRightUnsignedExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getSubExpressionRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+				else if (rule == grammarAccess.getSubExpressionRule()
+						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -242,40 +220,26 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getSumExpressionRule()
 						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getProductExpressionRule()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
 						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
-						|| rule == grammarAccess.getFBYExpressionRule()
+						|| rule == grammarAccess.getInitExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -318,6 +282,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	/**
 	 * Contexts:
 	 *     AddExpression returns OperatorExpression
+	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -357,54 +322,49 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=ProductExpression) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -451,159 +411,49 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     DivModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_0_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivModExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -650,159 +500,49 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultDivExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultDivExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -849,159 +589,49 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_MultModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1048,20 +678,20 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftLeftExpression_OperatorExpression_1_0 
@@ -1069,248 +699,33 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=ShiftRightExpression 
 	 *             subExpressions+=ShiftRightExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1357,20 +772,20 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftRightExpression_OperatorExpression_1_0 
@@ -1378,143 +793,33 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=ShiftRightUnsignedExpression 
 	 *             subExpressions+=ShiftRightUnsignedExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftRightRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=BitwiseOrExpression 
-	 *             subExpressions+=BitwiseOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseOrOperator 
-	 *             subExpressions+=BitwiseXOrExpression 
-	 *             subExpressions+=BitwiseXOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseXOrExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseXOrOperator 
-	 *             subExpressions+=BitwiseAndExpression 
-	 *             subExpressions+=BitwiseAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=BitwiseAndExpression_OperatorExpression_1_0 
-	 *             operator=BitwiseAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=BitwiseNotOperator subExpressions+=BitwiseNotExpression) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             operator=ConditionalOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
-	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
-	 *     )
-	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1561,20 +866,20 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftRightUnsignedExpression_OperatorExpression_1_0 
@@ -1582,38 +887,33 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=SumExpression 
 	 *             subExpressions+=SumExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1621,6 +921,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	/**
 	 * Contexts:
 	 *     SubExpression returns OperatorExpression
+	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1660,54 +961,49 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression subExpressions+=ProductExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=ProductExpression) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1737,36 +1033,22 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SumExpression returns OperatorExpression
 	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     AddExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     SubExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ProductExpression returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     MultExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     NegExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
-	 *     FBYExpression returns OperatorExpression
+	 *     InitExpression returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
@@ -1809,53 +1091,48 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
 	 *         (
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression) | 
-	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression) | 
+	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *     )
 	 */
-	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FBYExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1885,15 +1162,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns BoolValue
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns BoolValue
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns BoolValue
-	 *     ShiftLeftRightExpression returns BoolValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns BoolValue
-	 *     ShiftLeftRightUnsignedExpression returns BoolValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns BoolValue
-	 *     ShiftRightRightUnsignedExpression returns BoolValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns BoolValue
 	 *     ShiftLeftExpression returns BoolValue
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns BoolValue
 	 *     ShiftRightExpression returns BoolValue
@@ -1911,15 +1179,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns BoolValue
 	 *     ProductExpression.OperatorExpression_1_1_0 returns BoolValue
 	 *     ProductExpression.OperatorExpression_1_2_0 returns BoolValue
-	 *     MultDivExpression returns BoolValue
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns BoolValue
-	 *     MultModExpression returns BoolValue
-	 *     MultModExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     MultModExpression.OperatorExpression_1_1_0 returns BoolValue
-	 *     DivModExpression returns BoolValue
-	 *     DivModExpression.OperatorExpression_1_0_0 returns BoolValue
-	 *     DivModExpression.OperatorExpression_1_1_0 returns BoolValue
 	 *     MultExpression returns BoolValue
 	 *     MultExpression.OperatorExpression_1_0 returns BoolValue
 	 *     DivExpression returns BoolValue
@@ -1928,7 +1187,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns BoolValue
 	 *     NegExpression returns BoolValue
 	 *     TernaryOperation returns BoolValue
-	 *     FBYExpression returns BoolValue
+	 *     InitExpression returns BoolValue
 	 *     AtomicExpression returns BoolValue
 	 *     AtomicValuedExpression returns BoolValue
 	 *     BoolValue returns BoolValue
@@ -1975,15 +1234,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns FloatValue
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns FloatValue
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns FloatValue
-	 *     ShiftLeftRightExpression returns FloatValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns FloatValue
-	 *     ShiftLeftRightUnsignedExpression returns FloatValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns FloatValue
-	 *     ShiftRightRightUnsignedExpression returns FloatValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns FloatValue
 	 *     ShiftLeftExpression returns FloatValue
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns FloatValue
 	 *     ShiftRightExpression returns FloatValue
@@ -2001,15 +1251,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns FloatValue
 	 *     ProductExpression.OperatorExpression_1_1_0 returns FloatValue
 	 *     ProductExpression.OperatorExpression_1_2_0 returns FloatValue
-	 *     MultDivExpression returns FloatValue
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns FloatValue
-	 *     MultModExpression returns FloatValue
-	 *     MultModExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     MultModExpression.OperatorExpression_1_1_0 returns FloatValue
-	 *     DivModExpression returns FloatValue
-	 *     DivModExpression.OperatorExpression_1_0_0 returns FloatValue
-	 *     DivModExpression.OperatorExpression_1_1_0 returns FloatValue
 	 *     MultExpression returns FloatValue
 	 *     MultExpression.OperatorExpression_1_0 returns FloatValue
 	 *     DivExpression returns FloatValue
@@ -2018,7 +1259,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns FloatValue
 	 *     NegExpression returns FloatValue
 	 *     TernaryOperation returns FloatValue
-	 *     FBYExpression returns FloatValue
+	 *     InitExpression returns FloatValue
 	 *     AtomicExpression returns FloatValue
 	 *     AtomicValuedExpression returns FloatValue
 	 *     FloatValue returns FloatValue
@@ -2065,15 +1306,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns FunctionCall
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns FunctionCall
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns FunctionCall
-	 *     ShiftLeftRightExpression returns FunctionCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns FunctionCall
-	 *     ShiftLeftRightUnsignedExpression returns FunctionCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns FunctionCall
-	 *     ShiftRightRightUnsignedExpression returns FunctionCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns FunctionCall
 	 *     ShiftLeftExpression returns FunctionCall
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     ShiftRightExpression returns FunctionCall
@@ -2091,15 +1323,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns FunctionCall
 	 *     ProductExpression.OperatorExpression_1_1_0 returns FunctionCall
 	 *     ProductExpression.OperatorExpression_1_2_0 returns FunctionCall
-	 *     MultDivExpression returns FunctionCall
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns FunctionCall
-	 *     MultModExpression returns FunctionCall
-	 *     MultModExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     MultModExpression.OperatorExpression_1_1_0 returns FunctionCall
-	 *     DivModExpression returns FunctionCall
-	 *     DivModExpression.OperatorExpression_1_0_0 returns FunctionCall
-	 *     DivModExpression.OperatorExpression_1_1_0 returns FunctionCall
 	 *     MultExpression returns FunctionCall
 	 *     MultExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     DivExpression returns FunctionCall
@@ -2108,7 +1331,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     NegExpression returns FunctionCall
 	 *     TernaryOperation returns FunctionCall
-	 *     FBYExpression returns FunctionCall
+	 *     InitExpression returns FunctionCall
 	 *     AtomicExpression returns FunctionCall
 	 *     AtomicValuedExpression returns FunctionCall
 	 *     FunctionCall returns FunctionCall
@@ -2160,15 +1383,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns IntValue
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns IntValue
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns IntValue
-	 *     ShiftLeftRightExpression returns IntValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns IntValue
-	 *     ShiftLeftRightUnsignedExpression returns IntValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns IntValue
-	 *     ShiftRightRightUnsignedExpression returns IntValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns IntValue
 	 *     ShiftLeftExpression returns IntValue
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns IntValue
 	 *     ShiftRightExpression returns IntValue
@@ -2186,15 +1400,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns IntValue
 	 *     ProductExpression.OperatorExpression_1_1_0 returns IntValue
 	 *     ProductExpression.OperatorExpression_1_2_0 returns IntValue
-	 *     MultDivExpression returns IntValue
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns IntValue
-	 *     MultModExpression returns IntValue
-	 *     MultModExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     MultModExpression.OperatorExpression_1_1_0 returns IntValue
-	 *     DivModExpression returns IntValue
-	 *     DivModExpression.OperatorExpression_1_0_0 returns IntValue
-	 *     DivModExpression.OperatorExpression_1_1_0 returns IntValue
 	 *     MultExpression returns IntValue
 	 *     MultExpression.OperatorExpression_1_0 returns IntValue
 	 *     DivExpression returns IntValue
@@ -2203,7 +1408,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns IntValue
 	 *     NegExpression returns IntValue
 	 *     TernaryOperation returns IntValue
-	 *     FBYExpression returns IntValue
+	 *     InitExpression returns IntValue
 	 *     AtomicExpression returns IntValue
 	 *     AtomicValuedExpression returns IntValue
 	 *     IntValue returns IntValue
@@ -2368,15 +1573,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns RandomCall
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns RandomCall
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns RandomCall
-	 *     ShiftLeftRightExpression returns RandomCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns RandomCall
-	 *     ShiftLeftRightUnsignedExpression returns RandomCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns RandomCall
-	 *     ShiftRightRightUnsignedExpression returns RandomCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns RandomCall
 	 *     ShiftLeftExpression returns RandomCall
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns RandomCall
 	 *     ShiftRightExpression returns RandomCall
@@ -2394,15 +1590,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns RandomCall
 	 *     ProductExpression.OperatorExpression_1_1_0 returns RandomCall
 	 *     ProductExpression.OperatorExpression_1_2_0 returns RandomCall
-	 *     MultDivExpression returns RandomCall
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns RandomCall
-	 *     MultModExpression returns RandomCall
-	 *     MultModExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     MultModExpression.OperatorExpression_1_1_0 returns RandomCall
-	 *     DivModExpression returns RandomCall
-	 *     DivModExpression.OperatorExpression_1_0_0 returns RandomCall
-	 *     DivModExpression.OperatorExpression_1_1_0 returns RandomCall
 	 *     MultExpression returns RandomCall
 	 *     MultExpression.OperatorExpression_1_0 returns RandomCall
 	 *     DivExpression returns RandomCall
@@ -2411,7 +1598,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns RandomCall
 	 *     NegExpression returns RandomCall
 	 *     TernaryOperation returns RandomCall
-	 *     FBYExpression returns RandomCall
+	 *     InitExpression returns RandomCall
 	 *     AtomicExpression returns RandomCall
 	 *     AtomicValuedExpression returns RandomCall
 	 *     RandomCall returns RandomCall
@@ -2450,15 +1637,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns RandomizeCall
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns RandomizeCall
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns RandomizeCall
-	 *     ShiftLeftRightExpression returns RandomizeCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns RandomizeCall
-	 *     ShiftLeftRightUnsignedExpression returns RandomizeCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns RandomizeCall
-	 *     ShiftRightRightUnsignedExpression returns RandomizeCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns RandomizeCall
 	 *     ShiftLeftExpression returns RandomizeCall
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     ShiftRightExpression returns RandomizeCall
@@ -2476,15 +1654,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns RandomizeCall
 	 *     ProductExpression.OperatorExpression_1_1_0 returns RandomizeCall
 	 *     ProductExpression.OperatorExpression_1_2_0 returns RandomizeCall
-	 *     MultDivExpression returns RandomizeCall
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns RandomizeCall
-	 *     MultModExpression returns RandomizeCall
-	 *     MultModExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     MultModExpression.OperatorExpression_1_1_0 returns RandomizeCall
-	 *     DivModExpression returns RandomizeCall
-	 *     DivModExpression.OperatorExpression_1_0_0 returns RandomizeCall
-	 *     DivModExpression.OperatorExpression_1_1_0 returns RandomizeCall
 	 *     MultExpression returns RandomizeCall
 	 *     MultExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     DivExpression returns RandomizeCall
@@ -2493,7 +1662,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     NegExpression returns RandomizeCall
 	 *     TernaryOperation returns RandomizeCall
-	 *     FBYExpression returns RandomizeCall
+	 *     InitExpression returns RandomizeCall
 	 *     AtomicExpression returns RandomizeCall
 	 *     AtomicValuedExpression returns RandomizeCall
 	 *     RandomizeCall returns RandomizeCall
@@ -2532,15 +1701,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns ReferenceCall
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns ReferenceCall
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns ReferenceCall
-	 *     ShiftLeftRightExpression returns ReferenceCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns ReferenceCall
-	 *     ShiftLeftRightUnsignedExpression returns ReferenceCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns ReferenceCall
-	 *     ShiftRightRightUnsignedExpression returns ReferenceCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns ReferenceCall
 	 *     ShiftLeftExpression returns ReferenceCall
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     ShiftRightExpression returns ReferenceCall
@@ -2558,15 +1718,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns ReferenceCall
 	 *     ProductExpression.OperatorExpression_1_1_0 returns ReferenceCall
 	 *     ProductExpression.OperatorExpression_1_2_0 returns ReferenceCall
-	 *     MultDivExpression returns ReferenceCall
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns ReferenceCall
-	 *     MultModExpression returns ReferenceCall
-	 *     MultModExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     MultModExpression.OperatorExpression_1_1_0 returns ReferenceCall
-	 *     DivModExpression returns ReferenceCall
-	 *     DivModExpression.OperatorExpression_1_0_0 returns ReferenceCall
-	 *     DivModExpression.OperatorExpression_1_1_0 returns ReferenceCall
 	 *     MultExpression returns ReferenceCall
 	 *     MultExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     DivExpression returns ReferenceCall
@@ -2575,14 +1726,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     NegExpression returns ReferenceCall
 	 *     TernaryOperation returns ReferenceCall
-	 *     FBYExpression returns ReferenceCall
+	 *     InitExpression returns ReferenceCall
 	 *     AtomicExpression returns ReferenceCall
 	 *     AtomicValuedExpression returns ReferenceCall
 	 *     ReferenceCall returns ReferenceCall
 	 *     VectorValueMember returns ReferenceCall
 	 *
 	 * Constraint:
-	 *     (valuedObject=[ValuedObject|PrimeID] (parameters+=Parameter parameters+=Parameter*)?)
+	 *     (valuedObject=[ValuedObject|PrimeID] indices+=Expression* subReference=ValuedObjectReference? (parameters+=Parameter parameters+=Parameter*)?)
 	 */
 	protected void sequence_ReferenceCall(ISerializationContext context, ReferenceCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2635,15 +1786,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns StringValue
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns StringValue
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns StringValue
-	 *     ShiftLeftRightExpression returns StringValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns StringValue
-	 *     ShiftLeftRightUnsignedExpression returns StringValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns StringValue
-	 *     ShiftRightRightUnsignedExpression returns StringValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns StringValue
 	 *     ShiftLeftExpression returns StringValue
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns StringValue
 	 *     ShiftRightExpression returns StringValue
@@ -2661,15 +1803,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns StringValue
 	 *     ProductExpression.OperatorExpression_1_1_0 returns StringValue
 	 *     ProductExpression.OperatorExpression_1_2_0 returns StringValue
-	 *     MultDivExpression returns StringValue
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns StringValue
-	 *     MultModExpression returns StringValue
-	 *     MultModExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     MultModExpression.OperatorExpression_1_1_0 returns StringValue
-	 *     DivModExpression returns StringValue
-	 *     DivModExpression.OperatorExpression_1_0_0 returns StringValue
-	 *     DivModExpression.OperatorExpression_1_1_0 returns StringValue
 	 *     MultExpression returns StringValue
 	 *     MultExpression.OperatorExpression_1_0 returns StringValue
 	 *     DivExpression returns StringValue
@@ -2678,7 +1811,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns StringValue
 	 *     NegExpression returns StringValue
 	 *     TernaryOperation returns StringValue
-	 *     FBYExpression returns StringValue
+	 *     InitExpression returns StringValue
 	 *     AtomicExpression returns StringValue
 	 *     AtomicValuedExpression returns StringValue
 	 *     StringValue returns StringValue
@@ -2725,15 +1858,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns TextExpression
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns TextExpression
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns TextExpression
-	 *     ShiftLeftRightExpression returns TextExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns TextExpression
-	 *     ShiftLeftRightUnsignedExpression returns TextExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns TextExpression
-	 *     ShiftRightRightUnsignedExpression returns TextExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns TextExpression
 	 *     ShiftLeftExpression returns TextExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns TextExpression
 	 *     ShiftRightExpression returns TextExpression
@@ -2751,15 +1875,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns TextExpression
 	 *     ProductExpression.OperatorExpression_1_1_0 returns TextExpression
 	 *     ProductExpression.OperatorExpression_1_2_0 returns TextExpression
-	 *     MultDivExpression returns TextExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns TextExpression
-	 *     MultModExpression returns TextExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns TextExpression
-	 *     DivModExpression returns TextExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns TextExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns TextExpression
 	 *     MultExpression returns TextExpression
 	 *     MultExpression.OperatorExpression_1_0 returns TextExpression
 	 *     DivExpression returns TextExpression
@@ -2768,7 +1883,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns TextExpression
 	 *     NegExpression returns TextExpression
 	 *     TernaryOperation returns TextExpression
-	 *     FBYExpression returns TextExpression
+	 *     InitExpression returns TextExpression
 	 *     AtomicExpression returns TextExpression
 	 *     AtomicValuedExpression returns TextExpression
 	 *     TextExpression returns TextExpression
@@ -2807,15 +1922,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns ValuedObjectReference
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns ValuedObjectReference
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns ValuedObjectReference
-	 *     ShiftLeftRightExpression returns ValuedObjectReference
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
-	 *     ShiftLeftRightUnsignedExpression returns ValuedObjectReference
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
-	 *     ShiftRightRightUnsignedExpression returns ValuedObjectReference
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
 	 *     ShiftLeftExpression returns ValuedObjectReference
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     ShiftRightExpression returns ValuedObjectReference
@@ -2833,15 +1939,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
 	 *     ProductExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
 	 *     ProductExpression.OperatorExpression_1_2_0 returns ValuedObjectReference
-	 *     MultDivExpression returns ValuedObjectReference
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
-	 *     MultModExpression returns ValuedObjectReference
-	 *     MultModExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     MultModExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
-	 *     DivModExpression returns ValuedObjectReference
-	 *     DivModExpression.OperatorExpression_1_0_0 returns ValuedObjectReference
-	 *     DivModExpression.OperatorExpression_1_1_0 returns ValuedObjectReference
 	 *     MultExpression returns ValuedObjectReference
 	 *     MultExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     DivExpression returns ValuedObjectReference
@@ -2850,7 +1947,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     NegExpression returns ValuedObjectReference
 	 *     TernaryOperation returns ValuedObjectReference
-	 *     FBYExpression returns ValuedObjectReference
+	 *     InitExpression returns ValuedObjectReference
 	 *     AtomicExpression returns ValuedObjectReference
 	 *     AtomicValuedExpression returns ValuedObjectReference
 	 *     ValuedObjectTestExpression returns ValuedObjectReference
@@ -2870,7 +1967,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ValuedObjectTestExpression returns OperatorExpression
 	 *
 	 * Constraint:
-	 *     ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression)
+	 *     ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 */
 	protected void sequence_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2902,15 +1999,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns VectorValue
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns VectorValue
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns VectorValue
-	 *     ShiftLeftRightExpression returns VectorValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns VectorValue
-	 *     ShiftLeftRightUnsignedExpression returns VectorValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns VectorValue
-	 *     ShiftRightRightUnsignedExpression returns VectorValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns VectorValue
 	 *     ShiftLeftExpression returns VectorValue
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns VectorValue
 	 *     ShiftRightExpression returns VectorValue
@@ -2928,15 +2016,6 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ProductExpression.OperatorExpression_1_0_0 returns VectorValue
 	 *     ProductExpression.OperatorExpression_1_1_0 returns VectorValue
 	 *     ProductExpression.OperatorExpression_1_2_0 returns VectorValue
-	 *     MultDivExpression returns VectorValue
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns VectorValue
-	 *     MultModExpression returns VectorValue
-	 *     MultModExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     MultModExpression.OperatorExpression_1_1_0 returns VectorValue
-	 *     DivModExpression returns VectorValue
-	 *     DivModExpression.OperatorExpression_1_0_0 returns VectorValue
-	 *     DivModExpression.OperatorExpression_1_1_0 returns VectorValue
 	 *     MultExpression returns VectorValue
 	 *     MultExpression.OperatorExpression_1_0 returns VectorValue
 	 *     DivExpression returns VectorValue
@@ -2945,7 +2024,7 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     ModExpression.OperatorExpression_1_0 returns VectorValue
 	 *     NegExpression returns VectorValue
 	 *     TernaryOperation returns VectorValue
-	 *     FBYExpression returns VectorValue
+	 *     InitExpression returns VectorValue
 	 *     AtomicExpression returns VectorValue
 	 *     AtomicValuedExpression returns VectorValue
 	 *     VectorValue returns VectorValue

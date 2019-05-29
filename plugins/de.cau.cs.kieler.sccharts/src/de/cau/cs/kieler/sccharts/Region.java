@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 
 /**
@@ -38,7 +37,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Linkable;
  * @model abstract="true"
  * @generated
  */
-public interface Region extends Scope, Linkable {
+public interface Region extends Scope {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

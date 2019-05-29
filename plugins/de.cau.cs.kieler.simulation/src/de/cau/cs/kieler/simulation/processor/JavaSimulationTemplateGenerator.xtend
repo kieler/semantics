@@ -28,10 +28,8 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
-class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
+class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     
     public static val FILE_NAME = "java-simulation.ftl" 
     
@@ -95,7 +93,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                         String line = stdInReader.readLine();
                         JSONObject json = new JSONObject(line);
                         
-                        «FOR v : store.orderedVariables»
+                        «FOR v : store.orderedVariables.dropBlacklisted»
                             // Receive «v.key»
                             if (json.has("«v.key»")) {
                                 «v.parse("json")»
@@ -111,7 +109,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                 private static void sendVariables() {
                     JSONObject json = new JSONObject();
                     
-                    «FOR v : store.orderedVariables»
+                    «FOR v : store.orderedVariables.dropBlacklisted»
                         // Send «v.key»
                         «v.serialize("json")»
                     «ENDFOR»

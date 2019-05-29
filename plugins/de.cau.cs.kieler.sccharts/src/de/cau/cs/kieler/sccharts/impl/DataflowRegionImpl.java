@@ -107,6 +107,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Assignment> getEquations() {
         if (equations == null) {
             equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, SCChartsPackage.DATAFLOW_REGION__EQUATIONS);
@@ -119,6 +120,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOnce() {
         return once;
     }
@@ -128,6 +130,7 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOnce(boolean newOnce) {
         boolean oldOnce = once;
         once = newOnce;

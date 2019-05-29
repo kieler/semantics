@@ -71,6 +71,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getCode() {
         return code;
     }
@@ -80,6 +81,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCode(String newCode) {
         String oldCode = code;
         code = newCode;

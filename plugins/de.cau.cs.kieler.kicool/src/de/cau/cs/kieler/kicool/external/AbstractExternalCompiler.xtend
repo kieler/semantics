@@ -60,14 +60,29 @@ abstract class AbstractExternalCompiler {
                 logger.println("Dectected external compiler on system path: " + rootDir)
             } else if (root.isPlatformPlugin) {
                 try {
-                    val bundle = Platform.getBundle(root.segment(1))
-                    val bundleFile = bundle.getBundleFile
-                    if (bundleFile.directory) {
-                        val file = new File(bundle.find(new Path(root.segments.drop(2).join("/"))).toFileURL.toURI.normalize)
-                        if (file.directory) {
-                            rootDir = file
-                            logger.println("Dectected external compiler on unzipped plugin path: " + rootDir)
+                    if (!Platform.OS.equals("macosx")) {
+                        val bundle = Platform.getBundle(root.segment(1))
+                        val bundleFile = bundle.getBundleFile
+                        if (bundleFile.directory) {
+                            val file = new File(bundle.find(new Path(root.segments.drop(2).join("/"))).toFileURL.toURI.normalize)
+                            if (file.directory) {
+                                rootDir = file
+                                logger.println("Dectected external compiler on unzipped plugin path: " + rootDir)
+                            }
                         }
+                    } else {
+                        logger.println("External compiler is located in .app on MAC OS.")
+                        val target = if (pinf.hasProject) {
+                            new File(pinf.project.workspace.root.rawLocation.toString + pinf.project.fullPath.toString, name)
+                        } else {
+                            new File(pinf.generatedCodeFolder, name)
+                        }
+                        if (!target.exists) {
+                            target.mkdirs
+                            rootDir.copyFolder(target, logger, true)
+                        }
+                        rootDir = target
+                        logger.println("External compiler copied into: " + rootDir)
                     }
                 } catch(Exception e) {
                     // ignore
@@ -75,7 +90,8 @@ abstract class AbstractExternalCompiler {
                 if (rootDir === null) {
                     logger.println("External compiler is located in zipped plugin.")
                     val target = if (pinf.hasProject) {
-                        pinf.getProjectRelativeFile(new File(name))
+                        val x = pinf.project.workspace.root.rawLocation.toString + pinf.project.fullPath.toString
+                        new File(x, name)
                     } else {
                         new File(pinf.generatedCodeFolder, name)
                     }
@@ -104,13 +120,33 @@ abstract class AbstractExternalCompiler {
         var succeeded = true
         if (isProperlySetUp && binariesFolder !== null) {
             val bin = new File(rootDir, binariesFolder)
+            
+            // For all OSs except for MAC OS
             if (bin.directory) {
                 for (exe : bin.listFiles) {
                     if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
+                        exe.executable = false
                         if (!exe.canExecute) {
                             val success = exe.executable = true
                             succeeded = succeeded && success
                         }
+                    }
+                }
+            }
+            
+            // For MAC OS
+            if (Platform.OS.equals("macosx") && !succeeded) {
+                succeeded = true
+                if (bin.directory) {
+                    for (exe : bin.listFiles) {
+                        if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
+                            exe.executable = false
+                            if (!exe.canExecute) {
+                                val p = Runtime.runtime.exec("chmod +x " +  exe.absolutePath)
+                                p.waitFor
+                            }
+                            succeeded = succeeded && exe.canExecute
+                         }
                     }
                 }
             }

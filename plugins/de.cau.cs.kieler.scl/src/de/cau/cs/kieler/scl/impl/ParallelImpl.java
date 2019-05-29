@@ -65,6 +65,7 @@ public class ParallelImpl extends StatementImpl implements Parallel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<de.cau.cs.kieler.scl.Thread> getThreads() {
         if (threads == null) {
             threads = new EObjectContainmentEList<de.cau.cs.kieler.scl.Thread>(de.cau.cs.kieler.scl.Thread.class, this, SCLPackage.PARALLEL__THREADS);

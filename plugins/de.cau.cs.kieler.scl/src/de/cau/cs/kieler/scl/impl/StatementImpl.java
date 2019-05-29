@@ -69,6 +69,7 @@ public abstract class StatementImpl extends AnnotatableImpl implements Statement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSemicolon() {
         return semicolon;
     }
@@ -78,6 +79,7 @@ public abstract class StatementImpl extends AnnotatableImpl implements Statement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSemicolon(boolean newSemicolon) {
         boolean oldSemicolon = semicolon;
         semicolon = newSemicolon;

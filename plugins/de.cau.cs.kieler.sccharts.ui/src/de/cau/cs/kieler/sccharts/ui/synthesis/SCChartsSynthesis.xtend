@@ -12,33 +12,38 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
+import java.util.HashMap
 import java.util.LinkedHashSet
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.klighd.krendering.Colors
+import org.eclipse.elk.alg.force.options.StressOptions
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import java.util.HashMap
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.alg.force.options.StressOptions
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Main diagram synthesis for SCCharts.
@@ -57,13 +62,19 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
+    @Inject extension KPolylineExtensions
     @Inject StateSynthesis stateSynthesis
     @Inject ControlflowRegionSynthesis controlflowSynthesis    
     @Inject DataflowRegionSynthesis dataflowSynthesis  
     @Inject TransitionSynthesis transitionSynthesis
     @Inject CommentSynthesis commentSynthesis
+    @Inject MethodSynthesis methodSynthesis
+    @Inject PolicySynthesis policySynthesis
         
     @Inject SynthesisHooks hooks  
+    
+    public static final IProperty<String> SKINPATH = new Property<String>(
+        "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
 
     static val PRAGMA_SYMBOLS = "symbols"       
     static val PRAGMA_SYMBOL = "symbol"       
@@ -76,8 +87,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_SKINPATH = "skinpath"
           
     val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
-    
-    @Accessors private var String skinPath = ""
     
     override getDisplayedActions() {
         return newLinkedList => [ list |
@@ -92,7 +101,15 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
         
         // General options
-        options.addAll(USE_KLAY, SHOW_ALL_SCCHARTS, SHOW_INHERITANCE, SHOW_BINDINGS, SHOW_COMMENTS)
+        options.addAll(
+            USE_KLAY,
+            SHOW_ALL_SCCHARTS,
+            SHOW_INHERITANCE,
+            SHOW_INHERITANCE_EDGES,
+            SHOW_BINDINGS,
+            SHOW_COMMENTS,
+            SHOW_CAUSAL_DATAFLOW
+        )
 
         // Adaptive Zoom
         options.add(AdaptiveZoom.USE_ADAPTIVEZOOM)
@@ -103,6 +120,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(controlflowSynthesis.displayedSynthesisOptions)
         options.addAll(dataflowSynthesis.displayedSynthesisOptions)
         options.addAll(commentSynthesis.displayedSynthesisOptions)
+        options.addAll(methodSynthesis.displayedSynthesisOptions)
+        options.addAll(policySynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
         hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
@@ -110,8 +129,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         return options.toList
     }
 
-    override transform(SCCharts scc) {
+    override transform(SCCharts sccharts) {
         val startTime = System.currentTimeMillis
+        
+        val scc = 
+            if (SHOW_CAUSAL_DATAFLOW.booleanValue) {
+                val compilationContext = Compile.createCompilationContext(sccharts, 
+                    #[ "de.cau.cs.kieler.sccharts.processors.controlDependencies" ]
+                )
+                compilationContext.compile
+//                val originalContext = this.usedContext.getProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT)
+//                originalContext.result.setProperty(RegionDependencies.REGION_DEPENDENCIES, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_DEPENDENCIES))
+//                originalContext.result.setProperty(RegionDependencies.REGION_LCAF_MAP, 
+//                    compilationContext.result.getProperty(RegionDependencies.REGION_LCAF_MAP))
+                this.usedContext.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, compilationContext)
+                compilationContext.result.model as SCCharts
+            } else sccharts
         
         val rootNode = createNode
                 
@@ -131,7 +165,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         for(symbol : scc.getStringPragmas(PRAGMA_SYMBOL)) {
             symbol.values.head.defineSymbol(symbol.values.get(1))
         }
-        if (scc.hasPragma(PRAGMA_SKINPATH)) skinPath = scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head
+        if (scc.hasPragma(PRAGMA_SKINPATH)) {
+            setSkinPath(scc.getStringPragmas(PRAGMA_SKINPATH).head.values.head, usedContext)
+        }
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
@@ -151,6 +187,20 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             rootNode.children.addAll(rootStateNodes.values)
             if (scc.rootStates.size > 1) {
 //                rootNode.configureInterChartCommunication(scc, rootStateNodes)
+            }
+            if (SHOW_INHERITANCE_EDGES.booleanValue) {
+                rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
+                for(state : scc.rootStates) {
+                    for (base : state.baseStates) {
+                        val edge = createEdge
+                        edge.source = rootStateNodes.get(state)
+                        edge.target = rootStateNodes.get(base)
+                        edge.addPolyline => [
+                            lineWidth = 1
+                            addInheritanceTriangleArrowDecorator
+                        ]
+                    }
+                }
             }
         } else {
             hooks.invokeStart(scc.rootStates.head, rootNode)
@@ -198,6 +248,23 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
                 }                 
             }
         }
+    }
+    
+    def String getSkinPath(ViewContext context) {
+        val rootNode = context.viewModel
+        var sp = rootNode.getProperty(SKINPATH)
+        if (sp.nullOrEmpty) {
+            sp = context.getProperty(SKINPATH)
+            if (!sp.nullOrEmpty) {
+                sp.setSkinPath(context)
+            }
+        } 
+        return sp 
+    }
+    
+    def void setSkinPath(String sp, ViewContext context) {
+        val rootNode = context.viewModel
+        rootNode.setProperty(SKINPATH, sp) 
     }
    
 }

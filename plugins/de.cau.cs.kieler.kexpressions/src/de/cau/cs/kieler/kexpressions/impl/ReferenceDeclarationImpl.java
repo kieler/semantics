@@ -93,6 +93,7 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EObject getReference() {
         if (reference != null && reference.eIsProxy()) {
             InternalEObject oldReference = (InternalEObject)reference;
@@ -119,6 +120,7 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(EObject newReference) {
         EObject oldReference = reference;
         reference = newReference;
@@ -131,6 +133,7 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ExternString> getExtern() {
         if (extern == null) {
             extern = new EObjectContainmentEList<ExternString>(ExternString.class, this, KExpressionsPackage.REFERENCE_DECLARATION__EXTERN);
@@ -143,6 +146,7 @@ public class ReferenceDeclarationImpl extends DeclarationImpl implements Referen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.REFERENCE_DECLARATION__PARAMETERS);

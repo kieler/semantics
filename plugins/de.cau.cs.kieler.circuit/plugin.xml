@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated circuit -->
+      <package
+            uri="http://kieler.cs.cau.de/circuit"
+            class="de.cau.cs.kieler.circuit.CircuitPackage"
+            genModel="model/circuit.genmodel"/>
+   </extension>
+
+   <extension
+         point="de.cau.cs.kieler.kicool.system">
+      <TransformationSystem
+            system="system/de.cau.cs.kieler.sccharts.circuit.kico">
+      </TransformationSystem>
+   </extension>
+   
+   <extension
+         point="de.cau.cs.kieler.kicool.processor">
+      <Processor
+            class="de.cau.cs.kieler.circuit.processors.SeqSCG2SSA_SCGTransformation">
+      </Processor>   
+      <Processor
+            class="de.cau.cs.kieler.circuit.processors.SSA_SCG2CircuitTransformation">
+      </Processor>   
+   </extension>
+
+</plugin>

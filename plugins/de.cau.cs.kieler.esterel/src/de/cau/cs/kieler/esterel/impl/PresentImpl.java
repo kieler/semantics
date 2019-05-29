@@ -110,6 +110,7 @@ public class PresentImpl extends StatementImpl implements Present {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__STATEMENTS);
@@ -122,6 +123,7 @@ public class PresentImpl extends StatementImpl implements Present {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -146,6 +148,7 @@ public class PresentImpl extends StatementImpl implements Present {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -165,6 +168,7 @@ public class PresentImpl extends StatementImpl implements Present {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<PresentCase> getCases() {
         if (cases == null) {
             cases = new EObjectContainmentEList<PresentCase>(PresentCase.class, this, EsterelPackage.PRESENT__CASES);
@@ -177,6 +181,7 @@ public class PresentImpl extends StatementImpl implements Present {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getElseStatements() {
         if (elseStatements == null) {
             elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.PRESENT__ELSE_STATEMENTS);

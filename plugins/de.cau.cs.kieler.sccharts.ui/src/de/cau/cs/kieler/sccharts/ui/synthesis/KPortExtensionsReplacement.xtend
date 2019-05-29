@@ -111,21 +111,33 @@ class KPortExtensionsReplacement {
     }
 
     def addPort(Object o1, KPort port) {
+        if (portExists(o1)) {
+            println("Adding a port mapping manually, but the port does already exist! " + o1)
+        }
         val key = newArrayList(newArrayList(o1))
         getInternalPortMap.put(key, port)
     }
 
     def addPort(Object o1, Object o2, KPort port) {
+        if (portExists(o1, o2)) {
+            println("Adding a port mapping manually, but the port does already exist! " + o1 + ", " + o2)
+        }
         val key = newArrayList(newArrayList(o1, o2))
         getInternalPortMap.put(key, port)
     }
 
     def addPort(Object o1, Object o2, Object o3, KPort port) {
+        if (portExists(o1, o2, o3)) {
+            println("Adding a port mapping manually, but the port does already exist!" + o1 + ", " + o2 + ", " + o3)
+        }
         val key = newArrayList(newArrayList(o1, o2, o3))
         getInternalPortMap.put(key, port)
     }
     
     def addPort(Object o1, Object o2, Object o3, Object o4, KPort port) {
+        if (portExists(o1, o2, o3, o4)) {
+            println("Adding a port mapping manually, but the port does already exist!" + o1 + ", " + o2 + ", " + o3 + ", " + o4)
+        }
         val key = newArrayList(newArrayList(o1, o2, o3, o4))
         getInternalPortMap.put(key, port)
     }

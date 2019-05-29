@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: de.cau.cs.kieler.kicool;singleton:=true
 Automatic-Module-Name: de.cau.cs.kieler.kicool
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -46,6 +46,8 @@ Export-Package: de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.kicool.parser.antlr,
  de.cau.cs.kieler.kicool.parser.antlr.internal,
  de.cau.cs.kieler.kicool.processors,
+ de.cau.cs.kieler.kicool.processors.ast,
+ de.cau.cs.kieler.kicool.processors.dependencies,
  de.cau.cs.kieler.kicool.processors.metrics,
  de.cau.cs.kieler.kicool.registration,
  de.cau.cs.kieler.kicool.scoping,

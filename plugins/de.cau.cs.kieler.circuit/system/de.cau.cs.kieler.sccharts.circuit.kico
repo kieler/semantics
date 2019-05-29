@@ -1,0 +1,34 @@
+public system de.cau.cs.kieler.sccharts.circuit 
+	label "SCCharts Circuit Compilation"
+	
+system de.cau.cs.kieler.sccharts.extended.core
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+de.cau.cs.kieler.scg.processors.dependency config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": true
+}
+post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+pre process de.cau.cs.kieler.scg.processors.structuralDepthJoin
+de.cau.cs.kieler.scg.processors.basicBlocks
+post process de.cau.cs.kieler.scg.processors.expressions
+de.cau.cs.kieler.scg.processors.guards config {
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies": true,
+    "de.cau.cs.kieler.scg.processors.loopAnalyzer.warningOnInstantaneousLoop": false
+}
+// post process de.cau.cs.kieler.scg.processors.guards.tickBoundaries
+// post process de.cau.cs.kieler.scg.processors.loopAnalyzerV2
+// post process de.cau.cs.kieler.scg.processors.ineffectiveGuardRemover
+// post process de.cau.cs.kieler.scg.processors.unobservableGuardRemover
+de.cau.cs.kieler.scg.processors.scheduler
+de.cau.cs.kieler.scg.processors.sequentializer
+// post process de.cau.cs.kieler.scg.processors.copyPropagation
+// post process de.cau.cs.kieler.scg.processors.conditionalMerger
+// post process de.cau.cs.kieler.scg.processors.haltStateRemover
+// post process de.cau.cs.kieler.scg.processors.smartRegisterAllocation
+// post process de.cau.cs.kieler.scg.processors.persistentStateOptimizer
+// post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+// post process de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation
+// post process silent de.cau.cs.kieler.scg.processors.cleanupValuedObjects
+// post process de.cau.cs.kieler.kicool.deploy.variable.store.clean
+de.cau.cs.kieler.seqscq.ssa
+de.cau.cs.kieler.seqssa.circuit

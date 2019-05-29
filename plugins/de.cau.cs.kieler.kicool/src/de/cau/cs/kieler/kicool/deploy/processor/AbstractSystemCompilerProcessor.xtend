@@ -51,11 +51,14 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         
     public static val IProperty<Long> TIMEOUT_SEC = 
         new Property<Long>("de.cau.cs.kieler.kicool.deploy.compiler.timeout", 60L)
+
+    public static val IProperty<String> DEBUG_FOLDER = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.folder.debug", "debug")
         
     @Accessors(PROTECTED_GETTER, PROTECTED_SETTER)
     var Boolean escapeOptions = true
         
-    protected val logger = new Logger()
+    protected var logger = new Logger()
     
     override getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
@@ -82,6 +85,21 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         }
         return binFolder
     }
+    
+    def createDebugFolder(ProjectInfrastructure infra, boolean clearDirectory) {
+        val debugFolder = new File(infra.generatedCodeFolder, environment.getProperty(DEBUG_FOLDER)?:DEBUG_FOLDER.^default)
+        logger.println("Debug output folder: " + debugFolder)
+        if (debugFolder.exists && clearDirectory) {
+            logger.println("\n== Clearing Debug Output Folder ==")
+            debugFolder.deleteRecursively(logger)
+            logger.println()
+                
+            debugFolder.mkdirs
+        } else {
+            debugFolder.mkdirs
+        }
+        return debugFolder
+    }    
     
     def invoke(List<String> command, File directory) {
         logger.println("Invoking command: " + command.join(" "))

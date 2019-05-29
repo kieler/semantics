@@ -37,4 +37,19 @@ class Logger extends PrintStream {
         this.close
         return cc
     }  
+
+    def intermediateLog(String logFileName) {
+        val cc = new CodeContainer => [add(logFileName, new String((this.out as ByteArrayOutputStream).toByteArray, charset))]
+        this.out.flush
+        
+        return cc
+    }  
+    
+    static def newLogger(Object object, String headline) {
+        val logger = new Logger
+        logger.println(headline)
+        logger.println
+        return logger
+    }
+
 }

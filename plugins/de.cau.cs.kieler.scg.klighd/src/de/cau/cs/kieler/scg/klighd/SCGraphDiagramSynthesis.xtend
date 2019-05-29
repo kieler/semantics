@@ -46,7 +46,6 @@ import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.BasicBlock
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.Entry
@@ -112,6 +111,8 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import de.cau.cs.kieler.scg.TickBoundaryDependency
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import java.util.Map
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -824,7 +825,12 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return assignment.createNode().associateWith(assignment) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Straightforward rectangle drawing
-            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH).background = "white".color;
+            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH) 
+            if (assignment.expression instanceof ReferenceCall) {
+                figure.setBackgroundGradient("#fcf7fc".color , "#e6cbf2".color, 90.0f)
+            } else {
+                figure.background = "white".color;
+            }
             (figure) => [
                 associateWith(assignment)
                 node.setMinimalNodeSize(MINIMALWIDTH, MINIMALHEIGHT)
@@ -832,6 +838,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                 var assignmentStr = ""
                 if (assignment.hasAnnotation(ANNOTATION_LABEL)) {
                     assignmentStr = assignment.getStringAnnotationValue(ANNOTATION_LABEL)
+                } else if (assignment.hasAnnotation(ANNOTATION_RETURN_NODE)) {
+                    assignmentStr = "return " + serializeHR(assignment.expression)
                 } else {
                     assignmentStr = serializeHR(assignment) as String
                 }

@@ -68,6 +68,7 @@ public abstract class StatementContainerImpl extends AnnotatableImpl implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, SCLPackage.STATEMENT_CONTAINER__STATEMENTS);

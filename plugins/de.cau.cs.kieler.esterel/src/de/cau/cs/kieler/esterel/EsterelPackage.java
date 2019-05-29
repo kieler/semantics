@@ -136,13 +136,13 @@ public interface EsterelPackage extends EPackage {
     int ESTEREL_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ESTEREL_DECLARATION__PRIVATE = KExpressionsPackage.DECLARATION__PRIVATE;
+    int ESTEREL_DECLARATION__ACCESS = KExpressionsPackage.DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Declaration</em>' class.
@@ -237,13 +237,13 @@ public interface EsterelPackage extends EPackage {
     int TYPE_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TYPE_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int TYPE_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Type Declaration</em>' class.
@@ -347,13 +347,13 @@ public interface EsterelPackage extends EPackage {
     int CONSTANT_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int CONSTANT_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int CONSTANT_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Constant Declaration</em>' class.
@@ -466,13 +466,13 @@ public interface EsterelPackage extends EPackage {
     int FUNCTION_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int FUNCTION_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int FUNCTION_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Function Declaration</em>' class.
@@ -594,13 +594,13 @@ public interface EsterelPackage extends EPackage {
     int PROCEDURE_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int PROCEDURE_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int PROCEDURE_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Procedure Declaration</em>' class.
@@ -722,13 +722,13 @@ public interface EsterelPackage extends EPackage {
     int TASK_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int TASK_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int TASK_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Task Declaration</em>' class.
@@ -850,13 +850,13 @@ public interface EsterelPackage extends EPackage {
     int SIGNAL_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SIGNAL_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int SIGNAL_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Signal Declaration</em>' class.
@@ -896,13 +896,13 @@ public interface EsterelPackage extends EPackage {
     int INPUT_DECLARATION__VALUED_OBJECTS = SIGNAL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_DECLARATION__PRIVATE = SIGNAL_DECLARATION__PRIVATE;
+    int INPUT_DECLARATION__ACCESS = SIGNAL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Input Declaration</em>' class.
@@ -942,13 +942,13 @@ public interface EsterelPackage extends EPackage {
     int OUTPUT_DECLARATION__VALUED_OBJECTS = SIGNAL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int OUTPUT_DECLARATION__PRIVATE = SIGNAL_DECLARATION__PRIVATE;
+    int OUTPUT_DECLARATION__ACCESS = SIGNAL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Output Declaration</em>' class.
@@ -988,13 +988,13 @@ public interface EsterelPackage extends EPackage {
     int INPUT_OUTPUT_DECLARATION__VALUED_OBJECTS = SIGNAL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int INPUT_OUTPUT_DECLARATION__PRIVATE = SIGNAL_DECLARATION__PRIVATE;
+    int INPUT_OUTPUT_DECLARATION__ACCESS = SIGNAL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Input Output Declaration</em>' class.
@@ -1034,13 +1034,13 @@ public interface EsterelPackage extends EPackage {
     int RETURN_DECLARATION__VALUED_OBJECTS = SIGNAL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RETURN_DECLARATION__PRIVATE = SIGNAL_DECLARATION__PRIVATE;
+    int RETURN_DECLARATION__ACCESS = SIGNAL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Return Declaration</em>' class.
@@ -1171,13 +1171,13 @@ public interface EsterelPackage extends EPackage {
     int SENSOR_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SENSOR_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int SENSOR_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The number of structural features of the '<em>Sensor Declaration</em>' class.
@@ -1290,13 +1290,13 @@ public interface EsterelPackage extends EPackage {
     int RELATION_DECLARATION__VALUED_OBJECTS = ESTEREL_DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int RELATION_DECLARATION__PRIVATE = ESTEREL_DECLARATION__PRIVATE;
+    int RELATION_DECLARATION__ACCESS = ESTEREL_DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Relations</b></em>' containment reference list.
@@ -2912,13 +2912,13 @@ public interface EsterelPackage extends EPackage {
     int LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS = ESTEREL_STATEMENT_FEATURE_COUNT + 1;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int LOCAL_SIGNAL_DECLARATION__PRIVATE = ESTEREL_STATEMENT_FEATURE_COUNT + 2;
+    int LOCAL_SIGNAL_DECLARATION__ACCESS = ESTEREL_STATEMENT_FEATURE_COUNT + 2;
 
     /**
      * The number of structural features of the '<em>Local Signal Declaration</em>' class.
@@ -3013,13 +3013,13 @@ public interface EsterelPackage extends EPackage {
     int ESTEREL_VARIABLE_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ESTEREL_VARIABLE_DECLARATION__PRIVATE = KExpressionsPackage.DECLARATION__PRIVATE;
+    int ESTEREL_VARIABLE_DECLARATION__ACCESS = KExpressionsPackage.DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' containment reference.

@@ -15,6 +15,7 @@ package de.cau.cs.kieler.scg.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
@@ -152,10 +153,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
                 return createControlFlowAdapter();
             }
             @Override
-            public Adapter caseControlDependency(ControlDependency object) {
-                return createControlDependencyAdapter();
-            }
-            @Override
             public Adapter caseExpressionDependency(ExpressionDependency object) {
                 return createExpressionDependencyAdapter();
             }
@@ -178,6 +175,10 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
             }
             @Override
             public Adapter caseNamedObject(NamedObject object) {
@@ -428,20 +429,6 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
-     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
-     * <!-- begin-user-doc -->
-     * This default implementation returns null so that we can easily ignore cases;
-     * it's useful to ignore a case when inheritance will catch all the cases anyway.
-     * <!-- end-user-doc -->
-     * @return the new adapter.
-     * @see de.cau.cs.kieler.scg.ControlDependency
-     * @generated
-     */
-    public Adapter createControlDependencyAdapter() {
-        return null;
-    }
-
-    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -578,6 +565,20 @@ public class ScgAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
         return null;
     }
 

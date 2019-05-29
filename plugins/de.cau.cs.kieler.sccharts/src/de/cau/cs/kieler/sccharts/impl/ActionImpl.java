@@ -232,6 +232,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.ACTION__OUTGOING_LINKS);
@@ -244,6 +245,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.ACTION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -256,6 +258,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Effect> getEffects() {
         if (effects == null) {
             effects = new EObjectContainmentEList<Effect>(Effect.class, this, SCChartsPackage.ACTION__EFFECTS);
@@ -268,6 +271,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getTrigger() {
         return trigger;
     }
@@ -292,6 +296,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTrigger(Expression newTrigger) {
         if (newTrigger != trigger) {
             NotificationChain msgs = null;
@@ -311,6 +316,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getTriggerDelay() {
         return triggerDelay;
     }
@@ -320,6 +326,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTriggerDelay(int newTriggerDelay) {
         int oldTriggerDelay = triggerDelay;
         triggerDelay = newTriggerDelay;
@@ -332,6 +339,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getTriggerProbability() {
         return triggerProbability;
     }
@@ -341,6 +349,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTriggerProbability(double newTriggerProbability) {
         double oldTriggerProbability = triggerProbability;
         triggerProbability = newTriggerProbability;
@@ -353,6 +362,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayType getDelay() {
         return delay;
     }
@@ -362,6 +372,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayType newDelay) {
         DelayType oldDelay = delay;
         delay = newDelay == null ? DELAY_EDEFAULT : newDelay;
@@ -374,6 +385,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isNondeterministic() {
         return nondeterministic;
     }
@@ -383,6 +395,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNondeterministic(boolean newNondeterministic) {
         boolean oldNondeterministic = nondeterministic;
         nondeterministic = newNondeterministic;
@@ -410,6 +423,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -419,6 +433,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;

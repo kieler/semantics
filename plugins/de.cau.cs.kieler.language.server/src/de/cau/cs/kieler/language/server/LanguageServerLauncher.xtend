@@ -37,14 +37,12 @@ class LanguageServerLauncher extends ServerLauncher {
     
     static extension LSCreator creator = new LSCreator
     
-    static Injector lsInjector
-    
     @Inject Injector injector
     
-    def static void main(String[] args) {       
+    def static void main(String[] args) {
         // Launch the server
-        lsInjector = bindAndRegisterLanguages()
-        launch(ServerLauncher.name, args, createLSModules(lsInjector, false))
+        bindAndRegisterLanguages()
+        launch(ServerLauncher.name, args, createLSModules(false))
     }
     
     /**
@@ -53,7 +51,7 @@ class LanguageServerLauncher extends ServerLauncher {
      */
     override start(LaunchArgs args) {
         val threadPool = Executors.newCachedThreadPool
-        val ls = lsInjector.getInstance(LanguageServerImpl)
+        val ls = injector.getInstance(LanguageServerImpl)
         buildAndStartLS(injector, ls, args.in, args.out, threadPool, args.wrapper,false)
     }
     

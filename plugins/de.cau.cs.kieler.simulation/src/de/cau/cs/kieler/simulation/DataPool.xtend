@@ -98,7 +98,7 @@ class DataPool implements IKiCoolCloneable {
         val input = new JsonObject
         val infos = entries
         for (entry : pool.entrySet) {
-            val properties = infos.get(entry.key)?.combinedProperties
+            val properties = infos.get(entry.key)?.getCombinedProperties(sim)
             if (properties !== null && properties.contains(VariableStore.INPUT)) {
                 input.add(entry.key, entry.value)
             }
@@ -409,14 +409,14 @@ class DataPoolEntry {
     }
     
     def getCombinedProperties(Simulatable sim) {
-        return this.getVariableInformation(sim)?.map[properties].flatten.toSet
+        return this.getVariableInformation(sim).map[properties].flatten.toSet
     }
     
     def getVariableInformation(Simulatable sim) {
         if (relatedSimulatables.contains(sim)) {
             return sim.variableInformation.variables.get(name)
         }
-        return null
+        return emptySet
     }
     
     def isInput() {

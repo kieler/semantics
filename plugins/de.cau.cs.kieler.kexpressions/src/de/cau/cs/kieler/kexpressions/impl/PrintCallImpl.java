@@ -80,6 +80,7 @@ public class PrintCallImpl extends EObjectImpl implements PrintCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.PRINT_CALL__SCHEDULE);
@@ -92,6 +93,7 @@ public class PrintCallImpl extends EObjectImpl implements PrintCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.PRINT_CALL__PARAMETERS);

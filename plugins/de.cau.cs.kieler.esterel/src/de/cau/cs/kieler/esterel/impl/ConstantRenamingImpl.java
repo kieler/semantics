@@ -88,6 +88,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Constant getNewName() {
         if (newName != null && newName.eIsProxy()) {
             InternalEObject oldNewName = (InternalEObject)newName;
@@ -114,6 +115,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(Constant newNewName) {
         Constant oldNewName = newName;
         newName = newNewName;
@@ -126,6 +128,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getNewValue() {
         return newValue;
     }
@@ -150,6 +153,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewValue(Expression newNewValue) {
         if (newNewValue != newValue) {
             NotificationChain msgs = null;
@@ -169,6 +173,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Constant getOldName() {
         if (oldName != null && oldName.eIsProxy()) {
             InternalEObject oldOldName = (InternalEObject)oldName;
@@ -195,6 +200,7 @@ public class ConstantRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(Constant newOldName) {
         Constant oldOldName = oldName;
         oldName = newOldName;

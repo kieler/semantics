@@ -83,6 +83,7 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.LOCAL_VARIABLE_DECLARATION__STATEMENTS);
@@ -95,6 +96,7 @@ public class LocalVariableDeclarationImpl extends StatementImpl implements Local
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<EsterelVariableDeclaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<EsterelVariableDeclaration>(EsterelVariableDeclaration.class, this, EsterelPackage.LOCAL_VARIABLE_DECLARATION__DECLARATIONS);
