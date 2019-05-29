@@ -12,6 +12,7 @@ RegularSSATransformation.xtend * KIELER - Kiel Integrated Environment for Layout
  */
 package de.cau.cs.kieler.scg.processors.ssa
 
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -20,9 +21,6 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGManipulationExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.processors.ssa.SSATransformationExtensions
-import javax.inject.Inject
 
 import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
 import static de.cau.cs.kieler.scg.processors.ssa.SSAParameterProperty.*
