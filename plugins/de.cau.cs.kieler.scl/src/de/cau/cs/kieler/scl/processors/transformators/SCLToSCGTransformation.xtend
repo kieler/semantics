@@ -312,7 +312,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         // Parameters
         declMapping.clear
         declVOMapping.clear
-        scg.declarations += method.declarations.copyDeclarations(declVOMapping, declMapping)
+        scg.declarations += method.parameterDeclarations.copyDeclarations(declVOMapping, declMapping)
         declMapping.entrySet.forEach[key.trace(value)]
         declVOMapping.entrySet.forEach[
             val oldVO = key
