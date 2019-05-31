@@ -80,7 +80,12 @@ import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.DuringAction
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -120,11 +125,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
-    
+
     // als magic: this should never reach the master (11.09.2018)! ;-)
     // but probably will. (10.10.2018) ;-)
-    private val actionRectangleMap = <Action, KRectangle> newHashMap 
+    val actionRectangleMap = <Action, KRectangle> newHashMap 
     
+    override getDisplayedSynthesisOptions() {
+        val options = newArrayList()
+        
+        return options
+    }     
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
@@ -542,5 +552,5 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ]
         ]
     }         
-       
+     
 }

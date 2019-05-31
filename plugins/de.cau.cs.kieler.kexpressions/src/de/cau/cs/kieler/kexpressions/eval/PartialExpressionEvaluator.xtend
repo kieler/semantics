@@ -270,9 +270,11 @@ class PartialExpressionEvaluator {
      * Returns null if eval should be aborted
      */
     def Value compute(OperatorExpression oexp) {
-        if (oexp.subExpressions.size > 2) {
-            // FIXME support!
-            return null
+        while (oexp.subExpressions.size > 2) {
+            val partialOE = createOperatorExpression(oexp.operator)
+            partialOE.subExpressions += oexp.subExpressions.head
+            partialOE.subExpressions += oexp.subExpressions.head
+            oexp.subExpressions.add(0, partialOE.compute)
         }
         // Only compute integer/bool
         if (oexp.subExpressions.forall[it instanceof IntValue || it instanceof BoolValue]) {
@@ -309,8 +311,8 @@ class PartialExpressionEvaluator {
                 case DIV: {
                     if (op0 % op1 == 0) {
                         createIntValue(op0 / op1)
-                    } else { // This would require floating point handling an a proper type system
-                        return null
+                    } else { 
+                        createIntValue(op0 / op1)
                     }
                 }
                 case MOD: createIntValue(op0 % op1)
