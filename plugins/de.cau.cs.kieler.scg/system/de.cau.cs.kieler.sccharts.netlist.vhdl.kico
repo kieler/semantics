@@ -1,4 +1,4 @@
-system de.cau.cs.kieler.sccharts.netlist 
+system de.cau.cs.kieler.sccharts.netlist.vhdl
 	label "Netlist-based Compilation (VHDL)"
     start config {
        "de.cau.cs.kieler.scg.opt.copyPropagation": true,
