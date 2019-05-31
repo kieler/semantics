@@ -19,6 +19,7 @@ import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * This class contains custom scoping description.
@@ -72,6 +73,11 @@ class SCLScopeProvider extends KExtScopeProvider {
                 if (declarationScope.initializationDeclaration !== null) {
                     candidates += declarationScope.initializationDeclaration.valuedObjects
                 }
+            }
+            
+            // Add method parameters           
+            if (declarationScope instanceof MethodImplementationDeclaration) {
+                candidates += declarationScope.parameterDeclarations.map[valuedObjects].flatten
             }
             
             declarationScope = declarationScope.nextDeclarationScope
