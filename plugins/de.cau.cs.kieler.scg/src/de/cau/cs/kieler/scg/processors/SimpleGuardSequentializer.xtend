@@ -218,8 +218,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
                	} 
             }
             
-            
-            
+            entryNode.exit = exitNode as Exit
         }
         
         newSCG
