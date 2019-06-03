@@ -52,10 +52,10 @@
      <extension
            point="de.cau.cs.kieler.kicool.processor">
         <Processor
-              class="de.cau.cs.kieler.c.sccharts.processors.CDTProcessor">
+              class="de.cau.cs.kieler.c.sccharts.processors.CParserProcessor">
         </Processor>
         <Processor
-              class="de.cau.cs.kieler.c.sccharts.processors.CParserProcessor">
+              class="de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor">
         </Processor>
    </extension>
    <extension
