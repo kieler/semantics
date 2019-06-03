@@ -60,7 +60,7 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.optimizer.IneffectiveGuardRemover,
             de.cau.cs.kieler.scg.processors.optimizer.UnobservableGuardRemover,
             de.cau.cs.kieler.scg.processors.optimizer.SimpleGuardOptimization,
-            de.cau.cs.kieler.scg.processors.MethodProcessor,
+            de.cau.cs.kieler.scg.processors.MethodInliningProcessor,
             de.cau.cs.kieler.scg.processors.codegen.promela.PromelaCodeGenerator,
             de.cau.cs.kieler.scg.processors.codegen.smv.SmvCodeGenerator,
             de.cau.cs.kieler.scg.processors.codegen.smv.SimplifyNamesOfSSA,

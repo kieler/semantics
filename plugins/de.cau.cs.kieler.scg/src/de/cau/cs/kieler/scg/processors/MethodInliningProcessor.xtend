@@ -15,9 +15,10 @@ package de.cau.cs.kieler.scg.processors
 import com.google.common.collect.HashBasedTable
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.IntAnnotation
-import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
@@ -39,17 +40,22 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import java.util.Map
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import java.util.WeakHashMap
 
 /**
  * 
  * @author als
  */
-class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
-    
+class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
+
+    public static val IProperty<Boolean> INLINE_ALL = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.all", true) 
+
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -58,13 +64,15 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
     @Inject extension PragmaExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGCoreExtensions
+    @Inject extension SCGMethodExtensions
         
     public static val GENERATED_PREFIX = "_"
     
     private int fnCouter = 0
+    private val simpleMethodCache = new WeakHashMap<SCGraph, Boolean>()
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.methods"
+        "de.cau.cs.kieler.scg.processors.methods.inline"
     }
     
     override getName() {
@@ -76,8 +84,8 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val normalSCGs = newArrayList
         
         for (scg : model.scgs) {
-            if (scg.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE)) {
-                methodSCGs.put((scg.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE) as ReferenceAnnotation).object as MethodDeclaration, scg)
+            if (scg.isMethod) {
+                methodSCGs.put(scg.methodDeclaration, scg)
             } else {
                 normalSCGs += scg
             }
@@ -100,8 +108,11 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             }
             for (call : calls.cellSet) {
                 if (methodSCGs.containsKey(call.rowKey)) {
-                    // Currently only inlining is available
-                    call.rowKey.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet)
+                    val method = call.rowKey
+                    val methodSCG = methodSCGs.get(method)
+                    if (INLINE_ALL.property || method.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || methodSCG.isSimpleMethod) {
+                        method.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet)
+                    }
                 }
             }
         }
@@ -113,6 +124,16 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             scg.declarations.removeIf[it instanceof ClassDeclaration && (it as ClassDeclaration).declarations.nullOrEmpty]
         }
         methodSCGs.keySet.forEach[remove]
+    }
+    
+    def boolean isSimpleMethod(SCGraph scg) {
+        if (simpleMethodCache.containsKey(scg)) {
+            return simpleMethodCache.get(scg)?:false
+        } else {
+            val simple = scg.nodes.size < 8 && !scg.nodes.exists[hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)]
+            simpleMethodCache.put(scg, simple)
+            return simple
+        }
     }
     
     def void inlineMethod(MethodDeclaration method, ReferenceCall call, Node callNode, Map<MethodDeclaration, SCGraph> methodSCGs,  Set<MethodDeclaration> callStack) {

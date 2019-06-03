@@ -3,6 +3,6 @@ public system de.cau.cs.kieler.sccharts.priority
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
-post process de.cau.cs.kieler.scg.processors.methods
+post process de.cau.cs.kieler.scg.processors.methods.inline
 system de.cau.cs.kieler.scg.priority
 de.cau.cs.kieler.scg.processors.sclp
