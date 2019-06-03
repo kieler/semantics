@@ -31,7 +31,6 @@ import org.eclipse.emf.compare.EMFCompare
 import org.eclipse.emf.compare.match.DefaultComparisonFactory
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
 import org.eclipse.emf.compare.match.DefaultMatchEngine
-import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.scope.FilterComparisonScope
 import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
@@ -39,6 +38,8 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
+import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -724,13 +725,13 @@ class TracingTreeExtensions {
             return null;
         }
   
-        val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
-        val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
-        val matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
-        val matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry();
-        val postProcessorRegistry = EMFCompareRCPPlugin.getDefault().getPostProcessorRegistry();
-        val comparator = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).
-            setPostProcessorRegistry(postProcessorRegistry).build();
+        val builder = EMFCompare.builder()
+        builder.matchEngineFactoryRegistry = new MatchEngineFactoryRegistryImpl() => [
+            val matchEngineFactory = new MatchEngineFactoryImpl(UseIdentifiers.NEVER)
+            matchEngineFactory.setRanking(1000)
+            add(matchEngineFactory)
+        ]
+        val comparator = builder.build
 
         val scope = new FilterComparisonScope(left, right, null);
         scope.setEObjectContentFilter(

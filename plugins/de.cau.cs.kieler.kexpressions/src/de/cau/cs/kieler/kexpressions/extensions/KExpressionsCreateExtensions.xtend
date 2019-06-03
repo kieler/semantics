@@ -294,6 +294,12 @@ class KExpressionsCreateExtensions {
         ]
     }
 
+    def OperatorExpression createConditionalExpression(Expression condition, Expression thenExpression) {
+        createOperatorExpression(OperatorType::CONDITIONAL) => [
+            subExpressions += condition
+            subExpressions += thenExpression
+        ]
+    }
     
     // Create an int value.
     def IntValue createIntValue(int value) {

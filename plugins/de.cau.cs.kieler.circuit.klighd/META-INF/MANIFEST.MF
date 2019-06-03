@@ -5,6 +5,7 @@ Bundle-Vendor: Kiel University
 Bundle-Version: 0.13.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.circuit.ui;singleton:=true
 Bundle-ActivationPolicy: lazy
+Eclipse-UI: True
 Require-Bundle: javax.inject,
  com.google.guava,
  com.google.inject,

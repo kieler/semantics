@@ -5,9 +5,6 @@
 -->
 
 <plugin>
-   <extension-point id="de.cau.cs.kieler.kicool.system" name="KIELER Compiler Transformation System" schema="schema/de.cau.cs.kieler.kicool.system.exsd"/>
-   <extension-point id="de.cau.cs.kieler.kicool.processor" name="KIELER Compiler Processor" schema="schema/de.cau.cs.kieler.kicool.processor.exsd"/>
-   <extension-point id="de.cau.cs.kieler.kicool.resource.extension" name="KIELER Compiler Resource Extension Information" schema="schema/de.cau.cs.kieler.kicool.resource.extension.exsd"/>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated KiCool -->
@@ -17,71 +14,5 @@
             genModel="model/KiCool.genmodel"/>
    </extension>
 
-   <extension
-         point="de.cau.cs.kieler.kicool.system">
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.kicool.identity.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.kicool.identity.dynamic.kico">
-      </TransformationSystem>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.processor">
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.Identity">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.metrics.EObjectCount">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.Delay">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.metrics.PTime">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.DynamicIdentity">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.ProjectSetup">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.VariableStoreInitializer">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.VariableStoreCleaner">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.JavaCompiler">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.CCompiler">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.ArduinoCompiler">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.NXJCompiler">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.MacroAnnotations">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.deploy.processor.ModelIncludes">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.Snapshot">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.kicool.processors.ast.GCCAST2KAST">
-      </Processor>
-   </extension>
    
 </plugin>

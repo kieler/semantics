@@ -19,8 +19,6 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
-import java.util.List
-import org.eclipse.core.resources.IFile
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.

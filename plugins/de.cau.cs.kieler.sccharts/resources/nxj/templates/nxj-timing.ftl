@@ -103,7 +103,6 @@
         } else {
             // Set actual tick duration
             scchart.${parameters.varName} = (int)(System.currentTimeMillis() - tickDurationCounter);
-            <#if (parameters.parameter1!0) != 0 >
             // Wait until target duration of tick reached
             if ( tickDurationCounter + ${parameters.parameter1} > System.currentTimeMillis() ) {
                 try {
@@ -112,7 +111,6 @@
                     e.printStackTrace();
                 }
             }
-            </#if>
             // Remember tick duration
             tickDurationCounter = System.currentTimeMillis();
         }
@@ -190,12 +188,12 @@
 -->
 <#macro TickCount position>
 <#if position=="init">
-<#list parameters["Sleep"] as parameters>
+<#list parameters["TickCount"] as parameters>
       scchart.${parameters.varName} = -1; // Start with -1 because increasing is done before each tick.
 </#list>
 </#if>
 <#if position=="input">
-<#list parameters["Sleep"] as parameters>
+<#list parameters["TickCount"] as parameters>
         // TickCount
         scchart.${parameters.varName}++;
 </#list>

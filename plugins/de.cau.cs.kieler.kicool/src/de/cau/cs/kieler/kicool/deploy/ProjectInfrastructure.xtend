@@ -98,7 +98,6 @@ class ProjectInfrastructure {
         }
         return projectInfrastructure
     }
-    
     /**
      * Returns the temporary project.
      * If the project does not exist yet, it is created beforehand.
@@ -284,26 +283,26 @@ class ProjectInfrastructure {
 
         val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).join("/")
-
-        // Copy files from bundle which are in the directory.
-        val entries = bundle.findEntries(path, "*.*", true)
-        if (entries !== null) {
-            for (var e = entries; e.hasMoreElements;) {
-                val fileUrl = e.nextElement
+        val entries = bundle.findEntries(path, "*", true)
+        if (entries.hasMoreElements) {
+            while (entries.hasMoreElements) {
+                val fileUrl = entries.nextElement
                 val fileUrlPath = fileUrl.toString
-                val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
-                val destFile = new File(dest, relativePath)
-
-                logger?.println("Copying file: " + fileUrlPath)
-                
-                destFile.parentFile.mkdirs
-                if (destFile.isDirectory) {
-                    logger?.println("Destination already exists and is directory (" + destFile + ")")
-                    return false
-                } else if (!destFile.exists || overrideFile) {
-                    fileUrl.copyUrlToFile(destFile)
-                } else {
-                    logger?.println("Skip - destination already exists")
+                if (!fileUrlPath.endsWith("/")) { // is file
+                    val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
+                    val destFile = new File(dest, relativePath)
+    
+                    logger?.println("Copying file: " + fileUrlPath)
+                    
+                    destFile.parentFile.mkdirs
+                    if (destFile.isDirectory) {
+                        logger?.println("Destination already exists and is directory (" + destFile + ")")
+                        return false
+                    } else if (!destFile.exists || overrideFile) {
+                        fileUrl.copyUrlToFile(destFile)
+                    } else {
+                        logger?.println("Skip - destination already exists")
+                    }
                 }
             }
             return true
@@ -345,13 +344,10 @@ class ProjectInfrastructure {
 
         val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
-
-        // Copy files from bundle which are in the directory.
         val entries = bundle.findEntries(path, src.lastSegment, true)
-        if (entries !== null) {
-            val fileUrl = entries.nextElement
+        val fileUrl = entries?.nextElement
+        if (fileUrl !== null) {
             val fileUrlPath = fileUrl.toString
-
             logger?.println("Copying file: " + fileUrlPath)
             
             dest.parentFile.mkdirs
@@ -387,7 +383,6 @@ class ProjectInfrastructure {
             input.close();
             output?.close();
         }
-                
     }
     
     /**
@@ -421,5 +416,4 @@ class ProjectInfrastructure {
             return false
         }
     }
-    
 }
