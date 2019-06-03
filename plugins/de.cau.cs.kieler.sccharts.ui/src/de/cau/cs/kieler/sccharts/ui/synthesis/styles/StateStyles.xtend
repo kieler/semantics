@@ -16,17 +16,20 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
@@ -50,9 +53,6 @@ import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.klighd.krendering.KColor
 
 /**
  * Styles for {@link State}.
@@ -230,7 +230,8 @@ class StateStyles {
             
             fontBold = true
             fontSize = stateLabelTextSize
-            //suppressSelectability
+            suppressSelectability
+            selectionTextUnderline = Underline.NONE // prevents default selection style
         ]
     }
 
@@ -244,7 +245,8 @@ class StateStyles {
                 
             eAllContents.filter(KText).forEach[
                 fontSize = stateLabelTextSize
-                //suppressSelectability
+                suppressSelectability
+                selectionTextUnderline = Underline.NONE // prevents default selection style
             ]
 
             children.head => [
@@ -309,6 +311,7 @@ class StateStyles {
                 	if (builder.length > 0 && keyword != entry.value) {
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
+                            selectionTextUnderline = Underline.SINGLE
                         ]
 		                if (keyword == TextFormat.KEYWORD) {
 		                	ktext.highlightKeyword
@@ -328,6 +331,7 @@ class StateStyles {
                 }
                 ktext = addText(builder.toString) => [
                     horizontalAlignment = H_LEFT
+                    selectionTextUnderline = Underline.SINGLE
                 ]
                 if (keyword == TextFormat.KEYWORD) {
                 	ktext.highlightKeyword

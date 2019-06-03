@@ -35,6 +35,7 @@ Require-Bundle: de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.simulation.ui,
  com.google.gson;bundle-version="2.7.0",
  org.eclipse.ui.ide;bundle-version="3.14.0",
+ de.cau.cs.kieler.scl.ui,
  de.cau.cs.kieler.klighd.ui.view
 Bundle-Vendor: Kiel University
 Bundle-ActivationPolicy: lazy

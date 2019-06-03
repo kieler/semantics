@@ -3,14 +3,18 @@
  */
 package de.cau.cs.kieler.sccharts.text.validation
 
+import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.AnnotationsPackage
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.TypedStringAnnotation
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -18,14 +22,18 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.VectorValue
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.PreemptionType
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.SCChartsPackage
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ScopeCall
@@ -33,6 +41,7 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
@@ -40,20 +49,13 @@ import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.text.SCTXResource
 import java.util.Map
 import java.util.Set
-import org.eclipse.elk.core.data.LayoutMetaDataService
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator
 import org.eclipse.xtext.validation.Check
 import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import com.google.common.collect.HashMultimap
-import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+
+import static extension java.lang.String.*
+import org.eclipse.elk.core.data.LayoutMetaDataService
 
 //import org.eclipse.xtext.validation.Check
 
@@ -137,6 +139,17 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
 
 
+    @Check
+    override checkReferenceAssignment(Assignment asm) {
+        super.checkReferenceAssignment(asm)
+        val decl = asm.reference?.valuedObject?.eContainer
+        if (decl instanceof ReferenceDeclaration) {
+            if (asm.reference.subReference === null && decl.reference instanceof de.cau.cs.kieler.sccharts.State && !(asm.eContainer instanceof DataflowRegion)) {
+                error("Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region).", asm.reference, null, -1)
+            }
+        }
+    }
+
     /**
      * Checks for inconsistencies/conflicts in inheritance hierarchy.
      */
@@ -157,7 +170,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (!state.baseStates.nullOrEmpty) {
             val names = HashMultimap.<String, de.cau.cs.kieler.sccharts.State>create
             for (base : state.allInheritedStates) {
-                base.declarations.filter[!private].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
+                base.declarations.filter[access !== AccessModifier.PRIVATE].map[valuedObjects].flatten.forEach[names.put(it.name, base)]
             }
             val clashes = names.keySet.filter[names.get(it).size > 1].toSet
             if (!clashes.empty) {
@@ -638,7 +651,7 @@ class SCTXValidator extends AbstractSCTXValidator {
      * @param state the state
      */
     @Check
-    public def void checkAllHaveFinalStates(de.cau.cs.kieler.sccharts.ControlflowRegion region) {
+    public def void checkAllHaveFinalStates(ControlflowRegion region) {
         val finalStates = region.states.filter[it.isFinal]
         if(!finalStates.isNullOrEmpty) {
             for(r : region.parentState.regions.filter(ControlflowRegion)) {
@@ -671,7 +684,8 @@ class SCTXValidator extends AbstractSCTXValidator {
         if (foundTermination) {
             // Assert inner behaviour
             val regions = state.regions.filter(ControlflowRegion)
-            if(regions.isEmpty && state.reference === null) {
+            val dataflowRegions = state.regions.filter(DataflowRegion)
+            if(regions.isEmpty && state.reference === null && dataflowRegions.isEmpty) {
                 val trans = terminationTransitions.get(0)
                 error(NO_REGION, trans, null, -1);
             }
@@ -817,7 +831,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
                     "The referencing binding is erroneous!\n" + errorMessage);
-            } else if (implicitMessage != "" && scopeCall.eContainer instanceof State) {
+            } else if (implicitMessage != "" && scopeCall.eContainer instanceof org.eclipse.xtext.validation.AbstractDeclarativeValidator.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 

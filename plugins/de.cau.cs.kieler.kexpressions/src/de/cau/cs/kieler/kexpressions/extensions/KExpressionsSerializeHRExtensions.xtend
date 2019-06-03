@@ -59,10 +59,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         vo
     }    
 
-    def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+    def dispatch CharSequence serializeHR(ValuedObjectReference vor) {
+        return vor.serializeVOR
+    }
+    
+    def CharSequence serializeVOR(ValuedObjectReference valuedObjectReference) {
         if (valuedObjectReference.valuedObject === null) {
             System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
-            return ""
+            return "<BROKEN_REFERENCE>"
         }
         var vo = valuedObjectReference.valuedObject.name
         for (index : valuedObjectReference.indices) {
@@ -75,7 +79,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }
     
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+        return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
@@ -134,8 +138,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 	
 	static val ALWAYS_OMIT_PARENTHESIS = newHashSet(OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND, OperatorType.NOT, OperatorType.ADD, OperatorType.SUB, OperatorType.MULT, OperatorType.BITWISE_AND, OperatorType.BITWISE_OR, OperatorType.BITWISE_XOR, OperatorType.BITWISE_NOT )
 	protected def boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
-	    val myPrecedence = expression.operator.precedence
-        val parentPrecedence = parent.operator.precedence
+        val myOperator = expression.operator
+        val parentOperator = parent.operator
+	    val myPrecedence = myOperator.precedence
+        val parentPrecedence = parentOperator.precedence
         
         if (myPrecedence > parentPrecedence) {
             return true
@@ -144,18 +150,21 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         if (myPrecedence == parentPrecedence) {
             val position = parent.subExpressions.indexOf(expression)
             if (position == 0) { // redundant left associativity
-                return false
+                if (parent.subExpressions.size != 1 || parent.operator != OperatorType.SUB) {
+                    // Exclude single minus 
+                    return false
+                }
             }
             // This will ignore user forces right associativity
             // TODO discuss if we really want this behavior
-            if (expression.operator == parent.operator && ALWAYS_OMIT_PARENTHESIS.contains(expression.operator)) {
+            if (myOperator == parentOperator && ALWAYS_OMIT_PARENTHESIS.contains(myOperator)) {
                 return false
             }
             // This will ignore if user forces right associativity with + and -
             // TODO discuss if we really want this behavior
-            if (expression.operator == OperatorType.ADD && parent.operator == OperatorType.SUB || expression.operator == OperatorType.SUB && parent.operator == OperatorType.ADD) {
-                return false
-            }
+//            if (myOperator == OperatorType.ADD && parentOperator == OperatorType.SUB || myOperator == OperatorType.SUB && parentOperator == OperatorType.ADD) {
+//                return false
+//            }
             return true
         }
         return false

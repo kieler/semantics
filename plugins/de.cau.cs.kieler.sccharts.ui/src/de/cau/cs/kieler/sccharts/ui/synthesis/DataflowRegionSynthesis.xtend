@@ -38,6 +38,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * @author ssm
@@ -119,10 +120,17 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 }
             }
         }    
-        val label = if(region.label.nullOrEmpty) "" else " " + region.label + sLabel.toString
+        val label = region.serializeHighlighted(true) 
+
+        if (region.hasAnnotation("style")) {
+            label.set(0, new Pair(label.head.key, TextFormat.KEYWORD))
+        }
 
         // Expanded
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
+            if (region.hasAnnotation("style")) {
+                it.addRegionStyle(region.getStringAnnotationValue("style"))
+            }
             setAsExpandedView
             addDoubleClickAction(ReferenceExpandAction::ID)
             if (region.declarations.empty) {
@@ -146,7 +154,7 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
         ]
 
         // Collapsed
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
             addDoubleClickAction(ReferenceExpandAction::ID)
@@ -197,20 +205,20 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
 
         if (!CIRCUIT.booleanValue) {
             // Expanded
-            node.addRegionFigure(false) => [
+            node.addRegionFigure => [
                 setAsExpandedView;
                 addStatesArea(true);
                 addDoubleClickAction(ReferenceExpandAction::ID)
                 // Add Button after area to assure correct overlapping
                 // Use special expand action to resolve references
-                addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
+                addCollapseButton.addDoubleClickAction(ReferenceExpandAction::ID);
             ]
-    
+   
             // Collapsed
-            node.addRegionFigure(false) => [
+            node.addRegionFigure => [
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
-                addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID);
+                addExpandButton.addDoubleClickAction(ReferenceExpandAction::ID);
             ]
         }
 

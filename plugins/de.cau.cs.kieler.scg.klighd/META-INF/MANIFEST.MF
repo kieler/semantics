@@ -4,6 +4,7 @@ Bundle-Name: KIELER SC Graph KlighD Binding
 Bundle-SymbolicName: de.cau.cs.kieler.scg.klighd;singleton:=true
 Bundle-Version: 1.1.0.qualifier
 Bundle-Vendor: Kiel University
+Eclipse-UI: True
 Require-Bundle: org.eclipse.elk.core,
  org.eclipse.elk.alg.layered,
  de.cau.cs.kieler.klighd.krendering.extensions,

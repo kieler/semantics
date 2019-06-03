@@ -139,6 +139,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelProgram createEsterelProgram() {
         EsterelProgramImpl esterelProgram = new EsterelProgramImpl();
         return esterelProgram;
@@ -149,6 +150,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeIdentifier createTypeIdentifier() {
         TypeIdentifierImpl typeIdentifier = new TypeIdentifierImpl();
         return typeIdentifier;
@@ -159,6 +161,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeDeclaration createTypeDeclaration() {
         TypeDeclarationImpl typeDeclaration = new TypeDeclarationImpl();
         return typeDeclaration;
@@ -169,6 +172,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeDefinition createTypeDefinition() {
         TypeDefinitionImpl typeDefinition = new TypeDefinitionImpl();
         return typeDefinition;
@@ -179,6 +183,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ConstantDeclaration createConstantDeclaration() {
         ConstantDeclarationImpl constantDeclaration = new ConstantDeclarationImpl();
         return constantDeclaration;
@@ -189,6 +194,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Constant createConstant() {
         ConstantImpl constant = new ConstantImpl();
         return constant;
@@ -199,6 +205,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FunctionDeclaration createFunctionDeclaration() {
         FunctionDeclarationImpl functionDeclaration = new FunctionDeclarationImpl();
         return functionDeclaration;
@@ -209,6 +216,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Function createFunction() {
         FunctionImpl function = new FunctionImpl();
         return function;
@@ -219,6 +227,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcedureDeclaration createProcedureDeclaration() {
         ProcedureDeclarationImpl procedureDeclaration = new ProcedureDeclarationImpl();
         return procedureDeclaration;
@@ -229,6 +238,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Procedure createProcedure() {
         ProcedureImpl procedure = new ProcedureImpl();
         return procedure;
@@ -239,6 +249,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TaskDeclaration createTaskDeclaration() {
         TaskDeclarationImpl taskDeclaration = new TaskDeclarationImpl();
         return taskDeclaration;
@@ -249,6 +260,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Task createTask() {
         TaskImpl task = new TaskImpl();
         return task;
@@ -259,6 +271,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InputDeclaration createInputDeclaration() {
         InputDeclarationImpl inputDeclaration = new InputDeclarationImpl();
         return inputDeclaration;
@@ -269,6 +282,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OutputDeclaration createOutputDeclaration() {
         OutputDeclarationImpl outputDeclaration = new OutputDeclarationImpl();
         return outputDeclaration;
@@ -279,6 +293,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public InputOutputDeclaration createInputOutputDeclaration() {
         InputOutputDeclarationImpl inputOutputDeclaration = new InputOutputDeclarationImpl();
         return inputOutputDeclaration;
@@ -289,6 +304,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReturnDeclaration createReturnDeclaration() {
         ReturnDeclarationImpl returnDeclaration = new ReturnDeclarationImpl();
         return returnDeclaration;
@@ -299,6 +315,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal createSignal() {
         SignalImpl signal = new SignalImpl();
         return signal;
@@ -309,6 +326,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SensorDeclaration createSensorDeclaration() {
         SensorDeclarationImpl sensorDeclaration = new SensorDeclarationImpl();
         return sensorDeclaration;
@@ -319,6 +337,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Sensor createSensor() {
         SensorImpl sensor = new SensorImpl();
         return sensor;
@@ -329,6 +348,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RelationDeclaration createRelationDeclaration() {
         RelationDeclarationImpl relationDeclaration = new RelationDeclarationImpl();
         return relationDeclaration;
@@ -339,6 +359,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Relation createRelation() {
         RelationImpl relation = new RelationImpl();
         return relation;
@@ -349,6 +370,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RelationImplication createRelationImplication() {
         RelationImplicationImpl relationImplication = new RelationImplicationImpl();
         return relationImplication;
@@ -359,6 +381,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RelationIncompatibility createRelationIncompatibility() {
         RelationIncompatibilityImpl relationIncompatibility = new RelationIncompatibilityImpl();
         return relationIncompatibility;
@@ -369,6 +392,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelParallel createEsterelParallel() {
         EsterelParallelImpl esterelParallel = new EsterelParallelImpl();
         return esterelParallel;
@@ -379,6 +403,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelThread createEsterelThread() {
         EsterelThreadImpl esterelThread = new EsterelThreadImpl();
         return esterelThread;
@@ -389,6 +414,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Nothing createNothing() {
         NothingImpl nothing = new NothingImpl();
         return nothing;
@@ -399,6 +425,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Halt createHalt() {
         HaltImpl halt = new HaltImpl();
         return halt;
@@ -409,6 +436,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Block createBlock() {
         BlockImpl block = new BlockImpl();
         return block;
@@ -419,6 +447,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Emit createEmit() {
         EmitImpl emit = new EmitImpl();
         return emit;
@@ -429,6 +458,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Sustain createSustain() {
         SustainImpl sustain = new SustainImpl();
         return sustain;
@@ -439,6 +469,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcedureCall createProcedureCall() {
         ProcedureCallImpl procedureCall = new ProcedureCallImpl();
         return procedureCall;
@@ -449,6 +480,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Present createPresent() {
         PresentImpl present = new PresentImpl();
         return present;
@@ -459,6 +491,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PresentCase createPresentCase() {
         PresentCaseImpl presentCase = new PresentCaseImpl();
         return presentCase;
@@ -469,6 +502,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IfTest createIfTest() {
         IfTestImpl ifTest = new IfTestImpl();
         return ifTest;
@@ -479,6 +513,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElsIf createElsIf() {
         ElsIfImpl elsIf = new ElsIfImpl();
         return elsIf;
@@ -489,6 +524,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Loop createLoop() {
         LoopImpl loop = new LoopImpl();
         return loop;
@@ -499,6 +535,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Repeat createRepeat() {
         RepeatImpl repeat = new RepeatImpl();
         return repeat;
@@ -509,6 +546,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Abort createAbort() {
         AbortImpl abort = new AbortImpl();
         return abort;
@@ -519,6 +557,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Case createCase() {
         CaseImpl case_ = new CaseImpl();
         return case_;
@@ -529,6 +568,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Await createAwait() {
         AwaitImpl await = new AwaitImpl();
         return await;
@@ -539,6 +579,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EveryDo createEveryDo() {
         EveryDoImpl everyDo = new EveryDoImpl();
         return everyDo;
@@ -549,6 +590,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Suspend createSuspend() {
         SuspendImpl suspend = new SuspendImpl();
         return suspend;
@@ -559,6 +601,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Trap createTrap() {
         TrapImpl trap = new TrapImpl();
         return trap;
@@ -569,6 +612,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TrapHandler createTrapHandler() {
         TrapHandlerImpl trapHandler = new TrapHandlerImpl();
         return trapHandler;
@@ -579,6 +623,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Exit createExit() {
         ExitImpl exit = new ExitImpl();
         return exit;
@@ -589,6 +634,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Exec createExec() {
         ExecImpl exec = new ExecImpl();
         return exec;
@@ -599,6 +645,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExecCase createExecCase() {
         ExecCaseImpl execCase = new ExecCaseImpl();
         return execCase;
@@ -609,6 +656,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public LocalSignalDeclaration createLocalSignalDeclaration() {
         LocalSignalDeclarationImpl localSignalDeclaration = new LocalSignalDeclarationImpl();
         return localSignalDeclaration;
@@ -619,6 +667,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public LocalVariableDeclaration createLocalVariableDeclaration() {
         LocalVariableDeclarationImpl localVariableDeclaration = new LocalVariableDeclarationImpl();
         return localVariableDeclaration;
@@ -629,6 +678,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelVariableDeclaration createEsterelVariableDeclaration() {
         EsterelVariableDeclarationImpl esterelVariableDeclaration = new EsterelVariableDeclarationImpl();
         return esterelVariableDeclaration;
@@ -639,6 +689,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Variable createVariable() {
         VariableImpl variable = new VariableImpl();
         return variable;
@@ -649,6 +700,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Run createRun() {
         RunImpl run = new RunImpl();
         return run;
@@ -659,6 +711,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ModuleRenaming createModuleRenaming() {
         ModuleRenamingImpl moduleRenaming = new ModuleRenamingImpl();
         return moduleRenaming;
@@ -669,6 +722,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Renamings createRenamings() {
         RenamingsImpl renamings = new RenamingsImpl();
         return renamings;
@@ -679,6 +733,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeRenaming createTypeRenaming() {
         TypeRenamingImpl typeRenaming = new TypeRenamingImpl();
         return typeRenaming;
@@ -689,6 +744,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ConstantRenaming createConstantRenaming() {
         ConstantRenamingImpl constantRenaming = new ConstantRenamingImpl();
         return constantRenaming;
@@ -699,6 +755,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FunctionRenaming createFunctionRenaming() {
         FunctionRenamingImpl functionRenaming = new FunctionRenamingImpl();
         return functionRenaming;
@@ -709,6 +766,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ProcedureRenaming createProcedureRenaming() {
         ProcedureRenamingImpl procedureRenaming = new ProcedureRenamingImpl();
         return procedureRenaming;
@@ -719,6 +777,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TaskRenaming createTaskRenaming() {
         TaskRenamingImpl taskRenaming = new TaskRenamingImpl();
         return taskRenaming;
@@ -729,6 +788,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SignalRenaming createSignalRenaming() {
         SignalRenamingImpl signalRenaming = new SignalRenamingImpl();
         return signalRenaming;
@@ -739,6 +799,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Do createDo() {
         DoImpl do_ = new DoImpl();
         return do_;
@@ -749,6 +810,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression createDelayExpression() {
         DelayExpressionImpl delayExpression = new DelayExpressionImpl();
         return delayExpression;
@@ -759,6 +821,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TrapSignal createTrapSignal() {
         TrapSignalImpl trapSignal = new TrapSignalImpl();
         return trapSignal;
@@ -769,6 +832,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TrapExpression createTrapExpression() {
         TrapExpressionImpl trapExpression = new TrapExpressionImpl();
         return trapExpression;
@@ -779,6 +843,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelFunctionCall createEsterelFunctionCall() {
         EsterelFunctionCallImpl esterelFunctionCall = new EsterelFunctionCallImpl();
         return esterelFunctionCall;
@@ -789,6 +854,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ConstantExpression createConstantExpression() {
         ConstantExpressionImpl constantExpression = new ConstantExpressionImpl();
         return constantExpression;
@@ -799,6 +865,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TrapReference createTrapReference() {
         TrapReferenceImpl trapReference = new TrapReferenceImpl();
         return trapReference;
@@ -809,6 +876,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SignalReference createSignalReference() {
         SignalReferenceImpl signalReference = new SignalReferenceImpl();
         return signalReference;
@@ -819,6 +887,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TickReference createTickReference() {
         TickReferenceImpl tickReference = new TickReferenceImpl();
         return tickReference;
@@ -829,6 +898,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public VariableReference createVariableReference() {
         VariableReferenceImpl variableReference = new VariableReferenceImpl();
         return variableReference;
@@ -839,6 +909,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCEstStatement createSCEstStatement() {
         SCEstStatementImpl scEstStatement = new SCEstStatementImpl();
         return scEstStatement;
@@ -849,6 +920,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public UnEmit createUnEmit() {
         UnEmitImpl unEmit = new UnEmitImpl();
         return unEmit;
@@ -859,6 +931,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Set createSet() {
         SetImpl set = new SetImpl();
         return set;
@@ -869,6 +942,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelPackage getEsterelPackage() {
         return (EsterelPackage)getEPackage();
     }

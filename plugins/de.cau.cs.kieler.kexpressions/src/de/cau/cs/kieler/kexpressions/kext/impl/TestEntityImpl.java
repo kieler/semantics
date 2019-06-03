@@ -76,6 +76,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Effect getEffect() {
         return effect;
     }
@@ -100,6 +101,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEffect(Effect newEffect) {
         if (newEffect != effect) {
             NotificationChain msgs = null;
@@ -119,6 +121,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public AnnotatedExpression getExpression() {
         return expression;
     }
@@ -143,6 +146,7 @@ public class TestEntityImpl extends MinimalEObjectImpl.Container implements Test
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(AnnotatedExpression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;

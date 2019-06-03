@@ -266,6 +266,8 @@ class TransitionStyles {
         val label = edge.createLabel
         label.configureTailEdgeLabel(text)
         label.getKRendering.configureTransitionTailLabelRendering
+        //label.selectionFontBold = true
+        //label.selectionForeground = SELECTION.color
         return label
     }    
     

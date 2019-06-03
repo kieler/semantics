@@ -46,6 +46,11 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * Class to perform the transformation of an SCG to Java Code using the priority based compilation approach
@@ -58,6 +63,7 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     @Inject extension JavaCodeSerializeHRExtensions
     @Inject extension SCGThreadExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
      
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
@@ -116,6 +122,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
     override process() {
         val code = new CodeContainer
         transform(getModel.scgs.head, code)
+        
+        // Handle hierarchical VO declarations in VariableStore
+        VariableStore.get(environment)?.flattenAllHierarchicalObjects
+        
         setModel(code)
     }
     
@@ -166,9 +176,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         // Add enumerations/States
         program.addStates
         // Add Variables
-        program.declareVariables(scg)
+        scg.declarations.generateClassDeclarations(program, 0)
+        scg.declarations.generateDeclarations(program, 0)
         // Add Constructor
-        program.addConstructor(programName)
+        program.addConstructor(programName, scg)
         
         // Add program
         program.append(sb)
@@ -219,65 +230,108 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
         sb.appendInd("}\n")
     }
     
-    /**
-     *  Declares all required variables in the beginning of the program
-     * 
-     *  @param sb
-     *              The StringBuilder the program writes the code into
-     *  @param scg
-     *              The SCGraph the method extracts the variables from
-     * 
-     */
-    protected def void declareVariables(StringBuilder sb, SCGraph scg) {
-        for(declaration : scg.variableDeclarations) {
-            if (declaration.valuedObjects.exists[ cardinalities.empty ]) {
-                sb.appendInd("public ")
-                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+    protected def void generateDeclarations(List<Declaration> declarations, StringBuilder code, int depth) {
+        val indentation = "  "
+        for (declaration : declarations.filter(VariableDeclaration)) {
+            for (valuedObject : declaration.valuedObjects) {
+                (0..depth).forEach[code.append(indentation)]
+                code.append("public ")
+                val declarationType = if (declaration instanceof ClassDeclaration) {
+                    declaration.name
+                } else if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) {
                     declaration.type.serializeHR
-                    else declaration.hostType
-                sb.append(declarationType)
-                for (variable : declaration.valuedObjects.filter[ cardinalities.empty ].indexed) {
-                    if (variable.key !== 0) {
-                        sb.append(",")
-                    }
-                    sb.append(" ")
-                    sb.addVariable(variable.value, scg)
+                } else {
+                    declaration.hostType
                 }
-                sb.append(";\n")
-            }
-            if (declaration.valuedObjects.exists[ !cardinalities.empty ]) {
-                sb.appendInd("public ")
-                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
-                    declaration.type.serializeHR
-                    else declaration.hostType
-                sb.append(declarationType)
-                sb.append("[]")
-                for (variable : declaration.valuedObjects.filter[ !cardinalities.empty ].indexed) {
-                    if (variable.key !== 0) {
-                        sb.append(",")
+                code.append(declarationType)
+                if (valuedObject.isArray) {
+                    for (cardinality : valuedObject.cardinalities) {
+                        code.append("[]")
                     }
-                    sb.append(" ")
-                    sb.addVariable(variable.value, scg)
                 }
-                sb.append(";\n")
+                code.append(" ")
+                code.append(valuedObject.name)
+                code.append(";\n")
             }
         }
-        sb.append("\n")
     }
     
-    protected def void addVariable(StringBuilder sb, ValuedObject valuedObject, SCGraph scg) {
-        sb.append(valuedObject.name)
-        if (!valuedObject.cardinalities.empty) {
-            val declaration = valuedObject.eContainer as VariableDeclaration
-            sb.append(" = new ")
-            val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
-                declaration.type.serializeHR
-                else declaration.hostType
-            sb.append(declarationType)
-            for (card : valuedObject.cardinalities) {
-                sb.append("[" + card.serializeHR + "]")
-            } 
+    protected def void generateClassDeclarations(List<Declaration> declarations, StringBuilder code, int depth) {
+        val indentation = "  "
+        for (declaration : declarations.filter(ClassDeclaration)) {
+            (0..depth).forEach[code.append(indentation)]
+            code.append("public class ")
+            code.append(declaration.name)
+            code.append(" {\n")
+            declaration.declarations.generateClassDeclarations(code, depth + 1)
+            declaration.declarations.generateDeclarations(code, depth + 1)
+            if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
+                code.append("\n")
+                (0..depth).forEach[code.append(indentation)]
+                code.append("public " + declaration.name + "() {\n")
+                declaration.declarations.createConstructorBody(code)
+                (0..depth).forEach[code.append(indentation)]
+                code.append("}\n")
+            }
+            (0..depth).forEach[code.append(indentation)]
+            code.append("}\n\n")
         }
+    }
+    
+    protected def createConstructorBody(List<Declaration> declarations, StringBuilder code) {
+        for (declaration : declarations.filter(VariableDeclaration)) {
+            val isClass = declaration instanceof ClassDeclaration
+            for (valuedObject : declaration.valuedObjects) {
+                if (valuedObject.isArray) {
+                    valuedObject.createArrayForCardinalityIndex(0, code)
+                } else if (isClass) {
+                    code.append(valuedObject.name + " = new " + (declaration as ClassDeclaration).name + "();\n")
+                }
+            }
+        }
+    }
+    
+    protected def createArrayForCardinalityIndex(ValuedObject valuedObject, int index, StringBuilder code) {
+        val declaration = valuedObject.variableDeclaration
+
+        switch(declaration.type) {
+        case ValueType.BOOL,
+        case ValueType.FLOAT,
+        case ValueType.INT: {            
+//            indent(2)
+            code.append(valuedObject.name + " = new " + declaration.type.serializeHR)
+            for (c : valuedObject.cardinalities) {
+                code.append("[" + c.serializeHR + "]")
+            }
+            code.append(";\n")
+        }
+        default:
+            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, code)
+        }
+    }
+    
+    protected def void createArrayForCardinalityIndexHelper(ValuedObject valuedObject, int index, String assignmentPart, String expressionPart, StringBuilder code) {
+        val declaration = valuedObject.variableDeclaration
+        val cardinality = valuedObject.cardinalities.get(index)
+        
+//        indent(2 + index)
+        code.append(assignmentPart)
+        code.append(expressionPart)
+        code.append("[" + cardinality.serializeHR + "]")
+        code.append(";\n")        
+
+        val i = "_i" + index
+        if (valuedObject.cardinalities.size > index + 1) {
+//            indent(2 + index)
+            code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
+            valuedObject.createArrayForCardinalityIndexHelper(index + 1, 
+                assignmentPart + "[" + i + "]",
+                " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name + "()" else declaration.type.serializeHR,
+                code
+            )
+//            indent(2 + index)
+            code.append("}\n")
+        }                
     }
     
     /** 
@@ -289,9 +343,10 @@ class SJTransformation extends Processor<SCGraphs, CodeContainer> {
      * @param programName
      *              The name of the model and resulting program 
      */
-    protected def void addConstructor(StringBuilder sb, String programName) {
+    protected def void addConstructor(StringBuilder sb, String programName, SCGraph scg) {
         sb.appendInd("public " + programName + "() {\n")
         sb.appendInd("  super(State." + initialState + ", " + startPriority + ", " + maxPriority + ");\n")
+        scg.declarations.createConstructorBody(sb)
         sb.appendInd("}\n\n\n")
     }
     

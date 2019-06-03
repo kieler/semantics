@@ -70,6 +70,7 @@ public class RelationImpl extends MinimalEObjectImpl.Container implements Relati
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getType() {
         return type;
     }
@@ -79,6 +80,7 @@ public class RelationImpl extends MinimalEObjectImpl.Container implements Relati
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(String newType) {
         String oldType = type;
         type = newType;

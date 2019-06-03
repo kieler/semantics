@@ -123,6 +123,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExtPackage.KEXT_SCOPE__ANNOTATIONS);
@@ -135,6 +136,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -144,6 +146,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -156,6 +159,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TestEntity> getEntities() {
         if (entities == null) {
             entities = new EObjectContainmentEList<TestEntity>(TestEntity.class, this, KExtPackage.KEXT_SCOPE__ENTITIES);
@@ -168,6 +172,7 @@ public class KExtScopeImpl extends DeclarationScopeImpl implements KExtScope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<KExtScope> getScopes() {
         if (scopes == null) {
             scopes = new EObjectContainmentEList<KExtScope>(KExtScope.class, this, KExtPackage.KEXT_SCOPE__SCOPES);

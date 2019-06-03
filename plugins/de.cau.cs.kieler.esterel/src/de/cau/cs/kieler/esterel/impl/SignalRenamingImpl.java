@@ -75,6 +75,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getNewName() {
         return newName;
     }
@@ -99,6 +100,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(ValuedObjectReference newNewName) {
         if (newNewName != newName) {
             NotificationChain msgs = null;
@@ -118,6 +120,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getOldName() {
         return oldName;
     }
@@ -142,6 +145,7 @@ public class SignalRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(ValuedObjectReference newOldName) {
         if (newOldName != oldName) {
             NotificationChain msgs = null;

@@ -21,8 +21,9 @@ import org.junit.Test
 import static org.junit.Assume.*
 
 /**
+ * Tests if the Lustre to SCC cf transformation behaves in correspondance to the trace files. 
+ * 
  * @author lgr
- *
  */
 class LustreSccControlFlowApproachSimulationTest extends AbstractSimulationTest<LustreProgram> {
     
@@ -37,7 +38,6 @@ class LustreSccControlFlowApproachSimulationTest extends AbstractSimulationTest<
     override filter(TestModelData modelData) {
         return modelData.hasSimulationTrace
             && modelData.modelProperties.contains("lustre")
-            && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
             && !modelData.modelProperties.contains("must-fail-validation")
             && !modelData.modelProperties.contains("not-for-cf-approach")
     }

@@ -24,10 +24,16 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTraci
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.scg.SchedulingBlock
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.SCGraph
+import de.cau.cs.kieler.scg.ScgFactory
+import de.cau.cs.kieler.scg.SchedulingBlock
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import java.util.Map
 
@@ -56,6 +62,7 @@ class SCGDeclarationExtensions {
     
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCGCoreExtensions
 
@@ -117,30 +124,29 @@ class SCGDeclarationExtensions {
         }
         return null
     }    
+
+    public def ValuedObjectMapping copyDeclarations(SCGraph source, SCGraph target) {
+        copyDeclarations(source, target, null)
+    }
     
-    def ValuedObjectMapping copyDeclarations(
-    	SCGraph source, SCGraph target, Map<SCGraph, SCGraph> SCGMap
-    ) {
-    	val map = new ValuedObjectMapping
-    	for (declaration : source.declarations) {
-    		val newDeclaration = createDeclaration(declaration).trace(declaration)
-    		declaration.valuedObjects.forEach[ 
-    			map.put(it, <ValuedObject> newLinkedList(it.copyValuedObject(newDeclaration)))
-    		]
-    		declaration.copyAnnotations(newDeclaration)
-    		if (declaration instanceof ReferenceDeclaration) {
-    		    if (SCGMap === null) {
-    		        (newDeclaration as ReferenceDeclaration).reference = declaration.reference
-    		    } else {
-    		        (newDeclaration as ReferenceDeclaration).reference = SCGMap.get(declaration.reference)
-    		    }
-    		}
-    		target.declarations += newDeclaration
-    	}
-    	map
+    public def ValuedObjectMapping copyDeclarations(SCGraph source, SCGraph target, Map<SCGraph, SCGraph> scgMap) {
+        val map = new ValuedObjectMapping
+        val declMapping = newHashMap
+        val voMapping = newHashMap
+        target.declarations += source.declarations.copyDeclarations(voMapping, declMapping)
+        declMapping.entrySet.forEach[
+            value.trace(key)
+            if (key instanceof ReferenceDeclaration && scgMap !== null) {
+                (value as ReferenceDeclaration).reference = scgMap.get((key as ReferenceDeclaration).reference)
+            }
+        ]
+        voMapping.entrySet.forEach[
+            map.put(key, <ValuedObject> newLinkedList(value))
+        ]
+    	return map
 	} 
 	
-	def addValuedObjectMapping(ValuedObjectMapping map, ValuedObject source, ValuedObject target) {
+	public def addValuedObjectMapping(ValuedObjectMapping map, ValuedObject source, ValuedObject target) {
 	    val deque = map.get(source) 
 	    if (deque === null) {
 	        map.put(source, <ValuedObject> newLinkedList(target))
@@ -149,15 +155,15 @@ class SCGDeclarationExtensions {
 	    }
 	} 
 	
-	def ValuedObject peekValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
+	public def ValuedObject peekValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
 	    return map.get(source)?.peek
 	}
 	
-	def void removeLastValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
+	public def void removeLastValuedObjectMapping(ValuedObjectMapping map, ValuedObject source) {
 	    map.get(source)?.pop
 	}
     
-    def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
+    public def void copyDeclarationsWODead(SCGraph source, SCGraph target) {
         for (declaration : source.declarations) {
             val newDeclaration = createDeclaration(declaration).trace(declaration)
             for(vo : declaration.valuedObjects) {
@@ -170,7 +176,7 @@ class SCGDeclarationExtensions {
         }
     }       
     
-    def ValuedObject copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
+    public def ValuedObject copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
         sourceObject.copy => [
 	        targetDeclaration.valuedObjects += it
         ]
@@ -241,7 +247,15 @@ class SCGDeclarationExtensions {
     		s.operator = assignment.operator
     		assignment.indices?.forEach[
     			s.indices += it.copySCGExpression(map)
-    		] 
+    		]
+            var newVOR = s.reference
+            var oldSub = assignment.reference?.subReference
+            while (oldSub !== null) {
+                val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
+                newVOR.subReference = ref
+                newVOR = ref
+                oldSub = oldSub.subReference
+            }
     	]
     } 
 

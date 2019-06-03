@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
@@ -47,6 +49,9 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCGControlFlowExtensions
     
+    public static val IProperty<Boolean> PERSISTENT_STATE_OPTIMIZER_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.persistentStateOptimizer", false)    
+    
     override getId() {
         "de.cau.cs.kieler.scg.processors.persistentStateOptimizer"
     }
@@ -58,6 +63,8 @@ class PersistentStateOptimizer extends InplaceProcessor<SCGraphs> {
     var AnnotationModel<SCGraphs> annotationModel 
     
     override process() {
+        if (!environment.getProperty(PERSISTENT_STATE_OPTIMIZER_ENABLED)) return;
+        
         val model = getModel
         annotationModel = model.createAnnotationModel
         

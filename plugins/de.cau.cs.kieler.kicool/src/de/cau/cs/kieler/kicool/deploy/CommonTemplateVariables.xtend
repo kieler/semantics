@@ -45,6 +45,8 @@ class CommonTemplateVariables {
     public static val MODEL_RESET_NAME = "reset_name"
     /** The name for the tick function  */
     public static val MODEL_TICK_NAME = "tick_name"
+    /** Name of the original model */
+    public static val MODEL_NAME = "model_name"
     
     // -- Defaults --
     public static val DEFAULTS = #{

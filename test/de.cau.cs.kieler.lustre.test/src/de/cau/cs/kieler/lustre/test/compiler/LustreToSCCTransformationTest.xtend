@@ -37,17 +37,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import static org.junit.Assume.*
 
-import static extension java.lang.Boolean.parseBoolean
 import static extension java.lang.String.format
 
 /**
- * Tests if all sensible intermediate results of the Esterel to SCL compilation fullfill basic sanity properties.
+ * Tests if the Lustre to SCC dataflow transformation produces reasonable results.
  * 
- * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
+ * @author lgr
  */
 @RunWith(ModelsRepositoryTestRunner)
 class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<LustreProgram> {
@@ -55,7 +51,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
     /** Compiler configuration */
     val compilationSystemID = "de.cau.cs.kieler.lustre.scc.dataflow"
     
-    /** Sct Parser Injector */
+    /** Lustre Parser Injector */
     static val lustreInjector = new LustreStandaloneSetup().createInjectorAndDoEMFRegistration
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -72,13 +68,12 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("lustre")
-        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
         && !modelData.modelProperties.contains("must-fail-validation")
     }
     
-    @Test(timeout=15000)
+    @Test(timeout=20000)
     @StopOnFailure
-    def void testValidation(LustreProgram lus, TestModelData modelData) {
+    def void testCompilation(LustreProgram lus, TestModelData modelData) {
 
         // Check all intermediate results
         val context = lus.compile
@@ -95,7 +90,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
                         err.message
                      }
                 ].join("\n- "))
-            }     
+            }
             
             // Create resource
             val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".lus")
@@ -107,15 +102,7 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
             val validator = LustreToSCCTransformationTest.lustreInjector.getInstance(IResourceValidator)
             val validatorResults = validator.validate(lus.eResource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
             assertTrue("Intermediate result of transformation " + iResult.id + " contains validation error markers: \n- " + validatorResults.map[message].join("\n- "), validatorResults.empty)            
-        }        
-    }
-    
-    @Test(timeout=10000)
-    def void testSerializability(LustreProgram lus, TestModelData modelData) {
-        
-        // Check all intermediate results
-        val result = lus.compile
-        for (iResult : result.processorInstancesSequence) {
+            
             val name = "intermediate result of transformation " + iResult.id
             
             assertNotNull("The %s is null".format(name), iResult.model)
@@ -124,14 +111,6 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
             try {
                 // Serialize
                 val outputStream = new ByteArrayOutputStream(25000);
-                val uri = URI.createURI("dummy:/test/" + modelData.modelPath.fileName.toString + ".lus")
-                val resourceSet = lustreInjector.getInstance(XtextResourceSet)
-                
-                // create model resource
-                val resource = resourceSet.createResource(uri) as XtextResource
-                resource.getContents().add(iResult.model as EObject)
-
-                // save
                 resource.save(outputStream, saveOptions)
                 
                 assertTrue("Serialized %s is empty".format(name), outputStream.size > 0)
@@ -140,7 +119,9 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
             } catch (Exception e) {
                 throw new Exception("Error while serializing %s caused by: %s".format(name, e.message), e)
             }
-        }
+            
+            
+        }        
     }
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -148,7 +129,6 @@ class LustreToSCCTransformationTest extends AbstractXTextModelRepositoryTest<Lus
     private def compile(LustreProgram est) {
         val context = Compile.createCompilationContext(compilationSystemID, est)
         context.startEnvironment.setProperty(Environment.INPLACE, false)
-
         context.compile
         
         return context

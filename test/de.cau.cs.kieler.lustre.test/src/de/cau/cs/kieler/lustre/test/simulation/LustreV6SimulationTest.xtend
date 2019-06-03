@@ -23,8 +23,9 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.lustre.compiler.LustreV6Compiler
 
 /**
+ * Tests if the Lustre V6 compiler behaves in correspondance to the trace files. 
+ * 
  * @author lgr
- *
  */
 class LustreV6SimulationTest extends AbstractSimulationTest<LustreProgram> {
     public static val String LUSTRE_V6_SYSTEM = "de.cau.cs.kieler.lustre.v6.simulation"
@@ -40,7 +41,6 @@ class LustreV6SimulationTest extends AbstractSimulationTest<LustreProgram> {
     override filter(TestModelData modelData) {
         return modelData.hasSimulationTrace
             && modelData.modelProperties.contains("lustre")
-            && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
             && !modelData.modelProperties.contains("must-fail-validation")
     }
     

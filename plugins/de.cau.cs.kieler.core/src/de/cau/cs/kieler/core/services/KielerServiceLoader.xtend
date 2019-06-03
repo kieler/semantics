@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.core.services
 
-import java.util.ServiceLoader
-import org.eclipse.core.runtime.Platform
-import de.cau.cs.kieler.core.CoreActivator
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.ServiceLoader
+import org.osgi.framework.FrameworkUtil
 
 /**
  * ServiceLoader adaoted to the KIELER project.
@@ -26,10 +25,10 @@ import java.io.InputStreamReader
 class KielerServiceLoader {
 
     /**
-     * Loads and instanciates all implementing classes of the given service registered via '/META-INF/services/'.
+     * Loads and instantiates all implementing classes of the given service registered via '/META-INF/services/'.
      * <br>
-     * If exected with a running eclipse platform the implementations will be loaded from the Bundles, otherwise the
-     * standart ServiceLoader is used.
+     * If executed with a running eclipse platform the implementations will be loaded from the Bundles, otherwise the
+     * standard ServiceLoader is used.
      * 
      * @param  service
      *         The interface or abstract class representing the service.
@@ -37,9 +36,10 @@ class KielerServiceLoader {
      * @return An iterable with instances of all implementing classes.
      */
     static def <S> Iterable<S> load(Class<S> service) {
-        if (Platform.isRunning) {
+        val context = FrameworkUtil.getBundle(KielerServiceLoader)?.bundleContext
+        if (context !== null) {
             val serviceClasses = <Class<? extends S>>newHashSet
-            for (bundle : CoreActivator.CONTEXT?.bundles) {
+            for (bundle : context.bundles) {
                 try {
                     val file = bundle.getResource("/META-INF/services/" + service.canonicalName)
                     if (file !== null) {
