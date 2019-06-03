@@ -45,6 +45,8 @@ import static extension de.cau.cs.kieler.kicool.registration.KiCoolRegistration.
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.PortConstraints
 
 /**
  * @author ssm
@@ -102,10 +104,23 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         rootNode.addLayoutParam(CoreOptions::ALGORITHM, LayeredOptions.ALGORITHM_ID)
         rootNode.setLayoutOption(CoreOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL)
         rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.DOWN)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 80d)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 80d)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
-        rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
+        
+        if (BUNDLE_EDGES.booleanValue) {
+            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 200d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 200d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 200d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE_BETWEEN_LAYERS, 200d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 200d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 200d)
+        } else {
+            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE, 80d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 80d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE, 80d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE_BETWEEN_LAYERS, 10d)
+            rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 10d)
+        }
         
         
         if (SHOW_PROCESSOR_DETAILS.booleanValue) {
@@ -280,10 +295,11 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         
         for (p : pNodes) {
             val node = p.createNode
+            node.addLayoutParam(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE)
             if (p.type == 0) {
-                node.setMinimalNodeSize(34 * 3, 34 * 3); 
+                node.setMinimalNodeSize(34 * 3, 34 * 5); 
             } else {
-                node.setMinimalNodeSize(34 * 12, 34 * 8);
+                node.setMinimalNodeSize(34 * 12, 34 * 10);
             }
             val content = node.addRoundedRectangle(4, 4, 1) => [
                 if (p.type == 0) {
@@ -297,7 +313,7 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
             
             var text = p.id.kielerPrefix
             content.addText(text) => [
-                fontSize = 32;
+                fontSize = 64;
                 // Add surrounding space
                 setGridPlacementData().from(LEFT, 14, 0, TOP, 14, 0).to(RIGHT, 14, 0, BOTTOM, 14, 0);
                 suppressSelectability
@@ -319,11 +335,15 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
                     p.createEdge(s, i++) => [
                         source = pNode
                         target = sNode
+                        sourcePort = pNode.createPort("out", it) => [ pNode.ports += it it.addLayoutParam(LayeredOptions.PORT_SIDE, PortSide.SOUTH)]
+                        targetPort = sNode.createPort("in", it) => [ sNode.ports += it it.addLayoutParam(LayeredOptions.PORT_SIDE, PortSide.NORTH)]
                         addPolyline => [
                             addHeadArrowDecorator
                             addJunctionPointDecorator
-                            lineWidth = succs.get(s) * 5
+                            lineWidth = (succs.get(s) * 7) as int
+                            setForeground("#000".color, 75)
                         ]
+//                        addLayoutParam(CoreOptions.PRIORITY, 100 - succs.get(s))
                     ]                
                 }
             }
@@ -336,6 +356,8 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
                     p.createEdge(s, i++) => [
                         source = pNode
                         target = sNode
+                        sourcePort = pNode.createPort("out", it) => [ pNode.ports += it it.addLayoutParam(LayeredOptions.PORT_SIDE, PortSide.SOUTH)]
+                        targetPort = sNode.createPort("in", it) => [ sNode.ports += it it.addLayoutParam(LayeredOptions.PORT_SIDE, PortSide.NORTH)]
                         addPolyline => [
                             addHeadArrowDecorator
                             addJunctionPointDecorator
