@@ -592,54 +592,54 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     		    // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
     		    val effect = transition.effects.get(0) as Effect
     		    if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
-    			assignment.operator = effect.operator
-    
-    			// For hostcode e.g. there is no need for a valued object - it is allowed to be null
-    			val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
-    			if (sCChartAssignment.valuedObject !== null) {
-    			    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-    			    // Copy sub reference
-    			    var scgRef = assignment.reference
-    			    var sccSub = sCChartAssignment.reference.subReference
-    			    while (sccSub !== null) {
-    				var ref = sccSub.valuedObject.SCGValuedObject.reference
-    				ref.indices += sccSub.indices.map[copy]
-    				ref.indices.filter(ValuedObjectReference).toList.forEach[valuedObject = valuedObject.SCGValuedObject]
-    				scgRef.subReference = ref
-    				scgRef = ref
-    				sccSub = sccSub.subReference
-    			    }
-    			}
-    
-    			// TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-    			if (!effect.isPostfixOperation) {
-    			    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
-    			}
-    			if (!sCChartAssignment.indices.nullOrEmpty) {
-    			    sCChartAssignment.indices.forEach [
-    				    assignment.indices += it.convertToSCGExpression.trace(transition, effect)
-    			    ]
-    			}
-		    } else if (effect instanceof HostcodeEffect) {
-			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-		    } else if (effect instanceof FunctionCallEffect) {
-			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-		    } else if (effect instanceof PrintCallEffect) {
-			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-		    } else if (effect instanceof RandomizeCallEffect) {
-			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-		    } else if (effect instanceof ReferenceCallEffect) {
-			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-		    }
-		    
-		    if (!effect.schedule.nullOrEmpty) {
-    			for (s : effect.schedule) {
-    			    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-    				    it.priority = s.priority
-    			    ]
-    			}
-		    }
-		}
+        			assignment.operator = effect.operator
+        
+        			// For hostcode e.g. there is no need for a valued object - it is allowed to be null
+        			val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
+        			if (sCChartAssignment.valuedObject !== null) {
+        			    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+        			    // Copy sub reference
+        			    var scgRef = assignment.reference
+        			    var sccSub = sCChartAssignment.reference.subReference
+        			    while (sccSub !== null) {
+        				var ref = sccSub.valuedObject.SCGValuedObject.reference
+        				ref.indices += sccSub.indices.map[copy]
+        				ref.indices.filter(ValuedObjectReference).toList.forEach[valuedObject = valuedObject.SCGValuedObject]
+        				scgRef.subReference = ref
+        				scgRef = ref
+        				sccSub = sccSub.subReference
+        			    }
+        			}
+        
+        			// TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+        			if (!effect.isPostfixOperation) {
+        			    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+        			}
+        			if (!sCChartAssignment.indices.nullOrEmpty) {
+        			    sCChartAssignment.indices.forEach [
+        				    assignment.indices += it.convertToSCGExpression.trace(transition, effect)
+        			    ]
+        			}
+    		    } else if (effect instanceof HostcodeEffect) {
+    			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+    		    } else if (effect instanceof FunctionCallEffect) {
+    			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+    		    } else if (effect instanceof PrintCallEffect) {
+    			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+    		    } else if (effect instanceof RandomizeCallEffect) {
+    			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+    		    } else if (effect instanceof ReferenceCallEffect) {
+    			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+    		    }
+    		    
+    		    if (!effect.schedule.nullOrEmpty) {
+        			for (s : effect.schedule) {
+        			    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+        				    it.priority = s.priority
+        			    ]
+        			}
+    		    }
+    		}
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
@@ -922,6 +922,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ReferenceCall referenceCall) {
         createReferenceCall.trace(referenceCall) => [ rc |
             rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
+            rc.indices += referenceCall.indices.map[convertToSCGExpression]
             rc.handleSubReferences(referenceCall)
             referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
@@ -930,6 +931,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def void handleSubReferences(ValuedObjectReference dest, ValuedObjectReference src) {
         if (src.subReference !== null) {
             val ref =  src.subReference.valuedObject.SCGValuedObject.reference
+            ref.indices += src.subReference.indices.map[convertToSCGExpression]
             dest.subReference = ref
             dest.subReference.handleSubReferences(src.subReference)
         }

@@ -252,6 +252,7 @@ class SCGDeclarationExtensions {
             var oldSub = assignment.reference?.subReference
             while (oldSub !== null) {
                 val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
+                ref.indices += oldSub.indices.map[copySCGExpression(map)]
                 newVOR.subReference = ref
                 newVOR = ref
                 oldSub = oldSub.subReference

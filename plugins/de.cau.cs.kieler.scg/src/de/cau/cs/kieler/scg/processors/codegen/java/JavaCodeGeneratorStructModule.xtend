@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Declaration
+import java.lang.instrument.ClassDefinition
 
 /**
  * Java Code Generator Struct Module
@@ -110,7 +111,6 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             declaration.declarations.generateClassDeclarations(depth + 1, serializer)
             declaration.declarations.generateDeclarations(depth + 1, serializer)
             if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
-                code.append("\n")
                 declaration.declarations.createConstructor(declaration.name, serializer)
             }
             (0..depth).forEach[indent]
@@ -126,7 +126,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         code.append("\n" + indentation)
         code.append("public " + contructorName + "() {\n")
         
-        for (declaration : scg.declarations.filter(VariableDeclaration)) {
+        for (declaration : declarations.filter(VariableDeclaration)) {
             val isClass = declaration instanceof ClassDeclaration
             for (valuedObject : declaration.valuedObjects) {
                 if (valuedObject.isArray) {
@@ -145,9 +145,9 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         val declaration = valuedObject.variableDeclaration
 
         switch(declaration.type) {
-        case ValueType.BOOL,
-        case ValueType.FLOAT,
-        case ValueType.INT: {            
+        case BOOL,
+        case FLOAT,
+        case INT: {            
             indent(2)
             code.append(valuedObject.name + " = new " + declaration.type.serializeHR)
             for (c : valuedObject.cardinalities) {
@@ -156,7 +156,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append(";\n")
         }
         default:
-            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
+            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name else declaration.type.serializeHR, serializer)
         }
     }
     
@@ -179,6 +179,16 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
                 " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name + "()" else declaration.type.serializeHR,
                 serializer
             )
+            indent(2 + index)
+            code.append("}\n")
+        } else if (declaration instanceof ClassDeclaration) {
+            indent(2 + index)
+            code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
+            indent(2 + index + 1)
+            code.append(assignmentPart + "[" + i + "]")
+            code.append(" = new ")
+            code.append(declaration.name)
+            code.append("();\n") 
             indent(2 + index)
             code.append("}\n")
         }                

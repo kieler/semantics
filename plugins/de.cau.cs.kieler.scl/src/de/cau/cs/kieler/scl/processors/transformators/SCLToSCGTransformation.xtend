@@ -689,6 +689,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         if (newExpression instanceof ValuedObjectReference) {
             newExpression.valuedObject = (expression as ValuedObjectReference).valuedObject.copyValuedObject
             newExpression.subReference = (expression as ValuedObjectReference).subReference.copyReference
+            newExpression.indices.clear
             newExpression.indices += (expression as ValuedObjectReference).indices.map[copyExpression]
         } else if (newExpression !== null) {
             newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach[vor|

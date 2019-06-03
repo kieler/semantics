@@ -176,7 +176,8 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
                 val index = params.get(vor.valuedObject)
                 if (index == -1) { // self
                     selfDecl = vor.valuedObject.declaration
-                    vor.valuedObject = callVOs.head
+                    vor.valuedObject = call.valuedObject
+                    vor.indices += call.indices.map[copy]
                 } else if (index < call.parameters.size) {
                     val exp = call.parameters.get(index).expression
                     if (exp instanceof ValuedObjectReference) {

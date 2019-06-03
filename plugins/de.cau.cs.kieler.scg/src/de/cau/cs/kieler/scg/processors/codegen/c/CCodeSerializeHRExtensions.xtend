@@ -94,11 +94,11 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
 //            vo = valuedObjectReference.valuedObject.getReferenceDeclaration.extern.head.code
             vo = valuedObjectReference.valuedObject.name
         }
-        if (valuedObjectReference.subReference !== null) {
-            vo += "." + valuedObjectReference.subReference.serializeVOR
-        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
+        }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
     }    
@@ -108,11 +108,11 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         if (valuedObjectReference.valuedObject.isExternalReference) {
             vo = valuedObjectReference.valuedObject.name
         }
-        if (valuedObjectReference.subReference !== null) {
-            vo += "." + valuedObjectReference.subReference.serializeVOR
-        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
+        }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
     }    
@@ -135,15 +135,14 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         
         if (assignment.valuedObject !== null) {
             res = res + valuedObjectPrefix + assignment.valuedObject.name
-            if (assignment.reference.subReference !== null) {
-                res += "." + assignment.reference.subReference.serializeVOR
-            }
             if (!assignment.indices.nullOrEmpty) {
                 for(index : assignment.indices) {
                     res = res + "[" + index.serialize + "]"
                 }
             }
-            
+            if (assignment.reference.subReference !== null) {
+                res += "." + assignment.reference.subReference.serializeVOR
+            }
             res = res + assignment.operator.serializeAssignOperator
         }
         if (expressionStr !== null) {
@@ -160,11 +159,11 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 assignmentText = serializeHRWithCasts(assignment)
             }
             var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
-            if (assignment.reference.subReference !== null) {
-                valuedObjectName += "." + assignment.reference.subReference.serializeVOR
-            }
             if (!assignment.indices.nullOrEmpty) {
                 valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
+            }
+            if (assignment.reference.subReference !== null) {
+                valuedObjectName += "." + assignment.reference.subReference.serializeVOR
             }
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).serializeHR
