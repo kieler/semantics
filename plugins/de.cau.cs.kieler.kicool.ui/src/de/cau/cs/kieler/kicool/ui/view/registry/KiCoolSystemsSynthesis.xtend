@@ -68,9 +68,12 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     public static val KIELER_QUALIFIED_NAME_PREFIX = "de.cau.cs.kieler."
     
     public static val SynthesisOption SHOW_META_ONLY = SynthesisOption::createCheckOption("Show Meta Systems Only", false)
+    public static val SynthesisOption SHOW_PROCESSOR_DETAILS = SynthesisOption::createCheckOption("Show Processor Details", false)
         
     public static val SynthesisOption FULLY_QUALIFIED_KIELER_PREFIX = SynthesisOption::createCheckOption("Show KIELER Qualified Name Prefix", false)
     public static val SynthesisOption FULLY_QUALIFIED_PROCESSOR_NAMES = SynthesisOption::createCheckOption("Show Long Processor Names", false)
+    
+    public static val SynthesisOption BUNDLE_EDGES = SynthesisOption::createCheckOption("Bundle Edges", false)
     
     
     val processorConnections = <String, Integer> newHashMap
@@ -80,7 +83,9 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
     
     override getDisplayedSynthesisOptions() {
         <SynthesisOption> newLinkedList => [
+            add(SHOW_PROCESSOR_DETAILS)
             add(FULLY_QUALIFIED_KIELER_PREFIX)
+            add(BUNDLE_EDGES)
         ]
     }    
     
@@ -103,10 +108,14 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_EDGE, 10d)
         
         
-        rootNode.children += model.createSystemNodes
-        rootNode.children += model.createSystemsMetaModels
-//        rootNode.children += model.connectSystemPaths
-        rootNode.children += model.connectReferencedSystems
+        if (SHOW_PROCESSOR_DETAILS.booleanValue) {
+            rootNode.children += model.createPGraph            
+        } else {
+            rootNode.children += model.createSystemNodes
+            rootNode.children += model.createSystemsMetaModels
+    //        rootNode.children += model.connectSystemPaths
+            rootNode.children += model.connectReferencedSystems
+        }
         
         rootNode.addRoundedRectangle(0, 0, 1) => [
             it.addAction(Trigger.DOUBLECLICK, KLIGHD_ACTION_DEFOCUS_NODE)
@@ -151,7 +160,7 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         
         for (s : model.systemList) {
             if (s.id.endsWith("esterel.scest.scl.simulation.netlist.java")) {
-                println("HERE")
+//                println("HERE")
             }            
             
             
@@ -193,7 +202,7 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         
         for (s : model.systemList) {
             if (s.id.endsWith("esterel.scest.scl.simulation.netlist.java")) {
-                println("HERE")
+//                println("HERE")
             }
             val firstProcessor = s.getFirstProcessor
             val lastProcessor = s.getLastProcessor
@@ -202,7 +211,7 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
             val pfName = (pfTypes.source as Class<?>).name
             val plName = (plTypes.target as Class<?>).name
             
-            println(s.id + " | pf: " + pfName + " | pl : " + plName)
+//            println(s.id + " | pf: " + pfName + " | pl : " + plName)
             
             result += createMetaModelNode(pfName, pfName.unqualified)
             result += createMetaModelNode(plName, plName.unqualified)
@@ -254,6 +263,95 @@ class KiCoolSystemsSynthesis extends AbstractDiagramSynthesis<KiCoolSystemsSumma
         
         return result
     }
+    
+    
+    
+    
+    
+    def protected createPGraph(KiCoolSystemsSummary model) {
+        val result = <KNode>newLinkedList
+
+        val pGraph = new PGraph
+        for (s : model.systemList) {
+            pGraph.addSystem(s)
+        }
+        
+        val pNodes = pGraph.pNodes + pGraph.metaNodes.values
+        
+        for (p : pNodes) {
+            val node = p.createNode
+            if (p.type == 0) {
+                node.setMinimalNodeSize(34 * 3, 34 * 3); 
+            } else {
+                node.setMinimalNodeSize(34 * 12, 34 * 8);
+            }
+            val content = node.addRoundedRectangle(4, 4, 1) => [
+                if (p.type == 0) {
+                    setBackgroundGradient("#fff".color, "#aaf".color, 90);
+                } else {
+                    setBackgroundGradient("#fdd".color, "#8f8".color, 90);
+                }
+                foreground = "#000".color;
+//                it.addAction(Trigger.SINGLECLICK, KLIGHD_ACTION_FOCUS_NODE)
+            ]
+            
+            var text = p.id.kielerPrefix
+            content.addText(text) => [
+                fontSize = 32;
+                // Add surrounding space
+                setGridPlacementData().from(LEFT, 14, 0, TOP, 14, 0).to(RIGHT, 14, 0, BOTTOM, 14, 0);
+                suppressSelectability
+            ]
+            
+            result += node                
+        }
+        
+        if (BUNDLE_EDGES.booleanValue) {
+            var i = 0
+            for (p : pNodes) {
+                val succs = <PNode, Integer> newHashMap
+                for (s : p.successors) {
+                    succs.put(s, if (succs.containsKey(s)) succs.get(s) + 1 else 1)
+                }
+                for (s : succs.keySet) {
+                    val pNode = p.node
+                    val sNode = s.node
+                    p.createEdge(s, i++) => [
+                        source = pNode
+                        target = sNode
+                        addPolyline => [
+                            addHeadArrowDecorator
+                            addJunctionPointDecorator
+                            lineWidth = succs.get(s) * 5
+                        ]
+                    ]                
+                }
+            }
+        } else {
+            var i = 0
+            for (p : pNodes) {
+                for (s : p.successors) {
+                    val pNode = p.node
+                    val sNode = s.node
+                    p.createEdge(s, i++) => [
+                        source = pNode
+                        target = sNode
+                        addPolyline => [
+                            addHeadArrowDecorator
+                            addJunctionPointDecorator
+                        ]
+                    ]                
+                }
+            }
+        }
+
+        return result
+    }   
+    
+    
+    
+    
+    
      
         
     def private kielerPrefix(String s) {
