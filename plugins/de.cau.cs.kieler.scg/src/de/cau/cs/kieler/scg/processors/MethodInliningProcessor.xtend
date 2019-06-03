@@ -130,7 +130,9 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         if (simpleMethodCache.containsKey(scg)) {
             return simpleMethodCache.get(scg)?:false
         } else {
-            val simple = scg.nodes.size < 8 && !scg.nodes.exists[hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)]
+            val simple = scg.nodes.size < 30
+                && !scg.nodes.exists[hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)]
+                && !scg.nodes.map[eAllContents.toIterable].flatten.exists[it instanceof ReferenceCall]
             simpleMethodCache.put(scg, simple)
             return simple
         }
