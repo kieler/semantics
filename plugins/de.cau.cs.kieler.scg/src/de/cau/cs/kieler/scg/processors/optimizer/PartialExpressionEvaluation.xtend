@@ -21,6 +21,8 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import com.google.inject.Inject
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * The SSA transformation for SCGs
@@ -31,6 +33,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  */
 class PartialExpressionEvaluation extends InplaceProcessor<SCGraphs> implements Traceable {
 
+    @Inject extension SCGMethodExtensions
+    
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
     // -------------------------------------------------------------------------
@@ -43,7 +47,7 @@ class PartialExpressionEvaluation extends InplaceProcessor<SCGraphs> implements 
     }
     
     override process() {
-        model.scgs.forEach[transform]
+        model.scgs.ignoreMethods.forEach[transform]
         model = model
     }
 

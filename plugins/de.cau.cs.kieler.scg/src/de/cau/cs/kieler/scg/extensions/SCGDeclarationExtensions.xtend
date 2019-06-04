@@ -188,7 +188,7 @@ class SCGDeclarationExtensions {
         if (valuedObject === null) {
             throw new IllegalArgumentException("Can't copy valued object. Valued object is null!")
         }
-        val vo = map.get(valuedObject).peek
+        val vo = map.get(valuedObject)?.peek
         if (vo === null) {
             return valuedObject // TODO: Remove
             //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")

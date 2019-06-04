@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * @author ssm
@@ -37,6 +38,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
 	@Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
 	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
@@ -80,7 +82,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 
         if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
 
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.findSCCs(loopData, environment.getProperty(LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES))
         }
        

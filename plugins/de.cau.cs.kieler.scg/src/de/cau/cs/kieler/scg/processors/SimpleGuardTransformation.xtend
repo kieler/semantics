@@ -54,6 +54,8 @@ import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import java.util.Map
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /** 
  * @author ssm
@@ -71,10 +73,13 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
+    @Inject extension SCGMethodExtensions
+    
     
     public static val IProperty<Boolean> SGT_EXCLUDE_GUARD_ASSIGNMENT_CONTROL_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.excludeGuardAssignmentControlDependencies", true)     
     
+    val globalVOMap = <ValuedObject, ValuedObject>newHashMap
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.guards"
@@ -101,18 +106,20 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         val SCGMap = <SCGraph, SCGraph> newHashMap
         for (scg : model.scgs) {
             SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
-        }        
+        }
             
-        for (scg : model.scgs) {
-            SCGGraphs.scgs += 
-            scg.createGuards(SCGMap.get(scg), SCGMap) => [
+        for (scg : model.scgs.ignoreMethods) {
+            SCGGraphs.scgs += scg.createGuards(SCGMap.get(scg), SCGMap) => [
                 label = scg.label
                 name = scg.name
                 SCGGraphs.scgs += it    
             ]
-        }        
+        }
+        // retain method SCGs
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))
+        
         setModel(SCGGraphs)
-    }    
+    }
 
 	/**
 	 * {@inherited}
@@ -139,6 +146,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
+        valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
         val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap

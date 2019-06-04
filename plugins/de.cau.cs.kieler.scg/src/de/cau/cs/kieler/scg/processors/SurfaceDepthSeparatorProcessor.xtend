@@ -36,6 +36,7 @@ import java.util.Collection
 import de.cau.cs.kieler.scg.processors.analyzer.LoopAnalyzerV2
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -49,6 +50,7 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions    
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.surfaceDepthSeparator"
@@ -67,7 +69,7 @@ class SurfaceDepthSeparatorProcessor extends InplaceProcessor<SCGraphs> {
             return;
         }        
                 
-        for (scg : getModel.scgs) {
+        for (scg : getModel.scgs.ignoreMethods) {
             scg.processModel(threadData) 
             snapshot
         }

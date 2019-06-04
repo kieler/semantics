@@ -54,7 +54,9 @@ import java.util.WeakHashMap
 class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
 
     public static val IProperty<Boolean> INLINE_ALL = 
-        new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.all", true) 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.all", false)
+    public static val IProperty<Boolean> INLINE_NOTHING = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.nothing", false)  
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -83,6 +85,7 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         val voStore = VariableStore.get(environment)
         val methodSCGs = newHashMap
         val normalSCGs = newArrayList
+        val inlined = newHashSet
         
         for (scg : model.scgs) {
             if (scg.isMethod) {
@@ -111,15 +114,16 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
                 if (methodSCGs.containsKey(call.rowKey)) {
                     val method = call.rowKey
                     val methodSCG = methodSCGs.get(method)
-                    if (INLINE_ALL.property || method.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || methodSCG.isSimpleMethod) {
+                    if (!INLINE_NOTHING.property && (INLINE_ALL.property || method.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_INLINING) || methodSCG.isSimpleMethod)) {
                         method.inlineMethod(call.value, call.columnKey, methodSCGs, newHashSet)
+                        inlined += methodSCG
                     }
                 }
             }
         }
         
         // Remove inlined methods
-        methodSCGs.entrySet.forEach[
+        methodSCGs.entrySet.filter[inlined.contains(value)].forEach[
             it.key.valuedObjects.forEach[voStore.remove(it)]
             model.scgs.remove(it.value)
         ]
