@@ -305,8 +305,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             value.map(key)
             
             // Fix VO association in VariableStore
-            val oldVO = key
-            val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
+            val info = voStore.getInfo(key)
             if (info !== null) info.valuedObject = value
         ]        
 

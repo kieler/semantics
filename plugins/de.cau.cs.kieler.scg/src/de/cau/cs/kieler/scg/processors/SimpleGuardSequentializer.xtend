@@ -118,7 +118,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
         // Fix VO association in VariableStore
         val voStore = VariableStore.get(environment)
         valuedObjectMap.entrySet.forEach[ entry |
-            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            val info = voStore.getInfo(entry.key)
             if (info !== null) info.valuedObject = entry.value.head
         ]
         

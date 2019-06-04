@@ -80,6 +80,7 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
     }
     
     override process() {
+        val voStore = VariableStore.get(environment)
         val methodSCGs = newHashMap
         val normalSCGs = newArrayList
         
@@ -118,7 +119,10 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         }
         
         // Remove inlined methods
-        model.scgs.removeAll(methodSCGs.values)
+        methodSCGs.entrySet.forEach[
+            it.key.valuedObjects.forEach[voStore.remove(it)]
+            model.scgs.remove(it.value)
+        ]
         // Remove classes without content
         for (scg : model.scgs) {
             scg.declarations.removeIf[it instanceof ClassDeclaration && (it as ClassDeclaration).declarations.nullOrEmpty]

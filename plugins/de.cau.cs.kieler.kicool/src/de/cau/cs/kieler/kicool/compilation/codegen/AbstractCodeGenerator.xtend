@@ -108,9 +108,6 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
             ]
         }
         
-        // Handle hierarchical VO declarations in VariableStore
-        VariableStore.get(environment)?.flattenAllHierarchicalObjects
-        
         setModel(result)
     }
     

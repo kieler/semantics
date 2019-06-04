@@ -171,7 +171,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 // Fix VO association in VariableStore
                 if (voStore !== null) {
                     val oldVO = key
-                    val info = voStore.variables.get(oldVO.name).findFirst[it.valuedObject == oldVO]
+                    val info = voStore.getInfo(oldVO)
                     if (info !== null) info.valuedObject = value
                 }
             ]
@@ -296,7 +296,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             valuedObjectMapping.put(oldVO, newVO)
             // Fix VO association in VariableStore
             if (voStore !== null) {
-                val info = voStore.variables.get(oldVO.name).findFirst[it.valuedObject == oldVO]
+                val info = voStore.getInfo(oldVO)
                 if (info !== null) info.valuedObject = newVO
             }
             // Initialize
