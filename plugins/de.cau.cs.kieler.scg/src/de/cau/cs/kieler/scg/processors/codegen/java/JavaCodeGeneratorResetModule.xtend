@@ -41,12 +41,14 @@ class JavaCodeGeneratorResetModule extends CCodeGeneratorResetModule {
         code.append(")")
         
         code.append(" {\n")
-        
+    }
+    
+    override generate() {
         indent(2) 
         code.append(struct.getVariableName).append(struct.separator).append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = true;\n")
         indent(2)
         code.append(struct.getVariableName).append(struct.separator).append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = false;\n")
-    }
+    }    
     
     override generateDone() {
         indent

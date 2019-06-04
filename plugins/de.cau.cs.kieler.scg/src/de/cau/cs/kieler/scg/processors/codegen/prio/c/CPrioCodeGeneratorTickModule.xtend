@@ -65,7 +65,11 @@ class CPrioCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     }
     
     override generate() {
-        
-    }  
+
+    }
+    
+    override generateDone() {
+        code.append("}\n")
+    }
     
 }

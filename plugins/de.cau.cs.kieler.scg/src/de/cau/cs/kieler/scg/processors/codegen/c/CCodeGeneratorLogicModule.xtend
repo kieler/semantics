@@ -117,24 +117,18 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         code.append("}\n")
     }
     
-    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
-        if (!conditionalStack.empty) {
-            // Apparently, we are in a nested conditional. Handle it if necessary. 
-            assignment.handleConditionalNesting
-        }
-        
+    protected def void serializeToCode(Assignment assignment, int indent, 
+        extension CCodeGeneratorStructModule struct, extension CCodeSerializeHRExtensions serializer
+    ) {
         if (assignment.valuedObject === null) {
+            indent(indent)
             if (assignment.expression instanceof TextExpression) {
-                indent(conditionalStack.size + 1)
                 code.append((assignment.expression as TextExpression).text).append(";\n")
             } else if (assignment.expression instanceof PrintCall) {
-                indent(conditionalStack.size + 1)
                 code.append((assignment.expression as PrintCall).serialize).append(";\n")
             } else if (assignment.expression instanceof RandomizeCall) {
-                indent(conditionalStack.size + 1)
                 code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
             } else if (assignment.expression instanceof FunctionCall) {
-                indent(conditionalStack.size + 1)
                 code.append((assignment.expression as FunctionCall).serialize).append(";\n")
             } else if (assignment.expression instanceof ReferenceCall) {
                 val referenceCall = assignment.expression as ReferenceCall
@@ -142,7 +136,6 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 if (declaration.reference instanceof SCGraph) {
                     code.append(callToSCG(referenceCall, declaration, conditionalStack.size + 1, serializer))
                 } else {
-                    indent(conditionalStack.size + 1)
                     code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
                 }
             } else {
@@ -150,20 +143,30 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             }
             
         } else {
-            
             // Add the assignment.
             valuedObjectPrefix = struct.getVariableName + struct.separator
             prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
             if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
                 for (asgn : assignment.splitAssignment) {
-                    indent(conditionalStack.size + 1)
+                    indent(indent)
                     code.append(asgn.serializeHR).append(";\n")    
                 }
             } else {
-                indent(conditionalStack.size + 1)
+                indent(indent)
                 code.append(assignment.serializeHR).append(";\n")
             }
-            
+        }        
+    }
+    
+    protected def dispatch void generate(Assignment assignment, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
+        if (!conditionalStack.empty) {
+            // Apparently, we are in a nested conditional. Handle it if necessary. 
+            assignment.handleConditionalNesting
+        }
+
+        assignment.serializeToCode(conditionalStack.size + 1, struct, serializer)
+        
+        if (assignment.valuedObject !== null) {
             // Handle pre variable if necessary.
             if (assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
                 for (preOE : assignment.expression.asOperatorExpression.getPreOperatorExpressions) {

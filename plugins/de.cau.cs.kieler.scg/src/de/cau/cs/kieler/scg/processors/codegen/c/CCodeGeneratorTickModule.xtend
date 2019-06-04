@@ -45,15 +45,17 @@ class CCodeGeneratorTickModule extends SCGCodeGeneratorModule {
         struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
+        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
+        code.append("\n")
     }
     
     override generate() {
-        code.append(indentation).append(logic.getName).append("(").append(struct.getVariableName).append(");\n")
-        indent 
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
+
     }
     
     override generateDone() {
+        indent 
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 0;\n")
         code.append("}\n")
     }
     

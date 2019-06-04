@@ -59,6 +59,14 @@ class CPrioCodeGeneratorModule extends CCodeGeneratorModule {
             codeFilename + C_EXTENSION, this, LOGIC_FUNCTION_NAME)
     }
     
+    override generateDone() {
+        struct?.generateDone
+        reset?.generateDone
+        logic?.generateDone
+        tick.code.append(logic.code)
+        tick?.generateDone
+    }
+    
     override generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {
         // Swap logic and reset w.r.t. super implementation.
         hFile.append(struct.code)
