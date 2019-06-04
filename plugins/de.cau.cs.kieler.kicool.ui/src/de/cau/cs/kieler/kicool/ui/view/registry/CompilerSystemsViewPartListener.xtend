@@ -26,11 +26,11 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
  * @kieler.design 2018-06-01 proposed
  * @kieler.rating 2018-06-01 proposed yellow 
  */
-class CompilerRegistryViewPartListener implements IPartListener2 {
+class CompilerSystemsViewPartListener implements IPartListener2 {
     
-    var CompilerRegistryView view
+    var CompilerSystemsView view
     
-    new(CompilerRegistryView view, Composite parent) {
+    new(CompilerSystemsView view, Composite parent) {
         this.view = view
         
         val listener = this
@@ -45,7 +45,7 @@ class CompilerRegistryViewPartListener implements IPartListener2 {
     override partActivated(IWorkbenchPartReference partRef) {
         val part = partRef.getPart(false)
         if (part === null) return;
-        if (part instanceof CompilerRegistryView) {
+        if (part instanceof CompilerSystemsView) {
             (view as IDiagramViewUpdate).updateView
         }
     }
@@ -68,7 +68,7 @@ class CompilerRegistryViewPartListener implements IPartListener2 {
     override partOpened(IWorkbenchPartReference partRef) {
         val part = partRef.getPart(false)
         if (part === null) return;
-        if (part instanceof CompilerRegistryView) {
+        if (part instanceof CompilerSystemsView) {
             (view as IDiagramViewUpdate).updateView
         }
     }
