@@ -62,6 +62,7 @@ public class RelationIncompatibilityImpl extends RelationImpl implements Relatio
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Signal> getIncomp() {
         if (incomp == null) {
             incomp = new EObjectResolvingEList<Signal>(Signal.class, this, EsterelPackage.RELATION_INCOMPATIBILITY__INCOMP);

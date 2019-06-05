@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Esterel Tests
+Bundle-SymbolicName: de.cau.cs.kieler.lustre.test;singleton:=true
+Bundle-Version: 0.14.0.qualifier
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.junit;bundle-version="4.12.0",
+ org.eclipse.osgi;bundle-version="3.11.3",
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.kicool,
+ de.cau.cs.kieler.test.common,
+ de.cau.cs.kieler.scl,
+ de.cau.cs.kieler.scg,
+ org.eclipse.core.resources,
+ de.cau.cs.kieler.simulation,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sccharts.test,
+ de.cau.cs.kieler.lustre;bundle-version="0.14.0"
+

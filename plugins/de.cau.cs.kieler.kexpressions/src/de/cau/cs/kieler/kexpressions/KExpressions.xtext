@@ -161,55 +161,13 @@ ValuedExpression returns Expression:
 ShiftExpressions returns Expression:
     SumExpression 
     (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=ShiftLeftOperator subExpressions+=ShiftRightRightUnsignedExpression)
-        ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightOperator subExpressions+=ShiftLeftRightUnsignedExpression)
-        ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightUnsignedOperator subExpressions+=ShiftLeftRightExpression)
-        ('>>>' subExpressions+=ShiftLeftRightExpression)*
-    )
-    )?
+    ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression ('<<' subExpressions+=SumExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ShiftRightOperator subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)
+    )*     
 ;   
-
-ShiftLeftRightExpression returns Expression:
-    SumExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=ShiftLeftOperator subExpressions+=ShiftRightRightUnsignedExpression)
-        ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightOperator subExpressions+=ShiftLeftRightUnsignedExpression)
-        ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-    )
-    )?;
-    
-ShiftLeftRightUnsignedExpression returns Expression:
-    SumExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=ShiftLeftOperator subExpressions+=ShiftRightRightUnsignedExpression)
-        ('<<' subExpressions+=ShiftRightRightUnsignedExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightUnsignedOperator subExpressions+=ShiftLeftRightExpression)
-        ('>>>' subExpressions+=ShiftLeftRightExpression)*
-    )
-    )?;
-    
-ShiftRightRightUnsignedExpression returns Expression:
-    SumExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightOperator subExpressions+=ShiftLeftRightUnsignedExpression)
-        ('>>' subExpressions+=ShiftLeftRightUnsignedExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ShiftRightUnsignedOperator subExpressions+=ShiftLeftRightExpression)
-        ('>>>' subExpressions+=ShiftLeftRightExpression)*
-    )
-    )?;           
-	
 	
 ShiftLeftExpression returns Expression:
     SumExpression
@@ -236,14 +194,10 @@ ShiftRightUnsignedExpression returns Expression:
 SumExpression returns Expression:
     ProductExpression 
     (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=AddOperator subExpressions+=SubExpression)
-        ('+' subExpressions+=SubExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=SubOperator subExpressions+=AddExpression)
-        ('-' subExpressions+=AddExpression)*
-    )
-    )?
+    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)
+    )*
 ;	
 	
 // Add Expression Rule
@@ -252,10 +206,8 @@ SumExpression returns Expression:
 // Example: 1 + 2
 AddExpression returns Expression:
 	ProductExpression 
-	({OperatorExpression.subExpressions+=current} 
-	    (operator=AddOperator subExpressions+=ProductExpression)
-	    ('+' subExpressions+=ProductExpression)*
-	)?;
+	({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression)*
+;
 
 // Sub Expression Rule
 // The rule directs the 'mult expression' rule and creates an operator expression for subtractions
@@ -263,63 +215,23 @@ AddExpression returns Expression:
 // Example: var(A) - i
 SubExpression returns Expression:
 	ProductExpression 
-	({OperatorExpression.subExpressions+=current} 
-	    (operator=SubOperator subExpressions+=ProductExpression)
-	    ('-' subExpressions+=ProductExpression)*
-	)?;
+	({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression)*
+;
+	
 
 
 ProductExpression returns Expression:
     NegExpression 
     (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('%' subExpressions+=MultDivExpression)*
-    )
-    )?
+    ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=NegExpression ('*' subExpressions+=NegExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=NegExpression ('/' subExpressions+=NegExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=NegExpression ('%' subExpressions+=NegExpression)*)
+    )*    
 ;   
 
-MultDivExpression returns Expression:
-    NegExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )
-    )?;
-    
-MultModExpression returns Expression:
-    NegExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=MultOperator subExpressions+=DivModExpression)
-        ('*' subExpressions+=DivModExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('%' subExpressions+=MultDivExpression)*
-    )
-    )?;
-    
-DivModExpression returns Expression:
-    NegExpression 
-    (
-    (  {OperatorExpression.subExpressions+=current}
-        (operator=DivOperator subExpressions+=MultModExpression)
-        ('/' subExpressions+=MultModExpression)*
-    )|({OperatorExpression.subExpressions+=current}
-        (operator=ModOperator subExpressions+=MultDivExpression)
-        ('%' subExpressions+=MultDivExpression)*
-    )
-    )?;           
+     
 
 // Mult Expression Rule
 // The rule directs the 'div expression' rule and creates an operator expression for multiplications
@@ -363,11 +275,11 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
-    | FBYExpression;
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
+    | InitExpression;
     
-FBYExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
+InitExpression returns Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
     | AtomicValuedExpression;    
     
 // Atomic Expression Rule
@@ -376,12 +288,12 @@ FBYExpression returns Expression:
 // Basically, the rule chain may start over again at this point.     
 AtomicExpression returns Expression:
     BoolValue
-    | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
     | FunctionCall
     | RandomCall
     | RandomizeCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -403,7 +315,7 @@ AtomicValuedExpression returns Expression:
 // valued object reference.
 // Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 ValuedObjectTestExpression returns Expression:
-	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
+	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 	| ValuedObjectReference;
 
 // ID with primes
@@ -426,6 +338,8 @@ ScheduleObjectReference returns ScheduleObjectReference:
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
     valuedObject=[ValuedObject|PrimeID] 
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
     (
         ('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
@@ -566,8 +480,8 @@ enum PostfixSub returns OperatorType:
 enum ConditionalOperator returns OperatorType:
     CONDITIONAL = "?";        
     
-enum FBYOperator returns OperatorType:
-    FBY = "->";
+enum InitOperator returns OperatorType:
+    INIT = "->";
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 
@@ -579,10 +493,21 @@ enum HostType returns ValueType:
 
 enum StructType returns ValueType:
     STRUCT="struct";
+    
+enum ClassType returns ValueType:
+    CLASS="class";
 
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
+    
+enum AccessModifier returns AccessModifier:
+    PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
+    
+enum MethodReturnType returns ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string";
 
 // -------------------- //
 //  JSON                // 

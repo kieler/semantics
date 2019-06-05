@@ -128,6 +128,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValueType getType() {
         return type;
     }
@@ -137,6 +138,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(ValueType newType) {
         ValueType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -149,6 +151,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getIdType() {
         return idType;
     }
@@ -158,6 +161,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIdType(String newIdType) {
         String oldIdType = idType;
         idType = newIdType;
@@ -170,6 +174,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CombineOperator getOperator() {
         return operator;
     }
@@ -179,6 +184,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperator(CombineOperator newOperator) {
         CombineOperator oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
@@ -191,6 +197,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeDefinition getEsterelType() {
         if (esterelType != null && esterelType.eIsProxy()) {
             InternalEObject oldEsterelType = (InternalEObject)esterelType;
@@ -217,6 +224,7 @@ public class TypeIdentifierImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEsterelType(TypeDefinition newEsterelType) {
         TypeDefinition oldEsterelType = esterelType;
         esterelType = newEsterelType;

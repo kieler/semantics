@@ -259,6 +259,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValueType getType() {
         return type;
     }
@@ -268,6 +269,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(ValueType newType) {
         ValueType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -280,6 +282,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isInput() {
         return input;
     }
@@ -289,6 +292,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInput(boolean newInput) {
         boolean oldInput = input;
         input = newInput;
@@ -301,6 +305,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isOutput() {
         return output;
     }
@@ -310,6 +315,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOutput(boolean newOutput) {
         boolean oldOutput = output;
         output = newOutput;
@@ -322,6 +328,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isStatic() {
         return static_;
     }
@@ -331,6 +338,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStatic(boolean newStatic) {
         boolean oldStatic = static_;
         static_ = newStatic;
@@ -343,6 +351,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSignal() {
         return signal;
     }
@@ -352,6 +361,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSignal(boolean newSignal) {
         boolean oldSignal = signal;
         signal = newSignal;
@@ -364,6 +374,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isConst() {
         return const_;
     }
@@ -373,6 +384,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConst(boolean newConst) {
         boolean oldConst = const_;
         const_ = newConst;
@@ -385,6 +397,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isExtern() {
         return extern;
     }
@@ -394,6 +407,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExtern(boolean newExtern) {
         boolean oldExtern = extern;
         extern = newExtern;
@@ -406,6 +420,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isVolatile() {
         return volatile_;
     }
@@ -415,6 +430,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setVolatile(boolean newVolatile) {
         boolean oldVolatile = volatile_;
         volatile_ = newVolatile;
@@ -427,6 +443,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isGlobal() {
         return global;
     }
@@ -436,6 +453,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setGlobal(boolean newGlobal) {
         boolean oldGlobal = global;
         global = newGlobal;
@@ -448,6 +466,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getHostType() {
         return hostType;
     }
@@ -457,6 +476,7 @@ public class VariableDeclarationImpl extends DeclarationImpl implements Variable
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHostType(String newHostType) {
         String oldHostType = hostType;
         hostType = newHostType;

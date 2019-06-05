@@ -88,6 +88,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
             case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
+            case SCChartsPackage.POLICY_CLASS_DECLARATION: return createPolicyClassDeclaration();
+            case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -250,6 +252,28 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
     public PeriodAction createPeriodAction() {
         PeriodActionImpl periodAction = new PeriodActionImpl();
         return periodAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PolicyClassDeclaration createPolicyClassDeclaration() {
+        PolicyClassDeclarationImpl policyClassDeclaration = new PolicyClassDeclarationImpl();
+        return policyClassDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PolicyRegion createPolicyRegion() {
+        PolicyRegionImpl policyRegion = new PolicyRegionImpl();
+        return policyRegion;
     }
 
     /**

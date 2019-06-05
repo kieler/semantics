@@ -10,24 +10,6 @@
        genModel = "model/generated/KVis.genmodel" /> 
 	
   </extension>
-  <extension
-        point="de.cau.cs.kieler.kicool.processor">
-     <Processor
-           class="de.cau.cs.kieler.kivis.processor.KiVisJSGenerator">
-     </Processor>
-     <Processor
-           class="de.cau.cs.kieler.kivis.processor.VisualizationGenerator">
-     </Processor>
-     <Processor
-           class="de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues">
-     </Processor>
-  </extension>
-  <extension
-        point="de.cau.cs.kieler.kicool.system">
-     <TransformationSystem
-           system="system/de.cau.cs.kieler.kivis.js.kico">
-     </TransformationSystem>
-  </extension>
 
 
 

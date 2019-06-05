@@ -148,6 +148,14 @@
     <eLiterals name="BITWISE_NOT" value="25" literal="~"/>
     <eLiterals name="CONDITIONAL" value="24" literal="? :"/>
     <eLiterals name="FBY" value="25" literal="FBY"/>
+    <eLiterals name="CURRENT" value="26" literal="CURRENT"/>
+    <eLiterals name="WHEN" value="27" literal="WHEN"/>
+    <eLiterals name="INIT" value="28" literal="INIT"/>
+    <eLiterals name="INTDIV" value="29" literal="INTDIV"/>
+    <eLiterals name="LOGICAL_XOR" value="30" literal="LOGICAL_XOR"/>
+    <eLiterals name="IMPLIES" value="31" literal="IMPLIES"/>
+    <eLiterals name="ATMOSTONEOF" value="32" literal="ATMOSTONEOF"/>
+    <eLiterals name="NOR" value="33" literal="NOR"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -189,11 +197,14 @@
     </eLiterals>
     <eLiterals name="STRING" value="6" literal="string"/>
     <eLiterals name="REFERENCE" value="8" literal="reference"/>
-    <eLiterals name="SCHEDULE" value="9"/>
+    <eLiterals name="SCHEDULE" value="9" literal="schedule"/>
     <eLiterals name="UNKNOWN" value="10" literal="UNKNOWN"/>
-    <eLiterals name="CLOCK" value="11" literal="CLOCK"/>
-    <eLiterals name="JSON" value="12" literal="JSON"/>
-    <eLiterals name="STRUCT" value="13" literal="STRUCT"/>
+    <eLiterals name="CLOCK" value="11" literal="clock"/>
+    <eLiterals name="JSON" value="12" literal="json"/>
+    <eLiterals name="STRUCT" value="13" literal="struct"/>
+    <eLiterals name="CLASS" value="14" literal="class"/>
+    <eLiterals name="ENUM" value="15" literal="enum"/>
+    <eLiterals name="VOID" value="16" literal="void"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObjectReference" eSuperTypes="#//Expression">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -286,8 +297,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Declaration" abstract="true" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="valuedObjects" upperBound="-1"
         eType="#//ValuedObject" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="private" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="access" eType="#//AccessModifier"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ValueType"/>
@@ -317,8 +327,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleDeclaration" eSuperTypes="#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="global" eType="#//PriorityProtocol"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" upperBound="-1"
-        eType="#//PriorityProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="priorities" unique="false"
+        upperBound="-1" eType="#//PriorityProtocol"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodDeclaration" eSuperTypes="#//Declaration #//Schedulable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="returnType" eType="#//ValueType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDeclarations"
+        upperBound="-1" eType="#//Declaration" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="PriorityProtocol">
     <eLiterals name="CONFLICT"/>
@@ -355,5 +370,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExternString" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AccessModifier">
+    <eLiterals name="PUBLIC"/>
+    <eLiterals name="PROTECTED" value="1"/>
+    <eLiterals name="PRIVATE" value="2"/>
   </eClassifiers>
 </ecore:EPackage>

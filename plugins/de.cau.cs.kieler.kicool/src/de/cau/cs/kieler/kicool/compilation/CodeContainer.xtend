@@ -87,6 +87,7 @@ class CodeFile {
     @Accessors val String code
     @Accessors var File underlyingFile = null
     @Accessors val Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap 
+    @Accessors var String modelName
     
     new(File underlyingFile) {
         this(underlyingFile, null)

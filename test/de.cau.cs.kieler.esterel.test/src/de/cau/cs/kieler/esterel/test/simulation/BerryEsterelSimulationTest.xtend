@@ -58,7 +58,7 @@ class BerryEsterelSimulationTest extends AbstractSimulationTest<EsterelProgram> 
     def void testSimulationInriaEsterel(EsterelProgram esterel, TestModelData modelData) {
         assumeTrue("Program contains unsupported data types", esterel.hasUnsupportedType) // skip if program includes esterel type
         
-        startSimulationTest(INRIA_ESTEREL_SYSTEM, esterel, modelData, "EsterelSimulationSLICNetlistC")
+        startSimulationTest(INRIA_ESTEREL_SYSTEM, esterel, modelData, "EsterelSimulationBerry")
     }
     
     /**

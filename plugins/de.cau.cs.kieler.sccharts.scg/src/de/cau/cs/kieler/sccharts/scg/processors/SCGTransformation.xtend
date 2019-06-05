@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.scg.processors
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
@@ -29,12 +28,14 @@ import de.cau.cs.kieler.kexpressions.FunctionCall
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference
 import de.cau.cs.kieler.kexpressions.StringValue
 import de.cau.cs.kieler.kexpressions.TextExpression
@@ -49,11 +50,13 @@ import de.cau.cs.kieler.kexpressions.keffects.FunctionCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.HostcodeEffect
 import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.Region
@@ -61,12 +64,10 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsFixExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.scg.PatternType
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.text.scoping.SCTXScopeProvider
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -82,13 +83,14 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousForkRemover
 import de.cau.cs.kieler.scg.processors.optimizer.SuperfluousThreadRemover
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.processors.transformators.SCLToSCGTransformation
 import java.util.HashMap
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 
 /** 
  * SCCharts CoreTransformation Extensions.
@@ -108,27 +110,31 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsControlflowRegionExtensions
     @Inject extension SCChartsTransitionExtensions
-    @Inject extension SCChartsFixExtensions
     @Inject extension PragmaExtensions
+    
+    private var SCLToSCGTransformation methodProcessor;
+
+
+    public static val PREFIX_REFERENCE_VALUED_OBJECT_NAME = "_r"
     
     protected static val ANNOTATION_IGNORETHREAD = "ignore"
     
-    private static val Injector i = SCTXStandaloneSetup::doSetup();
-    private static val SCTXScopeProvider scopeProvider = i.getInstance(typeof(SCTXScopeProvider));
+    val stateTypeCache = <State, Set<PatternType>>newHashMap
+    val uniqueNameCache = new UniqueNameCache
 
-    private val stateTypeCache = <State, Set<PatternType>>newHashMap
-    private val uniqueNameCache = new UniqueNameCache
+    static val String ANNOTATION_REGIONNAME = "regionName"
+    static val String ANNOTATION_HOSTCODE = "hostcode"
 
-    private static val String ANNOTATION_REGIONNAME = "regionName"
-    private static val String ANNOTATION_HOSTCODE = "hostcode"
-
-    private var Entry rootStateEntry = null
+    var Entry rootStateEntry = null
+    private var SCGraphs scGraphs
 
     // State mappings         
     HashMap<EObject, Node> stateOrRegion2node = new HashMap<EObject, Node>()
     HashMap<Node, EObject> node2state = new HashMap<Node, EObject>()    
+    val SCC2SCGMap = <State, SCGraph> newHashMap
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCG"
@@ -143,16 +149,41 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     }
     
     override process() {
+        methodProcessor = KiCoolRegistration.getProcessorInstance("de.cau.cs.kieler.scl.processors.transformators.scl2scg") as SCLToSCGTransformation
+        methodProcessor?.setEnvironment(sourceEnvironment, environment)
+        
         val model = getModel
-        val scgs = ScgFactory.eINSTANCE.createSCGraphs => [
+        scGraphs = ScgFactory.eINSTANCE.createSCGraphs => [
             creationalTransformation(model, it) // Tell KITT that this is not an in-place transformation from here on
             it.trace(model)
-            
             model.copyPragmas(it)
-            
-            scgs.addAll(model.rootStates.map[transform])
         ]
-        setModel(scgs)
+        model.createSCGs
+        scGraphs.scgs.addAll(0, model.rootStates.map[transform])
+        setModel(scGraphs)
+    }
+    
+    def createSCGs(EObject obj) {
+        SCC2SCGMap.clear
+        switch (obj) {
+            SCGraph: { return }
+            State: {
+                ScgFactory::eINSTANCE.createSCGraph => [
+                    label = (obj as State).name; 
+                    name = (obj as State).name
+                    SCC2SCGMap.put(obj as State, it)
+                ]
+            }
+            SCCharts: {
+                for (rootState : obj.rootStates) {
+                    ScgFactory::eINSTANCE.createSCGraph => [
+                        label = rootState.name; 
+                        name = rootState.name
+                        SCC2SCGMap.put(rootState, it)
+                    ]
+                }
+            }            
+        }
     }
 
     def Node getMappedNode(State state) {
@@ -248,36 +279,36 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
         stateTypeCache.clear
         uniqueNameCache.clear
 
-        // Create a new SCGraph
-        val sCGraph = ScgFactory::eINSTANCE.createSCGraph => [
-            // Fix: Better always take the id (e.g. for java code generation). The label could start with a number and contain spaces...
-            label = rootState.name; //if(!rootState.label.nullOrEmpty) rootState.label else rootState.id
-            name = rootState.name
-        ]
+        val sCGraph = SCC2SCGMap.get(rootState)
 
-//        creationalTransformation(rootState, sCGraph) // Tell KITT that this is not an in-place transformation from here on
         sCGraph.trace(rootState)
         
         // Handle declarations
-        // for (valuedObject : state.valuedObjects) {
-        // val valuedObjectSCG = sCGraph.createValuedObject(valuedObject.name)
-        // valuedObjectSCG.applyAttributes(valuedObject)
-        // valuedObjectSCG.map(valuedObject)
-        // }
-        for (declaration : rootState.declarations) {
-            val newDeclaration = createDeclaration(declaration).trace(declaration)
-            declaration.copyAnnotations(newDeclaration)
-            declaration.valuedObjects.forEach [ oldVO |
-                val newValuedObject = oldVO.copy
-                newDeclaration.valuedObjects += newValuedObject
-                newValuedObject.map(oldVO)
-                
-                // Fix VO association in VariableStore
-                val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
-                if (info !== null) info.valuedObject = newValuedObject
-            ]
-            sCGraph.declarations += newDeclaration
-        }
+        val declMapping = newHashMap
+        val voMapping = newHashMap
+        sCGraph.declarations += rootState.declarations.copyDeclarations(voMapping, declMapping)
+        declMapping.entrySet.forEach[
+            value.trace(key)
+            // Convert method body
+            if (key instanceof MethodImplementationDeclaration) {
+                val method = key as MethodImplementationDeclaration
+                if (!method.statements.nullOrEmpty) {
+                    scGraphs.scgs += methodProcessor?.transformMethod(method, value as MethodDeclaration, voMapping)
+                }
+            }
+            if (value instanceof ReferenceDeclaration) {
+                (value as ReferenceDeclaration).reference = SCC2SCGMap.get((key as ReferenceDeclaration).reference)
+            }
+        ]
+        voMapping.entrySet.forEach[
+            value.trace(key)
+            value.map(key)
+            
+            // Fix VO association in VariableStore
+            val oldVO = key
+            val info = voStore.variables.get(oldVO.name).findFirst[valuedObject == oldVO]
+            if (info !== null) info.valuedObject = value
+        ]        
 
         val hostcodeAnnotations = rootState.getAnnotations(ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach [
@@ -315,20 +346,6 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
         rootState.mappedNode.createControlFlow.trace(rootState) => [rootStateEntry.setNext(it)]
 
-        // if (state.rootState.regions.size==1) {
-        // // Generate nodes and recursively traverse model
-        // state.transformSCGGenerateNodes(sCGraph)
-        // state.transformSCGConnectNodes(sCGraph)        
-        // } else {
-        // // Generate nodes and recursively traverse model
-        // for (region : state.rootState.regions) {
-        // region.transformSCGGenerateNodes(sCGraph)
-        // }
-        // // Generate nodes and recursively traverse model
-        // for (region : state.rootState.regions) {
-        // region.transformSCGConnectNodes(sCGraph)
-        // }
-        // }
         // Fix superfluous exit nodes
         sCGraph.trimExitNodes.trimConditioanlNodes
 
@@ -366,7 +383,8 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
 
     def boolean isAssignment(State state) {
         ((state.outgoingTransitions.filter [e|
-            e.isImplicitlyImmediate && e.trigger === null && !e.effects.nullOrEmpty && e.preemption != PreemptionType::TERMINATION
+            e.isImplicitlyImmediate && e.trigger === null && 
+            ((e.preemption != PreemptionType::TERMINATION && !e.effects.nullOrEmpty) || state.isReferencing)
         ].size == 1) && (state.outgoingTransitions.size == 1))
     }
 
@@ -556,45 +574,72 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
             
             assignment.name = state.name
 
-            // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
-            val effect = transition.effects.get(0) as Effect
-            if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
-                assignment.operator = effect.operator
-
-                // For hostcode e.g. there is no need for a valued object - it is allowed to be null
-                val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
-                if (sCChartAssignment.valuedObject !== null) {
-                    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
-                }
-
-                // TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
-                if (!effect.isPostfixOperation) {
-                    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
-                }
-                if (!sCChartAssignment.indices.nullOrEmpty) {
-                    sCChartAssignment.indices.forEach [
-                        assignment.indices += it.convertToSCGExpression.trace(transition, effect)
+            if (state.isReferencing) {
+                val referenceDeclaration = createReferenceDeclaration => [
+                    reference = SCC2SCGMap.get(state.reference.scope)
+                    sCGraph.declarations += it    
+                ]
+                val referenceCall = createReferenceCall.trace(state) => [ rc |
+                    val VOR = createValuedObject(PREFIX_REFERENCE_VALUED_OBJECT_NAME + state.reference.scope.name) => [
+                        referenceDeclaration.valuedObjects += it
                     ]
-                }
+                    rc.valuedObject = VOR
+                    state.reference.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
+                ]    
                 
-                if (!sCChartAssignment.schedule.nullOrEmpty) {
-                    sCChartAssignment.schedule.forEach[ s |
-                        assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
-                            it.priority = s.priority
-                        ]
-                    ]
-                }
-            } else if (effect instanceof HostcodeEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof FunctionCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof PrintCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof RandomizeCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            } else if (effect instanceof ReferenceCallEffect) {
-                assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
-            }
+                assignment.expression = referenceCall
+            } else {
+    		    // Assertion: A SCG normalized SCChart should have just ONE assignment per transition
+    		    val effect = transition.effects.get(0) as Effect
+    		    if (effect instanceof de.cau.cs.kieler.kexpressions.keffects.Assignment) {
+    			assignment.operator = effect.operator
+    
+    			// For hostcode e.g. there is no need for a valued object - it is allowed to be null
+    			val sCChartAssignment = (effect as de.cau.cs.kieler.kexpressions.keffects.Assignment)
+    			if (sCChartAssignment.valuedObject !== null) {
+    			    assignment.setValuedObject(sCChartAssignment.valuedObject.getSCGValuedObject)
+    			    // Copy sub reference
+    			    var scgRef = assignment.reference
+    			    var sccSub = sCChartAssignment.reference.subReference
+    			    while (sccSub !== null) {
+    				var ref = sccSub.valuedObject.SCGValuedObject.reference
+    				ref.indices += sccSub.indices.map[copy]
+    				ref.indices.filter(ValuedObjectReference).toList.forEach[valuedObject = valuedObject.SCGValuedObject]
+    				scgRef.subReference = ref
+    				scgRef = ref
+    				sccSub = sccSub.subReference
+    			    }
+    			}
+    
+    			// TODO: Test if this works correct? Was before: assignment.setAssignment(serializer.serialize(transitionCopy))
+    			if (!effect.isPostfixOperation) {
+    			    assignment.setExpression(sCChartAssignment.expression.convertToSCGExpression.trace(transition, effect))
+    			}
+    			if (!sCChartAssignment.indices.nullOrEmpty) {
+    			    sCChartAssignment.indices.forEach [
+    				    assignment.indices += it.convertToSCGExpression.trace(transition, effect)
+    			    ]
+    			}
+		    } else if (effect instanceof HostcodeEffect) {
+			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+		    } else if (effect instanceof FunctionCallEffect) {
+			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+		    } else if (effect instanceof PrintCallEffect) {
+			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+		    } else if (effect instanceof RandomizeCallEffect) {
+			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+		    } else if (effect instanceof ReferenceCallEffect) {
+			assignment.setExpression(effect.convertToSCGExpression.trace(transition, effect))
+		    }
+		    
+		    if (!effect.schedule.nullOrEmpty) {
+    			for (s : effect.schedule) {
+    			    assignment.schedule += s.valuedObject.getSCGValuedObject.createScheduleReference => [
+    				    it.priority = s.priority
+    			    ]
+    			}
+		    }
+		}
         } else if (stateTypeCache.get(state).contains(PatternType::CONDITIONAL)) {
             val conditional = sCGraph.addConditional
             state.map(conditional)
@@ -772,6 +817,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ScheduleObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.createScheduleReference => [ sor |
             sor.trace(expression)
+            sor.handleSubReferences(expression)
             expression.indices.forEach [
                 sor.indices += it.convertToSCGExpression
             ]
@@ -785,6 +831,7 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ValuedObjectReference expression) {
         expression.valuedObject.getSCGValuedObject.reference => [ vor |
             vor.trace(expression)
+            vor.handleSubReferences(expression)
             expression.indices.forEach [
                 vor.indices += it.convertToSCGExpression
             ]
@@ -875,8 +922,17 @@ class SCGTransformation extends Processor<SCCharts, SCGraphs> implements Traceab
     def dispatch Expression convertToSCGExpression(ReferenceCall referenceCall) {
         createReferenceCall.trace(referenceCall) => [ rc |
             rc.valuedObject = referenceCall.valuedObject.getSCGValuedObject
+            rc.handleSubReferences(referenceCall)
             referenceCall.parameters.forEach[ rc.parameters += it.convertToSCGParameter ]
         ]
+    }
+    
+    def void handleSubReferences(ValuedObjectReference dest, ValuedObjectReference src) {
+        if (src.subReference !== null) {
+            val ref =  src.subReference.valuedObject.SCGValuedObject.reference
+            dest.subReference = ref
+            dest.subReference.handleSubReferences(src.subReference)
+        }
     }
     
 // -------------------------------------------------------------------------   

@@ -28,6 +28,7 @@ public enum TemplatePosition {
     LOCAL_DECLARATION("local-decl"),
     INIT("init"),
     INPUT("input"),
+    PARAMETER("step-parameter"),
     OUTPUT("output"),
     PRE_TICK("pre-tick"), // Only for time measuring
     POST_TICK("post-tick"), // Only for time measuring

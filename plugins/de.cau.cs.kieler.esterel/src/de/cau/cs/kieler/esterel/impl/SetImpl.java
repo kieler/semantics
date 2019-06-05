@@ -75,6 +75,7 @@ public class SetImpl extends SCEstStatementImpl implements Set {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getSignal() {
         if (signal != null && signal.eIsProxy()) {
             InternalEObject oldSignal = (InternalEObject)signal;
@@ -101,6 +102,7 @@ public class SetImpl extends SCEstStatementImpl implements Set {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSignal(Signal newSignal) {
         Signal oldSignal = signal;
         signal = newSignal;
@@ -113,6 +115,7 @@ public class SetImpl extends SCEstStatementImpl implements Set {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -137,6 +140,7 @@ public class SetImpl extends SCEstStatementImpl implements Set {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;

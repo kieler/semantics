@@ -64,6 +64,7 @@ public class JsonPragmaImpl extends PragmaImpl implements JsonPragma {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue getValue() {
         return value;
     }
@@ -88,6 +89,7 @@ public class JsonPragmaImpl extends PragmaImpl implements JsonPragma {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(JsonObjectValue newValue) {
         if (newValue != value) {
             NotificationChain msgs = null;

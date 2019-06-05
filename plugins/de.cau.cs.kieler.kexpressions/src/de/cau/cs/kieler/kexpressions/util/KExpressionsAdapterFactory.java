@@ -165,6 +165,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createScheduleDeclarationAdapter();
             }
             @Override
+            public Adapter caseMethodDeclaration(MethodDeclaration object) {
+                return createMethodDeclarationAdapter();
+            }
+            @Override
             public Adapter caseScheduleObjectReference(ScheduleObjectReference object) {
                 return createScheduleObjectReferenceAdapter();
             }
@@ -427,6 +431,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createScheduleDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration <em>Method Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration
+     * @generated
+     */
+    public Adapter createMethodDeclarationAdapter() {
         return null;
     }
 

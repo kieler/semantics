@@ -14,8 +14,13 @@
 package de.cau.cs.kieler.scg.processors
 
 import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.IntAnnotation
+import de.cau.cs.kieler.annotations.ReferenceAnnotation
 import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Entry
@@ -89,4 +94,20 @@ class SCGAnnotations {
     public static val ANNOTATION_SSA = 
         register("SSA", AnnotationsType.SYSTEM, StringAnnotation, SCGraph, 
             "Marks an SCG as being in SSA form.")
+            
+    public static val ANNOTATION_RETURN_NODE = 
+        register("isReturn", AnnotationsType.SYSTEM, TagAnnotation, Assignment, 
+            "Marks an node as return node.")
+            
+    public static val ANNOTATION_METHOD_PARAMETER = 
+        register("methodParameter", AnnotationsType.SYSTEM, IntAnnotation, ValuedObject, 
+            "Marks an node as method parameter assignment.")
+            
+    public static val ANNOTATION_METHOD_REFERENCE = 
+        register("method", AnnotationsType.SYSTEM, ReferenceAnnotation, SCGraph, 
+            "Marks an SCG as a method, referencing its declaration.")
+            
+    public static val ANNOTATION_METHOD_INLINING = 
+        register("inline", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
+            "Marks a method/method call to be always inlined.")
 }

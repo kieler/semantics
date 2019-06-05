@@ -133,6 +133,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SCLPackage.MODULE_CALL__SCHEDULE);
@@ -145,6 +146,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, SCLPackage.MODULE_CALL__PARAMETERS);
@@ -157,6 +159,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, SCLPackage.MODULE_CALL__ANNOTATIONS);
@@ -169,6 +172,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSemicolon() {
         return semicolon;
     }
@@ -178,6 +182,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSemicolon(boolean newSemicolon) {
         boolean oldSemicolon = semicolon;
         semicolon = newSemicolon;
@@ -190,6 +195,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.cau.cs.kieler.scl.Module getModule() {
         if (module != null && module.eIsProxy()) {
             InternalEObject oldModule = (InternalEObject)module;
@@ -216,6 +222,7 @@ public class ModuleCallImpl extends MinimalEObjectImpl.Container implements Modu
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setModule(de.cau.cs.kieler.scl.Module newModule) {
         de.cau.cs.kieler.scl.Module oldModule = module;
         module = newModule;

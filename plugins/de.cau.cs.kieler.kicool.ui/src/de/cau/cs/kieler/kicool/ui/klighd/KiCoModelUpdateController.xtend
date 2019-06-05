@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ui.klighd
 
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
@@ -68,6 +67,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
 import java.util.List
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -658,9 +658,9 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
-            val ext = ResourceExtension.getResourceExtension(model)
+            val ext = ModelInformation.getResourceExtension(model)
             if (ext !== null) {
-                filename += "." + ext.getFileExtension()
+                filename += "." + ext
             }
             return filename
         }

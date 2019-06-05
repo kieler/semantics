@@ -12,35 +12,38 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.ValueType
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import java.util.List
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.PrintCall
-import com.google.common.collect.Multimap
 import com.google.common.collect.HashMultimap
+import com.google.common.collect.Multimap
+import com.google.inject.Inject
 import com.google.inject.Singleton
-import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
-import de.cau.cs.kieler.kexpressions.RandomCall
-import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
-import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.RandomCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
@@ -59,6 +62,7 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KEffectsExtensions    
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
+    @Inject extension KExpressionsTypeExtensions
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
@@ -90,6 +94,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
 //            vo = valuedObjectReference.valuedObject.getReferenceDeclaration.extern.head.code
             vo = valuedObjectReference.valuedObject.name
         }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
+        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
@@ -100,6 +107,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         var vo = valuedObjectPrefix + valuedObjectReference.valuedObject.name
         if (valuedObjectReference.valuedObject.isExternalReference) {
             vo = valuedObjectReference.valuedObject.name
+        }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
         }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
@@ -120,11 +130,14 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return "0"
     }
     
-    override CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
+    override CharSequence serializeAssignment(de.cau.cs.kieler.kexpressions.keffects.Assignment assignment, CharSequence expressionStr) {
         var res = ""
         
         if (assignment.valuedObject !== null) {
             res = res + valuedObjectPrefix + assignment.valuedObject.name
+            if (assignment.reference.subReference !== null) {
+                res += "." + assignment.reference.subReference.serializeVOR
+            }
             if (!assignment.indices.nullOrEmpty) {
                 for(index : assignment.indices) {
                     res = res + "[" + index.serialize + "]"
@@ -140,13 +153,16 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return res
     }   
     
-    dispatch override CharSequence serializeHR(de.cau.cs.kieler.scg.Assignment assignment) {
+    dispatch override CharSequence serializeHR(Assignment assignment) {
         if (assignment.valuedObject !== null) {
             var CharSequence assignmentText = ""
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
-                assignmentText = serializeHR(assignment.expression)
+                assignmentText = serializeHRWithCasts(assignment)
             }
             var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
+            if (assignment.reference.subReference !== null) {
+                valuedObjectName += "." + assignment.reference.subReference.serializeVOR
+            }
             if (!assignment.indices.nullOrEmpty) {
                 valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
             }
@@ -176,6 +192,21 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             (assignment.expression as PrintCall).serializeHR
         }
     }    
+    
+    protected def String serializeHRWithCasts(Assignment assignment) {
+        if (assignment.valuedObject === null) return ""
+        if (!(assignment.expression.isFloatExpression)) {
+            return serializeHR(assignment.expression).toString
+        } 
+        val vo = assignment.valuedObject
+        val exp = assignment.expression
+        
+        var result = serializeHR(assignment.expression).toString
+        if (vo.declaration instanceof VariableDeclaration && vo.variableDeclaration.type == ValueType.INT && exp.isFloatExpression) {
+            result = "(int)(" + result + ")"
+        } 
+        return result
+    }
     
     protected override CharSequence serializeHRIndices(List<Expression> indices) {
         var String indicesStr = ""
@@ -237,28 +268,36 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }
     
     override dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.referenceDeclaration
-        if (declaration.extern.nullOrEmpty) { 
-            return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
-        } else {
-            var code = declaration.extern.head.code
-            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+        val declaration = referenceCall.valuedObject.declaration
+        if (declaration instanceof ReferenceDeclaration) {
+            if (declaration.extern.nullOrEmpty) { 
+                return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+            } else {
+                var code = declaration.extern.head.code
+                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                return code + referenceCall.parameters.serializeHRParameters
             }
-            return code + referenceCall.parameters.serializeHRParameters
+        } else {
+            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
     
     override dispatch CharSequence serialize(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.referenceDeclaration
-        if (declaration.extern.nullOrEmpty) { 
-            return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
-        } else {
-            var code = declaration.extern.head.code
-            if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+        val declaration = referenceCall.valuedObject.declaration
+        if (declaration instanceof ReferenceDeclaration) {
+            if (declaration.extern.nullOrEmpty) { 
+                return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
+            } else {
+                var code = declaration.extern.head.code
+                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
+                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
+                }
+                return code + referenceCall.parameters.serializeParameters
             }
-            return code + referenceCall.parameters.serializeParameters
+        } else {
+            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
     

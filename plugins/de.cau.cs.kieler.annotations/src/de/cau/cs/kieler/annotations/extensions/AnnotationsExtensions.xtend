@@ -133,6 +133,21 @@ class AnnotationsExtensions {
         ]
     }
     
+    def addIntAnnotation(Annotatable annotatable, String name, int value) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createIntAnnotation => [
+            it.name = name
+            it.value = value
+        ]
+    }
+    
+    def addReferenceAnnotation(Annotatable annotatable, String name, EObject obj) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createReferenceAnnotation => [
+            it.name = name
+            it.object = obj
+        ]
+    }
+    
+    
     def addCommentAnnotation(Annotatable annotatable, String name, String text) {
         annotatable.annotations += AnnotationsFactory.eINSTANCE.createCommentAnnotation => [
             it.name = name

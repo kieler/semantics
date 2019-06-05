@@ -79,6 +79,7 @@ public class ProcedureImpl extends ValuedObjectImpl implements Procedure {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TypeIdentifier> getReferenceArguments() {
         if (referenceArguments == null) {
             referenceArguments = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.PROCEDURE__REFERENCE_ARGUMENTS);
@@ -91,6 +92,7 @@ public class ProcedureImpl extends ValuedObjectImpl implements Procedure {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TypeIdentifier> getValueArguments() {
         if (valueArguments == null) {
             valueArguments = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.PROCEDURE__VALUE_ARGUMENTS);

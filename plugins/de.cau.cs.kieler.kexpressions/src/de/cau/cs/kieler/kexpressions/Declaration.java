@@ -16,7 +16,7 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.Declaration#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.Declaration#getAccess <em>Access</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration()
@@ -41,29 +41,28 @@ public interface Declaration extends Annotatable {
     EList<ValuedObject> getValuedObjects();
 
     /**
-     * Returns the value of the '<em><b>Private</b></em>' attribute.
+     * Returns the value of the '<em><b>Access</b></em>' attribute.
+     * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.AccessModifier}.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of the '<em>Private</em>' attribute isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Private</em>' attribute.
-     * @see #setPrivate(boolean)
-     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration_Private()
-     * @model required="true"
+     * @return the value of the '<em>Access</em>' attribute.
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @see #setAccess(AccessModifier)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getDeclaration_Access()
+     * @model
      * @generated
      */
-    boolean isPrivate();
+    AccessModifier getAccess();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}' attribute.
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.Declaration#getAccess <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Private</em>' attribute.
-     * @see #isPrivate()
+     * @param value the new value of the '<em>Access</em>' attribute.
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @see #getAccess()
      * @generated
      */
-    void setPrivate(boolean value);
+    void setAccess(AccessModifier value);
 
 } // Declaration

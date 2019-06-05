@@ -16,7 +16,9 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getNodes <em>Nodes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getIncludes <em>Includes</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackBody <em>Pack Body</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackList <em>Pack List</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram()
@@ -26,19 +28,71 @@ import org.eclipse.emf.ecore.EObject;
 public interface LustreProgram extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Nodes</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Node_Declaration}.
+   * Returns the value of the '<em><b>Includes</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Nodes</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Includes</em>' attribute list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Nodes</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram_Nodes()
+   * @return the value of the '<em>Includes</em>' attribute list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram_Includes()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getIncludes();
+
+  /**
+   * Returns the value of the '<em><b>Pack Body</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Pack Body</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Pack Body</em>' containment reference.
+   * @see #setPackBody(PackBody)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram_PackBody()
    * @model containment="true"
    * @generated
    */
-  EList<Node_Declaration> getNodes();
+  PackBody getPackBody();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackBody <em>Pack Body</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Pack Body</em>' containment reference.
+   * @see #getPackBody()
+   * @generated
+   */
+  void setPackBody(PackBody value);
+
+  /**
+   * Returns the value of the '<em><b>Pack List</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Pack List</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Pack List</em>' containment reference.
+   * @see #setPackList(PackList)
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram_PackList()
+   * @model containment="true"
+   * @generated
+   */
+  PackList getPackList();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackList <em>Pack List</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Pack List</em>' containment reference.
+   * @see #getPackList()
+   * @generated
+   */
+  void setPackList(PackList value);
 
 } // LustreProgram

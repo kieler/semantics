@@ -38,6 +38,9 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     public static val IProperty<String> STRUCT_ACCESS = 
         new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".")
 
+    public static val IProperty<Integer> MESSAGE_BUFFER_SIZE = 
+        new Property<Integer>("de.cau.cs.kieler.simulation.c.buffer.size", 2048)
+
     override getId() {
         "de.cau.cs.kieler.simulation.c.template"
     }
@@ -86,25 +89,34 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
             #include "lib/cJSON.h"
             </#macro>
             
+            <#macro simulation_init position>
+            sendVariables(1);
+            </#macro>
+            
             <#macro simulation_in position>
             receiveVariables();
             </#macro>
             
             <#macro simulation_out position>
-            sendVariables();
+            sendVariables(0);
             </#macro>
             
             <#macro simulation_body position>
             void receiveVariables() {
-                char buffer[10000];
-                int i = 0;
+                size_t blocksize = «MESSAGE_BUFFER_SIZE.property»;
+                char *buffer = realloc(NULL, sizeof(char) * blocksize);
+                size_t i = 0;
                 char c;
+                
                 // read next line
-                for (i = 0; (c = getchar()) != '\n'; i++) {
-                    buffer[i] = c;
+                while ((c = getchar()) != '\n') {
+                    buffer[i++] = c;
+                    if (i == blocksize) {
+                        buffer = realloc(buffer, sizeof(char) * (blocksize += «MESSAGE_BUFFER_SIZE.property»));
+                    }
                 }
-                buffer[i] = 0;
-            
+                buffer[i++] = '\0';
+                
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
@@ -118,9 +130,10 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                 }
               
                 cJSON_Delete(root);
+                free(buffer);
             }
             
-            void sendVariables() {
+            void sendVariables(int send_interface) {
                 cJSON* root = cJSON_CreateObject();
                 «IF store.variables.values.exists[array]»
                     cJSON* array;
@@ -130,6 +143,24 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
                     // Send «v.key»
                     «v.serialize("root", "array")»
                 «ENDFOR»
+                
+                if (send_interface) {
+                    cJSON *interface = cJSON_CreateObject();
+                    cJSON *info, *properties;
+                    
+                    «FOR v : store.orderedVariables.dropBlacklisted»
+                        info = cJSON_CreateObject();
+                        properties = cJSON_CreateArray();
+                        «FOR p : v.value.properties»
+                        cJSON_AddItemToArray(properties, cJSON_CreateString("«p»"));
+                        «ENDFOR»
+                        cJSON_AddItemToObject(info, "type", cJSON_CreateString("«v.value.typeName»"));
+                        cJSON_AddItemToObject(info, "properties", properties);
+                        cJSON_AddItemToObject(interface, "«v.key»", info);
+                    «ENDFOR»
+                    
+                    cJSON_AddItemToObject(root, "#interface", interface);
+                }
             
                 // Get JSON object as string
                 char* outString = cJSON_Print(root);
@@ -148,7 +179,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
         environment.addIncludeInjection(FILE_NAME.relativeTemplatePath)
         environment.addMacroInjection(HEADER, "simulation_imports")
         environment.addMacroInjection(BODY, "simulation_body")
-        environment.addMacroInjection(INIT, "simulation_out")
+        environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         

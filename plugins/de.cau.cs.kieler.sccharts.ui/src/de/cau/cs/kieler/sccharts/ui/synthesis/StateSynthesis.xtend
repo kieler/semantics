@@ -17,9 +17,14 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingEdgeNode
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
@@ -34,6 +39,7 @@ import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.Trigger
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
@@ -41,6 +47,7 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.sccharts.Action
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.Transition
@@ -49,14 +56,18 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSearchExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionDependencies
 import de.cau.cs.kieler.sccharts.processors.dataflow.RegionLCAFMap
 import de.cau.cs.kieler.sccharts.processors.dataflow.StateDependencies
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.StateStyles
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.ArrayList
 import java.util.List
 import java.util.Map
@@ -65,21 +76,16 @@ import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
-import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
-import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
-import de.cau.cs.kieler.kicool.environments.Environment
-import de.cau.cs.kieler.sccharts.processors.dataflow.ControlDependencies
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.keffects.Assignment
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSearchExtensions
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.sccharts.EntryAction
+import de.cau.cs.kieler.sccharts.ExitAction
+import de.cau.cs.kieler.sccharts.DuringAction
 
 /**
  * Transforms {@link State} into {@link KNode} diagram elements.
@@ -114,14 +120,21 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     @Inject extension TransitionSynthesis
     @Inject extension ControlflowRegionSynthesis
     @Inject extension DataflowRegionSynthesis
+    @Inject extension PolicySynthesis
+    @Inject extension MethodSynthesis
     @Inject extension StateStyles
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
-    
+
     // als magic: this should never reach the master (11.09.2018)! ;-)
     // but probably will. (10.10.2018) ;-)
-    private val actionRectangleMap = <Action, KRectangle> newHashMap 
+    val actionRectangleMap = <Action, KRectangle> newHashMap 
     
+    override getDisplayedSynthesisOptions() {
+        val options = newArrayList()
+        
+        return options
+    }     
 
     override List<KNode> performTranformation(State state) {
         val node = state.createNode().associateWith(state)
@@ -217,7 +230,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(state)
                     if (it instanceof KText) configureTextLOD(state)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(state)
                         if (it instanceof KText) configureTextLOD(state)
                     ]
@@ -229,14 +242,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             // Add declarations
             val declarations = new ArrayList<Declaration>(state.declarations)
             if (SHOW_INHERITANCE.booleanValue) declarations.addAll(0, state.allVisibleInheritedDeclarations.toList)
-            for (declaration : declarations) {
-                if (declaration instanceof StructDeclaration) {
+            for (declaration : declarations.filter[!(it instanceof MethodImplementationDeclaration)]) {
+                if (declaration instanceof ClassDeclaration) {
                     node.addStructDeclarations(declaration, 0)
                 } else {
                     node.addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                         associateWith(declaration)
-                        eAllContents.filter(KRendering).forEach[
+                        eAllContents.filter(KRendering).toList.forEach[
                             associateWith(declaration)
                             if (it instanceof KText) configureTextLOD(declaration)
                         ]
@@ -251,7 +264,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 node.addActionLabel(action.serializeHighlighted(true)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(action)
-                    eAllContents.filter(KRendering).forEach[
+                    eAllContents.filter(KRendering).toList.forEach[
                         associateWith(action)
                         if (it instanceof KText) configureTextLOD(action)
                     ]
@@ -264,6 +277,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
                 || state.containsDataflowRegions
                 || state.isReferencedState
                 || (SHOW_INHERITANCE.booleanValue && !state.allVisibleInheritedRegions.empty)
+                || !state.declarations.filter(MethodImplementationDeclaration).empty
             ) {
                 node.addRegionsArea;
             }
@@ -282,6 +296,11 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ];
         }
 
+        // Transform methods
+        for (method : state.declarations.filter(MethodImplementationDeclaration)) {
+            node.children += method.transform
+        }
+
         // Transform regions
         val regions = new ArrayList<Region>(state.regions)
         if (SHOW_INHERITANCE.booleanValue) regions.addAll(0, state.allVisibleInheritedRegions.toList)
@@ -289,6 +308,15 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             switch region {
                 ControlflowRegion: node.children += region.transform
                 DataflowRegion: node.children += region.transform
+            }
+        }
+        
+        if(PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val policies = newArrayList
+            policies += state.declarations.filter(PolicyClassDeclaration).map[policy].filterNull
+            policies += state.regions.map[declarations].flatten.filter(PolicyClassDeclaration).map[policy].filterNull
+            for (policy : policies.reverseView) {
+                node.children.addAll(0, policy.transform)
             }
         }
         
@@ -312,7 +340,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
         return returnNodes
     }
     
-    private def void addStructDeclarations(KNode node, StructDeclaration struct, int indent) {
+    private def void addStructDeclarations(KNode node, ClassDeclaration struct, int indent) {
         val segments = struct.serializeHighlighted(true)
         val head = segments.takeWhile[value !== TextFormat.CONTENT_PLACEHOLDER].toList;
         val tail = segments.dropWhile[value !== TextFormat.CONTENT_PLACEHOLDER].drop(1).toList;
@@ -321,8 +349,16 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             associateWith(struct)
             eAllContents.filter(KRendering).forEach[associateWith(struct)]
         ]
+        if (struct instanceof PolicyClassDeclaration) {
+            if (struct.policy !== null && !struct.policy.name.nullOrEmpty) {
+                val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+                components += new Pair("policy", TextFormat.KEYWORD)
+                components += new Pair(if (struct.policy.label.nullOrEmpty) struct.policy.label else struct.policy.name, TextFormat.TEXT)
+                node.addDeclarationLabel(components, indent + 1)
+            }
+        }
         for (declaration : struct.declarations) {
-            if (declaration instanceof StructDeclaration) {
+            if (declaration instanceof ClassDeclaration) {
                 node.addStructDeclarations(declaration, indent + 1)
             } else {
                 node.addDeclarationLabel(declaration.serializeHighlighted(true), indent + 1) => [
@@ -337,14 +373,14 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
     
     
     /** Configures the default layout of children (regions in the state) */
-    private def static void configureLayout(KNode node) {
+    def static void configureLayout(KNode node) {
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.box");
         node.setLayoutOption(CoreOptions::EXPAND_NODES, true);
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(0));
         node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 1.0)
     }
     
-    private def static void configureLayoutRegionDependencies(KNode node) {
+    def static void configureLayoutRegionDependencies(KNode node) {
         node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(5));
 //        node.setLayoutOption(CoreOptions::NODE_SIZE_CONSTRAINTS, SizeConstraint.free)
         node.setLayoutOption(CoreOptions::ALGORITHM, "org.eclipse.elk.layered")
@@ -516,5 +552,5 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             ]
         ]
     }         
-       
+     
 }
