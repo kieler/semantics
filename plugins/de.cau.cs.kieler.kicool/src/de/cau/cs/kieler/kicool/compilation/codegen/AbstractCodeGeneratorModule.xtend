@@ -66,8 +66,23 @@ abstract class AbstractCodeGeneratorModule {
         }
     }
     
+    protected def appendInd(StringBuilder sb, String s) {
+        indent
+        sb.append(s)
+    }     
     
+    protected def appendInd(String s) {
+        indent
+        code.append(s)
+    }        
     
+    protected def incIndentation() {
+        indentation = indentation + "  "
+    } 
+    
+    protected def decIndentation() {
+        indentation = indentation.substring(2)
+    }
     
     // Convenient StringBuilder methods
     private static val MAGIC_PREFIX = "§ulf§"

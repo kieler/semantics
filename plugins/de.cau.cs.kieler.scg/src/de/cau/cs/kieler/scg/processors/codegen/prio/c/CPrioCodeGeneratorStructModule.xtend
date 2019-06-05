@@ -35,7 +35,7 @@ class CPrioCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }     
     
     override protected separator() {
-        ""
+        "->"
     } 
     
     override generateInit() {

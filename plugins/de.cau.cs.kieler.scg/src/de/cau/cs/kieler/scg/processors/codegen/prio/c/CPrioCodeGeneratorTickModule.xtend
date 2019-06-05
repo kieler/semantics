@@ -59,7 +59,14 @@ class CPrioCodeGeneratorTickModule extends CCodeGeneratorTickModule {
            .append("#include \"sc.h\"\n")
            .append("#include \"sc-generic.h\"\n\n")
             
-       super.generateInit
+        code.append("int ").append(getName)
+        code.append("(")
+        code.append(struct.getName).append("* ").append(struct.getVariableName)
+        code.append(")")
+        
+        struct.forwardDeclarations.append(code).append(";\n")
+        
+        code.append(" {\n")
        
        setNewCodeStringBuilder(pSB.append(code))        
     }
@@ -69,6 +76,7 @@ class CPrioCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     }
     
     override generateDone() {
+        code.appendInd("tickreturn();\n")
         code.append("}\n")
     }
     

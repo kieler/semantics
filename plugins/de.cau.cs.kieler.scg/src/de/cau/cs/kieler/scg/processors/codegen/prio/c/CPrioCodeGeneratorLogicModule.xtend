@@ -86,12 +86,13 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         
         while(!nodes.empty) {
             val node = nodes.pop
-            println(node)
 
             switch (node) {
                 PushNode: { previousNodes.push(node.nodeToPush) }
                 PopNode: { previousNodes.pop }
-                CodeNode: { code.append(node.code) }
+                IncIndentationNode: { incIndentation }
+                DecIndentationNode: { decIndentation }
+                CodeNode: { code.append(node.getCode) }
                 GatherPriosNode: { node.gather(this) }
                 default: {
                     val newNodes = node.processNode(previousNodes, visited)
@@ -131,7 +132,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             val prevPrio = prev.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             val prio = node.getAnnotation(PriorityAuxiliaryData.OPTIMIZED_NODE_PRIORITIES_ANNOTATION) as IntAnnotation
             if(!(prev instanceof Fork) && prevPrio.value != prio.value) {
-                code.append("prio(" + prio.value + ");\n")
+                code.appendInd("prio(" + prio.value + ");\n")
                 val entry = node.threadEntry
                 if(entry.hasAnnotation("exitPrio")) {
                     val minThreadExitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value
@@ -141,7 +142,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
                 }
             }
             if(prev instanceof Entry) {
-                labeledNodes.put(node, labeledNodes.get(prev))
+//                labeledNodes.put(node, labeledNodes.get(prev))
             }
         }
         
@@ -149,7 +150,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             // If the node has already been visited before, add a goto, instead of translating it again
             if(visited.contains(node) && labeledNodes.containsKey(node)) {
             // if(labeledNodes.containsKey(node)) {
-                code.append("goto " + labeledNodes.get(node) + ";\n")
+                code.appendInd("goto " + labeledNodes.get(node) + ";\n")
                 return emptyList
             } else {
                 if(!labeledNodes.containsKey(node)) {
@@ -158,7 +159,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
                     if(incomingControlFlows.size > 1) {
                         val newLabel = "label_" + labelNr++
                         labeledNodes.put(node, newLabel)
-                        code.append(newLabel + ":\n")
+                        code.appendInd(newLabel + ":\n")
                     }                
                 }
             }
@@ -191,11 +192,15 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     protected def List<Node> transformNode(Conditional conditional, extension CPrioCodeSerializeHRExtensions serializer) {
         val result = <Node> newLinkedList
         
-        code.append("if(" + conditional.condition.serializeHR + "){\n")
+        code.appendInd("if(" + conditional.condition.serializeHR + "){\n")
+        result += new IncIndentationNode
         result += conditional.then.target.asNode
-        result += new CodeNode("} else {\n");
+        result += new DecIndentationNode
+        result += new CodeNode(indentation + "} else {\n");
+        result += new IncIndentationNode
         result += conditional.^else.target.asNode
-        result += new CodeNode("}");
+        result += new DecIndentationNode
+        result += new CodeNode(indentation + "}\n");
         
         return result        
     }
@@ -211,7 +216,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             var prio = (entry.getAnnotation("optPrioIDs") as IntAnnotation).value
             
             if (entry.incomingLinks.empty) {
-                code.append("tickstart(" + prio + ");\n")                
+                code.appendInd("tickstart(" + prio + ");\n")                
             } else {
                 if (entry.hasAnnotation("exitPrio")) {
                     val minThreadExitPrio = (entry.getAnnotation("exitPrio") as IntAnnotation).value 
@@ -229,13 +234,15 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     protected def List<Node> transformNode(Exit exit, extension CPrioCodeSerializeHRExtensions serializer) {
         // Does nothing
         // Cannot have more than one incoming edge and cannot lower the priority.
-        code.append("\n")
+        code.appendInd("\n")
         if(exit.next !== null) {
             val entry = exit.threadEntry
             val prio = (exit.getAnnotation("optPrioIDs") as IntAnnotation).value
             threadPriorities.get(entry).add(prio)
             threadPriorities.get(exit.next.target.asNode.threadEntry).addAll(threadPriorities.get(entry))
             return <Node> newLinkedList => [ add(exit.next.target.asNode) ] 
+        } else {
+            return emptyList
         }
     }
     
@@ -247,14 +254,14 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         val prio = sur.getAnnotation("optPrioIDs") as IntAnnotation
         
         if (depthPrio.value != prio.value) {
-            code.append("prio(" + depthPrio.value + ");\n")
+            code.appendInd("prio(" + depthPrio.value + ");\n")
         }
         if(sur.threadEntry.hasAnnotation("exitPrio")) {
             if(prio.value > (sur.threadEntry.getAnnotation("exitPrio") as IntAnnotation).value) {
                 threadPriorities.get(sur.threadEntry).add(prio.value)
             }            
         }
-        code.append("pause;\n");
+        code.appendInd("pause;\n");
         
         return <Node> newLinkedList => [
             add(new PushNode(sur.depth))
@@ -397,14 +404,14 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         for(n : childNodes.keySet) {
             val label = childNodes.get(n)
             
-            result += new CodeNode(label + ":\n")
+            result += new CodeNode(indentation + "  " + label + ":\n")
             result += n
             result += new GatherPriosNode(joinPrioSet, n)
                 
-            result += new CodeNode("} par {\n")
+            result += new CodeNode(indentation + "} par {\n")
         }        
 
-        result += new CodeNode(newLabel + ":\n")
+        result += new CodeNode(indentation + "  " + newLabel + ":\n")
         labeledNodes.put(minNode, newLabel)
         
         // Translate thread
@@ -415,7 +422,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         
         // Joins all the threads together again
         result += new PushNode(fork.join)
-        result += fork.join
+        result += fork.join.next.target.asNode
         result += new PopNode
         
         return result
@@ -444,11 +451,21 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     static class PopNode extends EntryImpl {
     }
     
+    static class IncIndentationNode extends EntryImpl {
+    }
+    
+    static class DecIndentationNode extends EntryImpl {
+    }
+    
     static class CodeNode extends EntryImpl {
         public var String code
         
         new(String code) {
             this.code = code
+        }
+        
+        def getCode() {
+            return code
         }    
     }
     
@@ -467,9 +484,11 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     }
     
     static class ForkNNode extends CodeNode {
+        var CPrioCodeGeneratorLogicModule module
         
         new (int n, String label, ArrayList<String> labels, ArrayList<Integer> prios, extension CPrioCodeGeneratorLogicModule module) {
             super("")
+            this.module = module
             val sb = new StringBuilder
             
             sb.append("fork" + n + "(" + label + ",")
@@ -483,7 +502,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
                     labelsAndPrios += ", "
                 }
             }
-            sb.append(labelsAndPrios + ") {\n")
+            sb.appendInd(labelsAndPrios + ") {\n")
             
             if(n > 4 && !generatedForks.contains(n)) {
                 forkSb.append("#define fork" + n + "(label, ")
@@ -508,20 +527,33 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             
             code = sb.toString
         }
+        
+        override getCode() {
+            module.incIndentation
+            return code
+        }
     }
     
     static class JoinNNode extends CodeNode {
+        var Set<Integer> prioList
+        var CPrioCodeGeneratorLogicModule module
          
         new (Set<Integer> prioList, extension CPrioCodeGeneratorLogicModule module) {
             super("")
+            this.prioList = prioList
+            this.module = module
+        }
+        
+        override getCode() {
             val n = prioList.size
             val sb = new StringBuilder
+            module.decIndentation
             
-            sb.append("} join" + n + "(" + prioList.createPrioString + ");\n")
+            module.appendInd(sb, "} join" + n + "(" + module.createPrioString(prioList) + ");\n")
 
-            if(n > 4 && !generatedJoins.contains(n)) {
-                joinSbOverWordsize.append("#define join" + n + "(")
-                joinSbUnderWordsize.append("#define join" + n + "(")
+            if(n > 4 && !module.generatedJoins.contains(n)) {
+                module.joinSbOverWordsize.append("#define join" + n + "(")
+                module.joinSbUnderWordsize.append("#define join" + n + "(")
                 var s1 = ""
                 var underWordsizeString = ""
                 var overWordsizeString = ""
@@ -537,23 +569,23 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
                        overWordsizeString  = overWordsizeString.concat(" | ")
                     }
                 }
-                joinSbUnderWordsize.append(s1 + ") \\\n")
-                joinSbUnderWordsize.append("  _case __LABEL__: if (")
-                joinSbUnderWordsize.append("isEnabledAnyOf(")
-                joinSbUnderWordsize.append(underWordsizeString)
-                joinSbUnderWordsize.append(")")
-                joinSbUnderWordsize.append(") {\\\n")
-                joinSbUnderWordsize.append("    PAUSEG_(__LABEL__); }")
-                joinSbUnderWordsize.append("\n\n")
+                module.joinSbUnderWordsize.append(s1 + ") \\\n")
+                module.joinSbUnderWordsize.append("  _case __LABEL__: if (")
+                module.joinSbUnderWordsize.append("isEnabledAnyOf(")
+                module.joinSbUnderWordsize.append(underWordsizeString)
+                module.joinSbUnderWordsize.append(")")
+                module.joinSbUnderWordsize.append(") {\\\n")
+                module.joinSbUnderWordsize.append("    PAUSEG_(__LABEL__); }")
+                module.joinSbUnderWordsize.append("\n\n")
                 
-                joinSbOverWordsize.append(s1 + ") \\\n")
-                joinSbOverWordsize.append("  _case __LABEL__: if (")
-                joinSbOverWordsize.append(overWordsizeString)
-                joinSbOverWordsize.append(") {\\\n")
-                joinSbOverWordsize.append("    PAUSEG_(__LABEL__); }")
-                joinSbOverWordsize.append("\n\n")
+                module.joinSbOverWordsize.append(s1 + ") \\\n")
+                module.joinSbOverWordsize.append("  _case __LABEL__: if (")
+                module.joinSbOverWordsize.append(overWordsizeString)
+                module.joinSbOverWordsize.append(") {\\\n")
+                module.joinSbOverWordsize.append("    PAUSEG_(__LABEL__); }")
+                module.joinSbOverWordsize.append("\n\n")
                 
-                generatedJoins.add(n)
+                module.generatedJoins.add(n)
             }
             
             code = sb.toString
@@ -577,4 +609,5 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         return s.toString
     }
     
+   
 }
