@@ -88,6 +88,8 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTLiteralExpression
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author lan
@@ -140,12 +142,23 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         val SCChart = scc.createSCCharts
         
-        val rootState = createState("root")
+        /*val rootState = createState("root")
         SCChart.rootStates += rootState
-        val rootRegion = rootState.createControlflowRegion("0")
+        val rootRegion = rootState.createControlflowRegion("0")*/
+        
+        //auto created dataflow graph
+        for (child : ast.children) {
+            if (child instanceof CASTFunctionDefinition) {
+                val funcDef = child as CASTFunctionDefinition
+                val funcState = funcDef.illustrate
+                SCChart.rootStates += funcState
+            }    
+        }
+        
         
         //AST as SCChart
-        val astState = rootRegion.createState("AST")
+        val astState = createState("AST")
+        SCChart.rootStates += astState
         
         val region = astState.createControlflowRegion("0")
         
@@ -153,22 +166,49 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
             val state = createASTNodeState(child, region)
             region.states += state
             
-        }      
+        } 
+        
+        //Times_2
+        
+        val times_2 = createState("times_2")
+        SCChart.rootStates += times_2
+        
+        val parameter = createIntDeclaration()
+        var xIn = parameter.createValuedObject("x")
+        parameter.input = true
+        times_2.declarations += parameter
+        
+        val returnValue = createIntDeclaration()
+        var res = returnValue.createValuedObject("res")
+        returnValue.output = true
+        times_2.declarations += returnValue
+        
+        val topRegion2 = times_2.createControlflowRegion("0")
+        
+        val returnState2 = topRegion2.createState("return")
+        returnState2.initial = true
+        returnState2.final = true
+        val dReturnRegion2 = returnState2.createDataflowRegion("0")
+        dReturnRegion2.equations += createAssignment(res, mult(xIn.reference, createIntValue(2)))     
         
         //DataFlow Test
         
         val dataflowState = scc.createState
         dataflowState.label = "main"
-        rootRegion.states += dataflowState
+        SCChart.rootStates += dataflowState
         val topRegion = dataflowState.createControlflowRegion("0")
-        //dataflowState.regions += topRegion
         
         val intDecl = createIntDeclaration()
         intDecl.output = true
         dataflowState.declarations += intDecl
-        var a = intDecl.createValuedObject("a")
-        var i = intDecl.createValuedObject("i")
-        var x = intDecl.createValuedObject("x")
+        val a = intDecl.createValuedObject("a")
+        val i = intDecl.createValuedObject("i")
+        val x = intDecl.createValuedObject("x")
+        
+        var refDecl = createReferenceDeclaration()
+        dataflowState.declarations += refDecl
+        refDecl.setReference(times_2)
+        var t = refDecl.createValuedObject("t")
         
         val initState = scc.createState
         initState.label = "Init"
@@ -189,8 +229,16 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         val dForRegion = forState.createDataflowRegion("0")
         
-        dForRegion.equations += createAssignment(x, mult(x.reference, createIntValue(2)))
+        val times_2_x = times_2.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.filter[ name == "x" ].head
+        val times_2_res = times_2.declarations.filter(VariableDeclaration).map[ valuedObjects ].flatten.filter[ name == "res" ].head
+//        dForRegion.equations += createAssignment(x, x, t.reference)
+        dForRegion.equations += createAssignment(t, times_2_x, x.reference)
+        //dForRegion.equations += createAssignment(x, mult(x.reference, createIntValue(2)))
         dForRegion.equations += createAssignment(i, add(i.reference, createIntValue(1)))
+        
+        dForRegion.equations += createAssignment(x, t.reference => [
+            subReference = times_2_res.reference
+        ])
         
         val returnState = topRegion.createState("return")
         returnState.final = true
@@ -200,25 +248,134 @@ class DataflowExtractor extends ExogenousProcessor<IASTTranslationUnit, SCCharts
         
         dReturnRegion.equations += createAssignment(x, x.reference)
         
-        val times_2 = createState("times_2")
-        rootRegion.states += times_2
-        
-        val parameter = createIntDeclaration()
-        var xIn = parameter.createValuedObject("x")
-        parameter.input = true
-        times_2.declarations += parameter
-        
-        val topRegion2 = times_2.createControlflowRegion("0")
-        
-        val returnState2 = topRegion2.createState("return")
-        returnState2.initial = true
-        returnState2.final = true
-        val dReturnRegion2 = returnState2.createDataflowRegion("0")
-        dReturnRegion2.equations += createAssignment(xIn, mult(xIn.reference, createIntValue(2)))
-        
         
         SCChart
         
+    }
+    
+    def State illustrate(CASTFunctionDefinition func) {
+        var res = createState
+        val funcDeclarator = func.children.filter(typeof(CASTFunctionDeclarator)).head
+        //Set func name
+        res.label = funcDeclarator.children.head.toString
+        
+        //Set func inputs
+        for(parameter : funcDeclarator.children.filter(typeof(CASTParameterDeclaration))) {
+            val paramDec = createVariableDeclaration
+            paramDec.input = true
+            paramDec.type = parameter.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type.CDTTypeConversion
+            res.declarations += paramDec
+            
+            val param = paramDec.createValuedObject(parameter.children.filter(typeof(CASTDeclarator)).head.children.head.toString)        
+        }
+        
+        
+        //Set func outputs
+        val returnDec = createVariableDeclaration
+        returnDec.output = true
+        returnDec.type = func.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type.CDTTypeConversion
+        res.declarations += returnDec
+        
+        val returnVal = returnDec.createValuedObject("res")
+        
+        //illustrate func body
+        val controlFlowRegion = func.children.filter(typeof(CASTCompoundStatement)).head.illustrate(res)
+        res.regions += controlFlowRegion
+        
+        res
+    }
+    
+    def ControlflowRegion illustrate(CASTCompoundStatement compound, State funcState) {
+        val res = createControlflowRegion("")
+        var State previousState
+        //Init Phase
+        var initDeclStatements = <CASTDeclarationStatement> newArrayList => [ list |
+            var initDone = false
+            for(child : compound.children) {
+                if(!initDone && (child instanceof CASTDeclarationStatement)) {
+                    list += child as CASTDeclarationStatement
+                } else {
+                    initDone = true
+                }
+            }
+        ]  
+        
+        if (initDeclStatements.length > 0) {
+            val initState = res.createState("Init")
+            previousState = initState
+            val initRegion = initState.createDataflowRegion("")
+            
+            for (declStatement : initDeclStatements) {
+                val decl = createVariableDeclaration
+                funcState.declarations += decl
+                decl.type = declStatement.children.head.children.filter(typeof(CASTSimpleDeclSpecifier)).head.type.CDTTypeConversion
+                
+                val valObj = decl.createValuedObject(declStatement.children.head.children.filter(typeof(CASTDeclarator)).head.children.head.toString)
+                
+                val initExpr = createIntValue(Integer.parseInt(declStatement.children.head.children.filter(typeof (CASTDeclarator)).head.children.filter(typeof(CASTEqualsInitializer)).head.children.head.toString))
+                
+                initRegion.equations += createAssignment(valObj, initExpr)
+            }
+        }
+        
+        //Return Phase
+        val returnState = compound.children.filter(typeof(CASTReturnStatement)).head.illustrate(funcState)
+        res.states +=  returnState
+        if(previousState !== null) previousState.createTransitionTo(returnState)
+        
+        res
+    }
+    
+    def State illustrate(CASTReturnStatement returnStatement, State funcState) {
+        val res = createState("return")
+        res.final = true
+        
+        val returnChild = returnStatement.children.head
+        if(returnChild instanceof CASTIdExpression) {
+            val returnVal = findValuedObjectByName(funcState,"res")
+            val returnVar = findValuedObjectByName(funcState,returnChild.children.head.toString)
+            
+            val dataflowRegion = res.createDataflowRegion("")
+            dataflowRegion.equations += createAssignment(returnVal, returnVar.reference)
+            
+        } else if(returnChild instanceof CASTBinaryExpression) {
+            
+        }
+        
+        res
+    }
+    
+    def ValuedObject findValuedObjectByName(State state, String name) {
+        var ValuedObject res
+        println("Inside own findValuedObjectByName looking for objectName: " + name)
+        for(declaration : state.getVariableDeclarations) {
+            println("   Inside For loop for declarations")
+            val temp = declaration.findValuedObjectByName(name)
+            if(temp !== null) {
+                res = temp
+                println("matching valuedObject found!")
+                }
+        }
+         
+        res
+    }
+    
+    def ValueType CDTTypeConversion(int n) {
+        switch n {
+            case 1: null
+            case 2: ValueType::STRING
+            case 3: ValueType::INT
+            case 4: ValueType::FLOAT
+            case 5: ValueType::DOUBLE
+            case 6: ValueType::BOOL
+            case 7: ValueType::STRING
+            case 8: null
+            case 9: null
+            case 10: null
+            case 11: ValueType::STRING
+            case 12: ValueType::STRING
+            default: null
+        }
     }
     
     def State createASTNodeState(IASTNode parentNode, ControlflowRegion region) {
