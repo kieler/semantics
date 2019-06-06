@@ -29,6 +29,7 @@ import de.cau.cs.kieler.scg.SCGraph
 import org.eclipse.emf.ecore.EObject
 
 import static de.cau.cs.kieler.annotations.registry.AnnotationsRegistry.*
+import java.beans.MethodDescriptor
 
 /** 
  * @author ssm
@@ -104,6 +105,14 @@ class SCGAnnotations {
         register("methodParameter", AnnotationsType.SYSTEM, IntAnnotation, ValuedObject, 
             "Marks an node as method parameter assignment.")
             
+    public static val ANNOTATION_METHOD_REQUIRES_SELF = 
+        register("methodHasSelfParameter", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
+            "Marks an node as method parameter.")            
+            
+    public static val ANNOTATION_METHOD_REQUIRES_TICKDATA = 
+        register("methodHasTickDataParameter", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
+            "Marks an node as method parameter.")
+                        
     public static val ANNOTATION_METHOD_REFERENCE = 
         register("method", AnnotationsType.SYSTEM, ReferenceAnnotation, SCGraph, 
             "Marks an SCG as a method, referencing its declaration.")
@@ -111,6 +120,10 @@ class SCGAnnotations {
     public static val ANNOTATION_METHOD_INLINING = 
         register("inline", AnnotationsType.SYSTEM, TagAnnotation, MethodDeclaration, 
             "Marks a method/method call to be always inlined.")
+            
+    public static val ANNOTATION_METHOD_LOCAL_VARIABLE = 
+        register("methodLocalVar", AnnotationsType.SYSTEM, TagAnnotation, ValuedObject, 
+            "Marks an VO as local variable in method.")
             
     public static val ANNOTATION_LOOP = 
         register("loop", AnnotationsType.SYSTEM, StringAnnotation, Node, 

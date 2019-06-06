@@ -72,6 +72,8 @@ import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /** 
  * SCL to SCG Transformation 
@@ -86,7 +88,8 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject extension SCGControlFlowExtensions 
-    @Inject extension SCGThreadExtensions    
+    @Inject extension SCGThreadExtensions   
+    @Inject extension SCGMethodExtensions   
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
@@ -369,9 +372,9 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                         throw new IllegalArgumentException("Cannot handle methods in nested classes")
                     } else {
                         val selfVO = createValuedObject("self")
-                        scg.declarations += createReferenceDeclaration => [
+                        scg.declarations += createVariableDeclaration(ValueType.HOST) => [
                             valuedObjects += selfVO
-                            reference = classDecl
+                            hostType = classDecl.name
                         ]
                         selfVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
                         // Fix VOR
@@ -386,6 +389,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         }
         
         scg.removeSuperflousConditionals
+        scg.markAllLocalVariables
         
         // restore state
         valuedObjectMapping.clear
@@ -616,7 +620,10 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             } else if (loop.initializationDeclaration !== null) {
                 val decl = loop.initializationDeclaration
                 scg.declarations += newArrayList(decl as Declaration).copyDeclarations(valuedObjectMapping, null)
-                scg.declarations.last.trace(decl)
+                scg.declarations.last => [
+                    trace(decl)
+                    addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init")
+                ]
                 for (vo : decl.valuedObjects) {
                     if (vo.initialValue !== null) {
                         val init = vo.initialValue
@@ -626,7 +633,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                         asm.valuedObject = vo.copyValuedObject
                         asm.operator = AssignOperator.ASSIGN
                         asm.controlFlowTarget(cf)
-                        asm.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init")
+                        asm.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init", "decl")
                         asm.annotations += vo.annotations.map[copy]
                         cf = newArrayList(asm.createControlFlow)
                     }

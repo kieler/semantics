@@ -27,6 +27,10 @@ import java.util.Collection
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.scg.Node
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.annotations.IntAnnotation
 
 /**
  * 
@@ -45,11 +49,64 @@ class SCGMethodExtensions {
         return (scg.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE) as ReferenceAnnotation).object as MethodDeclaration
     }
     
+    def boolean isParameter(Declaration decl) {
+        return decl.valuedObjects.exists[parameter]
+    }
+    def boolean isParameter(ValuedObject vo) {
+        return vo.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER)
+    }
+    def int getParameterIndex(ValuedObject vo) {
+        return (vo.getAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER) as IntAnnotation).value
+    }
+    
+    def boolean isReturn(Node node) {
+        return node.hasAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)
+    }
+    def boolean isReturn(Declaration decl) {
+        return decl.valuedObjects.exists[isReturn]
+    }
+    def boolean isReturn(ValuedObject vo) {
+        return vo.hasAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)
+    }
+    
     def ignoreMethods(List<SCGraph> scgs) {
         return scgs.filter[!method].toList
     }
     def ignoreMethods(Iterable<SCGraph> scgs) {
         return scgs.filter[!method]
+    }
+    
+    def markAllLocalVariables(SCGraph scg) {
+        scg.declarations.map[valuedObjects].flatten.forEach[markLocalVariable]
+    }
+    def markLocalVariable(ValuedObject vo) {
+        vo.addTagAnnotation(SCGAnnotations.ANNOTATION_METHOD_LOCAL_VARIABLE)
+    }
+    def isLocalVariable(ValuedObject vo) {
+        return vo?.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_LOCAL_VARIABLE)
+    }
+    def isLocalVariable(Assignment asm) {
+        return asm.reference?.valuedObject?.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_LOCAL_VARIABLE)
+    }
+    def unmarkAllLocalVariables(SCGraph scg) {
+        scg.declarations.map[valuedObjects].flatten.forEach[unmarkLocalVariable]
+    }
+    def unmarkLocalVariable(ValuedObject vo) {
+        vo.removeAnnotations(SCGAnnotations.ANNOTATION_METHOD_LOCAL_VARIABLE)
+    }
+    
+    def hasSelfInParameter(MethodDeclaration method) {
+        return method?.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_REQUIRES_SELF)
+    }
+    def void markSelfInParameter(MethodDeclaration method) {
+        method?.addTagAnnotation(SCGAnnotations.ANNOTATION_METHOD_REQUIRES_SELF)
+    }
+    
+    def hasTickDataInParameter(MethodDeclaration method) {
+        return method?.hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_REQUIRES_TICKDATA)
+    }
+    def void markTickDataInParameter(MethodDeclaration method) {
+        method?.addTagAnnotation(SCGAnnotations.ANNOTATION_METHOD_REQUIRES_TICKDATA)
     }
 
     def Collection<? extends SCGraph> copyMethodSCGs(Iterable<SCGraph> scgs, Map<ValuedObject, ValuedObject> VOmap) {

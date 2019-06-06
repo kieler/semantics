@@ -46,12 +46,13 @@ import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import java.util.WeakHashMap
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * 
  * @author als
  */
-class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
+class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
 
     public static val IProperty<Boolean> INLINE_ALL = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.all", false)
@@ -69,12 +70,14 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
     @Inject extension SCGMethodExtensions
         
     public static val GENERATED_PREFIX = "_"
+    public static val SUPPORTED_RETURN_TYPES = #[ValueType.BOOL, ValueType.FLOAT, ValueType.HOST, ValueType.INT, ValueType.STRING]
+    
     
     private int fnCouter = 0
     private val simpleMethodCache = new WeakHashMap<SCGraph, Boolean>()
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.methods.inline"
+        "de.cau.cs.kieler.scg.processors.methods"
     }
     
     override getName() {
@@ -90,6 +93,7 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         for (scg : model.scgs) {
             if (scg.isMethod) {
                 methodSCGs.put(scg.methodDeclaration, scg)
+                scg.methodDeclaration.preprocess(scg)
             } else {
                 normalSCGs += scg
             }
@@ -126,12 +130,12 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         methodSCGs.entrySet.filter[inlined.contains(value)].forEach[
             it.key.valuedObjects.forEach[voStore.remove(it)]
             model.scgs.remove(it.value)
+            it.key.remove
         ]
         // Remove classes without content
         for (scg : model.scgs) {
             scg.declarations.removeIf[it instanceof ClassDeclaration && (it as ClassDeclaration).declarations.nullOrEmpty]
         }
-        methodSCGs.keySet.forEach[remove]
     }
     
     def boolean isSimpleMethod(SCGraph scg) {
@@ -143,6 +147,19 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
                 && !scg.nodes.map[eAllContents.toIterable].flatten.exists[it instanceof ReferenceCall]
             simpleMethodCache.put(scg, simple)
             return simple
+        }
+    }
+    
+    def void preprocess(MethodDeclaration method, SCGraph scg) {
+        if (scg.declarations.map[valuedObjects].flatten.filter[isParameter].exists[parameterIndex == 1]) {
+            method.markSelfInParameter
+        }
+        if (scg.nodes.map[eAllContents.toIterable].flatten.filter(ValuedObjectReference).exists[!(valuedObject.declaration instanceof ClassDeclaration) && valuedObject.declaration.eContainer !== scg]) {
+            method.markTickDataInParameter
+        }
+        // Fix return
+        if (!SUPPORTED_RETURN_TYPES.contains(method.returnType)) {
+            method.returnType = ValueType.VOID
         }
     }
     
@@ -170,12 +187,12 @@ class MethodInliningProcessor extends InplaceProcessor<SCGraphs> implements Trac
         fnCouter++
         val targetSCG = callNode.eContainer as SCGraph
         val scg = methodSCG.copy
+        scg.unmarkAllLocalVariables
         
         val entry = scg.nodes.filter(Entry).head
         val exit = scg.nodes.filter(Exit).head
-        val returnVO = scg.nodes.filter(Assignment).findFirst[hasAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)]?.valuedObject
-        val params = scg.declarations.map[valuedObjects].flatten.filter[hasAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER)].toMap([it],
-            [(getAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER) as IntAnnotation).value])
+        val returnVO = scg.nodes.filter(Assignment).findFirst[isReturn]?.valuedObject
+        val params = scg.declarations.map[valuedObjects].flatten.filter[isParameter].toMap([it],[parameterIndex])
         
         // Replace params
         var Declaration selfDecl
