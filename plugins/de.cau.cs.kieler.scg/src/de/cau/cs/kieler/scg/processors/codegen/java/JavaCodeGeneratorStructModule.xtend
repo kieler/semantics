@@ -111,7 +111,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             declaration.declarations.generateDeclarations(depth + 1, serializer)
             if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
                 code.append("\n")
-                declaration.declarations.createConstructor(declaration.name, serializer)
+                declaration.declarations.createConstructor(declaration.name, null, serializer)
             }
             (0..depth).forEach[indent]
             code.append("}\n\n")
@@ -119,12 +119,15 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override generateDone() {
-        if (hasArrays || hasClasses) scg.declarations.createConstructor(className, serializer)
+        if (hasArrays || hasClasses) scg.declarations.createConstructor(className, null, serializer)
     }
     
-    protected def createConstructor(List<Declaration> declarations, String contructorName, extension CCodeSerializeHRExtensions serializer) {
+    protected def createConstructor(List<Declaration> declarations, String contructorName, String additionalCode, extension CCodeSerializeHRExtensions serializer) {
         code.append("\n" + indentation)
         code.append("public " + contructorName + "() {\n")
+        if (!additionalCode.nullOrEmpty) {
+            code.append("  " + additionalCode)
+        }
         
         for (declaration : scg.declarations.filter(VariableDeclaration)) {
             val isClass = declaration instanceof ClassDeclaration

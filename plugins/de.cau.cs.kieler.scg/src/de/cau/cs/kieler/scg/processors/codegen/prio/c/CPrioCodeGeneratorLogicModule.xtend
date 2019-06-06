@@ -36,6 +36,7 @@ import de.cau.cs.kieler.scg.Surface
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.annotations.AnnotationsFactory
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 
 /**
  * Java Code Generator Logic Module
@@ -122,7 +123,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     }
         
         
-    private def List<Node> processNode(Node node, LinkedList<Node> previousNodes, Set<Node> visited) {
+    protected def List<Node> processNode(Node node, LinkedList<Node> previousNodes, Set<Node> visited) {
         if(node instanceof Join) {
             return emptyList
         }
@@ -184,12 +185,12 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     }        
     
 
-    protected def List<Node> transformNode(Assignment assignment, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Assignment assignment, extension CCodeSerializeHRExtensions serializer) {
         assignment.serializeToCode(1, struct, serializer)
         return <Node> newLinkedList => [ add(assignment.next.target.asNode) ]
     }
 
-    protected def List<Node> transformNode(Conditional conditional, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Conditional conditional, extension CCodeSerializeHRExtensions serializer) {
         val result = <Node> newLinkedList
         
         code.appendInd("if(" + conditional.condition.serializeHR + "){\n")
@@ -205,11 +206,11 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         return result        
     }
 
-    protected def List<Node> transformNode(Join join, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Join join, extension CCodeSerializeHRExtensions serializer) {
         return <Node> newLinkedList => [ add(join.next.target.asNode) ]        
     }
 
-    protected def List<Node> transformNode(Entry entry, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Entry entry, extension CCodeSerializeHRExtensions serializer) {
         // If entry is the root node
         var threadPrios = new ArrayList<Integer>
         if (entry.hasAnnotation("optPrioIDs")) {
@@ -231,7 +232,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         return <Node> newLinkedList => [ add(entry.next.target.asNode) ]
     }
 
-    protected def List<Node> transformNode(Exit exit, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Exit exit, extension CCodeSerializeHRExtensions serializer) {
         // Does nothing
         // Cannot have more than one incoming edge and cannot lower the priority.
         code.appendInd("\n")
@@ -246,7 +247,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         }
     }
     
-    protected def List<Node> transformNode(Surface sur, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Surface sur, extension CCodeSerializeHRExtensions serializer) {
         // If the priority after the pause is higher than before the pause, we must increase it 
         //   before the pause. Else the increase of the priority would happen after other threads, whose
         //   priorities might be higher at first, but lower after the increase of the priority.
@@ -270,14 +271,14 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         ]
     }
     
-    protected def List<Node> transformNode(Depth dep, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Depth dep, extension CCodeSerializeHRExtensions serializer) {
         return <Node> newLinkedList => [ add(dep.next.target.asNode) ]
     }
 
 
 
 
-    protected def List<Node> transformNode(Fork fork, extension CPrioCodeSerializeHRExtensions serializer) {
+    protected def List<Node> transformNode(Fork fork, extension CCodeSerializeHRExtensions serializer) {
 
         var labelList = <String> newArrayList
         var joinPrioList = <Integer> newArrayList
