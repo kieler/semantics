@@ -279,9 +279,9 @@ ruleRootState returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getRootStateAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_6_0());
+					newCompositeNode(grammarAccess.getRootStateAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_6_0());
 				}
-				lv_declarations_9_0=ruleDeclarationWOSemicolon
+				lv_declarations_9_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -290,42 +290,17 @@ ruleRootState returns [EObject current=null]
 						$current,
 						"declarations",
 						lv_declarations_9_0,
-						"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+						"de.cau.cs.kieler.sccharts.text.SCTX.DeclarationOrMethodWithKeywordWOSemicolon");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
 		(
-			otherlv_10='method'
-			{
-				newLeafNode(otherlv_10, grammarAccess.getRootStateAccess().getMethodKeyword_7_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getDeclarationsMethodDeclarationWOSemicolonParserRuleCall_7_1_0());
-					}
-					lv_declarations_11_0=ruleMethodDeclarationWOSemicolon
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getRootStateRule());
-						}
-						add(
-							$current,
-							"declarations",
-							lv_declarations_11_0,
-							"de.cau.cs.kieler.scl.SCL.MethodDeclarationWOSemicolon");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)*
-		(
 			(
 				{
-					newCompositeNode(grammarAccess.getRootStateAccess().getActionsLocalActionParserRuleCall_8_0());
+					newCompositeNode(grammarAccess.getRootStateAccess().getActionsLocalActionParserRuleCall_7_0());
 				}
-				lv_actions_12_0=ruleLocalAction
+				lv_actions_10_0=ruleLocalAction
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -333,7 +308,7 @@ ruleRootState returns [EObject current=null]
 					add(
 						$current,
 						"actions",
-						lv_actions_12_0,
+						lv_actions_10_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.LocalAction");
 					afterParserOrEnumRuleCall();
 				}
@@ -343,9 +318,9 @@ ruleRootState returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_9_0_0());
+						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_8_0_0());
 					}
-					lv_regions_13_0=ruleImplicitControlflowRegion
+					lv_regions_11_0=ruleImplicitControlflowRegion
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -353,7 +328,7 @@ ruleRootState returns [EObject current=null]
 						add(
 							$current,
 							"regions",
-							lv_regions_13_0,
+							lv_regions_11_0,
 							"de.cau.cs.kieler.sccharts.text.SCTX.ImplicitControlflowRegion");
 						afterParserOrEnumRuleCall();
 					}
@@ -363,9 +338,9 @@ ruleRootState returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsRegionParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getRootStateAccess().getRegionsRegionParserRuleCall_8_1_0());
 					}
-					lv_regions_14_0=ruleRegion
+					lv_regions_12_0=ruleRegion
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getRootStateRule());
@@ -373,16 +348,16 @@ ruleRootState returns [EObject current=null]
 						add(
 							$current,
 							"regions",
-							lv_regions_14_0,
+							lv_regions_12_0,
 							"de.cau.cs.kieler.sccharts.text.SCTX.Region");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)*
 		)
-		otherlv_15='}'
+		otherlv_13='}'
 		{
-			newLeafNode(otherlv_15, grammarAccess.getRootStateAccess().getRightCurlyBracketKeyword_10());
+			newLeafNode(otherlv_13, grammarAccess.getRootStateAccess().getRightCurlyBracketKeyword_9());
 		}
 	)
 ;
@@ -650,9 +625,9 @@ ruleState returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getStateAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_8_1_3_0());
+							newCompositeNode(grammarAccess.getStateAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_8_1_3_0());
 						}
-						lv_declarations_19_0=ruleDeclarationWOSemicolon
+						lv_declarations_19_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -661,42 +636,17 @@ ruleState returns [EObject current=null]
 								$current,
 								"declarations",
 								lv_declarations_19_0,
-								"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+								"de.cau.cs.kieler.sccharts.text.SCTX.DeclarationOrMethodWithKeywordWOSemicolon");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
 				(
-					otherlv_20='method'
-					{
-						newLeafNode(otherlv_20, grammarAccess.getStateAccess().getMethodKeyword_8_1_4_0());
-					}
-					(
-						(
-							{
-								newCompositeNode(grammarAccess.getStateAccess().getDeclarationsMethodDeclarationWOSemicolonParserRuleCall_8_1_4_1_0());
-							}
-							lv_declarations_21_0=ruleMethodDeclarationWOSemicolon
-							{
-								if ($current==null) {
-									$current = createModelElementForParent(grammarAccess.getStateRule());
-								}
-								add(
-									$current,
-									"declarations",
-									lv_declarations_21_0,
-									"de.cau.cs.kieler.scl.SCL.MethodDeclarationWOSemicolon");
-								afterParserOrEnumRuleCall();
-							}
-						)
-					)
-				)*
-				(
 					(
 						{
-							newCompositeNode(grammarAccess.getStateAccess().getActionsLocalActionParserRuleCall_8_1_5_0());
+							newCompositeNode(grammarAccess.getStateAccess().getActionsLocalActionParserRuleCall_8_1_4_0());
 						}
-						lv_actions_22_0=ruleLocalAction
+						lv_actions_20_0=ruleLocalAction
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -704,7 +654,7 @@ ruleState returns [EObject current=null]
 							add(
 								$current,
 								"actions",
-								lv_actions_22_0,
+								lv_actions_20_0,
 								"de.cau.cs.kieler.sccharts.text.SCTX.LocalAction");
 							afterParserOrEnumRuleCall();
 						}
@@ -714,9 +664,9 @@ ruleState returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_8_1_6_0_0());
+								newCompositeNode(grammarAccess.getStateAccess().getRegionsImplicitControlflowRegionParserRuleCall_8_1_5_0_0());
 							}
-							lv_regions_23_0=ruleImplicitControlflowRegion
+							lv_regions_21_0=ruleImplicitControlflowRegion
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -724,7 +674,7 @@ ruleState returns [EObject current=null]
 								add(
 									$current,
 									"regions",
-									lv_regions_23_0,
+									lv_regions_21_0,
 									"de.cau.cs.kieler.sccharts.text.SCTX.ImplicitControlflowRegion");
 								afterParserOrEnumRuleCall();
 							}
@@ -734,9 +684,9 @@ ruleState returns [EObject current=null]
 					(
 						(
 							{
-								newCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_8_1_6_1_0());
+								newCompositeNode(grammarAccess.getStateAccess().getRegionsRegionParserRuleCall_8_1_5_1_0());
 							}
-							lv_regions_24_0=ruleRegion
+							lv_regions_22_0=ruleRegion
 							{
 								if ($current==null) {
 									$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -744,16 +694,16 @@ ruleState returns [EObject current=null]
 								add(
 									$current,
 									"regions",
-									lv_regions_24_0,
+									lv_regions_22_0,
 									"de.cau.cs.kieler.sccharts.text.SCTX.Region");
 								afterParserOrEnumRuleCall();
 							}
 						)
 					)*
 				)
-				otherlv_25='}'
+				otherlv_23='}'
 				{
-					newLeafNode(otherlv_25, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_7());
+					newLeafNode(otherlv_23, grammarAccess.getStateAccess().getRightCurlyBracketKeyword_8_1_6());
 				}
 			)
 		)?
@@ -762,7 +712,7 @@ ruleState returns [EObject current=null]
 				{
 					newCompositeNode(grammarAccess.getStateAccess().getOutgoingTransitionsTransitionParserRuleCall_9_0());
 				}
-				lv_outgoingTransitions_26_0=ruleTransition
+				lv_outgoingTransitions_24_0=ruleTransition
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getStateRule());
@@ -770,7 +720,7 @@ ruleState returns [EObject current=null]
 					add(
 						$current,
 						"outgoingTransitions",
-						lv_outgoingTransitions_26_0,
+						lv_outgoingTransitions_24_0,
 						"de.cau.cs.kieler.sccharts.text.SCTX.Transition");
 					afterParserOrEnumRuleCall();
 				}
@@ -1866,9 +1816,9 @@ ruleControlflowRegion returns [EObject current=null]
 						(
 							(
 								{
-									newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_1_2_0_1_0());
+									newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_0_1_0());
 								}
-								lv_declarations_26_0=ruleDeclarationWOSemicolon
+								lv_declarations_26_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -1877,42 +1827,17 @@ ruleControlflowRegion returns [EObject current=null]
 										$current,
 										"declarations",
 										lv_declarations_26_0,
-										"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+										"de.cau.cs.kieler.sccharts.text.SCTX.DeclarationOrMethodWithKeywordWOSemicolon");
 									afterParserOrEnumRuleCall();
 								}
 							)
 						)*
 						(
-							otherlv_27='method'
-							{
-								newLeafNode(otherlv_27, grammarAccess.getControlflowRegionAccess().getMethodKeyword_7_1_2_0_2_0());
-							}
-							(
-								(
-									{
-										newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsMethodDeclarationWOSemicolonParserRuleCall_7_1_2_0_2_1_0());
-									}
-									lv_declarations_28_0=ruleMethodDeclarationWOSemicolon
-									{
-										if ($current==null) {
-											$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
-										}
-										add(
-											$current,
-											"declarations",
-											lv_declarations_28_0,
-											"de.cau.cs.kieler.scl.SCL.MethodDeclarationWOSemicolon");
-										afterParserOrEnumRuleCall();
-									}
-								)
-							)
-						)*
-						(
 							(
 								{
-									newCompositeNode(grammarAccess.getControlflowRegionAccess().getActionsLocalActionParserRuleCall_7_1_2_0_3_0());
+									newCompositeNode(grammarAccess.getControlflowRegionAccess().getActionsLocalActionParserRuleCall_7_1_2_0_2_0());
 								}
-								lv_actions_29_0=ruleLocalAction
+								lv_actions_27_0=ruleLocalAction
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -1920,7 +1845,7 @@ ruleControlflowRegion returns [EObject current=null]
 									add(
 										$current,
 										"actions",
-										lv_actions_29_0,
+										lv_actions_27_0,
 										"de.cau.cs.kieler.sccharts.text.SCTX.LocalAction");
 									afterParserOrEnumRuleCall();
 								}
@@ -1930,9 +1855,9 @@ ruleControlflowRegion returns [EObject current=null]
 							(
 								(
 									{
-										newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesImplicitStateParserRuleCall_7_1_2_0_4_0_0());
+										newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesImplicitStateParserRuleCall_7_1_2_0_3_0_0());
 									}
-									lv_states_30_0=ruleImplicitState
+									lv_states_28_0=ruleImplicitState
 									{
 										if ($current==null) {
 											$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -1940,7 +1865,7 @@ ruleControlflowRegion returns [EObject current=null]
 										add(
 											$current,
 											"states",
-											lv_states_30_0,
+											lv_states_28_0,
 											"de.cau.cs.kieler.sccharts.text.SCTX.ImplicitState");
 										afterParserOrEnumRuleCall();
 									}
@@ -1950,9 +1875,9 @@ ruleControlflowRegion returns [EObject current=null]
 							(
 								(
 									{
-										newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesStateParserRuleCall_7_1_2_0_4_1_0());
+										newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesStateParserRuleCall_7_1_2_0_3_1_0());
 									}
-									lv_states_31_0=ruleState
+									lv_states_29_0=ruleState
 									{
 										if ($current==null) {
 											$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -1960,30 +1885,30 @@ ruleControlflowRegion returns [EObject current=null]
 										add(
 											$current,
 											"states",
-											lv_states_31_0,
+											lv_states_29_0,
 											"de.cau.cs.kieler.sccharts.text.SCTX.State");
 										afterParserOrEnumRuleCall();
 									}
 								)
 							)+
 						)
-						otherlv_32='}'
+						otherlv_30='}'
 						{
-							newLeafNode(otherlv_32, grammarAccess.getControlflowRegionAccess().getRightCurlyBracketKeyword_7_1_2_0_5());
+							newLeafNode(otherlv_30, grammarAccess.getControlflowRegionAccess().getRightCurlyBracketKeyword_7_1_2_0_4());
 						}
 					)
 					    |
 					(
-						otherlv_33=':'
+						otherlv_31=':'
 						{
-							newLeafNode(otherlv_33, grammarAccess.getControlflowRegionAccess().getColonKeyword_7_1_2_1_0());
+							newLeafNode(otherlv_31, grammarAccess.getControlflowRegionAccess().getColonKeyword_7_1_2_1_0());
 						}
 						(
 							(
 								{
-									newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_1_2_1_1_0());
+									newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsDeclarationOrMethodWithKeywordWOSemicolonParserRuleCall_7_1_2_1_1_0());
 								}
-								lv_declarations_34_0=ruleDeclarationWOSemicolon
+								lv_declarations_32_0=ruleDeclarationOrMethodWithKeywordWOSemicolon
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -1991,43 +1916,18 @@ ruleControlflowRegion returns [EObject current=null]
 									add(
 										$current,
 										"declarations",
-										lv_declarations_34_0,
-										"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+										lv_declarations_32_0,
+										"de.cau.cs.kieler.sccharts.text.SCTX.DeclarationOrMethodWithKeywordWOSemicolon");
 									afterParserOrEnumRuleCall();
 								}
 							)
 						)*
 						(
-							otherlv_35='method'
-							{
-								newLeafNode(otherlv_35, grammarAccess.getControlflowRegionAccess().getMethodKeyword_7_1_2_1_2_0());
-							}
-							(
-								(
-									{
-										newCompositeNode(grammarAccess.getControlflowRegionAccess().getDeclarationsMethodDeclarationWOSemicolonParserRuleCall_7_1_2_1_2_1_0());
-									}
-									lv_declarations_36_0=ruleMethodDeclarationWOSemicolon
-									{
-										if ($current==null) {
-											$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
-										}
-										add(
-											$current,
-											"declarations",
-											lv_declarations_36_0,
-											"de.cau.cs.kieler.scl.SCL.MethodDeclarationWOSemicolon");
-										afterParserOrEnumRuleCall();
-									}
-								)
-							)
-						)*
-						(
 							(
 								{
-									newCompositeNode(grammarAccess.getControlflowRegionAccess().getActionsLocalActionParserRuleCall_7_1_2_1_3_0());
+									newCompositeNode(grammarAccess.getControlflowRegionAccess().getActionsLocalActionParserRuleCall_7_1_2_1_2_0());
 								}
-								lv_actions_37_0=ruleLocalAction
+								lv_actions_33_0=ruleLocalAction
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -2035,7 +1935,7 @@ ruleControlflowRegion returns [EObject current=null]
 									add(
 										$current,
 										"actions",
-										lv_actions_37_0,
+										lv_actions_33_0,
 										"de.cau.cs.kieler.sccharts.text.SCTX.LocalAction");
 									afterParserOrEnumRuleCall();
 								}
@@ -2044,9 +1944,9 @@ ruleControlflowRegion returns [EObject current=null]
 						(
 							(
 								{
-									newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesStateParserRuleCall_7_1_2_1_4_0());
+									newCompositeNode(grammarAccess.getControlflowRegionAccess().getStatesStateParserRuleCall_7_1_2_1_3_0());
 								}
-								lv_states_38_0=ruleState
+								lv_states_34_0=ruleState
 								{
 									if ($current==null) {
 										$current = createModelElementForParent(grammarAccess.getControlflowRegionRule());
@@ -2054,7 +1954,7 @@ ruleControlflowRegion returns [EObject current=null]
 									add(
 										$current,
 										"states",
-										lv_states_38_0,
+										lv_states_34_0,
 										"de.cau.cs.kieler.sccharts.text.SCTX.State");
 									afterParserOrEnumRuleCall();
 								}
@@ -4542,6 +4442,310 @@ rulePolicyTransition returns [EObject current=null]
 					}
 				)
 			)
+		)?
+	)
+;
+
+// Entry rule entryRuleDeclarationOrMethodWithKeywordWOSemicolon
+entryRuleDeclarationOrMethodWithKeywordWOSemicolon returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()); }
+	iv_ruleDeclarationOrMethodWithKeywordWOSemicolon=ruleDeclarationOrMethodWithKeywordWOSemicolon
+	{ $current=$iv_ruleDeclarationOrMethodWithKeywordWOSemicolon.current; }
+	EOF;
+
+// Rule DeclarationOrMethodWithKeywordWOSemicolon
+ruleDeclarationOrMethodWithKeywordWOSemicolon returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonAccess().getDeclarationWOSemicolonParserRuleCall_0());
+		}
+		this_DeclarationWOSemicolon_0=ruleDeclarationWOSemicolon
+		{
+			$current = $this_DeclarationWOSemicolon_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonAccess().getKeywordMethodDeclarationWOSemicolonParserRuleCall_1());
+		}
+		this_KeywordMethodDeclarationWOSemicolon_1=ruleKeywordMethodDeclarationWOSemicolon
+		{
+			$current = $this_KeywordMethodDeclarationWOSemicolon_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleKeywordMethodDeclarationWOSemicolon
+entryRuleKeywordMethodDeclarationWOSemicolon returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule()); }
+	iv_ruleKeywordMethodDeclarationWOSemicolon=ruleKeywordMethodDeclarationWOSemicolon
+	{ $current=$iv_ruleKeywordMethodDeclarationWOSemicolon.current; }
+	EOF;
+
+// Rule KeywordMethodDeclarationWOSemicolon
+ruleKeywordMethodDeclarationWOSemicolon returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getMethodImplementationDeclarationAction_0(),
+					$current);
+			}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAnnotationsAnnotationParserRuleCall_1_0());
+				}
+				lv_annotations_1_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_1_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAccessAccessModifierEnumRuleCall_2_0());
+				}
+				lv_access_2_0=ruleAccessModifier
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+					}
+					set(
+						$current,
+						"access",
+						lv_access_2_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.AccessModifier");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		otherlv_3='method'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getMethodKeyword_3());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getReturnTypeMethodReturnTypeEnumRuleCall_4_0());
+				}
+				lv_returnType_4_0=ruleMethodReturnType
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+					}
+					set(
+						$current,
+						"returnType",
+						lv_returnType_4_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.MethodReturnType");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)?
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getValuedObjectsSimpleValuedObjectParserRuleCall_5_0());
+				}
+				lv_valuedObjects_5_0=ruleSimpleValuedObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+					}
+					add(
+						$current,
+						"valuedObjects",
+						lv_valuedObjects_5_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.SimpleValuedObject");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			(
+				otherlv_6='('
+				{
+					newLeafNode(otherlv_6, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getLeftParenthesisKeyword_6_0_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_1_0());
+						}
+						lv_parameterDeclarations_7_0=ruleVariableDeclarationWOSemicolon
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+							}
+							add(
+								$current,
+								"parameterDeclarations",
+								lv_parameterDeclarations_7_0,
+								"de.cau.cs.kieler.kexpressions.kext.KExt.VariableDeclarationWOSemicolon");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					otherlv_8=','
+					{
+						newLeafNode(otherlv_8, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getCommaKeyword_6_0_2_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getParameterDeclarationsVariableDeclarationWOSemicolonParserRuleCall_6_0_2_1_0());
+							}
+							lv_parameterDeclarations_9_0=ruleVariableDeclarationWOSemicolon
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+								}
+								add(
+									$current,
+									"parameterDeclarations",
+									lv_parameterDeclarations_9_0,
+									"de.cau.cs.kieler.kexpressions.kext.KExt.VariableDeclarationWOSemicolon");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)*
+				otherlv_10=')'
+				{
+					newLeafNode(otherlv_10, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightParenthesisKeyword_6_0_3());
+				}
+			)
+			    |
+			otherlv_11='()'
+			{
+				newLeafNode(otherlv_11, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getLeftParenthesisRightParenthesisKeyword_6_1());
+			}
+		)
+		(
+			otherlv_12='schedule'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getScheduleKeyword_7_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getScheduleScheduleObjectReferenceParserRuleCall_7_1_0());
+					}
+					lv_schedule_13_0=ruleScheduleObjectReference
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+						}
+						add(
+							$current,
+							"schedule",
+							lv_schedule_13_0,
+							"de.cau.cs.kieler.kexpressions.KExpressions.ScheduleObjectReference");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)+
+		)?
+		(
+			otherlv_14='{'
+			{
+				newLeafNode(otherlv_14, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_8_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getAnnotationsCommentAnnotatonSLParserRuleCall_8_1_0());
+					}
+					lv_annotations_15_0=ruleCommentAnnotatonSL
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+						}
+						add(
+							$current,
+							"annotations",
+							lv_annotations_15_0,
+							"de.cau.cs.kieler.annotations.Annotations.CommentAnnotatonSL");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)?
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_8_2_0());
+					}
+					lv_declarations_16_0=ruleDeclarationWOSemicolon
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+						}
+						add(
+							$current,
+							"declarations",
+							lv_declarations_16_0,
+							"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getStatementsStatementParserRuleCall_8_3_0());
+					}
+					lv_statements_17_0=ruleStatement
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getKeywordMethodDeclarationWOSemicolonRule());
+						}
+						add(
+							$current,
+							"statements",
+							lv_statements_17_0,
+							"de.cau.cs.kieler.sccharts.text.SCTX.Statement");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)*
+			otherlv_18='}'
+			{
+				newLeafNode(otherlv_18, grammarAccess.getKeywordMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_8_4());
+			}
 		)?
 	)
 ;
