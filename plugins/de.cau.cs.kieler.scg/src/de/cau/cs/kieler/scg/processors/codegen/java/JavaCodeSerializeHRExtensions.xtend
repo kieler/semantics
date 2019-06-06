@@ -14,11 +14,18 @@ package de.cau.cs.kieler.scg.processors.codegen.java
 
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.PrintCall
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.RandomCall
 import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
+import java.util.ArrayList
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 
 /**
  * @author ssm
@@ -28,6 +35,9 @@ import de.cau.cs.kieler.kexpressions.RandomizeCall
  */
 @Singleton
 class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
+    
+    @Inject extension SCGMethodExtensions
+    @Inject extension KExpressionsCreateExtensions
     
     public static val GLOBAL_OBJECTS = "globalObjects"
     
@@ -77,6 +87,16 @@ class JavaCodeSerializeHRExtensions extends CCodeSerializeHRExtensions {
             modifications.put(INCLUDES, "java.util.Random;")
             
         return "random.setSeed(System.currentTimeMillis())"
+    }
+    
+    override addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
+        if (declaration.hasSelfInParameter) {
+            params.add(0, createParameter =>[
+                callByReference = true
+                val ex = referenceCall.serializeVOR.toString
+                expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
+            ])
+        }
     }
     
 }

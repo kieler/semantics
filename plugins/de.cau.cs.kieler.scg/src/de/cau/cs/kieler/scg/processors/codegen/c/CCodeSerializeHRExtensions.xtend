@@ -47,6 +47,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import java.util.ArrayList
+import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * @author ssm
@@ -310,23 +312,27 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             }
             val params = newArrayList
             params.addAll(referenceCall.parameters)
-            if (declaration.hasSelfInParameter) {
-                params.add(0, createParameter =>[
-                    callByReference = true
-                    val ex = referenceCall.serializeVOR.toString
-                    expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
-                ])
-            }
-            if (declaration.hasTickDataInParameter) {
-                params.add(0, createParameter =>[
-                    expression = valuedObjectPrefix.replaceAll("\\.", "").replaceAll("->", "").asTextExpression
-                ])
-            }
+            params.addPlatformDependentParamsToMethodCall(declaration, referenceCall)
             return name + params.serializeParameters
         } else {
             return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
-    }    
+    }
+    
+    def addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
+        if (declaration.hasSelfInParameter) {
+            params.add(0, createParameter =>[
+                callByReference = true
+                val ex = referenceCall.serializeVOR.toString
+                expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
+            ])
+        }
+        if (declaration.hasTickDataInParameter) {
+            params.add(0, createParameter =>[
+                expression = valuedObjectPrefix.replaceAll("\\.", "").replaceAll("->", "").asTextExpression
+            ])
+        }
+    }
     
     override dispatch CharSequence serialize(ReferenceCall referenceCall) {
         return referenceCall.serializeHR

@@ -309,7 +309,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             code.append(" ").append(method.valuedObjects.head.name)
             code.append("(")
             val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].toList
-            if (method.hasTickDataInParameter) {
+            if (method.hasTickDataInParameter && !struct.getVariableName.nullOrEmpty) {
                 code.append(struct.getName).append("* ").append(struct.getVariableName)
                 if (!params.empty) code.append(", ")
             }
@@ -342,6 +342,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     processedNodes += node
                 }
             }
+            indent(0)
             code.append("}\n\n")
         }
     }

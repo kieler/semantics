@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.lang.instrument.ClassDefinition
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Java Code Generator Struct Module
@@ -38,6 +39,7 @@ import java.lang.instrument.ClassDefinition
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGMethodExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     @Accessors String className
@@ -79,7 +81,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         for (declaration : declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects) {
                 (0..depth).forEach[indent]
-                code.append("public ")
+                if (!valuedObject.localVariable) code.append("public ")
                 val declarationType = if (declaration instanceof ClassDeclaration) {
                     declaration.name
                 } else if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) {
