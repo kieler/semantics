@@ -58,6 +58,8 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.all", false)
     public static val IProperty<Boolean> INLINE_NOTHING = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.inline.nothing", false)  
+    public static val IProperty<Boolean> REMOVE_UNUSED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.methods.removeUnused", true) 
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -89,6 +91,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         val methodSCGs = newHashMap
         val normalSCGs = newArrayList
         val inlined = newHashSet
+        val calls = HashBasedTable.create
         
         for (scg : model.scgs) {
             if (scg.isMethod) {
@@ -99,7 +102,6 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             }
         }
         for (scg : normalSCGs) {
-            val calls = HashBasedTable.create
             for (node : scg.nodes) {
                 if (node instanceof Assignment || node instanceof Conditional) {
                     for (refcall : node.eAllContents.filter(ReferenceCall).toIterable) {
@@ -115,6 +117,7 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
             for (call : calls.cellSet) {
+                println(calls.cellSet.size)
                 if (methodSCGs.containsKey(call.rowKey)) {
                     val method = call.rowKey
                     val methodSCG = methodSCGs.get(method)
@@ -126,8 +129,8 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
             }
         }
         
-        // Remove inlined methods
-        methodSCGs.entrySet.filter[inlined.contains(value)].forEach[
+        // Remove inlined/unused methods
+        methodSCGs.entrySet.filter[inlined.contains(value) || (REMOVE_UNUSED.property && !calls.containsRow(it.key))].forEach[
             it.key.valuedObjects.forEach[voStore.remove(it)]
             model.scgs.remove(it.value)
             it.key.remove
