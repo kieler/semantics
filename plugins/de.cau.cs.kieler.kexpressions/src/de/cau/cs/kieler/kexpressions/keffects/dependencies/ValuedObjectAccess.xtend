@@ -66,6 +66,16 @@ class ValuedObjectAccess {
         this.isSpecific = isSpecific
     }
     
+    new(ValuedObjectAccess VOA) {
+        this.node = VOA.node
+        this.associatedNode = VOA.associatedNode
+        this.schedule = VOA.schedule
+        this.scheduleObject = scheduleObject
+        this.priority = VOA.priority
+        this.forkStack = new ForkStack(VOA.forkStack)
+        this.isSpecific = isSpecific
+    }
+    
     
     override String toString() {
         val result = new StringBuffer("VOA");

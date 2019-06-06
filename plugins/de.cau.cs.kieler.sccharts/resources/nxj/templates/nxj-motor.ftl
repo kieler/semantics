@@ -54,6 +54,26 @@
 </#if>
 </#macro>
 
+<#-- MotorRotationSpeed -->
+<#-- As output variable, sets the speed of the motor while rotating.
+     Setting this does not move the motor.
+     
+     Example for SCCharts:
+         output int 
+         @macro "MotorRotationSpeed", "A", speedLeft
+-->
+<#macro MotorRotationSpeed position>
+<#if position=="output">
+<#list parameters["MotorRotationSpeed"] as parameters>
+        // Motor ${parameters.parameter1}
+        if (scchart.${parameters.varName} != 0) {
+            Motor.${parameters.parameter1}.setSpeed(Math.abs(scchart.${parameters.varName}));
+            scchart.${parameters.varName} = 0;
+        }
+</#list>        
+</#if>
+</#macro>
+
 <#-- MotorIsMoving -->
 <#-- As input variable, sets a boolean to true, iff the motor on the given port is moving.
      

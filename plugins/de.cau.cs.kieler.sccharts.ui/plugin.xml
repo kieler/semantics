@@ -92,6 +92,9 @@
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook">
       </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook">
+      </hook>
    </extension>
     <extension
             point="org.eclipse.ui.editors">

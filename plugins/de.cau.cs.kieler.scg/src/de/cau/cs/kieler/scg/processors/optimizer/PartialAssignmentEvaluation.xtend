@@ -103,7 +103,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
                 if (node.expression !== null) {
                    val references = node.expression.allReferences
                    
-            	   node.expression.replace(parEval.evaluate(node.expression))
+            	   node.expression.replace(parEval.evaluate(node.expression)?:node.expression)
             	   
             	   val newReferences = node.expression.allReferences
             	   for (r : references) {
@@ -127,7 +127,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
                         ref = node.condition as ValuedObjectReference
                     }
                     
-                    node.condition.replace(parEval.evaluate(node.condition))
+                    node.condition.replace(parEval.evaluate(node.condition)?:node.condition)
                     
                     if (ref instanceof ValuedObjectReference && node.condition instanceof Value && candidates.keySet.contains(ref.valuedObject)) {
                         if (environment.getProperty(PAE_REMOVE_SOURCENODE)) {

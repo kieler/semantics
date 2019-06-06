@@ -38,7 +38,7 @@ public final class GeneralSynthesisOptions {
     /** The appearance category */
     public static final SynthesisOption APPEARANCE = SynthesisOption.createCategory("Appearance");
     /** The navigation category */
-    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation");
+    public static final SynthesisOption NAVIGATION = SynthesisOption.createCategory("Navigation", false);
     /** The debugging category */
     public static final SynthesisOption DEBUGGING =
             SynthesisOption.createCategory("Analysis / Debugging", false);

@@ -99,7 +99,7 @@ def readDependencies(base, args):
 
 def checkDependencies(deps, base, args):
     isBanned = re.compile(BANNED_REGEX)
-    success = isfile(join(base, DEP_FILE))
+    success = True #isfile(join(base, DEP_FILE)) # no error if dependencies not available
     for dep in deps:
         if isBanned.match(dep) or dep in BANNED:
             print(' - Has (possibly transient) dependency to banned plugin: %s' % dep)
