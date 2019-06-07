@@ -72,6 +72,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Loop;
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
@@ -183,6 +184,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else if (rule == grammarAccess.getEffectRule()) {
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectOrAssignmentRule()) {
+					sequence_EffectOrAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
@@ -792,7 +797,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.REFERENCE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
@@ -806,7 +812,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
 					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
@@ -1027,7 +1034,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 				}
 				else break;
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -1249,8 +1257,27 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.LOOP:
+				if (rule == grammarAccess.getForLoopRule()) {
+					sequence_ForLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_ForLoop_WhileLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWhileLoopRule()) {
+					sequence_WhileLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
-				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonRule()
+						|| rule == grammarAccess.getKeywordMethodDeclarationWOSemicolonRule()) {
+					sequence_KeywordMethodDeclarationWOSemicolon(context, (MethodImplementationDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_MethodDeclarationWOSemicolon(context, (MethodImplementationDeclaration) semanticObject); 
 					return; 
@@ -1522,6 +1549,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	/**
 	 * Contexts:
 	 *     ClassDeclarationWOSemicolon returns PolicyClassDeclaration
+	 *     DeclarationOrMethodWithKeywordWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationOrMethodWOSemicolon returns PolicyClassDeclaration
 	 *
@@ -1566,13 +1594,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *                 schedule+=ScheduleObjectReference* 
 	 *                 (
-	 *                     (
-	 *                         declarations+=DeclarationWOSemicolon* 
-	 *                         declarations+=MethodDeclarationWOSemicolon* 
-	 *                         actions+=LocalAction* 
-	 *                         (states+=ImplicitState | states+=State+)
-	 *                     ) | 
-	 *                     (declarations+=DeclarationWOSemicolon* declarations+=MethodDeclarationWOSemicolon* actions+=LocalAction* states+=State*)
+	 *                     (declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* (states+=ImplicitState | states+=State+)) | 
+	 *                     (declarations+=DeclarationOrMethodWithKeywordWOSemicolon* actions+=LocalAction* states+=State*)
 	 *                 )
 	 *             )
 	 *         )
@@ -1693,6 +1716,29 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     DeclarationOrMethodWithKeywordWOSemicolon returns MethodImplementationDeclaration
+	 *     KeywordMethodDeclarationWOSemicolon returns MethodImplementationDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         access=AccessModifier? 
+	 *         returnType=MethodReturnType? 
+	 *         valuedObjects+=SimpleValuedObject 
+	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
+	 *         schedule+=ScheduleObjectReference* 
+	 *         annotations+=CommentAnnotatonSL? 
+	 *         declarations+=DeclarationWOSemicolon* 
+	 *         statements+=Statement*
+	 *     )
+	 */
+	protected void sequence_KeywordMethodDeclarationWOSemicolon(ISerializationContext context, MethodImplementationDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LocalAction returns PeriodAction
 	 *     PeriodAction returns PeriodAction
 	 *
@@ -1768,8 +1814,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         name=ExtendedID 
 	 *         label=STRING? 
 	 *         (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
-	 *         declarations+=DeclarationWOSemicolon* 
-	 *         declarations+=MethodDeclarationWOSemicolon* 
+	 *         declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *         actions+=LocalAction* 
 	 *         (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *     )
@@ -1833,8 +1878,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             (
 	 *                 (baseStates+=[State|ID] baseStates+=[State|ID]*)? 
 	 *                 schedule+=ScheduleObjectReference* 
-	 *                 declarations+=DeclarationWOSemicolon* 
-	 *                 declarations+=MethodDeclarationWOSemicolon* 
+	 *                 declarations+=DeclarationOrMethodWithKeywordWOSemicolon* 
 	 *                 actions+=LocalAction* 
 	 *                 (regions+=ImplicitControlflowRegion | regions+=Region+)?
 	 *             )

@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
 import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -57,6 +58,7 @@ import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysi
 class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SCGraph> {
     
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     @Inject extension AnnotationsExtensions
     
     override getId() {
@@ -68,7 +70,7 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
     }
     
     override getSubModels(SCGraphs rootModel) {
-        return rootModel.scgs
+        return rootModel.scgs.ignoreMethods
     }
     
     

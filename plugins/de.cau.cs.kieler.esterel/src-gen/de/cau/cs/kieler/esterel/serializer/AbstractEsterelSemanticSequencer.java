@@ -446,6 +446,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getEffectOrAssignmentRule()) {
+					sequence_EffectOrAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
@@ -837,6 +841,20 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.LOOP:
+				if (rule == grammarAccess.getForLoopRule()) {
+					sequence_ForLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_ForLoop_WhileLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWhileLoopRule()) {
+					sequence_WhileLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
 				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {

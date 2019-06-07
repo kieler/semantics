@@ -60,8 +60,8 @@ class SimulationVariableStore extends VariableStore {
                 for (entry : variables.entries) {
                     val info = entry.value
                     val additionalInfo = store.variables.get(entry.key).head
-                    if (additionalInfo !== null) {
-                        if (info.inferType.equals(additionalInfo.type)) {
+                    if (additionalInfo !== null && !additionalInfo.encapsulated) {
+                        if (info.inferType?.equals(additionalInfo.type)) {
                             info.type = additionalInfo.type
                             info.valuedObject = additionalInfo.valuedObject
                         }

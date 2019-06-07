@@ -1,5 +1,8 @@
 public system de.cau.cs.kieler.sccharts.priority
     label "Priority-based Compilation (C)"
+    config {
+       "de.cau.cs.kieler.scg.processors.methods.inline.all": true
+    }
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG

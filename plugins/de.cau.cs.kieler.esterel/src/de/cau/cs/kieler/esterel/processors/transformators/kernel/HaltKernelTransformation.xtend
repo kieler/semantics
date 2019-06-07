@@ -52,11 +52,11 @@ class HaltKernelTransformation extends InplaceProcessor<EsterelProgram> implemen
         model.eAllContents.filter(Halt).toList.forEach[transform]
     }
     
-    extension EsterelFactory = EsterelFactory.eINSTANCE
+    extension EsterelFactory eFac = EsterelFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     
     def transform(Halt halt) {
-        halt.replace(createLoop.trace(halt) => [statements += createPause.trace(halt)])
+        halt.replace(eFac.createLoop.trace(halt) => [statements += createPause.trace(halt)])
     }
     
 }
