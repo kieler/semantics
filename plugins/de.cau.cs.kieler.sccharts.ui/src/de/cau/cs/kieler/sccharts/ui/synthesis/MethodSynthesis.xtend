@@ -98,7 +98,10 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             }
             if (method.schedule.size > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
-            addCollapseButton(label).addDoubleClickAction(CollapseExpandAction.ID)
+            addCollapseButton(label) => [
+                addSingleClickAction(CollapseExpandAction.ID)
+                addDoubleClickAction(CollapseExpandAction.ID)
+            ] 
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
@@ -108,7 +111,10 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             associateWith(method)
             if (method.schedule.size > 0) it.setUserScheduleStyle
             addDoubleClickAction(CollapseExpandAction.ID)
-            addExpandButton(label).addDoubleClickAction(CollapseExpandAction.ID)
+            addExpandButton(label) => [
+                addSingleClickAction(CollapseExpandAction.ID)
+                addDoubleClickAction(CollapseExpandAction.ID)
+            ]
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
         
