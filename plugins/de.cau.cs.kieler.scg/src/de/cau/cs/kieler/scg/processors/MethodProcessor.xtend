@@ -221,7 +221,16 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         if (selfDecl !== null) selfDecl.remove
         
         // Rename VOs
-        scg.declarations.map[valuedObjects].flatten.forEach[name = prefix + name]
+        val allVOs = scg.declarations.map[valuedObjects].flatten.toList
+        for (clashes : allVOs.groupBy[name].values) {
+            if (clashes.size > 1) {
+                for (i : 0..clashes.size -1) {
+                    val clash = clashes.get(i)
+                    clash.name = clash.name + "_" + i
+                }
+            }
+        }
+        allVOs.forEach[name = prefix + name]
         
         // Connect
         callNode.allPrevious.toList.forEach[target = entry.next.target]
