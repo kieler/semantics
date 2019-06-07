@@ -620,6 +620,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             } else if (loop.initializationDeclaration !== null) {
                 val decl = loop.initializationDeclaration
                 scg.declarations += newArrayList(decl as Declaration).copyDeclarations(valuedObjectMapping, null)
+                VariableStore.get(environment)?.remove(decl.valuedObjects.head)
                 scg.declarations.last => [
                     trace(decl)
                     addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init")
