@@ -23,6 +23,8 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import java.util.List
 import de.cau.cs.kieler.kexpressions.Declaration
+import java.lang.instrument.ClassDefinition
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Java Code Generator Struct Module
@@ -37,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGMethodExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     @Accessors String className
@@ -78,7 +81,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         for (declaration : declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects) {
                 (0..depth).forEach[indent]
-                code.append("public ")
+                if (!valuedObject.localVariable) code.append("public ")
                 val declarationType = if (declaration instanceof ClassDeclaration) {
                     declaration.name
                 } else if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) {
@@ -129,7 +132,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append("  " + additionalCode)
         }
         
-        for (declaration : scg.declarations.filter(VariableDeclaration)) {
+        for (declaration : declarations.filter(VariableDeclaration)) {
             val isClass = declaration instanceof ClassDeclaration
             for (valuedObject : declaration.valuedObjects) {
                 if (valuedObject.isArray) {
@@ -148,9 +151,9 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         val declaration = valuedObject.variableDeclaration
 
         switch(declaration.type) {
-        case ValueType.BOOL,
-        case ValueType.FLOAT,
-        case ValueType.INT: {            
+        case BOOL,
+        case FLOAT,
+        case INT: {            
             indent(2)
             code.append(valuedObject.name + " = new " + declaration.type.serializeHR)
             for (c : valuedObject.cardinalities) {
@@ -159,7 +162,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append(";\n")
         }
         default:
-            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
+            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name else declaration.type.serializeHR, serializer)
         }
     }
     
@@ -182,6 +185,16 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
                 " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name + "()" else declaration.type.serializeHR,
                 serializer
             )
+            indent(2 + index)
+            code.append("}\n")
+        } else if (declaration instanceof ClassDeclaration) {
+            indent(2 + index)
+            code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
+            indent(2 + index + 1)
+            code.append(assignmentPart + "[" + i + "]")
+            code.append(" = new ")
+            code.append(declaration.name)
+            code.append("();\n") 
             indent(2 + index)
             code.append("}\n")
         }                

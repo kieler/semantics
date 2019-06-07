@@ -30,6 +30,7 @@ import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.StatementContainer
+import de.cau.cs.kieler.scl.Loop
 
 /**
  * @author als
@@ -82,6 +83,7 @@ class InternalSyntaxValidation {
         switch(obj) {
             Label,
             ScopeStatement,
+            Loop,
             Thread: return true
             Conditional: {
                 if (node !== null && node.grammarElement instanceof Keyword) {

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
 import de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator
 import java.util.Map
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * C Code Processor
@@ -34,6 +35,7 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     
     @Inject extension PragmaExtensions
+    @Inject extension SCGMethodExtensions
     @Inject Injector injector
     
     public static val IProperty<Boolean> DEBUG_COMMENTS = 
@@ -48,7 +50,7 @@ class CCodeGenerator extends AbstractCodeGenerator<SCGraphs, SCGraph> {
     }
     
     override createModuleMap(SCGraphs rootModel, Map<SCGraph, CodeGeneratorModule<SCGraphs, SCGraph>> moduleMap) {
-        for (scg : rootModel.scgs.indexed) {
+        for (scg : rootModel.scgs.ignoreMethods.indexed) {
             
             if (scg.key > 0) {
                 environment.setProperty(CODE_NAMING_MAGIC, PRAGMA_CODE_NAMING_MAGIC_SUFFIX)

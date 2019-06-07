@@ -67,6 +67,7 @@ class SCGProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.scg.processors.codegen.smv.DefineUnboundVariablesOfSSA,
             de.cau.cs.kieler.scg.processors.codegen.smv.PreFinalVariableValuesOfSSA,
             de.cau.cs.kieler.scg.processors.StoreVariableDeclarations,
+            de.cau.cs.kieler.scg.processors.codegen.vhdl.VHDLCodeGenerator,
             de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGenerator,
             de.cau.cs.kieler.scg.processors.codegen.prio.java.JavaPrioCodeGenerator
         ]

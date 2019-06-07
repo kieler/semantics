@@ -45,6 +45,9 @@ import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * C Code Generator Logic Module
@@ -63,6 +66,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     @Inject extension KEffectsExtensions
     @Inject extension KExtReferenceExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     @Accessors @Inject CCodeSerializeHRExtensions serializer
     
     @Accessors var CCodeGeneratorStructModule struct 
@@ -82,15 +86,19 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     
     override generateInit() {
         preVariables.clear
+          
+        // Generate functions
+        serializer.generateMethods
+                
+        val signature = new StringBuilder
+        signature.append("void ").append(getName)
+        signature.append("(")
+        signature.append(struct.getName).append("* ").append(struct.getVariableName)
+        signature.append(")")
         
-        indent(0)
-        code.append("void ").append(getName)
-        code.append("(")
-        code.append(struct.getName).append("* ").append(struct.getVariableName)
-        code.append(")")
-        
-        struct.forwardDeclarations.append(code).append(";\n")
-        
+        struct.forwardDeclarations.append(signature).append(";\n")
+
+        code.append(signature)
         code.append(" {\n")
     }
     
@@ -141,7 +149,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             } else {
                 throw new NullPointerException("Assigned valued object is null or not supported")
             }
-            
+
+        } else if (assignment.isReturn) {
+                indent(conditionalStack.size + 1)
+                code.append("return ").append(assignment.expression.serializeHR).append(";\n")    
         } else {
             // Add the assignment.
             valuedObjectPrefix = struct.getVariableName + struct.separator
@@ -189,9 +200,54 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
 
         indent(conditionalStack.size + 1)
-        code.append("if (")
-        code.append(conditional.condition.serializeHR)
-        code.append(") {\n")
+        if (conditional.isExplicitLoop) {
+            if (conditional.isPartOfForLoopHeader) {
+                val prev = conditional.allPrevious.map[eContainer as Assignment]
+                val init = prev.findFirst[annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("init")]]
+                val decl = if (init !== null && init.annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("init")]) {
+                    init.valuedObject.variableDeclaration
+                }
+                val after = prev.findFirst[annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("after")]]
+                code.append("for (")
+                if (decl !== null) {
+                    code.append(decl.type.serializeHR)
+                    code.append(" ")
+                    code.append(init.valuedObject.name)
+                    code.append(" = ")
+                    code.append(init.expression.serializeHR)
+                } else if (init !== null){
+                    code.append(init.valuedObject.name)
+                    code.append(" ").append(init.operator.serializeAssignOperator).append(" ")
+                    code.append(init.expression.serializeHR)
+                }
+                code.append("; ")
+                code.append(conditional.condition.serializeHR)
+                code.append("; ")
+                if (after !== null) {
+                    if (after.operator.isPostfixOperator) {
+                        code.append(after.valuedObject.name)
+                        code.append(after.operator.serializeAssignOperator)
+                    } else {
+                        if (after.valuedObject !== null) {
+                            code.append(after.valuedObject.name)
+                            code.append(" ")
+                            code.append(after.operator.serializeAssignOperator)
+                            code.append(" ")
+                        }
+                        code.append(after.expression.serializeHR)
+                    }
+                }
+                code.append(") {\n")
+            } else {
+                code.append("while (")
+                code.append(conditional.condition.serializeHR)
+                code.append(") {\n")
+            }
+        } else {
+            code.append("if (")
+            code.append(conditional.condition.serializeHR)
+            code.append(") {\n")
+        }
         
         conditionalStack.push(conditional)
         
@@ -206,11 +262,15 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         val conditional = conditionalStack.peek
         val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
         if (conditional.^else !== null && conditional.^else.target == node) {
-            if (incomingControlFlows.size == 1) {
+            if (conditional.isExplicitLoop) {
+                indent(conditionalStack.size)
+                code.append("}\n")
+                conditionalStack.pop
+            } else if (incomingControlFlows.size == 1) {
                 // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
                 indent(conditionalStack.size)
                 code.append("} else {\n")
-            }        
+            }
         }
         // If multiple control-flows are joining here, reduce the nesting depth accordingly.
         if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
@@ -231,6 +291,60 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 code.append("}\n")
                 conditionalStack.pop
             }
+        }
+    }
+    
+
+    protected def generateMethods(extension CCodeSerializeHRExtensions serializer) {
+        for (scg : SCGraphs.scgs.filter[method]) {
+            val method = scg.methodDeclaration
+            if (method.hasSelfInParameter) {
+                val selfVO = scg.declarations.map[valuedObjects].flatten.filter[parameter].findFirst[parameterIndex == -1]
+                if (selfVO !== null && !selfVO.name.startsWith("(")) {
+                    selfVO.name = "(*" + selfVO.name + ")" // simulate pointer access
+                }
+            }
+            
+            indent(0)
+            code.append(method.returnType.serialize)
+            code.append(" ").append(method.valuedObjects.head.name)
+            code.append("(")
+            val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].toList
+            if (method.hasTickDataInParameter && !struct.getVariableName.nullOrEmpty) {
+                code.append(struct.getName).append("* ").append(struct.getVariableName)
+                if (!params.empty) code.append(", ")
+            }
+            for (param : params) {
+                if (param.type === ValueType.HOST) {
+                    code.append(param.hostType).append("*")
+                } else {
+                    code.append(param.type.serializeHR)
+                }
+                code.append(" ")
+                code.append(param.valuedObjects.head.name)
+                if (params.last !== param) code.append(", ")
+            }
+            code.append(") {\n")
+            
+            // Temporarily redirect struct module output to this module
+            val structCode = struct.code
+            struct.newCodeStringBuilder = code
+            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
+            struct.newCodeStringBuilder = structCode
+            
+            // Generate body
+            conditionalStack.clear
+            var nodes = newLinkedList => [ it += scg.nodes.head ]
+            val processedNodes = <Node> newHashSet
+            while(!nodes.empty) {
+                val node = nodes.pop
+                if (!processedNodes.contains(node)) {
+                    node.generate(nodes, serializer)
+                    processedNodes += node
+                }
+            }
+            indent(0)
+            code.append("}\n\n")
         }
     }
     

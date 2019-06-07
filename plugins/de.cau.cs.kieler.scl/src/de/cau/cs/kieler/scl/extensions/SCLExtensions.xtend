@@ -234,10 +234,14 @@ class SCLExtensions {
                     stmList = parent.statements
                     index = stmList.indexOf(curStm) + 1
                 } else if (parent instanceof Scope) {
-                    curStm = parent
-                    parent = parent.eContainer as StatementContainer
-                    stmList = parent.statements
-                    index = stmList.indexOf(curStm) + 1
+                    if (parent.eContainer instanceof StatementContainer) {
+                        curStm = parent
+                        parent = parent.eContainer as StatementContainer
+                        stmList = parent.statements
+                        index = stmList.indexOf(curStm) + 1
+                    } else {
+                        continue = false
+                    }
                 } else {
                     continue = false
                 }

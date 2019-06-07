@@ -2613,6 +2613,56 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeStatementAccess().getRule();
 	}
 	
+	//ForLoop Loop:
+	//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+	//	';'
+	//	condition=BoolExpression
+	//	';'
+	//	afterthought=EffectOrAssignment?
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.ForLoopElements getForLoopAccess() {
+		return gaSCL.getForLoopAccess();
+	}
+	
+	public ParserRule getForLoopRule() {
+		return getForLoopAccess().getRule();
+	}
+	
+	//EffectOrAssignment keffects::Assignment:
+	//	annotations+=super::Annotation* (reference=ValuedObjectReference
+	//	operator=PostfixOperator
+	//	| reference=ValuedObjectReference
+	//	operator=AssignOperator
+	//	expression=super::Expression
+	//	| expression=super::Expression);
+	public SCLGrammarAccess.EffectOrAssignmentElements getEffectOrAssignmentAccess() {
+		return gaSCL.getEffectOrAssignmentAccess();
+	}
+	
+	public ParserRule getEffectOrAssignmentRule() {
+		return getEffectOrAssignmentAccess().getRule();
+	}
+	
+	//WhileLoop Loop:
+	//	'while' '('
+	//	condition=BoolExpression
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.WhileLoopElements getWhileLoopAccess() {
+		return gaSCL.getWhileLoopAccess();
+	}
+	
+	public ParserRule getWhileLoopRule() {
+		return getWhileLoopAccess().getRule();
+	}
+	
 	//ModuleCall:
 	//	annotations+=super::Annotation*
 	//	'run'
@@ -3134,8 +3184,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=super::Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}

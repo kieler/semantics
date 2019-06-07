@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.Set
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Smart Register Allocation
@@ -53,6 +54,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.smartRegisterAllocation"
@@ -67,7 +69,7 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
         
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performSmartRegisterAllocation
         }
         VariableStore.get(environment).removeAllUncontainedVO(model, environment)

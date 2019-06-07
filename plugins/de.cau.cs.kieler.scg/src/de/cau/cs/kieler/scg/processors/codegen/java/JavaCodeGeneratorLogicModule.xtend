@@ -18,6 +18,10 @@ import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorLogicModule
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.Node
 
 /**
  * Java Code Generator Logic Module
@@ -32,6 +36,8 @@ import de.cau.cs.kieler.kexpressions.ValueType
 class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     
     @Inject JavaCodeSerializeHRExtensions javaSerializer
+    @Inject extension SCGMethodExtensions
+    @Inject extension SCGControlFlowExtensions
     
     override configure() {
         struct = (parent as JavaCodeGeneratorModule).struct as JavaCodeGeneratorStructModule
@@ -45,6 +51,9 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     override generateInit() {
         preVariables.clear
         
+        // Generate functions
+        serializer.generateMethods
+        
         indent(0)
         code.append("public void ").append(getName)
         code.append("(")
@@ -53,7 +62,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         code.append(" {\n")
     }
     
-    override def void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
+    override void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
         prePrefix = JavaCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         val name = operatorExpression.serializeHR 
@@ -77,5 +86,48 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         tick.code.append(indentation + indentation)
         tick.code.append(struct.getVariableName).append(struct.separator).append(name).append(" = ")
         tick.code.append(struct.getVariableName).append(struct.separator).append(operatorExpression.serializeHR).append(";\n")
-    }    
+    }
+    
+    override generateMethods(extension CCodeSerializeHRExtensions serializer) {
+        for (scg : SCGraphs.scgs.filter[method]) {
+            val method = scg.methodDeclaration
+                        
+            indent(0)
+            code.append(method.returnType.serialize)
+            code.append(" ").append(method.valuedObjects.head.name)
+            code.append("(")
+            val params = scg.declarations.filter[parameter].map[it as VariableDeclaration].toList
+            for (param : params) {
+                if (param.type === ValueType.HOST) {
+                    code.append(param.hostType)
+                } else {
+                    code.append(param.type.serializeHR)
+                }
+                code.append(" ")
+                code.append(param.valuedObjects.head.name)
+                if (params.last !== param) code.append(", ")
+            }
+            code.append(") {\n")
+            
+            // Temporarily redirect struct module output to this module
+            val structCode = struct.code
+            struct.newCodeStringBuilder = code
+            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
+            struct.newCodeStringBuilder = structCode
+            
+            // Generate body
+            conditionalStack.clear
+            var nodes = newLinkedList => [ it += scg.nodes.head ]
+            val processedNodes = <Node> newHashSet
+            while(!nodes.empty) {
+                val node = nodes.pop
+                if (!processedNodes.contains(node)) {
+                    node.generate(nodes, serializer)
+                    processedNodes += node
+                }
+            }
+            indent(0)
+            code.append("}\n\n")
+        }
+    }   
 }

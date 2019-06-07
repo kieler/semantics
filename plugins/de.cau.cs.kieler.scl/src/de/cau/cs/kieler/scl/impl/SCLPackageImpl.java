@@ -15,6 +15,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Loop;
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
@@ -168,6 +169,13 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     private EClass methodImplementationDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass loopEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -512,6 +520,56 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
      * @generated
      */
     @Override
+    public EClass getLoop() {
+        return loopEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLoop_Initialization() {
+        return (EReference)loopEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLoop_InitializationDeclaration() {
+        return (EReference)loopEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLoop_Condition() {
+        return (EReference)loopEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getLoop_Afterthought() {
+        return (EReference)loopEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public SCLFactory getSCLFactory() {
         return (SCLFactory)getEFactoryInstance();
     }
@@ -579,6 +637,12 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         createEReference(returnEClass, RETURN__EXPRESSION);
 
         methodImplementationDeclarationEClass = createEClass(METHOD_IMPLEMENTATION_DECLARATION);
+
+        loopEClass = createEClass(LOOP);
+        createEReference(loopEClass, LOOP__INITIALIZATION);
+        createEReference(loopEClass, LOOP__INITIALIZATION_DECLARATION);
+        createEReference(loopEClass, LOOP__CONDITION);
+        createEReference(loopEClass, LOOP__AFTERTHOUGHT);
     }
 
     /**
@@ -644,6 +708,8 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         returnEClass.getESuperTypes().add(this.getStatement());
         methodImplementationDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getMethodDeclaration());
         methodImplementationDeclarationEClass.getESuperTypes().add(this.getScope());
+        loopEClass.getESuperTypes().add(this.getStatement());
+        loopEClass.getESuperTypes().add(this.getScope());
 
         // Initialize classes and features; add operations and parameters
         initEClass(sclProgramEClass, SCLProgram.class, "SCLProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -690,6 +756,12 @@ public class SCLPackageImpl extends EPackageImpl implements SCLPackage {
         initEReference(getReturn_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 1, 1, Return.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(methodImplementationDeclarationEClass, MethodImplementationDeclaration.class, "MethodImplementationDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getLoop_Initialization(), theKEffectsPackage.getAssignment(), null, "initialization", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLoop_InitializationDeclaration(), theKExpressionsPackage.getVariableDeclaration(), null, "initializationDeclaration", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLoop_Condition(), theKExpressionsPackage.getExpression(), null, "condition", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getLoop_Afterthought(), theKEffectsPackage.getAssignment(), null, "afterthought", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);

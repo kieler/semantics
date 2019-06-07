@@ -56,6 +56,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Loop;
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
@@ -165,6 +166,10 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				}
 				else if (rule == grammarAccess.getEffectRule()) {
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectOrAssignmentRule()) {
+					sequence_EffectOrAssignment(context, (Assignment) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
@@ -495,6 +500,20 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.LOOP:
+				if (rule == grammarAccess.getForLoopRule()) {
+					sequence_ForLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_ForLoop_WhileLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWhileLoopRule()) {
+					sequence_WhileLoop(context, (Loop) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
 				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
@@ -565,12 +584,72 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     EffectOrAssignment returns Assignment
+	 *
+	 * Constraint:
+	 *     (
+	 *         annotations+=Annotation* 
+	 *         (
+	 *             (reference=ValuedObjectReference operator=PostfixOperator) | 
+	 *             (reference=ValuedObjectReference operator=AssignOperator expression=Expression) | 
+	 *             expression=Expression
+	 *         )
+	 *     )
+	 */
+	protected void sequence_EffectOrAssignment(ISerializationContext context, Assignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ElseScope returns ElseScope
 	 *
 	 * Constraint:
 	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement* semicolon?=';'?)
 	 */
 	protected void sequence_ElseScope(ISerializationContext context, ElseScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForLoop returns Loop
+	 *
+	 * Constraint:
+	 *     (
+	 *         (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)? 
+	 *         condition=BoolExpression 
+	 *         afterthought=EffectOrAssignment? 
+	 *         declarations+=Declaration* 
+	 *         statements+=Statement* 
+	 *         semicolon?=';'?
+	 *     )
+	 */
+	protected void sequence_ForLoop(ISerializationContext context, Loop semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Loop
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)? 
+	 *             condition=BoolExpression 
+	 *             afterthought=EffectOrAssignment? 
+	 *             declarations+=Declaration* 
+	 *             statements+=Statement* 
+	 *             semicolon?=';'?
+	 *         ) | 
+	 *         (condition=BoolExpression declarations+=Declaration* statements+=Statement* semicolon?=';'?)
+	 *     )
+	 */
+	protected void sequence_ForLoop_WhileLoop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -834,6 +913,18 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     ((annotations+=Annotation* declarations+=Declaration* statements+=Statement*) | statements+=Statement+)?
 	 */
 	protected void sequence_Thread(ISerializationContext context, de.cau.cs.kieler.scl.Thread semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     WhileLoop returns Loop
+	 *
+	 * Constraint:
+	 *     (condition=BoolExpression declarations+=Declaration* statements+=Statement* semicolon?=';'?)
+	 */
+	protected void sequence_WhileLoop(ISerializationContext context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
