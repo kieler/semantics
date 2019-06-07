@@ -363,7 +363,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         // check if a former shortcut syntax (*=) is conflicting with another one with a different operator.
         if (source.priority == GLOBAL_RELATIVE_WRITE && target.priority == GLOBAL_RELATIVE_WRITE) {
             if (source.node instanceof Assignment && target.node instanceof Assignment) {
-                if (source.node.asAssignment.operator != target.node.asAssignment.operator) {
+                if (!isCommuting(source.node.asAssignment.operator, target.node.asAssignment.operator)) {
                     ttype = WRITE_WRITE
                 }
             }
@@ -388,6 +388,12 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         dependency.trace(source.node)       
         dependency.postProcessDependency(valuedObjectIdentifier, source, target)      
         dependencies += dependency       
+    }
+    
+    val opPlusMinus = newHashSet(AssignOperator.POSTFIXADD, AssignOperator.POSTFIXADD, AssignOperator.ASSIGNADD, AssignOperator.POSTFIXSUB)
+    def boolean isCommuting(AssignOperator operator, AssignOperator operator2) {
+        return operator == operator
+          || (opPlusMinus.contains(operator) && opPlusMinus.contains(operator2))
     }
     
     protected def accessType(ValuedObjectAccess source, ValuedObjectAccess target) {
