@@ -12,9 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.ui.synthesis.srtg;
 
-import com.google.inject.Injector;
-
-import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis;
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks;
 
 /**
@@ -22,13 +19,4 @@ import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks;
  *
  */
 public class SRTGSynthesisHooks extends SynthesisHooks {
-
-    /**
-     * @param injector
-     * @param synthesis
-     */
-    public SRTGSynthesisHooks(Injector injector, AbstractDiagramSynthesis<?> synthesis) {
-        super(injector, synthesis);
-    }
-
 }
