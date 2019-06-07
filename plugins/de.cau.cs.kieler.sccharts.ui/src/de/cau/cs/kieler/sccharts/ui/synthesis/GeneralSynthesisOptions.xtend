@@ -52,6 +52,11 @@ final class GeneralSynthesisOptions {
      * Dataflow category 
      */
     public static final SynthesisOption DATAFLOW = SynthesisOption.createCategory("Dataflow", false).setCategory(APPEARANCE)
+    /** 
+     * References and OO / Inheritance
+     */
+    public static final SynthesisOption OO = SynthesisOption.createCategory("Object Orientation / References", false).setCategory(APPEARANCE)
+    
     // -- OPTIONS --
     /** 
      * Option for setting the KLayLayered layout 
@@ -62,12 +67,12 @@ final class GeneralSynthesisOptions {
     /** 
      * Scope call parameters synthesis option 
      */
-    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_BINDINGS = SynthesisOption.createCheckOption("Binding Parameters", true).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
-    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(APPEARANCE)
-    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("Class Diagram Style", false).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_INHERITANCE = SynthesisOption.createCheckOption("Inherited Parts", true).setCategory(OO)
+    public static final SynthesisOption SHOW_INHERITANCE_EDGES = SynthesisOption.createCheckOption("Class Diagram Style", false).setCategory(OO)
     /** 
      * inherited declarations and regions synthesis option 
      */
