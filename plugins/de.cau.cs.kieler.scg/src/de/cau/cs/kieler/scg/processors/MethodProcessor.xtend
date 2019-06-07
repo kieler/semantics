@@ -128,10 +128,13 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
         }
-        
+        // Clean VO store of variables in methods
+        methodSCGs.entrySet.forEach[
+            voStore.remove(key.valuedObjects.head)
+            value.declarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
+        ]
         // Remove inlined/unused methods
         methodSCGs.entrySet.filter[inlined.contains(value) || (REMOVE_UNUSED.property && !calls.containsRow(it.key))].forEach[
-            it.key.valuedObjects.forEach[voStore.remove(it)]
             model.scgs.remove(it.value)
             it.key.remove
         ]
