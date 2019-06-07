@@ -3,14 +3,18 @@
 package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
+
 import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
@@ -19,10 +23,12 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.Loop;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.Scope;
@@ -97,16 +103,18 @@ public class SCLSwitch<T> extends Switch<T> {
                 SCLProgram sclProgram = (SCLProgram)theEObject;
                 T result = caseSCLProgram(sclProgram);
                 if (result == null) result = casePragmatable(sclProgram);
+                if (result == null) result = caseNameable(sclProgram);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
             case SCLPackage.MODULE: {
-                Module module = (Module)theEObject;
+                de.cau.cs.kieler.scl.Module module = (de.cau.cs.kieler.scl.Module)theEObject;
                 T result = caseModule(module);
                 if (result == null) result = caseScope(module);
                 if (result == null) result = caseNamedObject(module);
                 if (result == null) result = caseDeclarationScope(module);
                 if (result == null) result = caseStatementContainer(module);
+                if (result == null) result = caseNameable(module);
                 if (result == null) result = caseAnnotatable(module);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -151,6 +159,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(label);
                 if (result == null) result = caseAnnotatable(label);
                 if (result == null) result = caseSequencePart(label);
+                if (result == null) result = caseNameable(label);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -172,6 +181,7 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseSequencePart(assignment);
                 if (result == null) result = caseAnnotatable(assignment);
                 if (result == null) result = caseSchedulable(assignment);
+                if (result == null) result = caseLinkable(assignment);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -247,6 +257,40 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case SCLPackage.RETURN: {
+                Return return_ = (Return)theEObject;
+                T result = caseReturn(return_);
+                if (result == null) result = caseStatement(return_);
+                if (result == null) result = caseAnnotatable(return_);
+                if (result == null) result = caseSequencePart(return_);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION: {
+                MethodImplementationDeclaration methodImplementationDeclaration = (MethodImplementationDeclaration)theEObject;
+                T result = caseMethodImplementationDeclaration(methodImplementationDeclaration);
+                if (result == null) result = caseMethodDeclaration(methodImplementationDeclaration);
+                if (result == null) result = caseScope(methodImplementationDeclaration);
+                if (result == null) result = caseDeclaration(methodImplementationDeclaration);
+                if (result == null) result = caseSchedulable(methodImplementationDeclaration);
+                if (result == null) result = caseDeclarationScope(methodImplementationDeclaration);
+                if (result == null) result = caseStatementContainer(methodImplementationDeclaration);
+                if (result == null) result = caseAnnotatable(methodImplementationDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.LOOP: {
+                Loop loop = (Loop)theEObject;
+                T result = caseLoop(loop);
+                if (result == null) result = caseStatement(loop);
+                if (result == null) result = caseScope(loop);
+                if (result == null) result = caseSequencePart(loop);
+                if (result == null) result = caseDeclarationScope(loop);
+                if (result == null) result = caseStatementContainer(loop);
+                if (result == null) result = caseAnnotatable(loop);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -277,7 +321,7 @@ public class SCLSwitch<T> extends Switch<T> {
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseModule(Module object) {
+    public T caseModule(de.cau.cs.kieler.scl.Module object) {
         return null;
     }
 
@@ -492,6 +536,51 @@ public class SCLSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Return</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Return</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseReturn(Return object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Method Implementation Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Method Implementation Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMethodImplementationDeclaration(MethodImplementationDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Loop</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Loop</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLoop(Loop object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -503,6 +592,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePragmatable(Pragmatable object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
         return null;
     }
 
@@ -567,6 +671,21 @@ public class SCLSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Linkable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLinkable(Linkable object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -623,6 +742,36 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseCall(Call object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Method Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Method Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseMethodDeclaration(MethodDeclaration object) {
         return null;
     }
 

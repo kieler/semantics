@@ -73,31 +73,33 @@ public class KivisSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case KivisPackage.VISUALIZATION_CONFIGURATION:
+      case KivisPackage.VISUALIZATION:
       {
-        VisualizationConfiguration visualizationConfiguration = (VisualizationConfiguration)theEObject;
-        T result = caseVisualizationConfiguration(visualizationConfiguration);
+        Visualization visualization = (Visualization)theEObject;
+        T result = caseVisualization(visualization);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.ELEMENT:
+      case KivisPackage.CONTENT:
       {
-        Element element = (Element)theEObject;
-        T result = caseElement(element);
+        Content content = (Content)theEObject;
+        T result = caseContent(content);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.INTERACTION:
+      case KivisPackage.BINDING:
       {
-        Interaction interaction = (Interaction)theEObject;
-        T result = caseInteraction(interaction);
+        Binding binding = (Binding)theEObject;
+        T result = caseBinding(binding);
+        if (result == null) result = caseContent(binding);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.EVENT:
+      case KivisPackage.HANDLER:
       {
-        Event event = (Event)theEObject;
-        T result = caseEvent(event);
+        Handler handler = (Handler)theEObject;
+        T result = caseHandler(handler);
+        if (result == null) result = caseContent(handler);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -105,93 +107,29 @@ public class KivisSwitch<T> extends Switch<T>
       {
         Action action = (Action)theEObject;
         T result = caseAction(action);
+        if (result == null) result = caseContent(action);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.FUNCTION:
+      case KivisPackage.CODE:
       {
-        Function function = (Function)theEObject;
-        T result = caseFunction(function);
+        Code code = (Code)theEObject;
+        T result = caseCode(code);
+        if (result == null) result = caseContent(code);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.ANIMATION:
+      case KivisPackage.SETTER:
       {
-        Animation animation = (Animation)theEObject;
-        T result = caseAnimation(animation);
+        Setter setter = (Setter)theEObject;
+        T result = caseSetter(setter);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case KivisPackage.ATTRIBUTE_MAPPING:
+      case KivisPackage.INTERFACE:
       {
-        AttributeMapping attributeMapping = (AttributeMapping)theEObject;
-        T result = caseAttributeMapping(attributeMapping);
-        if (result == null) result = caseKibuild_AttributeMapping(attributeMapping);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.MAPPING:
-      {
-        Mapping mapping = (Mapping)theEObject;
-        T result = caseMapping(mapping);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.CONDITION:
-      {
-        Condition condition = (Condition)theEObject;
-        T result = caseCondition(condition);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.COMPARISON:
-      {
-        Comparison comparison = (Comparison)theEObject;
-        T result = caseComparison(comparison);
-        if (result == null) result = caseCondition(comparison);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.DOMAIN:
-      {
-        Domain domain = (Domain)theEObject;
-        T result = caseDomain(domain);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.INTERVAL:
-      {
-        Interval interval = (Interval)theEObject;
-        T result = caseInterval(interval);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.VARIABLE_REFERENCE:
-      {
-        VariableReference variableReference = (VariableReference)theEObject;
-        T result = caseVariableReference(variableReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.MODEL_REFERENCE:
-      {
-        ModelReference modelReference = (ModelReference)theEObject;
-        T result = caseModelReference(modelReference);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.FUNCTION_PARAMETER:
-      {
-        FunctionParameter functionParameter = (FunctionParameter)theEObject;
-        T result = caseFunctionParameter(functionParameter);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case KivisPackage.AND_EXPRESSION:
-      {
-        AndExpression andExpression = (AndExpression)theEObject;
-        T result = caseAndExpression(andExpression);
-        if (result == null) result = caseCondition(andExpression);
+        Interface interface_ = (Interface)theEObject;
+        T result = caseInterface(interface_);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -200,65 +138,65 @@ public class KivisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Visualization Configuration</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Visualization</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Visualization Configuration</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Visualization</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseVisualizationConfiguration(VisualizationConfiguration object)
+  public T caseVisualization(Visualization object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Element</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Content</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Element</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Content</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseElement(Element object)
+  public T caseContent(Content object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Interaction</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Binding</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Interaction</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Binding</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseInteraction(Interaction object)
+  public T caseBinding(Binding object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Event</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Handler</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Event</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Handler</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseEvent(Event object)
+  public T caseHandler(Handler object)
   {
     return null;
   }
@@ -280,209 +218,49 @@ public class KivisSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Function</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Code</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Function</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Code</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseFunction(Function object)
+  public T caseCode(Code object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Animation</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Setter</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Animation</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Setter</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAnimation(Animation object)
+  public T caseSetter(Setter object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Interface</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Interface</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAttributeMapping(AttributeMapping object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Mapping</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Mapping</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseMapping(Mapping object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Condition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Condition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseCondition(Condition object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Comparison</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Comparison</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseComparison(Comparison object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Domain</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Domain</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseDomain(Domain object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Interval</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Interval</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseInterval(Interval object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Variable Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseVariableReference(VariableReference object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Model Reference</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Model Reference</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseModelReference(ModelReference object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Function Parameter</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Function Parameter</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFunctionParameter(FunctionParameter object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>And Expression</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>And Expression</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAndExpression(AndExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Attribute Mapping</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseKibuild_AttributeMapping(de.cau.cs.kieler.prom.kibuild.AttributeMapping object)
+  public T caseInterface(Interface object)
   {
     return null;
   }

@@ -68,22 +68,25 @@ z = x+y
 z = x +y
 
 @check arithmetics.additions.paranthesis#001
+@readable "z = 1 + 2 + 3"
 z = (1 + 2) + 3
 
 @check arithmetics.additions.paranthesis#002
+@readable "z = x + 2 + 3"
 z = x + (2 + 3)
 
 @check arithmetics.additions.paranthesis#003
 @strict
-@readable "z = (1 + x) + y"
+@readable "z = 1 + x + y"
 z = ((1 + x) + y)
 
 @check arithmetics.additions.paranthesis#004
 @strict
-@readable "z = x + (2 + y)"
+@readable "z = x + 2 + y"
 z = (x + (2 + y))
 
 @check arithmetics.additions.paranthesis#005
+@readable "z = x + x + y"
 z = x + (x + y)
 
 @check arithmetics.additions.three#001

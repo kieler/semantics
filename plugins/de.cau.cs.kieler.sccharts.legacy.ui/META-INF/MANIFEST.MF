@@ -2,9 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: UI for Legacy SCCharts
 Bundle-SymbolicName: de.cau.cs.kieler.sccharts.legacy.ui;singleton:=true
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sccharts.legacy.text.ui.internal.SctActivator
 Bundle-Vendor: Kiel University
+Eclipse-UI: True
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.xtext.ui,

@@ -157,17 +157,17 @@ class LayoutHook extends SynthesisActionHook {
 
     override processRegion(Region region, KNode node) {
         val regions = region.parentState?.regions
-        if (region !== null) {
+        if (regions !== null) {
             node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
             
             if (region instanceof DataflowRegion){
-                node.eAllContents.filter(KNode).forEach[
+                node.eAllContents.filter(KNode).toList.forEach[
                     val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
                     if (source !== null && source instanceof ValuedObject && source.eContainer instanceof Annotatable) {
                         it.processLayoutOptionAnnotations(source.eContainer as Annotatable)
                     }
-                ]            
-                node.eAllContents.filter(KEdge).forEach[
+                ]
+                node.eAllContents.filter(KEdge).toList.forEach[
                     val source = it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) as EObject;
                     if (source !== null && source.eContainer instanceof Annotatable) {
                         it.processLayoutOptionAnnotations(source.eContainer as Annotatable)

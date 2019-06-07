@@ -72,6 +72,7 @@ public class BlockImpl extends StatementContainerImpl implements Block {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSemicolon() {
         return semicolon;
     }
@@ -81,6 +82,7 @@ public class BlockImpl extends StatementContainerImpl implements Block {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSemicolon(boolean newSemicolon) {
         boolean oldSemicolon = semicolon;
         semicolon = newSemicolon;
@@ -207,7 +209,7 @@ public class BlockImpl extends StatementContainerImpl implements Block {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (semicolon: ");
         result.append(semicolon);
         result.append(')');

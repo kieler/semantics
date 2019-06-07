@@ -141,15 +141,6 @@ public interface ScgFactory extends EFactory {
     ControlFlow createControlFlow();
 
     /**
-     * Returns a new object of class '<em>Control Dependency</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Control Dependency</em>'.
-     * @generated
-     */
-    ControlDependency createControlDependency();
-
-    /**
      * Returns a new object of class '<em>Basic Block</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -204,6 +195,15 @@ public interface ScgFactory extends EFactory {
 	ScheduleDependency createScheduleDependency();
 
 				/**
+     * Returns a new object of class '<em>Tick Boundary Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Tick Boundary Dependency</em>'.
+     * @generated
+     */
+    TickBoundaryDependency createTickBoundaryDependency();
+
+                /**
      * Returns a new object of class '<em>Guard</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

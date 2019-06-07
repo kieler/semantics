@@ -68,6 +68,7 @@ public class IgnoreValueImpl extends EObjectImpl implements IgnoreValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.IGNORE_VALUE__SCHEDULE);

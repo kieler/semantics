@@ -107,6 +107,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.SUSPEND__STATEMENTS);
@@ -119,6 +120,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isWeak() {
         return weak;
     }
@@ -128,6 +130,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWeak(boolean newWeak) {
         boolean oldWeak = weak;
         weak = newWeak;
@@ -140,6 +143,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -164,6 +168,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
@@ -315,7 +320,7 @@ public class SuspendImpl extends StatementImpl implements Suspend {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (weak: ");
         result.append(weak);
         result.append(')');

@@ -36,6 +36,7 @@ import static org.junit.Assert.*
 import java.util.WeakHashMap
 import java.util.Collections
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
+import de.cau.cs.kieler.core.Platform
 
 /**
  * @author aas, als
@@ -69,7 +70,9 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
     protected def void startSimulationTest(String system, EObject model, TestModelData modelData, String testID) {
         val ccontext = Compile.createCompilationContext(system, model)
         ccontext.startEnvironment.setProperty(Environment.INPLACE, true)
-        ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, this.class.simpleName + "-" + testID)
+        ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, 
+            (if (!Platform.isWindows) this.class.simpleName + "-" else "") + testID
+        )
         val simContext = ccontext.createSimulationContext
         simContext.runSimulationTraces(modelData)
     }
@@ -120,7 +123,7 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
                     simulationTraceEventData.remove(context)
 
                     // Configure trace
-                    context.setTrace(traceFile.traces.get(i), true)
+                    context.setTrace(traceFile.traces.get(i), true, false)
                     context.mode = ManualMode
                     
                     // Start simulation

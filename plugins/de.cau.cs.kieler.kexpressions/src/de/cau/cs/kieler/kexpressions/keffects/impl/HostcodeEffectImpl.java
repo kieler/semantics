@@ -118,6 +118,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.HOSTCODE_EFFECT__SCHEDULE);
@@ -130,6 +131,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.HOSTCODE_EFFECT__OUTGOING_LINKS);
@@ -142,6 +144,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.HOSTCODE_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -154,6 +157,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -163,6 +167,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setText(String newText) {
         String oldText = text;
         text = newText;
@@ -372,7 +377,7 @@ public class HostcodeEffectImpl extends AnnotatableImpl implements HostcodeEffec
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (text: ");
         result.append(text);
         result.append(')');

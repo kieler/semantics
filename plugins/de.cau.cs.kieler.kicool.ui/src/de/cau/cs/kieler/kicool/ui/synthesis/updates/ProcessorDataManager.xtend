@@ -89,6 +89,9 @@ import org.eclipse.core.runtime.Status
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.kicool.ui.synthesis.actions.SelectParent
+import de.cau.cs.kieler.kicool.ui.synthesis.styles.SkinSelector
+import java.util.List
+import org.eclipse.ui.IEditorPart
 
 /**
  * The data manager handles all synthesis updates.
@@ -135,8 +138,10 @@ class ProcessorDataManager {
         }
         
         val nameNode = nodeIdMap.findNode(NODE_NAME)
+        val nameStr = if (rtProcessor.name.length < SkinSelector.skinMaxNameSize) rtProcessor.name else
+            rtProcessor.name.substring(0, SkinSelector.skinMaxNameSize - 2) + "..."
         val label = nameNode.label
-        label.text = rtProcessor.name
+        label.text = nameStr
 //        label.data.filter(KText).head.setProperty(KlighdProperties.NOT_SELECTABLE, true)
         val text = label.data.filter(KText).head
         text.addAction(Trigger::SINGLECLICK, SelectParent.ID)
@@ -176,6 +181,14 @@ class ProcessorDataManager {
         }
         
         if (compilationNotification instanceof CompilationStart) {
+            // Clear all intermediate results and data
+            node.eAllOfType(KNode).forEach[
+                if (getData(KIdentifier) !== null && NODE_INTERMEDIATE.equals(getData(KIdentifier).id)) {
+                    children.clear
+                }
+                setProperty(INTERMEDIATE_DATA, null)
+            ]
+            
             // Set Select Nothing Data
             node.setProperty(INTERMEDIATE_DATA, 
                 new IntermediateData(null, 
@@ -366,11 +379,11 @@ class ProcessorDataManager {
                     intermediateNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += intermediateNode
                     intermediateNode.setProperty(INTERMEDIATE_DATA, 
-                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot, 
+                        new IntermediateData(processorInstance, processorNotification.compilationContext, snapshot.object, 
                             view, intermediateModelCounter++, intermediateNode
                         ))
                     intermediatePosX += intermediatePosXInc
-                    lastModel = snapshot
+                    lastModel = snapshot.object
                 }
             }
             
@@ -413,7 +426,7 @@ class ProcessorDataManager {
                     infoNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += infoNode 
                     
-                    val model = processorInstance.targetModel
+                    val model = if (infoKey === null) processorInstance.targetModel else infoKey
                     if (model instanceof EObject) {
                         val morModel = new MessageObjectListPair(infos.get(infoKey).fillUndefinedColors(INFO), 
                             if (infoKey === null) model else infoKey)
@@ -422,8 +435,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, infoNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(infos.get(infoKey).fillUndefinedColors(INFO), 
+                            if (infoKey === null) model else infoKey)
                         infoNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, infos, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, infoNode
                             ))
                     }
@@ -441,7 +456,7 @@ class ProcessorDataManager {
                     warningNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
                     intermediateRootNode.children += warningNode 
                     
-                    val model = processorInstance.targetModel
+                    val model = if (warningKey === null) processorInstance.targetModel else warningKey
                     if (model instanceof EObject) {
                         val morModel = new MessageObjectListPair(warnings.get(warningKey).fillUndefinedColors(WARNING), 
                             if (warningKey === null) model else warningKey)
@@ -450,8 +465,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, warningNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(warnings.get(warningKey).fillUndefinedColors(WARNING), 
+                            if (warningKey === null) model else warningKey)
                         warningNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, warnings, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, warningNode
                             ))
                     }
@@ -478,8 +495,10 @@ class ProcessorDataManager {
                                 view, intermediateModelCounter++, errorNode
                             ))
                     } else {
+                        val morModel = new MessageObjectListPair(errors.get(errorKey).fillUndefinedColors(ERROR), 
+                            if (errorKey === null) model else errorKey)
                         errorNode.setProperty(INTERMEDIATE_DATA, 
-                            new IntermediateData(processorInstance, processorNotification.compilationContext, errors, 
+                            new IntermediateData(processorInstance, processorNotification.compilationContext, morModel, 
                                 view, intermediateModelCounter++, errorNode
                             ))
                     }
@@ -541,37 +560,62 @@ class ProcessorDataManager {
     }
     
     
-    static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, IntermediateSelection selection) {
-        retrieveIntermediateModel(node, view, model, selection, true)
+    static def List<Object> retrieveIntermediateModel(KNode node, CompilerView view, Object model, IntermediateSelection selection, IEditorPart editor) {
+        retrieveIntermediateModel(node, view, model, selection, editor, true)
     }
     
-    package static def Object retrieveIntermediateModel(KNode node, CompilerView view, Object model, 
-        IntermediateSelection selection, boolean scheduleUIJob
+    package static def List<Object> retrieveIntermediateModel(KNode node, CompilerView view, Object model, 
+        IntermediateSelection selection, IEditorPart editor, boolean scheduleUIJob
     ) {
-        val processorReference = selection.processor?.processorReference
-        val processorNode = if (selection.processor === null) node.findNode(NODE_SOURCE)
-            else node.eAllContents.filter(KNode).filter[ getData(KIdentifier)?.id.startsWith(processorReference.id) ]?.head
+        val processorNodes = <Pair<KNode, Integer>> newArrayList
+        for (s : selection.entries) {
+            if (s.processor === null) {
+                processorNodes += new Pair<KNode, Integer>(node.findNode(NODE_SOURCE), s.intermediateIndex)
+            } else {
+                val processorReference = s.processor.processorReference
+                processorNodes += new Pair<KNode, Integer>(
+                    node.eAllContents.filter(KNode).filter[ getData(KIdentifier)?.id.startsWith(processorReference.id) ]?.head,
+                    s.intermediateIndex)
+            }
+        }
         
-        if (processorNode !== null) {
-            val intermediateData = processorNode.eAllContents.filter(KNode).filter[ 
+        val intermediateData = <IntermediateData> newArrayList
+        for (p : processorNodes.filter[ it.key !== null] ) {
+            val iD = p.key.eAllContents.filter(KNode).filter[ 
                 val iData = getProperty(INTERMEDIATE_DATA)
-                return (iData !== null) && (iData.intermediateIndex <= selection.intermediateIndex)
+                return (iData !== null) && (iData.intermediateIndex <= p.value)
             ].map[ getProperty(INTERMEDIATE_DATA) ].toIterable.sortBy[ -intermediateIndex ].head
             
-            if (intermediateData !== null) {
-                if (scheduleUIJob) {
-                    new Thread(new DelayedSelectionUpdate(node, view, model, selection)).start
-                } else {
-                    view.viewer.resetSelectionTo(intermediateData.parentNode)
-                    intermediateData.parentNode.containers.forEach[ 
+            if (iD !== null) 
+                intermediateData += iD
+        }
+        
+        if (!intermediateData.empty) {
+            if (scheduleUIJob) {
+                new Thread(new DelayedSelectionUpdate(node, view, model, selection, editor)).start
+            } else {
+                val modelList = <Object> newArrayList
+                if (intermediateData.size == 1) {
+                    view.viewer.resetSelectionTo(intermediateData.head.parentNode)
+                    intermediateData.head.parentNode.containers.forEach[ 
                         setProperty(KlighdInternalProperties.SELECTED, true)
                     ]
+                    modelList += intermediateData.head.model
+                } else {
+                    val selectionIter = intermediateData.map[parentNode]
+                    view.viewer.resetSelectionToDiagramElements(selectionIter)
+                    for (iM : intermediateData) {
+                        iM.parentNode.containers.forEach[ 
+                            setProperty(KlighdInternalProperties.SELECTED, true)
+                        ]
+                        modelList += iM.model
+                    }
                 }
-                return intermediateData.model
+                return modelList
             }
         }
          
-        return model 
+        return <Object> newArrayList => [ it += model ]  
     }
     
     
@@ -674,6 +718,10 @@ class ProcessorDataManager {
     
     static def KNode findNode(KNode node, String id) {
         node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ]?.head
+    }
+        
+    static def findAllNodes(KNode node, String id) {
+        node.eAllContents.filter(KNode).filter[ id.equals(getData(KIdentifier)?.id) ].toList
     }
     
     static def getId(KNode node) {

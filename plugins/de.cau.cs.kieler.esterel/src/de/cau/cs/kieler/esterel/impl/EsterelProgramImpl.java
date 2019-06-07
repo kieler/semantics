@@ -49,7 +49,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * @generated
      * @ordered
      */
-    protected EList<Module> modules;
+    protected EList<de.cau.cs.kieler.scl.Module> modules;
 
     /**
      * The cached value of the '{@link #getTick() <em>Tick</em>}' containment reference.
@@ -85,9 +85,10 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Module> getModules() {
+    @Override
+    public EList<de.cau.cs.kieler.scl.Module> getModules() {
         if (modules == null) {
-            modules = new EObjectContainmentEList<Module>(Module.class, this, EsterelPackage.ESTEREL_PROGRAM__MODULES);
+            modules = new EObjectContainmentEList<de.cau.cs.kieler.scl.Module>(de.cau.cs.kieler.scl.Module.class, this, EsterelPackage.ESTEREL_PROGRAM__MODULES);
         }
         return modules;
     }
@@ -97,6 +98,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getTick() {
         return tick;
     }
@@ -121,6 +123,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTick(ValuedObject newTick) {
         if (newTick != tick) {
             NotificationChain msgs = null;
@@ -133,6 +136,17 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
         }
         else if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ESTEREL_PROGRAM__TICK, newTick, newTick));
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (!getModules().isEmpty()) {
+            return getModules().get(0).getName();
+        }
+        return null;
     }
 
     /**
@@ -178,7 +192,7 @@ public class EsterelProgramImpl extends PragmatableImpl implements EsterelProgra
         switch (featureID) {
             case EsterelPackage.ESTEREL_PROGRAM__MODULES:
                 getModules().clear();
-                getModules().addAll((Collection<? extends Module>)newValue);
+                getModules().addAll((Collection<? extends de.cau.cs.kieler.scl.Module>)newValue);
                 return;
             case EsterelPackage.ESTEREL_PROGRAM__TICK:
                 setTick((ValuedObject)newValue);

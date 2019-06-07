@@ -1,7 +1,6 @@
-developer system de.cau.cs.kieler.sccharts.^simulation.netlist.java
-    label "Netlist-based Simulation (Java, No-TTS)"
+developer system de.cau.cs.kieler.^simulation.netlist.java
+    label "Netlist-based Simulation Java Backend"
 
-system de.cau.cs.kieler.sccharts.netlist.java
 de.cau.cs.kieler.kicool.deploy.setup config {
     "de.cau.cs.kieler.kicool.deploy.setup.clear": ["lib"],
     "de.cau.cs.kieler.kicool.deploy.setup.copy": {
@@ -10,6 +9,10 @@ de.cau.cs.kieler.kicool.deploy.setup config {
         "platform:/plugin/de.cau.cs.kieler.kicool/resources/templates/injection.ftl": "templates/injection.ftl"
     }
 }
+post process silent de.cau.cs.kieler.kivis.gen config {
+    "de.cau.cs.kieler.kivis.autosearch": true
+}
+pre process de.cau.cs.kieler.^simulation.java.ticktime
 pre process de.cau.cs.kieler.^simulation.java.template
 de.cau.cs.kieler.kicool.deploy.templates config {
     "de.cau.cs.kieler.kicool.deploy.templates": {

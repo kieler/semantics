@@ -13,17 +13,18 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import java.util.List
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.State
+import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
+import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
+import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 
 /**
  * @author ssm
@@ -31,12 +32,13 @@ import de.cau.cs.kieler.sccharts.State
  * @kieler.rating 2017-07-05 proposed yellow 
  *
  */
-class SCChartsReferenceExtensions {
+class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension SCChartsInheritanceExtensions
     
     /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
@@ -59,11 +61,20 @@ class SCChartsReferenceExtensions {
         // Return an empty binding list if there is no target in the reference.
         // At the moment, only states are supported.
         if (targetState === null) return bindings
-        if (!(targetState instanceof State)) return bindings
         
         val targetVOs = <ValuedObject> newArrayList
-        for (declaration : targetState.variableDeclarations.filter[ input || output]) {
-            targetVOs += declaration.valuedObjects
+        if (targetState instanceof State) {
+            
+            for (declaration : targetState.variableDeclarations.filter[ input || output]) {
+                targetVOs += declaration.valuedObjects
+            }
+            
+            // Inherited Decls
+            for (declaration : targetState.allVisibleInheritedDeclarations.filter(VariableDeclaration).filter[ input || output ]) {
+                targetVOs += declaration.valuedObjects
+            }
+        } else {
+            targetVOs += targetState.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet
         }
 
         // Process explicit bindings.
@@ -154,50 +165,4 @@ class SCChartsReferenceExtensions {
         bindings
     }
 
-    protected def checkTypeCompability(Binding binding) {
-        switch(binding.sourceExpression) {
-            ValuedObjectReference: binding.checkTypeCompabilityForReferences
-            Value: binding.checkTypeCompabilityForLiterals
-        }
-    }
-    
-    protected def checkTypeCompabilityForReferences(Binding binding) {
-        val sExp = binding.sourceExpression as ValuedObjectReference
-        if (sExp.isArrayReference) {
-            // An array ref is used
-            if (sExp.valuedObject.isArray) {
-                if (!binding.targetValuedObject.isArray) {
-                    // but the target is not an array
-//                        binding.addErrorMessage("It is not possible to bind an array reference of array " + sExp.valuedObject.name + 
-//                            " to scalar " + binding.targetValuedObject.name + "!")
-                }
-            } else {
-                // but the valued object is not an array
-                binding.addErrorMessage("It is not possible to bind an array reference of the scalar " +
-                    sExp.valuedObject.name)
-            }
-        } else {
-            // No array ref used
-            if (sExp.valuedObject.isArray) { //
-                // but is is an array
-                if (!binding.targetValuedObject.isArray) {
-                    // but the target is not an array
-                    binding.addErrorMessage("It is not possible to bind array " + sExp.valuedObject.name + 
-                        " to scalar " + binding.targetValuedObject.name + "!")
-                }
-            } 
-        }
-    }
-        
-    protected def checkTypeCompabilityForLiterals(Binding binding) { 
-        val sExp = binding.sourceExpression as Value
-        val targetContainer = binding.targetValuedObject.eContainer
-        if (targetContainer instanceof VariableDeclaration) {
-            if (targetContainer.output) {
-                binding.addErrorMessage("It is not possible to bind the literal " + sExp.serializeHR + " 
-                    to the output " + binding.targetValuedObject.name + " !")
-            }
-        }
-    }
-    
 }

@@ -1,28 +1,28 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+
+import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.BoolValue;
 import de.cau.cs.kieler.kexpressions.Call;
 import de.cau.cs.kieler.kexpressions.CombineOperator;
 import de.cau.cs.kieler.kexpressions.Declaration;
-import de.cau.cs.kieler.kexpressions.DoubleValue;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ExternString;
 import de.cau.cs.kieler.kexpressions.FloatValue;
 import de.cau.cs.kieler.kexpressions.FunctionCall;
 import de.cau.cs.kieler.kexpressions.IgnoreValue;
 import de.cau.cs.kieler.kexpressions.IntValue;
+import de.cau.cs.kieler.kexpressions.JsonAnnotation;
 import de.cau.cs.kieler.kexpressions.JsonArrayValue;
 import de.cau.cs.kieler.kexpressions.JsonObjectMember;
 import de.cau.cs.kieler.kexpressions.JsonObjectValue;
+import de.cau.cs.kieler.kexpressions.JsonPragma;
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.NullValue;
 import de.cau.cs.kieler.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.kexpressions.OperatorType;
@@ -37,17 +37,15 @@ import de.cau.cs.kieler.kexpressions.Referenceable;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.SchedulePriority;
-import de.cau.cs.kieler.kexpressions.SchedulePriorityType;
 import de.cau.cs.kieler.kexpressions.StringValue;
 import de.cau.cs.kieler.kexpressions.TextExpression;
 import de.cau.cs.kieler.kexpressions.Value;
 import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 import de.cau.cs.kieler.kexpressions.VectorValue;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -119,6 +117,69 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass stringValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass vectorValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass ignoreValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonPragmaEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonObjectValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonObjectMemberEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass jsonArrayValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass nullValueEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass operatorExpressionEClass = null;
 
     /**
@@ -161,7 +222,35 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    private EClass methodDeclarationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     private EClass scheduleObjectReferenceEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass parameterEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass callEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass referenceCallEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -217,76 +306,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    private EClass parameterEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass stringValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass vectorValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass ignoreValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass jsonObjectValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass jsonObjectMemberEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass jsonArrayValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass nullValueEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass callEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    private EClass referenceCallEClass = null;
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
     private EEnum combineOperatorEEnum = null;
 
     /**
@@ -309,6 +328,13 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * @generated
      */
     private EEnum priorityProtocolEEnum = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EEnum accessModifierEEnum = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -338,7 +364,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KExpressionsPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -352,7 +378,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         if (isInited) return (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
 
         // Obtain or create and register package
-        KExpressionsPackageImpl theKExpressionsPackage = (KExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KExpressionsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KExpressionsPackageImpl());
+        Object registeredKExpressionsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KExpressionsPackageImpl theKExpressionsPackage = registeredKExpressionsPackage instanceof KExpressionsPackageImpl ? (KExpressionsPackageImpl)registeredKExpressionsPackage : new KExpressionsPackageImpl();
 
         isInited = true;
 
@@ -368,7 +395,6 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         // Mark meta-data to indicate it can't be changed
         theKExpressionsPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KExpressionsPackage.eNS_URI, theKExpressionsPackage);
         return theKExpressionsPackage;
@@ -379,6 +405,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExpression() {
         return expressionEClass;
     }
@@ -388,6 +415,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getValuedObject() {
         return valuedObjectEClass;
     }
@@ -397,24 +425,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EReference getValuedObject_InitialValue() {
-        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     */
-	public EReference getValuedObject_Cardinalities() {
-        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
-    }
-
-				/**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+    @Override
     public EAttribute getValuedObject_CombineOperator() {
         return (EAttribute)valuedObjectEClass.getEStructuralFeatures().get(0);
     }
@@ -424,6 +435,27 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EReference getValuedObject_InitialValue() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getValuedObject_Cardinalities() {
+        return (EReference)valuedObjectEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getValuedObjectReference() {
         return valuedObjectReferenceEClass;
     }
@@ -433,6 +465,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_ValuedObject() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -442,6 +475,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_Indices() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -451,6 +485,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getValuedObjectReference_SubReference() {
         return (EReference)valuedObjectReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -460,6 +495,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getValue() {
         return valueEClass;
     }
@@ -469,6 +505,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntValue() {
         return intValueEClass;
     }
@@ -478,6 +515,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntValue_Value() {
         return (EAttribute)intValueEClass.getEStructuralFeatures().get(0);
     }
@@ -487,6 +525,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFloatValue() {
         return floatValueEClass;
     }
@@ -496,6 +535,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getFloatValue_Value() {
         return (EAttribute)floatValueEClass.getEStructuralFeatures().get(0);
     }
@@ -505,6 +545,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getBoolValue() {
         return boolValueEClass;
     }
@@ -514,6 +555,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getBoolValue_Value() {
         return (EAttribute)boolValueEClass.getEStructuralFeatures().get(0);
     }
@@ -523,402 +565,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public EClass getOperatorExpression() {
-        return operatorExpressionEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getOperatorExpression_Operator() {
-        return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getOperatorExpression_SubExpressions() {
-        return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getTextExpression() {
-        return textExpressionEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getTextExpression_Text() {
-        return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getDeclaration() {
-        return declarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getDeclaration_ValuedObjects() {
-        return (EReference)declarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getVariableDeclaration() {
-        return variableDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Type() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Input() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Output() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Static() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Signal() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Const() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(5);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Extern() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(6);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Volatile() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(7);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_Global() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(8);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getVariableDeclaration_HostType() {
-        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(9);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getReferenceDeclaration() {
-        return referenceDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getReferenceDeclaration_Reference() {
-        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getReferenceDeclaration_Extern() {
-        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getReferenceDeclaration_Parameters() {
-        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getScheduleDeclaration() {
-        return scheduleDeclarationEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScheduleDeclaration_Name() {
-        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScheduleDeclaration_Priorities() {
-        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScheduleDeclaration_Global() {
-        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getScheduleObjectReference() {
-        return scheduleObjectReferenceEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getScheduleObjectReference_Priority() {
-        return (EAttribute)scheduleObjectReferenceEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getFunctionCall() {
-        return functionCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getFunctionCall_FunctionName() {
-        return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getPrintCall() {
-        return printCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getRandomCall() {
-        return randomCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getRandomizeCall() {
-        return randomizeCallEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getReferenceable() {
-        return referenceableEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getSchedulable() {
-        return schedulableEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getSchedulable_Schedule() {
-        return (EReference)schedulableEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getExternString() {
-        return externStringEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getExternString_Code() {
-        return (EAttribute)externStringEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EClass getParameter() {
-        return parameterEClass;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getParameter_CallByReference() {
-        return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EAttribute getParameter_PureOutput() {
-        return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getParameter_Expression() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(2);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getParameter_ExplicitBinding() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(3);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public EReference getParameter_ExplicitBindingIndices() {
-        return (EReference)parameterEClass.getEStructuralFeatures().get(4);
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+    @Override
     public EClass getStringValue() {
         return stringValueEClass;
     }
@@ -928,6 +575,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getStringValue_Value() {
         return (EAttribute)stringValueEClass.getEStructuralFeatures().get(0);
     }
@@ -937,6 +585,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVectorValue() {
         return vectorValueEClass;
     }
@@ -946,6 +595,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getVectorValue_Values() {
         return (EReference)vectorValueEClass.getEStructuralFeatures().get(0);
     }
@@ -955,6 +605,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIgnoreValue() {
         return ignoreValueEClass;
     }
@@ -964,6 +615,47 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getJsonPragma() {
+        return jsonPragmaEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getJsonPragma_Value() {
+        return (EReference)jsonPragmaEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getJsonAnnotation() {
+        return jsonAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getJsonAnnotation_Value() {
+        return (EReference)jsonAnnotationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getJsonObjectValue() {
         return jsonObjectValueEClass;
     }
@@ -973,6 +665,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonObjectValue_Members() {
         return (EReference)jsonObjectValueEClass.getEStructuralFeatures().get(0);
     }
@@ -982,6 +675,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getJsonObjectMember() {
         return jsonObjectMemberEClass;
     }
@@ -991,6 +685,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getJsonObjectMember_Key() {
         return (EAttribute)jsonObjectMemberEClass.getEStructuralFeatures().get(0);
     }
@@ -1000,6 +695,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonObjectMember_Value() {
         return (EReference)jsonObjectMemberEClass.getEStructuralFeatures().get(1);
     }
@@ -1009,6 +705,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getJsonArrayValue() {
         return jsonArrayValueEClass;
     }
@@ -1018,6 +715,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getJsonArrayValue_Elements() {
         return (EReference)jsonArrayValueEClass.getEStructuralFeatures().get(0);
     }
@@ -1027,6 +725,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getNullValue() {
         return nullValueEClass;
     }
@@ -1036,6 +735,387 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getOperatorExpression() {
+        return operatorExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getOperatorExpression_Operator() {
+        return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getOperatorExpression_SubExpressions() {
+        return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getTextExpression() {
+        return textExpressionEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getTextExpression_Text() {
+        return (EAttribute)textExpressionEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getDeclaration() {
+        return declarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getDeclaration_ValuedObjects() {
+        return (EReference)declarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getDeclaration_Access() {
+        return (EAttribute)declarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getVariableDeclaration() {
+        return variableDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Type() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Input() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Output() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Static() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Signal() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Const() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(5);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Extern() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(6);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Volatile() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(7);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_Global() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getVariableDeclaration_HostType() {
+        return (EAttribute)variableDeclarationEClass.getEStructuralFeatures().get(9);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getReferenceDeclaration() {
+        return referenceDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_Reference() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_Parameters() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getReferenceDeclaration_Extern() {
+        return (EReference)referenceDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getScheduleDeclaration() {
+        return scheduleDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScheduleDeclaration_Name() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScheduleDeclaration_Global() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScheduleDeclaration_Priorities() {
+        return (EAttribute)scheduleDeclarationEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getMethodDeclaration() {
+        return methodDeclarationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getMethodDeclaration_ReturnType() {
+        return (EAttribute)methodDeclarationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getMethodDeclaration_ParameterDeclarations() {
+        return (EReference)methodDeclarationEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getScheduleObjectReference() {
+        return scheduleObjectReferenceEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getScheduleObjectReference_Priority() {
+        return (EAttribute)scheduleObjectReferenceEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getParameter() {
+        return parameterEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getParameter_CallByReference() {
+        return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getParameter_PureOutput() {
+        return (EAttribute)parameterEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getParameter_Expression() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getParameter_ExplicitBinding() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(3);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getParameter_ExplicitBindingIndices() {
+        return (EReference)parameterEClass.getEStructuralFeatures().get(4);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getCall() {
         return callEClass;
     }
@@ -1045,6 +1125,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCall_Parameters() {
         return (EReference)callEClass.getEStructuralFeatures().get(0);
     }
@@ -1054,6 +1135,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReferenceCall() {
         return referenceCallEClass;
     }
@@ -1063,6 +1145,107 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EClass getFunctionCall() {
+        return functionCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getFunctionCall_FunctionName() {
+        return (EAttribute)functionCallEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getPrintCall() {
+        return printCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getRandomCall() {
+        return randomCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getRandomizeCall() {
+        return randomizeCallEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getReferenceable() {
+        return referenceableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getSchedulable() {
+        return schedulableEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getSchedulable_Schedule() {
+        return (EReference)schedulableEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EClass getExternString() {
+        return externStringEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EAttribute getExternString_Code() {
+        return (EAttribute)externStringEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EEnum getCombineOperator() {
         return combineOperatorEEnum;
     }
@@ -1072,6 +1255,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getOperatorType() {
         return operatorTypeEEnum;
     }
@@ -1081,6 +1265,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getValueType() {
         return valueTypeEEnum;
     }
@@ -1090,6 +1275,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EEnum getPriorityProtocol() {
         return priorityProtocolEEnum;
     }
@@ -1099,6 +1285,17 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EEnum getAccessModifier() {
+        return accessModifierEEnum;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public KExpressionsFactory getKExpressionsFactory() {
         return (KExpressionsFactory)getEFactoryInstance();
     }
@@ -1153,6 +1350,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         ignoreValueEClass = createEClass(IGNORE_VALUE);
 
+        jsonPragmaEClass = createEClass(JSON_PRAGMA);
+        createEReference(jsonPragmaEClass, JSON_PRAGMA__VALUE);
+
+        jsonAnnotationEClass = createEClass(JSON_ANNOTATION);
+        createEReference(jsonAnnotationEClass, JSON_ANNOTATION__VALUE);
+
         jsonObjectValueEClass = createEClass(JSON_OBJECT_VALUE);
         createEReference(jsonObjectValueEClass, JSON_OBJECT_VALUE__MEMBERS);
 
@@ -1174,6 +1377,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         declarationEClass = createEClass(DECLARATION);
         createEReference(declarationEClass, DECLARATION__VALUED_OBJECTS);
+        createEAttribute(declarationEClass, DECLARATION__ACCESS);
 
         variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
         createEAttribute(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
@@ -1196,6 +1400,10 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__NAME);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__GLOBAL);
         createEAttribute(scheduleDeclarationEClass, SCHEDULE_DECLARATION__PRIORITIES);
+
+        methodDeclarationEClass = createEClass(METHOD_DECLARATION);
+        createEAttribute(methodDeclarationEClass, METHOD_DECLARATION__RETURN_TYPE);
+        createEReference(methodDeclarationEClass, METHOD_DECLARATION__PARAMETER_DECLARATIONS);
 
         scheduleObjectReferenceEClass = createEClass(SCHEDULE_OBJECT_REFERENCE);
         createEAttribute(scheduleObjectReferenceEClass, SCHEDULE_OBJECT_REFERENCE__PRIORITY);
@@ -1234,6 +1442,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         operatorTypeEEnum = createEEnum(OPERATOR_TYPE);
         valueTypeEEnum = createEEnum(VALUE_TYPE);
         priorityProtocolEEnum = createEEnum(PRIORITY_PROTOCOL);
+        accessModifierEEnum = createEEnum(ACCESS_MODIFIER);
     }
 
     /**
@@ -1250,6 +1459,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("deprecation")
     public void initializePackageContents() {
         if (isInitialized) return;
         isInitialized = true;
@@ -1279,6 +1489,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         stringValueEClass.getESuperTypes().add(this.getValue());
         vectorValueEClass.getESuperTypes().add(this.getValue());
         ignoreValueEClass.getESuperTypes().add(this.getValue());
+        jsonPragmaEClass.getESuperTypes().add(theAnnotationsPackage.getPragma());
+        jsonAnnotationEClass.getESuperTypes().add(theAnnotationsPackage.getAnnotation());
         jsonObjectValueEClass.getESuperTypes().add(this.getValue());
         jsonArrayValueEClass.getESuperTypes().add(this.getValue());
         nullValueEClass.getESuperTypes().add(this.getValue());
@@ -1289,6 +1501,8 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         variableDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         referenceDeclarationEClass.getESuperTypes().add(this.getDeclaration());
         scheduleDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        methodDeclarationEClass.getESuperTypes().add(this.getDeclaration());
+        methodDeclarationEClass.getESuperTypes().add(this.getSchedulable());
         scheduleObjectReferenceEClass.getESuperTypes().add(this.getValuedObjectReference());
         callEClass.getESuperTypes().add(this.getExpression());
         referenceCallEClass.getESuperTypes().add(this.getValuedObjectReference());
@@ -1318,7 +1532,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEAttribute(getIntValue_Value(), ecorePackage.getEIntegerObject(), "value", null, 1, 1, IntValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(floatValueEClass, FloatValue.class, "FloatValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEAttribute(getFloatValue_Value(), ecorePackage.getEFloatObject(), "value", null, 1, 1, FloatValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getFloatValue_Value(), ecorePackage.getEDoubleObject(), "value", null, 1, 1, FloatValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(boolValueEClass, BoolValue.class, "BoolValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getBoolValue_Value(), ecorePackage.getEBooleanObject(), "value", null, 1, 1, BoolValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1330,6 +1544,12 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEReference(getVectorValue_Values(), this.getExpression(), null, "values", null, 1, -1, VectorValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(ignoreValueEClass, IgnoreValue.class, "IgnoreValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(jsonPragmaEClass, JsonPragma.class, "JsonPragma", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonPragma_Value(), this.getJsonObjectValue(), null, "value", null, 0, 1, JsonPragma.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(jsonAnnotationEClass, JsonAnnotation.class, "JsonAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEReference(getJsonAnnotation_Value(), this.getJsonObjectValue(), null, "value", null, 0, 1, JsonAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(jsonObjectValueEClass, JsonObjectValue.class, "JsonObjectValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getJsonObjectValue_Members(), this.getJsonObjectMember(), null, "members", null, 0, -1, JsonObjectValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1360,6 +1580,7 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
 
         initEClass(declarationEClass, Declaration.class, "Declaration", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getDeclaration_ValuedObjects(), this.getValuedObject(), null, "valuedObjects", null, 0, -1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getDeclaration_Access(), this.getAccessModifier(), "access", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getVariableDeclaration_Type(), this.getValueType(), "type", null, 1, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1381,7 +1602,11 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         initEClass(scheduleDeclarationEClass, ScheduleDeclaration.class, "ScheduleDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleDeclaration_Name(), ecorePackage.getEString(), "name", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getScheduleDeclaration_Global(), this.getPriorityProtocol(), "global", null, 0, 1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-        initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEAttribute(getScheduleDeclaration_Priorities(), this.getPriorityProtocol(), "priorities", null, 0, -1, ScheduleDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(methodDeclarationEClass, MethodDeclaration.class, "MethodDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getMethodDeclaration_ReturnType(), this.getValueType(), "returnType", null, 0, 1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getMethodDeclaration_ParameterDeclarations(), this.getDeclaration(), null, "parameterDeclarations", null, 0, -1, MethodDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(scheduleObjectReferenceEClass, ScheduleObjectReference.class, "ScheduleObjectReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getScheduleObjectReference_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, ScheduleObjectReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1454,6 +1679,14 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(operatorTypeEEnum, OperatorType.BITWISE_NOT);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.CONDITIONAL);
         addEEnumLiteral(operatorTypeEEnum, OperatorType.FBY);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.CURRENT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.WHEN);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INIT);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.INTDIV);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.LOGICAL_XOR);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.IMPLIES);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.ATMOSTONEOF);
+        addEEnumLiteral(operatorTypeEEnum, OperatorType.NOR);
 
         initEEnum(valueTypeEEnum, ValueType.class, "ValueType");
         addEEnumLiteral(valueTypeEEnum, ValueType.PURE);
@@ -1469,10 +1702,19 @@ public class KExpressionsPackageImpl extends EPackageImpl implements KExpression
         addEEnumLiteral(valueTypeEEnum, ValueType.UNKNOWN);
         addEEnumLiteral(valueTypeEEnum, ValueType.CLOCK);
         addEEnumLiteral(valueTypeEEnum, ValueType.JSON);
+        addEEnumLiteral(valueTypeEEnum, ValueType.STRUCT);
+        addEEnumLiteral(valueTypeEEnum, ValueType.CLASS);
+        addEEnumLiteral(valueTypeEEnum, ValueType.ENUM);
+        addEEnumLiteral(valueTypeEEnum, ValueType.VOID);
 
         initEEnum(priorityProtocolEEnum, PriorityProtocol.class, "PriorityProtocol");
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLICT);
         addEEnumLiteral(priorityProtocolEEnum, PriorityProtocol.CONFLUENT);
+
+        initEEnum(accessModifierEEnum, AccessModifier.class, "AccessModifier");
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PUBLIC);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PROTECTED);
+        addEEnumLiteral(accessModifierEEnum, AccessModifier.PRIVATE);
 
         // Create resource
         createResource(eNS_URI);

@@ -29,6 +29,8 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import org.eclipse.ui.IEditorPart
 import static extension de.cau.cs.kieler.kicool.ui.view.EditPartSystemManager.*
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
+import org.eclipse.ui.editors.text.TextEditor
+import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
 
 /**
  * @author ssm
@@ -38,7 +40,7 @@ import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
 class CompilationAction {
 
     public static final ImageDescriptor ICON_COMPILE = AbstractUIPlugin.imageDescriptorFromPlugin(
-            "de.cau.cs.kieler.kicool.ui", "icons/IMBC_go.png");    
+            "de.cau.cs.kieler.kicool.ui", "icons/compile.png");    
     
     /** The action for compiling systems. */
     @Accessors private Action action
@@ -60,7 +62,7 @@ class CompilationAction {
     
     def void invokeCompile() {
         val editor = view.editPartSystemManager.activeEditor
-        var Object model = editor.retrieveModel
+        var Object model = ModelReaderUtil.readModelFromEditor(editor)
         if (model === null) {
             model = CompilationActionSimSalabim.SIM_MODEL
         }
@@ -81,7 +83,7 @@ class CompilationAction {
         if (view.developerToggle.checked) {
             cc.startEnvironment.setProperty(Environment.DEVELOPER_MODE, true)
         }
-                
+        cc.stopOnError = !view.developerToggle.checked
         cc.deactiveDisabledProcessors
         
         val updateObserver = new CompilationUpdate(view)
@@ -103,16 +105,5 @@ class CompilationAction {
             }
         }
     }
-    
-    static def retrieveModel(IEditorPart editor) {
-        if (editor instanceof XtextEditor) {
-            val doc = editor.getDocument
-            var EObject m = doc.readOnly(new IUnitOfWork<EObject, XtextResource>() {
-                override exec(XtextResource state) throws Exception {
-                    if (state !== null && state.contents !== null) state.contents.head else null
-                }
-            });   
-            return m 
-        }    
-    }
+
 }

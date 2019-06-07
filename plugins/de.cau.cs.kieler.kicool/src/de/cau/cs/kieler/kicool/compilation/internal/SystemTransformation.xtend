@@ -12,15 +12,18 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kicool.ProcessorEntry
-import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Internal class that creates the working copy of the system.
@@ -35,38 +38,50 @@ class SystemTransformation {
      * Create instances for all processors (including metrics).
      */
     static def void transformSystem(CompilationContext cc) {
-        cc.system = cc.originalSystem.copyAndAddToSystemMap(cc) as de.cau.cs.kieler.kicool.System
-        
-        cc.flattenSystem
+        cc.system = cc.originalSystem.copyAndAddToSystemMap(cc) as System
+        cc.system.processors.replaceSystemsByGroups(cc)
     }
-    
+       
     /**
      * Expand all system entries to full flat group entries.
      */
-    static def void flattenSystem(CompilationContext cc) {
-        cc.system.processors = cc.system.processors.replaceSystemEntry(cc)
+    static protected def dispatch ProcessorEntry replaceSystemsByGroups(ProcessorSystem processorSystem, CompilationContext cc) {
+         val system = KiCoolRegistration.getSystemById(processorSystem.id).copyAndAddToSystemMap(cc) as System
+         
+         system.processors = system.processors.replaceSystemsByGroups(cc)
+         if (system.config !== null) {
+             // Move system config into first processor
+            val first = system.processors.firstProcessorReference
+            if (first.preconfig === null) {
+                first.preconfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
+            }
+            first.preconfig.members.addAll(0, system.config.members.map[copy])
+         }
+         
+         if (processorSystem !== cc.system && system.startConfig !== null) {
+             if (cc.system.startConfig === null) {
+                 cc.system.startConfig = KExpressionsFactory.eINSTANCE.createJsonObjectValue
+             }
+             cc.system.startConfig.members.addAll(0, system.startConfig.members.map[copy])
+         }
+         
+         return system.processors
     }
     
-    static protected def dispatch ProcessorEntry replaceSystemEntry(ProcessorReference processorReference, CompilationContext cc) {
-        processorReference
+    static protected def dispatch ProcessorEntry replaceSystemsByGroups(ProcessorReference processorReference, CompilationContext cc) {
+        return processorReference
     }
 
-    static protected def dispatch ProcessorEntry replaceSystemEntry(ProcessorGroup processorGroup, CompilationContext cc) {
+    static protected def dispatch ProcessorEntry replaceSystemsByGroups(ProcessorGroup processorGroup, CompilationContext cc) {
         val newList = <ProcessorEntry> newLinkedList
         for (entry : processorGroup.processors) {
-            newList += entry.replaceSystemEntry(cc)
+            newList += entry.replaceSystemsByGroups(cc)
         }
-        processorGroup => [
+        return processorGroup => [
             processors.clear
             processors.addAll(newList)
         ]
     }
-    
-    static protected def dispatch ProcessorEntry replaceSystemEntry(ProcessorSystem processorSystem, CompilationContext cc) {
-         val system = KiCoolRegistration.getSystemById(processorSystem.id).copyAndAddToSystemMap(cc) as de.cau.cs.kieler.kicool.System
-         system.processors
-    }
-    
     
     static protected def EObject copyAndAddToSystemMap(EObject source, CompilationContext cc) {
         val copier = new Copier
@@ -76,7 +91,15 @@ class SystemTransformation {
         for (eObject : source.eAllContents.filter(ProcessorEntry).toIterable) {
             cc.systemMap.put(copier.get(eObject) as ProcessorEntry, eObject)
         }
-        result
+        return result
+    }
+    
+    static protected dispatch def ProcessorReference firstProcessorReference(ProcessorReference p) {
+        return p
+    }
+    
+    static protected dispatch def ProcessorReference firstProcessorReference(ProcessorGroup g) {
+        return g.processors.head.firstProcessorReference
     }
 }
 

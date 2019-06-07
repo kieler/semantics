@@ -134,6 +134,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__SCHEDULE);
@@ -146,6 +147,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__OUTGOING_LINKS);
@@ -158,6 +160,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -170,6 +173,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getFunctionName() {
         return functionName;
     }
@@ -179,6 +183,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFunctionName(String newFunctionName) {
         String oldFunctionName = functionName;
         functionName = newFunctionName;
@@ -206,6 +211,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.FUNCTION_CALL_EFFECT__PARAMETERS);
@@ -425,7 +431,7 @@ public class FunctionCallEffectImpl extends AnnotatableImpl implements FunctionC
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (functionName: ");
         result.append(functionName);
         result.append(')');

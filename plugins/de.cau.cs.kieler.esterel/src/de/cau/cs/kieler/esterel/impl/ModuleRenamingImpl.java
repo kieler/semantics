@@ -38,7 +38,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * @generated
      * @ordered
      */
-    protected Module module;
+    protected de.cau.cs.kieler.scl.Module module;
 
     /**
      * The default value of the '{@link #getNewName() <em>New Name</em>}' attribute.
@@ -84,10 +84,11 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public Module getModule() {
+    @Override
+    public de.cau.cs.kieler.scl.Module getModule() {
         if (module != null && module.eIsProxy()) {
             InternalEObject oldModule = (InternalEObject)module;
-            module = (Module)eResolveProxy(oldModule);
+            module = (de.cau.cs.kieler.scl.Module)eResolveProxy(oldModule);
             if (module != oldModule) {
                 if (eNotificationRequired())
                     eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.MODULE_RENAMING__MODULE, oldModule, module));
@@ -101,7 +102,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public Module basicGetModule() {
+    public de.cau.cs.kieler.scl.Module basicGetModule() {
         return module;
     }
 
@@ -110,8 +111,9 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setModule(Module newModule) {
-        Module oldModule = module;
+    @Override
+    public void setModule(de.cau.cs.kieler.scl.Module newModule) {
+        de.cau.cs.kieler.scl.Module oldModule = module;
         module = newModule;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.MODULE_RENAMING__MODULE, oldModule, module));
@@ -122,6 +124,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getNewName() {
         return newName;
     }
@@ -131,6 +134,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(String newNewName) {
         String oldNewName = newName;
         newName = newNewName;
@@ -164,7 +168,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
             case EsterelPackage.MODULE_RENAMING__MODULE:
-                setModule((Module)newValue);
+                setModule((de.cau.cs.kieler.scl.Module)newValue);
                 return;
             case EsterelPackage.MODULE_RENAMING__NEW_NAME:
                 setNewName((String)newValue);
@@ -182,7 +186,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
     public void eUnset(int featureID) {
         switch (featureID) {
             case EsterelPackage.MODULE_RENAMING__MODULE:
-                setModule((Module)null);
+                setModule((de.cau.cs.kieler.scl.Module)null);
                 return;
             case EsterelPackage.MODULE_RENAMING__NEW_NAME:
                 setNewName(NEW_NAME_EDEFAULT);
@@ -216,7 +220,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (newName: ");
         result.append(newName);
         result.append(')');

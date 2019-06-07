@@ -1,10 +1,11 @@
-grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.kexpressions.kext.KExt
+grammar de.cau.cs.kieler.sccharts.text.SCTX with de.cau.cs.kieler.scl.SCL
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions 
 import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://kieler.cs.cau.de/scl/0.2.0" as scl
 import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 
 //generate sct3 "http://kieler.cs.cau.de/sccharts/textual3/0.1.0"
@@ -14,19 +15,23 @@ import "http://kieler.cs.cau.de/sccharts/0.3.0" as sccharts
 // ---------------- //
 
 SCCharts returns sccharts::SCCharts:
-    pragmas+=Pragma*
+    (
+        pragmas+=Pragma
+    |
+        'import' imports+=EString
+    )*
     rootStates+=RootState*;
 
 // ------------- //
 //  State Rules  // 
 // ------------- //
 
-
 RootState returns sccharts::State:
 	annotations+=Annotation*
 	'scchart' name=ExtendedID label=STRING?
+	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
-		declarations+=DeclarationWOSemicolon*
+		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
@@ -43,9 +48,10 @@ State returns sccharts::State:
 	    'is' reference = ScopeCall
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	)|(
+	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
-		declarations+=DeclarationWOSemicolon*
+		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	   '}')
@@ -59,7 +65,8 @@ ImplicitState returns sccharts::State:
 
 	
 ScopeCall returns sccharts::ScopeCall:
-    scope = [sccharts::State|ID]
+    super?='super.'?
+    scope = [sccharts::Scope|ID]
     (('(' parameters += ScopeParameter (',' parameters += ScopeParameter)* ')') | '(' ')')?;
     
 ScopeParameter returns kexpressions::Parameter:
@@ -79,31 +86,23 @@ BoolScheduleExpression returns kexpressions::Expression:
 Transition returns sccharts::Transition:
     {sccharts::Transition}
 	annotations+=RestrictedTypeAnnotation*
-	
-	((
-    	preemption=(PreemptionType | PreemptionTypeLegacy) 
-        targetState=[sccharts::State|ID]
-        delay=DelayType?
-        deferred?='deferred'?
-        history=HistoryType?
-        //                      -> This alternative is only for the serializer to enable forcing of brackets
-	   ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
-	       ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
-	   )? 
-	   ('do' effects+=Effect (';' effects+=Effect)*)?
-	)
-	|
-	(
-        delay=DelayType?
-        ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
-            ('Pr=' triggerProbability=Double)? nondeterministic?='nondeterministic'?
-        )?
-        ('do' effects+=Effect (';' effects+=Effect)*)?
-        preemption=(PreemptionType | PreemptionTypeLegacy) 
-        targetState=[sccharts::State|ID]
-        deferred?='deferred'?
-        history=HistoryType?
-	))
+
+    /*
+     * Order is: target last. Both options with target first or last would results in the following ambguity (KISEMA-1399):
+     * go to A
+     *  if I
+     *  do O
+     * go to B 
+     */
+    delay=DelayType?
+    ('if' triggerDelay=INT? (trigger=BoolScheduleExpression | trigger=AtomicExpression) 
+        ('Pr=' triggerProbability=FLOAT)? nondeterministic?='nondeterministic'?
+    )?
+    ('do' effects+=Effect (';' effects+=Effect)*)?
+    preemption=PreemptionType 
+    targetState=[sccharts::State|ID]
+    deferred?='deferred'?
+    history=HistoryType?
 	
 	('label' label=STRING)?;
 	
@@ -121,36 +120,50 @@ ImplicitControlflowRegion returns sccharts::ControlflowRegion:
 ControlflowRegion returns sccharts::ControlflowRegion:
     {sccharts::ControlflowRegion}
     annotations+=Annotation*
+    override?='override'?
     final?='final'?
     'region' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)?
-    ('schedule' schedule+=ScheduleObjectReference+)?
     ((
-        ':'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        states+=State*
+        'is'
+        reference = ScopeCall
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
     )|(
-        '{'
-        declarations+=DeclarationWOSemicolon*
-        actions+=LocalAction*
-        (states+=ImplicitState | states+=State+)
-        '}'
-    ))  
-    ;
+        ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)?
+        ('schedule' schedule+=ScheduleObjectReference+)?
+        ((
+            '{'
+            declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
+            actions+=LocalAction*
+            (states+=ImplicitState | states+=State+)
+            '}'
+        )|(
+            ':'
+            declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
+            actions+=LocalAction*
+            states+=State*
+        ))
+    ));
 
     
 DataflowRegion returns sccharts::DataflowRegion:
     {sccharts::DataflowRegion}
     annotations+=Annotation*
+    override?='override'?
     'dataflow' name=ExtendedID? label=STRING?
-    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('..' forEnd=IntOrReference)?)? 
+    ('for' counterVariable=CounterVariable ':' forStart=IntOrReference ('to' forEnd=IntOrReference)?)? 
     ('schedule' schedule+=ScheduleObjectReference+)?
     once?='once'?
-    ':'
-    declarations+=DeclarationWOSemicolon*
-    equations+=Assignment*;
-    
+    ((
+        '{'
+        declarations+=DeclarationWOSemicolon*
+        equations+=Assignment*
+        '}'
+    )|(
+        ':'
+        declarations+=DeclarationWOSemicolon*
+        equations+=Assignment*
+    ));
     
 IntOrReference returns kexpressions::Expression:
     IntValue | ValuedObjectReference;
@@ -168,32 +181,32 @@ LocalAction returns sccharts::LocalAction:
 
 EntryAction returns sccharts::EntryAction:
 	{sccharts::EntryAction}
-   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'entry' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 DuringAction returns sccharts::DuringAction:
 	{sccharts::DuringAction}
-    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+    delay=DelayType? 'during' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
     ('label' label=STRING)?;
          
 ExitAction returns sccharts::ExitAction:
 	{sccharts::ExitAction}
-	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'exit' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
        
 SuspendAction returns sccharts::SuspendAction:
 	{sccharts::SuspendAction}
-	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=Double)?)?
+	delay=DelayType? weak?='weak'? 'suspend' ('if' triggerDelay=INT? trigger=BoolScheduleExpression ('Pr=' triggerProbability=FLOAT)?)?
 	('label' label=STRING)?;
       
 PrecedingAction returns sccharts::PrecedingAction:
 	{sccharts::PrecedingAction}
-   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+   'preceding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
    ('label' label=STRING)?;
          
 SucceedingAction returns sccharts::SucceedingAction:
 	{sccharts::SucceedingAction}
-	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=Double)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
+	'succeeding' ('if' trigger=BoolScheduleExpression ('Pr' triggerProbability=FLOAT)?)? ('do' effects+=Effect (';' effects+=Effect)*)?
 	('label' label=STRING)?;  
 
 PeriodAction returns sccharts::PeriodAction:
@@ -201,16 +214,98 @@ PeriodAction returns sccharts::PeriodAction:
     annotations+=RestrictedTypeAnnotation*
     delay=DelayType? 'period' trigger=ValuedExpression
     ('label' label=STRING)?;
+
+// ----- //
+//  SCL  // 
+// ----- //
+@Override
+Statement returns scl::Statement:
+    // Only allow restricted set of SCL statements
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
+;
+
+// --------------- //
+//  Class/ Method  // 
+// --------------- //
+
+@Override
+ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {sccharts::PolicyClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    host?='host'?
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            policy=PolicyRegion?
+            declarations+=DeclarationOrMethodWOSemicolon*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationWOSemicolon*
+        '}'
+    ))
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    annotations+=CommentAnnotatonSL?
+;
+
+PolicyRegion returns sccharts::PolicyRegion:
+    'policy' name=ID label=STRING?
+    '{'
+    declarations+=DeclarationWOSemicolon*
+    states+=PolicyState+
+    '}';
+
+PolicyState returns sccharts::State:
+    annotations+=Annotation*
+    initial?='initial'?
+    'state' name=ID label=STRING?
+    outgoingTransitions+=PolicyTransition*;
+
+PolicyTransition returns sccharts::Transition:
+    {sccharts::Transition}
+    annotations+=RestrictedTypeAnnotation*
+    ('if' (trigger=LogicalOrExpression | trigger=ValuedObjectReference) 
+     (':' effects+=PureEmission (',' effects+=PureEmission)*)?
+    )?
+    'go to'
+    targetState=[sccharts::State|ID]    
+    ('label' label=STRING)?;
     
+DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
+    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon
+;
+
+KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+    {scl::MethodImplementationDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    'method'
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    ('{'
+        annotations+=CommentAnnotatonSL?
+        declarations+=DeclarationWOSemicolon*
+        statements+=Statement*
+    '}')?
+;
+
 // ------------ //
 //  Enum Rules  // 
 // ------------ //
 
 enum PreemptionType returns sccharts::PreemptionType:
 	WEAKABORT = 'go to' | STRONGABORT = 'abort to' | TERMINATION = 'join to';
-
-enum PreemptionTypeLegacy returns sccharts::PreemptionType:
-    WEAKABORT = '-->' | STRONGABORT = 'o->' | TERMINATION = '>->';
     
 enum DelayType returns sccharts::DelayType:
     UNDEFINED = 'undefined' | DELAYED = 'delayed' | IMMEDIATE = 'immediate' | AUTOMATIC = 'auto';    
@@ -220,7 +315,7 @@ enum HistoryType returns sccharts::HistoryType:
 
 @Override  
 enum ValueType returns kexpressions::ValueType:
-    PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | 
+    PURE="pure" | BOOL="bool" | 
     INT="int" | FLOAT="float" |
     STRING="string" |
     CLOCK="clock"; // als: added clock for timed automata

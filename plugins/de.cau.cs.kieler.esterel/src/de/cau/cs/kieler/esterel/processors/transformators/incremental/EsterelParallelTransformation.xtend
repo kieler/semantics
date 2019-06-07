@@ -26,7 +26,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @author mrb
  *
  */
-class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
+class EsterelParallelTransformation extends AbstractSCEstDynamicProcessor<EsterelParallel> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -45,31 +45,7 @@ class EsterelParallelTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof EsterelParallel) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(EsterelParallel).toList.forEach[transform]
-        }
-    }
-    
-    def transform(EsterelParallel parallel) {
+    override transform(EsterelParallel parallel) {
         val newParallel = createParallel
         for (t : parallel.statements) {
             newParallel.threads.add(createThread => [ statements.add((t as EsterelThread).statements) ])

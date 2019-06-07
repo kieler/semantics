@@ -22,10 +22,17 @@ import java.util.LinkedList
  * @kieler.design 2017-06-12 proposed
  * @kieler.rating 2017-06-12 proposed yellow  
  */
-class Snapshots extends LinkedList<Object> implements IKiCoolCloneable {
+class Snapshots extends LinkedList<Snapshot> implements IKiCoolCloneable {
     
     override isMutable() { false }
     override cloneObject() { null }
     override isVolatile() { true }
     
+    def Snapshot getModelSnapshot(Object model) {
+        val snapshots = this.filter[ it.object === model ].toList
+        if (snapshots.empty) 
+            return null
+        else
+            return snapshots.head 
+    }
 }

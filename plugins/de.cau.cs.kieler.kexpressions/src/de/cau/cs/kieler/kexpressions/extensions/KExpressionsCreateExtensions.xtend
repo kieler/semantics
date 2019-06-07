@@ -294,6 +294,12 @@ class KExpressionsCreateExtensions {
         ]
     }
 
+    def OperatorExpression createConditionalExpression(Expression condition, Expression thenExpression) {
+        createOperatorExpression(OperatorType::CONDITIONAL) => [
+            subExpressions += condition
+            subExpressions += thenExpression
+        ]
+    }
     
     // Create an int value.
     def IntValue createIntValue(int value) {
@@ -303,12 +309,12 @@ class KExpressionsCreateExtensions {
     }
 
     // Create a float value.
-    def FloatValue createFloatValue(float value) {
+    def FloatValue createFloatValue(double value) {
         KExpressionsFactory::eINSTANCE.createFloatValue() => [
             setValue(value)
         ]
     }
-
+    
     // Create a boolean value.
     def BoolValue createBoolValue(boolean value) {
         KExpressionsFactory::eINSTANCE.createBoolValue() => [

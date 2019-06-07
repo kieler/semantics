@@ -37,6 +37,8 @@ import org.eclipse.elk.graph.properties.IPropertyHolder
 
 import static extension de.cau.cs.kieler.kicool.ui.synthesis.updates.ProcessorDataManager.*
 import de.cau.cs.kieler.kicool.ui.synthesis.SourceModelTrackingAdapterReplacement
+import org.eclipse.elk.alg.layered.options.LayerConstraint
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 
 /**
  * @author ssm
@@ -48,6 +50,9 @@ class MessageObjectReferencesManager {
     
     public static val IProperty<Object> MESSAGE_OBJECT_REFERENCE = 
         new Property<Object>("de.cau.cs.kieler.kicool.ui.updates.messageObjectReference", null)    
+        
+    public static val IProperty<Boolean> SUPPORTS_COMMENT_BOXES = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.ui.updates.messageObjectReference.supportsCommentBoxes", true)    
     
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions 
@@ -67,14 +72,21 @@ class MessageObjectReferencesManager {
             if (reference.object !== null) {
                 val nodes = trackingAdapter.getTargetElements(reference.object)
                 if (nodes.empty) {
-                    val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem)
+                    val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem, true)
                     node.children += commentNode
                 } else {
                     for (n : nodes) {
                         if (n instanceof KNode) {
                             val parentNode = n.eContainer as KNode
-                            val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem)
-                            parentNode.children.add(commentNode)
+                            val commentBoxSupport = n.getProperty(SUPPORTS_COMMENT_BOXES)
+                            val commentNode = reference.createCommentBox(reference.message, n, reference.colorSystem as ColorSystem, commentBoxSupport)
+                            
+                            if (commentBoxSupport) {
+                                parentNode.children.add(commentNode)
+                            } else {
+                                commentNode.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST_SEPARATE)
+                                n.children.add(commentNode)
+                            }
                         } else if (n instanceof KEdge) {
                             reference.createCommentLabel(reference.message, n, reference.colorSystem as ColorSystem)
                             reverseLabelList += n
@@ -93,7 +105,7 @@ class MessageObjectReferencesManager {
                     }
                 }
             } else {
-                val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem)
+                val commentNode = reference.createCommentBox(reference.message, null, reference.colorSystem as ColorSystem, true)
                 node.children += commentNode
             }
         }
@@ -119,15 +131,17 @@ class MessageObjectReferencesManager {
         return label;        
     }
     
-    private def KNode createCommentBox(Object association, String text, KNode relatedNode, ColorSystem colorSystem) {
+    private def KNode createCommentBox(Object association, String text, KNode relatedNode, ColorSystem colorSystem, boolean setCommentBoxProperty) {
         val node = association.createNode
         
-        node.addLayoutParam(CoreOptions.COMMENT_BOX, true)
+        if (setCommentBoxProperty) {
+            node.addLayoutParam(CoreOptions.COMMENT_BOX, true)
+        }
         
         node.addCommentFigure(colorSystem)
         node.addCommentText(text)
         
-        if (relatedNode !== null) {
+        if (relatedNode !== null && setCommentBoxProperty) {
             val edge = association.createEdge
             edge.source = relatedNode
             edge.target = node

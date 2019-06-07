@@ -106,7 +106,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link KiCoolPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -120,7 +120,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         if (isInited) return (KiCoolPackage)EPackage.Registry.INSTANCE.getEPackage(KiCoolPackage.eNS_URI);
 
         // Obtain or create and register package
-        KiCoolPackageImpl theKiCoolPackage = (KiCoolPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof KiCoolPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new KiCoolPackageImpl());
+        Object registeredKiCoolPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        KiCoolPackageImpl theKiCoolPackage = registeredKiCoolPackage instanceof KiCoolPackageImpl ? (KiCoolPackageImpl)registeredKiCoolPackage : new KiCoolPackageImpl();
 
         isInited = true;
 
@@ -139,7 +140,6 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         // Mark meta-data to indicate it can't be changed
         theKiCoolPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(KiCoolPackage.eNS_URI, theKiCoolPackage);
         return theKiCoolPackage;
@@ -150,6 +150,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSystem() {
         return systemEClass;
     }
@@ -159,6 +160,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSystem_Id() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(0);
     }
@@ -168,6 +170,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSystem_Label() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(1);
     }
@@ -177,6 +180,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSystem_Processors() {
         return (EReference)systemEClass.getEStructuralFeatures().get(2);
     }
@@ -186,6 +190,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSystem_Intermediates() {
         return (EReference)systemEClass.getEStructuralFeatures().get(3);
     }
@@ -195,6 +200,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSystem_Config() {
         return (EReference)systemEClass.getEStructuralFeatures().get(4);
     }
@@ -204,8 +210,9 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_Public() {
-        return (EAttribute)systemEClass.getEStructuralFeatures().get(5);
+    @Override
+    public EReference getSystem_StartConfig() {
+        return (EReference)systemEClass.getEStructuralFeatures().get(5);
     }
 
     /**
@@ -213,7 +220,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_Developer() {
+    @Override
+    public EAttribute getSystem_Public() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(6);
     }
 
@@ -222,7 +230,8 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EAttribute getSystem_Simulation() {
+    @Override
+    public EAttribute getSystem_Developer() {
         return (EAttribute)systemEClass.getEStructuralFeatures().get(7);
     }
 
@@ -231,6 +240,17 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EAttribute getSystem_Simulation() {
+        return (EAttribute)systemEClass.getEStructuralFeatures().get(8);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getProcessorEntry() {
         return processorEntryEClass;
     }
@@ -240,6 +260,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProcessorEntry_Id() {
         return (EAttribute)processorEntryEClass.getEStructuralFeatures().get(0);
     }
@@ -249,6 +270,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcessorReference() {
         return processorReferenceEClass;
     }
@@ -258,6 +280,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorReference_Preconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -267,6 +290,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorReference_Postconfig() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(1);
     }
@@ -276,6 +300,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorReference_Metric() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(2);
     }
@@ -285,6 +310,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorReference_Preprocesses() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(3);
     }
@@ -294,6 +320,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorReference_Postprocesses() {
         return (EReference)processorReferenceEClass.getEStructuralFeatures().get(4);
     }
@@ -303,6 +330,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProcessorReference_Silent() {
         return (EAttribute)processorReferenceEClass.getEStructuralFeatures().get(5);
     }
@@ -312,6 +340,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcessorSystem() {
         return processorSystemEClass;
     }
@@ -321,6 +350,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcessorGroup() {
         return processorGroupEClass;
     }
@@ -330,6 +360,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcessorGroup_Processors() {
         return (EReference)processorGroupEClass.getEStructuralFeatures().get(0);
     }
@@ -339,6 +370,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getProcessorGroup_Label() {
         return (EAttribute)processorGroupEClass.getEStructuralFeatures().get(1);
     }
@@ -348,6 +380,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcessorAlternativeGroup() {
         return processorAlternativeGroupEClass;
     }
@@ -357,6 +390,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIntermediateReference() {
         return intermediateReferenceEClass;
     }
@@ -366,6 +400,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getIntermediateReference_Alias() {
         return (EAttribute)intermediateReferenceEClass.getEStructuralFeatures().get(0);
     }
@@ -375,6 +410,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KiCoolFactory getKiCoolFactory() {
         return (KiCoolFactory)getEFactoryInstance();
     }
@@ -404,6 +440,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         createEReference(systemEClass, SYSTEM__PROCESSORS);
         createEReference(systemEClass, SYSTEM__INTERMEDIATES);
         createEReference(systemEClass, SYSTEM__CONFIG);
+        createEReference(systemEClass, SYSTEM__START_CONFIG);
         createEAttribute(systemEClass, SYSTEM__PUBLIC);
         createEAttribute(systemEClass, SYSTEM__DEVELOPER);
         createEAttribute(systemEClass, SYSTEM__SIMULATION);
@@ -478,6 +515,7 @@ public class KiCoolPackageImpl extends EPackageImpl implements KiCoolPackage {
         initEReference(getSystem_Processors(), this.getProcessorEntry(), null, "processors", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSystem_Intermediates(), this.getIntermediateReference(), null, "intermediates", null, 0, -1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEReference(getSystem_Config(), theKExpressionsPackage.getJsonObjectValue(), null, "config", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getSystem_StartConfig(), theKExpressionsPackage.getJsonObjectValue(), null, "startConfig", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Public(), ecorePackage.getEBoolean(), "public", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Developer(), ecorePackage.getEBoolean(), "developer", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getSystem_Simulation(), ecorePackage.getEBoolean(), "simulation", null, 0, 1, de.cau.cs.kieler.kicool.System.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

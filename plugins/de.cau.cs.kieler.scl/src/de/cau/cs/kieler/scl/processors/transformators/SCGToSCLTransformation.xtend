@@ -46,7 +46,7 @@ import java.util.HashMap
 import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static de.cau.cs.kieler.scg.common.SCGAnnotations.*
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /** 
@@ -99,7 +99,10 @@ class SCGToSCLTransformation extends Processor<SCGraphs, SCLProgram> {
         
             // Create new SCL module
             val m = createModule
-            m.name = if (!scg.getStringAnnotationValue(ANNOTATION_NAME).nullOrEmpty) scg.getStringAnnotationValue(ANNOTATION_NAME) else 'M' + scg.hashCode.toString
+            m.name = scg.name
+            if (m.name.nullOrEmpty) {
+                m.name = if (!scg.getStringAnnotationValue(ANNOTATION_NAME).nullOrEmpty) scg.getStringAnnotationValue(ANNOTATION_NAME) else 'M' + scg.hashCode.toString
+            }
                   
             for(declaration : scg.declarations) {
                 val newDeclaration = createDeclaration(declaration)

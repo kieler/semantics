@@ -25,7 +25,7 @@ import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
  * @author mrb
  *
  */
-class IfTestTransformation extends InplaceProcessor<EsterelProgram> {
+class IfTestTransformation extends AbstractSCEstDynamicProcessor<IfTest> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -44,31 +44,7 @@ class IfTestTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof IfTest) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(IfTest).toList.forEach[transform]
-        }
-    }
-    
-    def transform(IfTest ifTest) {
+    override transform(IfTest ifTest) {
         val conditional = createConditional(ifTest.expression)
         conditional.statements.add(ifTest.statements)
         if (!ifTest.elseif.empty) {

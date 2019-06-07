@@ -673,7 +673,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link EsterelPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -687,7 +687,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         if (isInited) return (EsterelPackage)EPackage.Registry.INSTANCE.getEPackage(EsterelPackage.eNS_URI);
 
         // Obtain or create and register package
-        EsterelPackageImpl theEsterelPackage = (EsterelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof EsterelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new EsterelPackageImpl());
+        Object registeredEsterelPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        EsterelPackageImpl theEsterelPackage = registeredEsterelPackage instanceof EsterelPackageImpl ? (EsterelPackageImpl)registeredEsterelPackage : new EsterelPackageImpl();
 
         isInited = true;
 
@@ -707,7 +708,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
         // Mark meta-data to indicate it can't be changed
         theEsterelPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(EsterelPackage.eNS_URI, theEsterelPackage);
         return theEsterelPackage;
@@ -718,6 +718,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelProgram() {
         return esterelProgramEClass;
     }
@@ -727,6 +728,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEsterelProgram_Modules() {
         return (EReference)esterelProgramEClass.getEStructuralFeatures().get(0);
     }
@@ -736,6 +738,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEsterelProgram_Tick() {
         return (EReference)esterelProgramEClass.getEStructuralFeatures().get(1);
     }
@@ -745,6 +748,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelDeclaration() {
         return esterelDeclarationEClass;
     }
@@ -754,6 +758,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTypeIdentifier() {
         return typeIdentifierEClass;
     }
@@ -763,6 +768,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTypeIdentifier_Type() {
         return (EAttribute)typeIdentifierEClass.getEStructuralFeatures().get(0);
     }
@@ -772,6 +778,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTypeIdentifier_IdType() {
         return (EAttribute)typeIdentifierEClass.getEStructuralFeatures().get(1);
     }
@@ -781,6 +788,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTypeIdentifier_Operator() {
         return (EAttribute)typeIdentifierEClass.getEStructuralFeatures().get(2);
     }
@@ -790,6 +798,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTypeIdentifier_EsterelType() {
         return (EReference)typeIdentifierEClass.getEStructuralFeatures().get(3);
     }
@@ -799,6 +808,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTypeDeclaration() {
         return typeDeclarationEClass;
     }
@@ -808,6 +818,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTypeDefinition() {
         return typeDefinitionEClass;
     }
@@ -817,6 +828,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getConstantDeclaration() {
         return constantDeclarationEClass;
     }
@@ -826,6 +838,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getConstant() {
         return constantEClass;
     }
@@ -835,6 +848,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstant_Type() {
         return (EReference)constantEClass.getEStructuralFeatures().get(0);
     }
@@ -844,6 +858,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFunctionDeclaration() {
         return functionDeclarationEClass;
     }
@@ -853,6 +868,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFunction() {
         return functionEClass;
     }
@@ -862,6 +878,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getFunction_ParameterTypes() {
         return (EReference)functionEClass.getEStructuralFeatures().get(0);
     }
@@ -871,6 +888,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getFunction_ReturnType() {
         return (EReference)functionEClass.getEStructuralFeatures().get(1);
     }
@@ -880,6 +898,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcedureDeclaration() {
         return procedureDeclarationEClass;
     }
@@ -889,6 +908,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcedure() {
         return procedureEClass;
     }
@@ -898,6 +918,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedure_ReferenceArguments() {
         return (EReference)procedureEClass.getEStructuralFeatures().get(0);
     }
@@ -907,6 +928,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedure_ValueArguments() {
         return (EReference)procedureEClass.getEStructuralFeatures().get(1);
     }
@@ -916,6 +938,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTaskDeclaration() {
         return taskDeclarationEClass;
     }
@@ -925,6 +948,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTask() {
         return taskEClass;
     }
@@ -934,6 +958,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTask_ReferenceArguments() {
         return (EReference)taskEClass.getEStructuralFeatures().get(0);
     }
@@ -943,6 +968,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTask_ValueArguments() {
         return (EReference)taskEClass.getEStructuralFeatures().get(1);
     }
@@ -952,6 +978,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSignalDeclaration() {
         return signalDeclarationEClass;
     }
@@ -961,6 +988,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInputDeclaration() {
         return inputDeclarationEClass;
     }
@@ -970,6 +998,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getOutputDeclaration() {
         return outputDeclarationEClass;
     }
@@ -979,6 +1008,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getInputOutputDeclaration() {
         return inputOutputDeclarationEClass;
     }
@@ -988,6 +1018,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getReturnDeclaration() {
         return returnDeclarationEClass;
     }
@@ -997,6 +1028,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSignal() {
         return signalEClass;
     }
@@ -1006,6 +1038,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSignal_Type() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(0);
     }
@@ -1015,6 +1048,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSignal_IdType() {
         return (EAttribute)signalEClass.getEStructuralFeatures().get(1);
     }
@@ -1024,6 +1058,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSignal_CombineFunction() {
         return (EReference)signalEClass.getEStructuralFeatures().get(2);
     }
@@ -1033,6 +1068,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSensorDeclaration() {
         return sensorDeclarationEClass;
     }
@@ -1042,6 +1078,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSensor() {
         return sensorEClass;
     }
@@ -1051,6 +1088,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSensor_Type() {
         return (EReference)sensorEClass.getEStructuralFeatures().get(0);
     }
@@ -1060,6 +1098,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRelationDeclaration() {
         return relationDeclarationEClass;
     }
@@ -1069,6 +1108,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRelationDeclaration_Relations() {
         return (EReference)relationDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -1078,6 +1118,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRelation() {
         return relationEClass;
     }
@@ -1087,6 +1128,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRelation_Type() {
         return (EAttribute)relationEClass.getEStructuralFeatures().get(0);
     }
@@ -1096,6 +1138,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRelationImplication() {
         return relationImplicationEClass;
     }
@@ -1105,6 +1148,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRelationImplication_First() {
         return (EReference)relationImplicationEClass.getEStructuralFeatures().get(0);
     }
@@ -1114,6 +1158,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRelationImplication_Second() {
         return (EReference)relationImplicationEClass.getEStructuralFeatures().get(1);
     }
@@ -1123,6 +1168,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRelationIncompatibility() {
         return relationIncompatibilityEClass;
     }
@@ -1132,6 +1178,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRelationIncompatibility_Incomp() {
         return (EReference)relationIncompatibilityEClass.getEStructuralFeatures().get(0);
     }
@@ -1141,6 +1188,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelStatement() {
         return esterelStatementEClass;
     }
@@ -1150,6 +1198,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelParallel() {
         return esterelParallelEClass;
     }
@@ -1159,6 +1208,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelThread() {
         return esterelThreadEClass;
     }
@@ -1168,6 +1218,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getNothing() {
         return nothingEClass;
     }
@@ -1177,6 +1228,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getHalt() {
         return haltEClass;
     }
@@ -1186,6 +1238,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getBlock() {
         return blockEClass;
     }
@@ -1195,6 +1248,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEmit() {
         return emitEClass;
     }
@@ -1204,6 +1258,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEmit_Signal() {
         return (EReference)emitEClass.getEStructuralFeatures().get(0);
     }
@@ -1213,6 +1268,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEmit_Expression() {
         return (EReference)emitEClass.getEStructuralFeatures().get(1);
     }
@@ -1222,6 +1278,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSustain() {
         return sustainEClass;
     }
@@ -1231,6 +1288,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSustain_Signal() {
         return (EReference)sustainEClass.getEStructuralFeatures().get(0);
     }
@@ -1240,6 +1298,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSustain_Expression() {
         return (EReference)sustainEClass.getEStructuralFeatures().get(1);
     }
@@ -1249,6 +1308,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcedureCall() {
         return procedureCallEClass;
     }
@@ -1258,6 +1318,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedureCall_Procedure() {
         return (EReference)procedureCallEClass.getEStructuralFeatures().get(0);
     }
@@ -1267,6 +1328,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedureCall_ReferenceArguments() {
         return (EReference)procedureCallEClass.getEStructuralFeatures().get(1);
     }
@@ -1276,6 +1338,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedureCall_ValueArguments() {
         return (EReference)procedureCallEClass.getEStructuralFeatures().get(2);
     }
@@ -1285,6 +1348,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPresent() {
         return presentEClass;
     }
@@ -1294,6 +1358,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPresent_Expression() {
         return (EReference)presentEClass.getEStructuralFeatures().get(0);
     }
@@ -1303,6 +1368,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPresent_Cases() {
         return (EReference)presentEClass.getEStructuralFeatures().get(1);
     }
@@ -1312,6 +1378,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPresent_ElseStatements() {
         return (EReference)presentEClass.getEStructuralFeatures().get(2);
     }
@@ -1321,6 +1388,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getPresentCase() {
         return presentCaseEClass;
     }
@@ -1330,6 +1398,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getPresentCase_Expression() {
         return (EReference)presentCaseEClass.getEStructuralFeatures().get(0);
     }
@@ -1339,6 +1408,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIfTest() {
         return ifTestEClass;
     }
@@ -1348,6 +1418,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIfTest_Expression() {
         return (EReference)ifTestEClass.getEStructuralFeatures().get(0);
     }
@@ -1357,6 +1428,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIfTest_Elseif() {
         return (EReference)ifTestEClass.getEStructuralFeatures().get(1);
     }
@@ -1366,6 +1438,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getIfTest_ElseStatements() {
         return (EReference)ifTestEClass.getEStructuralFeatures().get(2);
     }
@@ -1375,6 +1448,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElsIf() {
         return elsIfEClass;
     }
@@ -1384,6 +1458,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElsIf_Expression() {
         return (EReference)elsIfEClass.getEStructuralFeatures().get(0);
     }
@@ -1393,6 +1468,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLoop() {
         return loopEClass;
     }
@@ -1402,6 +1478,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLoop_Delay() {
         return (EReference)loopEClass.getEStructuralFeatures().get(0);
     }
@@ -1411,6 +1488,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRepeat() {
         return repeatEClass;
     }
@@ -1420,6 +1498,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getRepeat_Positive() {
         return (EAttribute)repeatEClass.getEStructuralFeatures().get(0);
     }
@@ -1429,6 +1508,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRepeat_Expression() {
         return (EReference)repeatEClass.getEStructuralFeatures().get(1);
     }
@@ -1438,6 +1518,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAbort() {
         return abortEClass;
     }
@@ -1447,6 +1528,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getAbort_Weak() {
         return (EAttribute)abortEClass.getEStructuralFeatures().get(0);
     }
@@ -1456,6 +1538,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAbort_Delay() {
         return (EReference)abortEClass.getEStructuralFeatures().get(1);
     }
@@ -1465,6 +1548,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAbort_DoStatements() {
         return (EReference)abortEClass.getEStructuralFeatures().get(2);
     }
@@ -1474,6 +1558,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAbort_Cases() {
         return (EReference)abortEClass.getEStructuralFeatures().get(3);
     }
@@ -1483,6 +1568,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCase() {
         return caseEClass;
     }
@@ -1492,6 +1578,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getCase_Delay() {
         return (EReference)caseEClass.getEStructuralFeatures().get(0);
     }
@@ -1501,6 +1588,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getAwait() {
         return awaitEClass;
     }
@@ -1510,6 +1598,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAwait_Delay() {
         return (EReference)awaitEClass.getEStructuralFeatures().get(0);
     }
@@ -1519,6 +1608,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getAwait_Cases() {
         return (EReference)awaitEClass.getEStructuralFeatures().get(1);
     }
@@ -1528,6 +1618,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEveryDo() {
         return everyDoEClass;
     }
@@ -1537,6 +1628,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEveryDo_Delay() {
         return (EReference)everyDoEClass.getEStructuralFeatures().get(0);
     }
@@ -1546,6 +1638,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSuspend() {
         return suspendEClass;
     }
@@ -1555,6 +1648,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getSuspend_Weak() {
         return (EAttribute)suspendEClass.getEStructuralFeatures().get(0);
     }
@@ -1564,6 +1658,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSuspend_Delay() {
         return (EReference)suspendEClass.getEStructuralFeatures().get(1);
     }
@@ -1573,6 +1668,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrap() {
         return trapEClass;
     }
@@ -1582,6 +1678,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTrap_TrapSignals() {
         return (EReference)trapEClass.getEStructuralFeatures().get(0);
     }
@@ -1591,6 +1688,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTrap_TrapHandler() {
         return (EReference)trapEClass.getEStructuralFeatures().get(1);
     }
@@ -1600,6 +1698,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrapHandler() {
         return trapHandlerEClass;
     }
@@ -1609,6 +1708,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTrapHandler_Expression() {
         return (EReference)trapHandlerEClass.getEStructuralFeatures().get(0);
     }
@@ -1618,6 +1718,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExit() {
         return exitEClass;
     }
@@ -1627,6 +1728,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExit_Trap() {
         return (EReference)exitEClass.getEStructuralFeatures().get(0);
     }
@@ -1636,6 +1738,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExit_Expression() {
         return (EReference)exitEClass.getEStructuralFeatures().get(1);
     }
@@ -1645,6 +1748,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExec() {
         return execEClass;
     }
@@ -1654,6 +1758,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExec_Task() {
         return (EReference)execEClass.getEStructuralFeatures().get(0);
     }
@@ -1663,6 +1768,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExec_ReferenceParameters() {
         return (EReference)execEClass.getEStructuralFeatures().get(1);
     }
@@ -1672,6 +1778,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExec_ValueParameters() {
         return (EReference)execEClass.getEStructuralFeatures().get(2);
     }
@@ -1681,6 +1788,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExec_ReturnSignal() {
         return (EReference)execEClass.getEStructuralFeatures().get(3);
     }
@@ -1690,6 +1798,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExec_ExecCaseList() {
         return (EReference)execEClass.getEStructuralFeatures().get(4);
     }
@@ -1699,6 +1808,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getExecCase() {
         return execCaseEClass;
     }
@@ -1708,6 +1818,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExecCase_Task() {
         return (EReference)execCaseEClass.getEStructuralFeatures().get(0);
     }
@@ -1717,6 +1828,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExecCase_ReferenceParameters() {
         return (EReference)execCaseEClass.getEStructuralFeatures().get(1);
     }
@@ -1726,6 +1838,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExecCase_ValueParameters() {
         return (EReference)execCaseEClass.getEStructuralFeatures().get(2);
     }
@@ -1735,6 +1848,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getExecCase_ReturnSignal() {
         return (EReference)execCaseEClass.getEStructuralFeatures().get(3);
     }
@@ -1744,6 +1858,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLocalSignalDeclaration() {
         return localSignalDeclarationEClass;
     }
@@ -1753,6 +1868,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getLocalVariableDeclaration() {
         return localVariableDeclarationEClass;
     }
@@ -1762,6 +1878,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getLocalVariableDeclaration_Declarations() {
         return (EReference)localVariableDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -1771,6 +1888,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelVariableDeclaration() {
         return esterelVariableDeclarationEClass;
     }
@@ -1780,6 +1898,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEsterelVariableDeclaration_Type() {
         return (EReference)esterelVariableDeclarationEClass.getEStructuralFeatures().get(0);
     }
@@ -1789,6 +1908,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVariable() {
         return variableEClass;
     }
@@ -1798,6 +1918,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRun() {
         return runEClass;
     }
@@ -1807,6 +1928,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRun_Module() {
         return (EReference)runEClass.getEStructuralFeatures().get(0);
     }
@@ -1816,6 +1938,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRun_Renamings() {
         return (EReference)runEClass.getEStructuralFeatures().get(1);
     }
@@ -1825,6 +1948,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getModuleRenaming() {
         return moduleRenamingEClass;
     }
@@ -1834,6 +1958,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getModuleRenaming_Module() {
         return (EReference)moduleRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -1843,6 +1968,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getModuleRenaming_NewName() {
         return (EAttribute)moduleRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -1852,6 +1978,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRenaming() {
         return renamingEClass;
     }
@@ -1861,6 +1988,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getRenamings() {
         return renamingsEClass;
     }
@@ -1870,6 +1998,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getRenamings_Renamings() {
         return (EReference)renamingsEClass.getEStructuralFeatures().get(0);
     }
@@ -1879,6 +2008,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTypeRenaming() {
         return typeRenamingEClass;
     }
@@ -1888,6 +2018,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTypeRenaming_NewName() {
         return (EReference)typeRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -1897,6 +2028,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getTypeRenaming_NewType() {
         return (EAttribute)typeRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -1906,6 +2038,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTypeRenaming_OldName() {
         return (EReference)typeRenamingEClass.getEStructuralFeatures().get(2);
     }
@@ -1915,6 +2048,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getConstantRenaming() {
         return constantRenamingEClass;
     }
@@ -1924,6 +2058,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstantRenaming_NewName() {
         return (EReference)constantRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -1933,6 +2068,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstantRenaming_NewValue() {
         return (EReference)constantRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -1942,6 +2078,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstantRenaming_OldName() {
         return (EReference)constantRenamingEClass.getEStructuralFeatures().get(2);
     }
@@ -1951,6 +2088,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getFunctionRenaming() {
         return functionRenamingEClass;
     }
@@ -1960,6 +2098,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getFunctionRenaming_NewName() {
         return (EReference)functionRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -1969,6 +2108,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getFunctionRenaming_NewFunc() {
         return (EAttribute)functionRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -1978,6 +2118,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getFunctionRenaming_OldName() {
         return (EReference)functionRenamingEClass.getEStructuralFeatures().get(2);
     }
@@ -1987,6 +2128,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getProcedureRenaming() {
         return procedureRenamingEClass;
     }
@@ -1996,6 +2138,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedureRenaming_NewName() {
         return (EReference)procedureRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -2005,6 +2148,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getProcedureRenaming_OldName() {
         return (EReference)procedureRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -2014,6 +2158,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTaskRenaming() {
         return taskRenamingEClass;
     }
@@ -2023,6 +2168,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTaskRenaming_NewName() {
         return (EReference)taskRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -2032,6 +2178,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTaskRenaming_OldName() {
         return (EReference)taskRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -2041,6 +2188,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSignalRenaming() {
         return signalRenamingEClass;
     }
@@ -2050,6 +2198,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSignalRenaming_NewName() {
         return (EReference)signalRenamingEClass.getEStructuralFeatures().get(0);
     }
@@ -2059,6 +2208,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSignalRenaming_OldName() {
         return (EReference)signalRenamingEClass.getEStructuralFeatures().get(1);
     }
@@ -2068,6 +2218,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDo() {
         return doEClass;
     }
@@ -2077,6 +2228,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDo_WatchingAnnotations() {
         return (EReference)doEClass.getEStructuralFeatures().get(0);
     }
@@ -2086,6 +2238,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDo_Watching() {
         return (EReference)doEClass.getEStructuralFeatures().get(1);
     }
@@ -2095,6 +2248,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDo_Delay() {
         return (EReference)doEClass.getEStructuralFeatures().get(2);
     }
@@ -2104,6 +2258,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDo_WatchingStatements() {
         return (EReference)doEClass.getEStructuralFeatures().get(3);
     }
@@ -2113,6 +2268,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getDelayExpression() {
         return delayExpressionEClass;
     }
@@ -2122,6 +2278,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDelayExpression_Delay() {
         return (EReference)delayExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -2131,6 +2288,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getDelayExpression_Immediate() {
         return (EAttribute)delayExpressionEClass.getEStructuralFeatures().get(1);
     }
@@ -2140,6 +2298,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getDelayExpression_Expression() {
         return (EReference)delayExpressionEClass.getEStructuralFeatures().get(2);
     }
@@ -2149,6 +2308,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrapSignal() {
         return trapSignalEClass;
     }
@@ -2158,6 +2318,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrapExpression() {
         return trapExpressionEClass;
     }
@@ -2167,6 +2328,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getTrapExpression_Trap() {
         return (EReference)trapExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -2176,6 +2338,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEsterelFunctionCall() {
         return esterelFunctionCallEClass;
     }
@@ -2185,6 +2348,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEsterelFunctionCall_Function() {
         return (EReference)esterelFunctionCallEClass.getEStructuralFeatures().get(0);
     }
@@ -2194,6 +2358,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEsterelFunctionCall_Parameter() {
         return (EReference)esterelFunctionCallEClass.getEStructuralFeatures().get(1);
     }
@@ -2203,6 +2368,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getConstantExpression() {
         return constantExpressionEClass;
     }
@@ -2212,6 +2378,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstantExpression_Constant() {
         return (EReference)constantExpressionEClass.getEStructuralFeatures().get(0);
     }
@@ -2221,6 +2388,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getConstantExpression_Value() {
         return (EReference)constantExpressionEClass.getEStructuralFeatures().get(1);
     }
@@ -2230,6 +2398,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTrapReference() {
         return trapReferenceEClass;
     }
@@ -2239,6 +2408,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSignalReference() {
         return signalReferenceEClass;
     }
@@ -2248,6 +2418,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getTickReference() {
         return tickReferenceEClass;
     }
@@ -2257,6 +2428,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getVariableReference() {
         return variableReferenceEClass;
     }
@@ -2266,6 +2438,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSCEstStatement() {
         return scEstStatementEClass;
     }
@@ -2275,6 +2448,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getUnEmit() {
         return unEmitEClass;
     }
@@ -2284,6 +2458,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getUnEmit_Signal() {
         return (EReference)unEmitEClass.getEStructuralFeatures().get(0);
     }
@@ -2293,6 +2468,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getSet() {
         return setEClass;
     }
@@ -2302,6 +2478,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSet_Signal() {
         return (EReference)setEClass.getEStructuralFeatures().get(0);
     }
@@ -2311,6 +2488,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getSet_Expression() {
         return (EReference)setEClass.getEStructuralFeatures().get(1);
     }
@@ -2320,6 +2498,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EsterelFactory getEsterelFactory() {
         return (EsterelFactory)getEFactoryInstance();
     }
@@ -2633,6 +2812,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage {
 
         // Add supertypes to classes
         esterelProgramEClass.getESuperTypes().add(theAnnotationsPackage.getPragmatable());
+        esterelProgramEClass.getESuperTypes().add(theAnnotationsPackage.getNameable());
         esterelDeclarationEClass.getESuperTypes().add(theKExpressionsPackage.getDeclaration());
         typeDeclarationEClass.getESuperTypes().add(this.getEsterelDeclaration());
         typeDefinitionEClass.getESuperTypes().add(theKExpressionsPackage.getValuedObject());

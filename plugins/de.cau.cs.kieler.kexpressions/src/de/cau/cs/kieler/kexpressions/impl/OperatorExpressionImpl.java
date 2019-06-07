@@ -105,6 +105,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.OPERATOR_EXPRESSION__SCHEDULE);
@@ -117,6 +118,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public OperatorType getOperator() {
         return operator;
     }
@@ -126,6 +128,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOperator(OperatorType newOperator) {
         OperatorType oldOperator = operator;
         operator = newOperator == null ? OPERATOR_EDEFAULT : newOperator;
@@ -138,6 +141,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getSubExpressions() {
         if (subExpressions == null) {
             subExpressions = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
@@ -251,7 +255,7 @@ public class OperatorExpressionImpl extends EObjectImpl implements OperatorExpre
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (operator: ");
         result.append(operator);
         result.append(')');

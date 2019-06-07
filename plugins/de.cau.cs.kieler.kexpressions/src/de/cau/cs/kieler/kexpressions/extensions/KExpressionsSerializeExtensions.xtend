@@ -97,7 +97,7 @@ class KExpressionsSerializeExtensions {
     	"pre(" + expression.subExpressions.head.serialize + ")"
     }   
 
-    protected def CharSequence serializeOperatorExpressionFBY(OperatorExpression expression) {
+    protected def CharSequence serializeOperatorExpressionINIT(OperatorExpression expression) {
         combineOperators(expression.subExpressions.iterator, " -> ")
     }
     
@@ -170,10 +170,10 @@ class KExpressionsSerializeExtensions {
     }
     
     protected def CharSequence serializeOperatorExpressionConditional(OperatorExpression expression) {
-        if (expression.subExpressions.size == 3) {
+        if (expression.subExpressions.size == 2 || expression.subExpressions.size == 3 ) {
             return expression.subExpressions.head.serialize + " ? " +
-                expression.subExpressions.get(1).serialize + " : " + 
-                expression.subExpressions.get(2).serialize  
+                expression.subExpressions.get(1).serialize 
+                + if (expression.subExpressions.size == 3) " : " + expression.subExpressions.get(2).serialize else ""  
         } else {
             throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
                 expression.subExpressions.size + " arguments.")
@@ -201,8 +201,8 @@ class KExpressionsSerializeExtensions {
             return expression.serializeOperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeOperatorExpressionPRE
-        } else if (expression.operator == OperatorType::FBY) {
-            return expression.serializeOperatorExpressionFBY
+        } else if (expression.operator == OperatorType::INIT) {
+            return expression.serializeOperatorExpressionINIT
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeOperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {

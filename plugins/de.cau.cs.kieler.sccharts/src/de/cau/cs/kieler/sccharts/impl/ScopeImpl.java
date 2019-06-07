@@ -14,12 +14,16 @@
 package de.cau.cs.kieler.sccharts.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.LocalAction;
@@ -39,6 +43,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -52,6 +57,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getDeclarations <em>Declarations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getSchedule <em>Schedule</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getLabel <em>Label</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getActions <em>Actions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl#getReference <em>Reference</em>}</li>
@@ -106,6 +113,26 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * @ordered
      */
     protected EList<ScheduleObjectReference> schedule;
+
+    /**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
 
     /**
      * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
@@ -184,6 +211,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
@@ -196,6 +224,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<LocalAction> getActions() {
         if (actions == null) {
             actions = new EObjectContainmentEList<LocalAction>(LocalAction.class, this, SCChartsPackage.SCOPE__ACTIONS);
@@ -208,6 +237,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScopeCall getReference() {
         return reference;
     }
@@ -232,6 +262,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReference(ScopeCall newReference) {
         if (newReference != reference) {
             NotificationChain msgs = null;
@@ -251,6 +282,22 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.SCOPE__DECLARATIONS);
@@ -263,6 +310,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -272,6 +320,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -284,11 +333,38 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SCChartsPackage.SCOPE__SCHEDULE);
         }
         return schedule;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.SCOPE__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.SCOPE__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
     }
 
     /**
@@ -303,6 +379,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return ((InternalEList<?>)getDeclarations()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__SCHEDULE:
                 return ((InternalEList<?>)getSchedule()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__ACTIONS:
                 return ((InternalEList<?>)getActions()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.SCOPE__REFERENCE:
@@ -325,6 +405,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return getName();
             case SCChartsPackage.SCOPE__SCHEDULE:
                 return getSchedule();
+            case SCChartsPackage.SCOPE__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                return getIncomingLinks();
             case SCChartsPackage.SCOPE__LABEL:
                 return getLabel();
             case SCChartsPackage.SCOPE__ACTIONS:
@@ -354,6 +438,14 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__SCHEDULE:
                 getSchedule().clear();
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
+                return;
+            case SCChartsPackage.SCOPE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
                 return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel((String)newValue);
@@ -386,6 +478,12 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
             case SCChartsPackage.SCOPE__SCHEDULE:
                 getSchedule().clear();
                 return;
+            case SCChartsPackage.SCOPE__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case SCChartsPackage.SCOPE__LABEL:
                 setLabel(LABEL_EDEFAULT);
                 return;
@@ -413,6 +511,10 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
             case SCChartsPackage.SCOPE__SCHEDULE:
                 return schedule != null && !schedule.isEmpty();
+            case SCChartsPackage.SCOPE__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case SCChartsPackage.SCOPE__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case SCChartsPackage.SCOPE__LABEL:
                 return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
             case SCChartsPackage.SCOPE__ACTIONS:
@@ -436,6 +538,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case SCChartsPackage.SCOPE__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -445,6 +552,13 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (baseClass == Schedulable.class) {
             switch (derivedFeatureID) {
                 case SCChartsPackage.SCOPE__SCHEDULE: return KExpressionsPackage.SCHEDULABLE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case SCChartsPackage.SCOPE__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case SCChartsPackage.SCOPE__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
                 default: return -1;
             }
         }
@@ -464,6 +578,11 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
                 default: return -1;
             }
         }
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return SCChartsPackage.SCOPE__NAME;
@@ -473,6 +592,13 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
         if (baseClass == Schedulable.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.SCHEDULABLE__SCHEDULE: return SCChartsPackage.SCOPE__SCHEDULE;
+                default: return -1;
+            }
+        }
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return SCChartsPackage.SCOPE__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return SCChartsPackage.SCOPE__INCOMING_LINKS;
                 default: return -1;
             }
         }
@@ -488,7 +614,7 @@ public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(", label: ");

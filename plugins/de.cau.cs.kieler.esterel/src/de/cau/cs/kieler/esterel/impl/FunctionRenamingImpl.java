@@ -94,6 +94,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Function getNewName() {
         if (newName != null && newName.eIsProxy()) {
             InternalEObject oldNewName = (InternalEObject)newName;
@@ -120,6 +121,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(Function newNewName) {
         Function oldNewName = newName;
         newName = newNewName;
@@ -132,6 +134,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getNewFunc() {
         return newFunc;
     }
@@ -141,6 +144,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewFunc(String newNewFunc) {
         String oldNewFunc = newFunc;
         newFunc = newNewFunc;
@@ -153,6 +157,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Function getOldName() {
         if (oldName != null && oldName.eIsProxy()) {
             InternalEObject oldOldName = (InternalEObject)oldName;
@@ -179,6 +184,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(Function newOldName) {
         Function oldOldName = oldName;
         oldName = newOldName;
@@ -275,7 +281,7 @@ public class FunctionRenamingImpl extends MinimalEObjectImpl.Container implement
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (newFunc: ");
         result.append(newFunc);
         result.append(')');

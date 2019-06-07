@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.simulation.internal.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.trace.ktrace.Trace
 import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.SimulationContext
@@ -31,8 +31,8 @@ abstract class TraceProcessor extends SimulationProcessor {
     public static val IProperty<TraceDataProvider> TRACE = 
         new Property<TraceDataProvider>("de.cau.cs.kieler.simulation.internal.trace", null)
         
-    static def prepareTraceInformation(SimulationContext ctx, Trace trace) {
-        ctx.startEnvironment.setProperty(TRACE, new TraceDataProvider(trace))
+    static def prepareTraceInformation(SimulationContext ctx, Trace trace, boolean allowLoops) {
+        ctx.startEnvironment.setProperty(TRACE, new TraceDataProvider(trace, allowLoops))
     }
     
     static def resetTraceInformation(SimulationContext ctx) {

@@ -1,6 +1,0 @@
-simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.java
-    label "Netlist-based Simulation (Java)"
-
-pre process de.cau.cs.kieler.kicool.deploy.variable.store.init 
-de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
-system de.cau.cs.kieler.sccharts.^simulation.netlist.java

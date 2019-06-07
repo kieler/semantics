@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.simulation
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
@@ -81,10 +81,11 @@ class SimulationContext extends CompilationContext implements SimulationControls
         transformSystem()
         originalModel = dataPool
         
-        for (subSystem : subContexts.values.map[originalSystem]) {
-            EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, subSystem.config)
-        }
         EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, system.config)
+    }
+    
+    def getSourceCompilationContext() {
+        return startEnvironment.getProperty(SOURCE_COMPILATION_CONTEXT)
     }
 
     package def initialize() {
@@ -106,8 +107,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
     def getModels() {
         return models.unmodifiableView
     }
-    
-    def setTrace(Trace trace, boolean check) {
+
+    def setTrace(Trace trace, boolean check, boolean allowLoops) {
         val root = system.processors as ProcessorGroup
         if (trace === null) {
             // Remove trace processors
@@ -126,9 +127,8 @@ class SimulationContext extends CompilationContext implements SimulationControls
                 root.processors.add(KiCoolFactory.eINSTANCE.createProcessorReference => [
                     id = CheckTrace.ID
                 ])
-            } 
-               
-            TraceProcessor.prepareTraceInformation(this, trace)
+            }
+            TraceProcessor.prepareTraceInformation(this, trace, allowLoops)
             startEnvironment.setProperty(CheckTrace.MATCH, check)
         }
     }

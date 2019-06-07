@@ -179,6 +179,10 @@ class SCChartsStateExtensions {
         state.reference !== null
     }  
     
+    def boolean hasBaseStates(State state) {
+        !state.baseStates.nullOrEmpty
+    }
+    
     def State copyState(State state) {
         val newState = state.nontracingCopy
 
@@ -206,5 +210,16 @@ class SCChartsStateExtensions {
         }    
         return if (enclosing !== null) enclosing as State else null 
     }
+    
+    def State getFirstState(EObject eObject) {
+        if (eObject === null) 
+            return null
+        else if (eObject instanceof State) 
+            return eObject as State
+        else if (eObject.eContainer === null) 
+            return null
+        else 
+            return eObject.eContainer.getFirstState
+    }    
          
 }

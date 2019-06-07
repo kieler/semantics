@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -33,30 +29,48 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>NOT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical Negation operator (unary)
+     * <!-- end-model-doc -->
      * @see #NOT_VALUE
      * @generated
      * @ordered
      */
-    NOT(0, "NOT", "!"), /**
+    NOT(0, "NOT", "!"),
+
+    /**
      * The '<em><b>EQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Equals operator
+     * <!-- end-model-doc -->
      * @see #EQ_VALUE
      * @generated
      * @ordered
      */
-    EQ(1, "EQ", "=="), /**
+    EQ(1, "EQ", "=="),
+
+    /**
      * The '<em><b>LT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LT_VALUE
      * @generated
      * @ordered
      */
-    LT(2, "LT", "<"), /**
+    LT(2, "LT", "<"),
+
+    /**
      * The '<em><b>LEQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Less or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #LEQ_VALUE
      * @generated
      * @ordered
@@ -67,22 +81,36 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>LOGICAL AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical AND operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #LOGICAL_AND_VALUE
      * @generated
      * @ordered
      */
-    LOGICAL_AND(4, "LOGICAL_AND", "&&"), /**
+    LOGICAL_AND(4, "LOGICAL_AND", "&&"),
+
+    /**
      * The '<em><b>LOGICAL OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical OR operator.
+     * <!-- end-model-doc -->
      * @see #LOGICAL_OR_VALUE
      * @generated
      * @ordered
      */
-    LOGICAL_OR(5, "LOGICAL_OR", "||"), /**
+    LOGICAL_OR(5, "LOGICAL_OR", "||"),
+
+    /**
      * The '<em><b>ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic addition operator.
+     * <!-- end-model-doc -->
      * @see #ADD_VALUE
      * @generated
      * @ordered
@@ -93,6 +121,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>SUB</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic subtraction operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #SUB_VALUE
      * @generated
      * @ordered
@@ -103,6 +134,9 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>MULT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic multiplication operator.
+     * <!-- end-model-doc -->
      * @see #MULT_VALUE
      * @generated
      * @ordered
@@ -113,30 +147,48 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>DIV</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Aithmetic division operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #DIV_VALUE
      * @generated
      * @ordered
      */
-    DIV(9, "DIV", "/"), /**
+    DIV(9, "DIV", "/"),
+
+    /**
      * The '<em><b>GEQ</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater or Equal operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GEQ_VALUE
      * @generated
      * @ordered
      */
-    GEQ(10, "GEQ", ">="), /**
+    GEQ(10, "GEQ", ">="),
+
+    /**
      * The '<em><b>PRE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Pre operator, returns the previous state of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #PRE_VALUE
      * @generated
      * @ordered
      */
-    PRE(11, "PRE", "pre"), /**
+    PRE(11, "PRE", "pre"),
+
+    /**
      * The '<em><b>GT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Greater than operator. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #GT_VALUE
      * @generated
      * @ordered
@@ -147,27 +199,43 @@ public enum OperatorType implements Enumerator {
      * The '<em><b>MOD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic modulo operation. (Not commutative!)
+     * <!-- end-model-doc -->
      * @see #MOD_VALUE
      * @generated
      * @ordered
      */
-    MOD(13, "MOD", "%"), /**
+    MOD(13, "MOD", "%"),
+
+    /**
      * The '<em><b>NE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Not Equal operator.
+     * 
+     * <!-- end-model-doc -->
      * @see #NE_VALUE
      * @generated
      * @ordered
      */
-    NE(14, "NE", "!="), /**
+    NE(14, "NE", "!="),
+
+    /**
      * The '<em><b>VAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Value operator. Returns the value of a Signal referenced by a SignalReference.
+     * <!-- end-model-doc -->
      * @see #VAL_VALUE
      * @generated
      * @ordered
      */
-    VAL(15, "VAL", "val"), /**
+    VAL(15, "VAL", "val"),
+
+    /**
      * The '<em><b>BITWISE AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -175,7 +243,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_AND(16, "BITWISE_AND", "&"), /**
+    BITWISE_AND(16, "BITWISE_AND", "&"),
+
+    /**
      * The '<em><b>BITWISE OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -183,7 +253,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_OR(17, "BITWISE_OR", "|"), /**
+    BITWISE_OR(17, "BITWISE_OR", "|"),
+
+    /**
      * The '<em><b>POSTFIX ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -191,7 +263,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIX_ADD(18, "POSTFIX_ADD", "++"), /**
+    POSTFIX_ADD(18, "POSTFIX_ADD", "++"),
+
+    /**
      * The '<em><b>POSTFIX SUB</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -199,7 +273,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    POSTFIX_SUB(19, "POSTFIX_SUB", "--"), /**
+    POSTFIX_SUB(19, "POSTFIX_SUB", "--"),
+
+    /**
      * The '<em><b>SHIFT LEFT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -207,7 +283,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_LEFT(20, "SHIFT_LEFT", "<<"), /**
+    SHIFT_LEFT(20, "SHIFT_LEFT", "<<"),
+
+    /**
      * The '<em><b>SHIFT RIGHT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -215,7 +293,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_RIGHT(21, "SHIFT_RIGHT", ">>"), /**
+    SHIFT_RIGHT(21, "SHIFT_RIGHT", ">>"),
+
+    /**
      * The '<em><b>SHIFT RIGHT UNSIGNED</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -223,7 +303,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    SHIFT_RIGHT_UNSIGNED(22, "SHIFT_RIGHT_UNSIGNED", ">>>"), /**
+    SHIFT_RIGHT_UNSIGNED(22, "SHIFT_RIGHT_UNSIGNED", ">>>"),
+
+    /**
      * The '<em><b>BITWISE XOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -231,7 +313,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_XOR(23, "BITWISE_XOR", "^"), /**
+    BITWISE_XOR(23, "BITWISE_XOR", "^"),
+
+    /**
      * The '<em><b>BITWISE NOT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -239,7 +323,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    BITWISE_NOT(25, "BITWISE_NOT", "~"), /**
+    BITWISE_NOT(25, "BITWISE_NOT", "~"),
+
+    /**
      * The '<em><b>CONDITIONAL</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -247,7 +333,9 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CONDITIONAL(24, "CONDITIONAL", "? :"), /**
+    CONDITIONAL(24, "CONDITIONAL", "? :"),
+
+    /**
      * The '<em><b>FBY</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -255,7 +343,72 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    FBY(25, "FBY", "FBY");
+    FBY(25, "FBY", "FBY"), /**
+     * The '<em><b>CURRENT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #CURRENT_VALUE
+     * @generated
+     * @ordered
+     */
+    CURRENT(26, "CURRENT", "CURRENT"), /**
+     * The '<em><b>WHEN</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #WHEN_VALUE
+     * @generated
+     * @ordered
+     */
+    WHEN(27, "WHEN", "WHEN"), /**
+     * The '<em><b>INIT</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INIT_VALUE
+     * @generated
+     * @ordered
+     */
+    INIT(28, "INIT", "INIT"), /**
+     * The '<em><b>INTDIV</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #INTDIV_VALUE
+     * @generated
+     * @ordered
+     */
+    INTDIV(29, "INTDIV", "INTDIV"), /**
+     * The '<em><b>LOGICAL XOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #LOGICAL_XOR_VALUE
+     * @generated
+     * @ordered
+     */
+    LOGICAL_XOR(30, "LOGICAL_XOR", "LOGICAL_XOR"), /**
+     * The '<em><b>IMPLIES</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #IMPLIES_VALUE
+     * @generated
+     * @ordered
+     */
+    IMPLIES(31, "IMPLIES", "IMPLIES"), /**
+     * The '<em><b>ATMOSTONEOF</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ATMOSTONEOF_VALUE
+     * @generated
+     * @ordered
+     */
+    ATMOSTONEOF(32, "ATMOSTONEOF", "ATMOSTONEOF"), /**
+     * The '<em><b>NOR</b></em>' literal object.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #NOR_VALUE
+     * @generated
+     * @ordered
+     */
+    NOR(33, "NOR", "NOR");
+
     /**
      * The '<em><b>NOT</b></em>' literal value.
      * <!-- begin-user-doc -->
@@ -648,6 +801,122 @@ public enum OperatorType implements Enumerator {
     public static final int FBY_VALUE = 25;
 
     /**
+     * The '<em><b>CURRENT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>CURRENT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #CURRENT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int CURRENT_VALUE = 26;
+
+    /**
+     * The '<em><b>WHEN</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>WHEN</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #WHEN
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int WHEN_VALUE = 27;
+
+    /**
+     * The '<em><b>INIT</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>INIT</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #INIT
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int INIT_VALUE = 28;
+
+    /**
+     * The '<em><b>INTDIV</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>INTDIV</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #INTDIV
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int INTDIV_VALUE = 29;
+
+    /**
+     * The '<em><b>LOGICAL XOR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>LOGICAL XOR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #LOGICAL_XOR
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int LOGICAL_XOR_VALUE = 30;
+
+    /**
+     * The '<em><b>IMPLIES</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>IMPLIES</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #IMPLIES
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int IMPLIES_VALUE = 31;
+
+    /**
+     * The '<em><b>ATMOSTONEOF</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #ATMOSTONEOF
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int ATMOSTONEOF_VALUE = 32;
+
+    /**
+     * The '<em><b>NOR</b></em>' literal value.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of '<em><b>NOR</b></em>' literal object isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @see #NOR
+     * @model
+     * @generated
+     * @ordered
+     */
+    public static final int NOR_VALUE = 33;
+
+    /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -682,6 +951,14 @@ public enum OperatorType implements Enumerator {
             BITWISE_NOT,
             CONDITIONAL,
             FBY,
+            CURRENT,
+            WHEN,
+            INIT,
+            INTDIV,
+            LOGICAL_XOR,
+            IMPLIES,
+            ATMOSTONEOF,
+            NOR,
         };
 
     /**
@@ -764,6 +1041,14 @@ public enum OperatorType implements Enumerator {
             case BITWISE_XOR_VALUE: return BITWISE_XOR;
             case BITWISE_NOT_VALUE: return BITWISE_NOT;
             case CONDITIONAL_VALUE: return CONDITIONAL;
+            case CURRENT_VALUE: return CURRENT;
+            case WHEN_VALUE: return WHEN;
+            case INIT_VALUE: return INIT;
+            case INTDIV_VALUE: return INTDIV;
+            case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
+            case IMPLIES_VALUE: return IMPLIES;
+            case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
+            case NOR_VALUE: return NOR;
         }
         return null;
     }
@@ -806,6 +1091,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -815,6 +1101,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -824,6 +1111,7 @@ public enum OperatorType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

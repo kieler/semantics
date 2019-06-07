@@ -49,10 +49,10 @@ class SCLTransformation extends Processor<EsterelProgram, SCLProgram> {
     extension EsterelTransformationExtensions
     
     override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
         val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
         
         if (isDynamicCompilation) {
+            val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM)?.getObject
             if (nextStatement instanceof EsterelProgram) {
                 transform(nextStatement)
             }

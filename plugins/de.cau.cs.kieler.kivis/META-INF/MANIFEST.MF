@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.kivis
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.kivis;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
@@ -14,28 +14,23 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.kexpressions;bundle-version="0.12.0",
- de.cau.cs.kieler.prom,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- de.cau.cs.kieler.simulation.ui;bundle-version="0.13.0",
+ de.cau.cs.kieler.simulation,
  com.google.gson;bundle-version="2.7.0",
- de.cau.cs.kieler.kicool;bundle-version="0.13.0"
+ de.cau.cs.kieler.kicool;bundle-version="0.13.0",
+ org.eclipse.core.resources;bundle-version="3.12.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kivis,
- de.cau.cs.kieler.kivis.animations,
- de.cau.cs.kieler.kivis.extensions,
- de.cau.cs.kieler.kivis.formatting,
- de.cau.cs.kieler.kivis.interactions,
+ de.cau.cs.kieler.kivis.formatting2,
  de.cau.cs.kieler.kivis.kivis,
  de.cau.cs.kieler.kivis.kivis.impl,
  de.cau.cs.kieler.kivis.kivis.util,
  de.cau.cs.kieler.kivis.parser.antlr,
  de.cau.cs.kieler.kivis.parser.antlr.internal,
+ de.cau.cs.kieler.kivis.processor,
  de.cau.cs.kieler.kivis.scoping,
  de.cau.cs.kieler.kivis.serializer,
  de.cau.cs.kieler.kivis.services,
- de.cau.cs.kieler.kivis.validation,
- de.cau.cs.kieler.kivis.formatting2
+ de.cau.cs.kieler.kivis.validation
 Import-Package: org.apache.log4j

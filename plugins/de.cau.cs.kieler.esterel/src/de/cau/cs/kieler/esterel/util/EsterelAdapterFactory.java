@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.esterel.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.annotations.Pragmatable;
@@ -397,6 +398,10 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
+            }
+            @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -1647,6 +1652,20 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
         return null;
     }
 

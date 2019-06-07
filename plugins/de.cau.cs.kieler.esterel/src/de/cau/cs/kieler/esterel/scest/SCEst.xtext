@@ -45,7 +45,7 @@ InstructionStatement returns scl::Statement:
 ;
 
 SCLStatement returns scl::Statement:
-    Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
+    SclAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
 ;
 
 @Override
@@ -117,15 +117,14 @@ terminal SL_COMMENT:
 // Care about order of the rules! 
 @Override
 AtomicExpression returns kexpressions::Expression:
-    EsterelFunctionCall
+      EsterelFunctionCall
     | TrapExpression
     | BoolValue
     | ValuedObjectPreExpression
     | TextExpression
     | '(' BooleanExpression ')'
     | ConstantExpression
-    | FunctionCall
-    | SignalOrTickReferenceExpression;
+    | FunctionCall;
     
 
 @Override    
@@ -136,5 +135,17 @@ AtomicValuedExpression returns kexpressions::Expression:
     | AtomicExpression
     | StringValue;
     
-
+// Example: pre(pre(?A)), pre(pre(A)), ?A, A varX
+@Override
+ValuedObjectPreExpression returns kexpressions::Expression:
+    {kexpressions::OperatorExpression} operator=EsterelPreOperator '('subExpressions+=ValuedObjectPreExpression')'
+    | {kexpressions::OperatorExpression} operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression
+    | ValuedObjectOrSignalReference;
+    
+ValuedObjectOrSignalReference returns kexpressions::ValuedObjectReference:
+     TickSignalExpression
+   | ValuedObjectReference
+   | SignalReferenceExpression
+   | VariableReference
+;
       

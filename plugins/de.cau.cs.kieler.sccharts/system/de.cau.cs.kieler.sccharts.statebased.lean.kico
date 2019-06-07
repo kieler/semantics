@@ -1,0 +1,10 @@
+system de.cau.cs.kieler.sccharts.statebased.lean
+	label "State-based Compilation (C) lean-mode"
+
+system de.cau.cs.kieler.sccharts.extended
+pre process de.cau.cs.kieler.sccharts.processors.voRise
+de.cau.cs.kieler.sccharts.processors.codegen.statebased config {
+    "de.cau.cs.kieler.kicool.codegen.comments.enabled": false,
+    "de.cau.cs.kieler.kicool.codegen.statebased.leanMode": true,
+    "de.cau.cs.kieler.kicool.codegen.statebased.printDebug" : false
+}

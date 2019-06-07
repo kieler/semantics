@@ -24,9 +24,11 @@ A = B ^ C ^ D
 A = (B ^ C ^ D)
 
 @check boolean.bitwise.xor.xor.parenthesis#002
+@readable "A = B ^ C ^ D"
 A = B ^ (C ^ D)
 
 @check boolean.bitwise.xor.xor.parenthesis#003
+@readable "A = B ^ C ^ D"
 A = (B ^ C) ^ D
 
 

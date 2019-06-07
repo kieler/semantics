@@ -3,14 +3,18 @@
 package de.cau.cs.kieler.scl.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
-
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
+
 import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.MethodDeclaration;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 
@@ -19,10 +23,12 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
-import de.cau.cs.kieler.scl.Module;
+import de.cau.cs.kieler.scl.Loop;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.Scope;
@@ -99,7 +105,7 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createSCLProgramAdapter();
             }
             @Override
-            public Adapter caseModule(Module object) {
+            public Adapter caseModule(de.cau.cs.kieler.scl.Module object) {
                 return createModuleAdapter();
             }
             @Override
@@ -159,8 +165,24 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createSequencePartAdapter();
             }
             @Override
+            public Adapter caseReturn(Return object) {
+                return createReturnAdapter();
+            }
+            @Override
+            public Adapter caseMethodImplementationDeclaration(MethodImplementationDeclaration object) {
+                return createMethodImplementationDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseLoop(Loop object) {
+                return createLoopAdapter();
+            }
+            @Override
             public Adapter casePragmatable(Pragmatable object) {
                 return createPragmatableAdapter();
+            }
+            @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
@@ -179,6 +201,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
                 return createSchedulableAdapter();
             }
             @Override
+            public Adapter caseLinkable(Linkable object) {
+                return createLinkableAdapter();
+            }
+            @Override
             public Adapter caseEffect(Effect object) {
                 return createEffectAdapter();
             }
@@ -193,6 +219,14 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseCall(Call object) {
                 return createCallAdapter();
+            }
+            @Override
+            public Adapter caseDeclaration(Declaration object) {
+                return createDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseMethodDeclaration(MethodDeclaration object) {
+                return createMethodDeclarationAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -439,6 +473,48 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Return <em>Return</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.Return
+     * @generated
+     */
+    public Adapter createReturnAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.MethodImplementationDeclaration <em>Method Implementation Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.MethodImplementationDeclaration
+     * @generated
+     */
+    public Adapter createMethodImplementationDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Loop <em>Loop</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.Loop
+     * @generated
+     */
+    public Adapter createLoopAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragmatable <em>Pragmatable</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -449,6 +525,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createPragmatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
         return null;
     }
 
@@ -509,6 +599,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Linkable <em>Linkable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.keffects.Linkable
+     * @generated
+     */
+    public Adapter createLinkableAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.keffects.Effect <em>Effect</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -561,6 +665,34 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createCallAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Declaration <em>Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.Declaration
+     * @generated
+     */
+    public Adapter createDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration <em>Method Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration
+     * @generated
+     */
+    public Adapter createMethodDeclarationAdapter() {
         return null;
     }
 

@@ -15,6 +15,11 @@ import de.cau.cs.kieler.scl.ScopeStatement
 import org.eclipse.xtext.validation.CheckType
 import de.cau.cs.kieler.scl.SCLResource
 import org.eclipse.xtext.Keyword
+import de.cau.cs.kieler.scl.Return
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.Parallel
+import de.cau.cs.kieler.scl.Pause
 
 //import org.eclipse.xtext.validation.Check
 
@@ -27,6 +32,28 @@ class SCLValidator extends AbstractSCLValidator {
     
     public static val DUBLICATE_LABEL = "Duplicate label"
     public static val LEAGACY_CONDITIONAL = "This conditional uses legacy syntax. Please use if {...} else {...} instead."
+    public static val RETURN_NOT_IN_METHOD = "Return statements can only be used in method bodies."
+    public static val RESTRICTED_METHOD_STATEMENTS = "This statement is not allowed in method bodies."
+
+    @Check
+    def checkReturn(Return ret) {
+        var container = ret.eContainer
+        while(container !== null) {
+            if(container instanceof MethodImplementationDeclaration) {
+                return
+            }
+        }
+        error(RETURN_NOT_IN_METHOD, ret, null, -1)
+    }
+    
+    @Check
+    def checkMethod(MethodImplementationDeclaration method) {
+        for (stm : method.eAllContents.filter(Statement).toIterable) {
+            if (stm instanceof Pause || stm instanceof Parallel) {
+                error(RESTRICTED_METHOD_STATEMENTS, stm, null, -1)
+            }
+        }
+    }
 
      /*
      * Checks if labels are unique

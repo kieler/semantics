@@ -12,29 +12,33 @@
  */
 package de.cau.cs.kieler.simulation.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.VariableInformation
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
-import de.cau.cs.kieler.kicool.deploy.processor.AbstractTemplateGeneratorProcessor
 import de.cau.cs.kieler.kicool.deploy.processor.TemplateEngine
+
+import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
 /**
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
-class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
+class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
 
     public static val FILE_NAME = "c-simulation.ftl" 
 
     public static val IProperty<String> STRUCT_ACCESS = 
         new Property<String>("de.cau.cs.kieler.simulation.c.struct.access", ".")
+
+    public static val IProperty<Integer> MESSAGE_BUFFER_SIZE = 
+        new Property<Integer>("de.cau.cs.kieler.simulation.c.buffer.size", 2048)
 
     override getId() {
         "de.cau.cs.kieler.simulation.c.template"
@@ -51,14 +55,16 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         environment.setProperty(TemplateEngine.GENRAL_ENVIRONMENT, generalTemplateEnvironment)
         
         if (infra.sourceCode !== null) {
-            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!dataStructName.nullOrEmpty].toList
+            val structFiles = infra.sourceCode.files.filter(CCodeFile).filter[!naming.empty].toList
             var structFile = structFiles.findFirst[header]
             if (structFile === null) {
                 structFile = structFiles.head
             }
             if (structFile !== null) {
-                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, structFile.dataStructName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_TYPE, structFile.naming.get(CodeGeneratorNames.TICKDATA))
                 generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_DATA_FILE, structFile.fileName)
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_RESET_NAME, structFile.naming.get(CodeGeneratorNames.RESET))
+                generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_TICK_NAME, structFile.naming.get(CodeGeneratorNames.TICK))
             }
         }
         
@@ -69,6 +75,10 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         if (store.ambiguous) {
             environment.warnings.add("VariableStore contains ambiguous information for variables.")
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
+        }
+        
+        if (store.variables.values.exists[input && container]) {
+            environment.errors.add("Input variables of type object (class/struct) are currently not supported and will be ignored.")
         }
         
         val cc = new CodeContainer
@@ -82,50 +92,81 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             #include "lib/cJSON.h"
             </#macro>
             
+            <#macro simulation_init position>
+            sendVariables(1);
+            </#macro>
+            
             <#macro simulation_in position>
             receiveVariables();
             </#macro>
             
             <#macro simulation_out position>
-            sendVariables();
+            sendVariables(0);
             </#macro>
             
             <#macro simulation_body position>
             void receiveVariables() {
-                char buffer[10000];
-                int i = 0;
+                size_t blocksize = «MESSAGE_BUFFER_SIZE.property»;
+                char *buffer = realloc(NULL, sizeof(char) * blocksize);
+                size_t i = 0;
                 char c;
+                
                 // read next line
-                for (i = 0; (c = getchar()) != '\n'; i++) {
-                    buffer[i] = c;
+                while ((c = getchar()) != '\n') {
+                    buffer[i++] = c;
+                    if (i == blocksize) {
+                        buffer = realloc(buffer, sizeof(char) * (blocksize += «MESSAGE_BUFFER_SIZE.property»));
+                    }
                 }
-                buffer[i] = 0;
-            
+                buffer[i++] = '\0';
+                
                 cJSON *root = cJSON_Parse(buffer);
                 cJSON *item = NULL;
                 if(root != NULL) {
-                    «FOR v : store.orderedVariableNames»
-                        // Receive «v»
-                        item = cJSON_GetObjectItemCaseSensitive(root, "«v»");
+                    «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
+                        // Receive «v.key»
+                        item = cJSON_GetObjectItemCaseSensitive(root, "«v.key»");
                         if(item != NULL) {
-                            «store.parse(v, "item")»
+                            «v.parse("item")»
                         }
-                    «ENDFOR» 
+                    «ENDFOR»
                 }
               
                 cJSON_Delete(root);
+                free(buffer);
             }
             
-            void sendVariables() {
+            void sendVariables(int send_interface) {
                 cJSON* root = cJSON_CreateObject();
                 «IF store.variables.values.exists[array]»
-                    cJSON* array;
+                    cJSON *array;
+                «ENDIF»
+                «IF store.variables.values.exists[container]»
+                    cJSON *obj;
                 «ENDIF»
                 
-                «FOR v : store.orderedVariableNames»
-                    // Send «v»
-                    «store.serialize(v, "root", "array")»
+                «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated]»
+                    // Send «v.key»
+                    «v.serialize("root", "array", "obj")»
                 «ENDFOR»
+                
+                if (send_interface) {
+                    cJSON *interface = cJSON_CreateObject();
+                    cJSON *info, *properties;
+                    
+                    «FOR v : store.orderedVariables.dropBlacklisted»
+                        info = cJSON_CreateObject();
+                        properties = cJSON_CreateArray();
+                        «FOR p : v.value.properties»
+                        cJSON_AddItemToArray(properties, cJSON_CreateString("«p»"));
+                        «ENDFOR»
+                        cJSON_AddItemToObject(info, "type", cJSON_CreateString("«v.value.typeName»"));
+                        cJSON_AddItemToObject(info, "properties", properties);
+                        cJSON_AddItemToObject(interface, "«v.key»", info);
+                    «ENDFOR»
+                    
+                    cJSON_AddItemToObject(root, "#interface", interface);
+                }
             
                 // Get JSON object as string
                 char* outString = cJSON_Print(root);
@@ -144,34 +185,55 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         environment.addIncludeInjection(FILE_NAME.relativeTemplatePath)
         environment.addMacroInjection(HEADER, "simulation_imports")
         environment.addMacroInjection(BODY, "simulation_body")
-        environment.addMacroInjection(INIT, "simulation_out")
+        environment.addMacroInjection(INIT, "simulation_init")
         environment.addMacroInjection(INPUT, "simulation_in")
         environment.addMacroInjection(OUTPUT, "simulation_out")
         
         return cc
     }
     
-    private def access() {
+    private def accessor() {
         return environment.getProperty(STRUCT_ACCESS)?:STRUCT_ACCESS.^default
     }
     
-    def serialize(VariableStore store, String varName, String json, String array) {
-        if (store.variables.get(varName).head.array) {
+    def String serialize(Pair<String, VariableInformation> variable, String json, String array, String clazz) {
+        serialize(variable, "${tickdata_name}" + accessor, json, array, clazz, 0)
+    }
+    
+    def String serialize(Pair<String, VariableInformation> variable, String accessPrefix, String json, String array, String clazz, int depth) {
+        val varName = variable.key.simpleName
+        val info = variable.value
+        if (info.array) {
+            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variables.")
+            val arrayVar = array?:'''array_«depth»'''
             return '''
-                «array» = cJSON_CreateArray();
-                «store.serializeArray(varName, 0, array)»
-                cJSON_AddItemToObject(«json», "«varName»", «array»);
+                «IF clazz === null»cJSON *«ENDIF»«arrayVar» = cJSON_CreateArray();
+                «variable.serializeArray(accessPrefix, 0, arrayVar, depth)»
+                cJSON_AddItemToObject(«json», "«varName»", «arrayVar»);
+            '''
+        } else if (info.container) {
+            val clazzVar = clazz?:'''obj_«depth»'''
+            return '''
+                «IF clazz === null»cJSON *«ENDIF»«clazzVar» = cJSON_CreateObject();
+                cJSON_AddItemToObject(«json», "«varName»", «clazzVar»);
+                «variable.serializeMember(accessPrefix + varName + ".", clazzVar, depth)»
             '''
         } else {
-            val type = store.variables.get(varName).head.type
-            val accessor = access + varName
+            val type = info.type
+            val access = if (info.isExternal) {
+                info.externalName
+            } else {
+                accessPrefix + varName
+            }
             val creator = switch(type) {
-                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case BOOL: '''cJSON_CreateBool(«access»)'''
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
-                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
-                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                case FLOAT: '''cJSON_CreateNumber(«access»)'''
+                case STRING: '''cJSON_CreateString((«access» != NULL) ? «access» : "")'''
+                case CLASS,
+                case STRUCT: '''cJSON_CreateObject()'''
                 default: {
                     environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
                     ""
@@ -181,20 +243,26 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
         }
     }
     
-    def String serializeArray(VariableStore store, String varName, int idx, String json) {
-        val info = store.variables.get(varName).head
+    def String serializeArray(Pair<String, VariableInformation> variable, String accessPrefix, int idx, String json, int depth) {
+        val varName = variable.key.simpleName
+        val info = variable.value
         val dimensions = info.dimensions
+        val iPrefix = if (depth == 0) "i" else "i_" + depth + "_"
+        val i = iPrefix + idx
+        val item = if (depth == 0) "item" + idx else "item_" + depth + "_" + idx
+        val access = accessPrefix + varName + (0..<dimensions.size).map["["+iPrefix+it+"]"].join
         val creator = if (idx + 1 >= dimensions.size) {
-            val accessor = access + varName + (0..<dimensions.size).map["[i"+it+"]"].join
             switch(info.type) {
-                case BOOL: '''cJSON_CreateBool(${tickdata_name}«accessor»)'''
+                case BOOL: '''cJSON_CreateBool(«access»)'''
                 case UNSIGNED,
                 case INT,
                 case DOUBLE,
-                case FLOAT: '''cJSON_CreateNumber(${tickdata_name}«accessor»)'''
-                case STRING: '''cJSON_CreateString((${tickdata_name}«accessor» != NULL) ? ${tickdata_name}«accessor» : "")'''
+                case FLOAT: '''cJSON_CreateNumber(«access»)'''
+                case STRING: '''cJSON_CreateString((«access» != NULL) ? «access» : "")'''
+                case CLASS,
+                case STRUCT: '''cJSON_CreateObject()'''
                 default: {
-                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                    environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
                     ""
                 }
             }
@@ -202,27 +270,46 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             '''cJSON_CreateArray()'''
         }
         return '''
-            for (int i«idx» = 0; i«idx» < «dimensions.get(idx)»; i«idx»++) {
-                cJSON *item«idx» = «creator»;
+            for (int «i» = 0; «i» < «dimensions.get(idx)»; «i»++) {
+                cJSON *«item» = «creator»;
+                cJSON_AddItemToArray(«json», «item»);
                 «IF idx + 1 < dimensions.size»
-                «store.serializeArray(varName, idx + 1, "item" + idx)»
+                    «variable.serializeArray(accessPrefix, idx + 1, item, depth)»
+                «ELSE»
+                    «IF info.container»
+                    «variable.serializeMember(access + ".", item, depth)»
+                    «ENDIF»
                 «ENDIF»
-                cJSON_AddItemToArray(«json», item«idx»);
             }
         '''
     }
     
-    def parse(VariableStore store, String varName, String json) {
-        if (store.variables.get(varName).head.array) {
-            return store.parseArray(varName, 0, store.variables.get(varName).head.dimensions.size, json)
+    def serializeMember(Pair<String, VariableInformation> variable, String accessPrefix, String item, int depth) {
+        val store = VariableStore.getVariableStore(environment)
+        val members = store.orderedVariables.filter[value.encapsulatedIn.contains(variable.key)]
+        return '''
+            «FOR member : members»
+                // Add member «member.key.simpleName»
+                «member.serialize(accessPrefix, item, null, null, depth + 1)»
+            «ENDFOR»
+        '''
+    }
+    
+    def parse(Pair<String, VariableInformation> variable, String json) {
+        val varName = variable.key
+        val info = variable.value
+        if (info.array) {
+            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variables.")
+            return info.parseArray(varName, 0, info.dimensions.size, json)
+        } else if (info.isExternal){
+            return '''«info.externalName» = «json»«info.jsonTypeGetter»;'''
         } else {
-            return '''${tickdata_name}«access»«varName» = «json»«store.jsonTypeGetter(varName)»;'''
+            return '''${tickdata_name}«accessor»«varName» = «json»«info.jsonTypeGetter»;'''
         }
     }
     
-    def jsonTypeGetter(VariableStore store, String varName) {
-        val type = store.variables.get(varName).head.inferType
-        return switch(type) {
+    def jsonTypeGetter(VariableInformation info) {
+        return switch(info.type) {
             case UNSIGNED,
             case BOOL,
             case INT: "->valueint"
@@ -230,20 +317,20 @@ class CSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Ob
             case FLOAT: "->valuedouble"
             case STRING: "->valuestring"
             default: {
-                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + type)
+                environment.errors.add("Cannot serialize simulation interface. Unsupported type: " + info.type)
                 ""
             }
         }
     }
 
-    def String parseArray(VariableStore store, String varName, int idx, int dimensions, String json) {
+    def String parseArray(VariableInformation info, String varName, int idx, int dimensions, String json) {
         if (idx == dimensions) {
-            return '''${tickdata_name}«access»«varName»«(0..<dimensions).map["[i"+it+"]"].join» = item«idx - 1»«store.jsonTypeGetter(varName)»;'''
+            return '''${tickdata_name}«accessor»«varName»«(0..<dimensions).map["[i"+it+"]"].join» = item«idx - 1»«info.jsonTypeGetter»;'''
         } else {
             return '''
                 for (int i«idx» = 0; i«idx» < cJSON_GetArraySize(«json»); i«idx»++) {
                     cJSON *item«idx» = cJSON_GetArrayItem(«json», i«idx»);
-                    «store.parseArray(varName, idx + 1, dimensions, "item" + idx)»
+                    «info.parseArray(varName, idx + 1, dimensions, "item" + idx)»
                 }
             '''
         }

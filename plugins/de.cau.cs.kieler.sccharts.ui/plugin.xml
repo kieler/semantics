@@ -28,6 +28,10 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction"
             id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ExpandAllRegionsAction">
       </action>
+      <action
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.ToggleDependencyAction"
+            id="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.toggleDependencyAction">
+      </action>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.diagramSyntheses">
@@ -62,12 +66,6 @@
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowAnnotationsHook">
       </hook>
       <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGLoopHook">
-      </hook>
-      <hook
-            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SCGDependencyHook">
-      </hook>
-      <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.HideAnnotationHook">
       </hook>
       <hook
@@ -91,12 +89,12 @@
       <hook
             class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.InducedDataflowHook">
       </hook>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.sccharts.text.generator.extension">
-      <SCTGeneratorExtension
-            class="de.cau.cs.kieler.sccharts.ui.text.sctgenerator.extensions.KGXExtension">
-      </SCTGeneratorExtension>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ShowStateDependencyHook">
+      </hook>
+      <hook
+            class="de.cau.cs.kieler.sccharts.ui.synthesis.hooks.ActionsAsDataflowHook">
+      </hook>
    </extension>
     <extension
             point="org.eclipse.ui.editors">
@@ -449,12 +447,25 @@
             id="de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.category"
             name="SCT Generator Category">
       </category>
+      <category
+            id="de.cau.cs.kieler.sccharts.ui.text.annotations.category"
+            name="SCTX Annotations Category">
+      </category>
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.ui.text.annotations.category"
+            id="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies"
+            name="Annotate Dependencies">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
             class="de.cau.cs.kieler.sccharts.ui.text.sctgenerator.SCTGeneratorDialogHandler"
             commandId="de.cau.cs.kieler.sccharts.ui.text.SCTGenerator.openDialog">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.text.annotations.SCTXAnnotateDependenciesHandler"
+            commandId="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies">
       </handler>
    </extension>
    <extension
@@ -484,6 +495,19 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.ui.text.annotations.dependencies"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.SCTX.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension>
    <extension
          point="de.cau.cs.kieler.klighd.ui.view.editor">
@@ -493,6 +517,138 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             editorID="de.cau.cs.kieler.sccharts.text.SCTX">
       </editor>
    </extension>
-   
+   <extension
+         id="de.cau.cs.kieler.sccharts.ui.application.SCChartFileRenderingApplication"
+         name="SCCharts File Renderer"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="de.cau.cs.kieler.sccharts.ui.application.SCChartFileRenderingApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            canFinishEarly="false"
+            class="de.cau.cs.kieler.sccharts.ui.wizard.SctxFileWizard"
+            hasPages="true"
+            icon="icons/sccharts_icon16.png"
+            id="de.cau.cs.kieler.sccharts.ui.sctxWizard"
+            name="SCChart"
+            project="false">
+         <description>
+            Create a new SCCharts Text file.
+         </description>
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.Modeling">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <newWizardShortcut
+               id="de.cau.cs.kieler.sccharts.ui.sctxWizard">
+         </newWizardShortcut>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.ui.devel.category"
+            id="de.cau.cs.kieler.sccharts.ui.reserialize"
+            name="Reserialize SCTX">
+      </command>
+      <category
+            id="de.cau.cs.kieler.sccharts.ui.devel.category"
+            name="KIELER SCCharts Development Tools">
+      </category>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.debug.ReserializeCommand"
+            commandId="de.cau.cs.kieler.sccharts.ui.reserialize">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.ui.reserialize"
+               label="ReSerialize SCTX"
+               mnemonic="C"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <adapt
+                              type="org.eclipse.core.resources.IProject">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFolder">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFile">
+                           <test
+                                 property="org.eclipse.core.resources.extension"
+                                 value="sctx">
+                           </test>
+                        </adapt>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.ui.reserialize"
+               label="ReSerialize SCTX"
+               mnemonic="C"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="selection">
+                  <iterate
+                        ifEmpty="false"
+                        operator="and">
+                     <or>
+                        <adapt
+                              type="org.eclipse.core.resources.IProject">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFolder">
+                        </adapt>
+                        <adapt
+                              type="org.eclipse.core.resources.IFile">
+                           <test
+                                 property="org.eclipse.core.resources.extension"
+                                 value="sctx">
+                           </test>
+                        </adapt>
+                     </or>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
    
 </plugin>

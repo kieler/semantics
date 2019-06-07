@@ -12,13 +12,13 @@
  */
 package de.cau.cs.kieler.kicool.environments
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -79,7 +79,10 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Long> OVERALL_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
-        
+    
+    public static val IProperty<Long> OVERALL_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.overallTime", new Long(0))
+    
     public static val IProperty<Long> PTIME = 
         new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
 
@@ -105,9 +108,22 @@ class Environment extends EnvironmentPropertyHolder {
         new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
         
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
-             
+    
     new() {
     }
+    
+    def <T> T getProperty(IProperty<T> property, Object snapshotModel) {
+        val snapshots = getProperty(SNAPSHOTS)
+        val snapshot = snapshots.getModelSnapshot(snapshotModel)
+        
+        if (snapshot !== null) {
+            if (snapshot.environment.propertyExists(property)) {
+                return snapshot.environment.getProperty(property)
+            }                
+        }
+        
+        return property.getProperty
+    }    
     
     def getErrors() {
         getProperty(ERRORS)
@@ -134,5 +150,26 @@ class Environment extends EnvironmentPropertyHolder {
     def isInDeveloperMode() {
         getProperty(DEVELOPER_MODE)
     }
-  
+    
+    /** 
+     * Convenient toString method mainly for debugging purposes.
+     */
+    override toString() {
+        val text = new StringBuilder
+        text.append("Environment@")
+        text.append(hashCode)
+        if (propertyMap.size > 0) {
+            text.append("\n")
+            for (k : propertyMap.keySet) {
+                text.append("  ")
+                text.append(k.id)
+                text.append(" = ")
+                text.append(propertyMap.get(k).toString)
+                text.append("\n")                
+            }
+            text.append("\n")
+        }
+        
+        return text.toString
+    }
 }

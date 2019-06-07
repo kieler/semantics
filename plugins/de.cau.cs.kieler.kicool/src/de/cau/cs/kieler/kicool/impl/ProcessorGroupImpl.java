@@ -86,6 +86,7 @@ public class ProcessorGroupImpl extends ProcessorEntryImpl implements ProcessorG
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ProcessorEntry> getProcessors() {
         if (processors == null) {
             processors = new EObjectContainmentEList<ProcessorEntry>(ProcessorEntry.class, this, KiCoolPackage.PROCESSOR_GROUP__PROCESSORS);
@@ -98,6 +99,7 @@ public class ProcessorGroupImpl extends ProcessorEntryImpl implements ProcessorG
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -107,6 +109,7 @@ public class ProcessorGroupImpl extends ProcessorEntryImpl implements ProcessorG
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
@@ -207,7 +210,7 @@ public class ProcessorGroupImpl extends ProcessorEntryImpl implements ProcessorG
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (label: ");
         result.append(label);
         result.append(')');

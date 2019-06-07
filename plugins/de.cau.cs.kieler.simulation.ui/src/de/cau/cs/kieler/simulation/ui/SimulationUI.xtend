@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui
 
-import de.cau.cs.kieler.core.model.ui.console.Consoles
+import de.cau.cs.kieler.kicool.ui.console.Consoles
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.Compile
@@ -34,6 +34,7 @@ import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.swt.widgets.Display
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.ui.statushandlers.StatusAdapter
 
 /**
  * Handles the one simulation that should be shown in the UI.
@@ -174,20 +175,16 @@ class SimulationUI {
                     
                     if (monitor.canceled) {return Status.CANCEL_STATUS}
                 
-                    if (!context.result.errors.empty) {
-                        for (error : context.result.errors?.get(Environment.REPORT_ROOT)) {
-                            StatusManager.getManager().handle(new Status(IStatus.ERROR, SimulationUIPlugin.PLUGIN_ID,
-                                "Error in compilation for simulation:\n " + error.message), StatusManager.SHOW)
-                        }
+                    if (context.hasErrors) {
+                        val status = new Status(IStatus.ERROR, SimulationUIPlugin.PLUGIN_ID, "Error(s) in compilation for simulation", new Throwable(context.allErrors.map[message].toSet.join("\n")))
+                        StatusManager.getManager().handle(status, StatusManager.SHOW.bitwiseOr(StatusManager.LOG))
                         return Status.CANCEL_STATUS
                     }
                     
-                    if (!context.result.warnings.empty) {
-                        for (waring : context.result.warnings?.get(Environment.REPORT_ROOT)) {
-                            StatusManager.getManager().handle(new Status(IStatus.WARNING, SimulationUIPlugin.PLUGIN_ID,
-                                "Warning in compilation for simulation:\n " + waring.message), StatusManager.LOG)
-                        }
-                    }
+//                    if (context.hasWarings) {
+//                        StatusManager.getManager().handle(new Status(IStatus.WARNING, SimulationUIPlugin.PLUGIN_ID,
+//                            "Warning(s) in compilation for simulation", new Throwable(context.allWarnings.map[message].toSet.join("\n"))), StatusManager.LOG)
+//                    }
                     
                     if (monitor.canceled) {return Status.CANCEL_STATUS}
                     
@@ -216,6 +213,16 @@ class SimulationUI {
     
     static def registerObserver(SimulationListener listener) {
         listeners += listener
+        if (currentSimulation !== null) {
+            currentSimulation.addObserver(listener)
+        }
+    }
+    
+    static def removeObserver(SimulationListener listener) {
+        listeners -= listener
+        if (currentSimulation !== null) {
+            currentSimulation.deleteObserver(listener)
+        }
     }
     
     static def getObservers() {

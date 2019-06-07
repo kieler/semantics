@@ -66,23 +66,14 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     switch (eClass.getClassifierID())
     {
-      case KivisPackage.VISUALIZATION_CONFIGURATION: return createVisualizationConfiguration();
-      case KivisPackage.ELEMENT: return createElement();
-      case KivisPackage.INTERACTION: return createInteraction();
-      case KivisPackage.EVENT: return createEvent();
+      case KivisPackage.VISUALIZATION: return createVisualization();
+      case KivisPackage.CONTENT: return createContent();
+      case KivisPackage.BINDING: return createBinding();
+      case KivisPackage.HANDLER: return createHandler();
       case KivisPackage.ACTION: return createAction();
-      case KivisPackage.FUNCTION: return createFunction();
-      case KivisPackage.ANIMATION: return createAnimation();
-      case KivisPackage.ATTRIBUTE_MAPPING: return createAttributeMapping();
-      case KivisPackage.MAPPING: return createMapping();
-      case KivisPackage.CONDITION: return createCondition();
-      case KivisPackage.COMPARISON: return createComparison();
-      case KivisPackage.DOMAIN: return createDomain();
-      case KivisPackage.INTERVAL: return createInterval();
-      case KivisPackage.VARIABLE_REFERENCE: return createVariableReference();
-      case KivisPackage.MODEL_REFERENCE: return createModelReference();
-      case KivisPackage.FUNCTION_PARAMETER: return createFunctionParameter();
-      case KivisPackage.AND_EXPRESSION: return createAndExpression();
+      case KivisPackage.CODE: return createCode();
+      case KivisPackage.SETTER: return createSetter();
+      case KivisPackage.INTERFACE: return createInterface();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -98,10 +89,8 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     switch (eDataType.getClassifierID())
     {
-      case KivisPackage.DOM_EVENT:
-        return createDOMEventFromString(eDataType, initialValue);
-      case KivisPackage.SIMULATION_OPERATION:
-        return createSimulationOperationFromString(eDataType, initialValue);
+      case KivisPackage.SIMULATION_CORNTROL:
+        return createSimulationCorntrolFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -117,10 +106,8 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
   {
     switch (eDataType.getClassifierID())
     {
-      case KivisPackage.DOM_EVENT:
-        return convertDOMEventToString(eDataType, instanceValue);
-      case KivisPackage.SIMULATION_OPERATION:
-        return convertSimulationOperationToString(eDataType, instanceValue);
+      case KivisPackage.SIMULATION_CORNTROL:
+        return convertSimulationCorntrolToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -131,10 +118,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public VisualizationConfiguration createVisualizationConfiguration()
+  public Visualization createVisualization()
   {
-    VisualizationConfigurationImpl visualizationConfiguration = new VisualizationConfigurationImpl();
-    return visualizationConfiguration;
+    VisualizationImpl visualization = new VisualizationImpl();
+    return visualization;
   }
 
   /**
@@ -142,10 +129,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Element createElement()
+  public Content createContent()
   {
-    ElementImpl element = new ElementImpl();
-    return element;
+    ContentImpl content = new ContentImpl();
+    return content;
   }
 
   /**
@@ -153,10 +140,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Interaction createInteraction()
+  public Binding createBinding()
   {
-    InteractionImpl interaction = new InteractionImpl();
-    return interaction;
+    BindingImpl binding = new BindingImpl();
+    return binding;
   }
 
   /**
@@ -164,10 +151,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Event createEvent()
+  public Handler createHandler()
   {
-    EventImpl event = new EventImpl();
-    return event;
+    HandlerImpl handler = new HandlerImpl();
+    return handler;
   }
 
   /**
@@ -186,10 +173,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Function createFunction()
+  public Code createCode()
   {
-    FunctionImpl function = new FunctionImpl();
-    return function;
+    CodeImpl code = new CodeImpl();
+    return code;
   }
 
   /**
@@ -197,10 +184,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Animation createAnimation()
+  public Setter createSetter()
   {
-    AnimationImpl animation = new AnimationImpl();
-    return animation;
+    SetterImpl setter = new SetterImpl();
+    return setter;
   }
 
   /**
@@ -208,10 +195,10 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public AttributeMapping createAttributeMapping()
+  public Interface createInterface()
   {
-    AttributeMappingImpl attributeMapping = new AttributeMappingImpl();
-    return attributeMapping;
+    InterfaceImpl interface_ = new InterfaceImpl();
+    return interface_;
   }
 
   /**
@@ -219,108 +206,9 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Mapping createMapping()
+  public SimulationCorntrol createSimulationCorntrolFromString(EDataType eDataType, String initialValue)
   {
-    MappingImpl mapping = new MappingImpl();
-    return mapping;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Condition createCondition()
-  {
-    ConditionImpl condition = new ConditionImpl();
-    return condition;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Comparison createComparison()
-  {
-    ComparisonImpl comparison = new ComparisonImpl();
-    return comparison;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Domain createDomain()
-  {
-    DomainImpl domain = new DomainImpl();
-    return domain;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Interval createInterval()
-  {
-    IntervalImpl interval = new IntervalImpl();
-    return interval;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public VariableReference createVariableReference()
-  {
-    VariableReferenceImpl variableReference = new VariableReferenceImpl();
-    return variableReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ModelReference createModelReference()
-  {
-    ModelReferenceImpl modelReference = new ModelReferenceImpl();
-    return modelReference;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FunctionParameter createFunctionParameter()
-  {
-    FunctionParameterImpl functionParameter = new FunctionParameterImpl();
-    return functionParameter;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AndExpression createAndExpression()
-  {
-    AndExpressionImpl andExpression = new AndExpressionImpl();
-    return andExpression;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DOMEvent createDOMEventFromString(EDataType eDataType, String initialValue)
-  {
-    DOMEvent result = DOMEvent.get(initialValue);
+    SimulationCorntrol result = SimulationCorntrol.get(initialValue);
     if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     return result;
   }
@@ -330,29 +218,7 @@ public class KivisFactoryImpl extends EFactoryImpl implements KivisFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public String convertDOMEventToString(EDataType eDataType, Object instanceValue)
-  {
-    return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SimulationOperation createSimulationOperationFromString(EDataType eDataType, String initialValue)
-  {
-    SimulationOperation result = SimulationOperation.get(initialValue);
-    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    return result;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertSimulationOperationToString(EDataType eDataType, Object instanceValue)
+  public String convertSimulationCorntrolToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

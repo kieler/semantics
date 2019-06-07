@@ -102,8 +102,8 @@
     <eLiterals name="ELSEBRANCH" value="2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ControlFlow" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Link"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ControlDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="ExpressionDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="GuardDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="ScheduleDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TickBoundaryDependency" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Dependency"/>
 </ecore:EPackage>

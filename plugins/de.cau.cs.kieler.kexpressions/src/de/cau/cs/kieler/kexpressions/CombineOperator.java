@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -29,6 +25,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>NONE</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Specifies that no combine operator is given. 
+     * <!-- end-model-doc -->
      * @see #NONE_VALUE
      * @generated
      * @ordered
@@ -39,6 +38,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>ADD</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic addition.
+     * <!-- end-model-doc -->
      * @see #ADD_VALUE
      * @generated
      * @ordered
@@ -49,6 +51,10 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>MULT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Arithmetic multiplication.
+     * 
+     * <!-- end-model-doc -->
      * @see #MULT_VALUE
      * @generated
      * @ordered
@@ -59,6 +65,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>MAX</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * The maximum function. Takes the greater of the given two.
+     * <!-- end-model-doc -->
      * @see #MAX_VALUE
      * @generated
      * @ordered
@@ -69,6 +78,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>MIN</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * The minimum function. Takes the lesser of the given two.
+     * <!-- end-model-doc -->
      * @see #MIN_VALUE
      * @generated
      * @ordered
@@ -79,6 +91,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>OR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical or function for boolean valued signals.
+     * <!-- end-model-doc -->
      * @see #OR_VALUE
      * @generated
      * @ordered
@@ -89,6 +104,9 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>AND</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Logical and for boolean valued signals.
+     * <!-- end-model-doc -->
      * @see #AND_VALUE
      * @generated
      * @ordered
@@ -99,6 +117,11 @@ public enum CombineOperator implements Enumerator {
      * The '<em><b>HOST</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * Specifies that no built-in combine operator should be used 
+     * but the operator given in the hostCombineOperator field given as a String and 
+     * referencing some function of the host language (maybe C or Java, etc. ) .
+     * <!-- end-model-doc -->
      * @see #HOST_VALUE
      * @generated
      * @ordered
@@ -341,6 +364,7 @@ public enum CombineOperator implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -350,6 +374,7 @@ public enum CombineOperator implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -359,6 +384,7 @@ public enum CombineOperator implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

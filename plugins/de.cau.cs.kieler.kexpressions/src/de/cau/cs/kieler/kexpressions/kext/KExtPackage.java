@@ -291,6 +291,169 @@ public interface KExtPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl <em>Class Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl
+     * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getClassDeclaration()
+     * @generated
+     */
+    int CLASS_DECLARATION = 5;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__DECLARATIONS = DECLARATION_SCOPE__DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__ANNOTATIONS = DECLARATION_SCOPE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__VALUED_OBJECTS = DECLARATION_SCOPE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__ACCESS = DECLARATION_SCOPE_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__TYPE = DECLARATION_SCOPE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__INPUT = DECLARATION_SCOPE_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__OUTPUT = DECLARATION_SCOPE_FEATURE_COUNT + 5;
+
+    /**
+     * The feature id for the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__STATIC = DECLARATION_SCOPE_FEATURE_COUNT + 6;
+
+    /**
+     * The feature id for the '<em><b>Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__SIGNAL = DECLARATION_SCOPE_FEATURE_COUNT + 7;
+
+    /**
+     * The feature id for the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__CONST = DECLARATION_SCOPE_FEATURE_COUNT + 8;
+
+    /**
+     * The feature id for the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__EXTERN = DECLARATION_SCOPE_FEATURE_COUNT + 9;
+
+    /**
+     * The feature id for the '<em><b>Volatile</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__VOLATILE = DECLARATION_SCOPE_FEATURE_COUNT + 10;
+
+    /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__GLOBAL = DECLARATION_SCOPE_FEATURE_COUNT + 11;
+
+    /**
+     * The feature id for the '<em><b>Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__HOST_TYPE = DECLARATION_SCOPE_FEATURE_COUNT + 12;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__NAME = DECLARATION_SCOPE_FEATURE_COUNT + 13;
+
+    /**
+     * The feature id for the '<em><b>Host</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION__HOST = DECLARATION_SCOPE_FEATURE_COUNT + 14;
+
+    /**
+     * The number of structural features of the '<em>Class Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CLASS_DECLARATION_FEATURE_COUNT = DECLARATION_SCOPE_FEATURE_COUNT + 15;
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.kext.Kext <em>Kext</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -407,6 +570,27 @@ public interface KExtPackage extends EPackage {
     EReference getDeclarationScope_Declarations();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.kext.ClassDeclaration <em>Class Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Class Declaration</em>'.
+     * @see de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+     * @generated
+     */
+    EClass getClassDeclaration();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.kext.ClassDeclaration#isHost <em>Host</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Host</em>'.
+     * @see de.cau.cs.kieler.kexpressions.kext.ClassDeclaration#isHost()
+     * @see #getClassDeclaration()
+     * @generated
+     */
+    EAttribute getClassDeclaration_Host();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -499,6 +683,24 @@ public interface KExtPackage extends EPackage {
          * @generated
          */
         EReference DECLARATION_SCOPE__DECLARATIONS = eINSTANCE.getDeclarationScope_Declarations();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl <em>Class Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.ClassDeclarationImpl
+         * @see de.cau.cs.kieler.kexpressions.kext.impl.KExtPackageImpl#getClassDeclaration()
+         * @generated
+         */
+        EClass CLASS_DECLARATION = eINSTANCE.getClassDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Host</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute CLASS_DECLARATION__HOST = eINSTANCE.getClassDeclaration_Host();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.kext.impl.KExtScopeImpl <em>Scope</em>}' class.

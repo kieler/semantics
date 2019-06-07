@@ -130,6 +130,33 @@ public interface SCLFactory extends EFactory {
     ElseScope createElseScope();
 
     /**
+     * Returns a new object of class '<em>Return</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Return</em>'.
+     * @generated
+     */
+    Return createReturn();
+
+    /**
+     * Returns a new object of class '<em>Method Implementation Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Method Implementation Declaration</em>'.
+     * @generated
+     */
+    MethodImplementationDeclaration createMethodImplementationDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Loop</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Loop</em>'.
+     * @generated
+     */
+    Loop createLoop();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

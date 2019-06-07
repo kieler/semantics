@@ -14,10 +14,13 @@ package de.cau.cs.kieler.sccharts.test.c.simulation
 
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import de.cau.cs.kieler.test.common.simulation.AbstractSimulationTest
 import java.util.List
+import org.junit.BeforeClass
 import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Prints out the semantic simulation tests that are known to fail.
@@ -25,7 +28,10 @@ import org.junit.Test
  * @author aas
  *
  */
+@RunWith(ModelsRepositoryTestRunner)
 class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
+
+    private static val Thread shutdownHook = createAndRegisterShutdownHookToPrintStatistics
 
     private static val knownToFailTests = <String, List<TestModelData>>newHashMap
     
@@ -35,7 +41,11 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
                                           "simulation-fails-netlist-java",
                                           "simulation-fails-netlist-java-with-tts",
                                           "simulation-fails-prio-java",
-                                          "simulation-fails-prio-java-with-tts"]
+                                          "simulation-fails-prio-java-with-tts",
+                                          "simulation-fails-statebased-c",
+                                          "simulation-fails-statebased-java",
+                                          "netlist-fails",
+                                          "prio-fails"]
     
     protected static val scchartsInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
     
@@ -62,26 +72,41 @@ class KnownToFailStatistics extends AbstractSimulationTest<SCCharts> {
                 addKnownToFailTest(p, modelData)
             }
         }
-        
-        // TODO: This should only be called once after ALL tests are done,
-        // but there is no hook in the TestRunner to do so
-        printStatistics
     }
-    
-    def static void printStatistics() {
-        // TODO: Call this after ALL tests are done
-        for(entry : knownToFailTests.entrySet) {
-            val knownToFailList = entry.value
-            System.err.println(knownToFailList.size+" known to fail tests of property '"+entry.key+"':")
-            for(modelData : knownToFailList) {
-                System.err.println("\t'"+modelData.modelPath+"'")
-            }
-        }
-    }
-    
+
     private def void addKnownToFailTest(String property, TestModelData modelData) {
         val knownToFailList = knownToFailTests.getOrDefault(property, newArrayList)
         knownToFailList.add(modelData)
         knownToFailTests.put(property, knownToFailList)
+    }
+    
+    
+    public def static void printStatistics() {
+        //This should be called after ALL tests are finished
+        println()
+        println(" == RESULTS ==")
+        for(entry : knownToFailTests.entrySet) {
+            val knownToFailList = entry.value
+            println(knownToFailList.size+" known to fail tests of property '"+entry.key+"':")
+            for(modelData : knownToFailList) {
+                println("\t'"+modelData.modelPath+"'")
+            }
+        }
+    }
+    
+    /**
+     * Adds a shutdown hook to the JVM (if not done yet)
+     * to print the statistics after all tests have been finished.
+     * 
+     * This should be executed in a static initializer, such that it is executed only once.
+     */
+    public def static Thread createAndRegisterShutdownHookToPrintStatistics() {
+        val shutdownHook = new Thread{
+            override run(){
+                printStatistics
+            }
+        }
+        Runtime.getRuntime().addShutdownHook(shutdownHook);
+        return shutdownHook
     }
 }

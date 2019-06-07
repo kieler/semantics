@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import java.util.List
 import java.util.Map
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -24,13 +24,6 @@ import de.cau.cs.kieler.kicool.environments.Environment
  * @kieler.rating proposed yellow
  */
 class TemplateInjection {
-    
-    // Common template positions
-    public static val HEADER = "header"
-    public static val BODY = "body"
-    public static val INIT = "init"
-    public static val INPUT = "input"
-    public static val OUTPUT = "output"
     
     // Environment properties
     public static val IProperty<List<String>> INCLUDES = 
@@ -44,6 +37,10 @@ class TemplateInjection {
         val includes = env.getProperty(INCLUDES)?:newArrayList
         env.setProperty(INCLUDES, includes)
         includes += includeFile
+    }
+    
+    static def addMacroInjection(Environment env, TemplatePosition position, String macroName) {
+        addMacroInjection(env, position.position, macroName)
     }
     
     static def addMacroInjection(Environment env, String position, String macroName) {

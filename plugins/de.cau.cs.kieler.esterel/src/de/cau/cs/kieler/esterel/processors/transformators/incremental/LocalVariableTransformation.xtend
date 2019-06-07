@@ -32,7 +32,7 @@ import de.cau.cs.kieler.esterel.VariableReference
  * @author mrb
  *
  */
-class LocalVariableTransformation extends InplaceProcessor<EsterelProgram> {
+class LocalVariableTransformation extends AbstractSCEstDynamicProcessor<LocalVariableDeclaration> {
     
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -51,31 +51,7 @@ class LocalVariableTransformation extends InplaceProcessor<EsterelProgram> {
     @Inject
     extension EsterelTransformationExtensions
     
-    var EObject lastStatement
-    
-    override process() {
-        val nextStatement = environment.getProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM).getObject
-        val isDynamicCompilation = environment.getProperty(SCEstIntermediateProcessor.DYNAMIC_COMPILATION)
-        
-        if (isDynamicCompilation) {
-            if (nextStatement instanceof LocalVariableDeclaration) {
-                transform(nextStatement)
-            }
-            else {
-                throw new UnsupportedOperationException(
-                    "The next statement to transform and this processor do not match.\n" +
-                    "This processor ID: " + ID + "\n" +
-                    "The statement to transform: " + nextStatement
-                )
-            }
-            environment.setProperty(SCEstIntermediateProcessor.NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(lastStatement))
-        }
-        else {
-            model.eAllContents.filter(LocalVariableDeclaration).toList.forEach[transform]
-        }
-    }
-    
-    def transform(LocalVariableDeclaration variables) {
+    override transform(LocalVariableDeclaration variables) {
         val scope = variables.statements.createScopeStatement
         // this map combines an Esterel variable with the new SCL variable
         val HashMap<ValuedObject, ValuedObject> newVariables = new HashMap<ValuedObject, ValuedObject>()

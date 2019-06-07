@@ -59,8 +59,8 @@ import de.cau.cs.kieler.scl.Assignment
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
 import de.cau.cs.kieler.scl.ScopeStatement
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.EObjectReferencePropertyData
 import de.cau.cs.kieler.esterel.EsterelThread
 
@@ -116,9 +116,13 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
             if (nextObj === null) {
                 throw new Exception("The next statement to transform can not be null!")
             }
-            val processorID = nextObj.getCorrespondingProcessorID 
+            val processorID = nextObj.getCorrespondingProcessorID
+
             environment.setProperty(NEXT_STATEMENT_TO_TRANSFORM, new EObjectReferencePropertyData(nextObj))
             if (nextObj instanceof EsterelProgram) {
+                if (processorID === null) {
+                    throw new NullPointerException("Internal Error")
+                }
                 environment.setProperty(DYNAMIC_COMPILATION, false) // this way all modules are checked
                 processorsToAdd += SENSOR
                 processorsToAdd += CONSTANT
@@ -127,6 +131,9 @@ class  SCEstIntermediateProcessor extends InplaceProcessor<EsterelProgram> {
                 processorsToAdd += processorID
             }
             else if (!(nextObj instanceof Module)) {
+                if (processorID === null) {
+                    throw new NullPointerException("Internal Error")
+                }
                 processorsToAdd += processorID
             }
             // as long as there are Esterel statements, add intermediate processor to the end of the compilation chain

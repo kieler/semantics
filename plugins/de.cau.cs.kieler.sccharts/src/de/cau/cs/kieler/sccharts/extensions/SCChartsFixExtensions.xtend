@@ -12,22 +12,17 @@
  */
 package de.cau.cs.kieler.sccharts.extensions
 
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import java.util.List
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.PreemptionType
-import de.cau.cs.kieler.annotations.extensions.UniqueNameExtensions
-import de.cau.cs.kieler.annotations.extensions.UniqueNameCache
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import java.util.ArrayList
-import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
+import java.util.ArrayList
+import java.util.List
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 /**
  * @author ssm
@@ -37,7 +32,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
  */
 class SCChartsFixExtensions {
 
-    @Inject extension UniqueNameExtensions
+//    @Inject extension UniqueNameExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
@@ -48,30 +43,30 @@ class SCChartsFixExtensions {
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsActionExtensions
     
-    private def uniqueName(State scope, UniqueNameCache nameCache) { scope }
+//    private def uniqueName(State scope, UniqueNameCache nameCache) { scope }
 
     //-------------------------------------------------------------------------
     //--  F I X   F O R   T E R M I N A T I O N S   / W    E F F E C T S     --
     //-------------------------------------------------------------------------
     // This fixes termination transitions that have effects
-    def State fixTerminationWithEffects(State rootState, List<Transition> transitionList, UniqueNameCache nameCache) {
-        val terminationTransitions = transitionList.filter[preemption == PreemptionType::TERMINATION].filter[
-            !effects.nullOrEmpty].toList
-
-        for (terminationTransition : terminationTransitions) {
-            val originalSource = terminationTransition.sourceState
-            val originalTarget = terminationTransition.targetState
-            val region = originalSource.parentRegion
-            val auxiliaryState = region.createState("_TE").uniqueName(nameCache).trace(terminationTransition)
-            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget).trace(
-                terminationTransition)
-            for (effect : terminationTransition.effects.immutableCopy) {
-                auxliiaryTransition.addEffect(effect)
-            }
-            terminationTransition.setTargetState(auxiliaryState)
-        }
-        rootState
-    }
+//    def State fixTerminationWithEffects(State rootState, List<Transition> transitionList, UniqueNameCache nameCache) {
+//        val terminationTransitions = transitionList.filter[preemption == PreemptionType::TERMINATION].filter[
+//            !effects.nullOrEmpty].toList
+//
+//        for (terminationTransition : terminationTransitions) {
+//            val originalSource = terminationTransition.sourceState
+//            val originalTarget = terminationTransition.targetState
+//            val region = originalSource.parentRegion
+//            val auxiliaryState = region.createState("_TE").uniqueName(nameCache).trace(terminationTransition)
+//            val auxliiaryTransition = auxiliaryState.createImmediateTransitionTo(originalTarget).trace(
+//                terminationTransition)
+//            for (effect : terminationTransition.effects.immutableCopy) {
+//                auxliiaryTransition.addEffect(effect)
+//            }
+//            terminationTransition.setTargetState(auxiliaryState)
+//        }
+//        rootState
+//    }
 
     //-------------------------------------------------------------------------
     //--                F I X   F O R   H A L T   S T A T E S                --
@@ -107,11 +102,11 @@ class SCChartsFixExtensions {
     }
 
     def boolean isStateReachable(State originalState, State state, List<State> visited) {
-        if (visited.contains(state) || state == null) {
+        if (visited.contains(state) || state === null) {
             return false
         }
         visited.add(state);
-        if (originalState.parentRegion == null) {
+        if (originalState.parentRegion === null) {
 
             // Root states ARE reachable
             return true

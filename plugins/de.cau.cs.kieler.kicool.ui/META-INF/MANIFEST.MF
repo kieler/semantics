@@ -2,8 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KiCool Ui
 Bundle-SymbolicName: de.cau.cs.kieler.kicool.ui;singleton:=true
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kicool.ui.internal.KiCoolActivator
+Eclipse-UI: True
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.annotations,
@@ -14,31 +15,31 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.annotations.ui,
  de.cau.cs.kieler.klighd.ui.view,
  com.google.guava,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.lib;resolution:=optional,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtend.lib;bundle-version="2.14.0";resolution:=optional,
  org.eclipse.xtend.lib.macro,
  de.cau.cs.kieler.klighd,
  de.cau.cs.kieler.klighd.krendering.extensions,
  org.eclipse.elk.alg.layered,
  de.cau.cs.kieler.klighd.ui,
- org.eclipse.elk.core,
  org.eclipse.ui.ide,
  org.eclipse.xtext.xbase.ui,
- de.cau.cs.kieler.core.model,
  org.eclipse.emf.ecore.edit,
  de.cau.cs.kieler.kgraph.text,
  de.cau.cs.kieler.kexpressions,
- de.cau.cs.kieler.prom.ui,
  de.cau.cs.kieler.kicool.ide,
  de.cau.cs.kieler.kexpressions.ui,
  de.cau.cs.kieler.kexpressions.ide,
  org.eclipse.debug.core;bundle-version="3.11.0",
  org.eclipse.core.externaltools;bundle-version="1.1.0",
- org.eclipse.debug.ui;bundle-version="3.12.50"
+ org.eclipse.debug.ui;bundle-version="3.12.50",
+ org.eclipse.ui.console;bundle-version="3.8.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.kicool.ui,
+ de.cau.cs.kieler.kicool.ui.console,
  de.cau.cs.kieler.kicool.ui.contentassist,
+ de.cau.cs.kieler.kicool.ui.deploy,
  de.cau.cs.kieler.kicool.ui.internal,
  de.cau.cs.kieler.kicool.ui.kitt.synthesis,
  de.cau.cs.kieler.kicool.ui.kitt.tracing,
@@ -47,8 +48,10 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.klighd.actions,
  de.cau.cs.kieler.kicool.ui.klighd.editor,
  de.cau.cs.kieler.kicool.ui.klighd.models,
+ de.cau.cs.kieler.kicool.ui.klighd.syntheses,
  de.cau.cs.kieler.kicool.ui.labeling,
  de.cau.cs.kieler.kicool.ui.outline,
+ de.cau.cs.kieler.kicool.ui.preferences,
  de.cau.cs.kieler.kicool.ui.quickfix,
  de.cau.cs.kieler.kicool.ui.synthesis,
  de.cau.cs.kieler.kicool.ui.synthesis.actions,
@@ -56,5 +59,6 @@ Export-Package: de.cau.cs.kieler.kicool.ui,
  de.cau.cs.kieler.kicool.ui.synthesis.styles,
  de.cau.cs.kieler.kicool.ui.synthesis.updates,
  de.cau.cs.kieler.kicool.ui.view,
- de.cau.cs.kieler.kicool.ui.view.actions
+ de.cau.cs.kieler.kicool.ui.view.actions,
+ de.cau.cs.kieler.kicool.ui.view.registry
 Import-Package: org.apache.log4j

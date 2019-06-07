@@ -4,62 +4,14 @@
 package de.cau.cs.kieler.kivis.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.annotations.CommentAnnotation;
-import de.cau.cs.kieler.annotations.Pragma;
-import de.cau.cs.kieler.annotations.StringAnnotation;
-import de.cau.cs.kieler.annotations.StringPragma;
-import de.cau.cs.kieler.annotations.TagAnnotation;
-import de.cau.cs.kieler.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.kexpressions.BoolValue;
-import de.cau.cs.kieler.kexpressions.FloatValue;
-import de.cau.cs.kieler.kexpressions.FunctionCall;
-import de.cau.cs.kieler.kexpressions.IgnoreValue;
-import de.cau.cs.kieler.kexpressions.IntValue;
-import de.cau.cs.kieler.kexpressions.JsonArrayValue;
-import de.cau.cs.kieler.kexpressions.JsonObjectMember;
-import de.cau.cs.kieler.kexpressions.JsonObjectValue;
-import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.kexpressions.NullValue;
-import de.cau.cs.kieler.kexpressions.OperatorExpression;
-import de.cau.cs.kieler.kexpressions.RandomCall;
-import de.cau.cs.kieler.kexpressions.RandomizeCall;
-import de.cau.cs.kieler.kexpressions.ReferenceCall;
-import de.cau.cs.kieler.kexpressions.ScheduleObjectReference;
-import de.cau.cs.kieler.kexpressions.StringValue;
-import de.cau.cs.kieler.kexpressions.TextExpression;
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kexpressions.VectorValue;
-import de.cau.cs.kieler.kivis.kivis.AndExpression;
-import de.cau.cs.kieler.kivis.kivis.Animation;
-import de.cau.cs.kieler.kivis.kivis.AttributeMapping;
-import de.cau.cs.kieler.kivis.kivis.Comparison;
-import de.cau.cs.kieler.kivis.kivis.Domain;
-import de.cau.cs.kieler.kivis.kivis.Element;
-import de.cau.cs.kieler.kivis.kivis.Event;
-import de.cau.cs.kieler.kivis.kivis.Function;
-import de.cau.cs.kieler.kivis.kivis.FunctionParameter;
-import de.cau.cs.kieler.kivis.kivis.Interaction;
-import de.cau.cs.kieler.kivis.kivis.Interval;
+import de.cau.cs.kieler.kivis.kivis.Binding;
+import de.cau.cs.kieler.kivis.kivis.Code;
+import de.cau.cs.kieler.kivis.kivis.Handler;
+import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
-import de.cau.cs.kieler.kivis.kivis.Mapping;
-import de.cau.cs.kieler.kivis.kivis.ModelReference;
-import de.cau.cs.kieler.kivis.kivis.VariableReference;
-import de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration;
+import de.cau.cs.kieler.kivis.kivis.Setter;
+import de.cau.cs.kieler.kivis.kivis.Visualization;
 import de.cau.cs.kieler.kivis.services.KiVisGrammarAccess;
-import de.cau.cs.kieler.prom.kibuild.ArrayIndex;
-import de.cau.cs.kieler.prom.kibuild.BuildConfiguration;
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-import de.cau.cs.kieler.prom.kibuild.Literal;
-import de.cau.cs.kieler.prom.kibuild.ModelCompiler;
-import de.cau.cs.kieler.prom.kibuild.NormalTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.SignedFloat;
-import de.cau.cs.kieler.prom.kibuild.SignedInt;
-import de.cau.cs.kieler.prom.kibuild.SimulationCompiler;
-import de.cau.cs.kieler.prom.kibuild.SimulationTemplateProcessor;
-import de.cau.cs.kieler.prom.kibuild.TextValue;
-import de.cau.cs.kieler.prom.kibuild.WrapperCodeTemplateProcessor;
-import de.cau.cs.kieler.prom.serializer.KiBuildSemanticSequencer;
 import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -68,10 +20,11 @@ import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
+import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
 
 @SuppressWarnings("all")
-public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequencer {
+public abstract class AbstractKiVisSemanticSequencer extends AbstractDelegatingSemanticSequencer {
 
 	@Inject
 	private KiVisGrammarAccess grammarAccess;
@@ -82,278 +35,56 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 		ParserRule rule = context.getParserRule();
 		Action action = context.getAssignedAction();
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
-		if (epackage == AnnotationsPackage.eINSTANCE)
-			switch (semanticObject.eClass().getClassifierID()) {
-			case AnnotationsPackage.COMMENT_ANNOTATION:
-				if (rule == grammarAccess.getAnnotationRule()
-						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getRestrictedTypeAnnotationRule()
-						|| rule == grammarAccess.getQuotedStringAnnotationRule()
-						|| rule == grammarAccess.getCommentAnnotationRule()) {
-					sequence_CommentAnnotation(context, (CommentAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getCommentAnnotatonSLRule()) {
-					sequence_CommentAnnotatonSL(context, (CommentAnnotation) semanticObject); 
-					return; 
-				}
-				else break;
-			case AnnotationsPackage.PRAGMA:
-				sequence_PragmaTag(context, (Pragma) semanticObject); 
-				return; 
-			case AnnotationsPackage.STRING_ANNOTATION:
-				if (rule == grammarAccess.getAnnotationRule()
-						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getKeyStringValueAnnotationRule()) {
-					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getQuotedStringAnnotationRule()
-						|| rule == grammarAccess.getQuotedKeyStringValueAnnotationRule()) {
-					sequence_QuotedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
-						|| rule == grammarAccess.getRestrictedKeyStringValueAnnotationRule()) {
-					sequence_RestrictedKeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
-					return; 
-				}
-				else break;
-			case AnnotationsPackage.STRING_PRAGMA:
-				sequence_StringPragma(context, (StringPragma) semanticObject); 
-				return; 
-			case AnnotationsPackage.TAG_ANNOTATION:
-				sequence_TagAnnotation(context, (TagAnnotation) semanticObject); 
-				return; 
-			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
-				if (rule == grammarAccess.getQuotedStringAnnotationRule()
-						|| rule == grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()) {
-					sequence_QuotedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getRestrictedTypeAnnotationRule()
-						|| rule == grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()) {
-					sequence_RestrictedTypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getAnnotationRule()
-						|| rule == grammarAccess.getValuedAnnotationRule()
-						|| rule == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
-					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
-					return; 
-				}
-				else break;
-			}
-		else if (epackage == KExpressionsPackage.eINSTANCE)
-			switch (semanticObject.eClass().getClassifierID()) {
-			case KExpressionsPackage.BOOL_VALUE:
-				sequence_BoolValue(context, (BoolValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.FLOAT_VALUE:
-				sequence_FloatValue(context, (FloatValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.FUNCTION_CALL:
-				sequence_FunctionCall(context, (FunctionCall) semanticObject); 
-				return; 
-			case KExpressionsPackage.IGNORE_VALUE:
-				sequence_IgnoreValue(context, (IgnoreValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.INT_VALUE:
-				sequence_IntValue(context, (IntValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.JSON_ARRAY_VALUE:
-				sequence_JsonArrayValue(context, (JsonArrayValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.JSON_OBJECT_MEMBER:
-				sequence_JsonObjectMember(context, (JsonObjectMember) semanticObject); 
-				return; 
-			case KExpressionsPackage.JSON_OBJECT_VALUE:
-				sequence_JsonObjectValue(context, (JsonObjectValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.NULL_VALUE:
-				sequence_NullValue(context, (NullValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.OPERATOR_EXPRESSION:
-				if (rule == grammarAccess.getRootRule()
-						|| rule == grammarAccess.getExpressionRule()
-						|| rule == grammarAccess.getBoolExpressionRule()
-						|| rule == grammarAccess.getLogicalOrExpressionRule()
-						|| action == grammarAccess.getLogicalOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getLogicalAndExpressionRule()
-						|| action == grammarAccess.getLogicalAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseOrExpressionRule()
-						|| action == grammarAccess.getBitwiseOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseXOrExpressionRule()
-						|| action == grammarAccess.getBitwiseXOrExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getBitwiseAndExpressionRule()
-						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getCompareOperationRule()
-						|| action == grammarAccess.getCompareOperationAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getNotOrValuedExpressionRule()
-						|| rule == grammarAccess.getBitwiseNotExpressionRule()
-						|| rule == grammarAccess.getNotExpressionRule()
-						|| rule == grammarAccess.getValuedExpressionRule()
-						|| rule == grammarAccess.getShiftLeftExpressionRule()
-						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getShiftRightExpressionRule()
-						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getShiftRightUnsignedExpressionRule()
-						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAddExpressionRule()
-						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSubExpressionRule()
-						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getMultExpressionRule()
-						|| action == grammarAccess.getMultExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getDivExpressionRule()
-						|| action == grammarAccess.getDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getModExpressionRule()
-						|| action == grammarAccess.getModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getNegExpressionRule()
-						|| rule == grammarAccess.getTernaryOperationRule()
-						|| rule == grammarAccess.getFBYExpressionRule()
-						|| rule == grammarAccess.getAtomicExpressionRule()
-						|| rule == grammarAccess.getAtomicValuedExpressionRule()
-						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FBYExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_MultExpression_NegExpression_NotExpression_ShiftLeftExpression_ShiftRightExpression_ShiftRightUnsignedExpression_SubExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
-					sequence_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else break;
-			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
-			case KExpressionsPackage.RANDOM_CALL:
-				sequence_RandomCall(context, (RandomCall) semanticObject); 
-				return; 
-			case KExpressionsPackage.RANDOMIZE_CALL:
-				sequence_RandomizeCall(context, (RandomizeCall) semanticObject); 
-				return; 
-			case KExpressionsPackage.REFERENCE_CALL:
-				sequence_ReferenceCall(context, (ReferenceCall) semanticObject); 
-				return; 
-			case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE:
-				sequence_ScheduleObjectReference(context, (ScheduleObjectReference) semanticObject); 
-				return; 
-			case KExpressionsPackage.STRING_VALUE:
-				sequence_StringValue(context, (StringValue) semanticObject); 
-				return; 
-			case KExpressionsPackage.TEXT_EXPRESSION:
-				sequence_TextExpression(context, (TextExpression) semanticObject); 
-				return; 
-			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
-				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
-				return; 
-			case KExpressionsPackage.VECTOR_VALUE:
-				sequence_VectorValue(context, (VectorValue) semanticObject); 
-				return; 
-			}
-		else if (epackage == KibuildPackage.eINSTANCE)
-			switch (semanticObject.eClass().getClassifierID()) {
-			case KibuildPackage.ARRAY_INDEX:
-				sequence_ArrayIndex(context, (ArrayIndex) semanticObject); 
-				return; 
-			case KibuildPackage.BUILD_CONFIGURATION:
-				sequence_BuildConfiguration(context, (BuildConfiguration) semanticObject); 
-				return; 
-			case KibuildPackage.LITERAL:
-				sequence_Literal(context, (Literal) semanticObject); 
-				return; 
-			case KibuildPackage.MODEL_COMPILER:
-				sequence_ModelCompiler(context, (ModelCompiler) semanticObject); 
-				return; 
-			case KibuildPackage.NORMAL_TEMPLATE_PROCESSOR:
-				sequence_NormalTemplateProcessor(context, (NormalTemplateProcessor) semanticObject); 
-				return; 
-			case KibuildPackage.SIGNED_FLOAT:
-				sequence_SignedFloat(context, (SignedFloat) semanticObject); 
-				return; 
-			case KibuildPackage.SIGNED_INT:
-				sequence_SignedInt(context, (SignedInt) semanticObject); 
-				return; 
-			case KibuildPackage.SIMULATION_COMPILER:
-				sequence_SimulationCompiler(context, (SimulationCompiler) semanticObject); 
-				return; 
-			case KibuildPackage.SIMULATION_TEMPLATE_PROCESSOR:
-				sequence_SimulationTemplateProcessor(context, (SimulationTemplateProcessor) semanticObject); 
-				return; 
-			case KibuildPackage.TEXT_VALUE:
-				sequence_TextValue(context, (TextValue) semanticObject); 
-				return; 
-			case KibuildPackage.WRAPPER_CODE_TEMPLATE_PROCESSOR:
-				sequence_WrapperCodeTemplateProcessor(context, (WrapperCodeTemplateProcessor) semanticObject); 
-				return; 
-			}
-		else if (epackage == KivisPackage.eINSTANCE)
+		if (epackage == KivisPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KivisPackage.ACTION:
-				if (rule == grammarAccess.getSimulationActionRule()) {
-					sequence_SimulationAction(context, (de.cau.cs.kieler.kivis.kivis.Action) semanticObject); 
+				sequence_Action(context, (de.cau.cs.kieler.kivis.kivis.Action) semanticObject); 
+				return; 
+			case KivisPackage.BINDING:
+				sequence_Binding(context, (Binding) semanticObject); 
+				return; 
+			case KivisPackage.CODE:
+				sequence_Code(context, (Code) semanticObject); 
+				return; 
+			case KivisPackage.HANDLER:
+				sequence_Handler(context, (Handler) semanticObject); 
+				return; 
+			case KivisPackage.INTERFACE:
+				if (rule == grammarAccess.getActionInterface1Rule()
+						|| rule == grammarAccess.getSetterInterfaceRule()) {
+					sequence_ActionInterface1_SetterInterface(context, (Interface) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getActionRule()) {
-					sequence_SimulationAction_VariableAssignment(context, (de.cau.cs.kieler.kivis.kivis.Action) semanticObject); 
+				else if (rule == grammarAccess.getActionInterface2Rule()) {
+					sequence_ActionInterface2(context, (Interface) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getVariableAssignmentRule()) {
-					sequence_VariableAssignment(context, (de.cau.cs.kieler.kivis.kivis.Action) semanticObject); 
+				else if (rule == grammarAccess.getBindingInterface1Rule()) {
+					sequence_BindingInterface1(context, (Interface) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getBindingInterface2Rule()) {
+					sequence_BindingInterface2(context, (Interface) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getCodeInterfaceRule()) {
+					sequence_CodeInterface(context, (Interface) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getHandlerInterface1Rule()) {
+					sequence_HandlerInterface1(context, (Interface) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getHandlerInterface2Rule()) {
+					sequence_HandlerInterface2(context, (Interface) semanticObject); 
 					return; 
 				}
 				else break;
-			case KivisPackage.AND_EXPRESSION:
-				sequence_AndExpression(context, (AndExpression) semanticObject); 
+			case KivisPackage.SETTER:
+				sequence_Setter(context, (Setter) semanticObject); 
 				return; 
-			case KivisPackage.ANIMATION:
-				sequence_Animation(context, (Animation) semanticObject); 
-				return; 
-			case KivisPackage.ATTRIBUTE_MAPPING:
-				sequence_AttributeMapping(context, (AttributeMapping) semanticObject); 
-				return; 
-			case KivisPackage.COMPARISON:
-				sequence_Comparison(context, (Comparison) semanticObject); 
-				return; 
-			case KivisPackage.DOMAIN:
-				if (rule == grammarAccess.getAttributeDomainRule()) {
-					sequence_AttributeDomain(context, (Domain) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getVariableDomainRule()) {
-					sequence_VariableDomain(context, (Domain) semanticObject); 
-					return; 
-				}
-				else break;
-			case KivisPackage.ELEMENT:
-				sequence_Element(context, (Element) semanticObject); 
-				return; 
-			case KivisPackage.EVENT:
-				sequence_Event(context, (Event) semanticObject); 
-				return; 
-			case KivisPackage.FUNCTION:
-				sequence_Function(context, (Function) semanticObject); 
-				return; 
-			case KivisPackage.FUNCTION_PARAMETER:
-				sequence_FunctionParameter(context, (FunctionParameter) semanticObject); 
-				return; 
-			case KivisPackage.INTERACTION:
-				sequence_Interaction(context, (Interaction) semanticObject); 
-				return; 
-			case KivisPackage.INTERVAL:
-				sequence_Interval(context, (Interval) semanticObject); 
-				return; 
-			case KivisPackage.MAPPING:
-				sequence_Mapping(context, (Mapping) semanticObject); 
-				return; 
-			case KivisPackage.MODEL_REFERENCE:
-				sequence_ModelReference(context, (ModelReference) semanticObject); 
-				return; 
-			case KivisPackage.VARIABLE_REFERENCE:
-				sequence_VariableReference(context, (VariableReference) semanticObject); 
-				return; 
-			case KivisPackage.VISUALIZATION_CONFIGURATION:
-				sequence_VisualizationConfiguration(context, (VisualizationConfiguration) semanticObject); 
+			case KivisPackage.VISUALIZATION:
+				sequence_Visualization(context, (Visualization) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -362,273 +93,199 @@ public abstract class AbstractKiVisSemanticSequencer extends KiBuildSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     AndExpression returns AndExpression
-	 *     AndExpression.AndExpression_1_0_0 returns AndExpression
+	 *     ActionInterface1 returns Interface
+	 *     SetterInterface returns Interface
 	 *
 	 * Constraint:
-	 *     (left=AndExpression_AndExpression_1_0_0 operator='&&' right=Comparison)
+	 *     {Interface}
 	 */
-	protected void sequence_AndExpression(ISerializationContext context, AndExpression semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.AND_EXPRESSION__LEFT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.AND_EXPRESSION__LEFT));
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.AND_EXPRESSION__OPERATOR) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.AND_EXPRESSION__OPERATOR));
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.AND_EXPRESSION__RIGHT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.AND_EXPRESSION__RIGHT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAndExpressionAccess().getAndExpressionLeftAction_1_0_0(), semanticObject.getLeft());
-		feeder.accept(grammarAccess.getAndExpressionAccess().getOperatorAmpersandAmpersandKeyword_1_0_1_0(), semanticObject.getOperator());
-		feeder.accept(grammarAccess.getAndExpressionAccess().getRightComparisonParserRuleCall_1_1_0(), semanticObject.getRight());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Animation returns Animation
-	 *
-	 * Constraint:
-	 *     (type=ID variable=VariableReference? attributeMappings+=AttributeMapping* condition=AndExpression?)
-	 */
-	protected void sequence_Animation(ISerializationContext context, Animation semanticObject) {
+	protected void sequence_ActionInterface1_SetterInterface(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     AttributeDomain returns Domain
+	 *     ActionInterface2 returns Interface
 	 *
 	 * Constraint:
-	 *     (currentValue?='value' | value=Literal | range=Interval)
+	 *     pool=ID?
 	 */
-	protected void sequence_AttributeDomain(ISerializationContext context, Domain semanticObject) {
+	protected void sequence_ActionInterface2(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     AttributeMapping returns AttributeMapping
-	 *
-	 * Constraint:
-	 *     (attribute=ID (currentValue?='value' | literal=Literal | (mappings+=Mapping mappings+=Mapping*)))
-	 */
-	protected void sequence_AttributeMapping(ISerializationContext context, AttributeMapping semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AndExpression returns Comparison
-	 *     AndExpression.AndExpression_1_0_0 returns Comparison
-	 *     Comparison returns Comparison
-	 *
-	 * Constraint:
-	 *     (left=VariableReference relation=CompareOperator (right=Literal | right=VariableReference))
-	 */
-	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Element returns Element
-	 *
-	 * Constraint:
-	 *     (name=ID animations+=Animation+)
-	 */
-	protected void sequence_Element(ISerializationContext context, Element semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Event returns Event
-	 *
-	 * Constraint:
-	 *     (event=DOMEvent element=ID)
-	 */
-	protected void sequence_Event(ISerializationContext context, Event semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.EVENT__EVENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.EVENT__EVENT));
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.EVENT__ELEMENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.EVENT__ELEMENT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getEventAccess().getEventDOMEventEnumRuleCall_0_0(), semanticObject.getEvent());
-		feeder.accept(grammarAccess.getEventAccess().getElementIDTerminalRuleCall_2_0(), semanticObject.getElement());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     FunctionParameter returns FunctionParameter
-	 *
-	 * Constraint:
-	 *     (variableReference=VariableReference | value=Literal)
-	 */
-	protected void sequence_FunctionParameter(ISerializationContext context, FunctionParameter semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Function returns Function
-	 *
-	 * Constraint:
-	 *     (functionName=ID (parameters+=FunctionParameter parameters+=FunctionParameter*)?)
-	 */
-	protected void sequence_Function(ISerializationContext context, Function semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Interaction returns Interaction
-	 *
-	 * Constraint:
-	 *     ((event=Event | afterTick?='after tick' | beforeTick?='before tick')? actions+=Action* condition=AndExpression?)
-	 */
-	protected void sequence_Interaction(ISerializationContext context, Interaction semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Interval returns Interval
-	 *
-	 * Constraint:
-	 *     ((from=SignedInt | from=SignedFloat) (to=SignedInt | to=SignedFloat))
-	 */
-	protected void sequence_Interval(ISerializationContext context, Interval semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Mapping returns Mapping
-	 *
-	 * Constraint:
-	 *     (variableDomain=VariableDomain attributeDomain=AttributeDomain)
-	 */
-	protected void sequence_Mapping(ISerializationContext context, Mapping semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.MAPPING__VARIABLE_DOMAIN) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.MAPPING__VARIABLE_DOMAIN));
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.MAPPING__ATTRIBUTE_DOMAIN) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.MAPPING__ATTRIBUTE_DOMAIN));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getMappingAccess().getVariableDomainVariableDomainParserRuleCall_0_0(), semanticObject.getVariableDomain());
-		feeder.accept(grammarAccess.getMappingAccess().getAttributeDomainAttributeDomainParserRuleCall_2_0(), semanticObject.getAttributeDomain());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ModelReference returns ModelReference
-	 *
-	 * Constraint:
-	 *     name=ID
-	 */
-	protected void sequence_ModelReference(ISerializationContext context, ModelReference semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.MODEL_REFERENCE__NAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.MODEL_REFERENCE__NAME));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getModelReferenceAccess().getNameIDTerminalRuleCall_0_0(), semanticObject.getName());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     SimulationAction returns Action
-	 *
-	 * Constraint:
-	 *     operation=SimulationOperation
-	 */
-	protected void sequence_SimulationAction(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.ACTION__OPERATION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.ACTION__OPERATION));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSimulationActionAccess().getOperationSimulationOperationEnumRuleCall_0_0(), semanticObject.getOperation());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
+	 *     Content returns Action
 	 *     Action returns Action
 	 *
 	 * Constraint:
-	 *     ((variable=VariableReference (value=Literal | function=Function)) | operation=SimulationOperation)
+	 *     (
+	 *         domEvent=STRING 
+	 *         multimatch?='all'? 
+	 *         domElement=STRING 
+	 *         (interface=ActionInterface1 script=SCRIPT)? 
+	 *         (deferredInterface=ActionInterface2 deferredScript=SCRIPT)? 
+	 *         setter+=Setter* 
+	 *         signal=ComplexKey? 
+	 *         control=SimulationCorntrol?
+	 *     )
 	 */
-	protected void sequence_SimulationAction_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
+	protected void sequence_Action(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     VariableAssignment returns Action
+	 *     BindingInterface1 returns Interface
 	 *
 	 * Constraint:
-	 *     (variable=VariableReference (value=Literal | function=Function))
+	 *     (element=ID (variable=ID | (variable=ID pool=ID))?)
 	 */
-	protected void sequence_VariableAssignment(ISerializationContext context, de.cau.cs.kieler.kivis.kivis.Action semanticObject) {
+	protected void sequence_BindingInterface1(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     VariableDomain returns Domain
+	 *     BindingInterface2 returns Interface
 	 *
 	 * Constraint:
-	 *     (otherValues?='others' | value=Literal | range=Interval)
+	 *     (variable=ID pool=ID?)?
 	 */
-	protected void sequence_VariableDomain(ISerializationContext context, Domain semanticObject) {
+	protected void sequence_BindingInterface2(ISerializationContext context, Interface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     VariableReference returns VariableReference
+	 *     Content returns Binding
+	 *     Binding returns Binding
 	 *
 	 * Constraint:
-	 *     (model=ModelReference? name=ID arrayIndex=ArrayIndex?)
+	 *     (variable=ComplexKey ((domElement=STRING interface=BindingInterface1 script=SCRIPT) | (interface=BindingInterface2 script=SCRIPT)))
 	 */
-	protected void sequence_VariableReference(ISerializationContext context, VariableReference semanticObject) {
+	protected void sequence_Binding(ISerializationContext context, Binding semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     VisualizationConfiguration returns VisualizationConfiguration
+	 *     CodeInterface returns Interface
 	 *
 	 * Constraint:
-	 *     (image=STRING | (image=STRING (elements+=Element | interactions+=Interaction)+))?
+	 *     pool=ID?
 	 */
-	protected void sequence_VisualizationConfiguration(ISerializationContext context, VisualizationConfiguration semanticObject) {
+	protected void sequence_CodeInterface(ISerializationContext context, Interface semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Content returns Code
+	 *     Code returns Code
+	 *
+	 * Constraint:
+	 *     (interface=CodeInterface script=SCRIPT)
+	 */
+	protected void sequence_Code(ISerializationContext context, Code semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.CONTENT__INTERFACE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.CONTENT__INTERFACE));
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.CONTENT__SCRIPT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.CONTENT__SCRIPT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCodeAccess().getInterfaceCodeInterfaceParserRuleCall_1_0(), semanticObject.getInterface());
+		feeder.accept(grammarAccess.getCodeAccess().getScriptSCRIPTTerminalRuleCall_2_0(), semanticObject.getScript());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     HandlerInterface1 returns Interface
+	 *
+	 * Constraint:
+	 *     (element=ID variable=ID pool=ID?)
+	 */
+	protected void sequence_HandlerInterface1(ISerializationContext context, Interface semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     HandlerInterface2 returns Interface
+	 *
+	 * Constraint:
+	 *     (variable=ID pool=ID?)
+	 */
+	protected void sequence_HandlerInterface2(ISerializationContext context, Interface semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Content returns Handler
+	 *     Handler returns Handler
+	 *
+	 * Constraint:
+	 *     (
+	 *         variable=SimpleKey 
+	 *         ((multimatch?='all'? domElement=STRING interface=HandlerInterface1 script=SCRIPT) | (interface=HandlerInterface2 script=SCRIPT))
+	 *     )
+	 */
+	protected void sequence_Handler(ISerializationContext context, Handler semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Setter returns Setter
+	 *
+	 * Constraint:
+	 *     (variable=ComplexKey interface=SetterInterface script=SCRIPT)
+	 */
+	protected void sequence_Setter(ISerializationContext context, Setter semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__INTERFACE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__INTERFACE));
+			if (transientValues.isValueTransient(semanticObject, KivisPackage.Literals.SETTER__SCRIPT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, KivisPackage.Literals.SETTER__SCRIPT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSetterAccess().getVariableComplexKeyParserRuleCall_0_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getSetterAccess().getInterfaceSetterInterfaceParserRuleCall_1_0(), semanticObject.getInterface());
+		feeder.accept(grammarAccess.getSetterAccess().getScriptSCRIPTTerminalRuleCall_2_0(), semanticObject.getScript());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Visualization returns Visualization
+	 *
+	 * Constraint:
+	 *     (
+	 *         (images+=STRING* loads+=STRING+ init=SCRIPT content+=Content*) | 
+	 *         (images+=STRING* (init=SCRIPT | (init=SCRIPT content+=Content*))) | 
+	 *         init=SCRIPT | 
+	 *         (init=SCRIPT content+=Content*)
+	 *     )?
+	 */
+	protected void sequence_Visualization(ISerializationContext context, Visualization semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -29,7 +29,7 @@ abstract class AbstractCodeGeneratorModule {
     
     @Inject protected Injector injector
         
-    @Accessors val StringBuilder code = new StringBuilder
+    @Accessors var StringBuilder code = new StringBuilder
     @Accessors var String baseName = ""
     @Accessors var String prefix = ""
     @Accessors var String suffix = ""
@@ -44,7 +44,9 @@ abstract class AbstractCodeGeneratorModule {
     /**
      * The name of the generated code part.
      */
-    def String getName()
+    def String getName() {
+        prefix + baseName + suffix
+    }
     
     /**
      * Indent adds the indentation to the builder.
@@ -176,6 +178,15 @@ abstract class AbstractCodeGeneratorModule {
     
     protected def String IFC(boolean condition, String comment) {
         return if (!condition) "" else comment
+    }
+    
+    protected def String IFC(boolean condition, Object ... args) {
+        if (!condition) return ""
+        val sb = new StringBuilder
+        for (s : args) {
+            sb.add(s)
+        }
+        return sb.toString
     }
     
     // Multi-Line Comment

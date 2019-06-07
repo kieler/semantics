@@ -17,8 +17,12 @@ import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimaps
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.kexpressions.keffects.converter.KEffectsEmissionReferenceCallConverter
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.Transition
 import java.io.File
 import java.io.IOException
 import java.io.OutputStream
@@ -38,10 +42,7 @@ import org.eclipse.xtext.resource.XtextResourceSet
 import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
-import static extension de.cau.cs.kieler.core.model.util.URIUtils.*
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import static extension de.cau.cs.kieler.core.uri.URIUtils.*
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -54,11 +55,12 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension PragmaExtensions
+    @Inject extension KEffectsEmissionReferenceCallConverter
 
     public static val FILE_EXTENSION = "sctx"
     private static val FILE_EXTENSION_INTERN = "." + FILE_EXTENSION
 
-    public static val PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
+    public static val DEPRECATED_PRAGMA_IMPORT = PragmaRegistry.register("import", StringPragma,
         "Add resources via import to the resource set.")
 
     /** All resources that were imported */
@@ -129,6 +131,9 @@ public class SCTXResource extends LazyLinkingResource {
                 // fail silent
             }
         }
+        
+        // Fix Emission vs. ReferenceCallEffect uncertainty.
+        parseResult.fixEmissionReferenceCallEffectDuality
 
         super.updateInternalState(parseResult);
 
@@ -164,17 +169,17 @@ public class SCTXResource extends LazyLinkingResource {
             SCTXStandaloneSetup.doSetup.getInstance(XtextResourceSet).resources.add(this)
         }
 
-        // Import pragma delta
-        val importPragmas = scc.getPragmas(PRAGMA_IMPORT).filter(StringPragma).map[values].flatten.toSet
-        val addedImports = importPragmas.difference(currentImports.keySet)
-        val removedImports = currentImports.keySet.difference(importPragmas)
+        // Import delta
+        val imports = scc.imports.toSet
+        val addedImports = imports.difference(currentImports.keySet)
+        val removedImports = currentImports.keySet.difference(imports)
 
         val base = uri.segmentsList.take(uri.segmentCount - 1).join(uri.scheme + ":/", "/", "/", [it])
 
         // Update folder imports
         // This might be slow!
         var folderImportChanged = false
-        for (folderImport : importPragmas.filter [
+        for (folderImport : imports.filter [
             it.endsWith("*") && !addedImports.contains(it) && !removedImports.contains(it)
         ]) {
             try {

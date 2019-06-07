@@ -3,8 +3,6 @@
  */
 package de.cau.cs.kieler.kivis.kivis;
 
-import de.cau.cs.kieler.prom.kibuild.KibuildPackage;
-
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -61,188 +59,215 @@ public interface KivisPackage extends EPackage
   KivisPackage eINSTANCE = de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl <em>Visualization</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.VisualizationConfigurationImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVisualizationConfiguration()
+   * @see de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVisualization()
    * @generated
    */
-  int VISUALIZATION_CONFIGURATION = 0;
+  int VISUALIZATION = 0;
 
   /**
-   * The feature id for the '<em><b>Image</b></em>' attribute.
+   * The feature id for the '<em><b>Images</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_CONFIGURATION__IMAGE = 0;
+  int VISUALIZATION__IMAGES = 0;
 
   /**
-   * The feature id for the '<em><b>Elements</b></em>' containment reference list.
+   * The feature id for the '<em><b>Loads</b></em>' attribute list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_CONFIGURATION__ELEMENTS = 1;
+  int VISUALIZATION__LOADS = 1;
 
   /**
-   * The feature id for the '<em><b>Interactions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Init</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_CONFIGURATION__INTERACTIONS = 2;
+  int VISUALIZATION__INIT = 2;
 
   /**
-   * The number of structural features of the '<em>Visualization Configuration</em>' class.
+   * The feature id for the '<em><b>Content</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int VISUALIZATION_CONFIGURATION_FEATURE_COUNT = 3;
+  int VISUALIZATION__CONTENT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ElementImpl <em>Element</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.ElementImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getElement()
-   * @generated
-   */
-  int ELEMENT = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The number of structural features of the '<em>Visualization</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELEMENT__NAME = 0;
+  int VISUALIZATION_FEATURE_COUNT = 4;
 
   /**
-   * The feature id for the '<em><b>Animations</b></em>' containment reference list.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ContentImpl <em>Content</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kivis.kivis.impl.ContentImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getContent()
+   * @generated
+   */
+  int CONTENT = 1;
+
+  /**
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELEMENT__ANIMATIONS = 1;
+  int CONTENT__INTERFACE = 0;
 
   /**
-   * The number of structural features of the '<em>Element</em>' class.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ELEMENT_FEATURE_COUNT = 2;
+  int CONTENT__SCRIPT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl <em>Interaction</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInteraction()
-   * @generated
-   */
-  int INTERACTION = 2;
-
-  /**
-   * The feature id for the '<em><b>Event</b></em>' containment reference.
+   * The number of structural features of the '<em>Content</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__EVENT = 0;
+  int CONTENT_FEATURE_COUNT = 2;
 
   /**
-   * The feature id for the '<em><b>After Tick</b></em>' attribute.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BindingImpl <em>Binding</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kivis.kivis.impl.BindingImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBinding()
+   * @generated
+   */
+  int BINDING = 2;
+
+  /**
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__AFTER_TICK = 1;
+  int BINDING__INTERFACE = CONTENT__INTERFACE;
 
   /**
-   * The feature id for the '<em><b>Before Tick</b></em>' attribute.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__BEFORE_TICK = 2;
+  int BINDING__SCRIPT = CONTENT__SCRIPT;
 
   /**
-   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__ACTIONS = 3;
+  int BINDING__VARIABLE = CONTENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * The feature id for the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION__CONDITION = 4;
+  int BINDING__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Interaction</em>' class.
+   * The number of structural features of the '<em>Binding</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INTERACTION_FEATURE_COUNT = 5;
+  int BINDING_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.EventImpl <em>Event</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl <em>Handler</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.EventImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getEvent()
+   * @see de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getHandler()
    * @generated
    */
-  int EVENT = 3;
+  int HANDLER = 3;
 
   /**
-   * The feature id for the '<em><b>Event</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT__EVENT = 0;
-
-  /**
-   * The feature id for the '<em><b>Element</b></em>' attribute.
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT__ELEMENT = 1;
+  int HANDLER__INTERFACE = CONTENT__INTERFACE;
 
   /**
-   * The number of structural features of the '<em>Event</em>' class.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT_FEATURE_COUNT = 2;
+  int HANDLER__SCRIPT = CONTENT__SCRIPT;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HANDLER__VARIABLE = CONTENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Multimatch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HANDLER__MULTIMATCH = CONTENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Dom Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HANDLER__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Handler</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HANDLER_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl <em>Action</em>}' class.
@@ -255,40 +280,94 @@ public interface KivisPackage extends EPackage
   int ACTION = 4;
 
   /**
-   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__VARIABLE = 0;
+  int ACTION__INTERFACE = CONTENT__INTERFACE;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__VALUE = 1;
+  int ACTION__SCRIPT = CONTENT__SCRIPT;
 
   /**
-   * The feature id for the '<em><b>Function</b></em>' containment reference.
+   * The feature id for the '<em><b>Dom Event</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__FUNCTION = 2;
+  int ACTION__DOM_EVENT = CONTENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Operation</b></em>' attribute.
+   * The feature id for the '<em><b>Multimatch</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTION__OPERATION = 3;
+  int ACTION__MULTIMATCH = CONTENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Dom Element</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__DOM_ELEMENT = CONTENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Deferred Interface</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__DEFERRED_INTERFACE = CONTENT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Deferred Script</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__DEFERRED_SCRIPT = CONTENT_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Setter</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__SETTER = CONTENT_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Signal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__SIGNAL = CONTENT_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Control</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ACTION__CONTROL = CONTENT_FEATURE_COUNT + 7;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -297,743 +376,308 @@ public interface KivisPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ACTION_FEATURE_COUNT = 4;
+  int ACTION_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 8;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl <em>Function</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.CodeImpl <em>Code</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunction()
+   * @see de.cau.cs.kieler.kivis.kivis.impl.CodeImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getCode()
    * @generated
    */
-  int FUNCTION = 5;
+  int CODE = 5;
 
   /**
-   * The feature id for the '<em><b>Function Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FUNCTION__FUNCTION_NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FUNCTION__PARAMETERS = 1;
+  int CODE__INTERFACE = CONTENT__INTERFACE;
 
   /**
-   * The number of structural features of the '<em>Function</em>' class.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FUNCTION_FEATURE_COUNT = 2;
+  int CODE__SCRIPT = CONTENT__SCRIPT;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl <em>Animation</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAnimation()
-   * @generated
-   */
-  int ANIMATION = 6;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The number of structural features of the '<em>Code</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION__TYPE = 0;
+  int CODE_FEATURE_COUNT = CONTENT_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Variable</b></em>' containment reference.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl <em>Setter</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kivis.kivis.impl.SetterImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSetter()
+   * @generated
+   */
+  int SETTER = 6;
+
+  /**
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION__VARIABLE = 1;
+  int SETTER__VARIABLE = 0;
 
   /**
-   * The feature id for the '<em><b>Attribute Mappings</b></em>' containment reference list.
+   * The feature id for the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION__ATTRIBUTE_MAPPINGS = 2;
+  int SETTER__INTERFACE = 1;
 
   /**
-   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * The feature id for the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION__CONDITION = 3;
+  int SETTER__SCRIPT = 2;
 
   /**
-   * The number of structural features of the '<em>Animation</em>' class.
+   * The number of structural features of the '<em>Setter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ANIMATION_FEATURE_COUNT = 4;
+  int SETTER_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl <em>Attribute Mapping</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl <em>Interface</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAttributeMapping()
+   * @see de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterface()
    * @generated
    */
-  int ATTRIBUTE_MAPPING = 7;
+  int INTERFACE = 7;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING__NAME = KibuildPackage.ATTRIBUTE_MAPPING__NAME;
-
-  /**
-   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
+   * The feature id for the '<em><b>Element</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__ARRAY_INDEX = KibuildPackage.ATTRIBUTE_MAPPING__ARRAY_INDEX;
+  int INTERFACE__ELEMENT = 0;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__VALUE = KibuildPackage.ATTRIBUTE_MAPPING__VALUE;
+  int INTERFACE__VARIABLE = 1;
 
   /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * The feature id for the '<em><b>Pool</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__VALUES = KibuildPackage.ATTRIBUTE_MAPPING__VALUES;
+  int INTERFACE__POOL = 2;
 
   /**
-   * The feature id for the '<em><b>Attributes</b></em>' containment reference list.
+   * The number of structural features of the '<em>Interface</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATTRIBUTE_MAPPING__ATTRIBUTES = KibuildPackage.ATTRIBUTE_MAPPING__ATTRIBUTES;
+  int INTERFACE_FEATURE_COUNT = 3;
 
   /**
-   * The feature id for the '<em><b>Attribute</b></em>' attribute.
+   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationCorntrol <em>Simulation Corntrol</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING__ATTRIBUTE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Current Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING__CURRENT_VALUE = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Literal</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING__LITERAL = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING__MAPPINGS = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 3;
-
-  /**
-   * The number of structural features of the '<em>Attribute Mapping</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATTRIBUTE_MAPPING_FEATURE_COUNT = KibuildPackage.ATTRIBUTE_MAPPING_FEATURE_COUNT + 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.MappingImpl <em>Mapping</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.MappingImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getMapping()
+   * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
+   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationCorntrol()
    * @generated
    */
-  int MAPPING = 8;
-
-  /**
-   * The feature id for the '<em><b>Variable Domain</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MAPPING__VARIABLE_DOMAIN = 0;
-
-  /**
-   * The feature id for the '<em><b>Attribute Domain</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MAPPING__ATTRIBUTE_DOMAIN = 1;
-
-  /**
-   * The number of structural features of the '<em>Mapping</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MAPPING_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ConditionImpl <em>Condition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.ConditionImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getCondition()
-   * @generated
-   */
-  int CONDITION = 9;
-
-  /**
-   * The number of structural features of the '<em>Condition</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONDITION_FEATURE_COUNT = 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ComparisonImpl <em>Comparison</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.ComparisonImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getComparison()
-   * @generated
-   */
-  int COMPARISON = 10;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__LEFT = CONDITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Relation</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__RELATION = CONDITION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON__RIGHT = CONDITION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>Comparison</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMPARISON_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.DomainImpl <em>Domain</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.DomainImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDomain()
-   * @generated
-   */
-  int DOMAIN = 11;
-
-  /**
-   * The feature id for the '<em><b>Other Values</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DOMAIN__OTHER_VALUES = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DOMAIN__VALUE = 1;
-
-  /**
-   * The feature id for the '<em><b>Range</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DOMAIN__RANGE = 2;
-
-  /**
-   * The feature id for the '<em><b>Current Value</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DOMAIN__CURRENT_VALUE = 3;
-
-  /**
-   * The number of structural features of the '<em>Domain</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DOMAIN_FEATURE_COUNT = 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterval()
-   * @generated
-   */
-  int INTERVAL = 12;
-
-  /**
-   * The feature id for the '<em><b>From</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERVAL__FROM = 0;
-
-  /**
-   * The feature id for the '<em><b>To</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERVAL__TO = 1;
-
-  /**
-   * The number of structural features of the '<em>Interval</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INTERVAL_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVariableReference()
-   * @generated
-   */
-  int VARIABLE_REFERENCE = 13;
-
-  /**
-   * The feature id for the '<em><b>Model</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE__MODEL = 0;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE__NAME = 1;
-
-  /**
-   * The feature id for the '<em><b>Array Index</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE__ARRAY_INDEX = 2;
-
-  /**
-   * The number of structural features of the '<em>Variable Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int VARIABLE_REFERENCE_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl <em>Model Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getModelReference()
-   * @generated
-   */
-  int MODEL_REFERENCE = 14;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_REFERENCE__NAME = 0;
-
-  /**
-   * The number of structural features of the '<em>Model Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_REFERENCE_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl <em>Function Parameter</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunctionParameter()
-   * @generated
-   */
-  int FUNCTION_PARAMETER = 15;
-
-  /**
-   * The feature id for the '<em><b>Variable Reference</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FUNCTION_PARAMETER__VARIABLE_REFERENCE = 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FUNCTION_PARAMETER__VALUE = 1;
-
-  /**
-   * The number of structural features of the '<em>Function Parameter</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FUNCTION_PARAMETER_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAndExpression()
-   * @generated
-   */
-  int AND_EXPRESSION = 16;
-
-  /**
-   * The feature id for the '<em><b>Left</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_EXPRESSION__LEFT = CONDITION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_EXPRESSION__OPERATOR = CONDITION_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Right</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_EXPRESSION__RIGHT = CONDITION_FEATURE_COUNT + 2;
-
-  /**
-   * The number of structural features of the '<em>And Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AND_EXPRESSION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.DOMEvent <em>DOM Event</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.DOMEvent
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDOMEvent()
-   * @generated
-   */
-  int DOM_EVENT = 17;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationOperation <em>Simulation Operation</em>}' enum.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.kivis.kivis.SimulationOperation
-   * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationOperation()
-   * @generated
-   */
-  int SIMULATION_OPERATION = 18;
+  int SIMULATION_CORNTROL = 8;
 
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration <em>Visualization Configuration</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Visualization <em>Visualization</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Visualization Configuration</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration
+   * @return the meta object for class '<em>Visualization</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization
    * @generated
    */
-  EClass getVisualizationConfiguration();
+  EClass getVisualization();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getImage <em>Image</em>}'.
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getImages <em>Images</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Image</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getImage()
-   * @see #getVisualizationConfiguration()
+   * @return the meta object for the attribute list '<em>Images</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getImages()
+   * @see #getVisualization()
    * @generated
    */
-  EAttribute getVisualizationConfiguration_Image();
+  EAttribute getVisualization_Images();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getElements <em>Elements</em>}'.
+   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getLoads <em>Loads</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Elements</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getElements()
-   * @see #getVisualizationConfiguration()
+   * @return the meta object for the attribute list '<em>Loads</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getLoads()
+   * @see #getVisualization()
    * @generated
    */
-  EReference getVisualizationConfiguration_Elements();
+  EAttribute getVisualization_Loads();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getInteractions <em>Interactions</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getInit <em>Init</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Interactions</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VisualizationConfiguration#getInteractions()
-   * @see #getVisualizationConfiguration()
+   * @return the meta object for the attribute '<em>Init</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getInit()
+   * @see #getVisualization()
    * @generated
    */
-  EReference getVisualizationConfiguration_Interactions();
+  EAttribute getVisualization_Init();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Element <em>Element</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Visualization#getContent <em>Content</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Element</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Element
+   * @return the meta object for the containment reference list '<em>Content</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Visualization#getContent()
+   * @see #getVisualization()
    * @generated
    */
-  EClass getElement();
+  EReference getVisualization_Content();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Element#getName <em>Name</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Content <em>Content</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Element#getName()
-   * @see #getElement()
+   * @return the meta object for class '<em>Content</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Content
    * @generated
    */
-  EAttribute getElement_Name();
+  EClass getContent();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Element#getAnimations <em>Animations</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Content#getInterface <em>Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Animations</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Element#getAnimations()
-   * @see #getElement()
+   * @return the meta object for the containment reference '<em>Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Content#getInterface()
+   * @see #getContent()
    * @generated
    */
-  EReference getElement_Animations();
+  EReference getContent_Interface();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interaction <em>Interaction</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Content#getScript <em>Script</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Interaction</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction
+   * @return the meta object for the attribute '<em>Script</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Content#getScript()
+   * @see #getContent()
    * @generated
    */
-  EClass getInteraction();
+  EAttribute getContent_Script();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Interaction#getEvent <em>Event</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Binding <em>Binding</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Event</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction#getEvent()
-   * @see #getInteraction()
+   * @return the meta object for class '<em>Binding</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Binding
    * @generated
    */
-  EReference getInteraction_Event();
+  EClass getBinding();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick <em>After Tick</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Binding#getVariable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>After Tick</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction#isAfterTick()
-   * @see #getInteraction()
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Binding#getVariable()
+   * @see #getBinding()
    * @generated
    */
-  EAttribute getInteraction_AfterTick();
+  EAttribute getBinding_Variable();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick <em>Before Tick</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Binding#getDomElement <em>Dom Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Before Tick</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction#isBeforeTick()
-   * @see #getInteraction()
+   * @return the meta object for the attribute '<em>Dom Element</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Binding#getDomElement()
+   * @see #getBinding()
    * @generated
    */
-  EAttribute getInteraction_BeforeTick();
+  EAttribute getBinding_DomElement();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Interaction#getActions <em>Actions</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Handler <em>Handler</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Actions</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction#getActions()
-   * @see #getInteraction()
+   * @return the meta object for class '<em>Handler</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Handler
    * @generated
    */
-  EReference getInteraction_Actions();
+  EClass getHandler();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Interaction#getCondition <em>Condition</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Handler#getVariable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Condition</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interaction#getCondition()
-   * @see #getInteraction()
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Handler#getVariable()
+   * @see #getHandler()
    * @generated
    */
-  EReference getInteraction_Condition();
+  EAttribute getHandler_Variable();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Event <em>Event</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Handler#isMultimatch <em>Multimatch</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Event</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Event
+   * @return the meta object for the attribute '<em>Multimatch</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Handler#isMultimatch()
+   * @see #getHandler()
    * @generated
    */
-  EClass getEvent();
+  EAttribute getHandler_Multimatch();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Event#getEvent <em>Event</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Handler#getDomElement <em>Dom Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Event</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Event#getEvent()
-   * @see #getEvent()
+   * @return the meta object for the attribute '<em>Dom Element</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Handler#getDomElement()
+   * @see #getHandler()
    * @generated
    */
-  EAttribute getEvent_Event();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Event#getElement <em>Element</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Element</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Event#getElement()
-   * @see #getEvent()
-   * @generated
-   */
-  EAttribute getEvent_Element();
+  EAttribute getHandler_DomElement();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Action <em>Action</em>}'.
@@ -1046,518 +690,198 @@ public interface KivisPackage extends EPackage
   EClass getAction();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getVariable <em>Variable</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getDomEvent <em>Dom Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#getVariable()
+   * @return the meta object for the attribute '<em>Dom Event</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDomEvent()
    * @see #getAction()
    * @generated
    */
-  EReference getAction_Variable();
+  EAttribute getAction_DomEvent();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getValue <em>Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#isMultimatch <em>Multimatch</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#getValue()
+   * @return the meta object for the attribute '<em>Multimatch</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#isMultimatch()
    * @see #getAction()
    * @generated
    */
-  EReference getAction_Value();
+  EAttribute getAction_Multimatch();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getFunction <em>Function</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getDomElement <em>Dom Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Function</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#getFunction()
+   * @return the meta object for the attribute '<em>Dom Element</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDomElement()
    * @see #getAction()
    * @generated
    */
-  EReference getAction_Function();
+  EAttribute getAction_DomElement();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getOperation <em>Operation</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface <em>Deferred Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operation</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Action#getOperation()
+   * @return the meta object for the containment reference '<em>Deferred Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDeferredInterface()
    * @see #getAction()
    * @generated
    */
-  EAttribute getAction_Operation();
+  EReference getAction_DeferredInterface();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Function <em>Function</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript <em>Deferred Script</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Function</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Function
+   * @return the meta object for the attribute '<em>Deferred Script</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getDeferredScript()
+   * @see #getAction()
    * @generated
    */
-  EClass getFunction();
+  EAttribute getAction_DeferredScript();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Function#getFunctionName <em>Function Name</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Action#getSetter <em>Setter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Function Name</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Function#getFunctionName()
-   * @see #getFunction()
+   * @return the meta object for the containment reference list '<em>Setter</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getSetter()
+   * @see #getAction()
    * @generated
    */
-  EAttribute getFunction_FunctionName();
+  EReference getAction_Setter();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Function#getParameters <em>Parameters</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getSignal <em>Signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Parameters</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Function#getParameters()
-   * @see #getFunction()
+   * @return the meta object for the attribute '<em>Signal</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getSignal()
+   * @see #getAction()
    * @generated
    */
-  EReference getFunction_Parameters();
+  EAttribute getAction_Signal();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Animation <em>Animation</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Action#getControl <em>Control</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Animation</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation
+   * @return the meta object for the attribute '<em>Control</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Action#getControl()
+   * @see #getAction()
    * @generated
    */
-  EClass getAnimation();
+  EAttribute getAction_Control();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Animation#getType <em>Type</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Code <em>Code</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation#getType()
-   * @see #getAnimation()
+   * @return the meta object for class '<em>Code</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Code
    * @generated
    */
-  EAttribute getAnimation_Type();
+  EClass getCode();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Animation#getVariable <em>Variable</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Setter <em>Setter</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Variable</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation#getVariable()
-   * @see #getAnimation()
+   * @return the meta object for class '<em>Setter</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter
    * @generated
    */
-  EReference getAnimation_Variable();
+  EClass getSetter();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.Animation#getAttributeMappings <em>Attribute Mappings</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Setter#getVariable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Attribute Mappings</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation#getAttributeMappings()
-   * @see #getAnimation()
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getVariable()
+   * @see #getSetter()
    * @generated
    */
-  EReference getAnimation_AttributeMappings();
+  EAttribute getSetter_Variable();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Animation#getCondition <em>Condition</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Setter#getInterface <em>Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Condition</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Animation#getCondition()
-   * @see #getAnimation()
+   * @return the meta object for the containment reference '<em>Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getInterface()
+   * @see #getSetter()
    * @generated
    */
-  EReference getAnimation_Condition();
+  EReference getSetter_Interface();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping <em>Attribute Mapping</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Setter#getScript <em>Script</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Attribute Mapping</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping
+   * @return the meta object for the attribute '<em>Script</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Setter#getScript()
+   * @see #getSetter()
    * @generated
    */
-  EClass getAttributeMapping();
+  EAttribute getSetter_Script();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getAttribute <em>Attribute</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interface <em>Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Attribute</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#getAttribute()
-   * @see #getAttributeMapping()
+   * @return the meta object for class '<em>Interface</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interface
    * @generated
    */
-  EAttribute getAttributeMapping_Attribute();
+  EClass getInterface();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue <em>Current Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interface#getElement <em>Element</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Current Value</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#isCurrentValue()
-   * @see #getAttributeMapping()
+   * @return the meta object for the attribute '<em>Element</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interface#getElement()
+   * @see #getInterface()
    * @generated
    */
-  EAttribute getAttributeMapping_CurrentValue();
+  EAttribute getInterface_Element();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getLiteral <em>Literal</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interface#getVariable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Literal</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#getLiteral()
-   * @see #getAttributeMapping()
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interface#getVariable()
+   * @see #getInterface()
    * @generated
    */
-  EReference getAttributeMapping_Literal();
+  EAttribute getInterface_Variable();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kivis.kivis.AttributeMapping#getMappings <em>Mappings</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Interface#getPool <em>Pool</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Mappings</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AttributeMapping#getMappings()
-   * @see #getAttributeMapping()
+   * @return the meta object for the attribute '<em>Pool</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.Interface#getPool()
+   * @see #getInterface()
    * @generated
    */
-  EReference getAttributeMapping_Mappings();
+  EAttribute getInterface_Pool();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Mapping <em>Mapping</em>}'.
+   * Returns the meta object for enum '{@link de.cau.cs.kieler.kivis.kivis.SimulationCorntrol <em>Simulation Corntrol</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Mapping</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Mapping
+   * @return the meta object for enum '<em>Simulation Corntrol</em>'.
+   * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
    * @generated
    */
-  EClass getMapping();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Mapping#getVariableDomain <em>Variable Domain</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Variable Domain</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Mapping#getVariableDomain()
-   * @see #getMapping()
-   * @generated
-   */
-  EReference getMapping_VariableDomain();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Mapping#getAttributeDomain <em>Attribute Domain</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Attribute Domain</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Mapping#getAttributeDomain()
-   * @see #getMapping()
-   * @generated
-   */
-  EReference getMapping_AttributeDomain();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Condition <em>Condition</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Condition</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Condition
-   * @generated
-   */
-  EClass getCondition();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Comparison <em>Comparison</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Comparison</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Comparison
-   * @generated
-   */
-  EClass getComparison();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Comparison#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Comparison#getLeft()
-   * @see #getComparison()
-   * @generated
-   */
-  EReference getComparison_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Comparison#getRelation <em>Relation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Relation</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Comparison#getRelation()
-   * @see #getComparison()
-   * @generated
-   */
-  EAttribute getComparison_Relation();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Comparison#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Comparison#getRight()
-   * @see #getComparison()
-   * @generated
-   */
-  EReference getComparison_Right();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Domain <em>Domain</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Domain</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain
-   * @generated
-   */
-  EClass getDomain();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues <em>Other Values</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Other Values</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain#isOtherValues()
-   * @see #getDomain()
-   * @generated
-   */
-  EAttribute getDomain_OtherValues();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Domain#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain#getValue()
-   * @see #getDomain()
-   * @generated
-   */
-  EReference getDomain_Value();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Domain#getRange <em>Range</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Range</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain#getRange()
-   * @see #getDomain()
-   * @generated
-   */
-  EReference getDomain_Range();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue <em>Current Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Current Value</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Domain#isCurrentValue()
-   * @see #getDomain()
-   * @generated
-   */
-  EAttribute getDomain_CurrentValue();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.Interval <em>Interval</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Interval</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interval
-   * @generated
-   */
-  EClass getInterval();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Interval#getFrom <em>From</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>From</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interval#getFrom()
-   * @see #getInterval()
-   * @generated
-   */
-  EReference getInterval_From();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.Interval#getTo <em>To</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>To</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.Interval#getTo()
-   * @see #getInterval()
-   * @generated
-   */
-  EReference getInterval_To();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.VariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Variable Reference</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference
-   * @generated
-   */
-  EClass getVariableReference();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getModel <em>Model</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Model</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getModel()
-   * @see #getVariableReference()
-   * @generated
-   */
-  EReference getVariableReference_Model();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getName()
-   * @see #getVariableReference()
-   * @generated
-   */
-  EAttribute getVariableReference_Name();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex <em>Array Index</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Array Index</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.VariableReference#getArrayIndex()
-   * @see #getVariableReference()
-   * @generated
-   */
-  EReference getVariableReference_ArrayIndex();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.ModelReference <em>Model Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Model Reference</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.ModelReference
-   * @generated
-   */
-  EClass getModelReference();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.ModelReference#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.ModelReference#getName()
-   * @see #getModelReference()
-   * @generated
-   */
-  EAttribute getModelReference_Name();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter <em>Function Parameter</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Function Parameter</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter
-   * @generated
-   */
-  EClass getFunctionParameter();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter#getVariableReference <em>Variable Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Variable Reference</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter#getVariableReference()
-   * @see #getFunctionParameter()
-   * @generated
-   */
-  EReference getFunctionParameter_VariableReference();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.FunctionParameter#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.FunctionParameter#getValue()
-   * @see #getFunctionParameter()
-   * @generated
-   */
-  EReference getFunctionParameter_Value();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.kivis.kivis.AndExpression <em>And Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>And Expression</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AndExpression
-   * @generated
-   */
-  EClass getAndExpression();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.AndExpression#getLeft <em>Left</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Left</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AndExpression#getLeft()
-   * @see #getAndExpression()
-   * @generated
-   */
-  EReference getAndExpression_Left();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kivis.kivis.AndExpression#getOperator <em>Operator</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Operator</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AndExpression#getOperator()
-   * @see #getAndExpression()
-   * @generated
-   */
-  EAttribute getAndExpression_Operator();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kivis.kivis.AndExpression#getRight <em>Right</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Right</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.AndExpression#getRight()
-   * @see #getAndExpression()
-   * @generated
-   */
-  EReference getAndExpression_Right();
-
-  /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.kivis.kivis.DOMEvent <em>DOM Event</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>DOM Event</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.DOMEvent
-   * @generated
-   */
-  EEnum getDOMEvent();
-
-  /**
-   * Returns the meta object for enum '{@link de.cau.cs.kieler.kivis.kivis.SimulationOperation <em>Simulation Operation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Simulation Operation</em>'.
-   * @see de.cau.cs.kieler.kivis.kivis.SimulationOperation
-   * @generated
-   */
-  EEnum getSimulationOperation();
+  EEnum getSimulationCorntrol();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1583,140 +907,132 @@ public interface KivisPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationConfigurationImpl <em>Visualization Configuration</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl <em>Visualization</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.VisualizationConfigurationImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVisualizationConfiguration()
+     * @see de.cau.cs.kieler.kivis.kivis.impl.VisualizationImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVisualization()
      * @generated
      */
-    EClass VISUALIZATION_CONFIGURATION = eINSTANCE.getVisualizationConfiguration();
+    EClass VISUALIZATION = eINSTANCE.getVisualization();
 
     /**
-     * The meta object literal for the '<em><b>Image</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Images</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute VISUALIZATION_CONFIGURATION__IMAGE = eINSTANCE.getVisualizationConfiguration_Image();
+    EAttribute VISUALIZATION__IMAGES = eINSTANCE.getVisualization_Images();
 
     /**
-     * The meta object literal for the '<em><b>Elements</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Loads</b></em>' attribute list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION_CONFIGURATION__ELEMENTS = eINSTANCE.getVisualizationConfiguration_Elements();
+    EAttribute VISUALIZATION__LOADS = eINSTANCE.getVisualization_Loads();
 
     /**
-     * The meta object literal for the '<em><b>Interactions</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Init</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference VISUALIZATION_CONFIGURATION__INTERACTIONS = eINSTANCE.getVisualizationConfiguration_Interactions();
+    EAttribute VISUALIZATION__INIT = eINSTANCE.getVisualization_Init();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ElementImpl <em>Element</em>}' class.
+     * The meta object literal for the '<em><b>Content</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.ElementImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getElement()
      * @generated
      */
-    EClass ELEMENT = eINSTANCE.getElement();
+    EReference VISUALIZATION__CONTENT = eINSTANCE.getVisualization_Content();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ContentImpl <em>Content</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.ContentImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getContent()
      * @generated
      */
-    EAttribute ELEMENT__NAME = eINSTANCE.getElement_Name();
+    EClass CONTENT = eINSTANCE.getContent();
 
     /**
-     * The meta object literal for the '<em><b>Animations</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Interface</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ELEMENT__ANIMATIONS = eINSTANCE.getElement_Animations();
+    EReference CONTENT__INTERFACE = eINSTANCE.getContent_Interface();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl <em>Interaction</em>}' class.
+     * The meta object literal for the '<em><b>Script</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.InteractionImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInteraction()
      * @generated
      */
-    EClass INTERACTION = eINSTANCE.getInteraction();
+    EAttribute CONTENT__SCRIPT = eINSTANCE.getContent_Script();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.BindingImpl <em>Binding</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.BindingImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getBinding()
      * @generated
      */
-    EReference INTERACTION__EVENT = eINSTANCE.getInteraction_Event();
+    EClass BINDING = eINSTANCE.getBinding();
 
     /**
-     * The meta object literal for the '<em><b>After Tick</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INTERACTION__AFTER_TICK = eINSTANCE.getInteraction_AfterTick();
+    EAttribute BINDING__VARIABLE = eINSTANCE.getBinding_Variable();
 
     /**
-     * The meta object literal for the '<em><b>Before Tick</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Dom Element</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute INTERACTION__BEFORE_TICK = eINSTANCE.getInteraction_BeforeTick();
+    EAttribute BINDING__DOM_ELEMENT = eINSTANCE.getBinding_DomElement();
 
     /**
-     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl <em>Handler</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.HandlerImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getHandler()
      * @generated
      */
-    EReference INTERACTION__ACTIONS = eINSTANCE.getInteraction_Actions();
+    EClass HANDLER = eINSTANCE.getHandler();
 
     /**
-     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference INTERACTION__CONDITION = eINSTANCE.getInteraction_Condition();
+    EAttribute HANDLER__VARIABLE = eINSTANCE.getHandler_Variable();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.EventImpl <em>Event</em>}' class.
+     * The meta object literal for the '<em><b>Multimatch</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.EventImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getEvent()
      * @generated
      */
-    EClass EVENT = eINSTANCE.getEvent();
+    EAttribute HANDLER__MULTIMATCH = eINSTANCE.getHandler_Multimatch();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Dom Element</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT__EVENT = eINSTANCE.getEvent_Event();
-
-    /**
-     * The meta object literal for the '<em><b>Element</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EVENT__ELEMENT = eINSTANCE.getEvent_Element();
+    EAttribute HANDLER__DOM_ELEMENT = eINSTANCE.getHandler_DomElement();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl <em>Action</em>}' class.
@@ -1729,416 +1045,156 @@ public interface KivisPackage extends EPackage
     EClass ACTION = eINSTANCE.getAction();
 
     /**
-     * The meta object literal for the '<em><b>Variable</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Dom Event</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTION__VARIABLE = eINSTANCE.getAction_Variable();
+    EAttribute ACTION__DOM_EVENT = eINSTANCE.getAction_DomEvent();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Multimatch</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTION__VALUE = eINSTANCE.getAction_Value();
+    EAttribute ACTION__MULTIMATCH = eINSTANCE.getAction_Multimatch();
 
     /**
-     * The meta object literal for the '<em><b>Function</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Dom Element</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTION__FUNCTION = eINSTANCE.getAction_Function();
+    EAttribute ACTION__DOM_ELEMENT = eINSTANCE.getAction_DomElement();
 
     /**
-     * The meta object literal for the '<em><b>Operation</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Deferred Interface</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ACTION__OPERATION = eINSTANCE.getAction_Operation();
+    EReference ACTION__DEFERRED_INTERFACE = eINSTANCE.getAction_DeferredInterface();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl <em>Function</em>}' class.
+     * The meta object literal for the '<em><b>Deferred Script</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunction()
      * @generated
      */
-    EClass FUNCTION = eINSTANCE.getFunction();
+    EAttribute ACTION__DEFERRED_SCRIPT = eINSTANCE.getAction_DeferredScript();
 
     /**
-     * The meta object literal for the '<em><b>Function Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Setter</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute FUNCTION__FUNCTION_NAME = eINSTANCE.getFunction_FunctionName();
+    EReference ACTION__SETTER = eINSTANCE.getAction_Setter();
 
     /**
-     * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Signal</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference FUNCTION__PARAMETERS = eINSTANCE.getFunction_Parameters();
+    EAttribute ACTION__SIGNAL = eINSTANCE.getAction_Signal();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl <em>Animation</em>}' class.
+     * The meta object literal for the '<em><b>Control</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.AnimationImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAnimation()
      * @generated
      */
-    EClass ANIMATION = eINSTANCE.getAnimation();
+    EAttribute ACTION__CONTROL = eINSTANCE.getAction_Control();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.CodeImpl <em>Code</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.CodeImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getCode()
      * @generated
      */
-    EAttribute ANIMATION__TYPE = eINSTANCE.getAnimation_Type();
+    EClass CODE = eINSTANCE.getCode();
 
     /**
-     * The meta object literal for the '<em><b>Variable</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.SetterImpl <em>Setter</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.SetterImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSetter()
      * @generated
      */
-    EReference ANIMATION__VARIABLE = eINSTANCE.getAnimation_Variable();
+    EClass SETTER = eINSTANCE.getSetter();
 
     /**
-     * The meta object literal for the '<em><b>Attribute Mappings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ANIMATION__ATTRIBUTE_MAPPINGS = eINSTANCE.getAnimation_AttributeMappings();
+    EAttribute SETTER__VARIABLE = eINSTANCE.getSetter_Variable();
 
     /**
-     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Interface</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ANIMATION__CONDITION = eINSTANCE.getAnimation_Condition();
+    EReference SETTER__INTERFACE = eINSTANCE.getSetter_Interface();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl <em>Attribute Mapping</em>}' class.
+     * The meta object literal for the '<em><b>Script</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.AttributeMappingImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAttributeMapping()
      * @generated
      */
-    EClass ATTRIBUTE_MAPPING = eINSTANCE.getAttributeMapping();
+    EAttribute SETTER__SCRIPT = eINSTANCE.getSetter_Script();
 
     /**
-     * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl <em>Interface</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kivis.kivis.impl.InterfaceImpl
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterface()
      * @generated
      */
-    EAttribute ATTRIBUTE_MAPPING__ATTRIBUTE = eINSTANCE.getAttributeMapping_Attribute();
+    EClass INTERFACE = eINSTANCE.getInterface();
 
     /**
-     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Element</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATTRIBUTE_MAPPING__CURRENT_VALUE = eINSTANCE.getAttributeMapping_CurrentValue();
+    EAttribute INTERFACE__ELEMENT = eINSTANCE.getInterface_Element();
 
     /**
-     * The meta object literal for the '<em><b>Literal</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ATTRIBUTE_MAPPING__LITERAL = eINSTANCE.getAttributeMapping_Literal();
+    EAttribute INTERFACE__VARIABLE = eINSTANCE.getInterface_Variable();
 
     /**
-     * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Pool</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ATTRIBUTE_MAPPING__MAPPINGS = eINSTANCE.getAttributeMapping_Mappings();
+    EAttribute INTERFACE__POOL = eINSTANCE.getInterface_Pool();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.MappingImpl <em>Mapping</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationCorntrol <em>Simulation Corntrol</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.MappingImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getMapping()
+     * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
+     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationCorntrol()
      * @generated
      */
-    EClass MAPPING = eINSTANCE.getMapping();
-
-    /**
-     * The meta object literal for the '<em><b>Variable Domain</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MAPPING__VARIABLE_DOMAIN = eINSTANCE.getMapping_VariableDomain();
-
-    /**
-     * The meta object literal for the '<em><b>Attribute Domain</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MAPPING__ATTRIBUTE_DOMAIN = eINSTANCE.getMapping_AttributeDomain();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ConditionImpl <em>Condition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.ConditionImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getCondition()
-     * @generated
-     */
-    EClass CONDITION = eINSTANCE.getCondition();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ComparisonImpl <em>Comparison</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.ComparisonImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getComparison()
-     * @generated
-     */
-    EClass COMPARISON = eINSTANCE.getComparison();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMPARISON__LEFT = eINSTANCE.getComparison_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Relation</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute COMPARISON__RELATION = eINSTANCE.getComparison_Relation();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMPARISON__RIGHT = eINSTANCE.getComparison_Right();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.DomainImpl <em>Domain</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.DomainImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDomain()
-     * @generated
-     */
-    EClass DOMAIN = eINSTANCE.getDomain();
-
-    /**
-     * The meta object literal for the '<em><b>Other Values</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute DOMAIN__OTHER_VALUES = eINSTANCE.getDomain_OtherValues();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DOMAIN__VALUE = eINSTANCE.getDomain_Value();
-
-    /**
-     * The meta object literal for the '<em><b>Range</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference DOMAIN__RANGE = eINSTANCE.getDomain_Range();
-
-    /**
-     * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute DOMAIN__CURRENT_VALUE = eINSTANCE.getDomain_CurrentValue();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl <em>Interval</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.IntervalImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getInterval()
-     * @generated
-     */
-    EClass INTERVAL = eINSTANCE.getInterval();
-
-    /**
-     * The meta object literal for the '<em><b>From</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INTERVAL__FROM = eINSTANCE.getInterval_From();
-
-    /**
-     * The meta object literal for the '<em><b>To</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference INTERVAL__TO = eINSTANCE.getInterval_To();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl <em>Variable Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.VariableReferenceImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getVariableReference()
-     * @generated
-     */
-    EClass VARIABLE_REFERENCE = eINSTANCE.getVariableReference();
-
-    /**
-     * The meta object literal for the '<em><b>Model</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_REFERENCE__MODEL = eINSTANCE.getVariableReference_Model();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute VARIABLE_REFERENCE__NAME = eINSTANCE.getVariableReference_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Array Index</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference VARIABLE_REFERENCE__ARRAY_INDEX = eINSTANCE.getVariableReference_ArrayIndex();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl <em>Model Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.ModelReferenceImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getModelReference()
-     * @generated
-     */
-    EClass MODEL_REFERENCE = eINSTANCE.getModelReference();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MODEL_REFERENCE__NAME = eINSTANCE.getModelReference_Name();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl <em>Function Parameter</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.FunctionParameterImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getFunctionParameter()
-     * @generated
-     */
-    EClass FUNCTION_PARAMETER = eINSTANCE.getFunctionParameter();
-
-    /**
-     * The meta object literal for the '<em><b>Variable Reference</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FUNCTION_PARAMETER__VARIABLE_REFERENCE = eINSTANCE.getFunctionParameter_VariableReference();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FUNCTION_PARAMETER__VALUE = eINSTANCE.getFunctionParameter_Value();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl <em>And Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.impl.AndExpressionImpl
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getAndExpression()
-     * @generated
-     */
-    EClass AND_EXPRESSION = eINSTANCE.getAndExpression();
-
-    /**
-     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AND_EXPRESSION__LEFT = eINSTANCE.getAndExpression_Left();
-
-    /**
-     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute AND_EXPRESSION__OPERATOR = eINSTANCE.getAndExpression_Operator();
-
-    /**
-     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AND_EXPRESSION__RIGHT = eINSTANCE.getAndExpression_Right();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.DOMEvent <em>DOM Event</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.DOMEvent
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getDOMEvent()
-     * @generated
-     */
-    EEnum DOM_EVENT = eINSTANCE.getDOMEvent();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.kivis.kivis.SimulationOperation <em>Simulation Operation</em>}' enum.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.kivis.kivis.SimulationOperation
-     * @see de.cau.cs.kieler.kivis.kivis.impl.KivisPackageImpl#getSimulationOperation()
-     * @generated
-     */
-    EEnum SIMULATION_OPERATION = eINSTANCE.getSimulationOperation();
+    EEnum SIMULATION_CORNTROL = eINSTANCE.getSimulationCorntrol();
 
   }
 

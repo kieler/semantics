@@ -96,6 +96,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeDefinition getNewName() {
         if (newName != null && newName.eIsProxy()) {
             InternalEObject oldNewName = (InternalEObject)newName;
@@ -122,6 +123,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(TypeDefinition newNewName) {
         TypeDefinition oldNewName = newName;
         newName = newNewName;
@@ -134,6 +136,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValueType getNewType() {
         return newType;
     }
@@ -143,6 +146,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewType(ValueType newNewType) {
         ValueType oldNewType = newType;
         newType = newNewType == null ? NEW_TYPE_EDEFAULT : newNewType;
@@ -155,6 +159,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeDefinition getOldName() {
         if (oldName != null && oldName.eIsProxy()) {
             InternalEObject oldOldName = (InternalEObject)oldName;
@@ -181,6 +186,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOldName(TypeDefinition newOldName) {
         TypeDefinition oldOldName = oldName;
         oldName = newOldName;
@@ -277,7 +283,7 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (newType: ");
         result.append(newType);
         result.append(')');

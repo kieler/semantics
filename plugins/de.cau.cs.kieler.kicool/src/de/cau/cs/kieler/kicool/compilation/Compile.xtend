@@ -24,6 +24,8 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.kexpressions.JsonPragma
 
 /**
  * Class for preparing compilations programmatically through creating compilation contexts. 
@@ -35,34 +37,52 @@ import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
  */
 class Compile {
     
+    public static val ENV_PRAGMA = "KiCoEnv".toLowerCase
+    
     /**
-     * Easily create a standard compilation context from a compilation system and a source model.
+     * Easily create a compilation context (or a subclass) from a compilation system and a source model.
      */
-    static def CompilationContext createCompilationContext(System system, Object sourceModel) {
+    static def <T extends CompilationContext> T createCompilationContext(System system, Object sourceModel, Class<T> clazz) {
         checkNotNull(system, "System is null")
         checkNotNull(sourceModel, "Source model is null")
-        val context = KiCoolRegistration.getInjector.getInstance(CompilationContext)
+        val context = KiCoolRegistration.getInjector.getInstance(clazz)
         context => [
             it.originalSystem = system
             it.transformSystem
             it.originalModel = sourceModel
             it.populateContext
-            // configure start environment
-            for (subSystem : subContexts.values.map[originalSystem]) {
-                EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, subSystem.config)
+            // Read compiler config from model
+            if (sourceModel instanceof Pragmatable) {
+                for (pragma : sourceModel.pragmas.filter[ENV_PRAGMA.equals(name.toLowerCase)]) {
+                    if (pragma instanceof JsonPragma) {
+                        EnvironmentPropertyHolder.processEnvironmentConfig(startEnvironment, pragma.value)
+                    }
+                }
             }
-            EnvironmentPropertyHolder.processEnvironmentConfig(it.startEnvironment, system.config)
-//            RuntimeSystems.add(it.getSystem, it)
         ]
+    }
+    
+    /**
+     * Easily create a standard compilation context from a compilation system and a source model.
+     */
+    static def CompilationContext createCompilationContext(System system, Object sourceModel) {
+        createCompilationContext(system, sourceModel, CompilationContext)
     }
     
     /**
      * Create a compilation context from a system id and a source model.
      */
     static def CompilationContext createCompilationContext(String systemID, Object sourceModel) {
-        createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel)
+        createCompilationContext(systemID, sourceModel, CompilationContext)
     }
 
+    /**
+     * Create a compilation context (or a subclass) from a system id and a source model.
+     */
+    static def <T extends CompilationContext> T createCompilationContext(String systemID, Object sourceModel, Class<T> clazz) {
+        createCompilationContext(KiCoolRegistration.getSystemById(systemID), sourceModel, clazz)
+    }
+    
     /**
      * Create a compilation context from a system id and a source model and additional processors
      */
@@ -81,6 +101,26 @@ class Compile {
         createCompilationContext(system, sourceModel)
     }
     
+    /**
+     * Create a compilation context from a system id and a source model and additional processors
+     */
+    static def CompilationContext createCompilationContext(Object sourceModel, List<String> additionalProcessors) {
+        checkNotNull(additionalProcessors)
+        checkState(!additionalProcessors.empty)
+        val system = KiCoolFactory.eINSTANCE.createSystem => [
+            processors = KiCoolFactory.eINSTANCE.createProcessorGroup
+            for (processorId : additionalProcessors) {
+                val entry = KiCoolFactory.eINSTANCE.createProcessorReference => [
+                    it.id = processorId
+                ]
+                switch(processors) {
+                    ProcessorGroup: (processors as ProcessorGroup).processors += entry
+                }
+                
+            }
+        ]
+        createCompilationContext(system, sourceModel)
+    }    
     
     
     /**

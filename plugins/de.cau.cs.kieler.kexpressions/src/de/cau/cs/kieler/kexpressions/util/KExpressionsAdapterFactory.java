@@ -7,7 +7,10 @@
 package de.cau.cs.kieler.kexpressions.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Annotation;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
+import de.cau.cs.kieler.annotations.Pragma;
 import de.cau.cs.kieler.kexpressions.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -114,6 +117,14 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createIgnoreValueAdapter();
             }
             @Override
+            public Adapter caseJsonPragma(JsonPragma object) {
+                return createJsonPragmaAdapter();
+            }
+            @Override
+            public Adapter caseJsonAnnotation(JsonAnnotation object) {
+                return createJsonAnnotationAdapter();
+            }
+            @Override
             public Adapter caseJsonObjectValue(JsonObjectValue object) {
                 return createJsonObjectValueAdapter();
             }
@@ -152,6 +163,10 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseScheduleDeclaration(ScheduleDeclaration object) {
                 return createScheduleDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseMethodDeclaration(MethodDeclaration object) {
+                return createMethodDeclarationAdapter();
             }
             @Override
             public Adapter caseScheduleObjectReference(ScheduleObjectReference object) {
@@ -198,12 +213,24 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
                 return createExternStringAdapter();
             }
             @Override
+            public Adapter caseNameable(Nameable object) {
+                return createNameableAdapter();
+            }
+            @Override
             public Adapter caseNamedObject(NamedObject object) {
                 return createNamedObjectAdapter();
             }
             @Override
             public Adapter caseAnnotatable(Annotatable object) {
                 return createAnnotatableAdapter();
+            }
+            @Override
+            public Adapter casePragma(Pragma object) {
+                return createPragmaAdapter();
+            }
+            @Override
+            public Adapter caseAnnotation(Annotation object) {
+                return createAnnotationAdapter();
             }
             @Override
             public Adapter defaultCase(EObject object) {
@@ -408,6 +435,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration <em>Method Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration
+     * @generated
+     */
+    public Adapter createMethodDeclarationAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -520,6 +561,20 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
     }
 
     /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Nameable <em>Nameable</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Nameable
+     * @generated
+     */
+    public Adapter createNameableAdapter() {
+        return null;
+    }
+
+    /**
      * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * This default implementation returns null so that we can easily ignore cases;
@@ -586,6 +641,34 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createIgnoreValueAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.JsonPragma <em>Json Pragma</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.JsonPragma
+     * @generated
+     */
+    public Adapter createJsonPragmaAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.JsonAnnotation <em>Json Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.kexpressions.JsonAnnotation
+     * @generated
+     */
+    public Adapter createJsonAnnotationAdapter() {
         return null;
     }
 
@@ -684,6 +767,34 @@ public class KExpressionsAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createAnnotatableAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Pragma <em>Pragma</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Pragma
+     * @generated
+     */
+    public Adapter createPragmaAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.annotations.Annotation <em>Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.annotations.Annotation
+     * @generated
+     */
+    public Adapter createAnnotationAdapter() {
         return null;
     }
 

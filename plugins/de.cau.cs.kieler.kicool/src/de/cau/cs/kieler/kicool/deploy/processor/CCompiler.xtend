@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CCodeFile
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
@@ -44,7 +44,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -68,16 +68,16 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         
         logger.println("Files:")
         for (source : sources) {
-            val sourceFile = new File(infra.generadedCodeFolder, source)
+            val sourceFile = new File(infra.generatedCodeFolder, source)
             if (sourceFile.file) {
-                sourcePaths += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                sourcePaths += infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else if (sourceFile.directory) {
                 for (path : Files.find(sourceFile.toPath, Integer.MAX_VALUE, [ filePath, fileAttr |
                     return fileAttr.regularFile && filePath.fileName.toString.endsWith(".c")
                 ]).iterator.toIterable) {
-                    sourcePaths += infra.generadedCodeFolder.toPath.relativize(path).toString
+                    sourcePaths += infra.generatedCodeFolder.toPath.relativize(path).toString
                 }
-                iDir += infra.generadedCodeFolder.toPath.relativize(sourceFile.toPath).toString
+                iDir += infra.generatedCodeFolder.toPath.relativize(sourceFile.toPath).toString
             } else {
                 environment.errors.add("Source location does not exist: " + sourceFile)
                 logger.println("ERROR: Source location does not exist: " + sourceFile)
@@ -91,7 +91,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         }
         
         val targetExe = new File(binFolder, environment.getProperty(EXE_NAME)?:EXE_NAME.^default)
-        val targetExePath = infra.generadedCodeFolder.toPath.relativize(targetExe.toPath).toString
+        val targetExePath = infra.generatedCodeFolder.toPath.relativize(targetExe.toPath).toString
         logger.println("Target exe file: " + targetExe)
         
         val gcc = newArrayList(environment.getProperty(CC_PATH)?:CC_PATH.^default)
@@ -115,7 +115,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         gcc += sourcePaths
         
         // Run c compiler
-        var success = gcc.invoke(infra.generadedCodeFolder)?:-1 == 0
+        var success = gcc.invoke(infra.generatedCodeFolder)?:-1 == 0
         if (!success) {
             environment.errors.add("Compiler did not return success (exit value != 0)")
             logger.println("Compilation failed")

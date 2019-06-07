@@ -59,10 +59,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
         vo
     }    
 
-    def dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
+    def dispatch CharSequence serializeHR(ValuedObjectReference vor) {
+        return vor.serializeVOR
+    }
+    
+    def CharSequence serializeVOR(ValuedObjectReference valuedObjectReference) {
         if (valuedObjectReference.valuedObject === null) {
             System.err.println("Valued object reference is null! Cannot serialize: " + valuedObjectReference)
-            return ""
+            return "<BROKEN_REFERENCE>"
         }
         var vo = valuedObjectReference.valuedObject.name
         for (index : valuedObjectReference.indices) {
@@ -75,7 +79,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }
     
     def dispatch CharSequence serializeHR(ReferenceCall referenceCall) {
-        return referenceCall.valuedObject.serializeHR.toString + referenceCall.parameters.serializeHRParameters
+        return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeHRParameters
     }    
 
     def dispatch CharSequence serializeHR(FunctionCall functionCall) {
@@ -121,9 +125,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		}
 		
 		if (expression.eContainer !== null && expression.eContainer instanceof OperatorExpression) {
-			val myPrecedence = expression.operator.precedence
-			val parentPrecedence = (expression.eContainer as OperatorExpression).operator.precedence
-			if (myPrecedence >= parentPrecedence) {
+			val parent = expression.eContainer as OperatorExpression
+			if (expression.requiresParenthesis(parent)) {
 				return "(" + result + ")"
 			} else {
 				return result
@@ -131,6 +134,40 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
 		}
 
 		return result
+	}
+	
+	static val ALWAYS_OMIT_PARENTHESIS = newHashSet(OperatorType.LOGICAL_OR, OperatorType.LOGICAL_AND, OperatorType.NOT, OperatorType.ADD, OperatorType.SUB, OperatorType.MULT, OperatorType.BITWISE_AND, OperatorType.BITWISE_OR, OperatorType.BITWISE_XOR, OperatorType.BITWISE_NOT )
+	protected def boolean requiresParenthesis(OperatorExpression expression, OperatorExpression parent) {
+        val myOperator = expression.operator
+        val parentOperator = parent.operator
+	    val myPrecedence = myOperator.precedence
+        val parentPrecedence = parentOperator.precedence
+        
+        if (myPrecedence > parentPrecedence) {
+            return true
+        }
+        // Same precedence is not always associative, such as div! KISEMA-1394
+        if (myPrecedence == parentPrecedence) {
+            val position = parent.subExpressions.indexOf(expression)
+            if (position == 0) { // redundant left associativity
+                if (parent.subExpressions.size != 1 || parent.operator != OperatorType.SUB) {
+                    // Exclude single minus 
+                    return false
+                }
+            }
+            // This will ignore user forces right associativity
+            // TODO discuss if we really want this behavior
+            if (myOperator == parentOperator && ALWAYS_OMIT_PARENTHESIS.contains(myOperator)) {
+                return false
+            }
+            // This will ignore if user forces right associativity with + and -
+            // TODO discuss if we really want this behavior
+//            if (myOperator == OperatorType.ADD && parentOperator == OperatorType.SUB || myOperator == OperatorType.SUB && parentOperator == OperatorType.ADD) {
+//                return false
+//            }
+            return true
+        }
+        return false
 	}
 	
 	protected def int precedence(OperatorType operatorType) {
@@ -202,7 +239,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     	"pre(" + expression.subExpressions.head.serializeHR + ")"
     }   
 
-    protected def CharSequence serializeHROperatorExpressionFBY(OperatorExpression expression) {
+    protected def CharSequence serializeHROperatorExpressionINIT(OperatorExpression expression) {
         combineOperatorsHR(expression.subExpressions.iterator, " -> ")
     }
     
@@ -275,10 +312,10 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     }        
     
     protected def CharSequence serializeHROperatorExpressionConditional(OperatorExpression expression) {
-        if (expression.subExpressions.size == 3) {
+        if (expression.subExpressions.size == 2 || expression.subExpressions.size == 3 ) {
             return expression.subExpressions.head.serializeHR + " ? " +
-                expression.subExpressions.get(1).serializeHR + " : " + 
-                expression.subExpressions.get(2).serializeHR  
+                expression.subExpressions.get(1).serializeHR
+                + if (expression.subExpressions.size == 3) " : " + expression.subExpressions.get(2).serializeHR else ""
         } else {
             throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
                 expression.subExpressions.size + " arguments.")
@@ -305,8 +342,8 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return expression.serializeHROperatorExpressionVAL
         } else if (expression.operator == OperatorType::PRE) {
             return expression.serializeHROperatorExpressionPRE
-        } else if (expression.operator == OperatorType::FBY) {
-            return expression.serializeHROperatorExpressionFBY
+        } else if (expression.operator == OperatorType::INIT) {
+            return expression.serializeHROperatorExpressionINIT
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeHROperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {

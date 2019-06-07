@@ -18,7 +18,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.sccharts.Region
-import de.cau.cs.kieler.core.model.Pair
 
 /**
  * @author ssm
@@ -110,7 +109,7 @@ class SCChartsControlflowRegionExtensions {
     // use also for hasInnerStatesOrControlflowRegions
     def boolean controlflowRegionsContainStates(State state) {
         for (r : state.regions.filter(ControlflowRegion)) {
-            if (r.containsStates) return true
+            if (r.containsStates || r.reference !== null) return true
         }
         false
     }

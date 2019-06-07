@@ -108,6 +108,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.REPEAT__STATEMENTS);
@@ -120,6 +121,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isPositive() {
         return positive;
     }
@@ -129,6 +131,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPositive(boolean newPositive) {
         boolean oldPositive = positive;
         positive = newPositive;
@@ -141,6 +144,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -165,6 +169,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -316,7 +321,7 @@ public class RepeatImpl extends StatementImpl implements Repeat {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (positive: ");
         result.append(positive);
         result.append(')');

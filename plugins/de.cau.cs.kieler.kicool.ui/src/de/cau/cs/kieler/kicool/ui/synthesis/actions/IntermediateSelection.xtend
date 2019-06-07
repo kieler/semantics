@@ -12,6 +12,9 @@
  */
 package de.cau.cs.kieler.kicool.ui.synthesis.actions
 
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
+
 /**
  * Class for holding the intermediate selection data.
  * 
@@ -19,8 +22,28 @@ package de.cau.cs.kieler.kicool.ui.synthesis.actions
  * @kieler.design 2018-04-12 proposed 
  * @kieler.rating 2018-04-12 proposed yellow
  */
-@Data
 class IntermediateSelection {
+    @Accessors List<IntermediateSelectionEntry> entries
+    
+    new(de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor, int intermediateIndex) {
+        entries = <IntermediateSelectionEntry> newArrayList
+        new IntermediateSelectionEntry(processor, intermediateIndex) => [
+            entries += it
+        ]
+    }
+    
+    new(List<Pair<de.cau.cs.kieler.kicool.compilation.Processor<?,?>, Integer>> processorIndexPairs) {
+        entries = <IntermediateSelectionEntry> newArrayList
+        for (pair : processorIndexPairs) {
+            new IntermediateSelectionEntry(pair.key, pair.value) => [
+                entries += it
+            ]
+        }
+    }
+}
+
+@Data
+class IntermediateSelectionEntry {
     de.cau.cs.kieler.kicool.compilation.Processor<?,?> processor
     int intermediateIndex
 }

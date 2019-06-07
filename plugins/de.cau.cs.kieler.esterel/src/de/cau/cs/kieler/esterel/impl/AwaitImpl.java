@@ -98,6 +98,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.AWAIT__STATEMENTS);
@@ -110,6 +111,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayExpression getDelay() {
         return delay;
     }
@@ -134,6 +136,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayExpression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
@@ -153,6 +156,7 @@ public class AwaitImpl extends StatementImpl implements Await {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Case> getCases() {
         if (cases == null) {
             cases = new EObjectContainmentEList<Case>(Case.class, this, EsterelPackage.AWAIT__CASES);

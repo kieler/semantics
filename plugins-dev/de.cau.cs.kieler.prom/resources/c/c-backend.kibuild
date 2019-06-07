@@ -1,0 +1,18 @@
+// Compile models to C code
+model compiler kico {
+  outputFolder: kieler-gen
+  outputFileExtension: c
+  compileChain: de.cau.cs.kieler.sccharts.netlist
+  
+  // Generate simulation from output of compilation
+  process simulation template {
+    file: assets/CSimulation.ftl
+  }
+}
+
+// Compile generated simulation
+simulation compiler c {
+  libFolder: kieler-gen/sim/lib
+  outputFolder: kieler-gen/sim/bin
+  command: "gcc -lm -o \"./${outputFolder}/${executable_name}\" \"${file_path}\""
+}

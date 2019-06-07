@@ -1046,16 +1046,6 @@ public interface ScgPackage extends EPackage {
 	int CONTROL_FLOW = 15;
 
 	/**
-     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.scg.impl.ControlDependencyImpl
-     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
-     * @generated
-     */
-    int CONTROL_DEPENDENCY = 16;
-
-    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1282,7 +1272,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getExpressionDependency()
      * @generated
      */
-	int EXPRESSION_DEPENDENCY = 17;
+	int EXPRESSION_DEPENDENCY = 16;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardDependencyImpl <em>Guard Dependency</em>}' class.
@@ -1292,7 +1282,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getGuardDependency()
      * @generated
      */
-	int GUARD_DEPENDENCY = 18;
+	int GUARD_DEPENDENCY = 17;
 
 	/**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
@@ -1431,6 +1421,24 @@ public interface ScgPackage extends EPackage {
 	int CONTROL_FLOW__TARGET = KEffectsPackage.LINK__TARGET;
 
 	/**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__TAG = KEffectsPackage.LINK__TAG;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROL_FLOW__REFERENCE = KEffectsPackage.LINK__REFERENCE;
+
+    /**
      * The number of structural features of the '<em>Control Flow</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1440,33 +1448,6 @@ public interface ScgPackage extends EPackage {
 	int CONTROL_FLOW_FEATURE_COUNT = KEffectsPackage.LINK_FEATURE_COUNT + 0;
 
 	/**
-     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
-
-	/**
-     * The feature id for the '<em><b>Target</b></em>' reference.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
-
-	/**
-     * The number of structural features of the '<em>Control Dependency</em>' class.
-     * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-	int CONTROL_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
-
-				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1485,6 +1466,24 @@ public interface ScgPackage extends EPackage {
 	int EXPRESSION_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXPRESSION_DEPENDENCY__TAG = KEffectsPackage.DEPENDENCY__TAG;
+
+                /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXPRESSION_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
      * The number of structural features of the '<em>Expression Dependency</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1512,6 +1511,24 @@ public interface ScgPackage extends EPackage {
 	int GUARD_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_DEPENDENCY__TAG = KEffectsPackage.DEPENDENCY__TAG;
+
+                /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int GUARD_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
      * The number of structural features of the '<em>Guard Dependency</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1528,7 +1545,7 @@ public interface ScgPackage extends EPackage {
      * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getScheduleDependency()
      * @generated
      */
-	int SCHEDULE_DEPENDENCY = 19;
+	int SCHEDULE_DEPENDENCY = 18;
 
 				/**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1549,6 +1566,24 @@ public interface ScgPackage extends EPackage {
 	int SCHEDULE_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
 
 				/**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DEPENDENCY__TAG = KEffectsPackage.DEPENDENCY__TAG;
+
+                /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCHEDULE_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
      * The number of structural features of the '<em>Schedule Dependency</em>' class.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1558,6 +1593,61 @@ public interface ScgPackage extends EPackage {
 	int SCHEDULE_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
 
 	/**
+     * The meta object id for the '{@link de.cau.cs.kieler.scg.impl.TickBoundaryDependencyImpl <em>Tick Boundary Dependency</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scg.impl.TickBoundaryDependencyImpl
+     * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getTickBoundaryDependency()
+     * @generated
+     */
+    int TICK_BOUNDARY_DEPENDENCY = 19;
+
+                /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__ANNOTATIONS = KEffectsPackage.DEPENDENCY__ANNOTATIONS;
+
+                /**
+     * The feature id for the '<em><b>Target</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__TARGET = KEffectsPackage.DEPENDENCY__TARGET;
+
+                /**
+     * The feature id for the '<em><b>Tag</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__TAG = KEffectsPackage.DEPENDENCY__TAG;
+
+                /**
+     * The feature id for the '<em><b>Reference</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY__REFERENCE = KEffectsPackage.DEPENDENCY__REFERENCE;
+
+                /**
+     * The number of structural features of the '<em>Tick Boundary Dependency</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TICK_BOUNDARY_DEPENDENCY_FEATURE_COUNT = KEffectsPackage.DEPENDENCY_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.scg.BranchType <em>Branch Type</em>}' enum.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1942,16 +2032,6 @@ public interface ScgPackage extends EPackage {
 	EClass getControlFlow();
 
 	/**
-     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.ControlDependency <em>Control Dependency</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return the meta object for class '<em>Control Dependency</em>'.
-     * @see de.cau.cs.kieler.scg.ControlDependency
-     * @generated
-     */
-    EClass getControlDependency();
-
-    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.BasicBlock <em>Basic Block</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2210,6 +2290,16 @@ public interface ScgPackage extends EPackage {
 	EClass getScheduleDependency();
 
 	/**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scg.TickBoundaryDependency <em>Tick Boundary Dependency</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Tick Boundary Dependency</em>'.
+     * @see de.cau.cs.kieler.scg.TickBoundaryDependency
+     * @generated
+     */
+    EClass getTickBoundaryDependency();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scg.Guard <em>Guard</em>}'.
      * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2556,16 +2646,6 @@ public interface ScgPackage extends EPackage {
 		EClass CONTROL_FLOW = eINSTANCE.getControlFlow();
 
 		/**
-         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.ControlDependencyImpl <em>Control Dependency</em>}' class.
-         * <!-- begin-user-doc -->
-         * <!-- end-user-doc -->
-         * @see de.cau.cs.kieler.scg.impl.ControlDependencyImpl
-         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getControlDependency()
-         * @generated
-         */
-        EClass CONTROL_DEPENDENCY = eINSTANCE.getControlDependency();
-
-        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.BasicBlockImpl <em>Basic Block</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2770,6 +2850,16 @@ public interface ScgPackage extends EPackage {
 		EClass SCHEDULE_DEPENDENCY = eINSTANCE.getScheduleDependency();
 
 		/**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.TickBoundaryDependencyImpl <em>Tick Boundary Dependency</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scg.impl.TickBoundaryDependencyImpl
+         * @see de.cau.cs.kieler.scg.impl.ScgPackageImpl#getTickBoundaryDependency()
+         * @generated
+         */
+        EClass TICK_BOUNDARY_DEPENDENCY = eINSTANCE.getTickBoundaryDependency();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.scg.impl.GuardImpl <em>Guard</em>}' class.
          * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->

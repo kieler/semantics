@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
@@ -37,7 +36,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * @author als
+ * @author als ssm
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
@@ -63,7 +62,7 @@ class PartialExpressionEvaluator {
     @Accessors var (ValuedObjectReference) => Value valueCallback
     
     new() {
-        this(emptyMap)
+        this(newHashMap)
     }
     
     new(Map<ValuedObject, Value> values) {
@@ -76,7 +75,7 @@ class PartialExpressionEvaluator {
     }
     
     new((ValuedObjectReference) => Value valueCallback) {
-        this(emptyMap)
+        this(newHashMap)
         this.valueCallback = valueCallback
     } 
     
@@ -100,7 +99,7 @@ class PartialExpressionEvaluator {
             BoolValue: value.value
             IntValue: value.value != 0
             FloatValue: value.value != 0
-            DoubleValue: value.value != 0
+            //DoubleValue: value.value != 0
             StringValue: !value.value.nullOrEmpty
             default: throw new UnsupportedOperationException("Cannot determine truth value for value type " + value.class.simpleName)
         }
@@ -271,9 +270,11 @@ class PartialExpressionEvaluator {
      * Returns null if eval should be aborted
      */
     def Value compute(OperatorExpression oexp) {
-        if (oexp.subExpressions.size > 2) {
-            // FIXME support!
-            return null
+        while (oexp.subExpressions.size > 2) {
+            val partialOE = createOperatorExpression(oexp.operator)
+            partialOE.subExpressions += oexp.subExpressions.head
+            partialOE.subExpressions += oexp.subExpressions.head
+            oexp.subExpressions.add(0, partialOE.compute)
         }
         // Only compute integer/bool
         if (oexp.subExpressions.forall[it instanceof IntValue || it instanceof BoolValue]) {
@@ -310,8 +311,8 @@ class PartialExpressionEvaluator {
                 case DIV: {
                     if (op0 % op1 == 0) {
                         createIntValue(op0 / op1)
-                    } else { // This would require floating point handling an a proper type system
-                        return null
+                    } else { 
+                        createIntValue(op0 / op1)
                     }
                 }
                 case MOD: createIntValue(op0 % op1)
@@ -320,6 +321,27 @@ class PartialExpressionEvaluator {
                 case SHIFT_RIGHT: createIntValue(op0.shiftRight(op1))
                 case SHIFT_RIGHT_UNSIGNED: createIntValue(op0.shiftRightUnsigned(op1))
                 case SUB: createIntValue(op0 - op1)
+                default: null
+            }
+        } else if (oexp.subExpressions.forall[it instanceof IntValue || it instanceof FloatValue]) {
+            val sub0 = oexp.subExpressions.get(0) as Value
+            val double op0 = if (sub0 instanceof IntValue) sub0.value else (sub0 as FloatValue).value 
+            val sub1 = oexp.subExpressions.get(1) as Value
+            val double op1 = if (sub1 instanceof IntValue) sub1.value else (sub1 as FloatValue).value
+            return switch (oexp.operator) {
+                // COMPARISON
+                case EQ: createBoolValue(op0 == op1)
+                case GEQ: createBoolValue(op0 >= op1)
+                case GT: createBoolValue(op0 > op1)
+                case LEQ: createBoolValue(op0 <= op1)
+                case LT: createBoolValue(op0 < op1)
+                case NE: createBoolValue(op0 != op1)
+                // CALCULATION
+                case ADD: createFloatValue(op0 + op1)
+                case DIV: createFloatValue(op0 / op1)
+                case MOD: createFloatValue(op0 % op1)
+                case MULT: createFloatValue(op0 * op1)
+                case SUB: createFloatValue(op0 - op1)
                 default: null
             }
         }

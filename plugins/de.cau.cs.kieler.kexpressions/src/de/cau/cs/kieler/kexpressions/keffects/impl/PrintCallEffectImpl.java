@@ -111,6 +111,7 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KEffectsPackage.PRINT_CALL_EFFECT__SCHEDULE);
@@ -123,6 +124,7 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.PRINT_CALL_EFFECT__OUTGOING_LINKS);
@@ -135,6 +137,7 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.PRINT_CALL_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -147,6 +150,7 @@ public class PrintCallEffectImpl extends AnnotatableImpl implements PrintCallEff
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KEffectsPackage.PRINT_CALL_EFFECT__PARAMETERS);

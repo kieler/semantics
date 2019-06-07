@@ -15,12 +15,16 @@ package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.PolicyClassDeclaration
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.labels.TransitionLabelSerializer
@@ -61,6 +65,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension TransitionLabelSerializer
     @Inject extension TransitionStyles
     @Inject extension ColorStore
+    @Inject extension AdaptiveZoom
     
     override getDisplayedSynthesisOptions() {
         return newLinkedList(SHOW_USER_LABELS)
@@ -68,6 +73,7 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);
+        edge.configureEdgeLOD(transition)
 
         if (USE_KLAY.booleanValue) {
             edge.setLayoutOption(LayeredOptions::SPACING_EDGE_LABEL, 3.0)
@@ -110,8 +116,48 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
                     exists.add(existPair)
                 }
             }
-            edge.addTailLabel(sLabel.toString).associateWith(transition)
+            edge.addTailLabel(sLabel.toString) => [
+                associateWith(transition)
+                configureLabelLOD(transition)
+            ]
             edge.setUserScheduleStyle
+        }
+        if (PolicySynthesis.SHOW_POLICIES.booleanValue) {
+            val calls = transition.eAllContents.filter(ReferenceCall).toList
+            val userSchedules = newHashSet
+            for (call : calls) {
+                var MethodDeclaration method = null
+                if (call.valuedObject.eContainer instanceof MethodDeclaration) {
+                    method = call.valuedObject.eContainer as MethodDeclaration
+                }
+                if (method === null) {
+                    var vor = call as ValuedObjectReference
+                    while (vor.subReference !== null && method === null) {
+                        if (vor.subReference.valuedObject.eContainer instanceof MethodDeclaration) {
+                            method = vor.subReference.valuedObject.eContainer as MethodDeclaration
+                        }
+                        vor = vor.subReference
+                    }
+                }
+                if (method !== null) {
+                    if (!method.schedule.nullOrEmpty) {
+                        userSchedules += method.schedule.map[valuedObject.name]
+                    }
+                    if (method.eContainer instanceof PolicyClassDeclaration) {
+                        val classDecl = method.eContainer as PolicyClassDeclaration
+                        if (classDecl.policy !== null && !classDecl.policy.name.nullOrEmpty) {
+                            userSchedules += if (classDecl.policy.label.nullOrEmpty) classDecl.policy.label else classDecl.policy.name
+                        }
+                    }
+                }
+            }
+            if (!userSchedules.empty) {
+//                edge.addTailLabel(userSchedules.join(", ")) => [
+//                    associateWith(transition)
+//                    configureLabelLOD(transition)
+//                ]
+                edge.setUserScheduleStyle
+            }
         }
         
         switch (transition.history) {
@@ -134,18 +180,22 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
         
         if (SHOW_COMMENTS.booleanValue) {
             transition.getCommentAnnotations.forEach[
-                edge.addLabel(it.values.head, 
-                    COMMENT_BACKGROUND_GRADIENT_2.color)
+                edge.addLabel(it.values.head, COMMENT_BACKGROUND_GRADIENT_2.color) => [
+                    configureLabelLOD(transition)
+                ]
             ]
-        }     
+        }    
         
         //Configure selection style
         edge.setSelectionStyle
 
         // Add Label
-        val label = transition.serializeLabel(!SHOW_USER_LABELS.booleanValue)
+        val label = transition.serializeLabel(SHOW_USER_LABELS.booleanValue)
         if (label.length != 0) {
-            edge.addLabel(label.toString).associateWith(transition);
+            edge.addLabel(label.toString) => [
+                associateWith(transition)
+                configureLabelLOD(transition)
+            ]
         }
         
         return <KEdge> newArrayList(edge)

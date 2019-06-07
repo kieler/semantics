@@ -66,6 +66,7 @@ public class ScheduleObjectReferenceImpl extends ValuedObjectReferenceImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getPriority() {
         return priority;
     }
@@ -75,6 +76,7 @@ public class ScheduleObjectReferenceImpl extends ValuedObjectReferenceImpl imple
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPriority(int newPriority) {
         int oldPriority = priority;
         priority = newPriority;
@@ -149,7 +151,7 @@ public class ScheduleObjectReferenceImpl extends ValuedObjectReferenceImpl imple
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (priority: ");
         result.append(priority);
         result.append(')');

@@ -16,11 +16,10 @@ public abstract class AbstractSCEstValidator extends EsterelValidator {
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.cau.de/cs/kieler/esterel/Esterel"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/scl/0.2.0"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kexpressions/0.1.2"));
-		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));
-		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
-		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
 		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/annotations"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/keffects/0.1.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://kieler.cs.cau.de/kext/0.1.0"));
+		result.add(EPackage.Registry.INSTANCE.getEPackage("http://www.eclipse.org/emf/2002/Ecore"));
 		return result;
 	}
-	
 }

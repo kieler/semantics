@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.SCChartsFactory
 import com.google.inject.Inject
 import de.cau.cs.kieler.sccharts.DelayType
+import org.eclipse.emf.ecore.EObject
 
 /**
  * @author ssm
@@ -91,6 +92,10 @@ class SCChartsTransitionExtensions {
             sourceState.outgoingTransitions.add(index, it)
         ]
     }
+    
+    def createTerminationTo(State sourceState, State targetState) {
+        sourceState.createTransitionTo(targetState).setTypeTermination
+    }
 
     def setSourceState(Transition transition, State sourceState) {
         transition => [ sourceState.outgoingTransitions += it ]
@@ -126,7 +131,7 @@ class SCChartsTransitionExtensions {
     
     def isImplicitlyImmediate(Transition transition) {
         (transition.delay == DelayType.IMMEDIATE) || (transition.sourceState.isConnector) || 
-        (transition.preemption == PreemptionType::TERMINATION && transition.trigger === null)
+        (transition.preemption == PreemptionType::TERMINATION && transition.trigger === null && transition.delay !== DelayType.DELAYED)
     }    
     
     def getPriority(Transition transition) {
@@ -141,4 +146,15 @@ class SCChartsTransitionExtensions {
     def isSelfLoop(Transition transition) {
         transition.targetState !== null && transition.targetState == transition.sourceState
     }
+    
+    def Transition getFirstTransition(EObject eObject) {
+        if (eObject === null) 
+            return null
+        else if (eObject instanceof Transition) 
+            return eObject as Transition
+        else if (eObject.eContainer === null) 
+            return null
+        else 
+            return eObject.eContainer.getFirstTransition
+    }     
 }

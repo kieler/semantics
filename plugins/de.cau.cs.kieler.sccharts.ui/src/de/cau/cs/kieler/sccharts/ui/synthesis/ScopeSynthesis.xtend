@@ -49,8 +49,6 @@ class ScopeSynthesis extends AbstractDiagramSynthesis<Scope> {
         ]
     }
 
-    @Accessors private var String skinPath = ""
-       
     override getDisplayedSynthesisOptions() {
         val options = new LinkedHashSet()
         

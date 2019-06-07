@@ -15,13 +15,18 @@ package de.cau.cs.kieler.scg.processors.ssa
 import com.google.common.collect.BiMap
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Multimap
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
@@ -32,29 +37,18 @@ import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import de.cau.cs.kieler.scg.common.SCGAnnotations
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.scg.ssa.IOPreserverExtensions
-import de.cau.cs.kieler.scg.ssa.MergeExpressionExtension
-import de.cau.cs.kieler.scg.ssa.SSACoreExtensions
-import de.cau.cs.kieler.scg.ssa.SSATransformationExtensions
-import de.cau.cs.kieler.scg.ssa.domtree.DominatorTree
-import java.util.Collection
-import javax.inject.Inject
-
-import static com.google.common.collect.Lists.*
-import static de.cau.cs.kieler.scg.ssa.SSAFunction.*
-
-import static extension com.google.common.base.Predicates.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-
-import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import java.util.Collection
+
+import static com.google.common.base.Predicates.*
+import static com.google.common.collect.Lists.*
+import static de.cau.cs.kieler.scg.processors.ssa.SSAFunction.*
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 
 /**
  * The SSA transformation for SCGs

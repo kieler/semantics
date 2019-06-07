@@ -37,6 +37,10 @@ public enum PreemptionType implements Enumerator {
      * The '<em><b>WEAKABORT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A WEAKABORT transition allows the
+     * exited State to execute its contents in that tick.
+     * <!-- end-model-doc -->
      * @see #WEAKABORT_VALUE
      * @generated
      * @ordered
@@ -47,6 +51,11 @@ public enum PreemptionType implements Enumerator {
      * The '<em><b>STRONGABORT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A STRONGABORT will immediately
+     * leave the state and not allow any actions in
+     * the source State in that tick. 
+     * <!-- end-model-doc -->
      * @see #STRONGABORT_VALUE
      * @generated
      * @ordered
@@ -57,6 +66,10 @@ public enum PreemptionType implements Enumerator {
      * The '<em><b>TERMINATION</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     * A NORMALTERMINATION will leave a State whenever all contained
+     * Regions are in final States. A normal termination may not define a guard trigger.
+     * <!-- end-model-doc -->
      * @see #TERMINATION_VALUE
      * @generated
      * @ordered
@@ -228,6 +241,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getValue() {
       return value;
     }
@@ -237,6 +251,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
       return name;
     }
@@ -246,6 +261,7 @@ public enum PreemptionType implements Enumerator {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getLiteral() {
       return literal;
     }

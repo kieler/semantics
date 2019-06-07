@@ -1,124 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="kivis" nsURI="http://www.cau.de/cs/kieler/kivis/KiVis" nsPrefix="kivis">
-  <eClassifiers xsi:type="ecore:EClass" name="VisualizationConfiguration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="image" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="elements" upperBound="-1"
-        eType="#//Element" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="interactions" upperBound="-1"
-        eType="#//Interaction" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Visualization">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="images" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="loads" unique="false" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="init" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="content" upperBound="-1"
+        eType="#//Content" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Element">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="animations" upperBound="-1"
-        eType="#//Animation" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Interaction">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"
+  <eClassifiers xsi:type="ecore:EClass" name="Content">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interface" eType="#//Interface"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="afterTick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="beforeTick" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
-        eType="#//Action" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Event">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="#//DOMEvent"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Binding" eSuperTypes="#//Content">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="domElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Handler" eSuperTypes="#//Content">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multimatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="domElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Action" eSuperTypes="#//Content">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="domEvent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="multimatch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="domElement" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deferredInterface" eType="#//Interface"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deferredScript" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="setter" upperBound="-1"
+        eType="#//Setter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="signal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="control" eType="#//SimulationCorntrol"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Code" eSuperTypes="#//Content"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Setter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interface" eType="#//Interface"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Interface">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="element" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variable" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pool" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operation" eType="#//SimulationOperation"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Function">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="functionName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="#//FunctionParameter" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Animation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeMappings" upperBound="-1"
-        eType="#//AttributeMapping" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttributeMapping" eSuperTypes="platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//AttributeMapping">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attribute" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="literal" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
-        eType="#//Mapping" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Mapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variableDomain" eType="#//Domain"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attributeDomain" eType="#//Domain"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Condition"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Comparison" eSuperTypes="#//Condition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="relation" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//OperatorType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Domain">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="otherValues" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="range" eType="#//Interval"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Interval">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="to" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="VariableReference">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="model" eType="#//ModelReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="arrayIndex" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//ArrayIndex"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ModelReference">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FunctionParameter">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variableReference" eType="#//VariableReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.prom/model/generated/KiBuild.ecore#//Literal"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="DOMEvent">
-    <eLiterals name="CLICK" literal="click"/>
-    <eLiterals name="MOUSEDOWN" value="1" literal="mousedown"/>
-    <eLiterals name="MOUSEUP" value="2" literal="mouseup"/>
-    <eLiterals name="MOUSEMOVE" value="3" literal="mousemove"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SimulationOperation">
-    <eLiterals name="STEP" literal="step"/>
-    <eLiterals name="STOP" value="1" literal="stop"/>
-    <eLiterals name="PAUSE" value="2" literal="pause"/>
-    <eLiterals name="PLAY" value="3" literal="play"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AndExpression" eSuperTypes="#//Condition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//Condition"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operator" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//Comparison"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EEnum" name="SimulationCorntrol">
+    <eLiterals name="NONE" literal="nothing"/>
+    <eLiterals name="STEP" value="1" literal="step"/>
+    <eLiterals name="STOP" value="2" literal="stop"/>
+    <eLiterals name="PAUSE" value="3" literal="pause"/>
+    <eLiterals name="PLAY" value="4" literal="play"/>
   </eClassifiers>
 </ecore:EPackage>

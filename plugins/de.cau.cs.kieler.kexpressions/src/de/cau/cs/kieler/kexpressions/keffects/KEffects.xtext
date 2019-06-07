@@ -37,15 +37,19 @@ import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
 // Effect Rule
 // An effect is either an assignment, a postfix effect, an emission, a hostcode effect or a 
 // function call effect.
+// NOTE: Emission has precedence before ReferenceCallEffect and consumes simple refecerence call grammar using this rule
+// should to use the KEffectsEmissionReferenceCallConverter to convert these Emissions back to ReferenceCallEffects.
+// If precedence is changed the converter has to be adapted too.
 Effect returns keffects::Effect: 
     Assignment | 
 	PostfixEffect | 
-	Emission |
+	ValuedEmission | // Will consume some ReferenceCallEffects
 	HostcodeEffect | 
 	ReferenceCallEffect |
 	FunctionCallEffect |
 	PrintCallEffect |
-	RandomizeCallEffect;
+	RandomizeCallEffect |
+	PureEmission;
 
 // Emission Rule
 // An emission is a esterel like 'call' of a signal instance. A transition effect list may simply set
@@ -54,10 +58,21 @@ Effect returns keffects::Effect:
 // Example: A, B(2)
 // Important: To help the parser and to avoid ambiguities, emissions may only allow restricted 
 // annotations defined in the annotations grammar.		
-Emission returns keffects::Emission:
+PureEmission returns keffects::Emission:
     (annotations+=QuotedStringAnnotation)*    
-	reference=ValuedObjectReference ( "(" newValue = Expression ")" )?
+	reference=ValuedObjectReference
 	('schedule' schedule+=ScheduleObjectReference+)?;
+
+// Valued emission must be separated from normal emission to allow correct parsing in combination with referece calls
+// Problematic case f(), here the emission rule must not even partially (optional value part) match to allow parsing as referece call
+ValuedEmission returns keffects::Emission:
+    (annotations+=QuotedStringAnnotation)*    
+    reference=ValuedObjectReference
+    "(" newValue = Expression ")"
+    ('schedule' schedule+=ScheduleObjectReference+)?;
+    
+PureOrValuedEmission returns keffects::Emission:
+    ValuedEmission | PureEmission;
 
 // Assignment Rule
 // An assignment may start with a list of arbitrary annotatations.
@@ -67,8 +82,8 @@ Emission returns keffects::Emission:
 Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
 	reference=ValuedObjectReference
-	 operator=AssignOperator expression = Expression
-	 ('schedule' schedule+=ScheduleObjectReference+)?;
+	operator=AssignOperator expression = Expression
+	('schedule' schedule+=ScheduleObjectReference+)?;
 	 
 //SubReferenceAssignment returns keffects::Assignment:
 //    (annotations+=Annotation)*    
@@ -83,8 +98,8 @@ Assignment returns keffects::Assignment:
 PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
     reference=ValuedObjectReference
-     operator=PostfixOperator
-     ('schedule' schedule+=ScheduleObjectReference+)?;
+    operator=PostfixOperator
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Hostcode Effect Rule
 // A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
@@ -97,8 +112,11 @@ HostcodeEffect returns keffects::HostcodeEffect:
 // preceded by a list of annotations.
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
-    'call' valuedObject=[kexpressions::ValuedObject|PrimeID]
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
+    valuedObject=[kexpressions::ValuedObject|PrimeID]
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
     
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
@@ -109,14 +127,15 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
         (('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
         ) | '()')
-    );    
+    );
 
 // Print Call Effect Rule
 // A print functions that enables target-independent prints in the model.    
 PrintCallEffect returns keffects::PrintCallEffect:
     (annotations+=Annotation)*
     'print' 
-    ('(' parameters += Parameter (',' parameters += Parameter)* ')');
+    ('(' parameters += Parameter (',' parameters += Parameter)* ')')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 RandomizeCallEffect returns keffects::RandomizeCallEffect:
     {keffects::RandomizeCallEffect}

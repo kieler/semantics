@@ -53,6 +53,7 @@ class SCChartsScopeExtensions {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsStateExtensions
+    @Inject extension SCChartsInheritanceExtensions
     @Inject extension KEffectsExtensions
     
     def Iterator<State> getAllContainedStates(Scope scope) {
@@ -137,6 +138,11 @@ class SCChartsScopeExtensions {
         for(vo : scope.valuedObjects) {
             if (!map.containsKey(vo.name)) map.put(vo.name, vo)
         }
+        if (scope instanceof State) {
+            if (!scope.baseStates.nullOrEmpty) {
+                map.putAll(scope.allVisibleInheritedDeclarations.map[valuedObjects].flatten.toMap[name])
+            }
+        }
         if (scope.eContainer !== null && scope.eContainer instanceof Scope) 
             return (scope.eContainer as Scope).getValuedObjectNameMap(map)
         map
@@ -193,9 +199,8 @@ class SCChartsScopeExtensions {
         }
     }
 
-
-
-
-    
+    def isReferencing(Scope scope) {
+        scope.reference !== null && scope.reference.scope !== null
+    }
     
 }

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
-import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 
 
 /**
@@ -31,13 +30,14 @@ import de.cau.cs.kieler.kexpressions.keffects.Linkable;
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getCounterVariable <em>Counter Variable</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getForStart <em>For Start</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.Region#getForEnd <em>For End</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.Region#isOverride <em>Override</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion()
  * @model abstract="true"
  * @generated
  */
-public interface Region extends Scope, Linkable {
+public interface Region extends Scope {
     /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -150,5 +150,31 @@ public interface Region extends Scope, Linkable {
      * @generated
      */
     void setForEnd(Expression value);
+
+    /**
+     * Returns the value of the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <p>
+     * If the meaning of the '<em>Override</em>' attribute isn't clear,
+     * there really should be more of a description here...
+     * </p>
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Override</em>' attribute.
+     * @see #setOverride(boolean)
+     * @see de.cau.cs.kieler.sccharts.SCChartsPackage#getRegion_Override()
+     * @model
+     * @generated
+     */
+    boolean isOverride();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.sccharts.Region#isOverride <em>Override</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Override</em>' attribute.
+     * @see #isOverride()
+     * @generated
+     */
+    void setOverride(boolean value);
 
 } // Region

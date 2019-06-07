@@ -12,16 +12,16 @@
  */
 package de.cau.cs.kieler.kicool.ui.klighd
 
-import de.cau.cs.kieler.core.model.util.ModelUtil
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.kicool.ui.view.CompilerView
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.ui.view.controller.AbstractViewUpdateController
-import de.cau.cs.kieler.klighd.ui.view.controllers.EcoreXtextSaveUpdateController
+import de.cau.cs.kieler.klighd.ui.view.controllers.EditorSaveAdapter
+import de.cau.cs.kieler.klighd.ui.view.controllers.EditorUtil
+import de.cau.cs.kieler.klighd.ui.view.controllers.XtextSelectionHighlighter
 import de.cau.cs.kieler.klighd.ui.view.model.MessageModel
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import java.io.IOException
@@ -39,12 +39,14 @@ import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.util.Diagnostician
+import org.eclipse.emf.edit.domain.IEditingDomainProvider
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.jface.resource.ImageDescriptor
+import org.eclipse.jface.viewers.SelectionChangedEvent
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
@@ -61,18 +63,21 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.dialogs.SaveAsDialog
 import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
+import java.util.List
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
  * 
- * @author als
+ * @author als ssm
  * @kieler.design 2014-07-30 proposed
  * @kieler.rating 2014-07-30 proposed yellow
  * 
  */
-class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
+class KiCoModelUpdateController extends AbstractViewUpdateController implements EditorSaveAdapter.EditorSafeListener {
 
     /**
      * Events that can cause an update of displayed model.
@@ -150,24 +155,30 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
     /** The action for toggling forced simple update strategy mode. */
     private var Action simpleUpdateToggleAction
     private static final boolean SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE = false
+    
+    /** External contributions */
+    private val List<KiCoModelViewUIContributor> externalUIContributors = newArrayList
         
     // -- Model --
 
     /** Model extracted from editor. */
     @Accessors(PUBLIC_GETTER)
-    private var EObject sourceModel
+    private var Object sourceModel
 
     /** Indicates if the source model has error markers. */
     private var boolean sourceModelHasErrorMarkers = false
 
     /** The compiled model. */
     @Accessors(PUBLIC_GETTER)
-    private var Object compiledModel = null
+    private val List<Object> compiledModel = <Object> newArrayList
     
     // -- Visual --
 
     /** Container for displaying waring messages. */
     private Composite warningMessageContainer = null
+    
+    /** The save adapter for the editor. */
+    protected final EditorSaveAdapter saveAdapter;
 
     // -- Constructor and Initialization
     // -------------------------------------------------------------------------
@@ -177,6 +188,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     new() {
         KiCoModelViewNotifier.register(this)
+        saveAdapter = new EditorSaveAdapter(this);
 
         // Save Button
         saveAction = new Action("Save displayed main model", IAction.AS_PUSH_BUTTON) {
@@ -271,6 +283,9 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         simpleUpdateToggleAction.setToolTipText(
                 "Forces this view to always use the simple update strategy (no incremental update)")
         simpleUpdateToggleAction.setChecked(SIMPLE_UPDATE_TOGGLE_ACTION_DEFAULT_STATE)
+        
+        
+        externalUIContributors += KiCoModelViewUIContributorRegistry.contributors
     }
 
     // -- Controller
@@ -304,8 +319,21 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onDeactivate() {
         sourceModel = null
-        compiledModel = null
+        compiledModel.clear()
         saveAdapter.deactivate()
+    }
+    
+    // -- Diagram Selection Change Event
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    override selectionChanged(SelectionChangedEvent event) {
+        if (getEditor() instanceof XtextEditor) {
+            // ssm: Deactivate for workaround for the SBE with SDs
+            XtextSelectionHighlighter.highlightSelection(getEditor as XtextEditor, event.getSelection());
+        }
     }
     
     // -- Save Listener
@@ -316,7 +344,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onEditorSaved(IEditorPart editor) {
         if (syncEditorToggleAction.isChecked() &&
-            (!compilerToggleAction.isChecked() || compiledModel === null)) {
+            (!compilerToggleAction.isChecked() || compiledModel.empty)) {
             update(ChangeEvent.EDITOR)
         }
         if (sourceModel instanceof EObject) {
@@ -330,7 +358,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void refresh() {
-        if (!compilerToggleAction.isChecked() || compiledModel === null) {
+        if (!compilerToggleAction.isChecked() || compiledModel.empty) {
             update(ChangeEvent.EDITOR)
         } else {
             diagramView.updateDiagram
@@ -356,8 +384,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         menu.add(chainToggleAction)
         menu.add(simpleUpdateToggleAction)
         
-        val externalUIContributors = KiCoModelViewUIContributorRegistry.contributors
-        externalUIContributors.forEach[it.contributeControls(this, toolBar, menu)]
+        externalUIContributors.forEach[contributeControls(this, toolBar, menu)]
     }
 
     /**
@@ -373,7 +400,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     override void onDiagramUpdate(Object model, KlighdSynthesisProperties properties) {
         // dispose warning message composite if necessary
-        if (warningMessageContainer != null) {
+        if (warningMessageContainer !== null) {
             if (!warningMessageContainer.isDisposed()) {
                 warningMessageContainer.dispose()
             }
@@ -394,7 +421,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
         }
         if (warnings.length() > 0) {
-            warnings.setLength(warnings.length() - 1)
+            warnings.setLength(warnings.length() - 1)           
             addWarningComposite(getDiagramView().getViewer(), warnings.toString())
         }
     }
@@ -415,7 +442,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             } else {
                 syncCompilerToggleAction.setChecked(source.syncCompilerToggleAction.isChecked())
             }
-            compiledModel = source.compiledModel
+            compiledModel.clear
+            compiledModel.addAll(source.compiledModel)
             syncEditorToggleAction.setChecked(source.syncEditorToggleAction.isChecked())
             sideBySideToggleAction.setChecked(source.sideBySideToggleAction.isChecked())
             diagramPlaceholderToggleAction.setChecked(source.diagramPlaceholderToggleAction.isChecked())
@@ -431,7 +459,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         lastSaveDirectory = null
         compilerToggleAction.setChecked(COMPILER_TOGGLE_ACTION_DEFAULT_STATE)
         syncCompilerToggleAction.setChecked(SYNC_COMPILER_TOGGLE_ACTION_DEFAULT_STATE)
-        compiledModel = null
+        compiledModel.clear
         syncEditorToggleAction.setChecked(SYNC_EDITOR_TOGGLE_ACTION_DEFAULT_STATE)
         sideBySideToggleAction.setChecked(SIDE_BY_SIDE_TOGGLE_ACTION_DEFAULT_STATE)
         diagramPlaceholderToggleAction.setChecked(DIAGRAM_PLACEHOLDER_TOGGLE_ACTION_DEFAULT_STATE)
@@ -444,7 +472,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * {@inheritDoc}
      */
     override void saveState(IMemento memento) {
-        if (lastSaveDirectory != null) {
+        if (lastSaveDirectory !== null) {
             memento.putString("lastSaveDirectory", lastSaveDirectory.toPortableString())
         }
         
@@ -457,6 +485,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
         memento.putBoolean("chainToggleAction", chainToggleAction.isChecked())
 
         memento.putBoolean("simpleUpdateToggleAction", simpleUpdateToggleAction.isChecked())
+        
+        externalUIContributors.forEach[saveState(this, memento)]
     }
 
     /**
@@ -502,6 +532,8 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                 simpleUpdateToggleAction.setChecked(simpleUpdateToggleActionValue)
             }
         }
+        
+        externalUIContributors.forEach[loadState(this, memento)]
     }
 
 
@@ -512,7 +544,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * Saves the current model into a file with saveAs dialog.
      */
     private def void saveModel() {
-        if (getModel() != null && isActive()) {
+        if (getModel() !== null && isActive()) {
             val model = getModel()
             // Get workspace
             val workspace = ResourcesPlugin.getWorkspace()
@@ -524,7 +556,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             val saveAsDialog = new SaveAsDialog(getDiagramView().getSite().getShell())
 
             // Configure dialog
-            if (lastSaveDirectory != null) {
+            if (lastSaveDirectory !== null) {
                 var path = lastSaveDirectory
                 // add new filename
                 path = path.append(filename)
@@ -546,7 +578,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             val path = saveAsDialog.getResult()
 
             // save
-            if (path != null && !path.isEmpty()) {
+            if (path !== null && !path.isEmpty()) {
                 val file = root.getFile(path)
                 val uri = URI.createPlatformResourceURI(path.toString(), false)
 
@@ -572,7 +604,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
                     // save
                     if (saveModel instanceof EObject) {
-                        ModelUtil.saveModel(saveModel, uri)
+                        saveModel(saveModel, uri)
                     } else {
                         // save to text file (create it if necessary)
                         if (!file.exists()) {
@@ -620,15 +652,15 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      * @return file extension or empty string if non exists.
      */
     public def String getResourceName(IEditorPart editor, Object model) {
-        if (editor != null && model != null) {
+        if (editor !== null && model !== null) {
             var filename = editor.getTitle()
             if (filename.contains(".")) {
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
-            val ext = ResourceExtension.getResourceExtension(model)
-            if (ext != null) {
-                filename += "." + ext.getFileExtension()
+            val ext = ModelInformation.getResourceExtension(model)
+            if (ext !== null) {
+                filename += "." + ext
             }
             return filename
         }
@@ -646,10 +678,25 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
      */
     package def void updateCompilerModel(Object model) {
         if (isActive() && syncCompilerToggleAction.isChecked()) {
-            compiledModel = model
+            compiledModel.clear
+            if (model !== null) compiledModel += model
             update(ChangeEvent.COMPILER)
         }
     }
+    
+    /**
+     * Updates the compiler model and compilation context with multiple models at once.
+     * 
+     * @param model
+     * @param context
+     */
+    package def void updateCompilerModels(List<Object> models) {
+        if (isActive() && syncCompilerToggleAction.isChecked()) {
+            compiledModel.clear
+            compiledModel.addAll(models)
+            update(ChangeEvent.COMPILER)
+        }
+    }    
     
     /**
      * Updates the model caused by changeEvent.
@@ -664,26 +711,28 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
             }
             // Read the model if necessary
             if (change == ChangeEvent.EDITOR) {
-                sourceModel = readModel(getEditor())
-                if (sourceModel != null && sourceModel.eResource() != null) {
-                    val eResource = sourceModel.eResource()
-                    sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty()
-                    
-                    // Check for model specific errors (e.g. Xtext validator rules) 
-                    val diagnostic = Diagnostician.INSTANCE.validate(sourceModel)
-                    if (diagnostic.getSeverity() ==  Diagnostic.ERROR) {
-                        sourceModelHasErrorMarkers = true
-                    }
-
-                    try {
-                        val underlyingFile = ResourceUtil.getUnderlyingFile(eResource)
-                        if (underlyingFile != null) {
-                            sourceModelHasErrorMarkers = sourceModelHasErrorMarkers ||
-                                    underlyingFile.findMarkers(IMarker.PROBLEM, false,
-                                            IResource.DEPTH_INFINITE).length > 0
+                sourceModel = ModelReaderUtil.readModelFromEditor(getEditor()) 
+                if (sourceModel instanceof EObject) {
+                    if (sourceModel.eResource() !== null) {
+                        val eResource = sourceModel.eResource()
+                        sourceModelHasErrorMarkers = !eResource.getErrors().isEmpty()
+                        
+                        // Check for model specific errors (e.g. Xtext validator rules) 
+                        val diagnostic = Diagnostician.INSTANCE.validate(sourceModel)
+                        if (diagnostic.getSeverity() == Diagnostic.ERROR) {
+                            sourceModelHasErrorMarkers = true
                         }
-                    } catch (Exception e) {
-                        // do nothing
+    
+                        try {
+                            val underlyingFile = ResourceUtil.getUnderlyingFile(eResource)
+                            if (underlyingFile !== null) {
+                                sourceModelHasErrorMarkers = sourceModelHasErrorMarkers ||
+                                        underlyingFile.findMarkers(IMarker.PROBLEM, false,
+                                                IResource.DEPTH_INFINITE).length > 0
+                            }
+                        } catch (Exception e) {
+                            // do nothing
+                        }
                     }
                 }
             }
@@ -701,8 +750,7 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
 
             // Create model to passed to update
             var Object model = null
-
-            if (sourceModel != null) {
+            if (sourceModel !== null) {
                 if (diagramPlaceholderToggleAction.isChecked()) {
                     model = new MessageModel(MODEL_PLACEHOLDER_PREFIX + getEditor().getTitle(), MODEL_PLACEHOLDER_MESSGAE)
                 } else if (sideBySideToggleAction.isChecked()) {
@@ -712,13 +760,20 @@ class KiCoModelUpdateController extends EcoreXtextSaveUpdateController {
                     }
                     if (chainToggleAction.isChecked && compilerToggleAction.isChecked && tracing !== null) {
                         model = new ModelChain(tracing, getEditor().getTitle(), null)
-                    } else if (compilerToggleAction.isChecked && compilerToggleAction.isChecked && compiledModel !== null) {
-                        model = new ModelChain(sourceModel, compiledModel)
+                    } else if (compilerToggleAction.isChecked && !compiledModel.empty) {
+                        if (compiledModel.size == 1) {
+                        model = new ModelChain(sourceModel, compiledModel.head)
+                        } else {
+                            model = new ModelChain(compiledModel.head, compiledModel.get(1))
+                            for (int i : 2..<compiledModel.size) {
+                                (model as ModelChain).models += compiledModel.get(i)
+                            }
+                        }
                     } else {
                         model = new ModelChain(sourceModel, sourceModel)
                     }
-                } else if (compilerToggleAction.isChecked && compiledModel !== null) {
-                    model = compiledModel
+                } else if (compilerToggleAction.isChecked && !compiledModel.empty) {
+                    model = compiledModel.head
                 } else {
                     model = sourceModel
                 }

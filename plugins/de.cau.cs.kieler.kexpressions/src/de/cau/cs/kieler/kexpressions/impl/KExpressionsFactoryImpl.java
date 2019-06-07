@@ -1,10 +1,8 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions.impl;
+
+import de.cau.cs.kieler.kexpressions.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
@@ -14,8 +12,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
-
-import de.cau.cs.kieler.kexpressions.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -69,6 +65,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.STRING_VALUE: return createStringValue();
             case KExpressionsPackage.VECTOR_VALUE: return createVectorValue();
             case KExpressionsPackage.IGNORE_VALUE: return createIgnoreValue();
+            case KExpressionsPackage.JSON_PRAGMA: return createJsonPragma();
+            case KExpressionsPackage.JSON_ANNOTATION: return createJsonAnnotation();
             case KExpressionsPackage.JSON_OBJECT_VALUE: return createJsonObjectValue();
             case KExpressionsPackage.JSON_OBJECT_MEMBER: return createJsonObjectMember();
             case KExpressionsPackage.JSON_ARRAY_VALUE: return createJsonArrayValue();
@@ -78,6 +76,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
             case KExpressionsPackage.VARIABLE_DECLARATION: return createVariableDeclaration();
             case KExpressionsPackage.REFERENCE_DECLARATION: return createReferenceDeclaration();
             case KExpressionsPackage.SCHEDULE_DECLARATION: return createScheduleDeclaration();
+            case KExpressionsPackage.METHOD_DECLARATION: return createMethodDeclaration();
             case KExpressionsPackage.SCHEDULE_OBJECT_REFERENCE: return createScheduleObjectReference();
             case KExpressionsPackage.PARAMETER: return createParameter();
             case KExpressionsPackage.REFERENCE_CALL: return createReferenceCall();
@@ -107,6 +106,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return createValueTypeFromString(eDataType, initialValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return createPriorityProtocolFromString(eDataType, initialValue);
+            case KExpressionsPackage.ACCESS_MODIFIER:
+                return createAccessModifierFromString(eDataType, initialValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -128,6 +129,8 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
                 return convertValueTypeToString(eDataType, instanceValue);
             case KExpressionsPackage.PRIORITY_PROTOCOL:
                 return convertPriorityProtocolToString(eDataType, instanceValue);
+            case KExpressionsPackage.ACCESS_MODIFIER:
+                return convertAccessModifierToString(eDataType, instanceValue);
             default:
                 throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
         }
@@ -138,6 +141,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject createValuedObject() {
         ValuedObjectImpl valuedObject = new ValuedObjectImpl();
         return valuedObject;
@@ -148,6 +152,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference createValuedObjectReference() {
         ValuedObjectReferenceImpl valuedObjectReference = new ValuedObjectReferenceImpl();
         return valuedObjectReference;
@@ -158,6 +163,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IntValue createIntValue() {
         IntValueImpl intValue = new IntValueImpl();
         return intValue;
@@ -168,6 +174,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FloatValue createFloatValue() {
         FloatValueImpl floatValue = new FloatValueImpl();
         return floatValue;
@@ -178,6 +185,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public BoolValue createBoolValue() {
         BoolValueImpl boolValue = new BoolValueImpl();
         return boolValue;
@@ -188,126 +196,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
-    public OperatorExpression createOperatorExpression() {
-        OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
-        return operatorExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public TextExpression createTextExpression() {
-        TextExpressionImpl textExpression = new TextExpressionImpl();
-        return textExpression;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public VariableDeclaration createVariableDeclaration() {
-        VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
-        return variableDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ReferenceDeclaration createReferenceDeclaration() {
-        ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
-        return referenceDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ScheduleDeclaration createScheduleDeclaration() {
-        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
-        return scheduleDeclaration;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ScheduleObjectReference createScheduleObjectReference() {
-        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
-        return scheduleObjectReference;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public FunctionCall createFunctionCall() {
-        FunctionCallImpl functionCall = new FunctionCallImpl();
-        return functionCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public PrintCall createPrintCall() {
-        PrintCallImpl printCall = new PrintCallImpl();
-        return printCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public RandomCall createRandomCall() {
-        RandomCallImpl randomCall = new RandomCallImpl();
-        return randomCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public RandomizeCall createRandomizeCall() {
-        RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
-        return randomizeCall;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public ExternString createExternString() {
-        ExternStringImpl externString = new ExternStringImpl();
-        return externString;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    public Parameter createParameter() {
-        ParameterImpl parameter = new ParameterImpl();
-        return parameter;
-    }
-
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
+    @Override
     public StringValue createStringValue() {
         StringValueImpl stringValue = new StringValueImpl();
         return stringValue;
@@ -318,6 +207,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public VectorValue createVectorValue() {
         VectorValueImpl vectorValue = new VectorValueImpl();
         return vectorValue;
@@ -328,6 +218,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IgnoreValue createIgnoreValue() {
         IgnoreValueImpl ignoreValue = new IgnoreValueImpl();
         return ignoreValue;
@@ -338,6 +229,29 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public JsonPragma createJsonPragma() {
+        JsonPragmaImpl jsonPragma = new JsonPragmaImpl();
+        return jsonPragma;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public JsonAnnotation createJsonAnnotation() {
+        JsonAnnotationImpl jsonAnnotation = new JsonAnnotationImpl();
+        return jsonAnnotation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public JsonObjectValue createJsonObjectValue() {
         JsonObjectValueImpl jsonObjectValue = new JsonObjectValueImpl();
         return jsonObjectValue;
@@ -348,6 +262,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectMember createJsonObjectMember() {
         JsonObjectMemberImpl jsonObjectMember = new JsonObjectMemberImpl();
         return jsonObjectMember;
@@ -358,6 +273,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonArrayValue createJsonArrayValue() {
         JsonArrayValueImpl jsonArrayValue = new JsonArrayValueImpl();
         return jsonArrayValue;
@@ -368,6 +284,7 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public NullValue createNullValue() {
         NullValueImpl nullValue = new NullValueImpl();
         return nullValue;
@@ -378,9 +295,153 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public OperatorExpression createOperatorExpression() {
+        OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
+        return operatorExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public TextExpression createTextExpression() {
+        TextExpressionImpl textExpression = new TextExpressionImpl();
+        return textExpression;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public VariableDeclaration createVariableDeclaration() {
+        VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
+        return variableDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ReferenceDeclaration createReferenceDeclaration() {
+        ReferenceDeclarationImpl referenceDeclaration = new ReferenceDeclarationImpl();
+        return referenceDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ScheduleDeclaration createScheduleDeclaration() {
+        ScheduleDeclarationImpl scheduleDeclaration = new ScheduleDeclarationImpl();
+        return scheduleDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public MethodDeclaration createMethodDeclaration() {
+        MethodDeclarationImpl methodDeclaration = new MethodDeclarationImpl();
+        return methodDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ScheduleObjectReference createScheduleObjectReference() {
+        ScheduleObjectReferenceImpl scheduleObjectReference = new ScheduleObjectReferenceImpl();
+        return scheduleObjectReference;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Parameter createParameter() {
+        ParameterImpl parameter = new ParameterImpl();
+        return parameter;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public ReferenceCall createReferenceCall() {
         ReferenceCallImpl referenceCall = new ReferenceCallImpl();
         return referenceCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public FunctionCall createFunctionCall() {
+        FunctionCallImpl functionCall = new FunctionCallImpl();
+        return functionCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PrintCall createPrintCall() {
+        PrintCallImpl printCall = new PrintCallImpl();
+        return printCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public RandomCall createRandomCall() {
+        RandomCallImpl randomCall = new RandomCallImpl();
+        return randomCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public RandomizeCall createRandomizeCall() {
+        RandomizeCallImpl randomizeCall = new RandomizeCallImpl();
+        return randomizeCall;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ExternString createExternString() {
+        ExternStringImpl externString = new ExternStringImpl();
+        return externString;
     }
 
     /**
@@ -468,6 +529,27 @@ public class KExpressionsFactoryImpl extends EFactoryImpl implements KExpression
      * <!-- end-user-doc -->
      * @generated
      */
+    public AccessModifier createAccessModifierFromString(EDataType eDataType, String initialValue) {
+        AccessModifier result = AccessModifier.get(initialValue);
+        if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+        return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public String convertAccessModifierToString(EDataType eDataType, Object instanceValue) {
+        return instanceValue == null ? null : instanceValue.toString();
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public KExpressionsPackage getKExpressionsPackage() {
         return (KExpressionsPackage)getEPackage();
     }

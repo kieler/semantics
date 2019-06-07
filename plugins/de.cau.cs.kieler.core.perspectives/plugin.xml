@@ -16,12 +16,6 @@
             id="de.cau.cs.kieler.modelSimulation"
             name="SCCharts Model Simulation">
       </perspective>
-      <perspective
-            class="de.cau.cs.kieler.core.perspectives.EnvironmentSimulationPerspective"
-            icon="icons/foerde-logo-kiem-16-env.gif"
-            id="de.cau.cs.kieler.environmentSimulation"
-            name="SCCharts Environment Simulation">
-      </perspective>
    </extension>
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -54,51 +48,6 @@
       </perspectiveExtension>
       <perspectiveExtension
             targetID="de.cau.cs.kieler.modelSimulation">
-         <viewShortcut
-               id="de.cau.cs.kieler.klighd.ui.view.diagram">
-         </viewShortcut>
-         <viewShortcut
-               id="de.cau.cs.kieler.kicool.ui.view.compiler">
-         </viewShortcut>
-         <viewShortcut
-               id="org.eclipse.ui.navigator.ProjectExplorer">
-         </viewShortcut>
-         <newWizardShortcut
-               id="org.eclipse.ui.wizards.new.file">
-         </newWizardShortcut>
-         <actionSet
-               id="org.eclipse.debug.ui.launchActionSet">
-         </actionSet>
-         <view
-               id="org.eclipse.ui.console.ConsoleView"
-               minimized="false"
-               relationship="stack"
-               relative="de.cau.cs.kieler.kicool.ui.view.compiler">
-         </view>
-         <viewShortcut
-               id="org.eclipse.ui.console.ConsoleView">
-         </viewShortcut>
-         <view
-               id="de.cau.cs.kieler.simulation.ui.dataPoolView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.ui.console.ConsoleView">
-         </view>
-         <viewShortcut
-               id="de.cau.cs.kieler.simulation.ui.dataPoolView">
-         </viewShortcut>
-         <view
-               id="de.cau.cs.kieler.kivis.ui.kivisView"
-               minimized="false"
-               relationship="stack"
-               relative="de.cau.cs.kieler.klighd.ui.view.diagram">
-         </view>
-         <viewShortcut
-               id="de.cau.cs.kieler.kivis.ui.kivisView">
-         </viewShortcut>
-      </perspectiveExtension>
-      <perspectiveExtension
-            targetID="de.cau.cs.kieler.environmentSimulation">
          <viewShortcut
                id="de.cau.cs.kieler.klighd.ui.view.diagram">
          </viewShortcut>

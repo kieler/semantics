@@ -12,6 +12,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.annotations.TagAnnotation
 import de.cau.cs.kieler.annotations.IntAnnotation
+import java.util.List
 
 /**
  * Annotations extensions
@@ -48,6 +49,13 @@ class AnnotationsExtensions {
 			it.values += value
 		]
 	}
+	
+    def Annotation createStringAnnotation(String name, List<String> value) {
+        AnnotationsFactory::eINSTANCE.createStringAnnotation => [
+            it.name = name
+            it.values.addAll(value)
+        ]
+    }	
 
     def Annotation createTypedStringAnnotation(String name, String type, String value) {
         AnnotationsFactory::eINSTANCE.createTypedStringAnnotation => [
@@ -118,11 +126,37 @@ class AnnotationsExtensions {
         eObject as Annotatable
     }
     
-    def addStringAnnotation(Annotatable annotatable, String name, String text) {
+    def addStringAnnotation(Annotatable annotatable, String name, String... text) {
         annotatable.annotations += AnnotationsFactory.eINSTANCE.createStringAnnotation => [
             it.name = name
             values += text
         ]
+    }
+    
+    def addIntAnnotation(Annotatable annotatable, String name, int value) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createIntAnnotation => [
+            it.name = name
+            it.value = value
+        ]
+    }
+    
+    def addReferenceAnnotation(Annotatable annotatable, String name, EObject obj) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createReferenceAnnotation => [
+            it.name = name
+            it.object = obj
+        ]
+    }
+    
+    
+    def addCommentAnnotation(Annotatable annotatable, String name, String text) {
+        annotatable.annotations += AnnotationsFactory.eINSTANCE.createCommentAnnotation => [
+            it.name = name
+            values += text
+        ]
+    }
+    
+    def addTagAnnotation(Annotatable annotatable, String name) {
+        annotatable.annotations += createTagAnnotation(name)
     }
     
     def boolean hasEqualAnnotationValue(Annotatable source, String name, Annotatable target) {

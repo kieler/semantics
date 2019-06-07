@@ -27,6 +27,9 @@ import de.cau.cs.kieler.scg.Surface
 import java.util.List
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.Link
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -52,6 +55,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Link
 class SCGControlFlowExtensions {
     
     @Inject extension SCGCoreExtensions 
+    @Inject extension AnnotationsExtensions 
     
     private int MAX_CONTROLFLOW_ACCUMULATION = 100;
 
@@ -330,5 +334,24 @@ class SCGControlFlowExtensions {
         }
         
         return false
-    }    
+    }
+    
+    def boolean isExplicitLoop(Node node) {
+        return node.hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    def boolean isExplicitLoopDeclaration(Declaration decl) {
+        return decl.hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    
+    def boolean isPartOfForLoopHeader(Node node) {
+        if (node.isExplicitLoop) {
+            if (node instanceof Assignment) {
+                return node.next?.targetNode?.isPartOfForLoopHeader
+            } else if (node instanceof Conditional) {
+                val prev = node.allPrevious.map[eContainer as Node].filterNull
+                return prev.size <= 2 && prev.forall[it instanceof Assignment && isExplicitLoop]
+            }
+        }
+        return false
+    }
 }

@@ -12,7 +12,7 @@
  */
 package de.cau.cs.kieler.simulation.ui.preferences
 
-import de.cau.cs.kieler.core.model.properties.MapPropertyHolder
+import de.cau.cs.kieler.core.properties.MapPropertyHolder
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import org.eclipse.jface.preference.IPreferenceStore

@@ -14,8 +14,8 @@
  package de.cau.cs.kieler.scg.processors.analyzer
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraphs
@@ -27,6 +27,7 @@ import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Depth
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * @author ssm
@@ -37,12 +38,17 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
 	@Inject extension SCGControlFlowExtensions
 	@Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
 	@Inject extension TarjanSCC
 	
 	public static val IProperty<Boolean> LOOP_ANALYZER_ENABLED = 
 	   new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.enabled", true)
+    public static val IProperty<Boolean> LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES = 
+       new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.considerAllDependencies", false)
     public static val IProperty<LoopData> LOOP_DATA = 
         new Property<LoopData>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data", null)	
+    public static val IProperty<Boolean> LOOP_DATA_PERSISTENT = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.data.persistent", false)   
     public static val IProperty<Boolean> ERROR_ON_INSTANTANEOUS_LOOP = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.loopAnalyzer.errorOnInstantaneousLoop", false)
     public static val IProperty<Boolean> WARNING_ON_INSTANTANEOUS_LOOP = 
@@ -66,7 +72,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
     
     override process() {
         val model = getModel
-        val loopData = new LoopData
+        val loopData = new LoopData(environment.getProperty(LOOP_DATA_PERSISTENT))
         val threadData = environment.getProperty(ThreadAnalyzer.THREAD_DATA)
         if (threadData === null) {
             environment.warnings.add("This processor requires thread information, but no thread data was found.")
@@ -76,27 +82,27 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 
         if (!environment.getProperty(LOOP_ANALYZER_ENABLED)) return;
 
-        for (scg : model.scgs) {
-            scg.findSCCs(loopData)
+        for (scg : model.scgs.ignoreMethods) {
+            scg.findSCCs(loopData, environment.getProperty(LOOP_ANALYZER_CONSIDER_ALL_DEPENDENCIES))
         }
        
         if (!loopData.criticalNodes.empty) {
             if (environment.getProperty(ERROR_ON_INSTANTANEOUS_LOOP)) {
                 environment.errors.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.errors.add(strippedModel.first, 
+                environment.errors.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
             if (environment.getProperty(WARNING_ON_INSTANTANEOUS_LOOP)) {
                 environment.warnings.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.warnings.add(strippedModel.first, 
+                environment.warnings.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
             if (environment.getProperty(INFO_ON_INSTANTANEOUS_LOOP)) {
                 environment.infos.add("Instantaneous loop detected!")
                 val strippedModel = extractLoopModel(loopData)
-                environment.infos.add(strippedModel.first, 
+                environment.infos.add(strippedModel.key, 
                    "Instantaneous loop detected!", null)
             }
         }
@@ -104,7 +110,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
 	
     protected def extractLoopModel(LoopData loopData) {
         val modelCopy = getModel.copyEObjectAndReturnCopier
-        val copier = modelCopy.second
+        val copier = modelCopy.value
         val maxStrippedNodes = environment.getProperty(LOOP_ANALYZER_MAX_STRIPPED_NODES)
         
         val reverseMap = <Node, Node> newLinkedHashMap
@@ -114,7 +120,7 @@ class LoopAnalyzerV2 extends InplaceProcessor<SCGraphs> {
         
         val adjacentDepth = environment.getProperty(LOOP_ANALYZER_ADJACENT_DEPTH)
         var i = 0
-        for (scg : modelCopy.first.scgs) {
+        for (scg : modelCopy.key.scgs) {
             for (node : scg.nodes.immutableCopy) {
                 
                 if (i > maxStrippedNodes) {

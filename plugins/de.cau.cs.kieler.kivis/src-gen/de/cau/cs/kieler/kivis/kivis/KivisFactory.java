@@ -24,40 +24,40 @@ public interface KivisFactory extends EFactory
   KivisFactory eINSTANCE = de.cau.cs.kieler.kivis.kivis.impl.KivisFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Visualization Configuration</em>'.
+   * Returns a new object of class '<em>Visualization</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Visualization Configuration</em>'.
+   * @return a new object of class '<em>Visualization</em>'.
    * @generated
    */
-  VisualizationConfiguration createVisualizationConfiguration();
+  Visualization createVisualization();
 
   /**
-   * Returns a new object of class '<em>Element</em>'.
+   * Returns a new object of class '<em>Content</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Element</em>'.
+   * @return a new object of class '<em>Content</em>'.
    * @generated
    */
-  Element createElement();
+  Content createContent();
 
   /**
-   * Returns a new object of class '<em>Interaction</em>'.
+   * Returns a new object of class '<em>Binding</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Interaction</em>'.
+   * @return a new object of class '<em>Binding</em>'.
    * @generated
    */
-  Interaction createInteraction();
+  Binding createBinding();
 
   /**
-   * Returns a new object of class '<em>Event</em>'.
+   * Returns a new object of class '<em>Handler</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Event</em>'.
+   * @return a new object of class '<em>Handler</em>'.
    * @generated
    */
-  Event createEvent();
+  Handler createHandler();
 
   /**
    * Returns a new object of class '<em>Action</em>'.
@@ -69,112 +69,31 @@ public interface KivisFactory extends EFactory
   Action createAction();
 
   /**
-   * Returns a new object of class '<em>Function</em>'.
+   * Returns a new object of class '<em>Code</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Function</em>'.
+   * @return a new object of class '<em>Code</em>'.
    * @generated
    */
-  Function createFunction();
+  Code createCode();
 
   /**
-   * Returns a new object of class '<em>Animation</em>'.
+   * Returns a new object of class '<em>Setter</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Animation</em>'.
+   * @return a new object of class '<em>Setter</em>'.
    * @generated
    */
-  Animation createAnimation();
+  Setter createSetter();
 
   /**
-   * Returns a new object of class '<em>Attribute Mapping</em>'.
+   * Returns a new object of class '<em>Interface</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Attribute Mapping</em>'.
+   * @return a new object of class '<em>Interface</em>'.
    * @generated
    */
-  AttributeMapping createAttributeMapping();
-
-  /**
-   * Returns a new object of class '<em>Mapping</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Mapping</em>'.
-   * @generated
-   */
-  Mapping createMapping();
-
-  /**
-   * Returns a new object of class '<em>Condition</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Condition</em>'.
-   * @generated
-   */
-  Condition createCondition();
-
-  /**
-   * Returns a new object of class '<em>Comparison</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Comparison</em>'.
-   * @generated
-   */
-  Comparison createComparison();
-
-  /**
-   * Returns a new object of class '<em>Domain</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Domain</em>'.
-   * @generated
-   */
-  Domain createDomain();
-
-  /**
-   * Returns a new object of class '<em>Interval</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Interval</em>'.
-   * @generated
-   */
-  Interval createInterval();
-
-  /**
-   * Returns a new object of class '<em>Variable Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Variable Reference</em>'.
-   * @generated
-   */
-  VariableReference createVariableReference();
-
-  /**
-   * Returns a new object of class '<em>Model Reference</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model Reference</em>'.
-   * @generated
-   */
-  ModelReference createModelReference();
-
-  /**
-   * Returns a new object of class '<em>Function Parameter</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Function Parameter</em>'.
-   * @generated
-   */
-  FunctionParameter createFunctionParameter();
-
-  /**
-   * Returns a new object of class '<em>And Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>And Expression</em>'.
-   * @generated
-   */
-  AndExpression createAndExpression();
+  Interface createInterface();
 
   /**
    * Returns the package supported by this factory.

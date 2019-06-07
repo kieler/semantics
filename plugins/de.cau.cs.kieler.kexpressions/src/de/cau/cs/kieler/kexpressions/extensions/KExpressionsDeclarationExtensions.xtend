@@ -13,22 +13,27 @@
  */
 package de.cau.cs.kieler.kexpressions.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.ExternString
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
+import de.cau.cs.kieler.kexpressions.StringValue
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import org.eclipse.emf.ecore.EObject
-import java.util.List
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.StringValue
-import de.cau.cs.kieler.kexpressions.DoubleValue
-import de.cau.cs.kieler.kexpressions.ExternString
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
-import com.google.inject.Inject
+import java.util.List
+import org.eclipse.emf.ecore.EObject
+import java.util.Map
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.kext.KExtFactory
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author ssm
@@ -37,8 +42,8 @@ import com.google.inject.Inject
  */
 class KExpressionsDeclarationExtensions {
     
-    @Inject
-    extension EcoreUtilExtensions
+    @Inject extension EcoreUtilExtensions
+    @Inject extension AnnotationsExtensions
     
     def dispatch Declaration createDeclaration(VariableDeclaration declaration) {
         declaration.createVariableDeclaration
@@ -52,6 +57,14 @@ class KExpressionsDeclarationExtensions {
         declaration.createScheduleDeclaration
     }
     
+    def dispatch Declaration createDeclaration(ClassDeclaration declaration) {
+        declaration.createClassDeclaration(true)
+    }
+    
+    def dispatch Declaration createDeclaration(MethodDeclaration declaration) {
+        declaration.createMethodDeclaration(true)
+    }
+    
     /**
      * @deprecated
      */
@@ -61,8 +74,16 @@ class KExpressionsDeclarationExtensions {
     
     def VariableDeclaration createVariableDeclaration() {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration
-    }   
+    }
     
+    def ClassDeclaration createClassDeclaration() {
+        KExtFactory::eINSTANCE.createClassDeclaration => [type = ValueType.CLASS]
+    } 
+    
+    def MethodDeclaration createMethodDeclaration() {
+        KExpressionsFactory::eINSTANCE.createMethodDeclaration
+    }
+        
     def VariableDeclaration createVariableDeclaration(ValueType valueType) {
         KExpressionsFactory::eINSTANCE.createVariableDeclaration => [
             type = valueType
@@ -84,8 +105,8 @@ class KExpressionsDeclarationExtensions {
         createVariableDeclaration(ValueType::BOOL)
     }    
 
-    def VariableDeclaration createDoubleDeclaration() {
-        createVariableDeclaration(ValueType::DOUBLE)
+    def VariableDeclaration createFloatDeclaration() {
+        createVariableDeclaration(ValueType::FLOAT)
     }    
 
     def VariableDeclaration createStringDeclaration() {
@@ -103,13 +124,47 @@ class KExpressionsDeclarationExtensions {
             extern = declaration.extern
             volatile = declaration.volatile
             hostType = declaration.hostType
+            access = declaration.access
+        ]
+    }
+    
+    def ClassDeclaration createClassDeclaration(ClassDeclaration declaration, boolean deep) {
+        return (createClassDeclaration as ClassDeclaration) => [
+            name = declaration.name
+            
+            type = declaration.type
+            input = declaration.input
+            output = declaration.output
+            signal = declaration.signal
+            static = declaration.static
+            const = declaration.const
+            extern = declaration.extern
+            volatile = declaration.volatile
+            hostType = declaration.hostType
+            host = declaration.host
+            access = declaration.access
+            
+            if (deep) {
+                declarations += declaration.declarations.copyDeclarations
+            }
+        ]
+    }
+    
+    def MethodDeclaration createMethodDeclaration(MethodDeclaration declaration, boolean deep) {
+        return (createMethodDeclaration as MethodDeclaration) => [
+            access = declaration.access
+            returnType = declaration.returnType
+            
+            if (deep) {
+                parameterDeclarations += declaration.parameterDeclarations.copyDeclarations
+            }
         ]
     } 
     
     def dispatch Declaration createDeclaration(Value value) {
         if (value instanceof IntValue) createIntDeclaration
         else if (value instanceof BoolValue) createBoolDeclaration
-        else if (value instanceof DoubleValue) createDoubleDeclaration
+        else if (value instanceof FloatValue) createFloatDeclaration
         else if (value instanceof StringValue) createStringDeclaration
         else createDeclaration
     }
@@ -122,6 +177,7 @@ class KExpressionsDeclarationExtensions {
             const = declarationWithAttributes.const
             extern = declarationWithAttributes.extern
             type = declarationWithAttributes.type
+            access = declarationWithAttributes.access
         ]
     }
     
@@ -172,22 +228,42 @@ class KExpressionsDeclarationExtensions {
         declaration.remove
     }
     
-    def List<Declaration> copyDeclarations(EObject source) {
-        <Declaration> newArrayList => [ targetList | 
-            for (declaration : source.eContents.filter(typeof(Declaration))) {
-                // @als: is this trace necessary?
-                targetList += createDeclaration(declaration) => [ newDec |
-                    declaration.valuedObjects.forEach[ _copyValuedObject(newDec) ]
-                ]
-            }
-        ]
+    def List<Declaration> copyDeclarations(List<Declaration> declaratins) {
+        return declaratins.copyDeclarations(null, null)
     }
     
-    private def void _copyValuedObject(ValuedObject sourceObject, Declaration targetDeclaration) {
-        val newValuedObject = sourceObject.copy
-        targetDeclaration.valuedObjects += newValuedObject
-    }            
-    
+    /**
+     * Mappings are old -> new
+     */
+    def List<Declaration> copyDeclarations(List<Declaration> declaratins, Map<ValuedObject, ValuedObject> voMapping, Map<Declaration, Declaration> declMapping) {
+        val newDecls = newArrayList
+        for (decl : declaratins) {
+            val newDecl = if (decl instanceof ClassDeclaration) {
+                createClassDeclaration(decl, false)
+            } else if (decl instanceof MethodDeclaration) {
+                createMethodDeclaration(decl, false)
+            } else {
+                createDeclaration(decl)
+            }
+            newDecls += newDecl
+            if (declMapping !== null) declMapping.put(decl, newDecl)
+            
+            decl.copyAnnotations(newDecl)
+            
+            if (newDecl instanceof ClassDeclaration) {
+                newDecl.declarations += (decl as ClassDeclaration).declarations.copyDeclarations(voMapping, declMapping)
+            } else if (newDecl instanceof MethodDeclaration) {
+                newDecl.parameterDeclarations += (decl as MethodDeclaration).parameterDeclarations.copyDeclarations(voMapping, declMapping)
+            }
+            
+            for (vo : decl.valuedObjects) {
+                val newVO = vo.copy
+                if (voMapping !== null) voMapping.put(vo, newVO)
+                newDecl.valuedObjects += newVO
+            }
+        }
+        return newDecls
+    }   
     
     def List<VariableDeclaration> getVariableDeclarations(EObject eObject) {
         <VariableDeclaration> newArrayList => [ list |

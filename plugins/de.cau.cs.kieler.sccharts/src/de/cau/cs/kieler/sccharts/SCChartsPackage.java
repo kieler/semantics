@@ -17,6 +17,7 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EEnum;
@@ -107,13 +108,22 @@ public interface SCChartsPackage extends EPackage {
     int SC_CHARTS__ROOT_STATES = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Imports</b></em>' attribute list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SC_CHARTS__IMPORTS = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>SC Charts</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 1;
+    int SC_CHARTS_FEATURE_COUNT = AnnotationsPackage.PRAGMATABLE_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
@@ -162,13 +172,31 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE__SCHEDULE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__OUTGOING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE__INCOMING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int SCOPE__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -177,7 +205,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int SCOPE__ACTIONS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' containment reference.
@@ -186,7 +214,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int SCOPE__REFERENCE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The number of structural features of the '<em>Scope</em>' class.
@@ -195,7 +223,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int SCOPE_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeCallImpl <em>Scope Call</em>}' class.
@@ -235,13 +263,22 @@ public interface SCChartsPackage extends EPackage {
     int SCOPE_CALL__SCOPE = KExpressionsPackage.CALL_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Super</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SCOPE_CALL__SUPER = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+
+    /**
      * The number of structural features of the '<em>Scope Call</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 1;
+    int SCOPE_CALL_FEATURE_COUNT = KExpressionsPackage.CALL_FEATURE_COUNT + 2;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -263,13 +300,31 @@ public interface SCChartsPackage extends EPackage {
     int ACTION__ANNOTATIONS = AnnotationsPackage.ANNOTATABLE__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__OUTGOING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ACTION__INCOMING_LINKS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ACTION__EFFECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
+    int ACTION__EFFECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>Trigger</b></em>' containment reference.
@@ -278,7 +333,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int ACTION__TRIGGER = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
 
     /**
      * The feature id for the '<em><b>Trigger Delay</b></em>' attribute.
@@ -287,7 +342,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER_DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 2;
+    int ACTION__TRIGGER_DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
 
     /**
      * The feature id for the '<em><b>Trigger Probability</b></em>' attribute.
@@ -296,7 +351,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__TRIGGER_PROBABILITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 3;
+    int ACTION__TRIGGER_PROBABILITY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
 
     /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -305,7 +360,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 4;
+    int ACTION__LABEL = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
 
     /**
      * The feature id for the '<em><b>Delay</b></em>' attribute.
@@ -314,7 +369,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 5;
+    int ACTION__DELAY = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
 
     /**
      * The feature id for the '<em><b>Nondeterministic</b></em>' attribute.
@@ -323,7 +378,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 6;
+    int ACTION__NONDETERMINISTIC = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 8;
 
     /**
      * The number of structural features of the '<em>Action</em>' class.
@@ -332,7 +387,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 7;
+    int ACTION_FEATURE_COUNT = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.LocalActionImpl <em>Local Action</em>}' class.
@@ -352,6 +407,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int LOCAL_ACTION__ANNOTATIONS = ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__OUTGOING_LINKS = ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOCAL_ACTION__INCOMING_LINKS = ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -472,6 +545,24 @@ public interface SCChartsPackage extends EPackage {
     int STATE__SCHEDULE = SCOPE__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__OUTGOING_LINKS = SCOPE__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__INCOMING_LINKS = SCOPE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -571,13 +662,22 @@ public interface SCChartsPackage extends EPackage {
     int STATE__INCOMING_TRANSITIONS = SCOPE_FEATURE_COUNT + 7;
 
     /**
+     * The feature id for the '<em><b>Base States</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int STATE__BASE_STATES = SCOPE_FEATURE_COUNT + 8;
+
+    /**
      * The number of structural features of the '<em>State</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 8;
+    int STATE_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 9;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
@@ -626,6 +726,24 @@ public interface SCChartsPackage extends EPackage {
     int REGION__SCHEDULE = SCOPE__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__OUTGOING_LINKS = SCOPE__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__INCOMING_LINKS = SCOPE__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -653,31 +771,13 @@ public interface SCChartsPackage extends EPackage {
     int REGION__REFERENCE = SCOPE__REFERENCE;
 
     /**
-     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__OUTGOING_LINKS = SCOPE_FEATURE_COUNT + 0;
-
-    /**
-     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int REGION__INCOMING_LINKS = SCOPE_FEATURE_COUNT + 1;
-
-    /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 2;
+    int REGION__PARENT_STATE = SCOPE_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
@@ -686,7 +786,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__COUNTER_VARIABLE = SCOPE_FEATURE_COUNT + 3;
+    int REGION__COUNTER_VARIABLE = SCOPE_FEATURE_COUNT + 1;
 
     /**
      * The feature id for the '<em><b>For Start</b></em>' containment reference.
@@ -695,7 +795,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__FOR_START = SCOPE_FEATURE_COUNT + 4;
+    int REGION__FOR_START = SCOPE_FEATURE_COUNT + 2;
 
     /**
      * The feature id for the '<em><b>For End</b></em>' containment reference.
@@ -704,7 +804,16 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION__FOR_END = SCOPE_FEATURE_COUNT + 5;
+    int REGION__FOR_END = SCOPE_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int REGION__OVERRIDE = SCOPE_FEATURE_COUNT + 4;
 
     /**
      * The number of structural features of the '<em>Region</em>' class.
@@ -713,7 +822,7 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      * @ordered
      */
-    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 6;
+    int REGION_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -762,6 +871,24 @@ public interface SCChartsPackage extends EPackage {
     int CONTROLFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -787,24 +914,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__REFERENCE = REGION__REFERENCE;
-
-    /**
-     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROLFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int CONTROLFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -841,6 +950,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int CONTROLFLOW_REGION__FOR_END = REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CONTROLFLOW_REGION__OVERRIDE = REGION__OVERRIDE;
 
     /**
      * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -916,6 +1034,24 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__SCHEDULE = REGION__SCHEDULE;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Label</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -941,24 +1077,6 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__REFERENCE = REGION__REFERENCE;
-
-    /**
-     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__OUTGOING_LINKS = REGION__OUTGOING_LINKS;
-
-    /**
-     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     * @ordered
-     */
-    int DATAFLOW_REGION__INCOMING_LINKS = REGION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Parent State</b></em>' container reference.
@@ -995,6 +1113,15 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DATAFLOW_REGION__FOR_END = REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DATAFLOW_REGION__OVERRIDE = REGION__OVERRIDE;
 
     /**
      * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -1041,6 +1168,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int TRANSITION__ANNOTATIONS = ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__OUTGOING_LINKS = ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TRANSITION__INCOMING_LINKS = ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1179,6 +1324,24 @@ public interface SCChartsPackage extends EPackage {
     int ENTRY_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ENTRY_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1268,6 +1431,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int DURING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int DURING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1370,6 +1551,24 @@ public interface SCChartsPackage extends EPackage {
     int EXIT_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int EXIT_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1459,6 +1658,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUSPEND_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUSPEND_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1561,6 +1778,24 @@ public interface SCChartsPackage extends EPackage {
     int PRECEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PRECEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1650,6 +1885,24 @@ public interface SCChartsPackage extends EPackage {
      * @ordered
      */
     int SUCCEEDING_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int SUCCEEDING_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
 
     /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
@@ -1743,6 +1996,24 @@ public interface SCChartsPackage extends EPackage {
     int PERIOD_ACTION__ANNOTATIONS = LOCAL_ACTION__ANNOTATIONS;
 
     /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PERIOD_ACTION__OUTGOING_LINKS = LOCAL_ACTION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int PERIOD_ACTION__INCOMING_LINKS = LOCAL_ACTION__INCOMING_LINKS;
+
+    /**
      * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1815,6 +2086,341 @@ public interface SCChartsPackage extends EPackage {
     int PERIOD_ACTION_FEATURE_COUNT = LOCAL_ACTION_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl <em>Policy Class Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyClassDeclaration()
+     * @generated
+     */
+    int POLICY_CLASS_DECLARATION = 17;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__DECLARATIONS = KExtPackage.CLASS_DECLARATION__DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__ANNOTATIONS = KExtPackage.CLASS_DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__VALUED_OBJECTS = KExtPackage.CLASS_DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__ACCESS = KExtPackage.CLASS_DECLARATION__ACCESS;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__TYPE = KExtPackage.CLASS_DECLARATION__TYPE;
+
+    /**
+     * The feature id for the '<em><b>Input</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__INPUT = KExtPackage.CLASS_DECLARATION__INPUT;
+
+    /**
+     * The feature id for the '<em><b>Output</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__OUTPUT = KExtPackage.CLASS_DECLARATION__OUTPUT;
+
+    /**
+     * The feature id for the '<em><b>Static</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__STATIC = KExtPackage.CLASS_DECLARATION__STATIC;
+
+    /**
+     * The feature id for the '<em><b>Signal</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__SIGNAL = KExtPackage.CLASS_DECLARATION__SIGNAL;
+
+    /**
+     * The feature id for the '<em><b>Const</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__CONST = KExtPackage.CLASS_DECLARATION__CONST;
+
+    /**
+     * The feature id for the '<em><b>Extern</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__EXTERN = KExtPackage.CLASS_DECLARATION__EXTERN;
+
+    /**
+     * The feature id for the '<em><b>Volatile</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__VOLATILE = KExtPackage.CLASS_DECLARATION__VOLATILE;
+
+    /**
+     * The feature id for the '<em><b>Global</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__GLOBAL = KExtPackage.CLASS_DECLARATION__GLOBAL;
+
+    /**
+     * The feature id for the '<em><b>Host Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__HOST_TYPE = KExtPackage.CLASS_DECLARATION__HOST_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__NAME = KExtPackage.CLASS_DECLARATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Host</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__HOST = KExtPackage.CLASS_DECLARATION__HOST;
+
+    /**
+     * The feature id for the '<em><b>Policy</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION__POLICY = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Policy Class Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_CLASS_DECLARATION_FEATURE_COUNT = KExtPackage.CLASS_DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
+     * @generated
+     */
+    int POLICY_REGION = 18;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ANNOTATIONS = CONTROLFLOW_REGION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__DECLARATIONS = CONTROLFLOW_REGION__DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__NAME = CONTROLFLOW_REGION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__SCHEDULE = CONTROLFLOW_REGION__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__OUTGOING_LINKS = CONTROLFLOW_REGION__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__INCOMING_LINKS = CONTROLFLOW_REGION__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__LABEL = CONTROLFLOW_REGION__LABEL;
+
+    /**
+     * The feature id for the '<em><b>Actions</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__ACTIONS = CONTROLFLOW_REGION__ACTIONS;
+
+    /**
+     * The feature id for the '<em><b>Reference</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__REFERENCE = CONTROLFLOW_REGION__REFERENCE;
+
+    /**
+     * The feature id for the '<em><b>Parent State</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__PARENT_STATE = CONTROLFLOW_REGION__PARENT_STATE;
+
+    /**
+     * The feature id for the '<em><b>Counter Variable</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__COUNTER_VARIABLE = CONTROLFLOW_REGION__COUNTER_VARIABLE;
+
+    /**
+     * The feature id for the '<em><b>For Start</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FOR_START = CONTROLFLOW_REGION__FOR_START;
+
+    /**
+     * The feature id for the '<em><b>For End</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FOR_END = CONTROLFLOW_REGION__FOR_END;
+
+    /**
+     * The feature id for the '<em><b>Override</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__OVERRIDE = CONTROLFLOW_REGION__OVERRIDE;
+
+    /**
+     * The feature id for the '<em><b>States</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__STATES = CONTROLFLOW_REGION__STATES;
+
+    /**
+     * The feature id for the '<em><b>Final</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION__FINAL = CONTROLFLOW_REGION__FINAL;
+
+    /**
+     * The number of structural features of the '<em>Policy Region</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int POLICY_REGION_FEATURE_COUNT = CONTROLFLOW_REGION_FEATURE_COUNT + 0;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1822,7 +2428,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 17;
+    int PREEMPTION_TYPE = 19;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -1832,7 +2438,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 18;
+    int HISTORY_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -1842,7 +2448,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 19;
+    int DELAY_TYPE = 21;
 
 
     /**
@@ -1865,6 +2471,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getSCCharts_RootStates();
+
+    /**
+     * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.sccharts.SCCharts#getImports <em>Imports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute list '<em>Imports</em>'.
+     * @see de.cau.cs.kieler.sccharts.SCCharts#getImports()
+     * @see #getSCCharts()
+     * @generated
+     */
+    EAttribute getSCCharts_Imports();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Scope <em>Scope</em>}'.
@@ -1929,6 +2546,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getScopeCall_Scope();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.ScopeCall#isSuper <em>Super</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Super</em>'.
+     * @see de.cau.cs.kieler.sccharts.ScopeCall#isSuper()
+     * @see #getScopeCall()
+     * @generated
+     */
+    EAttribute getScopeCall_Super();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Action <em>Action</em>}'.
@@ -2126,6 +2754,17 @@ public interface SCChartsPackage extends EPackage {
     EReference getState_IncomingTransitions();
 
     /**
+     * Returns the meta object for the reference list '{@link de.cau.cs.kieler.sccharts.State#getBaseStates <em>Base States</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the reference list '<em>Base States</em>'.
+     * @see de.cau.cs.kieler.sccharts.State#getBaseStates()
+     * @see #getState()
+     * @generated
+     */
+    EReference getState_BaseStates();
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.Region <em>Region</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2178,6 +2817,17 @@ public interface SCChartsPackage extends EPackage {
      * @generated
      */
     EReference getRegion_ForEnd();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.Region#isOverride <em>Override</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Override</em>'.
+     * @see de.cau.cs.kieler.sccharts.Region#isOverride()
+     * @see #getRegion()
+     * @generated
+     */
+    EAttribute getRegion_Override();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.ControlflowRegion <em>Controlflow Region</em>}'.
@@ -2401,6 +3051,37 @@ public interface SCChartsPackage extends EPackage {
     EClass getPeriodAction();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration <em>Policy Class Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Policy Class Declaration</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration
+     * @generated
+     */
+    EClass getPolicyClassDeclaration();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy <em>Policy</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Policy</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyClassDeclaration#getPolicy()
+     * @see #getPolicyClassDeclaration()
+     * @generated
+     */
+    EReference getPolicyClassDeclaration_Policy();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.PolicyRegion <em>Policy Region</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Policy Region</em>'.
+     * @see de.cau.cs.kieler.sccharts.PolicyRegion
+     * @generated
+     */
+    EClass getPolicyRegion();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2471,6 +3152,14 @@ public interface SCChartsPackage extends EPackage {
         EReference SC_CHARTS__ROOT_STATES = eINSTANCE.getSCCharts_RootStates();
 
         /**
+         * The meta object literal for the '<em><b>Imports</b></em>' attribute list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SC_CHARTS__IMPORTS = eINSTANCE.getSCCharts_Imports();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ScopeImpl <em>Scope</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2521,6 +3210,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference SCOPE_CALL__SCOPE = eINSTANCE.getScopeCall_Scope();
+
+        /**
+         * The meta object literal for the '<em><b>Super</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute SCOPE_CALL__SUPER = eINSTANCE.getScopeCall_Super();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ActionImpl <em>Action</em>}' class.
@@ -2673,6 +3370,14 @@ public interface SCChartsPackage extends EPackage {
         EReference STATE__INCOMING_TRANSITIONS = eINSTANCE.getState_IncomingTransitions();
 
         /**
+         * The meta object literal for the '<em><b>Base States</b></em>' reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference STATE__BASE_STATES = eINSTANCE.getState_BaseStates();
+
+        /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.RegionImpl <em>Region</em>}' class.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
@@ -2713,6 +3418,14 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EReference REGION__FOR_END = eINSTANCE.getRegion_ForEnd();
+
+        /**
+         * The meta object literal for the '<em><b>Override</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute REGION__OVERRIDE = eINSTANCE.getRegion_Override();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.ControlflowRegionImpl <em>Controlflow Region</em>}' class.
@@ -2901,6 +3614,34 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass PERIOD_ACTION = eINSTANCE.getPeriodAction();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl <em>Policy Class Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.PolicyClassDeclarationImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyClassDeclaration()
+         * @generated
+         */
+        EClass POLICY_CLASS_DECLARATION = eINSTANCE.getPolicyClassDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Policy</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference POLICY_CLASS_DECLARATION__POLICY = eINSTANCE.getPolicyClassDeclaration_Policy();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl <em>Policy Region</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.PolicyRegionImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPolicyRegion()
+         * @generated
+         */
+        EClass POLICY_REGION = eINSTANCE.getPolicyRegion();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

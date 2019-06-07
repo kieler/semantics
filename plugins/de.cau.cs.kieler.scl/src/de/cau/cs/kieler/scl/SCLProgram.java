@@ -2,6 +2,7 @@
  */
 package de.cau.cs.kieler.scl;
 
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import org.eclipse.emf.common.util.EList;
 
@@ -22,7 +23,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface SCLProgram extends Pragmatable {
+public interface SCLProgram extends Pragmatable, Nameable {
     /**
      * Returns the value of the '<em><b>Modules</b></em>' containment reference list.
      * The list contents are of type {@link de.cau.cs.kieler.scl.Module}.
@@ -37,6 +38,6 @@ public interface SCLProgram extends Pragmatable {
      * @model containment="true" required="true"
      * @generated
      */
-    EList<Module> getModules();
+    EList<de.cau.cs.kieler.scl.Module> getModules();
 
 } // SCLProgram

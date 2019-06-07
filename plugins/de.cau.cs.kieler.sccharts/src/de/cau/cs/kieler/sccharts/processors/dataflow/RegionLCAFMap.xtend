@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.ControlflowRegion
-import de.cau.cs.kieler.core.model.Pair
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kicool.classes.ITypedKiCoolCloneable
 

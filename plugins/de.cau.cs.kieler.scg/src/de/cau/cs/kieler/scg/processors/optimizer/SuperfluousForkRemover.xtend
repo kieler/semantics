@@ -37,12 +37,12 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
  * @kieler.rating 2014-05-04 proposed yellow
  *
  */
-class SuperfluousForkRemover extends AbstractOptimizer {
+class SuperfluousForkRemover {
 
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions
 
-    override optimize(SCGraph scg) {
+    def optimize(SCGraph scg) {
 
         // Retrieve all forks with only one outgoing control flow.
         val singleRegionForks = scg.nodes.filter(Fork).filter[ !next.nullOrEmpty && next.size == 1 ].toList
@@ -84,7 +84,7 @@ class SuperfluousForkRemover extends AbstractOptimizer {
                 forkPreviousControlflows.trace(fork.next)
                 exitPreviousControlflows.trace(fork.join.next, entry.exit.next)
                 ancestorEntry.trace(entry, fork)
-                ancestorEntry.exit.trace(entry.exit, fork.join)
+//                ancestorEntry.exit.trace(entry.exit, fork.join)
             }
 
             // Add superfluous control flows to the remove list.

@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.scl.impl;
 
 import de.cau.cs.kieler.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.scl.Label;
 import de.cau.cs.kieler.scl.SCLPackage;
@@ -71,6 +72,7 @@ public class LabelImpl extends StatementImpl implements Label {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -80,6 +82,7 @@ public class LabelImpl extends StatementImpl implements Label {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;
@@ -152,6 +155,11 @@ public class LabelImpl extends StatementImpl implements Label {
      */
     @Override
     public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (derivedFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (derivedFeatureID) {
                 case SCLPackage.LABEL__NAME: return AnnotationsPackage.NAMED_OBJECT__NAME;
@@ -168,6 +176,11 @@ public class LabelImpl extends StatementImpl implements Label {
      */
     @Override
     public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Nameable.class) {
+            switch (baseFeatureID) {
+                default: return -1;
+            }
+        }
         if (baseClass == NamedObject.class) {
             switch (baseFeatureID) {
                 case AnnotationsPackage.NAMED_OBJECT__NAME: return SCLPackage.LABEL__NAME;
@@ -186,7 +199,7 @@ public class LabelImpl extends StatementImpl implements Label {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (name: ");
         result.append(name);
         result.append(')');

@@ -2,8 +2,6 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-   <extension-point id="animationHandler" name="AnimationHandler" schema="schema/animationHandler.exsd"/>
-   <extension-point id="functionHandler" name="Function Handler" schema="schema/functionHandler.exsd"/>
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 

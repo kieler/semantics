@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.simulation.internal.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.trace.TraceDataProvider
@@ -42,17 +42,16 @@ class CheckTrace extends TraceProcessor {
         val context = simulationContext
         val traceProvider = traceDataProvider
 
-        if (traceProvider !== null) {
+        if (traceProvider !== null && traceProvider.isNextOutputTick(context.stepNumber)) {
             traceProvider.applyTraceOutputs(context.stepNumber)
             val mm = traceProvider.mismatches(dataPool)
             if (!mm.empty) {
                 context.notify(new TraceMismatchEvent(context, traceProvider.trace, context.stepNumber, mm.entries.map[new Pair(key, value)].toSet))
             }
-        }
-
-        if (traceProvider.trace.ticks.size <= context.stepNumber + 1) {
-            // Trace finished
-            context.notify(new TraceFinishedEvent(context, traceProvider.trace, context.stepNumber))
+            if (!traceProvider.isNextOutputTick(context.stepNumber + 1)) {
+                // Trace finished
+                context.notify(new TraceFinishedEvent(context, traceProvider.trace, context.stepNumber))
+            }
         }
     }
     

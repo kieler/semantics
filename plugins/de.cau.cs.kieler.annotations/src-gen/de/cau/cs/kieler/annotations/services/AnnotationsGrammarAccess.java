@@ -818,37 +818,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// Floateger
 		//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-		//Floateger ecore::EFloat:
-		//	'-'? FLOAT;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'-'? FLOAT
-		public Group getGroup() { return cGroup; }
-		
-		//'-'?
-		public Keyword getHyphenMinusKeyword_0() { return cHyphenMinusKeyword_0; }
-		
-		//FLOAT
-		public RuleCall getFLOATTerminalRuleCall_1() { return cFLOATTerminalRuleCall_1; }
-	}
-	public class DoubleElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Double");
-		private final RuleCall cFLOATTerminalRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//Double ecore::EDouble:
-		//	FLOAT;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//FLOAT
-		public RuleCall getFLOATTerminalRuleCall() { return cFLOATTerminalRuleCall; }
-	}
-	public class DoublegerElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.Doubleger");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cHyphenMinusKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final RuleCall cFLOATTerminalRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
-		
-		//Doubleger ecore::EDouble:
+		//Floateger ecore::EDouble:
 		//	'-'? FLOAT;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -886,8 +856,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private final QualifiedIDElements pQualifiedID;
 	private final IntegerElements pInteger;
 	private final FloategerElements pFloateger;
-	private final DoubleElements pDouble;
-	private final DoublegerElements pDoubleger;
 	private final TerminalRule tCOMMENT_ANNOTATION;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tSL_COMMENT_ANNOTATION;
@@ -931,8 +899,6 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.pQualifiedID = new QualifiedIDElements();
 		this.pInteger = new IntegerElements();
 		this.pFloateger = new FloategerElements();
-		this.pDouble = new DoubleElements();
-		this.pDoubleger = new DoublegerElements();
 		this.tCOMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.COMMENT_ANNOTATION");
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.ML_COMMENT");
 		this.tSL_COMMENT_ANNOTATION = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.annotations.Annotations.SL_COMMENT_ANNOTATION");
@@ -1240,7 +1206,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Floateger
 	//// The floateger rule extends the EFloat terminal by an optional sign for negative numbers.
-	//Floateger ecore::EFloat:
+	//Floateger ecore::EDouble:
 	//	'-'? FLOAT;
 	public FloategerElements getFloategerAccess() {
 		return pFloateger;
@@ -1250,33 +1216,14 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFloategerAccess().getRule();
 	}
 	
-	//Double ecore::EDouble:
-	//	FLOAT;
-	public DoubleElements getDoubleAccess() {
-		return pDouble;
-	}
-	
-	public ParserRule getDoubleRule() {
-		return getDoubleAccess().getRule();
-	}
-	
-	//Doubleger ecore::EDouble:
-	//	'-'? FLOAT;
-	public DoublegerElements getDoublegerAccess() {
-		return pDoubleger;
-	}
-	
-	public ParserRule getDoublegerRule() {
-		return getDoublegerAccess().getRule();
-	}
-	
 	//terminal COMMENT_ANNOTATION:
 	//	'/**'->'*/';
 	public TerminalRule getCOMMENT_ANNOTATIONRule() {
 		return tCOMMENT_ANNOTATION;
 	}
 	
-	//@ Override terminal ML_COMMENT:
+	//@Override
+	//terminal ML_COMMENT:
 	//	'/*' !'*'->'*/';
 	public TerminalRule getML_COMMENTRule() {
 		return tML_COMMENT;
@@ -1288,7 +1235,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tSL_COMMENT_ANNOTATION;
 	}
 	
-	//@ Override terminal SL_COMMENT:
+	//@Override
+	//terminal SL_COMMENT:
 	//	'//' !'*' !('\n' | '\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return tSL_COMMENT;
@@ -1300,13 +1248,14 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tNUMBER;
 	}
 	
-	//@ Override terminal INT returns ecore::EInt:
+	//@Override
+	//terminal INT returns ecore::EInt:
 	//	NUMBER+;
 	public TerminalRule getINTRule() {
 		return tINT;
 	}
 	
-	//terminal FLOAT returns ecore::EFloat:
+	//terminal FLOAT returns ecore::EDouble:
 	//	NUMBER+ ('.' NUMBER*) (("e" | "E") ("+" | "-")? NUMBER+)? 'f'? | NUMBER+ 'f';
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
@@ -1318,13 +1267,15 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tBOOLEAN;
 	}
 	
-	//@ Override terminal STRING:
+	//@Override
+	//terminal STRING:
 	//	'"' ('\\' ('b' | 't' | 'n' | 'f' | 'r' | '"' | "'" | '\\') | !('\\' | '"'))* '"';
 	public TerminalRule getSTRINGRule() {
 		return tSTRING;
 	}
 	
-	//@ Override terminal ID:
+	//@Override
+	//terminal ID:
 	//	'^'? (('_'? 'a'..'z' | '_'? 'A'..'Z') | '_' '0'..'9' | '__') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
 	public TerminalRule getIDRule() {
 		return tID;

@@ -41,7 +41,7 @@ public class SCLProgramImpl extends PragmatableImpl implements SCLProgram {
      * @generated
      * @ordered
      */
-    protected EList<Module> modules;
+    protected EList<de.cau.cs.kieler.scl.Module> modules;
 
     /**
      * <!-- begin-user-doc -->
@@ -67,11 +67,23 @@ public class SCLProgramImpl extends PragmatableImpl implements SCLProgram {
      * <!-- end-user-doc -->
      * @generated
      */
-    public EList<Module> getModules() {
+    @Override
+    public EList<de.cau.cs.kieler.scl.Module> getModules() {
         if (modules == null) {
-            modules = new EObjectContainmentEList<Module>(Module.class, this, SCLPackage.SCL_PROGRAM__MODULES);
+            modules = new EObjectContainmentEList<de.cau.cs.kieler.scl.Module>(de.cau.cs.kieler.scl.Module.class, this, SCLPackage.SCL_PROGRAM__MODULES);
         }
         return modules;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     */
+    public String getName() {
+        if (!getModules().isEmpty()) {
+            return getModules().get(0).getName();
+        }
+        return null;
     }
 
     /**
@@ -113,7 +125,7 @@ public class SCLProgramImpl extends PragmatableImpl implements SCLProgram {
         switch (featureID) {
             case SCLPackage.SCL_PROGRAM__MODULES:
                 getModules().clear();
-                getModules().addAll((Collection<? extends Module>)newValue);
+                getModules().addAll((Collection<? extends de.cau.cs.kieler.scl.Module>)newValue);
                 return;
         }
         super.eSet(featureID, newValue);

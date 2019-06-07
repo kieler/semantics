@@ -1,0 +1,7 @@
+developer system de.cau.cs.kieler.esterel.scest.scl.^simulation.priority.java
+    label "SCEst Priority-based Simulation (Java)"
+
+de.cau.cs.kieler.esterel.processors.scestintermediateprocessor config {
+    "de.cau.cs.kieler.esterel.processors.scestintermediateprocessor.append" : true
+}
+system de.cau.cs.kieler.scl.^simulation.priority.java

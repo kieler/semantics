@@ -16,6 +16,9 @@ package de.cau.cs.kieler.sccharts.impl;
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.keffects.Effect;
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
+import de.cau.cs.kieler.kexpressions.keffects.Link;
+import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.sccharts.Action;
 import de.cau.cs.kieler.sccharts.DelayType;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
@@ -33,6 +36,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -43,6 +47,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getOutgoingLinks <em>Outgoing Links</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getIncomingLinks <em>Incoming Links</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTrigger <em>Trigger</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.ActionImpl#getTriggerDelay <em>Trigger Delay</em>}</li>
@@ -63,6 +69,26 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
+     * The cached value of the '{@link #getOutgoingLinks() <em>Outgoing Links</em>}' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getOutgoingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> outgoingLinks;
+
+    /**
+     * The cached value of the '{@link #getIncomingLinks() <em>Incoming Links</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getIncomingLinks()
+     * @generated
+     * @ordered
+     */
+    protected EList<Link> incomingLinks;
+
+                /**
      * The cached value of the '{@link #getEffects() <em>Effects</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -206,6 +232,33 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EList<Link> getOutgoingLinks() {
+        if (outgoingLinks == null) {
+            outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.ACTION__OUTGOING_LINKS);
+        }
+        return outgoingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<Link> getIncomingLinks() {
+        if (incomingLinks == null) {
+            incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.ACTION__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
+        }
+        return incomingLinks;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EList<Effect> getEffects() {
         if (effects == null) {
             effects = new EObjectContainmentEList<Effect>(Effect.class, this, SCChartsPackage.ACTION__EFFECTS);
@@ -218,6 +271,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getTrigger() {
         return trigger;
     }
@@ -242,6 +296,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTrigger(Expression newTrigger) {
         if (newTrigger != trigger) {
             NotificationChain msgs = null;
@@ -261,6 +316,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getTriggerDelay() {
         return triggerDelay;
     }
@@ -270,6 +326,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTriggerDelay(int newTriggerDelay) {
         int oldTriggerDelay = triggerDelay;
         triggerDelay = newTriggerDelay;
@@ -282,6 +339,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getTriggerProbability() {
         return triggerProbability;
     }
@@ -291,6 +349,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTriggerProbability(double newTriggerProbability) {
         double oldTriggerProbability = triggerProbability;
         triggerProbability = newTriggerProbability;
@@ -303,6 +362,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayType getDelay() {
         return delay;
     }
@@ -312,6 +372,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(DelayType newDelay) {
         DelayType oldDelay = delay;
         delay = newDelay == null ? DELAY_EDEFAULT : newDelay;
@@ -324,6 +385,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isNondeterministic() {
         return nondeterministic;
     }
@@ -333,6 +395,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNondeterministic(boolean newNondeterministic) {
         boolean oldNondeterministic = nondeterministic;
         nondeterministic = newNondeterministic;
@@ -345,6 +408,22 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @SuppressWarnings("unchecked")
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                return ((InternalEList<InternalEObject>)(InternalEList<?>)getIncomingLinks()).basicAdd(otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public String getLabel() {
         return label;
     }
@@ -354,6 +433,7 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLabel(String newLabel) {
         String oldLabel = label;
         label = newLabel;
@@ -369,6 +449,10 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
+            case SCChartsPackage.ACTION__OUTGOING_LINKS:
+                return ((InternalEList<?>)getOutgoingLinks()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                return ((InternalEList<?>)getIncomingLinks()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.ACTION__EFFECTS:
                 return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
             case SCChartsPackage.ACTION__TRIGGER:
@@ -385,6 +469,10 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
+            case SCChartsPackage.ACTION__OUTGOING_LINKS:
+                return getOutgoingLinks();
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                return getIncomingLinks();
             case SCChartsPackage.ACTION__EFFECTS:
                 return getEffects();
             case SCChartsPackage.ACTION__TRIGGER:
@@ -412,6 +500,14 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
+            case SCChartsPackage.ACTION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                getOutgoingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                getIncomingLinks().addAll((Collection<? extends Link>)newValue);
+                return;
             case SCChartsPackage.ACTION__EFFECTS:
                 getEffects().clear();
                 getEffects().addAll((Collection<? extends Effect>)newValue);
@@ -446,6 +542,12 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
+            case SCChartsPackage.ACTION__OUTGOING_LINKS:
+                getOutgoingLinks().clear();
+                return;
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                getIncomingLinks().clear();
+                return;
             case SCChartsPackage.ACTION__EFFECTS:
                 getEffects().clear();
                 return;
@@ -479,6 +581,10 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
+            case SCChartsPackage.ACTION__OUTGOING_LINKS:
+                return outgoingLinks != null && !outgoingLinks.isEmpty();
+            case SCChartsPackage.ACTION__INCOMING_LINKS:
+                return incomingLinks != null && !incomingLinks.isEmpty();
             case SCChartsPackage.ACTION__EFFECTS:
                 return effects != null && !effects.isEmpty();
             case SCChartsPackage.ACTION__TRIGGER:
@@ -503,10 +609,44 @@ public abstract class ActionImpl extends AnnotatableImpl implements Action {
      * @generated
      */
     @Override
+    public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+        if (baseClass == Linkable.class) {
+            switch (derivedFeatureID) {
+                case SCChartsPackage.ACTION__OUTGOING_LINKS: return KEffectsPackage.LINKABLE__OUTGOING_LINKS;
+                case SCChartsPackage.ACTION__INCOMING_LINKS: return KEffectsPackage.LINKABLE__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
+        return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+        if (baseClass == Linkable.class) {
+            switch (baseFeatureID) {
+                case KEffectsPackage.LINKABLE__OUTGOING_LINKS: return SCChartsPackage.ACTION__OUTGOING_LINKS;
+                case KEffectsPackage.LINKABLE__INCOMING_LINKS: return SCChartsPackage.ACTION__INCOMING_LINKS;
+                default: return -1;
+            }
+        }
+        return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (triggerDelay: ");
         result.append(triggerDelay);
         result.append(", triggerProbability: ");

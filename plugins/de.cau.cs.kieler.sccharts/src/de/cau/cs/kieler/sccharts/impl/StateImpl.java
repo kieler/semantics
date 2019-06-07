@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -50,6 +51,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#isConnector <em>Connector</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getOutgoingTransitions <em>Outgoing Transitions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getIncomingTransitions <em>Incoming Transitions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.StateImpl#getBaseStates <em>Base States</em>}</li>
  * </ul>
  *
  * @generated
@@ -173,6 +175,16 @@ protected boolean connector = CONNECTOR_EDEFAULT;
     protected EList<Transition> incomingTransitions;
 
     /**
+     * The cached value of the '{@link #getBaseStates() <em>Base States</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getBaseStates()
+     * @generated
+     * @ordered
+     */
+    protected EList<State> baseStates;
+
+    /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -196,6 +208,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Region> getRegions() {
         if (regions == null) {
             regions = new EObjectContainmentWithInverseEList<Region>(Region.class, this, SCChartsPackage.STATE__REGIONS, SCChartsPackage.REGION__PARENT_STATE);
@@ -208,6 +221,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlflowRegion getParentRegion() {
         if (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION) return null;
         return (ControlflowRegion)eInternalContainer();
@@ -228,6 +242,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParentRegion(ControlflowRegion newParentRegion) {
         if (newParentRegion != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.STATE__PARENT_REGION && newParentRegion != null)) {
             if (EcoreUtil.isAncestor(this, newParentRegion))
@@ -249,6 +264,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isInitial() {
         return initial;
     }
@@ -258,6 +274,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setInitial(boolean newInitial) {
         boolean oldInitial = initial;
         initial = newInitial;
@@ -270,6 +287,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isFinal() {
         return final_;
     }
@@ -279,6 +297,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFinal(boolean newFinal) {
         boolean oldFinal = final_;
         final_ = newFinal;
@@ -291,6 +310,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isViolation() {
         return violation;
     }
@@ -300,6 +320,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setViolation(boolean newViolation) {
         boolean oldViolation = violation;
         violation = newViolation;
@@ -312,7 +333,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public boolean isConnector() {
+	@Override
+    public boolean isConnector() {
         return connector;
     }
 
@@ -321,7 +343,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public void setConnector(boolean newConnector) {
+	@Override
+    public void setConnector(boolean newConnector) {
         boolean oldConnector = connector;
         connector = newConnector;
         if (eNotificationRequired())
@@ -333,6 +356,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Transition> getOutgoingTransitions() {
         if (outgoingTransitions == null) {
             outgoingTransitions = new EObjectContainmentWithInverseEList<Transition>(Transition.class, this, SCChartsPackage.STATE__OUTGOING_TRANSITIONS, SCChartsPackage.TRANSITION__SOURCE_STATE);
@@ -345,11 +369,25 @@ protected boolean connector = CONNECTOR_EDEFAULT;
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Transition> getIncomingTransitions() {
         if (incomingTransitions == null) {
             incomingTransitions = new EObjectWithInverseResolvingEList<Transition>(Transition.class, this, SCChartsPackage.STATE__INCOMING_TRANSITIONS, SCChartsPackage.TRANSITION__TARGET_STATE);
         }
         return incomingTransitions;
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EList<State> getBaseStates() {
+        if (baseStates == null) {
+            baseStates = new EObjectResolvingEList<State>(State.class, this, SCChartsPackage.STATE__BASE_STATES);
+        }
+        return baseStates;
     }
 
                 /**
@@ -433,6 +471,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return getOutgoingTransitions();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return getIncomingTransitions();
+            case SCChartsPackage.STATE__BASE_STATES:
+                return getBaseStates();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -473,6 +513,10 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 getIncomingTransitions().clear();
                 getIncomingTransitions().addAll((Collection<? extends Transition>)newValue);
                 return;
+            case SCChartsPackage.STATE__BASE_STATES:
+                getBaseStates().clear();
+                getBaseStates().addAll((Collection<? extends State>)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -509,6 +553,9 @@ protected boolean connector = CONNECTOR_EDEFAULT;
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 getIncomingTransitions().clear();
                 return;
+            case SCChartsPackage.STATE__BASE_STATES:
+                getBaseStates().clear();
+                return;
         }
         super.eUnset(featureID);
     }
@@ -537,6 +584,8 @@ protected boolean connector = CONNECTOR_EDEFAULT;
                 return outgoingTransitions != null && !outgoingTransitions.isEmpty();
             case SCChartsPackage.STATE__INCOMING_TRANSITIONS:
                 return incomingTransitions != null && !incomingTransitions.isEmpty();
+            case SCChartsPackage.STATE__BASE_STATES:
+                return baseStates != null && !baseStates.isEmpty();
         }
         return super.eIsSet(featureID);
     }
@@ -550,7 +599,7 @@ protected boolean connector = CONNECTOR_EDEFAULT;
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (initial: ");
         result.append(initial);
         result.append(", final: ");

@@ -56,7 +56,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected static final Float VALUE_EDEFAULT = null;
+    protected static final Double VALUE_EDEFAULT = null;
 
     /**
      * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -66,7 +66,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * @generated
      * @ordered
      */
-    protected Float value = VALUE_EDEFAULT;
+    protected Double value = VALUE_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -92,6 +92,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.FLOAT_VALUE__SCHEDULE);
@@ -104,7 +105,8 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public Float getValue() {
+    @Override
+    public Double getValue() {
         return value;
     }
 
@@ -113,8 +115,9 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setValue(Float newValue) {
-        Float oldValue = value;
+    @Override
+    public void setValue(Double newValue) {
+        Double oldValue = value;
         value = newValue;
         if (eNotificationRequired())
             eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.FLOAT_VALUE__VALUE, oldValue, value));
@@ -164,7 +167,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
                 getSchedule().addAll((Collection<? extends ScheduleObjectReference>)newValue);
                 return;
             case KExpressionsPackage.FLOAT_VALUE__VALUE:
-                setValue((Float)newValue);
+                setValue((Double)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -213,7 +216,7 @@ public class FloatValueImpl extends EObjectImpl implements FloatValue {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (value: ");
         result.append(value);
         result.append(')');

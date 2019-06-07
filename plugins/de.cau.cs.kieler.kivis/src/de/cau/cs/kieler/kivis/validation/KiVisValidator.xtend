@@ -3,15 +3,10 @@
  */
 package de.cau.cs.kieler.kivis.validation
 
-import com.google.inject.Inject
-import de.cau.cs.kieler.kivis.extensions.KiVisExtensions
-import de.cau.cs.kieler.kivis.kivis.AttributeMapping
-import de.cau.cs.kieler.kivis.kivis.Interval
-import de.cau.cs.kieler.kivis.kivis.Mapping
-import de.cau.cs.kieler.prom.configurable.AttributeExtensions
 import org.eclipse.xtext.validation.Check
-
-//import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.kivis.kivis.Setter
+import de.cau.cs.kieler.kivis.kivis.KivisPackage
+import de.cau.cs.kieler.kivis.kivis.Binding
 
 /**
  * This class contains custom validation rules. 
@@ -19,61 +14,23 @@ import org.eclipse.xtext.validation.Check
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class KiVisValidator extends AbstractKiVisValidator {
+    
+    static val pkg = KivisPackage.eINSTANCE
+    
+	static val MISSING_RETURN = 'The javascript function must return a value but there is no return statement in the given code'
 
-    @Inject
-    extension AttributeExtensions attributeExtensions
-    @Inject
-    extension KiVisExtensions kivisExtensions
-    
-    private val CANNOT_MAP_VALUE_TO_RANGE = "Can't map a single value to a range."
-    private val LOWER_VALUE_ON_THE_LEFT = "Lower value of an interval has to be on the left side."
-    private val MAP_OTHERS_LAST = "Mapping all other values should be the very last mapping."
-    
-    /**
-     * Checks that there is no mapping of a single value to a range.
-     * A range might be mapped to a single value, but not the other way around.
-     */
+	@Check
+	def checkReturnStatement(Setter setter) {
+	    if (!setter.script.nullOrEmpty && !setter.script.contains("return")) {
+			error(MISSING_RETURN, pkg.setter_Script)
+		}
+	}
+	
     @Check
-    public def void checkMappingDomains(Mapping mapping) {
-        if (mapping.variableDomain.value != null && mapping.attributeDomain.range != null) {
-            error(CANNOT_MAP_VALUE_TO_RANGE, mapping, null);
+    def checkReturnStatement(Binding binding) {
+        if (!binding.script.nullOrEmpty && !binding.script.contains("return")) {
+            error(MISSING_RETURN, pkg.setter_Script)
         }
     }
-    
-    /**
-     * Checks that in a mapping the others keyword is used for the very last mapping.
-     */
-    @Check
-    public def void checkOthersIsLast(AttributeMapping attributeMapping) {
-        val mappings = attributeMapping.mappings
-        if(mappings != null) {
-            val size = mappings.size
-            var i = 0;
-            for(m : mappings) {
-                // Ignore the last mapping, because the others keyword is ok there.
-                if(i < size-1) {
-                    if(m.variableDomain.otherValues) {
-                        warning(MAP_OTHERS_LAST, m, null)
-                    }
-                }
-                i++
-            }
-        }
-    }
-    
-    /**
-     * Checks that all intervals have their lower value on the left side.
-     */
-    @Check
-    public def void checkIntervalFromLessOrEqualIntervalTo(Interval interval) {
-        val from = interval.from
-        val to = interval.to
-        if (from != null && to != null) {
-            val fromDouble = from.primitiveValue.doubleValue
-            val toDouble = to.primitiveValue.doubleValue
-            if(fromDouble > toDouble) {
-                error(LOWER_VALUE_ON_THE_LEFT, interval, null);
-            }
-        }
-    }
+	
 }

@@ -3,6 +3,7 @@
 package de.cau.cs.kieler.esterel.util;
 
 import de.cau.cs.kieler.annotations.Annotatable;
+import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 
 import de.cau.cs.kieler.annotations.Pragmatable;
@@ -89,6 +90,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 EsterelProgram esterelProgram = (EsterelProgram)theEObject;
                 T result = caseEsterelProgram(esterelProgram);
                 if (result == null) result = casePragmatable(esterelProgram);
+                if (result == null) result = caseNameable(esterelProgram);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -122,6 +124,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(typeDefinition);
                 if (result == null) result = caseAnnotatable(typeDefinition);
                 if (result == null) result = caseReferenceable(typeDefinition);
+                if (result == null) result = caseNameable(typeDefinition);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -141,6 +144,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(constant);
                 if (result == null) result = caseAnnotatable(constant);
                 if (result == null) result = caseReferenceable(constant);
+                if (result == null) result = caseNameable(constant);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -160,6 +164,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(function);
                 if (result == null) result = caseAnnotatable(function);
                 if (result == null) result = caseReferenceable(function);
+                if (result == null) result = caseNameable(function);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -179,6 +184,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(procedure);
                 if (result == null) result = caseAnnotatable(procedure);
                 if (result == null) result = caseReferenceable(procedure);
+                if (result == null) result = caseNameable(procedure);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -198,6 +204,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(task);
                 if (result == null) result = caseAnnotatable(task);
                 if (result == null) result = caseReferenceable(task);
+                if (result == null) result = caseNameable(task);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -257,6 +264,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(signal);
                 if (result == null) result = caseAnnotatable(signal);
                 if (result == null) result = caseReferenceable(signal);
+                if (result == null) result = caseNameable(signal);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -276,6 +284,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(sensor);
                 if (result == null) result = caseAnnotatable(sensor);
                 if (result == null) result = caseReferenceable(sensor);
+                if (result == null) result = caseNameable(sensor);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -604,6 +613,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(variable);
                 if (result == null) result = caseAnnotatable(variable);
                 if (result == null) result = caseReferenceable(variable);
+                if (result == null) result = caseNameable(variable);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -703,6 +713,7 @@ public class EsterelSwitch<T> extends Switch<T> {
                 if (result == null) result = caseNamedObject(trapSignal);
                 if (result == null) result = caseAnnotatable(trapSignal);
                 if (result == null) result = caseReferenceable(trapSignal);
+                if (result == null) result = caseNameable(trapSignal);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -2057,6 +2068,21 @@ public class EsterelSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Nameable</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseNameable(Nameable object) {
         return null;
     }
 

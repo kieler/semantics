@@ -14,6 +14,7 @@ package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelViewUIContributor
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
@@ -26,8 +27,10 @@ import org.eclipse.emf.ecore.resource.URIConverter
 import org.eclipse.jface.action.IMenuManager
 import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
+import org.eclipse.ui.IMemento
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
+import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
 
 /**
  * @author als
@@ -60,10 +63,12 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {
-                if (muc.showsCompiledModel && muc.compiledModel !== null) {
-                    inputIsShown = input == muc.compiledModel
+                if (muc.showsCompiledModel && !muc.compiledModel.empty) {
+                    inputIsShown = input == muc.compiledModel.head ||
+                        (muc.compiledModel instanceof ModelChain && (muc.compiledModel as ModelChain).models.head == input)
                 } else {
-                    inputIsShown = input == muc.sourceModel
+                    inputIsShown = input == muc.sourceModel ||
+                        (muc.sourceModel instanceof ModelChain && (muc.sourceModel as ModelChain).models.head == input)
                     if (inputIsShown) {
                         if (input instanceof EObject) {
                             if (input.eResource !== null) {
@@ -77,6 +82,19 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
             
         }
         return null
+    }
+    
+    override saveState(KiCoModelUpdateController muc, IMemento memento) {
+        if (!SimulationAction.LAST_SELECTED_SYSTEM.nullOrEmpty) {
+            memento.putString("SimulationAction.LAST_SELECTED_SYSTEM", SimulationAction.LAST_SELECTED_SYSTEM)
+        }
+    }
+    
+    override loadState(KiCoModelUpdateController muc, IMemento memento) {
+        val system = memento.getString("SimulationAction.LAST_SELECTED_SYSTEM")
+        if (!system.nullOrEmpty) {
+            SimulationAction.LAST_SELECTED_SYSTEM = system
+        }
     }
     
     override update(SimulationContext ctx, SimulationEvent e) {

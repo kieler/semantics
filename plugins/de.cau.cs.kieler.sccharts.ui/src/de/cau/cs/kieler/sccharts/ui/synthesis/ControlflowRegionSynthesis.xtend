@@ -14,19 +14,29 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.kicool.ui.synthesis.updates.MessageObjectReferencesManager
 import de.cau.cs.kieler.klighd.kgraph.KGraphFactory
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.processors.For
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
+import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.ControlflowRegionStyles
+import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
 import org.eclipse.elk.alg.layered.options.FixedAlignment
 import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
@@ -35,11 +45,7 @@ import org.eclipse.elk.core.options.EdgeRouting
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.sccharts.processors.transformators.For
-import org.eclipse.elk.alg.layered.options.CenterEdgeLabelPlacementStrategy
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import static extension de.cau.cs.kieler.klighd.util.ModelingUtil.*
 
 /**
  * Transforms {@link ControlflowRegion} into {@link KNode} diagram elements.
@@ -60,9 +66,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
     @Inject extension StateSynthesis
     @Inject extension ControlflowRegionStyles
     @Inject extension CommentSynthesis
+    @Inject extension ColorStore
+    @Inject extension AdaptiveZoom
 
     override performTranformation(ControlflowRegion region) {
         val node = region.createNode().associateWith(region);
+        
+        node.configureNodeLOD(region)
 
         // Set KIdentifier for use with incremental update
         if (!region.name.nullOrEmpty) {
@@ -85,37 +95,19 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         // Do not set! This is handled by the ExpandCollapseHook
         // node.initiallyExpand
         
-        // User schedules
-        val sLabel = new StringBuilder
-        val userSchedule = region.schedule
-        if (userSchedule.size > 0) {
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
-            for (s : userSchedule) {
-                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
-                if (!exists.contains(existPair)) {
-                    sLabel.append(", ")
-                    sLabel.append(s.valuedObject.name + " " + s.priority)
-                    exists.add(existPair)
-                }
-            }
-        }        
+        // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
+        node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
 
         if (!region.states.empty) {
-
-            var forLabel = ""
-            if (region.counterVariable !== null) {
-                val range = For.getForRegionRange(region)
-                forLabel = " | " + region.counterVariable.name + "[" + range.first + ", " + range.second + "]"
-            }
-            
-            val label = (if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString) + 
-                forLabel + sLabel.toString
+            val label = region.serializeHighlighted(true)
 
             // Expanded
-            node.addRegionFigure(region.final) => [
+            node.addRegionFigure => [
                 setAsExpandedView
                 associateWith(region)
-                addDoubleClickAction(ReferenceExpandAction::ID)
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
                 if (region.declarations.empty && region.actions.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
@@ -124,8 +116,11 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     for (declaration : region.variableDeclarations) {
                         addDeclarationLabel(declaration.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
-                            associateWith(declaration);
-                            eAllContents.filter(typeof(KRendering)).forEach[associateWith(declaration)];
+                            associateWith(declaration)
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(declaration)
+                                if (it instanceof KText) configureTextLOD(declaration)
+                            ]
                         ]
                     }
                     // Add actions
@@ -133,31 +128,67 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                         addActionLabel(action.serializeHighlighted(true)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(action);
-                            eAllContents.filter(KRendering).forEach[associateWith(action)];
+                            eAllContentsOfType2(KRendering).forEach[
+                                associateWith(action)
+                                if (it instanceof KText) configureTextLOD(action)
+                            ]
                         ]
                     }
                 }
-                if (sLabel.length > 0) it.setUserScheduleStyle
+                if (region.schedule.size > 0) it.setUserScheduleStyle
                 // Add Button after area to assure correct overlapping
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                addCollapseButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
+                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
 
             // Collapsed
-            node.addRegionFigure(region.final) => [
+            node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
-                if (sLabel.length > 0) it.setUserScheduleStyle
-                addDoubleClickAction(ReferenceExpandAction::ID)
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID);
+                if (region.schedule.size > 0) it.setUserScheduleStyle
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
+                addExpandButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ] 
+                if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
+            
+            node.setSelectionStyle
 
             // Add inner states
             for (state : region.states) {
                 node.children += state.transform;
             }
 
+        } else if (region.reference !== null) {
+            var label = if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString
+            label += "@"
+            if (region.reference.scope !== null) {
+                label += (region.reference.scope as Region).serializeHR
+            } else {
+                label += "UnresolvedReference"
+            }
+            if (SHOW_BINDINGS.booleanValue) {
+                label += region.reference.parameters.serializeHRParameters
+            }
+            
+            node.createReferenceRegionFigures(label, region) => [
+                node.data.filter(KRectangle).forEach[
+                    it.foreground = ColorStore.Color.STATE_REFERENCED_BACKGROUND_GRADIENT_2.color
+                    it.lineWidth = it.lineWidth.lineWidth + 1
+                ]
+            ]
         } else {
-            node.addRegionFigure(region.final);
+            node.addRegionFigure => [
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
+            ]
         }
 
         val returnNodes = <KNode> newArrayList(node)
@@ -181,33 +212,44 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         val node = createNode().associateWith(state); // This association is important for the ReferenceExpandAction
         if (USE_KLAY.booleanValue) {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.layered");
-//            node.setLayoutOption(CoreOptions::SPACING_NODE, 3);
-//            node.setLayoutOption(CoreOptions::SPACING_BORDER, 8);
         } else {
             node.addLayoutParam(CoreOptions::ALGORITHM, "org.eclipse.elk.graphviz.dot");
             node.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 40.0);
         }
         node.addLayoutParam(CoreOptions::EDGE_ROUTING, EdgeRouting::SPLINES);
-//        node.setLayoutOption(CoreOptions::SPACING_NODE, 40);
 
+        node.createReferenceRegionFigures(null, null)
+
+        return node;
+    }
+    
+    protected def KNode createReferenceRegionFigures(KNode node, String label, Region region) {
         // Set initially collapsed
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
         // Expanded
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
             setAsExpandedView
-            addStatesArea(false)
+            addStatesArea(label !== null)
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
+            addCollapseButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
+            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
         // Collapsed
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(null).addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
+            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
         return node;

@@ -90,22 +90,22 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      * @return value converter for standard Java style floats
      */
     @ValueConverter(rule = "FLOAT")
-    public IValueConverter<Float> _float() {
-        return new IValueConverter<Float>() {
+    public IValueConverter<Double> _float() {
+        return new IValueConverter<Double>() {
 
-            public Float toValue(String string, INode node) {
+            public Double toValue(String string, INode node) {
                 if (Strings.isEmpty(string))
                     throw new ValueConverterException("Couldn't convert empty string to float",
                             node, null);
                 try {
-                    return Float.valueOf(string);
+                    return Double.valueOf(string);
                 } catch (NumberFormatException e) {
                     throw new ValueConverterException("Couldn't convert '" + string + "' to float",
                             node, e);
                 }
             }
 
-            public String toString(Float value) {
+            public String toString(Double value) {
                 return value.toString();
             }
         };

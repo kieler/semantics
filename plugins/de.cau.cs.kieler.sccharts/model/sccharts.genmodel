@@ -3,28 +3,51 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" copyrightText="KIELER - Kiel Integrated Environment for Layout Eclipse RichClient&#xD;&#xA;&#xD;&#xA;http://www.informatik.uni-kiel.de/rtsys/kieler/&#xD;&#xA;&#xD;&#xA;Copyright 2013 by&#xD;&#xA;+ Kiel University&#xD;&#xA;  + Department of Computer Science&#xD;&#xA;    + Real-Time and Embedded Systems Group&#xD;&#xA;&#xD;&#xA;This code is provided under the terms of the Eclipse Public License (EPL).&#xD;&#xA;See the file epl-v10.html for the license text."
     modelDirectory="/de.cau.cs.kieler.sccharts/src" modelPluginID="de.cau.cs.kieler.sccharts"
     modelName="SCCharts" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext"
+    importerID="org.eclipse.emf.importer.ecore" bundleManifest="false" complianceLevel="8.0"
+    usedGenPackages="../../de.cau.cs.kieler.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.kexpressions/model/keffects.genmodel#//keffects ../../de.cau.cs.kieler.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.kexpressions/model/kext.genmodel#//kext ../../de.cau.cs.kieler.scl/model/scl.genmodel#//scl"
     importOrganizing="true" pluginKey="sccharts">
   <foreignModel>sccharts.ecore</foreignModel>
   <genPackages prefix="SCCharts" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       fileExtensions="scc" ecorePackage="sccharts.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//TransitionType">
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//TransitionType/WEAKABORT"/>
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//TransitionType/STRONGABORT"/>
-      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//TransitionType/TERMINATION"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//PreemptionType">
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/WEAKABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/STRONGABORT"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//PreemptionType/TERMINATION"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//HistoryType">
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//HistoryType/RESET"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//HistoryType/SHALLOW"/>
       <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//HistoryType/DEEP"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sccharts.ecore#//DelayType">
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/UNDEFINED"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/DELAYED"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/IMMEDIATE"/>
+      <genEnumLiterals ecoreEnumLiteral="sccharts.ecore#//DelayType/AUTOMATIC"/>
+    </genEnums>
+    <genClasses ecoreClass="sccharts.ecore#//SCCharts">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//SCCharts/rootStates"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SCCharts/imports"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="sccharts.ecore#//Scope">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Scope/label"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/reference"/>
+    </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//ScopeCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//ScopeCall/scope"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ScopeCall/super"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Action">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Action/effects"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Action/trigger"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/delay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/triggerDelay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/triggerProbability"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/label"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/immediate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/delay"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Action/nondeterministic"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="sccharts.ecore#//LocalAction"/>
     <genClasses ecoreClass="sccharts.ecore#//State">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//State/parentRegion"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/regions"/>
@@ -34,73 +57,44 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//State/connector"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/outgoingTransitions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/incomingTransitions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//State/baseStates"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Region">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Region/parentState"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/counterVariable"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/forStart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Region/forEnd"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Region/override"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//ControlflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ControlflowRegion/states"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//ControlflowRegion/final"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//DataflowRegion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/equations"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//DataflowRegion/nodes"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Node">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Node/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Node/label"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//ReferenceNode">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//ReferenceNode/referencedScope"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//ReferenceNode/parameters"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//CallNode">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//CallNode/callReference"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//CallNode/parameters"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//DefineNode">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/inputs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/outputs"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/valuedObjects"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/expressions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//DefineNode/states"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Equation">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/expression"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/node"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Equation/valuedObject"/>
-    </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//Binding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/formal"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Binding/actual"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DataflowRegion/once"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//Transition">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/priority"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/deferred"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/preemption"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/history"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Transition/deferred"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/targetState"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sccharts.ecore#//Transition/sourceState"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="sccharts.ecore#//Scope">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Scope/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//Scope/label"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/localActions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/referencedScope"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/bindings"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//Scope/expression"/>
-    </genClasses>
-    <genClasses image="false" ecoreClass="sccharts.ecore#//LocalAction"/>
     <genClasses ecoreClass="sccharts.ecore#//EntryAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//DuringAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//DuringAction">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//DuringAction/reset"/>
+    </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//ExitAction"/>
     <genClasses ecoreClass="sccharts.ecore#//SuspendAction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sccharts.ecore#//SuspendAction/weak"/>
     </genClasses>
-    <genClasses ecoreClass="sccharts.ecore#//IterateAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//InitAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//FinalAction"/>
-    <genClasses ecoreClass="sccharts.ecore#//SCCharts">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//SCCharts/rootStates"/>
+    <genClasses ecoreClass="sccharts.ecore#//PrecedingAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//SucceedingAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//PeriodAction"/>
+    <genClasses ecoreClass="sccharts.ecore#//PolicyClassDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policy"/>
     </genClasses>
+    <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
   </genPackages>
 </genmodel:GenModel>

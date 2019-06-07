@@ -112,6 +112,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataDependencyType getType() {
         return type;
     }
@@ -121,6 +122,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(DataDependencyType newType) {
         DataDependencyType oldType = type;
         type = newType == null ? TYPE_EDEFAULT : newType;
@@ -133,6 +135,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isConcurrent() {
         return concurrent;
     }
@@ -142,6 +145,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConcurrent(boolean newConcurrent) {
         boolean oldConcurrent = concurrent;
         concurrent = newConcurrent;
@@ -154,6 +158,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isConfluent() {
         return confluent;
     }
@@ -163,6 +168,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setConfluent(boolean newConfluent) {
         boolean oldConfluent = confluent;
         confluent = newConfluent;
@@ -257,7 +263,7 @@ public class DataDependencyImpl extends DependencyImpl implements DataDependency
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (type: ");
         result.append(type);
         result.append(", concurrent: ");

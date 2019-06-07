@@ -47,6 +47,9 @@ class SCTXEditorCallback extends IXtextEditorCallback.NullImpl {
             resource.reloadImporters
         }
         
+        // Validate
+        super.afterSave(editor)
+        
         // Display error marker on file
         if (editor.resource !== null && injector !== null) {
             val iResource = editor.resource

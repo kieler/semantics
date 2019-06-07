@@ -4,21 +4,25 @@
 package de.cau.cs.kieler.kivis.kivis.impl;
 
 import de.cau.cs.kieler.kivis.kivis.Action;
-import de.cau.cs.kieler.kivis.kivis.Function;
+import de.cau.cs.kieler.kivis.kivis.Interface;
 import de.cau.cs.kieler.kivis.kivis.KivisPackage;
-import de.cau.cs.kieler.kivis.kivis.SimulationOperation;
-import de.cau.cs.kieler.kivis.kivis.VariableReference;
+import de.cau.cs.kieler.kivis.kivis.Setter;
+import de.cau.cs.kieler.kivis.kivis.SimulationCorntrol;
 
-import de.cau.cs.kieler.prom.kibuild.Literal;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,65 +32,159 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getVariable <em>Variable</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getValue <em>Value</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getFunction <em>Function</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomEvent <em>Dom Event</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#isMultimatch <em>Multimatch</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDomElement <em>Dom Element</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDeferredInterface <em>Deferred Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getDeferredScript <em>Deferred Script</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getSetter <em>Setter</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kivis.kivis.impl.ActionImpl#getControl <em>Control</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class ActionImpl extends MinimalEObjectImpl.Container implements Action
+public class ActionImpl extends ContentImpl implements Action
 {
   /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' containment reference.
+   * The default value of the '{@link #getDomEvent() <em>Dom Event</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getDomEvent()
    * @generated
    * @ordered
    */
-  protected VariableReference variable;
+  protected static final String DOM_EVENT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
+   * The cached value of the '{@link #getDomEvent() <em>Dom Event</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValue()
+   * @see #getDomEvent()
    * @generated
    * @ordered
    */
-  protected Literal value;
+  protected String domEvent = DOM_EVENT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getFunction() <em>Function</em>}' containment reference.
+   * The default value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFunction()
+   * @see #isMultimatch()
    * @generated
    * @ordered
    */
-  protected Function function;
+  protected static final boolean MULTIMATCH_EDEFAULT = false;
 
   /**
-   * The default value of the '{@link #getOperation() <em>Operation</em>}' attribute.
+   * The cached value of the '{@link #isMultimatch() <em>Multimatch</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOperation()
+   * @see #isMultimatch()
    * @generated
    * @ordered
    */
-  protected static final SimulationOperation OPERATION_EDEFAULT = SimulationOperation.STEP;
+  protected boolean multimatch = MULTIMATCH_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getOperation() <em>Operation</em>}' attribute.
+   * The default value of the '{@link #getDomElement() <em>Dom Element</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOperation()
+   * @see #getDomElement()
    * @generated
    * @ordered
    */
-  protected SimulationOperation operation = OPERATION_EDEFAULT;
+  protected static final String DOM_ELEMENT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDomElement() <em>Dom Element</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDomElement()
+   * @generated
+   * @ordered
+   */
+  protected String domElement = DOM_ELEMENT_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getDeferredInterface() <em>Deferred Interface</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferredInterface()
+   * @generated
+   * @ordered
+   */
+  protected Interface deferredInterface;
+
+  /**
+   * The default value of the '{@link #getDeferredScript() <em>Deferred Script</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferredScript()
+   * @generated
+   * @ordered
+   */
+  protected static final String DEFERRED_SCRIPT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getDeferredScript() <em>Deferred Script</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDeferredScript()
+   * @generated
+   * @ordered
+   */
+  protected String deferredScript = DEFERRED_SCRIPT_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getSetter() <em>Setter</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSetter()
+   * @generated
+   * @ordered
+   */
+  protected EList<Setter> setter;
+
+  /**
+   * The default value of the '{@link #getSignal() <em>Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignal()
+   * @generated
+   * @ordered
+   */
+  protected static final String SIGNAL_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSignal() <em>Signal</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSignal()
+   * @generated
+   * @ordered
+   */
+  protected String signal = SIGNAL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getControl() <em>Control</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getControl()
+   * @generated
+   * @ordered
+   */
+  protected static final SimulationCorntrol CONTROL_EDEFAULT = SimulationCorntrol.NONE;
+
+  /**
+   * The cached value of the '{@link #getControl() <em>Control</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getControl()
+   * @generated
+   * @ordered
+   */
+  protected SimulationCorntrol control = CONTROL_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -114,9 +212,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableReference getVariable()
+  public String getDomEvent()
   {
-    return variable;
+    return domEvent;
   }
 
   /**
@@ -124,13 +222,82 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetVariable(VariableReference newVariable, NotificationChain msgs)
+  public void setDomEvent(String newDomEvent)
   {
-    VariableReference oldVariable = variable;
-    variable = newVariable;
+    String oldDomEvent = domEvent;
+    domEvent = newDomEvent;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DOM_EVENT, oldDomEvent, domEvent));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isMultimatch()
+  {
+    return multimatch;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMultimatch(boolean newMultimatch)
+  {
+    boolean oldMultimatch = multimatch;
+    multimatch = newMultimatch;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__MULTIMATCH, oldMultimatch, multimatch));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getDomElement()
+  {
+    return domElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setDomElement(String newDomElement)
+  {
+    String oldDomElement = domElement;
+    domElement = newDomElement;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DOM_ELEMENT, oldDomElement, domElement));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Interface getDeferredInterface()
+  {
+    return deferredInterface;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetDeferredInterface(Interface newDeferredInterface, NotificationChain msgs)
+  {
+    Interface oldDeferredInterface = deferredInterface;
+    deferredInterface = newDeferredInterface;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__VARIABLE, oldVariable, newVariable);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_INTERFACE, oldDeferredInterface, newDeferredInterface);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -141,20 +308,20 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVariable(VariableReference newVariable)
+  public void setDeferredInterface(Interface newDeferredInterface)
   {
-    if (newVariable != variable)
+    if (newDeferredInterface != deferredInterface)
     {
       NotificationChain msgs = null;
-      if (variable != null)
-        msgs = ((InternalEObject)variable).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__VARIABLE, null, msgs);
-      if (newVariable != null)
-        msgs = ((InternalEObject)newVariable).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__VARIABLE, null, msgs);
-      msgs = basicSetVariable(newVariable, msgs);
+      if (deferredInterface != null)
+        msgs = ((InternalEObject)deferredInterface).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__DEFERRED_INTERFACE, null, msgs);
+      if (newDeferredInterface != null)
+        msgs = ((InternalEObject)newDeferredInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__DEFERRED_INTERFACE, null, msgs);
+      msgs = basicSetDeferredInterface(newDeferredInterface, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__VARIABLE, newVariable, newVariable));
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_INTERFACE, newDeferredInterface, newDeferredInterface));
   }
 
   /**
@@ -162,9 +329,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public Literal getValue()
+  public String getDeferredScript()
   {
-    return value;
+    return deferredScript;
   }
 
   /**
@@ -172,16 +339,26 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(Literal newValue, NotificationChain msgs)
+  public void setDeferredScript(String newDeferredScript)
   {
-    Literal oldValue = value;
-    value = newValue;
+    String oldDeferredScript = deferredScript;
+    deferredScript = newDeferredScript;
     if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__DEFERRED_SCRIPT, oldDeferredScript, deferredScript));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<Setter> getSetter()
+  {
+    if (setter == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__VALUE, oldValue, newValue);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      setter = new EObjectContainmentEList<Setter>(Setter.class, this, KivisPackage.ACTION__SETTER);
     }
-    return msgs;
+    return setter;
   }
 
   /**
@@ -189,20 +366,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(Literal newValue)
+  public String getSignal()
   {
-    if (newValue != value)
-    {
-      NotificationChain msgs = null;
-      if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__VALUE, null, msgs);
-      if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__VALUE, null, msgs);
-      msgs = basicSetValue(newValue, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__VALUE, newValue, newValue));
+    return signal;
   }
 
   /**
@@ -210,26 +376,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public Function getFunction()
+  public void setSignal(String newSignal)
   {
-    return function;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetFunction(Function newFunction, NotificationChain msgs)
-  {
-    Function oldFunction = function;
-    function = newFunction;
+    String oldSignal = signal;
+    signal = newSignal;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__FUNCTION, oldFunction, newFunction);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__SIGNAL, oldSignal, signal));
   }
 
   /**
@@ -237,20 +389,9 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFunction(Function newFunction)
+  public SimulationCorntrol getControl()
   {
-    if (newFunction != function)
-    {
-      NotificationChain msgs = null;
-      if (function != null)
-        msgs = ((InternalEObject)function).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__FUNCTION, null, msgs);
-      if (newFunction != null)
-        msgs = ((InternalEObject)newFunction).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - KivisPackage.ACTION__FUNCTION, null, msgs);
-      msgs = basicSetFunction(newFunction, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__FUNCTION, newFunction, newFunction));
+    return control;
   }
 
   /**
@@ -258,22 +399,12 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
-  public SimulationOperation getOperation()
+  public void setControl(SimulationCorntrol newControl)
   {
-    return operation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOperation(SimulationOperation newOperation)
-  {
-    SimulationOperation oldOperation = operation;
-    operation = newOperation == null ? OPERATION_EDEFAULT : newOperation;
+    SimulationCorntrol oldControl = control;
+    control = newControl == null ? CONTROL_EDEFAULT : newControl;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__OPERATION, oldOperation, operation));
+      eNotify(new ENotificationImpl(this, Notification.SET, KivisPackage.ACTION__CONTROL, oldControl, control));
   }
 
   /**
@@ -286,12 +417,10 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case KivisPackage.ACTION__VARIABLE:
-        return basicSetVariable(null, msgs);
-      case KivisPackage.ACTION__VALUE:
-        return basicSetValue(null, msgs);
-      case KivisPackage.ACTION__FUNCTION:
-        return basicSetFunction(null, msgs);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return basicSetDeferredInterface(null, msgs);
+      case KivisPackage.ACTION__SETTER:
+        return ((InternalEList<?>)getSetter()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -306,14 +435,22 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case KivisPackage.ACTION__VARIABLE:
-        return getVariable();
-      case KivisPackage.ACTION__VALUE:
-        return getValue();
-      case KivisPackage.ACTION__FUNCTION:
-        return getFunction();
-      case KivisPackage.ACTION__OPERATION:
-        return getOperation();
+      case KivisPackage.ACTION__DOM_EVENT:
+        return getDomEvent();
+      case KivisPackage.ACTION__MULTIMATCH:
+        return isMultimatch();
+      case KivisPackage.ACTION__DOM_ELEMENT:
+        return getDomElement();
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return getDeferredInterface();
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        return getDeferredScript();
+      case KivisPackage.ACTION__SETTER:
+        return getSetter();
+      case KivisPackage.ACTION__SIGNAL:
+        return getSignal();
+      case KivisPackage.ACTION__CONTROL:
+        return getControl();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -323,22 +460,36 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case KivisPackage.ACTION__VARIABLE:
-        setVariable((VariableReference)newValue);
+      case KivisPackage.ACTION__DOM_EVENT:
+        setDomEvent((String)newValue);
         return;
-      case KivisPackage.ACTION__VALUE:
-        setValue((Literal)newValue);
+      case KivisPackage.ACTION__MULTIMATCH:
+        setMultimatch((Boolean)newValue);
         return;
-      case KivisPackage.ACTION__FUNCTION:
-        setFunction((Function)newValue);
+      case KivisPackage.ACTION__DOM_ELEMENT:
+        setDomElement((String)newValue);
         return;
-      case KivisPackage.ACTION__OPERATION:
-        setOperation((SimulationOperation)newValue);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        setDeferredInterface((Interface)newValue);
+        return;
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        setDeferredScript((String)newValue);
+        return;
+      case KivisPackage.ACTION__SETTER:
+        getSetter().clear();
+        getSetter().addAll((Collection<? extends Setter>)newValue);
+        return;
+      case KivisPackage.ACTION__SIGNAL:
+        setSignal((String)newValue);
+        return;
+      case KivisPackage.ACTION__CONTROL:
+        setControl((SimulationCorntrol)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -354,17 +505,29 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case KivisPackage.ACTION__VARIABLE:
-        setVariable((VariableReference)null);
+      case KivisPackage.ACTION__DOM_EVENT:
+        setDomEvent(DOM_EVENT_EDEFAULT);
         return;
-      case KivisPackage.ACTION__VALUE:
-        setValue((Literal)null);
+      case KivisPackage.ACTION__MULTIMATCH:
+        setMultimatch(MULTIMATCH_EDEFAULT);
         return;
-      case KivisPackage.ACTION__FUNCTION:
-        setFunction((Function)null);
+      case KivisPackage.ACTION__DOM_ELEMENT:
+        setDomElement(DOM_ELEMENT_EDEFAULT);
         return;
-      case KivisPackage.ACTION__OPERATION:
-        setOperation(OPERATION_EDEFAULT);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        setDeferredInterface((Interface)null);
+        return;
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        setDeferredScript(DEFERRED_SCRIPT_EDEFAULT);
+        return;
+      case KivisPackage.ACTION__SETTER:
+        getSetter().clear();
+        return;
+      case KivisPackage.ACTION__SIGNAL:
+        setSignal(SIGNAL_EDEFAULT);
+        return;
+      case KivisPackage.ACTION__CONTROL:
+        setControl(CONTROL_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -380,14 +543,22 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     switch (featureID)
     {
-      case KivisPackage.ACTION__VARIABLE:
-        return variable != null;
-      case KivisPackage.ACTION__VALUE:
-        return value != null;
-      case KivisPackage.ACTION__FUNCTION:
-        return function != null;
-      case KivisPackage.ACTION__OPERATION:
-        return operation != OPERATION_EDEFAULT;
+      case KivisPackage.ACTION__DOM_EVENT:
+        return DOM_EVENT_EDEFAULT == null ? domEvent != null : !DOM_EVENT_EDEFAULT.equals(domEvent);
+      case KivisPackage.ACTION__MULTIMATCH:
+        return multimatch != MULTIMATCH_EDEFAULT;
+      case KivisPackage.ACTION__DOM_ELEMENT:
+        return DOM_ELEMENT_EDEFAULT == null ? domElement != null : !DOM_ELEMENT_EDEFAULT.equals(domElement);
+      case KivisPackage.ACTION__DEFERRED_INTERFACE:
+        return deferredInterface != null;
+      case KivisPackage.ACTION__DEFERRED_SCRIPT:
+        return DEFERRED_SCRIPT_EDEFAULT == null ? deferredScript != null : !DEFERRED_SCRIPT_EDEFAULT.equals(deferredScript);
+      case KivisPackage.ACTION__SETTER:
+        return setter != null && !setter.isEmpty();
+      case KivisPackage.ACTION__SIGNAL:
+        return SIGNAL_EDEFAULT == null ? signal != null : !SIGNAL_EDEFAULT.equals(signal);
+      case KivisPackage.ACTION__CONTROL:
+        return control != CONTROL_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -402,9 +573,19 @@ public class ActionImpl extends MinimalEObjectImpl.Container implements Action
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (operation: ");
-    result.append(operation);
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (domEvent: ");
+    result.append(domEvent);
+    result.append(", multimatch: ");
+    result.append(multimatch);
+    result.append(", domElement: ");
+    result.append(domElement);
+    result.append(", deferredScript: ");
+    result.append(deferredScript);
+    result.append(", signal: ");
+    result.append(signal);
+    result.append(", control: ");
+    result.append(control);
     result.append(')');
     return result.toString();
   }

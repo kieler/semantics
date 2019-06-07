@@ -1,0 +1,5 @@
+simulation system de.cau.cs.kieler.sccharts.^simulation.tts.netlist.c
+    label "Netlist-based Simulation (C)"
+
+de.cau.cs.kieler.sccharts.processors.takenTransitionSignaling
+system de.cau.cs.kieler.sccharts.^simulation.netlist.c

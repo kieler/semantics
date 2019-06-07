@@ -22,13 +22,17 @@ import de.cau.cs.kieler.test.common.repository.TestModelData
 import org.junit.Test
 import org.junit.runner.RunWith
 import de.cau.cs.kieler.kicool.compilation.CompilationSystem
-import de.cau.cs.kieler.core.model.Pair
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.scg.SCGraphs
 
-import static org.junit.Assert.*
-import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.annotations.registry.AnnotationsRegistry
+import de.cau.cs.kieler.annotations.registry.AnnotationsType
+import de.cau.cs.kieler.annotations.StringAnnotation
+
+import static de.cau.cs.kieler.kexpressions.keffects.DataDependencyType.*
+import static org.junit.Assert.*
+import static org.junit.Assume.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * Tests if the new dependency analysis is as good as the old one.
@@ -40,11 +44,17 @@ import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 @RunWith(ModelsRepositoryTestRunner)
 class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
     
+    extension AnnotationsExtensions annotationExt = new AnnotationsExtensions
+    
+    public static val DEPENDENCY_TEST_ANNOTATION = AnnotationsRegistry.register("dependencies", AnnotationsType.SYSTEM, 
+        StringAnnotation, SCCharts, "Annotates dependencies inside the model for testing purposes.")
+        
     /** Compiler configuration */
-    private val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
-    private val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
-    private val dependencyAnalysisV1 = "de.cau.cs.kieler.scg.processors.dependency.v1"
-    private val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"
+    static val compilationSystemID = "de.cau.cs.kieler.sccharts.extended.core"
+    static val scgTransformation = "de.cau.cs.kieler.sccharts.scg.processors.SCG"
+    static val dependencyAnalysisV2 = "de.cau.cs.kieler.scg.processors.dependency"
+    
+    
     
     /** Sct Parser Injector */
     static val resourceSetInjector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration
@@ -61,31 +71,46 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
      */
     override filter(TestModelData modelData) {
         return modelData.modelProperties.contains("sccharts")
-        && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
+        && !modelData.modelProperties.contains("known-to-fail") 
         && !modelData.modelProperties.contains("must-fail")
-        && !modelData.modelProperties.contains("less-v2-dependencies")
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=16000)
     def void testDependendcy(SCCharts scc, TestModelData modelData) {
-        val result = scc.compile
         
-        val v1Model = result.first.result.model
-        val v2Model = result.second.result.model
+        val annotationMap = <String, StringAnnotation> newHashMap
+        val rootState = scc.rootStates.head
+        for (annotation : rootState.getAnnotations(DEPENDENCY_TEST_ANNOTATION).filter(StringAnnotation)) {
+            annotationMap.put(annotation.values.head, annotation)
+        }
         
-        if (v1Model instanceof SCGraphs && v2Model instanceof SCGraphs) {
-            val v1SCG = (v1Model as SCGraphs).scgs.head
-            val v2SCG = (v2Model as SCGraphs).scgs.head
+        for (t : #[WRITE_WRITE, WRITE_RELATIVEWRITE, WRITE_READ]) {
+            assumeNotNull(annotationMap.get(t.toString))
+        }
+                    
+        val context = scc.compile
+        val dataDependencies = 
+                (context.result.getModel as SCGraphs).scgs.head.nodes.map[ outgoingLinks ].flatten.
+                filter(DataDependency).toList
+        
+        for (t : #[WRITE_WRITE, WRITE_RELATIVEWRITE, WRITE_READ]) {
+            val ds = dataDependencies.filter[ type.equals(t) ].toList
             
-            val v1Dependencies = v1SCG.nodes.fold(0)[ a, b | a + b.outgoingLinks.filter(DataDependency).filter[ concurrent && !confluent ].size ]
-            val v2Dependencies = v2SCG.nodes.fold(0)[ a, b | a + b.outgoingLinks.filter(DataDependency).filter[ concurrent && !confluent ].size ]
             
-            if (v2Dependencies < v1Dependencies) {
-                val userDefinedSchedules = (v2Model as SCGraphs).scgs.map[ declarations ].flatten.filter(ScheduleDeclaration).toList.size
-                if (userDefinedSchedules == 0) { 
-                    fail("The V2 dependency analysis found fewer concurrent, non-confluent dependencies than the V1 dependency analysis." + 
-                        " [ " + v2Dependencies + " < " + v1Dependencies + " ]")
-                }                
+            val annotation = annotationMap.get(t.toString) 
+            try {
+                val dCount = new Integer(annotation.values.get(1))
+                val dConcurrent = new Integer(annotation.values.get(2))
+                val dConfluent = new Integer(annotation.values.get(3))
+                
+                assertEquals("The overall count of class " + t.toString + " dependencies is wrong.", 
+                    dCount, ds.size)
+                assertEquals("The count of concurrent class " + t.toString + " dependencies is wrong.", 
+                    dConcurrent, ds.filter[ concurrent ].size)
+                assertEquals("The count of confluent class " + t.toString + " dependencies is wrong.", 
+                    dConfluent, ds.filter[ confluent ].size)
+            } catch (NumberFormatException e) {
+                fail("The dependency annotation contains corrupt data. The dependency counts cannot be converted into a number.")
             }
         }
     }
@@ -95,19 +120,13 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
         context.startEnvironment.setProperty(Environment.INPLACE, false)
         context.compile
         
-        val v1Context = Compile.createCompilationContext(
-            CompilationSystem.createCompilationSystem("dep1", newArrayList(dependencyAnalysisV1)),
-            context.result.model
-        )
-        v1Context.compile
-        
         val v2Context = Compile.createCompilationContext(
             CompilationSystem.createCompilationSystem("dep2", newArrayList(dependencyAnalysisV2)),
             context.result.model
         )
         v2Context.compile
         
-        return new Pair<CompilationContext, CompilationContext>(v1Context, v2Context)
+        return v2Context
     }
     
 }

@@ -71,6 +71,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getCode() {
         return code;
     }
@@ -80,6 +81,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setCode(String newCode) {
         String oldCode = code;
         code = newCode;
@@ -154,7 +156,7 @@ public class ExternStringImpl extends AnnotatableImpl implements ExternString {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (code: ");
         result.append(code);
         result.append(')');

@@ -51,6 +51,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	protected AbstractElementAlias match_LocalSignalDeclaration_SignalKeyword_7_q;
 	protected AbstractElementAlias match_LocalVariableDeclaration_VarKeyword_7_q;
 	protected AbstractElementAlias match_Loop_LoopKeyword_4_0_1_q;
+	protected AbstractElementAlias match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q;
+	protected AbstractElementAlias match_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__;
 	protected AbstractElementAlias match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q;
 	protected AbstractElementAlias match_Module_ColonKeyword_3_q;
 	protected AbstractElementAlias match_Present_PresentKeyword_5_q;
@@ -100,6 +102,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 		match_LocalSignalDeclaration_SignalKeyword_7_q = new TokenAlias(false, true, grammarAccess.getLocalSignalDeclarationAccess().getSignalKeyword_7());
 		match_LocalVariableDeclaration_VarKeyword_7_q = new TokenAlias(false, true, grammarAccess.getLocalVariableDeclarationAccess().getVarKeyword_7());
 		match_Loop_LoopKeyword_4_0_1_q = new TokenAlias(false, true, grammarAccess.getLoopAccess().getLoopKeyword_4_0_1());
+		match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getMethodDeclarationWOSemicolonAccess().getLeftCurlyBracketKeyword_7_0()), new TokenAlias(false, false, grammarAccess.getMethodDeclarationWOSemicolonAccess().getRightCurlyBracketKeyword_7_4()));
+		match_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__ = new AlternativeAlias(false, false, new GroupAlias(false, false, new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getLeftCurlyBracketKeyword_7_1_0()), new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getRightCurlyBracketKeyword_7_1_4())), new TokenAlias(false, false, grammarAccess.getMethodDeclarationAccess().getSemicolonKeyword_7_0()));
 		match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q = new TokenAlias(false, true, grammarAccess.getModuleCallAccess().getLeftParenthesisRightParenthesisKeyword_3_1());
 		match_Module_ColonKeyword_3_q = new TokenAlias(false, true, grammarAccess.getModuleAccess().getColonKeyword_3());
 		match_Present_PresentKeyword_5_q = new TokenAlias(false, true, grammarAccess.getPresentAccess().getPresentKeyword_5());
@@ -188,6 +192,10 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 				emit_LocalVariableDeclaration_VarKeyword_7_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Loop_LoopKeyword_4_0_1_q.equals(syntax))
 				emit_Loop_LoopKeyword_4_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q.equals(syntax))
+				emit_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__.equals(syntax))
+				emit_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q.equals(syntax))
 				emit_ModuleCall_LeftParenthesisRightParenthesisKeyword_3_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_Module_ColonKeyword_3_q.equals(syntax))
@@ -405,7 +413,7 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     function=[Function|ID] (ambiguity) (rule end)
@@ -453,8 +461,8 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	 *     expression=SignalExpression ']' 'end' 'present'? (ambiguity) (rule end)
 	 *     expression=SignalExpression 'end' 'present'? (ambiguity) (rule end)
 	 *     module=ModuleRenaming (ambiguity) (rule end)
-	 *     procedure=[Procedure|ID] ('()' | ('(' ')')) ('()' | ('(' ')')) (ambiguity) (rule end)
-	 *     referenceArguments+=[Variable|ID] ')' ('()' | ('(' ')')) (ambiguity) (rule end)
+	 *     procedure=[Procedure|ID] (('(' ')') | '()') (('(' ')') | '()') (ambiguity) (rule end)
+	 *     referenceArguments+=[Variable|ID] ')' (('(' ')') | '()') (ambiguity) (rule end)
 	 *     renamings+=Renamings ']' (ambiguity) (rule end)
 	 *     returnSignal=[Signal|ID] (ambiguity) (rule end)
 	 *     signal=[Signal|ID] (ambiguity) (rule end)
@@ -542,11 +550,11 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     task=[Task|ID] (ambiguity) '(' valueParameters+=Expression
-	 *     task=[Task|ID] (ambiguity) ('()' | ('(' ')')) 'return' returnSignal=[Signal|ID]
+	 *     task=[Task|ID] (ambiguity) (('(' ')') | '()') 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_1_1_or___LeftParenthesisKeyword_2_0_1_0_0_RightParenthesisKeyword_2_0_1_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -554,11 +562,11 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     referenceParameters+=[Variable|ID] ')' (ambiguity) 'return' returnSignal=[Signal|ID]
-	 *     task=[Task|ID] ('()' | ('(' ')')) (ambiguity) 'return' returnSignal=[Signal|ID]
+	 *     task=[Task|ID] (('(' ')') | '()') (ambiguity) 'return' returnSignal=[Signal|ID]
 	 */
 	protected void emit_Exec_LeftParenthesisRightParenthesisKeyword_2_0_2_1_or___LeftParenthesisKeyword_2_0_2_0_0_RightParenthesisKeyword_2_0_2_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -643,6 +651,35 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
+	 *     ('{' '}')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) (rule end)
+	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
+	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
+	 */
+	protected void emit_MethodDeclarationWOSemicolon___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ';' | ('{' '}')
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) (rule end)
+	 *     parameterDeclarations+=VariableDeclarationWOSemicolon ')' (ambiguity) annotations+=CommentAnnotatonSL
+	 *     schedule+=ScheduleObjectReference (ambiguity) (rule end)
+	 *     schedule+=ScheduleObjectReference (ambiguity) annotations+=CommentAnnotatonSL
+	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) (rule end)
+	 *     valuedObjects+=SimpleValuedObject '()' (ambiguity) annotations+=CommentAnnotatonSL
+	 */
+	protected void emit_MethodDeclaration_SemicolonKeyword_7_0_or___LeftCurlyBracketKeyword_7_1_0_RightCurlyBracketKeyword_7_1_4__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
 	 *     '()'?
 	 *
 	 * This ambiguous syntax occurs at:
@@ -688,12 +725,12 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     procedure=[Procedure|ID] (ambiguity) '(' valueArguments+=Expression
-	 *     procedure=[Procedure|ID] (ambiguity) ('()' | ('(' ')')) ';'? (rule end)
-	 *     procedure=[Procedure|ID] (ambiguity) ('()' | ('(' ')')) (rule end)
+	 *     procedure=[Procedure|ID] (ambiguity) (('(' ')') | '()') ';'? (rule end)
+	 *     procedure=[Procedure|ID] (ambiguity) (('(' ')') | '()') (rule end)
 	 */
 	protected void emit_ProcedureCall_LeftParenthesisRightParenthesisKeyword_3_1_or___LeftParenthesisKeyword_3_0_0_RightParenthesisKeyword_3_0_2__(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
@@ -701,11 +738,11 @@ public abstract class AbstractEsterelSyntacticSequencer extends AbstractSyntacti
 	
 	/**
 	 * Ambiguous syntax:
-	 *     '()' | ('(' ')')
+	 *     ('(' ')') | '()'
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     procedure=[Procedure|ID] ('()' | ('(' ')')) (ambiguity) ';'? (rule end)
-	 *     procedure=[Procedure|ID] ('()' | ('(' ')')) (ambiguity) (rule end)
+	 *     procedure=[Procedure|ID] (('(' ')') | '()') (ambiguity) ';'? (rule end)
+	 *     procedure=[Procedure|ID] (('(' ')') | '()') (ambiguity) (rule end)
 	 *     referenceArguments+=[Variable|ID] ')' (ambiguity) ';'? (rule end)
 	 *     referenceArguments+=[Variable|ID] ')' (ambiguity) (rule end)
 	 */

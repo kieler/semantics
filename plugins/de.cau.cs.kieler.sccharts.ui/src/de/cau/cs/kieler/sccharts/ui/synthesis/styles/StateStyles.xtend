@@ -14,41 +14,45 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.kexpressions.keffects.DataDependency
+import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KNodeExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import java.util.EnumSet
 import java.util.List
+import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.PortConstraints
+import org.eclipse.elk.core.options.PortLabelPlacement
+import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.SizeConstraint
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
 import static de.cau.cs.kieler.sccharts.ui.synthesis.styles.ColorStore.Color.*
 
+import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
-import de.cau.cs.kieler.kexpressions.keffects.Dependency
-import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
-import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import org.eclipse.elk.core.options.CoreOptions
-import org.eclipse.elk.core.options.PortConstraints
-import de.cau.cs.kieler.klighd.krendering.LineStyle
-import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
-import de.cau.cs.kieler.klighd.kgraph.KPort
-import org.eclipse.elk.core.options.PortSide
-import de.cau.cs.kieler.klighd.krendering.extensions.KPortExtensions
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
-import org.eclipse.elk.core.options.PortLabelPlacement
-import java.util.EnumSet
-import org.eclipse.elk.core.options.SizeConstraint
-import org.eclipse.elk.core.math.ElkPadding
 
 /**
  * Styles for {@link State}.
@@ -70,6 +74,7 @@ class StateStyles {
     @Inject extension KContainerRenderingExtensions
     @Inject extension ColorStore
     @Inject extension AnnotationsExtensions
+    @Inject extension KColorExtensions
     
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
@@ -85,6 +90,7 @@ class StateStyles {
         "de.cau.cs.kieler.sccharts.ui.synthesis.style.state.declarations", null);
 
     protected var baseLineWidth = 1;
+    protected var stateLabelTextSize = 11;
     
     /**
      * Adds a connector figure.
@@ -217,19 +223,35 @@ class StateStyles {
      * Adds a title label to a simple state figure.
      */
     def KText addSimpleStateLabel(KNode node, String text) {
-        node.addMacroStateLabel(text) => [
-            fontBold = true;
+        node.contentContainer.addText(text) => [
+            
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
+            
+            fontBold = true
+            fontSize = stateLabelTextSize
+            suppressSelectability
+            selectionTextUnderline = Underline.NONE // prevents default selection style
         ]
     }
 
     /**
      * Adds a title label to a macro state figure.
      */
-    def KText addMacroStateLabel(KNode node, String text) {
-        node.contentContainer.addText(text) => [
-            fontSize = 11;
+    def KRectangle addMacroStateLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
+        node.contentContainer.addKeywordLabel(components, 0) => [
             // Add surrounding space
-            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0);
+            setGridPlacementData().from(LEFT, 10, 0, TOP, 8, 0).to(RIGHT, 10, 0, BOTTOM, 8, 0)
+                
+            eAllContents.filter(KText).forEach[
+                fontSize = stateLabelTextSize
+                suppressSelectability
+                selectionTextUnderline = Underline.NONE // prevents default selection style
+            ]
+
+            children.head => [
+                setPointPlacementData(createKPosition(LEFT, 0, 0.5f, TOP, 0, 0), H_CENTRAL, V_TOP, 0, 0, 0, 0);
+            ]
         ]
     }
     
@@ -248,22 +270,29 @@ class StateStyles {
      * Adds a label in declaration style with the given components to a macro state.<br>
      * The first part will be highlighted as keywords.
      */
-    def KRectangle addActionLabel(KNode node, List<Pair<CharSequence, TextFormat>> components) {
-        node.actionsContainer.addKeywordLabel(components);
+    def KRectangle addActionLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
+        node.actionsContainer.addKeywordLabel(components, 0);
     }
 
     /**
-     * Adds a label in action style with the given components to a macro state.<br>
-     * The first part will be highlighted as keywords.
+     * Adds a label in action style with the given components to a macro state.
      */
-    def KRectangle addDeclarationLabel(KNode node, List<Pair<CharSequence, TextFormat>> components) {
-        return node.declarationsContainer.addKeywordLabel(components);
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components) {
+        return node.declarationsContainer.addKeywordLabel(components, 0);
+    }
+    
+    /**
+     * Adds a label in action style with the given components to a macro state.<br>
+     * The given indent level will be prepended.
+     */
+    def KRectangle addDeclarationLabel(KNode node, List<Pair<? extends CharSequence, TextFormat>> components, int indent) {
+        return node.declarationsContainer.addKeywordLabel(components, indent);
     }
 
     /**
      * Creates a text with highlighted keywords.
      */
-    package def addKeywordLabel(KContainerRendering container, List<Pair<CharSequence, TextFormat>> components) {
+    package def addKeywordLabel(KContainerRendering container, List<Pair<? extends CharSequence, TextFormat>> components, int indent) {
         return container.addRectangle() => [
             // This additional rectangle allows left align in grid placement
             invisible = true
@@ -271,7 +300,7 @@ class StateStyles {
             addRectangle() => [
                 invisible = true;
                 // Add left alignment
-                setPointPlacementData(createKPosition(LEFT, 0, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
+                setPointPlacementData(createKPosition(LEFT, indent * 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 0, 0, 0, 0);
                 var parts = 0
                 val entries = components.iterator
                 val builder = new StringBuilder()
@@ -282,6 +311,7 @@ class StateStyles {
                 	if (builder.length > 0 && keyword != entry.value) {
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
+                            selectionTextUnderline = Underline.SINGLE
                         ]
 		                if (keyword == TextFormat.KEYWORD) {
 		                	ktext.highlightKeyword
@@ -301,6 +331,7 @@ class StateStyles {
                 }
                 ktext = addText(builder.toString) => [
                     horizontalAlignment = H_LEFT
+                    selectionTextUnderline = Underline.SINGLE
                 ]
                 if (keyword == TextFormat.KEYWORD) {
                 	ktext.highlightKeyword
@@ -321,6 +352,16 @@ class StateStyles {
     
     package def highlightHighlight(KText ktext) {
         ktext.foreground = KEYWORD.color;
+    }
+    
+    /**
+     * Sets the selection style of the state.
+     */
+    def setSelectionStyle(KNode node) {
+        node.KContainerRendering => [
+            selectionLineWidth = if (lineWidthValue > 2) 1.2f * lineWidthValue else 2 * lineWidthValue;
+            selectionForeground = SELECTION.color;
+        ]
     }
 
     /**
@@ -397,18 +438,33 @@ class StateStyles {
      
     
     def createDependencyEdge(Dependency dependency, KNode sourceNode, KNode targetNode) {
+        var color = "#000".color 
+        if (dependency instanceof DataDependency) {
+            switch(dependency.type) {
+                case WRITE_READ: color = DEPENDENCY_ABSWRITEREAD.color
+                case WRITE_RELATIVEWRITE: color = DEPENDENCY_ABSWRITERELWRITE.color
+                case WRITE_WRITE: color = DEPENDENCY_ABSWRITEABSWRITE.color
+                default: color = "#000".color
+            }
+        } else if (dependency instanceof ControlDependency) {
+            color = "#555".color
+        }
+        dependency.createDependencyEdge(sourceNode, targetNode, color)
+    }
+    
+    def createDependencyEdge(Dependency dependency, KNode sourceNode, KNode targetNode, KColor color) {
         createNewEdge() => [ edge |
             edge.source = sourceNode
             edge.target = targetNode
             if (dependency instanceof DataDependency) {
-                edge.addRoundedBendsPolyline(8, 2) => [
-                    if (dependency.type == DataDependencyType.WRITE_READ) {
-                        it.foreground = DEPENDENCY_ABSWRITEREAD.color
-                    } else  if (dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) { 
-                        it.foreground = DEPENDENCY_ABSWRITERELWRITE.color
-                    } else if (dependency.type == DataDependencyType.WRITE_WRITE) {
-                        it.foreground = DEPENDENCY_ABSWRITEABSWRITE.color
-                    }
+                edge.addRoundedBendsPolyline(2, 2) => [
+                    it.foreground = color
+                    it.lineStyle = LineStyle::DASH
+                    it.addArrowDecorator
+                ]
+            } else if (dependency instanceof ControlDependency) {
+                edge.addRoundedBendsPolyline(2, 2) => [
+                    it.foreground = color
                     it.lineStyle = LineStyle::DASH
                     it.addArrowDecorator
                 ]

@@ -5,6 +5,7 @@ package de.cau.cs.kieler.annotations.ui;
 
 import com.google.inject.Injector;
 import de.cau.cs.kieler.annotations.ui.internal.AnnotationsActivator;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
 
@@ -16,12 +17,13 @@ public class AnnotationsExecutableExtensionFactory extends AbstractGuiceAwareExe
 
 	@Override
 	protected Bundle getBundle() {
-		return AnnotationsActivator.getInstance().getBundle();
+		return Platform.getBundle(AnnotationsActivator.PLUGIN_ID);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return AnnotationsActivator.getInstance().getInjector(AnnotationsActivator.DE_CAU_CS_KIELER_ANNOTATIONS_ANNOTATIONS);
+		AnnotationsActivator activator = AnnotationsActivator.getInstance();
+		return activator != null ? activator.getInjector(AnnotationsActivator.DE_CAU_CS_KIELER_ANNOTATIONS_ANNOTATIONS) : null;
 	}
-	
+
 }

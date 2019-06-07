@@ -96,6 +96,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getDelay() {
         return delay;
     }
@@ -120,6 +121,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDelay(Expression newDelay) {
         if (newDelay != delay) {
             NotificationChain msgs = null;
@@ -139,6 +141,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isImmediate() {
         return immediate;
     }
@@ -148,6 +151,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setImmediate(boolean newImmediate) {
         boolean oldImmediate = immediate;
         immediate = newImmediate;
@@ -160,6 +164,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -184,6 +189,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -301,7 +307,7 @@ public class DelayExpressionImpl extends MinimalEObjectImpl.Container implements
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (immediate: ");
         result.append(immediate);
         result.append(')');

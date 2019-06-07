@@ -106,6 +106,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.TEXT_EXPRESSION__SCHEDULE);
@@ -118,6 +119,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Annotation> getAnnotations() {
         if (annotations == null) {
             annotations = new EObjectContainmentEList<Annotation>(Annotation.class, this, KExpressionsPackage.TEXT_EXPRESSION__ANNOTATIONS);
@@ -130,6 +132,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -139,6 +142,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setText(String newText) {
         String oldText = text;
         text = newText;
@@ -284,7 +288,7 @@ public class TextExpressionImpl extends EObjectImpl implements TextExpression {
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (text: ");
         result.append(text);
         result.append(')');

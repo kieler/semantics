@@ -12,8 +12,8 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import freemarker.cache.FileTemplateLoader
@@ -27,6 +27,7 @@ import java.util.Locale
 import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import static extension de.cau.cs.kieler.kicool.deploy.InfrastructureMacroNames.*
 
 /**
  * @author als
@@ -55,7 +56,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
     override process() {
         // Setup project infrastructure
         val infra = ProjectInfrastructure.getProjectInfrastructure(environment)
-        if (infra.generadedCodeFolder === null) {
+        if (infra.generatedCodeFolder === null) {
             return
         } else {
             infra.log(logger)
@@ -77,9 +78,10 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         // Environment
         generalTemplateEnvironment.putAll(environment.getProperty(GENRAL_ENVIRONMENT)?:newHashMap)
         // Genral
-        generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generadedCodeFolder.toString)       
+        generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generatedCodeFolder.toString)       
         // Injection
         generalTemplateEnvironment.registerTemplateInjection(environment)
+        generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_NAME, infra.sourceCode.head.modelName)
         
         for (entry : generalTemplateEnvironment.entrySet) {
             logger.println(entry.key + ": " + entry.value)
@@ -94,9 +96,9 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         val templates = environment.getProperty(TEMPLATES)?:emptyMap
         for (entry : templates.entrySet) {
-            val target = new File(infra.generadedCodeFolder, entry.value)
+            val target = new File(infra.generatedCodeFolder, entry.value.resolveMacros(infra))
             val relativeTemplatePath = entry.key
-            val template = new File(infra.generadedCodeFolder, relativeTemplatePath)
+            val template = new File(infra.generatedCodeFolder, relativeTemplatePath)
             
             logger.println("Processing template: " + template)
             
@@ -136,7 +138,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 
                 
                 // prepare freemarker
-                val freemarkerTemplate = createFreemarkerConfiguration(infra.generadedCodeFolder).getTemplate(relativeTemplatePath)
+                val freemarkerTemplate = createFreemarkerConfiguration(infra.generatedCodeFolder).getTemplate(relativeTemplatePath)
                 // process
                 freemarkerTemplate.process(templateEnvironment, writer)
                 

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
- * $Id$
  */
 package de.cau.cs.kieler.kexpressions;
 
@@ -71,6 +67,87 @@ public interface KExpressionsFactory extends EFactory {
     BoolValue createBoolValue();
 
     /**
+     * Returns a new object of class '<em>String Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>String Value</em>'.
+     * @generated
+     */
+    StringValue createStringValue();
+
+    /**
+     * Returns a new object of class '<em>Vector Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Vector Value</em>'.
+     * @generated
+     */
+    VectorValue createVectorValue();
+
+    /**
+     * Returns a new object of class '<em>Ignore Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Ignore Value</em>'.
+     * @generated
+     */
+    IgnoreValue createIgnoreValue();
+
+    /**
+     * Returns a new object of class '<em>Json Pragma</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Pragma</em>'.
+     * @generated
+     */
+    JsonPragma createJsonPragma();
+
+    /**
+     * Returns a new object of class '<em>Json Annotation</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Annotation</em>'.
+     * @generated
+     */
+    JsonAnnotation createJsonAnnotation();
+
+    /**
+     * Returns a new object of class '<em>Json Object Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Object Value</em>'.
+     * @generated
+     */
+    JsonObjectValue createJsonObjectValue();
+
+    /**
+     * Returns a new object of class '<em>Json Object Member</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Object Member</em>'.
+     * @generated
+     */
+    JsonObjectMember createJsonObjectMember();
+
+    /**
+     * Returns a new object of class '<em>Json Array Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Json Array Value</em>'.
+     * @generated
+     */
+    JsonArrayValue createJsonArrayValue();
+
+    /**
+     * Returns a new object of class '<em>Null Value</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Null Value</em>'.
+     * @generated
+     */
+    NullValue createNullValue();
+
+    /**
      * Returns a new object of class '<em>Operator Expression</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -116,6 +193,15 @@ public interface KExpressionsFactory extends EFactory {
     ScheduleDeclaration createScheduleDeclaration();
 
     /**
+     * Returns a new object of class '<em>Method Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Method Declaration</em>'.
+     * @generated
+     */
+    MethodDeclaration createMethodDeclaration();
+
+    /**
      * Returns a new object of class '<em>Schedule Object Reference</em>'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -123,6 +209,24 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ScheduleObjectReference createScheduleObjectReference();
+
+    /**
+     * Returns a new object of class '<em>Parameter</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Parameter</em>'.
+     * @generated
+     */
+    Parameter createParameter();
+
+    /**
+     * Returns a new object of class '<em>Reference Call</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Reference Call</em>'.
+     * @generated
+     */
+    ReferenceCall createReferenceCall();
 
     /**
      * Returns a new object of class '<em>Function Call</em>'.
@@ -168,87 +272,6 @@ public interface KExpressionsFactory extends EFactory {
      * @generated
      */
     ExternString createExternString();
-
-    /**
-     * Returns a new object of class '<em>Parameter</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Parameter</em>'.
-     * @generated
-     */
-    Parameter createParameter();
-
-    /**
-     * Returns a new object of class '<em>String Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>String Value</em>'.
-     * @generated
-     */
-    StringValue createStringValue();
-
-    /**
-     * Returns a new object of class '<em>Vector Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Vector Value</em>'.
-     * @generated
-     */
-    VectorValue createVectorValue();
-
-    /**
-     * Returns a new object of class '<em>Ignore Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Ignore Value</em>'.
-     * @generated
-     */
-    IgnoreValue createIgnoreValue();
-
-    /**
-     * Returns a new object of class '<em>Json Object Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Json Object Value</em>'.
-     * @generated
-     */
-    JsonObjectValue createJsonObjectValue();
-
-    /**
-     * Returns a new object of class '<em>Json Object Member</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Json Object Member</em>'.
-     * @generated
-     */
-    JsonObjectMember createJsonObjectMember();
-
-    /**
-     * Returns a new object of class '<em>Json Array Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Json Array Value</em>'.
-     * @generated
-     */
-    JsonArrayValue createJsonArrayValue();
-
-    /**
-     * Returns a new object of class '<em>Null Value</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Null Value</em>'.
-     * @generated
-     */
-    NullValue createNullValue();
-
-    /**
-     * Returns a new object of class '<em>Reference Call</em>'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @return a new object of class '<em>Reference Call</em>'.
-     * @generated
-     */
-    ReferenceCall createReferenceCall();
 
     /**
      * Returns the package supported by this factory.

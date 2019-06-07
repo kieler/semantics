@@ -88,6 +88,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
             case SCChartsPackage.PRECEDING_ACTION: return createPrecedingAction();
             case SCChartsPackage.SUCCEEDING_ACTION: return createSucceedingAction();
             case SCChartsPackage.PERIOD_ACTION: return createPeriodAction();
+            case SCChartsPackage.POLICY_CLASS_DECLARATION: return createPolicyClassDeclaration();
+            case SCChartsPackage.POLICY_REGION: return createPolicyRegion();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -136,6 +138,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public State createState() {
         StateImpl state = new StateImpl();
         return state;
@@ -146,6 +149,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ControlflowRegion createControlflowRegion() {
         ControlflowRegionImpl controlflowRegion = new ControlflowRegionImpl();
         return controlflowRegion;
@@ -156,6 +160,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataflowRegion createDataflowRegion() {
         DataflowRegionImpl dataflowRegion = new DataflowRegionImpl();
         return dataflowRegion;
@@ -166,6 +171,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Transition createTransition() {
         TransitionImpl transition = new TransitionImpl();
         return transition;
@@ -176,6 +182,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EntryAction createEntryAction() {
         EntryActionImpl entryAction = new EntryActionImpl();
         return entryAction;
@@ -186,6 +193,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DuringAction createDuringAction() {
         DuringActionImpl duringAction = new DuringActionImpl();
         return duringAction;
@@ -196,6 +204,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ExitAction createExitAction() {
         ExitActionImpl exitAction = new ExitActionImpl();
         return exitAction;
@@ -206,6 +215,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SuspendAction createSuspendAction() {
         SuspendActionImpl suspendAction = new SuspendActionImpl();
         return suspendAction;
@@ -216,6 +226,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrecedingAction createPrecedingAction() {
         PrecedingActionImpl precedingAction = new PrecedingActionImpl();
         return precedingAction;
@@ -226,6 +237,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SucceedingAction createSucceedingAction() {
         SucceedingActionImpl succeedingAction = new SucceedingActionImpl();
         return succeedingAction;
@@ -236,9 +248,32 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PeriodAction createPeriodAction() {
         PeriodActionImpl periodAction = new PeriodActionImpl();
         return periodAction;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PolicyClassDeclaration createPolicyClassDeclaration() {
+        PolicyClassDeclarationImpl policyClassDeclaration = new PolicyClassDeclarationImpl();
+        return policyClassDeclaration;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public PolicyRegion createPolicyRegion() {
+        PolicyRegionImpl policyRegion = new PolicyRegionImpl();
+        return policyRegion;
     }
 
     /**
@@ -266,7 +301,8 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
 	 * <!-- end-user-doc -->
      * @generated
      */
-	public SCCharts createSCCharts() {
+	@Override
+    public SCCharts createSCCharts() {
         SCChartsImpl scCharts = new SCChartsImpl();
         return scCharts;
     }
@@ -276,6 +312,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ScopeCall createScopeCall() {
         ScopeCallImpl scopeCall = new ScopeCallImpl();
         return scopeCall;
@@ -326,6 +363,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public SCChartsPackage getSCChartsPackage() {
         return (SCChartsPackage)getEPackage();
     }

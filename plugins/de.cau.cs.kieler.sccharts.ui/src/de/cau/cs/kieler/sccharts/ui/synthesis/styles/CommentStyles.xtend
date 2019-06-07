@@ -77,7 +77,7 @@ class CommentStyles {
      */
     def KText addCommentText(KNode node, String text) {
         node.getKContainerRendering.addText(text) => [
-            fontSize = 8;
+            fontSize = 7;
             setGridPlacementData().from(LEFT, 4, 0, TOP, 4, 0).to(RIGHT, 4, 0, BOTTOM, 4, 0);
         ]
     }

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCL
 Bundle-Vendor: Kiel University
-Bundle-Version: 0.14.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.scl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -26,9 +26,8 @@ Require-Bundle: de.cau.cs.kieler.scg,
  de.cau.cs.kieler.kicool,
  org.eclipse.xtext;bundle-version="2.12.0",
  com.google.guava,
- org.eclipse.xtext.xbase.lib,
- org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
+ org.eclipse.xtend.lib;bundle-version="2.14.0",
  org.eclipse.xtend.lib.macro,
- org.eclipse.equinox.common;bundle-version="3.9.0",
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.xtext.util

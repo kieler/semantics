@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.model.properties.IProperty
-import de.cau.cs.kieler.core.model.properties.Property
-import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.BufferedReader
@@ -23,7 +23,9 @@ import java.io.File
 import java.io.InputStreamReader
 import java.util.List
 import java.util.concurrent.TimeUnit
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
 
 /**
  * @author als
@@ -49,20 +51,26 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         
     public static val IProperty<Long> TIMEOUT_SEC = 
         new Property<Long>("de.cau.cs.kieler.kicool.deploy.compiler.timeout", 60L)
+
+    public static val IProperty<String> DEBUG_FOLDER = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.compiler.folder.debug", "debug")
         
-    protected val logger = new Logger()
+    @Accessors(PROTECTED_GETTER, PROTECTED_SETTER)
+    var Boolean escapeOptions = true
+        
+    protected var logger = new Logger()
     
     override getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
         
     def createBinFolder(ProjectInfrastructure infra) {
-        val binFolder = new File(infra.generadedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)
+        val binFolder = new File(infra.generatedCodeFolder, environment.getProperty(BIN_FOLDER)?:BIN_FOLDER.^default)
         logger.println("Binary output folder: " + binFolder)
         if (binFolder.exists) {
             if (environment.getProperty(BIN_CLEAN)) {
                 logger.println("\n== Clearing Binary Output Folder ==")
-                ProjectSetup.deleteRecursively(binFolder, logger)
+                binFolder.deleteRecursively(logger)
                 logger.println()
                 
                 binFolder.mkdirs
@@ -77,6 +85,21 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
         }
         return binFolder
     }
+    
+    def createDebugFolder(ProjectInfrastructure infra, boolean clearDirectory) {
+        val debugFolder = new File(infra.generatedCodeFolder, environment.getProperty(DEBUG_FOLDER)?:DEBUG_FOLDER.^default)
+        logger.println("Debug output folder: " + debugFolder)
+        if (debugFolder.exists && clearDirectory) {
+            logger.println("\n== Clearing Debug Output Folder ==")
+            debugFolder.deleteRecursively(logger)
+            logger.println()
+                
+            debugFolder.mkdirs
+        } else {
+            debugFolder.mkdirs
+        }
+        return debugFolder
+    }    
     
     def invoke(List<String> command, File directory) {
         logger.println("Invoking command: " + command.join(" "))
@@ -114,10 +137,13 @@ abstract class AbstractSystemCompilerProcessor<I, O> extends Processor<I, O> {
     }
     
     protected def List<String> escapeOptions(List<String> command) {
-        command.map[
-            if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""
-            return it
-        ].toList
+        if (escapeOptions) 
+            command.map[
+                if (it.contains(" ") && !it.startsWith("\"")) return "\"" + it + "\""
+                return it
+            ].toList
+        else
+            command
     }
     
 }

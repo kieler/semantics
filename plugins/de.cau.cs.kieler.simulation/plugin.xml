@@ -10,59 +10,5 @@
             class="de.cau.cs.kieler.simulation.trace.ktrace.KTracePackage"
             genModel="model/ktrace.genmodel"/>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.system">
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.netlist.c.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.tts.netlist.c.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.netlist.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.tts.netlist.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.prio.c.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.tts.prio.c.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.prio.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.simulation.tts.prio.java.kico">
-      </TransformationSystem>
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.internal.simulation.kico">
-      </TransformationSystem>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.processor">
-      <Processor
-            class="de.cau.cs.kieler.simulation.processor.JavaSimulationTemplateGenerator">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.processor.CSimulationTemplateGenerator">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.processor.SimulationContextBuilder">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.internal.processor.Step">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.internal.processor.ReadTrace">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.internal.processor.CheckTrace">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput">
-      </Processor>
-   </extension>
 
 </plugin>

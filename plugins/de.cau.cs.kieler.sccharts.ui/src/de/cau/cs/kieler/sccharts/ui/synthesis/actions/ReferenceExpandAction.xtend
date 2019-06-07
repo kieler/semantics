@@ -14,13 +14,16 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis.actions
 
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.actions.CollapseExpandAction
+import de.cau.cs.kieler.klighd.internal.util.KlighdInternalProperties
 import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
+import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import org.eclipse.elk.graph.properties.MapPropertyHolder
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.ui.synthesis.EquationSynthesis
+import de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis
 
 /**
  * This Action provides the normal collapse expand behavior for a reference {@link State} and
@@ -51,19 +54,38 @@ class ReferenceExpandAction extends CollapseExpandAction {
                     );
                     context.getKNode.children += diagram.children;
                 }
-            }
-            else if (modelElement instanceof ValuedObjectReference) {
+            } else if (modelElement instanceof Region) {
+                if (modelElement.reference !== null) {
+                    val diagram = LightDiagramServices.translateModel(
+                        modelElement.reference.scope.eContainer,
+                        context.viewContext,
+                        new MapPropertyHolder => [ 
+                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis") 
+                        ]
+                    );
+                    val node = diagram.children.head.children.findFirst[it.getProperty(KlighdInternalProperties.MODEL_ELEMEMT) == modelElement.reference.scope];
+                    context.getKNode.children += node.children
+                    context.getKNode.data += node.data
+                }
+            } else if (modelElement instanceof ValuedObjectReference) {
+                val propagatedSkinPath = context.KNode.getProperty(SCChartsSynthesis.SKINPATH)
+                
                 val declaration = modelElement.valuedObject.eContainer
                 if (declaration instanceof ReferenceDeclaration) {
                     val diagram = LightDiagramServices.translateModel(
                         declaration.reference,
                         context.viewContext, 
                         new MapPropertyHolder => [ 
-                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis") 
+                            setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.sccharts.ui.synthesis.ScopeSynthesis")
+                            setProperty(SCChartsSynthesis.SKINPATH, propagatedSkinPath) 
                         ]                        
                     )
-                    val extractedDataflow = diagram.children.head.children
-                    context.getKNode.children += extractedDataflow
+                    var extractedDataflow = diagram.children.head.children
+                    if (extractedDataflow.empty) {
+                        context.getKNode.children += diagram.children.head
+                    } else {
+                        context.getKNode.children += extractedDataflow
+                    }
                 } 
             }
         }

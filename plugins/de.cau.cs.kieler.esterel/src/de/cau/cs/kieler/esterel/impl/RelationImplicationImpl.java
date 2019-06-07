@@ -72,6 +72,7 @@ public class RelationImplicationImpl extends RelationImpl implements RelationImp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getFirst() {
         if (first != null && first.eIsProxy()) {
             InternalEObject oldFirst = (InternalEObject)first;
@@ -98,6 +99,7 @@ public class RelationImplicationImpl extends RelationImpl implements RelationImp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setFirst(Signal newFirst) {
         Signal oldFirst = first;
         first = newFirst;
@@ -110,6 +112,7 @@ public class RelationImplicationImpl extends RelationImpl implements RelationImp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getSecond() {
         if (second != null && second.eIsProxy()) {
             InternalEObject oldSecond = (InternalEObject)second;
@@ -136,6 +139,7 @@ public class RelationImplicationImpl extends RelationImpl implements RelationImp
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSecond(Signal newSecond) {
         Signal oldSecond = second;
         second = newSecond;

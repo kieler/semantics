@@ -14,6 +14,7 @@
 grammar de.cau.cs.kieler.kexpressions.KExpressions with  de.cau.cs.kieler.annotations.Annotations
 
 import "http://kieler.cs.cau.de/kexpressions/0.1.2" 
+import "http://kieler.cs.cau.de/annotations" as annotations
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 /**
@@ -154,60 +155,93 @@ NotExpression returns Expression:
 // Everything that evaluates to a primitive number value.
 // Similar to the boolean rule this rule is there for overview reasons.
 ValuedExpression returns Expression:
-	ShiftLeftExpression;
+	ShiftExpressions;
+	
+	
+ShiftExpressions returns Expression:
+    SumExpression 
+    (
+    ({OperatorExpression.subExpressions+=current} operator=ShiftLeftOperator subExpressions+=SumExpression ('<<' subExpressions+=SumExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ShiftRightOperator subExpressions+=SumExpression ('>>' subExpressions+=SumExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ShiftRightUnsignedOperator subExpressions+=SumExpression ('>>>' subExpressions+=SumExpression)*)
+    )*     
+;   
 	
 ShiftLeftExpression returns Expression:
-    ShiftRightExpression
+    SumExpression
     ({OperatorExpression.subExpressions+=current} 
         (operator=ShiftLeftOperator subExpressions+=ShiftRightExpression)
         ('<<' subExpressions+=ShiftRightExpression)*
     )?;
     
 ShiftRightExpression returns Expression:
-    ShiftRightUnsignedExpression
+    SumExpression
     ({OperatorExpression.subExpressions+=current} 
         (operator=ShiftRightOperator subExpressions+=ShiftRightUnsignedExpression)
         ('>>' subExpressions+=ShiftRightUnsignedExpression)*
     )?;
     
 ShiftRightUnsignedExpression returns Expression:
-    AddExpression
+    SumExpression
     ({OperatorExpression.subExpressions+=current} 
-        (operator=ShiftRightUnsignedOperator subExpressions+=AddExpression)
-        ('>>>' subExpressions+=AddExpression)*
+        (operator=ShiftRightUnsignedOperator subExpressions+=SumExpression)
+        ('>>>' subExpressions+=SumExpression)*
     )?;
+	
+	
+SumExpression returns Expression:
+    ProductExpression 
+    (
+    ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)
+    )*
+;	
 	
 // Add Expression Rule
 // The rule directs the 'sub expression' rule and creates an operator expression for additions
 // if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: 1 + 2
 AddExpression returns Expression:
-	SubExpression 
-	({OperatorExpression.subExpressions+=current} 
-	    (operator=AddOperator subExpressions+=SubExpression)
-	    ('+' subExpressions+=SubExpression)*
-	)?;
+	ProductExpression 
+	({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression)*
+;
 
 // Sub Expression Rule
 // The rule directs the 'mult expression' rule and creates an operator expression for subtractions
 // if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: var(A) - i
 SubExpression returns Expression:
-	MultExpression 
-	({OperatorExpression.subExpressions+=current} 
-	    (operator=SubOperator subExpressions+=MultExpression)
-	    ('-' subExpressions+=MultExpression)*
-	)?;
+	ProductExpression 
+	({OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression)*
+;
+	
+
+
+ProductExpression returns Expression:
+    NegExpression 
+    (
+    ({OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=NegExpression ('*' subExpressions+=NegExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=DivOperator subExpressions+=NegExpression ('/' subExpressions+=NegExpression)*)
+    |
+    ({OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=NegExpression ('%' subExpressions+=NegExpression)*)
+    )*    
+;   
+
+     
 
 // Mult Expression Rule
 // The rule directs the 'div expression' rule and creates an operator expression for multiplications
 // if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: 2 * 4
 MultExpression returns Expression:
-	DivExpression 
+	NegExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=MultOperator subExpressions+=DivExpression)
-	    ('*' subExpressions+=DivExpression)*
+	    (operator=MultOperator subExpressions+=NegExpression)
+	    ('*' subExpressions+=NegExpression)*
 	)?;
 
 // Div Expression Rule
@@ -215,10 +249,10 @@ MultExpression returns Expression:
 // if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 // Example: 2 / 4
 DivExpression returns Expression:
-	ModExpression 
+	NegExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=DivOperator subExpressions+=ModExpression)
-	    ('/' subExpressions+=ModExpression)*
+	    (operator=DivOperator subExpressions+=NegExpression)
+	    ('/' subExpressions+=NegExpression)*
 	)?;
 	
 // Mod Expression Rule
@@ -228,8 +262,8 @@ DivExpression returns Expression:
 ModExpression returns Expression:
 	NegExpression 
 	({OperatorExpression.subExpressions+=current} 
-	    (operator=ModOperator subExpressions+=AtomicValuedExpression)
-	    ('%' subExpressions+=AtomicValuedExpression)*
+	    (operator=ModOperator subExpressions+=NegExpression)
+	    ('%' subExpressions+=NegExpression)*
 	)?;
 
 // Neg Expression Rule
@@ -241,11 +275,11 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression ':' subExpressions += AtomicValuedExpression
-    | FBYExpression;
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
+    | InitExpression;
     
-FBYExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=FBYOperator subExpressions += AtomicValuedExpression
+InitExpression returns Expression:
+    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
     | AtomicValuedExpression;    
     
 // Atomic Expression Rule
@@ -254,12 +288,12 @@ FBYExpression returns Expression:
 // Basically, the rule chain may start over again at this point.     
 AtomicExpression returns Expression:
     BoolValue
-    | ValuedObjectTestExpression 
     | '(' BoolExpression ')'
     | ReferenceCall
     | FunctionCall
     | RandomCall
     | RandomizeCall
+    | ValuedObjectTestExpression // Last to allow detection of calls
     | TextExpression;
 
 // Atomic Valued Expression Rule
@@ -281,7 +315,7 @@ AtomicValuedExpression returns Expression:
 // valued object reference.
 // Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
 ValuedObjectTestExpression returns Expression:
-	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression')'
+	{OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
 	| ValuedObjectReference;
 
 // ID with primes
@@ -304,6 +338,8 @@ ScheduleObjectReference returns ScheduleObjectReference:
 // Calls to references. They may include a parameter list. 
 ReferenceCall returns ReferenceCall:
     valuedObject=[ValuedObject|PrimeID] 
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
     (
         ('(' parameters += Parameter 
             (',' parameters += Parameter)* ')'
@@ -444,20 +480,34 @@ enum PostfixSub returns OperatorType:
 enum ConditionalOperator returns OperatorType:
     CONDITIONAL = "?";        
     
-enum FBYOperator returns OperatorType:
-    FBY = "->";
+enum InitOperator returns OperatorType:
+    INIT = "->";
 
 enum ValueType returns ValueType:
-	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
+	PURE="pure" | BOOL="bool" | 
 	INT="int" | FLOAT="float" |
 	STRING="string";
 	
 enum HostType returns ValueType:
     HOST="host";
 
+enum StructType returns ValueType:
+    STRUCT="struct";
+    
+enum ClassType returns ValueType:
+    CLASS="class";
+
 enum CombineOperator returns CombineOperator:
 	NONE="none" | ADD="+" | MULT="*" | MAX="max" |
 	MIN="min" | OR="|" | AND="&" | HOST="host";
+    
+enum AccessModifier returns AccessModifier:
+    PUBLIC = 'public' | PROTECTED = 'protected' | PRIVATE = 'private';
+    
+enum MethodReturnType returns ValueType:
+    VOID="void" |
+    BOOL="bool" | INT="int" | FLOAT="float" |
+    STRING="string";
 
 // -------------------- //
 //  JSON                // 
@@ -484,6 +534,31 @@ JsonValue returns Value:
 NullValue returns NullValue:
     {NullValue}
     'null';
+
+// New Json Annotations
+
+JsonPragma returns JsonPragma:
+    '#' name=ExtendedID value=JsonObjectValue;
+
+JsonAnnotation returns JsonAnnotation:
+    '@' name=ExtendedID value=JsonObjectValue;
+
+@Override
+Pragma returns annotations::Pragma:
+    super | JsonPragma;
+
+@Override
+Annotation returns annotations::Annotation:
+    super | JsonAnnotation;
+
+@Override
+ValuedAnnotation returns annotations::Annotation:
+    super | JsonAnnotation;
+
+@Override
+QuotedStringAnnotation returns annotations::Annotation:
+    super | JsonAnnotation;    
+    
 
 // ------------------------ //
 //  KExpressions Terminals  // 

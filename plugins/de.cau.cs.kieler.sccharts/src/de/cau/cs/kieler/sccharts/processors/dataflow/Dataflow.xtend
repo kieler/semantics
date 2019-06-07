@@ -20,7 +20,7 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+//import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
@@ -39,6 +39,9 @@ import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.IgnoreValue
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+
 /**
  * @author ssm
  * @kieler.design 2017-10-19 proposed
@@ -55,6 +58,7 @@ class Dataflow extends SCChartsProcessor {
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsCreateExtensions
+    
     
     extension SCChartsFactory sccFactory = SCChartsFactory.eINSTANCE
     
@@ -89,15 +93,26 @@ class Dataflow extends SCChartsProcessor {
             for (s : dataflowRegion.schedule) {
                 r.schedule += s.copy
             }
+            trace(dataflowRegion)
         ]
         val newMainState = newControlflowRegion.createState(GENERATED_PREFIX + "main") => [
             initial = true
+            trace(dataflowRegion)
         ]
+        if (dataflowRegion.once) {
+            newControlflowRegion.createState(GENERATED_PREFIX + "done") => [
+                final = true
+                newMainState.createTerminationTo(it)
+                trace(dataflowRegion)
+            ]
+            trace(dataflowRegion)
+        }
         for (declaration : dataflowRegion.declarations.immutableCopy) {
             newControlflowRegion.declarations += declaration
         }
         
         // Search for used referenced declarations.
+        val rdEquationMappingForTracing = <ValuedObject, Assignment> newHashMap
         val rdInstances = <ValuedObject> newLinkedHashSet
         for (equation : dataflowRegion.equations.immutableCopy) {
             equation.allAssignmentReferences.filter[ 
@@ -105,6 +120,7 @@ class Dataflow extends SCChartsProcessor {
                 (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0
             ].forEach[
                 rdInstances += it.valuedObject
+                rdEquationMappingForTracing.put(it.valuedObject, equation)
             ]
         }
         
@@ -112,26 +128,37 @@ class Dataflow extends SCChartsProcessor {
         // Additionally, store the mapping information, so that later references can be corrected.
         val referenceReplacements = <Pair<ValuedObject, ValuedObject>, ValuedObject> newHashMap
         for (rdInstance : rdInstances.indexed) {
-            val newRefCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "refRegion_" + rdInstance.key)
+            val newRefCfRegion = 
+                newMainState.createControlflowRegion(GENERATED_PREFIX + "refRegion_" + rdInstance.key).
+                trace(rdEquationMappingForTracing.get(rdInstance.value))
             val newRefState = newRefCfRegion.createState(GENERATED_PREFIX + "" + rdInstance.key) => [ 
                 initial = true
                 reference = createScopeCall
+                trace(rdEquationMappingForTracing.get(rdInstance.value))
             ]
-            val newRefDelayState = newRefCfRegion.createState(GENERATED_PREFIX + "d" + rdInstance.key)
-            newRefState.createTransitionTo(newRefDelayState) => [ preemption = PreemptionType.TERMINATION  ]
-            newRefDelayState.createTransitionTo(newRefState)
+            val newRefDelayState = 
+                newRefCfRegion.createState(GENERATED_PREFIX + "d" + rdInstance.key).
+                trace(rdEquationMappingForTracing.get(rdInstance.value))
+            newRefState.createTransitionTo(newRefDelayState) => [ 
+                preemption = PreemptionType.TERMINATION
+                trace(rdEquationMappingForTracing.get(rdInstance.value))
+            ]
+            newRefDelayState.createTransitionTo(newRefState).trace(rdEquationMappingForTracing.get(rdInstance.value))
             
             newRefState.reference.scope = rdInstance.value.referenceDeclaration.reference as Scope
             for (declaration : rdInstance.value.referenceDeclaration.reference.asDeclarationScope.declarations.filter(VariableDeclaration).filter[ input || output ]) {
-                val localDeclaration = createVariableDeclaration(declaration.type)
+                val localDeclaration = createVariableDeclaration(declaration.type).trace(declaration)
                 
                 for (valuedObject : declaration.valuedObjects) {
                     val localValuedObject = createValuedObject => [
                         name = GENERATED_PREFIX + "" + rdInstance.value.name + "_" + valuedObject.name
+                        trace(valuedObject)
                     ]
                     localDeclaration.valuedObjects += localValuedObject
                     
-                    newRefState.reference.parameters += createParameter => [ expression = localValuedObject.reference ]
+                    newRefState.reference.parameters += createParameter => [ 
+                        expression = localValuedObject.reference
+                    ]
                     referenceReplacements.put(new Pair(rdInstance.value, valuedObject), localValuedObject)
                 }
                 
@@ -156,9 +183,12 @@ class Dataflow extends SCChartsProcessor {
                                 // Remove it afterwards.
                                 val value = vectorValues.head
                                 if (!(value instanceof IgnoreValue)) {
-                                    val newAssignment = createAssignment(rdInstance, valuedObject, value)
+                                    val newAssignment = createAssignment(rdInstance, valuedObject, value).
+                                        trace(rdEquationMappingForTracing.get(rdInstance))
                                     val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
                                     processedEquations += newEq
+                                } else {
+                                    vectorValues.head.remove
                                 }
                             }
                             idx++
@@ -167,7 +197,8 @@ class Dataflow extends SCChartsProcessor {
                 } else if (rdInstance.isArray) {
                     for (value : vectorValues.immutableCopy) {
                         if (!(value instanceof IgnoreValue)) {
-                            val newAssignment = createAssignment(rdInstance, value)
+                            val newAssignment = createAssignment(rdInstance, value).
+                                trace(rdEquationMappingForTracing.get(rdInstance))
                             newAssignment.indices += createIntValue(idx)
                             val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
                             processedEquations += newEq
@@ -183,11 +214,24 @@ class Dataflow extends SCChartsProcessor {
             }
             
             for (equation : processedEquations) {
-                val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key)
-                val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ initial = true ]
-                val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key)
-                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ delay = DelayType.IMMEDIATE]
-                newEqDelayState.createTransitionTo(newEqState)
+                val newEqCfRegion = newMainState.createControlflowRegion(GENERATED_PREFIX + "subRegion_" + equation.key).
+                    trace(dataflowRegion)
+                val newEqState = newEqCfRegion.createState(GENERATED_PREFIX + "" + equation.key) => [ 
+                    initial = true
+                    trace(dataflowRegion)
+                ]
+                val newEqDelayState = newEqCfRegion.createState(GENERATED_PREFIX + "d" + equation.key).
+                    trace(dataflowRegion)
+                val eqTrans = newEqState.createTransitionTo(newEqDelayState) => [ 
+                    delay = DelayType.IMMEDIATE
+                    trace(dataflowRegion)
+                ]
+                if (dataflowRegion.once) {
+                    newEqDelayState.final = true                    
+                } else {
+                    newEqDelayState.createTransitionTo(newEqState).
+                        trace(dataflowRegion)
+                }
                 
                 eqTrans.addAssignment(equation.value)
                 for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {

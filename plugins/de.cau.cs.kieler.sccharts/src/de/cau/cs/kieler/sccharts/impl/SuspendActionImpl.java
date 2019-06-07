@@ -87,6 +87,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isWeak() {
         return weak;
     }
@@ -96,6 +97,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWeak(boolean newWeak) {
         boolean oldWeak = weak;
         weak = newWeak;
@@ -170,7 +172,7 @@ public class SuspendActionImpl extends LocalActionImpl implements SuspendAction 
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (weak: ");
         result.append(weak);
         result.append(')');
