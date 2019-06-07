@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author als ssm Wechselberg
  */
 class SCGProcessorProvider implements IProcessorProvider {
     

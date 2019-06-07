@@ -12,15 +12,10 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.prio.java
 
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorTickModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.annotations.IntAnnotation
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorLogicModule
 import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorTickModule
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
@@ -38,10 +33,6 @@ import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 class JavaPrioCodeGeneratorTickModule extends CPrioCodeGeneratorTickModule {
     
     @Inject extension AnnotationsExtensions
-    @Inject extension JavaPrioCodeSerializeHRExtensions
-    @Inject extension SCGThreadExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension SCGControlFlowExtensions      
     
     @Accessors @Inject JavaPrioCodeSerializeHRExtensions javaSerializer
     
@@ -84,7 +75,7 @@ class JavaPrioCodeGeneratorTickModule extends CPrioCodeGeneratorTickModule {
     
     override generateDone() {
         decIndentation
-        code.appendInd("}\n")
+//        code.appendInd("}\n")
         decIndentation
         code.appendInd("}\n")
         decIndentation

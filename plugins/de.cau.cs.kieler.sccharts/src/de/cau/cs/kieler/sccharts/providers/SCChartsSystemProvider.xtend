@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
 /**
  * Provider to make processors available to KiCool.
  * 
- * @author Wechselberg
+ * @author als ssm Wechselberg
  */
 class SCChartsSystemProvider implements ISystemProvider {
     
@@ -60,7 +60,9 @@ class SCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.simulation.statebased.lean.c.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.c.kico",
             "system/de.cau.cs.kieler.sccharts.simulation.tts.statebased.lean.c.kico",
-            "system/de.cau.cs.kieler.c.sccharts.dataflow.kico"
+            "system/de.cau.cs.kieler.c.sccharts.dataflow.kico",
+            "system/de.cau.cs.kieler.sccharts.simulation.priority.java.legacy.kico",
+            "system/de.cau.cs.kieler.sccharts.simulation.tts.priority.java.legacy.kico"
         ]
     }
     

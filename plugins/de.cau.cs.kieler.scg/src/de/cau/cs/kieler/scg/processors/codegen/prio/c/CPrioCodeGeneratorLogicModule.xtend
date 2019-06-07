@@ -142,15 +142,11 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
                     }                    
                 }
             }
-            if(prev instanceof Entry) {
-//                labeledNodes.put(node, labeledNodes.get(prev))
-            }
         }
         
         if(!(node instanceof Exit)) {
             // If the node has already been visited before, add a goto, instead of translating it again
             if(visited.contains(node) && labeledNodes.containsKey(node)) {
-            // if(labeledNodes.containsKey(node)) {
                 code.appendInd("goto " + labeledNodes.get(node) + ";\n")
                 return emptyList
             } else {

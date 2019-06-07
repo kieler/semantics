@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
 /**
  * Provider to make systems available to KiCool.
  * 
- * @author Wechselberg
+ * @author als ssm Wechselberg
  */
 class SCGSystemProvider implements ISystemProvider {
     

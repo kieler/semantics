@@ -92,7 +92,7 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
    
     protected def addClass(StringBuilder sb) {
         val programName = getProgramName
-        sb.append("public class " + programName + " extends SJProgramForPriorities<" + programName + ".State> {\n");
+        sb.append("public class " + programName + " extends SJLProgramForPriorities<" + programName + ".State> {\n");
     }
     
     def getProgramName() {
