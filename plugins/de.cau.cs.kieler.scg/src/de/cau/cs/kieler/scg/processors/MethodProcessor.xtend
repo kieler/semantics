@@ -128,10 +128,13 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
                 }
             }
         }
-        
+        // Clean VO store of variables in methods
+        methodSCGs.entrySet.forEach[
+            voStore.remove(key.valuedObjects.head)
+            value.declarations.map[valuedObjects].flatten.forEach[voStore.remove(it)]
+        ]
         // Remove inlined/unused methods
         methodSCGs.entrySet.filter[inlined.contains(value) || (REMOVE_UNUSED.property && !calls.containsRow(it.key))].forEach[
-            it.key.valuedObjects.forEach[voStore.remove(it)]
             model.scgs.remove(it.value)
             it.key.remove
         ]
@@ -221,7 +224,16 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         if (selfDecl !== null) selfDecl.remove
         
         // Rename VOs
-        scg.declarations.map[valuedObjects].flatten.forEach[name = prefix + name]
+        val allVOs = scg.declarations.map[valuedObjects].flatten.toList
+        for (clashes : allVOs.groupBy[name].values) {
+            if (clashes.size > 1) {
+                for (i : 0..clashes.size -1) {
+                    val clash = clashes.get(i)
+                    clash.name = clash.name + "_" + i
+                }
+            }
+        }
+        allVOs.forEach[name = prefix + name]
         
         // Connect
         callNode.allPrevious.toList.forEach[target = entry.next.target]
