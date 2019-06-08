@@ -16,6 +16,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
+import de.cau.cs.kieler.annotations.Pragmatable
 
 /**
  * C Prio Code Processor
@@ -39,6 +40,10 @@ class JavaPrioCodeGenerator extends CCodeGenerator {
     
     override SCGCodeGeneratorModule createCodeGeneratorModule() {
         return injector.getInstance(JavaPrioCodeGeneratorModule)
+    }
+    
+    override processCustomNaming(Pragmatable pragmatable) {
+        // Actually, we are in a class. Deactivate custom naming for now.
     }
 }
 
