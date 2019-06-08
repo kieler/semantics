@@ -15,30 +15,23 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.c
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorTickModule
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.annotations.IntAnnotation
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorLogicModule
 
 /**
- * Java Code Generator Tick Module
+ * C Prio Code Generator Tick Module
+ * Migrated from SCLPTransformation
  * 
  * Handles the creation of the tick function.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGeneratorTickModule extends CCodeGeneratorTickModule {
     
     @Inject extension AnnotationsExtensions
-    @Inject extension CPrioCodeSerializeHRExtensions
-    @Inject extension SCGThreadExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension SCGControlFlowExtensions      
     
     @Accessors @Inject CPrioCodeSerializeHRExtensions serializer
     

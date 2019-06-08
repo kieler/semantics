@@ -49,26 +49,26 @@ class SCChartsPrioIntegrationChecker extends AbstractSimulationTest<SCCharts> {
     }
     
     
-    @Test
-    def void testSimulationPrioCLegacy(SCCharts scc, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
-        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
-        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
-        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
-        
-        startSimulationTest(PRIO_C_LEGACY_SYSTEM, scc, modelData, "SCChartsSimulationPrioCLegacy")
-    }
+//    @Test
+//    def void testSimulationPrioCLegacy(SCCharts scc, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+//        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
+//        
+//        startSimulationTest(PRIO_C_LEGACY_SYSTEM, scc, modelData, "SCChartsSimulationPrioCLegacy")
+//    }
 
-    @Test
-    // Test TTS only once with prio
-    def void testSimulationPrioCLegacyWithTTS(SCCharts scc, TestModelData modelData) {
-        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-prio-c-with-tts") || modelData.modelProperties.contains("simulation-fails-c"))
-        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
-        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
-        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
-        
-        startSimulationTest(PRIO_C_TTS_LEGACY_SYSTEM, scc, modelData, "SCChartsSimulationPrioCTTSLegacy")
-    }    
+//    @Test
+//    // Test TTS only once with prio
+//    def void testSimulationPrioCLegacyWithTTS(SCCharts scc, TestModelData modelData) {
+//        assumeFalse("Has 'simulation-fails' property", modelData.modelProperties.contains("simulation-fails-prio-c") || modelData.modelProperties.contains("simulation-fails-prio-c-with-tts") || modelData.modelProperties.contains("simulation-fails-c"))
+//        assumeFalse("Has 'not-IASC' property", modelData.modelProperties.contains("not-iasc"))
+//        assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
+//        assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
+//        
+//        startSimulationTest(PRIO_C_TTS_LEGACY_SYSTEM, scc, modelData, "SCChartsSimulationPrioCTTSLegacy")
+//    }    
 
     @Test
     def void testSimulationPrioC(SCCharts scc, TestModelData modelData) {

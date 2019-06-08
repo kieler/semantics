@@ -14,29 +14,25 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.java
 
 import com.google.inject.Inject
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.List
 import de.cau.cs.kieler.scg.processors.codegen.java.JavaCodeGeneratorStructModule
-import de.cau.cs.kieler.kexpressions.Declaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import java.util.Set
 
 /**
- * Java Code Generator Struct Module
+ * Java Prio Code Generator Struct Module
+ * Migrated from SJTransformation
  * 
  * Handles the creation of the data struct.
  * 
  * @author ssm
- * @kieler.design 2017-10-04 proposed 
- * @kieler.rating 2017-10-04 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
     
-    @Inject extension KExpressionsValuedObjectExtensions
     @Accessors @Inject JavaPrioCodeSerializeHRExtensions javaPrioSerializer
     
-    @Accessors var List<String> states = <String> newLinkedList
+    @Accessors var Set<String> states = <String> newLinkedHashSet
     @Accessors var String initialState
     @Accessors var int startPriority
     @Accessors var int maxPriority

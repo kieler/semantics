@@ -15,13 +15,14 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.c
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorResetModule
 
 /**
- * Java Code Generator Reset Module
+ * C Prio Code Generator Reset Module
+ * Migrated from SCLPTransformation
  * 
  * Handles the creation of the reset function.
  * 
  * @author ssm
- * @kieler.design 2017-10-04 proposed 
- * @kieler.rating 2017-10-04 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGeneratorResetModule extends CCodeGeneratorResetModule {

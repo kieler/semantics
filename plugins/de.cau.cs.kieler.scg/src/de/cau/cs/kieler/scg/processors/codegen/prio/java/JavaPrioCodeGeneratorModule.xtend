@@ -24,13 +24,14 @@ import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
 
 /**
- * Root C Code Generator Module
+ * Root Java Code Generator Module
+ * Migrated from SJTransformation
  * 
  * Initializes necessary modules and invokes them in correct order.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {

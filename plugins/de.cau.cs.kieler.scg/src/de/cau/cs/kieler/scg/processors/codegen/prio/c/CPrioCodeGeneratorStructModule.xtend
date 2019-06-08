@@ -17,13 +17,14 @@ import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorStructModule
 import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
- * Java Code Generator Struct Module
+ * C Prio Code Generator Struct Module
+ * Migrated from SCLPTransformation
  * 
  * Handles the creation of the data struct.
  * 
  * @author ssm
- * @kieler.design 2017-10-04 proposed 
- * @kieler.rating 2017-10-04 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGeneratorStructModule extends CCodeGeneratorStructModule {

@@ -14,25 +14,21 @@ package de.cau.cs.kieler.scg.processors.codegen.prio.c
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
-import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
-import de.cau.cs.kieler.annotations.Nameable
 
 /**
- * Root C Code Generator Module
+ * Root C Prio Code Generator Module
+ * Migrated from SCLPTransformation
  * 
  * Initializes necessary modules and invokes them in correct order.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGeneratorModule extends CCodeGeneratorModule {

@@ -17,8 +17,8 @@ import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 
 /**
  * @author ssm
- * @kieler.design 2017-10-04 proposed 
- * @kieler.rating 2017-10-04 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  *
  */
 @Singleton

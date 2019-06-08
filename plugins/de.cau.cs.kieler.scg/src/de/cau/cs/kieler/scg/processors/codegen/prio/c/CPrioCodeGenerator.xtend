@@ -19,10 +19,11 @@ import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 
 /**
  * C Prio Code Processor
+ * Migrated from SCLPTransformation
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGenerator extends CCodeGenerator {

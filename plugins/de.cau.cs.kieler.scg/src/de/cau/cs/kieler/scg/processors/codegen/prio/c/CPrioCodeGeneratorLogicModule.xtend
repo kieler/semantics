@@ -39,13 +39,14 @@ import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 
 /**
- * Java Code Generator Logic Module
+ * C Prio Code Generator Logic Module
+ * Migrated from SCLPTransformation
  * 
  * Handles the creation of the tick logic function.
  * 
  * @author ssm
- * @kieler.design 2017-07-24 proposed 
- * @kieler.rating 2017-07-24 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {

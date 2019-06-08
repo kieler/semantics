@@ -22,12 +22,13 @@ import de.cau.cs.kieler.scg.processors.priority.PriorityAuxiliaryData
 
 /**
  * Java Code Generator Tick Module
+ * Migrated from SJTransformation
  * 
  * Handles the creation of the tick function.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
 class JavaPrioCodeGeneratorTickModule extends CPrioCodeGeneratorTickModule {

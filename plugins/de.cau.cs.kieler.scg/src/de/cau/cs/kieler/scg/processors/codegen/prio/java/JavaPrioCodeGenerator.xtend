@@ -19,11 +19,13 @@ import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
 import de.cau.cs.kieler.annotations.Pragmatable
 
 /**
- * C Prio Code Processor
+ * Java Prio Code Processor
+ * Migrated from SJTransformation
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
+
  * 
  */
 class JavaPrioCodeGenerator extends CCodeGenerator {
