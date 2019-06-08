@@ -65,6 +65,8 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
     var labelNr = 0
     val labelCounter = <String, Integer> newHashMap
     var Set<Integer> globalJoinPrios
+    var labeledProxy = <Node, Boolean> newHashMap
+    var proxyStateHandled = <Node> newHashSet
     
     @Accessors var JavaPrioCodeGeneratorStructModule struct
     @Accessors var JavaPrioCodeGeneratorModule module    
@@ -104,7 +106,10 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
                 DecIndentationNode: { decIndentation }
                 CodeNode: { code.append(node.getCode) }
                 CaseNode: { 
-                    addCase(node.caze)
+                    if (node.node === null || !labeledProxy.containsKey(node.node) || labeledProxy.get(node.node) == false) {
+                        if (labeledProxy.containsKey(node.node)) labeledProxy.put(node.node, true)
+                        addCase(node.caze)
+                    }
                 }
                 GatherPriosNode: { node.gather(this) }
                 JoinPrioNode: { globalJoinPrios = node.joinPrioSet }
@@ -130,6 +135,10 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
         
     override List<Node> processNode(Node node, LinkedList<Node> previousNodes, Set<Node> visited) {
         serializer.valuedObjectPrefix = "";
+        
+        if (proxyStateHandled.contains(node)) {
+            return emptyList
+        }
         
         if(!previousNodes.empty && !(node instanceof Depth)) {
             val prev = previousNodes.peek()
@@ -158,14 +167,20 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
             code.appendInd(BREAK)
             return emptyList
         } else {
-            if(!labeledNodes.containsKey(node) && !(node instanceof Join)) {
-                // If a node has multiple incoming control flows, create a goto label
-                val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
-                if(incomingControlFlows.size > 1) {
-                    val newLabel = "_L_" + labelNr++
-                    labeledNodes.put(node, newLabel)
-                    addCase(newLabel)
-                }                
+            if (!(node instanceof Join)) {
+                if(!labeledNodes.containsKey(node)) {
+                    // If a node has multiple incoming control flows, create a goto label
+                    val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
+                    if(incomingControlFlows.size > 1) {
+                        val newLabel = "_L_" + labelNr++
+                        labeledNodes.put(node, newLabel)
+                        addCase(newLabel)
+                    }                
+                } else if (labeledProxy.containsKey(node) && labeledProxy.get(node) == false) {
+                   labeledProxy.put(node, true)
+                   proxyStateHandled.add(node)
+                   addCase(labeledNodes.get(node))
+                }
             }
         }
         visited += node
@@ -208,7 +223,11 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
             // Create goto and label
             ifLabel = "_L_" + labelNr++
             code.appendInd("  gotoB(State." + ifLabel + ");\n")
-            labeledNodes.put(conditional.then.target.asNode, ifLabel)  
+            val targetNode = conditional.then.target.asNode
+            labeledNodes.put(targetNode, ifLabel)  
+//            if (targetNode instanceof Exit) {
+                labeledProxy.put(targetNode, false)
+//            }  
     
             addIf = true
         }
@@ -221,7 +240,11 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
             // Create goto and label
             elseLabel = "_L_" + labelNr++
             code.appendInd("  gotoB(State." + elseLabel + ");\n")
-            labeledNodes.put(conditional.^else.target.asNode, elseLabel)  
+            val targetNode = conditional.^else.target.asNode
+            labeledNodes.put(targetNode, elseLabel)
+//            if (targetNode instanceof Exit) {
+                labeledProxy.put(targetNode, false)
+//            }  
     
             addElse = true            
         }
@@ -229,11 +252,11 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
         code.appendInd(BREAK)
         
         if (addIf) {
-            result += new CaseNode(ifLabel)
+//            result += new CaseNode(ifLabel, conditional.then.target.asNode)
             result += conditional.then.target.asNode
         }
         if (addElse) {
-            result += new CaseNode(elseLabel)
+            result += new CaseNode(elseLabel, conditional.^else.target.asNode)
             result += conditional.^else.target.asNode
         }
         
@@ -378,7 +401,7 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
         }
         
         // Translate thread with lowest exit priority but don't add its exit priority to the list of joining priorities
-        joinSB += new CaseNode(joinLabel)
+        joinSB += new CaseNode(joinLabel, fork.join)
         labeledNodes.put(joinThread, joinLabel)
         joinSB += joinThread
         childSB.addAll(joinSB)
@@ -390,7 +413,7 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
                     name = "exitPrio"
                     value = minPrio
             ]
-            forkSB += new CaseNode(forkLabel)
+            forkSB += new CaseNode(forkLabel, fork)
             labeledNodes.put(forkThread, forkLabel)
             forkSB += forkThread
             childSB.addAll(0, forkSB)
@@ -492,7 +515,7 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
         threadInfo.add(new Pair(newLabel, prio))
         labeledNodes.put(node, newLabel)
         return <Node> newLinkedList => [
-            add(new CaseNode(newLabel))
+            add(new CaseNode(newLabel, node))
             add(node)
             add(new GatherPriosNode(exitPrios, node))
         ]
@@ -538,9 +561,11 @@ class JavaPrioCodeGeneratorLogicModule extends CPrioCodeGeneratorLogicModule {
     
     static class CaseNode extends EntryImpl {
         public var String caze
+        public var Node node
         
-        new(String caze) {
+        new(String caze, Node node) {
             this.caze = caze
+            this.node = node
         }
     }
     

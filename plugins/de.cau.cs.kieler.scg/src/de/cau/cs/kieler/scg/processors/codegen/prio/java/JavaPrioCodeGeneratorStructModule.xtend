@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import java.util.Set
 
 /**
  * Java Code Generator Struct Module
@@ -36,7 +37,7 @@ class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
     @Inject extension KExpressionsValuedObjectExtensions
     @Accessors @Inject JavaPrioCodeSerializeHRExtensions javaPrioSerializer
     
-    @Accessors var List<String> states = <String> newLinkedList
+    @Accessors var Set<String> states = <String> newLinkedHashSet
     @Accessors var String initialState
     @Accessors var int startPriority
     @Accessors var int maxPriority
