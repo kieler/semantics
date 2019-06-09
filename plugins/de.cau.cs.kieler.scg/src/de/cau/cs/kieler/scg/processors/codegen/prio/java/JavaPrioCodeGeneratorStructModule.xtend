@@ -72,6 +72,4 @@ class JavaPrioCodeGeneratorStructModule extends JavaCodeGeneratorStructModule {
         code.appendInd("}\n")
     }    
     
-
-    
 }
