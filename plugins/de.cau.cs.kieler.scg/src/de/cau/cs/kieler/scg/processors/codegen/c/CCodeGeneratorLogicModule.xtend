@@ -140,9 +140,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                 code.append((assignment.expression as FunctionCall).serialize).append(";\n")
             } else if (assignment.expression instanceof ReferenceCall) {
                 val referenceCall = assignment.expression as ReferenceCall
-                 val declaration = referenceCall.valuedObject.referenceDeclaration
-                if (declaration.reference instanceof SCGraph) {
-                    code.append(callToSCG(referenceCall, declaration, conditionalStack.size + 1, serializer))
+                val declaration = referenceCall.valuedObject.declaration
+                if (declaration instanceof ReferenceDeclaration && declaration.asReferenceDeclaration.reference instanceof SCGraph) {
+                    code.append(callToSCG(referenceCall, declaration as ReferenceDeclaration, conditionalStack.size + 1, serializer))
                 } else {
                     code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
                 }
