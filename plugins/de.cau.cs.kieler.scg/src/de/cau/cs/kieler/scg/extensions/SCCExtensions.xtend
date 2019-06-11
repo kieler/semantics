@@ -77,38 +77,38 @@ class SCCExtensions {
         var neighbors = <Node> newLinkedList
         
         if(n instanceof Entry) {
-            if(n.next !== null) {
+            if(n.next !== null && n.next.target !== null) {
                 neighbors.add(n.next.targetNode)                
             }
         }
         
         if(n instanceof Exit) {
-            if(n.next !== null) {
+            if(n.next !== null && n.next.target !== null) {
                 neighbors.add(n.next.targetNode)
             }
         }
         
         if(n instanceof Assignment) {
-            if (n.next !== null) neighbors.add(n.next.targetNode)
+            if (n.next !== null && n.next.target !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Conditional) {
-            if (n.then !== null) neighbors.add(n.then.targetNode)
-            if (n.^else !== null) neighbors.add(n.^else.targetNode)
+            if (n.then !== null && n.then.target !== null) neighbors.add(n.then.targetNode)
+            if (n.^else !== null && n.^else.target !== null) neighbors.add(n.^else.targetNode)
         }
         
         if(n instanceof Fork) {
-            for(next : n.next) {
+            for(next : n.next.filter[ target !== null ]) {
                 neighbors.add(next.targetNode)
             }
         }
         
         if(n instanceof Join) {
-            if (n.next !== null) neighbors.add(n.next.targetNode)
+            if (n.next !== null && n.next.target !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Depth) {
-            if (n.next !== null) neighbors.add(n.next.targetNode)
+            if (n.next !== null && n.next.target !== null) neighbors.add(n.next.targetNode)
         }
         
         if(n instanceof Surface) {
