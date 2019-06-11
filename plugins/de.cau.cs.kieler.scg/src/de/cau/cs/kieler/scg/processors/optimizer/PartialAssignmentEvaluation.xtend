@@ -77,7 +77,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     def SCGraph transform(SCGraph scg) {
         val PartialExpressionEvaluator parEval = new PartialExpressionEvaluator(<ValuedObject, Value> newHashMap) => [ 
             compute = true
-            inplace = true
+            inplace = false
         ]
             
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
