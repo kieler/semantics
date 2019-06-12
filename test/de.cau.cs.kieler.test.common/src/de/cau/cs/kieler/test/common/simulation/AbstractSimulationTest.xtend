@@ -100,6 +100,14 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
                     }
                     msg.append("\n")
                 }
+                // Print code
+                if (iResult.sourceModel instanceof CodeContainer) {
+                    for (file : (iResult.sourceModel as CodeContainer).files) {
+                        msg.append("Source file ")
+                        msg.append(file.fileName).append(":\n")
+                        msg.append(file.code).append("\n")
+                    }
+                }
                 // Find logs
                 val snapshots = iResult.environment.getProperty(Environment.SNAPSHOTS)
                 val logs = snapshots.map[object].filter(CodeContainer).map[files].flatten.filter[fileName?.endsWith('.log')].toList
