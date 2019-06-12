@@ -22,6 +22,7 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import de.cau.cs.kieler.annotations.Nameable
 import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * Root Java Code Generator Module
@@ -36,13 +37,17 @@ import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
  */
 class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     
+    @Inject extension PragmaExtensions
     @Inject Injector injector
+    @Inject extension JavaPrioCodeSerializeHRExtensions
     
     protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     
     public static val JAVA_EXTENSION = ".java"
     
     override configure() {
+        modifications.clear
+        
         struct = injector.getInstance(JavaPrioCodeGeneratorStructModule)
         reset = injector.getInstance(JavaPrioCodeGeneratorResetModule)
         tick = injector.getInstance(JavaPrioCodeGeneratorTickModule)
@@ -99,4 +104,19 @@ class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     def getProgramName() {
         return if (scg.label.nullOrEmpty) "Program" else scg.label;
     }
+    
+    override void hostcodeAdditions(StringBuilder sb) {
+        val includes = modifications.get(JavaPrioCodeSerializeHRExtensions.INCLUDES)
+        for (include : includes)  {
+            sb.append("import " + include + "\n")
+        }
+        
+        val hostcodePragmas = SCGraphs.getStringPragmas(HOSTCODE)
+        for (pragma : hostcodePragmas) {
+            sb.append(pragma.values.head + "\n")
+        }
+        if (hostcodePragmas.size > 0 || includes.size > 0) {
+            sb.append("\n")
+        }
+    }      
 }

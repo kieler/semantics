@@ -34,12 +34,15 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.
 class CPrioCodeGeneratorModule extends CCodeGeneratorModule {
     
     @Inject Injector injector
+    @Inject extension CPrioCodeSerializeHRExtensions
     
     protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     
     public static val JAVA_EXTENSION = ".java"
     
     override configure() {
+        modifications.clear
+        
         struct = injector.getInstance(CPrioCodeGeneratorStructModule)
         reset = injector.getInstance(CPrioCodeGeneratorResetModule)
         tick = injector.getInstance(CPrioCodeGeneratorTickModule)

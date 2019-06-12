@@ -75,7 +75,7 @@ class SCChartsJavaPrioIntegrationChecker extends AbstractSimulationTest<SCCharts
         assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
         assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
         
-        startSimulationTest(PRIO_JAVA_SYSTEM, scc, modelData, "SCChartsSimulationPrioC")
+        startSimulationTest(PRIO_JAVA_SYSTEM, scc, modelData, "SCChartsSimulationPrioJava")
     }
 
     @Test
@@ -86,7 +86,7 @@ class SCChartsJavaPrioIntegrationChecker extends AbstractSimulationTest<SCCharts
         assumeFalse("Has 'not-SIASC' property", modelData.modelProperties.contains("not-siasc"))
         assumeFalse("Has 'prio-fails' property", modelData.modelProperties.contains("prio-fails"))
         
-        startSimulationTest(PRIO_JAVA_TTS_SYSTEM, scc, modelData, "SCChartsSimulationPrioCTTS")
+        startSimulationTest(PRIO_JAVA_TTS_SYSTEM, scc, modelData, "SCChartsSimulationPrioJavaTTS")
     }
     
 }

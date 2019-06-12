@@ -52,6 +52,8 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     @Accessors var SCGCodeGeneratorModule logic = null
     
     override configure() {
+        modifications.clear
+        
         struct = injector.getInstance(CCodeGeneratorStructModule)
         reset = injector.getInstance(CCodeGeneratorResetModule)
         tick = injector.getInstance(CCodeGeneratorTickModule)
