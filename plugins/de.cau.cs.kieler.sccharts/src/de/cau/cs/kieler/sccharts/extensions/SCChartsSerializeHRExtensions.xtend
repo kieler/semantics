@@ -301,11 +301,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         
         components.addText("(")
         for (para : method.parameterDeclarations.indexed) {
-            components.addText((if (hr) {
-                para.serializeHR
-            } else {
-                para.serialize
-            }))
+            components.addAll((para.value as VariableDeclaration).serializeHighlighted(hr))
             if (para.key < method.parameterDeclarations.size - 1) {
                 components.addText(",")
             }

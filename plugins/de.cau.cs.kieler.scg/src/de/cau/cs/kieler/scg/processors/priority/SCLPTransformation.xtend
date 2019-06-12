@@ -136,9 +136,6 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
         val code = new CodeContainer
         transform(getModel.scgs.head, code)
         
-        // Handle hierarchical VO declarations in VariableStore
-        VariableStore.get(environment)?.flattenAllHierarchicalObjects
-        
         setModel(code)
     }
     

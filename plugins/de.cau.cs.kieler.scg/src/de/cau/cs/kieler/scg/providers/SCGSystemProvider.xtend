@@ -32,6 +32,7 @@ class SCGSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.netlist.kico",  
             "system/de.cau.cs.kieler.sccharts.netlist.ref.kico",  
             "system/de.cau.cs.kieler.sccharts.netlist.java.kico", 
+            "system/de.cau.cs.kieler.sccharts.netlist.vhdl.kico", 
             "system/de.cau.cs.kieler.sccharts.priority.kico", 
             "system/de.cau.cs.kieler.sccharts.priority.java.kico",  
             "system/de.cau.cs.kieler.sccharts.netlist.sccp.kico", 

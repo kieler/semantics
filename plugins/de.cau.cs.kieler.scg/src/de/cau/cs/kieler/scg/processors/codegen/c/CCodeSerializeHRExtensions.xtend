@@ -44,6 +44,11 @@ import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.codegen.CodeGeneratorSerializeHRExtensions
 import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import java.util.ArrayList
+import de.cau.cs.kieler.kexpressions.Parameter
 
 /**
  * @author ssm
@@ -61,8 +66,10 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions    
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsCreateExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension KExpressionsTypeExtensions
+    @Inject extension SCGMethodExtensions
     
     @Accessors var String valuedObjectPrefix
     @Accessors var String prePrefix 
@@ -81,7 +88,10 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }
     
     override dispatch CharSequence serialize(ValuedObject valuedObject) {
-        var vo = valuedObjectPrefix + valuedObject.name
+        var vo = valuedObject.name
+        if (!valuedObject.isLocalVariable) {
+            vo = valuedObjectPrefix + vo
+        }
         for (index : valuedObject.cardinalities) {
             vo = vo + "[" + index.toString + "]"
         }
@@ -89,30 +99,36 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectPrefix + valuedObjectReference.valuedObject.name
+        var vo = valuedObjectReference.valuedObject.name
+        if (!valuedObjectReference.valuedObject.isLocalVariable) {
+            vo = valuedObjectPrefix + vo
+        }
         if (valuedObjectReference.valuedObject.isExternalReference) {
 //            vo = valuedObjectReference.valuedObject.getReferenceDeclaration.extern.head.code
             vo = valuedObjectReference.valuedObject.name
         }
-        if (valuedObjectReference.subReference !== null) {
-            vo += "." + valuedObjectReference.subReference.serializeVOR
-        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
+        }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
     }    
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectPrefix + valuedObjectReference.valuedObject.name
+        var vo = valuedObjectReference.valuedObject.name
+        if (!valuedObjectReference.valuedObject.isLocalVariable) {
+            vo = valuedObjectPrefix + vo
+        }
         if (valuedObjectReference.valuedObject.isExternalReference) {
             vo = valuedObjectReference.valuedObject.name
         }
-        if (valuedObjectReference.subReference !== null) {
-            vo += "." + valuedObjectReference.subReference.serializeVOR
-        }
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
+        }
+        if (valuedObjectReference.subReference !== null) {
+            vo += "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
     }    
@@ -130,28 +146,27 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return "0"
     }
     
-    override CharSequence serializeAssignment(de.cau.cs.kieler.kexpressions.keffects.Assignment assignment, CharSequence expressionStr) {
-        var res = ""
-        
-        if (assignment.valuedObject !== null) {
-            res = res + valuedObjectPrefix + assignment.valuedObject.name
-            if (assignment.reference.subReference !== null) {
-                res += "." + assignment.reference.subReference.serializeVOR
-            }
-            if (!assignment.indices.nullOrEmpty) {
-                for(index : assignment.indices) {
-                    res = res + "[" + index.serialize + "]"
-                }
-            }
-            
-            res = res + assignment.operator.serializeAssignOperator
-        }
-        if (expressionStr !== null) {
-            res = res + expressionStr
-        }
-        
-        return res
-    }   
+//    override CharSequence serializeAssignment(de.cau.cs.kieler.kexpressions.keffects.Assignment assignment, CharSequence expressionStr) {
+//        var res = ""
+//        
+//        if (assignment.valuedObject !== null) {
+//            res = res + valuedObjectPrefix + assignment.valuedObject.name
+//            if (!assignment.indices.nullOrEmpty) {
+//                for(index : assignment.indices) {
+//                    res = res + "[" + index.serialize + "]"
+//                }
+//            }
+//            if (assignment.reference.subReference !== null) {
+//                res += "." + assignment.reference.subReference.serializeVOR
+//            }
+//            res = res + assignment.operator.serializeAssignOperator
+//        }
+//        if (expressionStr !== null) {
+//            res = res + expressionStr
+//        }
+//        
+//        return res
+//    }   
     
     dispatch override CharSequence serializeHR(Assignment assignment) {
         if (assignment.valuedObject !== null) {
@@ -159,12 +174,15 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
             if (assignment.expression !== null && !assignment.operator.isPostfixOperator) {
                 assignmentText = serializeHRWithCasts(assignment)
             }
-            var valuedObjectName = valuedObjectPrefix + assignment.valuedObject.name
-            if (assignment.reference.subReference !== null) {
-                valuedObjectName += "." + assignment.reference.subReference.serializeVOR
+            var valuedObjectName = assignment.valuedObject.name
+            if (!assignment.isLocalVariable) {
+                valuedObjectName = valuedObjectPrefix + valuedObjectName
             }
             if (!assignment.indices.nullOrEmpty) {
                 valuedObjectName = valuedObjectName + serializeHRIndices(assignment.indices)
+            }
+            if (assignment.reference.subReference !== null) {
+                valuedObjectName += "." + assignment.reference.subReference.serializeVOR
             }
             if (assignment.expression instanceof TextExpression) {
                 assignmentText = (assignment.expression as TextExpression).serializeHR
@@ -227,6 +245,9 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
         return "printf(" + paramStr.substring(1, paramStr.length - 1) + ")"
     }
     
+    def dispatch CharSequence serializeHR(TextExpression textExp) {
+        textExp.serialize
+    }
     override dispatch CharSequence serialize(TextExpression textExp) {
         var hostcode = textExp.text
         if (textExp.hasAnnotation(HOSTCODE_EVAL)) {
@@ -279,26 +300,42 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
                 }
                 return code + referenceCall.parameters.serializeHRParameters
             }
+        } if (declaration instanceof MethodDeclaration) {
+            val name = if (declaration.hasSelfInParameter) {
+                var ValuedObjectReference lastVOR = referenceCall
+                while (lastVOR.subReference !== null) {
+                    lastVOR = lastVOR.subReference
+                }
+                lastVOR.valuedObject.name
+            } else {
+                referenceCall.serializeVOR.toString
+            }
+            val params = newArrayList
+            params.addAll(referenceCall.parameters)
+            params.addPlatformDependentParamsToMethodCall(declaration, referenceCall)
+            return name + params.serializeParameters
         } else {
             return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
-    }    
+    }
+    
+    def addPlatformDependentParamsToMethodCall(ArrayList<Parameter> params, MethodDeclaration declaration, ReferenceCall referenceCall) {
+        if (declaration.hasSelfInParameter) {
+            params.add(0, createParameter =>[
+                callByReference = true
+                val ex = referenceCall.serializeVOR.toString
+                expression = ex.substring(0, ex.lastIndexOf(".")).asTextExpression
+            ])
+        }
+        if (declaration.hasTickDataInParameter) {
+            params.add(0, createParameter =>[
+                expression = valuedObjectPrefix.replaceAll("\\.", "").replaceAll("->", "").asTextExpression
+            ])
+        }
+    }
     
     override dispatch CharSequence serialize(ReferenceCall referenceCall) {
-        val declaration = referenceCall.valuedObject.declaration
-        if (declaration instanceof ReferenceDeclaration) {
-            if (declaration.extern.nullOrEmpty) { 
-                return referenceCall.valuedObject.serialize.toString + referenceCall.parameters.serializeParameters
-            } else {
-                var code = declaration.extern.head.code
-                if (declaration.extern.exists[ hasAnnotation(codeAnnotation) ]) {
-                    code = declaration.extern.filter[ hasAnnotation(codeAnnotation) ].head.code
-                }
-                return code + referenceCall.parameters.serializeParameters
-            }
-        } else {
-            return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
-        }
+        return referenceCall.serializeHR
     }    
     
 }

@@ -53,6 +53,7 @@ class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
             && modelData.modelProperties.contains("sccharts")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
+            && false // disable
     }
 
     @Test

@@ -113,6 +113,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.LoopData
 import java.util.Map
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /** 
  * SCCGraph KlighD synthesis class. It contains all method mandatory to handle the visualization of
@@ -825,8 +826,16 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
         return assignment.createNode().associateWith(assignment) => [ node |
             if (USE_ADAPTIVEZOOM.booleanValue) node.setLayoutOption(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.50)
             // Straightforward rectangle drawing
-            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH) 
+            val figure = node.addRoundedRectangle(CORNERRADIUS, CORNERRADIUS, LINEWIDTH)
+            var isSCGRef = false
             if (assignment.expression instanceof ReferenceCall) {
+                val call = assignment.expression as ReferenceCall
+                val decl = call.valuedObject?.eContainer
+                if (decl instanceof ReferenceDeclaration) {
+                    isSCGRef = decl.reference instanceof SCGraph
+                }
+            }
+            if (isSCGRef) {
                 figure.setBackgroundGradient("#fcf7fc".color , "#e6cbf2".color, 90.0f)
             } else {
                 figure.background = "white".color;

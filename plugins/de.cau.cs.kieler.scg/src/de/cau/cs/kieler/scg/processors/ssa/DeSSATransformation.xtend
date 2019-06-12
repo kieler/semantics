@@ -14,8 +14,11 @@ package de.cau.cs.kieler.scg.processors.ssa
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Fork
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
@@ -33,6 +36,9 @@ import static de.cau.cs.kieler.scg.processors.ssa.SSAParameterProperty.*
  * @kieler.rating proposed yellow
  */
 class DeSSATransformation extends InplaceProcessor<SCGraphs> implements Traceable {
+    
+    public static val IProperty<Boolean> INLINE = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.ssa.dessa.sequential.inline", false)
 
     // -------------------------------------------------------------------------
     // --                 K I C O      C O N F I G U R A T I O N              --
@@ -76,17 +82,38 @@ class DeSSATransformation extends InplaceProcessor<SCGraphs> implements Traceabl
             environment.warnings.add("Illegal SSA parameter mapping information. Mapping refers to basic block not contained in the model")
         }
         
-        // ---------------
-        // 1. Place Move Instructions
-        // ---------------
-        val placed = scg.placeMoveInstructions(parameterMapping)
-        scg.snapshot
-        
-        // ---------------
-        // 2. Remove Phi functions
-        // ---------------
-        for (phi : placed.keySet) {
-            phi.removeNode(true)
+        if (INLINE.property) {
+            // ---------------
+            // 1. Replace by inline conditional instructions
+            // ---------------
+            scg.placeInlineConditionals(parameterMapping)
+            if (environment.inDeveloperMode) scg.snapshot
+            
+            // ---------------
+            // 2. Remove all branches
+            // ---------------
+            for (cond : scg.nodes.filter(Conditional).toList) {
+                cond.incomingLinks.immutableCopy.forEach[target = cond.then.target]
+                cond.removeNode(false)
+            }
+            
+            // ---------------
+            // 3. Remove all BBs
+            // ---------------
+            scg.basicBlocks.clear
+        } else {
+            // ---------------
+            // 1. Place Move Instructions
+            // ---------------
+            val placed = scg.placeMoveInstructions(parameterMapping)
+            if (environment.inDeveloperMode) scg.snapshot
+            
+            // ---------------
+            // 2. Remove Phi functions
+            // ---------------
+            for (phi : placed.keySet) {
+                phi.removeNode(true)
+            }
         }
 
         // This transformation removes the SSA property!       

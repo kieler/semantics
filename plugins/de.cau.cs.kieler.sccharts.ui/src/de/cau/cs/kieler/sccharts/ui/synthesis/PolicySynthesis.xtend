@@ -81,7 +81,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
     @Inject extension TransitionStyles
     
     public static final SynthesisOption SHOW_POLICIES =
-            SynthesisOption.createCheckOption("Policies", true).setCategory(APPEARANCE)
+            SynthesisOption.createCheckOption("Policies", true).setCategory(OO)
             
     override getDisplayedSynthesisOptions() {
         return newArrayList(SHOW_POLICIES)
@@ -142,7 +142,10 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                     }
                 }
                 // Add Button after area to assure correct overlapping
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addCollapseButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
                 if (!label.nullOrEmpty) eAllContents.filter(KText).toList.forEach[
                     if (foreground?.color?.equals(Color.KEYWORD.color)) {
                         foreground = Color.USER_SCHEDULE_COLOR.color
@@ -157,7 +160,10 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
                 associateWith(region)
                 addPolicyRegionStyle
                 addDoubleClickAction(MemorizingExpandCollapseAction.ID)
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addExpandButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
                 if (!label.nullOrEmpty) eAllContents.filter(KText).toList.forEach[
                     if (foreground?.color?.equals(Color.KEYWORD.color)) {
                         foreground = Color.USER_SCHEDULE_COLOR.color

@@ -98,7 +98,10 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             }
             if (method.schedule.size > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
-            addCollapseButton(label).addDoubleClickAction(CollapseExpandAction.ID)
+            addCollapseButton(label) => [
+                addSingleClickAction(CollapseExpandAction.ID)
+                addDoubleClickAction(CollapseExpandAction.ID)
+            ] 
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
@@ -108,7 +111,10 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             associateWith(method)
             if (method.schedule.size > 0) it.setUserScheduleStyle
             addDoubleClickAction(CollapseExpandAction.ID)
-            addExpandButton(label).addDoubleClickAction(CollapseExpandAction.ID)
+            addExpandButton(label) => [
+                addSingleClickAction(CollapseExpandAction.ID)
+                addDoubleClickAction(CollapseExpandAction.ID)
+            ]
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
         
@@ -139,13 +145,14 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
 //        val program = createSCLProgram
 //        program.modules += module
 
+        val methodCopy = method.copy // To prevent mutation of model in editor
         val vos = newHashMap
-        for (vo : method.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet) {
+        for (vo : methodCopy.eAllContents.filter(ValuedObjectReference).map[valuedObject].toSet) {
             vos.put(vo,vo)
         }
         
         val diagram = LightDiagramServices.translateModel(
-            method.transformMethod(null, vos),
+            methodCopy.transformMethod(null, vos),
             usedContext,
             new MapPropertyHolder => [ 
                 setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, "de.cau.cs.kieler.scg.klighd.diagramSynthesis.scg") 
