@@ -175,17 +175,18 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             assignment.handleConditionalNesting
         }
 
-        assignment.serializeToCode(conditionalStack.size + 1, struct, serializer)
-        
-        if (assignment.valuedObject !== null) {
-            // Handle pre variable if necessary.
-            if (assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
-                for (preOE : assignment.expression.asOperatorExpression.getPreOperatorExpressions) {
-                    preOE.addPreVariable(serializer)            
-                }        
+        if (!assignment.isPartOfForLoopHeader) {
+            assignment.serializeToCode(conditionalStack.size + 1, struct, serializer)
+            
+            if (assignment.valuedObject !== null) {
+                // Handle pre variable if necessary.
+                if (assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
+                    for (preOE : assignment.expression.asOperatorExpression.getPreOperatorExpressions) {
+                        preOE.addPreVariable(serializer)            
+                    }        
+                }
             }
-        }
-        
+        }        
         // If a new statement follows, add it to the node list.
         if (assignment.next !== null) nodes.push(assignment.next.targetNode)
     }

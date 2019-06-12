@@ -37,6 +37,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 
 /**
  * C Prio Code Generator Logic Module
@@ -54,6 +55,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     @Inject extension AnnotationsExtensions
     @Inject extension SCGCoreExtensions   
     @Inject extension SCGThreadExtensions
+    @Inject extension SCGControlFlowExtensions
     @Accessors @Inject CPrioCodeSerializeHRExtensions serializer 
     extension AnnotationsFactory = AnnotationsFactory.eINSTANCE
     
@@ -183,13 +185,17 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     
 
     protected def List<Node> transformNode(Assignment assignment, extension CCodeSerializeHRExtensions serializer) {
-        assignment.serializeToCode(1, struct, serializer)
+        if (!assignment.isPartOfForLoopHeader) {
+            assignment.serializeToCode(1, struct, serializer)
+        }
+        
         return <Node> newLinkedList => [ add(assignment.next.target.asNode) ]
     }
 
     protected def List<Node> transformNode(Conditional conditional, extension CCodeSerializeHRExtensions serializer) {
         val result = <Node> newLinkedList
         
+        valuedObjectPrefix = struct.getVariableName + "->"
         code.appendInd("if(" + conditional.condition.serializeHR + "){\n")
         result += new IncIndentationNode
         result += conditional.then.target.asNode
