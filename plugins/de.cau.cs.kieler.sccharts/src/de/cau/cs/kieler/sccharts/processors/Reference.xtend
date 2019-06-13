@@ -53,6 +53,10 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.Conditional
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -281,6 +285,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given state. */
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : state.declarations) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
@@ -304,6 +313,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given region. */
     protected def replaceValuedObjectReferencesInRegion(Region region, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : region.declarations) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : region.actions) {
@@ -335,6 +349,67 @@ class Reference extends SCChartsProcessor implements Traceable {
         action.trigger?.replaceReferences(replacements)
         for (effect : action.effects) {
             effect.replaceReferences(replacements)
+        }
+    }
+    
+    /** Replaces valued object references inside declarations. */
+    protected def replaceValuedObjectReferencesInDeclaration(Declaration decl, Replacements replacements) {
+        if (decl instanceof MethodImplementationDeclaration) {
+            decl.replaceValuedObjectReferencesInSclScope(replacements)
+        }
+        for (vo : decl.valuedObjects) {
+            // Handle cardinalities
+            for (cardinal : vo.cardinalities.filterNull) {
+                cardinal.replaceReferences(replacements)
+            }
+            if (vo.initialValue !== null) {
+                vo.initialValue.replaceReferences(replacements)
+            }
+        }
+    }
+    
+    /** Replaces valued object references inside scope from scl (due to methods). */
+    protected def void replaceValuedObjectReferencesInSclScope(de.cau.cs.kieler.scl.Scope scope, Replacements replacements) {
+        val valuedObjects = <ValuedObject>newArrayList
+        // Push this scopes variables onto the replacement stack.
+        if (scope instanceof Conditional) {
+            scope.expression.replaceReferences(replacements)
+        } else if (scope instanceof MethodImplementationDeclaration) {
+            valuedObjects += scope.parameterDeclarations.map[ valuedObjects ].flatten.toList
+        } else if (scope instanceof Loop) {
+            valuedObjects += scope.initializationDeclaration?.valuedObjects
+        }
+        valuedObjects += scope.declarations.map[ valuedObjects ].flatten.toList
+        for (valuedObject : valuedObjects) {
+            replacements.push(valuedObject, valuedObject.reference)
+        }
+        
+        if (scope instanceof Loop) {
+            scope.initialization?.replaceReferences(replacements)
+            scope.initializationDeclaration?.valuedObjects?.head?.initialValue?.replaceReferences(replacements)
+            scope.condition?.replaceReferences(replacements)
+            scope.afterthought?.replaceReferences(replacements)
+        }
+        
+        // Process statements
+        for (stm : scope.statements) {
+            if (stm instanceof de.cau.cs.kieler.scl.Scope) {
+                stm.replaceValuedObjectReferencesInSclScope(replacements)
+            } else if (stm instanceof de.cau.cs.kieler.scl.Assignment) {
+                stm.replaceReferences(replacements)
+            } else if (stm instanceof de.cau.cs.kieler.scl.Return) {
+                stm.expression?.replaceReferences(replacements)
+            }
+        }
+        
+        // Pop this scopes variables from the replacement stack.
+        for (valuedObject : valuedObjects) {
+            replacements.pop(valuedObject)
+        }
+        
+        // Process else scope in conditional
+        if (scope instanceof Conditional) {
+            scope.^else?.replaceValuedObjectReferencesInSclScope(replacements)
         }
     }
     
