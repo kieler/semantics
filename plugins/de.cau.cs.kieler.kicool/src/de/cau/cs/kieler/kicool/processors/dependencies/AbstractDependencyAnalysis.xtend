@@ -390,7 +390,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         dependencies += dependency       
     }
     
-    val opPlusMinus = newHashSet(AssignOperator.POSTFIXADD, AssignOperator.POSTFIXADD, AssignOperator.ASSIGNADD, AssignOperator.ASSIGNSUB)
+    val opPlusMinus = newHashSet(AssignOperator.POSTFIXADD, AssignOperator.POSTFIXSUB, AssignOperator.ASSIGNADD, AssignOperator.ASSIGNSUB)
     def boolean isCommuting(AssignOperator operator, AssignOperator operator2) {
         return operator == operator2 || (opPlusMinus.contains(operator) && opPlusMinus.contains(operator2))
     }

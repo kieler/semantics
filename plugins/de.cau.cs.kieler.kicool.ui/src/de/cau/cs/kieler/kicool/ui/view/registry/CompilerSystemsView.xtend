@@ -32,11 +32,12 @@ import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
  * @kieler.design 2018-06-01 proposed
  * @kieler.rating 2018-06-01 proposed yellow 
  */
-class CompilerRegistryView extends DiagramViewPart implements IDiagramViewUpdate {
+class CompilerSystemsView extends DiagramViewPart implements IDiagramViewUpdate {
     
-    public static val ID = "de.cau.cs.kieler.kicool.ui.view.compiler.registry"
+    public static val ID = "de.cau.cs.kieler.kicool.ui.view.compiler.systems"
     
-    @Accessors var CompilerRegistryViewPartListener partListener
+    @Accessors CompilerSystemsViewPartListener partListener
+    @Accessors KiCoolSystemsSummary summary
     
     /**
      * {@inheritDoc}
@@ -44,18 +45,21 @@ class CompilerRegistryView extends DiagramViewPart implements IDiagramViewUpdate
     override createPartControl(Composite parent) {
         super.createPartControl(parent)
 
-        partListener = new CompilerRegistryViewPartListener(this, parent)
+        partListener = new CompilerSystemsViewPartListener(this, parent)
+
+        val s = new KiCoolSystemsSummary        
+        summary = s.fetchAll
     }
     
     override void updateView() {
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-            "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis")
+            "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
 //        properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)
                                 
-        updateDiagram((new KiCoolRegistrySummary).fetchAll, properties)
+        updateDiagram(summary, properties)
     }
     
     private def void updateDiagram(Object model, KlighdSynthesisProperties properties) {
@@ -80,7 +84,7 @@ class CompilerRegistryView extends DiagramViewPart implements IDiagramViewUpdate
     def void reinitializeDiagram(Object model) {
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
-            "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolRegistrySynthesis")
+            "de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
                 ZoomConfigButtonsHandling.HIDE)
 //        properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY, SimpleUpdateStrategy.ID)

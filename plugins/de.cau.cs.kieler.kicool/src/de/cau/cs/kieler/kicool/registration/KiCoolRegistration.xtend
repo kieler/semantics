@@ -35,6 +35,10 @@ import org.eclipse.xtext.validation.IResourceValidator
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorSystem
 
 /**
  * Main class for the registration of systems and processors.
@@ -209,4 +213,51 @@ class KiCoolRegistration {
         } 
         return true
     }
+    
+    static def getModelTypes(String id) {
+        return processorModelTypes.get(id)
+    }
+    
+    
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorReference processor) {
+        return processor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorGroup processorGroup) {
+        return processorGroup.processors.head.getFirstProcessor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorAlternativeGroup processorGroup) {
+        return processorGroup.processors.head.getFirstProcessor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorSystem processorSystem) {
+        return processorSystem.id.getSystemById.processors.getFirstProcessor
+    }
+    
+    static def dispatch ProcessorReference getFirstProcessor(System system) {
+        return system.processors.getFirstProcessor
+    }
+    
+    
+    static def dispatch ProcessorReference getLastProcessor(ProcessorReference processor) {
+        return processor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorGroup processorGroup) {
+        return processorGroup.processors.last.getLastProcessor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorAlternativeGroup processorGroup) {
+        return processorGroup.processors.last.getLastProcessor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorSystem processorSystem) {
+        return processorSystem.id.getSystemById.processors.getLastProcessor
+    }
+    
+    static def dispatch ProcessorReference getLastProcessor(System system) {
+        return system.processors.getLastProcessor
+    }
+    
 }

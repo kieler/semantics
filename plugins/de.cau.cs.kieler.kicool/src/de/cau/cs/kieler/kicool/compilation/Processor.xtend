@@ -72,14 +72,14 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Return the prime environment.
      */
     def Environment getEnvironment() {
-        return environments.target
+        return environments?.target
     }
     
     /**
      * Return the source environment.
      */
     def Environment getSourceEnvironment() {
-        return environments.source
+        return environments?.source
     }
     
     /**

@@ -831,7 +831,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
                     "The referencing binding is erroneous!\n" + errorMessage);
-            } else if (implicitMessage != "" && scopeCall.eContainer instanceof org.eclipse.xtext.validation.AbstractDeclarativeValidator.State) {
+            } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
