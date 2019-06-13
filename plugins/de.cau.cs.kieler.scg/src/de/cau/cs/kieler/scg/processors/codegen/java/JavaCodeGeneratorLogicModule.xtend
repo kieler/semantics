@@ -62,7 +62,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         code.append(" {\n")
     }
     
-    override def void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
+    override void addPreVariable(OperatorExpression operatorExpression, extension CCodeSerializeHRExtensions serializer) {
         valuedObjectPrefix = ""
         prePrefix = JavaCodeGeneratorStructModule.STRUCT_PRE_PREFIX
         val name = operatorExpression.serializeHR 
@@ -88,7 +88,7 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
         tick.code.append(struct.getVariableName).append(struct.separator).append(operatorExpression.serializeHR).append(";\n")
     }
     
-    override def generateMethods(extension CCodeSerializeHRExtensions serializer) {
+    override generateMethods(extension CCodeSerializeHRExtensions serializer) {
         for (scg : SCGraphs.scgs.filter[method]) {
             val method = scg.methodDeclaration
                         
@@ -111,9 +111,9 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             
             // Temporarily redirect struct module output to this module
             val structCode = struct.code
-            struct.code = code
+            struct.newCodeStringBuilder = code
             struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
-            struct.code = structCode
+            struct.newCodeStringBuilder = structCode
             
             // Generate body
             conditionalStack.clear

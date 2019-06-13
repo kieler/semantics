@@ -8,4 +8,4 @@ system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
 post process de.cau.cs.kieler.scg.processors.methods
 system de.cau.cs.kieler.scg.priority
-de.cau.cs.kieler.scg.processors.sclp
+de.cau.cs.kieler.scg.processors.codegen.prio.c
