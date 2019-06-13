@@ -99,11 +99,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
     private def CharSequence serialize(Action action, boolean hr) {
         val joiner = Joiner.on(" ");
-        val parts = action.serializeHighlighted(hr)
+        val parts = action.serializeHighlighted(hr, false)
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr) {
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr, boolean userLabels) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         if (action.delay == DelayType.IMMEDIATE) {
@@ -122,21 +122,25 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             default: ""
         })
 
-        if (action.trigger !== null) {
-            components.addText(if (hr) {
-                action.trigger.serializeHR
-            } else {
-                action.trigger.serialize
-            })
-        }
-
-        if (!action.effects.empty) {
-            components.addText("/")
-            components.addText(if (hr) {
-                action.effects.serializeHR
-            } else {
-                action.effects.serialize
-            })
+        if (userLabels && !action.label.nullOrEmpty) {
+            components.addText(action.label)
+        } else {
+            if (action.trigger !== null) {
+                components.addText(if (hr) {
+                    action.trigger.serializeHR
+                } else {
+                    action.trigger.serialize
+                })
+            }
+    
+            if (!action.effects.empty) {
+                components.addText("/")
+                components.addText(if (hr) {
+                    action.effects.serializeHR
+                } else {
+                    action.effects.serialize
+                })
+            }
         }
 
         return components;
