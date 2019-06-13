@@ -261,7 +261,7 @@ class StateSynthesis extends SubSynthesis<State, KNode> {
             val actions = new ArrayList<Action>(state.actions)
             if (SHOW_INHERITANCE.booleanValue) actions.addAll(0, state.allVisibleInheritedActions.toList)
             for (action : actions) {
-                node.addActionLabel(action.serializeHighlighted(true)) => [
+                node.addActionLabel(action.serializeHighlighted(true, SHOW_USER_LABELS.booleanValue)) => [
                     setProperty(TracingVisualizationProperties.TRACING_NODE, true)
                     associateWith(action)
                     eAllContents.filter(KRendering).toList.forEach[

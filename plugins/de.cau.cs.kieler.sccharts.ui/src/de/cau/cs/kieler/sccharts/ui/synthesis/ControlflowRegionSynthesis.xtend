@@ -125,7 +125,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                     // Add actions
                     for (action : region.actions) {
-                        addActionLabel(action.serializeHighlighted(true)) => [
+                        addActionLabel(action.serializeHighlighted(true, SHOW_USER_LABELS.booleanValue)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(action);
                             eAllContentsOfType2(KRendering).forEach[

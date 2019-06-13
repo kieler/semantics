@@ -162,6 +162,10 @@ class SimulationUI {
     }
     
     static def compileAndStartSimulation(String system, Object model) {
+        compileAndStartSimulation(system, model, null)
+    }
+    
+    static def compileAndStartSimulation(String system, Object model, Environment startEnvironment) {
         Job.create("Simulation Compilation", new IJobFunction() {
             
             override run(IProgressMonitor monitor) {
@@ -171,6 +175,7 @@ class SimulationUI {
                 try {
                     val context = Compile.createCompilationContext(system, model)
                     context.startEnvironment.setProperty(Environment.INPLACE, true)
+                    context.startEnvironment.copyProperties(startEnvironment)
                     context.compile
                     
                     if (monitor.canceled) {return Status.CANCEL_STATUS}
