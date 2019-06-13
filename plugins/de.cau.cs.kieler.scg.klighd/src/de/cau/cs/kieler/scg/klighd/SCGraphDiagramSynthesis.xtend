@@ -958,6 +958,8 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
                         conditionalStr).setAreaPlacementData.
                         from(LEFT, 0, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 1, 0).associateWith(conditional) => [
                             if (USE_ADAPTIVEZOOM.booleanValue) it.setProperty(KlighdProperties.VISIBILITY_SCALE_LOWER_BOUND, 0.70);
+                            it.background = "white".color
+                            it.background.alpha = 196
                         ]
                 if(SHOW_SHADOW.booleanValue) it.shadow = "black".color
             ]
