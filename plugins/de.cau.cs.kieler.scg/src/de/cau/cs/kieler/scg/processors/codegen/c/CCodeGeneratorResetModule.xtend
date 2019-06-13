@@ -43,14 +43,13 @@ class CCodeGeneratorResetModule extends SCGCodeGeneratorModule {
         struct.forwardDeclarations.append(code).append(";\n")
         
         code.append(" {\n")
-        
-        indent 
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
-        indent
-        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")
     }
     
     override generate() {
+        indent 
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.GO_GUARD_NAME).append(" = 1;\n")
+        indent
+        code.append(struct.getVariableName).append("->").append(SimpleGuardExpressions.TERM_GUARD_NAME).append(" = 0;\n")        
     }
     
     override generateDone() {

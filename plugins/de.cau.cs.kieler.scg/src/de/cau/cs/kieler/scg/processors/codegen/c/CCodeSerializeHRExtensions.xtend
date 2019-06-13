@@ -71,8 +71,8 @@ class CCodeSerializeHRExtensions extends CodeGeneratorSerializeHRExtensions {
     @Inject extension KExpressionsTypeExtensions
     @Inject extension SCGMethodExtensions
     
-    @Accessors var String valuedObjectPrefix
-    @Accessors var String prePrefix 
+    @Accessors var String valuedObjectPrefix = ""
+    @Accessors var String prePrefix = ""
     @Accessors val Multimap<String, String> modifications = HashMultimap.create
     
     override dispatch CharSequence serialize(ValueType valueType) {

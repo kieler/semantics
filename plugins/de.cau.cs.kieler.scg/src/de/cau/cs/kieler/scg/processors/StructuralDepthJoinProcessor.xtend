@@ -128,7 +128,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 // cure this instance
                 
                 if (curedForks.contains(fork)) {
-                    throw new IllegalStateException("Structural Depth Join: A cured fork seems to be still shizophrenic. " +
+                    throw new IllegalStateException("Structural Depth Join: A cured fork still seems to be shizophrenic. " +
                         "This should not happen. Aborting compilation.")
                 }
                 
