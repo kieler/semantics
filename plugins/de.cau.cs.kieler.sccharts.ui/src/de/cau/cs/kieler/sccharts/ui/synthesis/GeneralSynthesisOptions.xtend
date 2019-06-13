@@ -64,6 +64,7 @@ final class GeneralSynthesisOptions {
     public static final SynthesisOption USE_KLAY = SynthesisOption.createCheckOption("KLayLayered", true).setCategory(LAYOUT)
     public static final SynthesisOption SHOW_ALL_SCCHARTS = SynthesisOption.createCheckOption("All SCCharts", false).setCategory(APPEARANCE)
     public static final SynthesisOption SHOW_COMMENTS = SynthesisOption.createCheckOption("Comment Nodes", true).setCategory(APPEARANCE)
+    public static final SynthesisOption SHOW_USER_LABELS = SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE)
     /** 
      * Scope call parameters synthesis option 
      */

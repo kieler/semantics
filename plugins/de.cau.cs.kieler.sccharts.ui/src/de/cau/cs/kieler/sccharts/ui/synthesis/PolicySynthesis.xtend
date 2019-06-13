@@ -300,7 +300,7 @@ class PolicySynthesis extends SubSynthesis<PolicyRegion, KNode> {
         edge.setSelectionStyle
 
         // Add Label
-        val label = if (TransitionSynthesis.SHOW_USER_LABELS.booleanValue && !transition.label.nullOrEmpty) {
+        val label = if (SHOW_USER_LABELS.booleanValue && !transition.label.nullOrEmpty) {
             transition.label
         } else if (transition.trigger !== null) {
             transition.trigger.serializeHR + if (transition.effects.nullOrEmpty) ": ∅" else transition.effects.join(": {", ", ", "}", [serializeHR])
