@@ -269,7 +269,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     warning(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
                 }
             }
-        } else if (!region.parentState.baseStates.nullOrEmpty) {
+        } else if (!region.parentState.baseStates.nullOrEmpty && !region.name.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
                 warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)

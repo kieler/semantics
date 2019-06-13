@@ -666,6 +666,16 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
         }
         return ""
     }
+    
+    public def getCurrentCompilationContext() {
+        if (compilerToggleAction.isChecked && !compiledModel.empty) {
+            val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
+            if (compiler !== null) {
+                return compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
+            }
+        }
+        return null
+    }
 
     // -- Model Update
     // -------------------------------------------------------------------------
@@ -742,10 +752,7 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
                     "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy")
             // Give model synthesis access to the compilation result
-            val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
-            val cc = if (compiler !== null) {
-                compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
-            }
+            val cc = currentCompilationContext
             properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, cc)
 
             // Create model to passed to update

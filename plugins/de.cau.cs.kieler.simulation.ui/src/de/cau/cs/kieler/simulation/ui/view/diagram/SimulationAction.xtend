@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.simulation.ui.view.diagram
 
 import de.cau.cs.kieler.kicool.System
+import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
@@ -129,7 +130,9 @@ class SimulationAction extends Action implements IMenuCreator {
      */
     override void run() {
         if (!lastSelectedSystem.nullOrEmpty && !systems.empty && muc.model.compilableModel !== null) {
-            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model.compilableModel)
+            val env = new Environment
+            env.setProperty(Environment.PRECEEDING_COMPILATION_CONTEXT, muc.currentCompilationContext)
+            SimulationUI.compileAndStartSimulation(lastSelectedSystem, muc.model.compilableModel, env)
             DataPoolView.bringToTopIfOpen
         }
     }
