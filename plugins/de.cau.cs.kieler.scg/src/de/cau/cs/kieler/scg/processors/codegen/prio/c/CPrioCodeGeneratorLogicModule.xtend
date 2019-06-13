@@ -185,9 +185,7 @@ class CPrioCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
     
 
     protected def List<Node> transformNode(Assignment assignment, extension CCodeSerializeHRExtensions serializer) {
-        if (!assignment.isPartOfForLoopHeader) {
-            assignment.serializeToCode(1, struct, serializer)
-        }
+        assignment.serializeToCode(1, struct, serializer)
         
         return <Node> newLinkedList => [ add(assignment.next.target.asNode) ]
     }

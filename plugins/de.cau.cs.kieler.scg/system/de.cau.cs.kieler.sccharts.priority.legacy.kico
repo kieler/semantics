@@ -1,5 +1,9 @@
 developer system de.cau.cs.kieler.sccharts.priority.legacy
-    label "Priority-based Compilation (C, Legacy) "
+    label "Priority-based Compilation (C, Legacy)"
+    config {
+       "de.cau.cs.kieler.scg.processors.methods.inline.all": true
+    }
+    
 
 system de.cau.cs.kieler.sccharts.extended.core
 de.cau.cs.kieler.sccharts.scg.processors.SCG
