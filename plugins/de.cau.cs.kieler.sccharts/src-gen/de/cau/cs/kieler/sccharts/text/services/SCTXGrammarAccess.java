@@ -2244,6 +2244,77 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		//WhileLoop
 		public RuleCall getWhileLoopParserRuleCall_8() { return cWhileLoopParserRuleCall_8; }
 	}
+	public class EffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.Effect");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cEffectParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cCodeEffectParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//Effect keffects::Effect:
+		//	super | CodeEffect;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//super | CodeEffect
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//super
+		public RuleCall getEffectParserRuleCall_0() { return cEffectParserRuleCall_0; }
+		
+		//CodeEffect
+		public RuleCall getCodeEffectParserRuleCall_1() { return cCodeEffectParserRuleCall_1; }
+	}
+	public class CodeEffectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.CodeEffect");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cCodeEffectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cDeclarationsAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_3_0 = (RuleCall)cDeclarationsAssignment_3.eContents().get(0);
+		private final Assignment cStatementsAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cStatementsStatementParserRuleCall_4_0 = (RuleCall)cStatementsAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//CodeEffect sccharts::CodeEffect:
+		//	{sccharts::CodeEffect} annotations+=Annotation*
+		//	'{'
+		//	declarations+=Declaration*
+		//	statements+=Statement*
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{sccharts::CodeEffect} annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
+		public Group getGroup() { return cGroup; }
+		
+		//{sccharts::CodeEffect}
+		public Action getCodeEffectAction_0() { return cCodeEffectAction_0; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//declarations+=Declaration*
+		public Assignment getDeclarationsAssignment_3() { return cDeclarationsAssignment_3; }
+		
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_3_0() { return cDeclarationsDeclarationParserRuleCall_3_0; }
+		
+		//statements+=Statement*
+		public Assignment getStatementsAssignment_4() { return cStatementsAssignment_4; }
+		
+		//Statement
+		public RuleCall getStatementsStatementParserRuleCall_4_0() { return cStatementsStatementParserRuleCall_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
 	public class ClassDeclarationWOSemicolonElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ClassDeclarationWOSemicolon");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -3119,6 +3190,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	private final SucceedingActionElements pSucceedingAction;
 	private final PeriodActionElements pPeriodAction;
 	private final StatementElements pStatement;
+	private final EffectElements pEffect;
+	private final CodeEffectElements pCodeEffect;
 	private final ClassDeclarationWOSemicolonElements pClassDeclarationWOSemicolon;
 	private final PolicyRegionElements pPolicyRegion;
 	private final PolicyStateElements pPolicyState;
@@ -3183,6 +3256,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		this.pSucceedingAction = new SucceedingActionElements();
 		this.pPeriodAction = new PeriodActionElements();
 		this.pStatement = new StatementElements();
+		this.pEffect = new EffectElements();
+		this.pCodeEffect = new CodeEffectElements();
 		this.pClassDeclarationWOSemicolon = new ClassDeclarationWOSemicolonElements();
 		this.pPolicyRegion = new PolicyRegionElements();
 		this.pPolicyState = new PolicyStateElements();
@@ -3561,6 +3636,31 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getStatementRule() {
 		return getStatementAccess().getRule();
+	}
+	
+	//@Override
+	//Effect keffects::Effect:
+	//	super | CodeEffect;
+	public EffectElements getEffectAccess() {
+		return pEffect;
+	}
+	
+	public ParserRule getEffectRule() {
+		return getEffectAccess().getRule();
+	}
+	
+	//CodeEffect sccharts::CodeEffect:
+	//	{sccharts::CodeEffect} annotations+=Annotation*
+	//	'{'
+	//	declarations+=Declaration*
+	//	statements+=Statement*
+	//	'}';
+	public CodeEffectElements getCodeEffectAccess() {
+		return pCodeEffect;
+	}
+	
+	public ParserRule getCodeEffectRule() {
+		return getCodeEffectAccess().getRule();
 	}
 	
 	//@Override
@@ -4085,7 +4185,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect;
+	//	expression=AnnotatedExpression | effect=super::Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -4356,12 +4456,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	//Effect keffects::Effect:
 	//	Assignment | PostfixEffect | ValuedEmission | HostcodeEffect | ReferenceCallEffect | FunctionCallEffect |
 	//	PrintCallEffect | RandomizeCallEffect | PureEmission;
-	public KEffectsGrammarAccess.EffectElements getEffectAccess() {
+	public KEffectsGrammarAccess.EffectElements getKEffectsEffectAccess() {
 		return gaKEffects.getEffectAccess();
 	}
 	
-	public ParserRule getEffectRule() {
-		return getEffectAccess().getRule();
+	public ParserRule getKEffectsEffectRule() {
+		return getKEffectsEffectAccess().getRule();
 	}
 	
 	//// Emission Rule

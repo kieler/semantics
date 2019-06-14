@@ -1253,7 +1253,7 @@ ruleTransition returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_11_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1277,7 +1277,7 @@ ruleTransition returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_13_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2555,7 +2555,7 @@ ruleEntryAction returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_7_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2579,7 +2579,7 @@ ruleEntryAction returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_9_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2748,7 +2748,7 @@ ruleDuringAction returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_9_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2772,7 +2772,7 @@ ruleDuringAction returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_11_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2904,7 +2904,7 @@ ruleExitAction returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_7_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -2928,7 +2928,7 @@ ruleExitAction returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_9_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3217,7 +3217,7 @@ rulePrecedingAction returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_7_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -3241,7 +3241,7 @@ rulePrecedingAction returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_9_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3373,7 +3373,7 @@ ruleSucceedingAction returns [EObject current=null]
 							$current,
 							"effects",
 							lv_effects_7_0,
-							"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+							"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -3397,7 +3397,7 @@ ruleSucceedingAction returns [EObject current=null]
 								$current,
 								"effects",
 								lv_effects_9_0,
-								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+								"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3667,6 +3667,142 @@ ruleStatement returns [EObject current=null]
 		{
 			$current = $this_WhileLoop_8.current;
 			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleEffect
+entryRuleEffect returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getEffectRule()); }
+	iv_ruleEffect=ruleEffect
+	{ $current=$iv_ruleEffect.current; }
+	EOF;
+
+// Rule Effect
+ruleEffect returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getEffectAccess().getEffectParserRuleCall_0());
+		}
+		this_Effect_0=superEffect
+		{
+			$current = $this_Effect_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getEffectAccess().getCodeEffectParserRuleCall_1());
+		}
+		this_CodeEffect_1=ruleCodeEffect
+		{
+			$current = $this_CodeEffect_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleCodeEffect
+entryRuleCodeEffect returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getCodeEffectRule()); }
+	iv_ruleCodeEffect=ruleCodeEffect
+	{ $current=$iv_ruleCodeEffect.current; }
+	EOF;
+
+// Rule CodeEffect
+ruleCodeEffect returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				/* */
+			}
+			{
+				$current = forceCreateModelElement(
+					grammarAccess.getCodeEffectAccess().getCodeEffectAction_0(),
+					$current);
+			}
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getCodeEffectAccess().getAnnotationsAnnotationParserRuleCall_1_0());
+				}
+				lv_annotations_1_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCodeEffectRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_1_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_2='{'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getCodeEffectAccess().getLeftCurlyBracketKeyword_2());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getCodeEffectAccess().getDeclarationsDeclarationParserRuleCall_3_0());
+				}
+				lv_declarations_3_0=ruleDeclaration
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCodeEffectRule());
+					}
+					add(
+						$current,
+						"declarations",
+						lv_declarations_3_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getCodeEffectAccess().getStatementsStatementParserRuleCall_4_0());
+				}
+				lv_statements_4_0=ruleStatement
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getCodeEffectRule());
+					}
+					add(
+						$current,
+						"statements",
+						lv_statements_4_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.Statement");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_5='}'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getCodeEffectAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -7203,7 +7339,7 @@ ruleTestEntity returns [EObject current=null]
 						$current,
 						"effect",
 						lv_effect_1_0,
-						"de.cau.cs.kieler.kexpressions.keffects.KEffects.Effect");
+						"de.cau.cs.kieler.sccharts.text.SCTX.Effect");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -9552,15 +9688,15 @@ ruleSimpleValuedObject returns [EObject current=null]
 	)
 ;
 
-// Entry rule entryRuleEffect
-entryRuleEffect returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getEffectRule()); }
-	iv_ruleEffect=ruleEffect
-	{ $current=$iv_ruleEffect.current; }
+// Entry rule entrySuperEffect
+entrySuperEffect returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getKEffectsEffectRule()); }
+	iv_superEffect=superEffect
+	{ $current=$iv_superEffect.current; }
 	EOF;
 
 // Rule Effect
-ruleEffect returns [EObject current=null]
+superEffect returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -9572,7 +9708,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getAssignmentParserRuleCall_0());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getAssignmentParserRuleCall_0());
 		}
 		this_Assignment_0=ruleAssignment
 		{
@@ -9584,7 +9720,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getPostfixEffectParserRuleCall_1());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getPostfixEffectParserRuleCall_1());
 		}
 		this_PostfixEffect_1=rulePostfixEffect
 		{
@@ -9596,7 +9732,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getValuedEmissionParserRuleCall_2());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getValuedEmissionParserRuleCall_2());
 		}
 		this_ValuedEmission_2=ruleValuedEmission
 		{
@@ -9608,7 +9744,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getHostcodeEffectParserRuleCall_3());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getHostcodeEffectParserRuleCall_3());
 		}
 		this_HostcodeEffect_3=ruleHostcodeEffect
 		{
@@ -9620,7 +9756,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getReferenceCallEffectParserRuleCall_4());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getReferenceCallEffectParserRuleCall_4());
 		}
 		this_ReferenceCallEffect_4=ruleReferenceCallEffect
 		{
@@ -9632,7 +9768,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getFunctionCallEffectParserRuleCall_5());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getFunctionCallEffectParserRuleCall_5());
 		}
 		this_FunctionCallEffect_5=ruleFunctionCallEffect
 		{
@@ -9644,7 +9780,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getPrintCallEffectParserRuleCall_6());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getPrintCallEffectParserRuleCall_6());
 		}
 		this_PrintCallEffect_6=rulePrintCallEffect
 		{
@@ -9656,7 +9792,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getRandomizeCallEffectParserRuleCall_7());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getRandomizeCallEffectParserRuleCall_7());
 		}
 		this_RandomizeCallEffect_7=ruleRandomizeCallEffect
 		{
@@ -9668,7 +9804,7 @@ ruleEffect returns [EObject current=null]
 			/* */
 		}
 		{
-			newCompositeNode(grammarAccess.getEffectAccess().getPureEmissionParserRuleCall_8());
+			newCompositeNode(grammarAccess.getKEffectsEffectAccess().getPureEmissionParserRuleCall_8());
 		}
 		this_PureEmission_8=rulePureEmission
 		{

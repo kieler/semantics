@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -49,14 +50,13 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.scl.Loop
-import de.cau.cs.kieler.scl.Conditional
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -397,7 +397,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 stm.replaceValuedObjectReferencesInSclScope(replacements)
             } else if (stm instanceof de.cau.cs.kieler.scl.Assignment) {
                 stm.replaceReferences(replacements)
-            } else if (stm instanceof de.cau.cs.kieler.scl.Return) {
+            } else if (stm instanceof Return) {
                 stm.expression?.replaceReferences(replacements)
             }
         }
@@ -568,6 +568,11 @@ class Reference extends SCChartsProcessor implements Traceable {
         for (parameter : referenceCall.parameters) {
             parameter.replaceReferences(replacements)
         }        
+    }
+    
+    /** Handle Code Effect. */
+    protected dispatch def void replaceReferences(CodeEffect code, Replacements replacements) {
+        code.replaceValuedObjectReferencesInSclScope(replacements)       
     }
     
     

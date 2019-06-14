@@ -45,6 +45,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
 			builder.put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
+			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAlternatives_9(), "rule__ClassDeclarationWOSemicolon__Alternatives_9");
 			builder.put(grammarAccess.getPolicyTransitionAccess().getAlternatives_2_1(), "rule__PolicyTransition__Alternatives_2_1");
 			builder.put(grammarAccess.getDeclarationOrMethodWithKeywordWOSemicolonAccess().getAlternatives(), "rule__DeclarationOrMethodWithKeywordWOSemicolon__Alternatives");
@@ -68,7 +69,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDeclarationOrMethodWOSemicolonAccess().getAlternatives(), "rule__DeclarationOrMethodWOSemicolon__Alternatives");
 			builder.put(grammarAccess.getReferenceDeclarationAccess().getAlternatives_2(), "rule__ReferenceDeclaration__Alternatives_2");
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__ReferenceDeclarationWOSemicolon__Alternatives_2");
-			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
+			builder.put(grammarAccess.getKEffectsEffectAccess().getAlternatives(), "superEffect__Alternatives");
 			builder.put(grammarAccess.getPureOrValuedEmissionAccess().getAlternatives(), "rule__PureOrValuedEmission__Alternatives");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_4(), "rule__ReferenceCallEffect__Alternatives_4");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
@@ -200,6 +201,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getSucceedingActionAccess().getGroup_4(), "rule__SucceedingAction__Group_4__0");
 			builder.put(grammarAccess.getPeriodActionAccess().getGroup(), "rule__PeriodAction__Group__0");
 			builder.put(grammarAccess.getPeriodActionAccess().getGroup_5(), "rule__PeriodAction__Group_5__0");
+			builder.put(grammarAccess.getCodeEffectAccess().getGroup(), "rule__CodeEffect__Group__0");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getGroup(), "rule__ClassDeclarationWOSemicolon__Group__0");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getGroup_9_0(), "rule__ClassDeclarationWOSemicolon__Group_9_0__0");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getGroup_9_1(), "rule__ClassDeclarationWOSemicolon__Group_9_1__0");
@@ -591,6 +593,9 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPeriodActionAccess().getDelayAssignment_2(), "rule__PeriodAction__DelayAssignment_2");
 			builder.put(grammarAccess.getPeriodActionAccess().getTriggerAssignment_4(), "rule__PeriodAction__TriggerAssignment_4");
 			builder.put(grammarAccess.getPeriodActionAccess().getLabelAssignment_5_1(), "rule__PeriodAction__LabelAssignment_5_1");
+			builder.put(grammarAccess.getCodeEffectAccess().getAnnotationsAssignment_1(), "rule__CodeEffect__AnnotationsAssignment_1");
+			builder.put(grammarAccess.getCodeEffectAccess().getDeclarationsAssignment_3(), "rule__CodeEffect__DeclarationsAssignment_3");
+			builder.put(grammarAccess.getCodeEffectAccess().getStatementsAssignment_4(), "rule__CodeEffect__StatementsAssignment_4");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAnnotationsAssignment_1(), "rule__ClassDeclarationWOSemicolon__AnnotationsAssignment_1");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAccessAssignment_2(), "rule__ClassDeclarationWOSemicolon__AccessAssignment_2");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getConstAssignment_3(), "rule__ClassDeclarationWOSemicolon__ConstAssignment_3");

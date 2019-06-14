@@ -15,10 +15,12 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Function
 import com.google.common.base.Joiner
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
 import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -28,12 +30,15 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.PeriodAction
+import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PrecedingAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
@@ -41,11 +46,8 @@ import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.processors.For
-import java.lang.reflect.Method
+import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.sccharts.PolicyRegion
 
 /**
  * @author ssm
@@ -54,6 +56,9 @@ import de.cau.cs.kieler.sccharts.PolicyRegion
  * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
+    
+    @Inject
+    var SCLSerializeExtensions sclSerializer
     
     def dispatch CharSequence serialize(Transition transition) {
         transition.serialize(false);
@@ -509,7 +514,18 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else {
             return emission.reference.valuedObject.name.applySymbolTable
         }
-    }    
+    } 
+    
+    def dispatch CharSequence serializeHR(CodeEffect code) {
+        code.serialize
+    }     
+    def dispatch CharSequence serialize(CodeEffect code) {
+        if (sclSerializer !== null) {
+            return sclSerializer.serialize(code)
+        } else {
+            return "{<code>}"
+        }
+    }
      
     def void defineSubscriptSymbols(String separator) {
         nameSymbolSuffixProcessor.put(separator, 

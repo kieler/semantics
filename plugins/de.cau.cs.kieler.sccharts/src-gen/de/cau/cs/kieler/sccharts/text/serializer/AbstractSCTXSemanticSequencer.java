@@ -51,6 +51,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
@@ -182,7 +183,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()) {
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getKEffectsEffectRule()) {
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
@@ -201,6 +203,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getKEffectsEffectRule()
 						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
 					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
 					return; 
@@ -1138,6 +1141,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			}
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case SCChartsPackage.CODE_EFFECT:
+				sequence_CodeEffect(context, (CodeEffect) semanticObject); 
+				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
 				if (rule == grammarAccess.getRegionRule()
 						|| rule == grammarAccess.getControlflowRegionRule()) {
@@ -1572,6 +1578,19 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_ClassDeclarationWOSemicolon(ISerializationContext context, PolicyClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns CodeEffect
+	 *     CodeEffect returns CodeEffect
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement*)
+	 */
+	protected void sequence_CodeEffect(ISerializationContext context, CodeEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
