@@ -274,7 +274,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             }
         }
         // If multiple control-flows are joining here, reduce the nesting depth accordingly.
-        if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
+        if (incomingControlFlows.size > 1 && !conditional.isExplicitLoop) for (i : 2..incomingControlFlows.size) {
             indent(conditionalStack.size)
             code.append("}\n")
             conditionalStack.pop
