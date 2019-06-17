@@ -286,7 +286,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     /** Replaces valued object references inside the given state. */
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
         // Handle refereces in declarations
-        for (decl : state.declarations) {
+        for (decl : state.declarations.immutableCopy) {
             decl.replaceValuedObjectReferencesInDeclaration(replacements)
         }
         
@@ -314,7 +314,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     /** Replaces valued object references inside the given region. */
     protected def replaceValuedObjectReferencesInRegion(Region region, Replacements replacements) {
         // Handle refereces in declarations
-        for (decl : region.declarations) {
+        for (decl : region.declarations.immutableCopy) {
             decl.replaceValuedObjectReferencesInDeclaration(replacements)
         }
         
@@ -377,7 +377,9 @@ class Reference extends SCChartsProcessor implements Traceable {
         } else if (scope instanceof MethodImplementationDeclaration) {
             valuedObjects += scope.parameterDeclarations.map[ valuedObjects ].flatten.toList
         } else if (scope instanceof Loop) {
-            valuedObjects += scope.initializationDeclaration?.valuedObjects
+            if (scope.initializationDeclaration !== null) {
+                valuedObjects += scope.initializationDeclaration.valuedObjects
+            }
         }
         valuedObjects += scope.declarations.map[ valuedObjects ].flatten.toList
         for (valuedObject : valuedObjects) {

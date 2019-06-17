@@ -72,4 +72,13 @@ class Replacements extends HashMap<String, Stack<Expression>> {
             return stack.pop
         }
     }
+    
+    def clear(String valuedObjectName) {
+        put(valuedObjectName, null)
+        remove(valuedObjectName) 
+    }
+    
+    def clear(ValuedObject valuedObject) {
+        clear(valuedObject.name)
+    }
 }

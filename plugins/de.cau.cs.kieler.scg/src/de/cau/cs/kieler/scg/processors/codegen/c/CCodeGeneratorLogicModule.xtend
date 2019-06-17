@@ -125,57 +125,60 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         code.append("}\n")
     }
     
+    protected def void serializeToCode(Assignment assignment, int indent, 
+        extension CCodeGeneratorStructModule struct, extension CCodeSerializeHRExtensions serializer
+    ) {
+        if (assignment.valuedObject === null) {
+            indent(indent)
+            if (assignment.expression instanceof TextExpression) {
+                code.append((assignment.expression as TextExpression).text).append(";\n")
+            } else if (assignment.expression instanceof PrintCall) {
+                code.append((assignment.expression as PrintCall).serialize).append(";\n")
+            } else if (assignment.expression instanceof RandomizeCall) {
+                code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
+            } else if (assignment.expression instanceof FunctionCall) {
+                code.append((assignment.expression as FunctionCall).serialize).append(";\n")
+            } else if (assignment.expression instanceof ReferenceCall) {
+                val referenceCall = assignment.expression as ReferenceCall
+                val declaration = referenceCall.valuedObject.declaration
+                if (declaration instanceof ReferenceDeclaration && declaration.asReferenceDeclaration.reference instanceof SCGraph) {
+                    code.append(callToSCG(referenceCall, declaration as ReferenceDeclaration, conditionalStack.size + 1, serializer))
+                } else {
+                    code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
+                }
+            } else {
+                throw new NullPointerException("Assigned valued object is null or not supported")
+            }
+
+        } else if (assignment.isReturn) {
+                indent(conditionalStack.size + 1)
+                code.append("return ").append(assignment.expression.serializeHR).append(";\n")    
+        } else {
+            // Add the assignment.
+            valuedObjectPrefix = struct.getVariableName + struct.separator
+            prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
+            if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
+                for (asgn : assignment.splitAssignment) {
+                    indent(indent)
+                    code.append(asgn.serializeHR).append(";\n")    
+                }
+            } else {
+                indent(indent)
+                code.append(assignment.serializeHR).append(";\n")
+            }
+        }        
+    }
+    
     protected def dispatch void generate(Assignment assignment, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
             assignment.handleConditionalNesting
         }
-        
+
         if (!assignment.isPartOfForLoopHeader) {
-            if (assignment.valuedObject === null) {
-                if (assignment.expression instanceof TextExpression) {
-                    indent(conditionalStack.size + 1)
-                    code.append((assignment.expression as TextExpression).text).append(";\n")
-                } else if (assignment.expression instanceof PrintCall) {
-                    indent(conditionalStack.size + 1)
-                    code.append((assignment.expression as PrintCall).serialize).append(";\n")
-                } else if (assignment.expression instanceof RandomizeCall) {
-                    indent(conditionalStack.size + 1)
-                    code.append((assignment.expression as RandomizeCall).serialize).append(";\n")                    
-                } else if (assignment.expression instanceof FunctionCall) {
-                    indent(conditionalStack.size + 1)
-                    code.append((assignment.expression as FunctionCall).serialize).append(";\n")
-                } else if (assignment.expression instanceof ReferenceCall) {
-                    val referenceCall = assignment.expression as ReferenceCall
-                    val declaration = referenceCall.valuedObject
-                    if (declaration instanceof ReferenceDeclaration && declaration.reference instanceof SCGraph) {
-                        code.append(callToSCG(referenceCall, declaration as ReferenceDeclaration, conditionalStack.size + 1, serializer))
-                    } else {
-                        indent(conditionalStack.size + 1)
-                        code.append((assignment.expression as ReferenceCall).serialize).append(";\n")
-                    }
-                } else {
-                    throw new NullPointerException("Assigned valued object is null or not supported")
-                }
-                
-            } else if (assignment.isReturn) {
-                indent(conditionalStack.size + 1)
-                code.append("return ").append(assignment.expression.serializeHR).append(";\n")
-            } else {
-                
-                // Add the assignment.
-                valuedObjectPrefix = struct.getVariableName + struct.separator
-                prePrefix = CCodeGeneratorStructModule.STRUCT_PRE_PREFIX
-                if (assignment.valuedObject.isArray && assignment.expression instanceof VectorValue) {
-                    for (asgn : assignment.splitAssignment) {
-                        indent(conditionalStack.size + 1)
-                        code.append(asgn.serializeHR).append(";\n")    
-                    }
-                } else {
-                    indent(conditionalStack.size + 1)
-                    code.append(assignment.serializeHR).append(";\n")
-                }
-                
+            assignment.serializeToCode(conditionalStack.size + 1, struct, serializer)
+            
+            if (assignment.valuedObject !== null) {
                 // Handle pre variable if necessary.
                 if (assignment.expression !== null && assignment.expression instanceof OperatorExpression) {
                     for (preOE : assignment.expression.asOperatorExpression.getPreOperatorExpressions) {
@@ -183,8 +186,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     }        
                 }
             }
-        }
-        
+        }        
         // If a new statement follows, add it to the node list.
         if (assignment.next !== null) nodes.push(assignment.next.targetNode)
     }
@@ -272,7 +274,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             }
         }
         // If multiple control-flows are joining here, reduce the nesting depth accordingly.
-        if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
+        if (incomingControlFlows.size > 1 && !conditional.isExplicitLoop) for (i : 2..incomingControlFlows.size) {
             indent(conditionalStack.size)
             code.append("}\n")
             conditionalStack.pop
@@ -327,9 +329,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             
             // Temporarily redirect struct module output to this module
             val structCode = struct.code
-            struct.code = code
+            struct.newCodeStringBuilder = code
             struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
-            struct.code = structCode
+            struct.newCodeStringBuilder = structCode
             
             // Generate body
             conditionalStack.clear

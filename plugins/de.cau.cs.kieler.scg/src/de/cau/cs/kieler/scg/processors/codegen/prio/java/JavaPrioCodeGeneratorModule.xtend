@@ -10,37 +10,36 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.scg.processors.codegen.java
+package de.cau.cs.kieler.scg.processors.codegen.prio.java
 
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGenerator
-import de.cau.cs.kieler.scg.processors.codegen.c.CCodeGeneratorModule
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.registry.PragmaRegistry
 
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 import de.cau.cs.kieler.annotations.Nameable
+import de.cau.cs.kieler.scg.processors.codegen.prio.c.CPrioCodeGeneratorModule
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
- * Root C Code Generator Module
+ * Root Java Code Generator Module
+ * Migrated from SJTransformation
  * 
  * Initializes necessary modules and invokes them in correct order.
  * 
  * @author ssm
- * @kieler.design 2017-07-21 proposed 
- * @kieler.rating 2017-07-21 proposed yellow 
+ * @kieler.design 2019-06-09 proposed 
+ * @kieler.rating 2019-06-09 proposed yellow 
  * 
  */
-class JavaCodeGeneratorModule extends CCodeGeneratorModule {
+class JavaPrioCodeGeneratorModule extends CPrioCodeGeneratorModule {
     
     @Inject extension PragmaExtensions
-    @Inject extension JavaCodeSerializeHRExtensions
-    
     @Inject Injector injector
+    @Inject extension JavaPrioCodeSerializeHRExtensions
     
     protected static val PACKAGE = PragmaRegistry.register("package", StringPragma, "Package name for the generated file(s)")
     
@@ -49,10 +48,10 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     override configure() {
         modifications.clear
         
-        struct = injector.getInstance(JavaCodeGeneratorStructModule)
-        reset = injector.getInstance(JavaCodeGeneratorResetModule)
-        tick = injector.getInstance(JavaCodeGeneratorTickModule)
-        logic = injector.getInstance(JavaCodeGeneratorLogicModule)
+        struct = injector.getInstance(JavaPrioCodeGeneratorStructModule)
+        reset = injector.getInstance(JavaPrioCodeGeneratorResetModule)
+        tick = injector.getInstance(JavaPrioCodeGeneratorTickModule)
+        logic = injector.getInstance(JavaPrioCodeGeneratorLogicModule)
             
         struct.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
             codeFilename + JAVA_EXTENSION, this, TICKDATA_STRUCT_NAME)
@@ -61,49 +60,53 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         tick.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
             codeFilename + JAVA_EXTENSION, this, TICK_FUNCTION_NAME)
         logic.configure(baseName, SCGraphs, scg, processorInstance, codeGeneratorModuleMap, 
-            codeFilename + JAVA_EXTENSION, this, LOGIC_FUNCTION_NAME)
+            codeFilename + C_EXTENSION, this, LOGIC_FUNCTION_NAME)
+    }
+    
+    override generateDone() {
+        struct?.generateDone
+        reset?.generateDone
+        logic?.generateDone
+        tick.code.append(logic.code)
+        tick?.generateDone
     }
     
     override generateWrite(CodeContainer codeContainer) {
-        val cFilename = codeFilename + JAVA_EXTENSION
-        val cFile = new StringBuilder
+        val classFilename = codeFilename + JAVA_EXTENSION
+        val classFile = new StringBuilder
 
-        cFile.packageAdditions
-        cFile.addHeader
-        cFile.hostcodeAdditions
+        classFile.addHeader
+        classFile.hostcodeAdditions
+        classFile.addClass
         
-        cFile.append("public class " + codeFilename + " {\n\n")
-
-        cFile.append(struct.code).append("\n")        
-        cFile.append(reset.code).append("\n")
-        cFile.append(logic.code).append("\n")
-        cFile.append(tick.code)
+        classFile.append(struct.code).append("\n")
+        classFile.append(tick.code).append("\n")
+        classFile.append(reset.code)
         
-        cFile.append("}\n")
-
+        classFile.append("}\n");        
+        
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
-
-        codeContainer.addJavaCode(cFilename, cFile.toString) => [
-            it.naming.putAll(this.naming)   
-            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
+        
+        codeContainer.addJavaCode(classFilename, classFile.toString) => [
+            it.naming.putAll(this.naming)
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
         ]        
-    }    
+    } 
+   
+    protected def addClass(StringBuilder sb) {
+        val programName = getProgramName
+        sb.append("public class " + programName + " extends SJLProgramForPriorities<" + programName + ".State> {\n");
+    }
     
-    override void addHeader(StringBuilder sb) {
-        sb.append(
-            "/*\n" + " * Automatically generated Java code by\n" + " * KIELER SCCharts - The Key to Efficient Modeling\n" +
-                " *\n" + " * http://rtsys.informatik.uni-kiel.de/kieler\n" + " */\n\n")
-                
-        if (processorInstance.environment.getProperty(CCodeGenerator.DEBUG_COMMENTS)) {
-            sb.addDebugComments
-        }
-    }  
+    def getProgramName() {
+        return if (scg.label.nullOrEmpty) "Program" else scg.label;
+    }
     
     override void hostcodeAdditions(StringBuilder sb) {
-        val includes = modifications.get(JavaCodeSerializeHRExtensions.INCLUDES)
+        val includes = modifications.get(JavaPrioCodeSerializeHRExtensions.INCLUDES)
         for (include : includes)  {
             sb.append("import " + include + "\n")
         }
@@ -115,12 +118,5 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
         if (hostcodePragmas.size > 0 || includes.size > 0) {
             sb.append("\n")
         }
-    }  
-    
-    def void packageAdditions(StringBuilder sb) {
-        val packagePragma = SCGraphs.getStringPragmas(PACKAGE)
-        if (packagePragma.size > 0) {
-            sb.append("package ").append(packagePragma.head.values.head).append(";\n\n")
-        }
-    }
+    }      
 }
