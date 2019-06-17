@@ -370,19 +370,19 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside scope from scl (due to methods). */
     protected def void replaceValuedObjectReferencesInSclScope(de.cau.cs.kieler.scl.Scope scope, Replacements replacements) {
-        val valuedObjects = <ValuedObject>newArrayList
+        val VOs = <ValuedObject>newArrayList
         // Push this scopes variables onto the replacement stack.
         if (scope instanceof Conditional) {
             scope.expression.replaceReferences(replacements)
         } else if (scope instanceof MethodImplementationDeclaration) {
-            valuedObjects += scope.parameterDeclarations.map[ valuedObjects ].flatten.toList
+            VOs += scope.parameterDeclarations.map[valuedObjects].flatten.toList
         } else if (scope instanceof Loop) {
             if (scope.initializationDeclaration !== null) {
-                valuedObjects += scope.initializationDeclaration.valuedObjects
+                VOs += scope.initializationDeclaration.valuedObjects
             }
         }
-        valuedObjects += scope.declarations.map[ valuedObjects ].flatten.toList
-        for (valuedObject : valuedObjects) {
+        VOs += scope.declarations.map[valuedObjects].flatten.toList
+        for (valuedObject : VOs) {
             replacements.push(valuedObject, valuedObject.reference)
         }
         
@@ -405,7 +405,7 @@ class Reference extends SCChartsProcessor implements Traceable {
         }
         
         // Pop this scopes variables from the replacement stack.
-        for (valuedObject : valuedObjects) {
+        for (valuedObject : VOs) {
             replacements.pop(valuedObject)
         }
         
