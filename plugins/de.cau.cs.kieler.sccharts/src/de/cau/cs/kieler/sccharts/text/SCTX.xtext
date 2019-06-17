@@ -218,6 +218,13 @@ PeriodAction returns sccharts::PeriodAction:
 // ----- //
 //  SCL  // 
 // ----- //
+
+// SCL has uses declarations with semicolon -> make it optional
+@Override
+Declaration returns kexpressions::Declaration:
+    super | DeclarationWOSemicolon
+;
+
 @Override
 Statement returns scl::Statement:
     // Only allow restricted set of SCL statements
@@ -309,7 +316,7 @@ KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     ('schedule' schedule+=ScheduleObjectReference+)?
     ('{'
         annotations+=CommentAnnotatonSL?
-        declarations+=DeclarationWOSemicolon*
+        declarations+=Declaration*
         statements+=Statement*
     '}')?
 ;

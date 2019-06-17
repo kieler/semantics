@@ -2855,9 +2855,9 @@ ruleMethodDeclarationWOSemicolon returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0());
+						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0());
 					}
-					lv_declarations_15_0=ruleDeclarationWOSemicolon
+					lv_declarations_15_0=ruleDeclaration
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getMethodDeclarationWOSemicolonRule());
@@ -2866,7 +2866,7 @@ ruleMethodDeclarationWOSemicolon returns [EObject current=null]
 							$current,
 							"declarations",
 							lv_declarations_15_0,
-							"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+							"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
 						afterParserOrEnumRuleCall();
 					}
 				)

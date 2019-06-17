@@ -44,6 +44,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDataflowRegionAccess().getAlternatives_9(), "rule__DataflowRegion__Alternatives_9");
 			builder.put(grammarAccess.getIntOrReferenceAccess().getAlternatives(), "rule__IntOrReference__Alternatives");
 			builder.put(grammarAccess.getLocalActionAccess().getAlternatives(), "rule__LocalAction__Alternatives");
+			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
 			builder.put(grammarAccess.getStatementAccess().getAlternatives(), "rule__Statement__Alternatives");
 			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 			builder.put(grammarAccess.getClassDeclarationWOSemicolonAccess().getAlternatives_9(), "rule__ClassDeclarationWOSemicolon__Alternatives_9");
@@ -60,7 +61,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAlternatives_7(), "rule__MethodDeclaration__Alternatives_7");
 			builder.put(grammarAccess.getMethodDeclarationWOSemicolonAccess().getAlternatives_5(), "rule__MethodDeclarationWOSemicolon__Alternatives_5");
 			builder.put(grammarAccess.getTestEntityAccess().getAlternatives(), "rule__TestEntity__Alternatives");
-			builder.put(grammarAccess.getDeclarationAccess().getAlternatives(), "rule__Declaration__Alternatives");
+			builder.put(grammarAccess.getKExtDeclarationAccess().getAlternatives(), "superDeclaration__Alternatives");
 			builder.put(grammarAccess.getDeclarationWOSemicolonAccess().getAlternatives(), "rule__DeclarationWOSemicolon__Alternatives");
 			builder.put(grammarAccess.getVariableDeclarationAccess().getAlternatives_7(), "rule__VariableDeclaration__Alternatives_7");
 			builder.put(grammarAccess.getVariableDeclarationWOSemicolonAccess().getAlternatives_7(), "rule__VariableDeclarationWOSemicolon__Alternatives_7");
