@@ -42,6 +42,7 @@ class SCLValidator extends AbstractSCLValidator {
             if(container instanceof MethodImplementationDeclaration) {
                 return
             }
+            container = container.eContainer
         }
         error(RETURN_NOT_IN_METHOD, ret, null, -1)
     }
