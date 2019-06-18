@@ -86,7 +86,9 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
                 addStatesAndDeclarationsAndActionsArea(!label.nullOrEmpty, method.declarations.size > 3);
                 // Add declarations
                 for (declaration : method.declarations) {
-                    addDeclarationLabel(declaration.serializeHighlighted(true)) => [
+                    val declCopy = declaration.copy
+                    declCopy.valuedObjects.forEach[initialValue = null] // Prevent dublicate initialization
+                    addDeclarationLabel(declCopy.serializeHighlighted(true)) => [
                         setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                         associateWith(declaration)
                         eAllContentsOfType2(KRendering).forEach[
@@ -117,33 +119,7 @@ class MethodSynthesis extends SubSynthesis<MethodImplementationDeclaration, KNod
             ]
 //            if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
-        
         node.setSelectionStyle
-
-//         Add inner scg
-//        val module = createModule
-//        module.name = method.valuedObjects.head.name
-//        val copier = new Copier()
-//        val copy = copier.copy(method) as Scope
-//        copier.copyReferences()
-//        module.statements.addAll(copy.statements)
-//        module.statements.removeIf[it instanceof Return]
-//        val vos = newHashMap
-//        for (entry : copier.entrySet) {
-//            if (entry.key instanceof ValuedObjectReference) {
-//                val vor = entry.key as ValuedObjectReference
-//                val vorCopy = entry.value as ValuedObjectReference
-//                if (!vos.containsKey(vor.valuedObject)) {
-//                    val declCopy = vor.valuedObject.eContainer.copy as Declaration
-//                    declCopy.valuedObjects.removeIf[!it.name.equals(vor.valuedObject.name)]
-//                    module.declarations += declCopy
-//                    vos.put(vor.valuedObject, declCopy.valuedObjects.head)
-//                }
-//                vorCopy.valuedObject = vos.get(vor.valuedObject)
-//            }
-//        }
-//        val program = createSCLProgram
-//        program.modules += module
 
         val methodCopy = method.copy // To prevent mutation of model in editor
         val vos = newHashMap

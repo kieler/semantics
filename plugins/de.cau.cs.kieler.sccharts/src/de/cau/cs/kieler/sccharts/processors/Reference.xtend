@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -49,14 +50,13 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.kext.DeclarationScope
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
-import de.cau.cs.kieler.scl.Loop
-import de.cau.cs.kieler.scl.Conditional
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -370,19 +370,19 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside scope from scl (due to methods). */
     protected def void replaceValuedObjectReferencesInSclScope(de.cau.cs.kieler.scl.Scope scope, Replacements replacements) {
-        val valuedObjects = <ValuedObject>newArrayList
+        val VOs = <ValuedObject>newArrayList
         // Push this scopes variables onto the replacement stack.
         if (scope instanceof Conditional) {
             scope.expression.replaceReferences(replacements)
         } else if (scope instanceof MethodImplementationDeclaration) {
-            valuedObjects += scope.parameterDeclarations.map[ valuedObjects ].flatten.toList
+            VOs += scope.parameterDeclarations.map[valuedObjects].flatten.toList
         } else if (scope instanceof Loop) {
             if (scope.initializationDeclaration !== null) {
-                valuedObjects += scope.initializationDeclaration.valuedObjects
+                VOs += scope.initializationDeclaration.valuedObjects
             }
         }
-        valuedObjects += scope.declarations.map[ valuedObjects ].flatten.toList
-        for (valuedObject : valuedObjects) {
+        VOs += scope.declarations.map[valuedObjects].flatten.toList
+        for (valuedObject : VOs) {
             replacements.push(valuedObject, valuedObject.reference)
         }
         
@@ -399,13 +399,13 @@ class Reference extends SCChartsProcessor implements Traceable {
                 stm.replaceValuedObjectReferencesInSclScope(replacements)
             } else if (stm instanceof de.cau.cs.kieler.scl.Assignment) {
                 stm.replaceReferences(replacements)
-            } else if (stm instanceof de.cau.cs.kieler.scl.Return) {
+            } else if (stm instanceof Return) {
                 stm.expression?.replaceReferences(replacements)
             }
         }
         
         // Pop this scopes variables from the replacement stack.
-        for (valuedObject : valuedObjects) {
+        for (valuedObject : VOs) {
             replacements.pop(valuedObject)
         }
         
@@ -570,6 +570,11 @@ class Reference extends SCChartsProcessor implements Traceable {
         for (parameter : referenceCall.parameters) {
             parameter.replaceReferences(replacements)
         }        
+    }
+    
+    /** Handle Code Effect. */
+    protected dispatch def void replaceReferences(CodeEffect code, Replacements replacements) {
+        code.replaceValuedObjectReferencesInSclScope(replacements)       
     }
     
     

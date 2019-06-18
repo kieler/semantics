@@ -9177,7 +9177,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=DeclarationWOSemicolon*
+	//	declarations+=Declaration*
 	//	statements+=Statement*
 	//	'}')?;
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {

@@ -2719,7 +2719,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=DeclarationWOSemicolon*
+	//	declarations+=Declaration*
 	//	statements+=super::Statement*
 	//	'}')?;
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {

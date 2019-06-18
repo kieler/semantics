@@ -20,6 +20,7 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.kexpressions.ValueType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -33,6 +34,7 @@ class SCLValidator extends AbstractSCLValidator {
     public static val DUBLICATE_LABEL = "Duplicate label"
     public static val LEAGACY_CONDITIONAL = "This conditional uses legacy syntax. Please use if {...} else {...} instead."
     public static val RETURN_NOT_IN_METHOD = "Return statements can only be used in method bodies."
+    public static val RETURN_NO_TYPE = "Return statement is used but no return type is declared in method signature."
     public static val RESTRICTED_METHOD_STATEMENTS = "This statement is not allowed in method bodies."
 
     @Check
@@ -40,8 +42,12 @@ class SCLValidator extends AbstractSCLValidator {
         var container = ret.eContainer
         while(container !== null) {
             if(container instanceof MethodImplementationDeclaration) {
+                if (container.returnType === null || container.returnType === ValueType.PURE || container.returnType === ValueType.VOID) {
+                    error(RETURN_NO_TYPE, ret, null, -1)
+                }
                 return
             }
+            container = container.eContainer
         }
         error(RETURN_NOT_IN_METHOD, ret, null, -1)
     }

@@ -614,7 +614,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 asm.reference = init.reference.copyReference
                 asm.operator = init.operator
                 asm.controlFlowTarget(cf)
-                asm.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init")
+                asm.markLoopHeaderPart("init")
                 asm.annotations += init.annotations.map[copy]
                 cf = newArrayList(asm.createControlFlow)
             } else if (loop.initializationDeclaration !== null) {
@@ -623,7 +623,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 VariableStore.get(environment)?.remove(decl.valuedObjects.head)
                 scg.declarations.last => [
                     trace(decl)
-                    addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init")
+                    markLoopHeaderPart("init")
                 ]
                 for (vo : decl.valuedObjects) {
                     if (vo.initialValue !== null) {
@@ -634,7 +634,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                         asm.valuedObject = vo.copyValuedObject
                         asm.operator = AssignOperator.ASSIGN
                         asm.controlFlowTarget(cf)
-                        asm.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "init", "decl")
+                        asm.markLoopHeaderPart("init", "decl")
                         asm.annotations += vo.annotations.map[copy]
                         cf = newArrayList(asm.createControlFlow)
                     }
@@ -647,7 +647,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             scg.nodes += cond
             cond.condition = loop.condition.copyExpression
             cond.controlFlowTarget(cf)
-            cond.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "condition")
+            cond.markLoopHeaderPart("condition")
             cond.then = createControlFlow
             cond.^else = createControlFlow
             continue.controlFlows = newArrayList(cond.^else)
@@ -663,14 +663,14 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 asm.reference = incr.reference.copyReference
                 asm.operator = incr.operator
                 asm.controlFlowTarget(cf)
-                asm.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, "after")
+                asm.markLoopHeaderPart("after")
                 asm.annotations += incr.annotations.map[copy]
                 cf = newArrayList(asm.createControlFlow)
             }
             
             // loop
             cf?.forEach[
-                addTagAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+                markExplicitLoop
                 target = cond
             ]
         ]

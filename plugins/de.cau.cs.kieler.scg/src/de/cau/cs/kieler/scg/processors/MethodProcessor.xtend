@@ -14,14 +14,15 @@ package de.cau.cs.kieler.scg.processors
 
 import com.google.common.collect.HashBasedTable
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.IntAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
@@ -43,10 +44,9 @@ import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import java.util.Map
 import java.util.Set
+import java.util.WeakHashMap
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import java.util.WeakHashMap
-import de.cau.cs.kieler.kexpressions.ValueType
 
 /**
  * 
@@ -250,9 +250,17 @@ class MethodProcessor extends InplaceProcessor<SCGraphs> implements Traceable {
         targetSCG.nodes += scg.nodes
         
         // Insert return value or remove call node
-        if (returnVO !== null) {
-            call.replace(returnVO.reference)
-            voStore.update(returnVO, "method-inlining")
+        val callContainer = call.eContainer
+        val isRead = callContainer instanceof Expression
+            || callContainer instanceof Conditional
+            || (callContainer instanceof Assignment && (callContainer as Assignment).valuedObject !== null)
+        if (isRead) {
+            if (returnVO !== null) {
+                call.replace(returnVO.reference)
+                voStore.update(returnVO, "method-inlining")
+            } else {
+                environment.errors.add("The method does not return any value!", callNode)
+            } 
         } else if (callNode instanceof Assignment) {
             callNode.allPrevious.toList.forEach[target = callNode.next.target]
             callNode.next.target = null

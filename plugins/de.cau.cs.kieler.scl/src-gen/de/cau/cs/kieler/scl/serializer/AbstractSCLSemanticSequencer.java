@@ -718,7 +718,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         annotations+=CommentAnnotatonSL? 
-	 *         declarations+=DeclarationWOSemicolon* 
+	 *         declarations+=Declaration* 
 	 *         statements+=Statement*
 	 *     )
 	 */

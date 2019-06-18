@@ -92223,28 +92223,28 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__MethodDeclarationWOSemicolon__DeclarationsAssignment_7_2"
-    // InternalSCL.g:27550:1: rule__MethodDeclarationWOSemicolon__DeclarationsAssignment_7_2 : ( ruleDeclarationWOSemicolon ) ;
+    // InternalSCL.g:27550:1: rule__MethodDeclarationWOSemicolon__DeclarationsAssignment_7_2 : ( ruleDeclaration ) ;
     public final void rule__MethodDeclarationWOSemicolon__DeclarationsAssignment_7_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
         	
         try {
-            // InternalSCL.g:27554:1: ( ( ruleDeclarationWOSemicolon ) )
-            // InternalSCL.g:27555:2: ( ruleDeclarationWOSemicolon )
+            // InternalSCL.g:27554:1: ( ( ruleDeclaration ) )
+            // InternalSCL.g:27555:2: ( ruleDeclaration )
             {
-            // InternalSCL.g:27555:2: ( ruleDeclarationWOSemicolon )
-            // InternalSCL.g:27556:3: ruleDeclarationWOSemicolon
+            // InternalSCL.g:27555:2: ( ruleDeclaration )
+            // InternalSCL.g:27556:3: ruleDeclaration
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0()); 
+               before(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0()); 
             }
             pushFollow(FollowSets000.FOLLOW_2);
-            ruleDeclarationWOSemicolon();
+            ruleDeclaration();
 
             state._fsp--;
             if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0()); 
+               after(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0()); 
             }
 
             }
@@ -112151,23 +112151,14 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_162s = "\51\uffff";
-    static final String dfa_163s = "\1\1\50\uffff";
-    static final String dfa_164s = "\1\6\45\uffff\1\0\2\uffff";
-    static final String dfa_165s = "\1\170\45\uffff\1\0\2\uffff";
-    static final String dfa_166s = "\1\uffff\1\2\46\uffff\1\1";
-    static final String dfa_167s = "\46\uffff\1\0\2\uffff}>";
+    static final String dfa_162s = "\40\uffff";
+    static final String dfa_163s = "\1\1\37\uffff";
+    static final String dfa_164s = "\1\6\34\uffff\1\0\2\uffff";
+    static final String dfa_165s = "\1\170\34\uffff\1\0\2\uffff";
+    static final String dfa_166s = "\1\uffff\1\2\35\uffff\1\1";
+    static final String dfa_167s = "\35\uffff\1\0\2\uffff}>";
     static final String[] dfa_168s = {
-            "\1\1\3\uffff\2\1\30\uffff\3\1\1\uffff\1\1\31\uffff\5\1\3\uffff\4\1\2\uffff\7\1\3\uffff\1\1\2\uffff\1\1\1\uffff\3\1\1\46\5\uffff\3\1\10\uffff\6\1",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
+            "\1\1\3\uffff\2\1\30\uffff\3\1\1\uffff\1\1\31\uffff\5\1\3\uffff\4\1\4\uffff\1\1\3\uffff\1\1\10\uffff\1\1\2\uffff\1\35\5\uffff\3\1\10\uffff\6\1",
             "",
             "",
             "",
@@ -112230,18 +112221,18 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA167_38 = input.LA(1);
+                        int LA167_29 = input.LA(1);
 
                          
-                        int index167_38 = input.index();
+                        int index167_29 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred247_InternalSCL()) ) {s = 40;}
+                        if ( (synpred247_InternalSCL()) ) {s = 31;}
 
                         else if ( (true) ) {s = 1;}
 
                          
-                        input.seek(index167_38);
+                        input.seek(index167_29);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -112252,26 +112243,17 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
             throw nvae;
         }
     }
-    static final String dfa_169s = "\46\uffff";
-    static final String dfa_170s = "\1\4\45\uffff";
-    static final String dfa_171s = "\1\6\3\0\42\uffff";
-    static final String dfa_172s = "\1\170\3\0\42\uffff";
-    static final String dfa_173s = "\4\uffff\1\2\40\uffff\1\1";
-    static final String dfa_174s = "\1\uffff\1\0\1\1\1\2\42\uffff}>";
+    static final String dfa_169s = "\35\uffff";
+    static final String dfa_170s = "\1\4\34\uffff";
+    static final String dfa_171s = "\1\6\3\0\31\uffff";
+    static final String dfa_172s = "\1\170\3\0\31\uffff";
+    static final String dfa_173s = "\4\uffff\1\2\27\uffff\1\1";
+    static final String dfa_174s = "\1\uffff\1\0\1\1\1\2\31\uffff}>";
     static final String[] dfa_175s = {
-            "\1\3\3\uffff\1\1\1\4\30\uffff\3\4\33\uffff\5\4\3\uffff\4\4\2\uffff\7\4\3\uffff\1\4\2\uffff\1\4\2\uffff\2\4\6\uffff\3\4\10\uffff\1\2\5\4",
+            "\1\3\3\uffff\1\1\1\4\30\uffff\3\4\33\uffff\5\4\3\uffff\4\4\4\uffff\1\4\3\uffff\1\4\21\uffff\3\4\10\uffff\1\2\5\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -112334,7 +112316,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index193_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred273_InternalSCL()) ) {s = 37;}
+                        if ( (synpred273_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -112349,7 +112331,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index193_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred273_InternalSCL()) ) {s = 37;}
+                        if ( (synpred273_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -112364,7 +112346,7 @@ public class InternalSCLParser extends AbstractInternalContentAssistParser {
                         int index193_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred273_InternalSCL()) ) {s = 37;}
+                        if ( (synpred273_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 

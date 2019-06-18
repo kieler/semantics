@@ -22,10 +22,12 @@ import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
 import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
+import de.cau.cs.kieler.scl.StatementContainer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -298,6 +300,19 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseSchedulable(policyRegion);
                 if (result == null) result = caseLinkable(policyRegion);
                 if (result == null) result = caseNameable(policyRegion);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.CODE_EFFECT: {
+                CodeEffect codeEffect = (CodeEffect)theEObject;
+                T result = caseCodeEffect(codeEffect);
+                if (result == null) result = caseEffect(codeEffect);
+                if (result == null) result = caseSCL_Scope(codeEffect);
+                if (result == null) result = caseSchedulable(codeEffect);
+                if (result == null) result = caseLinkable(codeEffect);
+                if (result == null) result = caseDeclarationScope(codeEffect);
+                if (result == null) result = caseStatementContainer(codeEffect);
+                if (result == null) result = caseAnnotatable(codeEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -576,6 +591,51 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEffect(Effect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStatementContainer(StatementContainer object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCL_Scope(de.cau.cs.kieler.scl.Scope object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Policy Region</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -587,6 +647,21 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T casePolicyRegion(PolicyRegion object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Code Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Code Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCodeEffect(CodeEffect object) {
         return null;
     }
 

@@ -909,7 +909,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check(CheckType.NORMAL)
     def void checkCorrectExternalReferenceObjects(ValuedObjectReference valuedObjectReference) {
         val valuedObject = valuedObjectReference.valuedObject
-        if (valuedObject.isExternalReference) {
+        if (valuedObject?.isExternalReference) {
             if (!(valuedObjectReference instanceof ReferenceCall)) {
                 warning("You are using an external reference without call syntax. If you want to generate a call, you must add parentheses.", 
                     valuedObjectReference, null)
