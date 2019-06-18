@@ -112,13 +112,14 @@ class JavaCodeGeneratorLogicModule extends CCodeGeneratorLogicModule {
             // Temporarily redirect struct module output to this module
             val structCode = struct.code
             struct.newCodeStringBuilder = code
-            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
+            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoop && !isReturn].toList, 0, serializer)
             struct.newCodeStringBuilder = structCode
             
             // Generate body
             conditionalStack.clear
+            processedNodes.clear
+            processedCF.clear
             var nodes = newLinkedList => [ it += scg.nodes.head ]
-            val processedNodes = <Node> newHashSet
             while(!nodes.empty) {
                 val node = nodes.pop
                 if (!processedNodes.contains(node)) {
