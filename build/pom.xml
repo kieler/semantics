@@ -9,8 +9,8 @@
 
   <!-- Define a few properties used throughout all build profiles. -->
   <properties>
-    <tycho-version>1.2.0</tycho-version>
-    <xtend-version>2.16.0</xtend-version>
+    <tycho-version>1.4.0</tycho-version>
+    <xtend-version>2.18.0</xtend-version>
     <targetJdk>1.8</targetJdk>
   
     <!-- Non-breakable space, as normal spaces are trimmed. -->
@@ -191,21 +191,22 @@
           </target>     
       
           <environments>
-            <environment>
+            <!-- als 2019-06-17: Dropped 32bit support. Primariliy due to cdt dependency (https://bugs.eclipse.org/bugs/show_bug.cgi?id=543366) -->
+            <!-- <environment>
               <os>linux</os>
               <ws>gtk</ws>
               <arch>x86</arch>
-            </environment>
+            </environment> -->
             <environment>
               <os>linux</os>
               <ws>gtk</ws>
               <arch>x86_64</arch>
             </environment>
-            <environment>
+            <!-- <environment>
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86</arch>
-            </environment>
+            </environment> -->
             <environment>
               <os>win32</os>
               <ws>win32</ws>
