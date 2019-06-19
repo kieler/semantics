@@ -39,6 +39,17 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 import de.cau.cs.kieler.kicool.ProcessorSystem
+import org.eclipse.emf.common.EMFPlugin
+import java.io.ByteArrayInputStream
+import java.net.URL
+import java.util.jar.JarFile
+import java.io.Closeable
+import com.google.common.io.ByteStreams
+import java.nio.file.FileSystems
+import java.nio.file.FileSystemNotFoundException
+import java.nio.file.Files
+import java.nio.file.Paths
+import de.cau.cs.kieler.kicool.KiCoolPackage
 
 /**
  * Main class for the registration of systems and processors.
@@ -136,23 +147,61 @@ class KiCoolRegistration {
     }
 
     static def getRegisteredSystems() {
-        val resourceList = <Pair<String, String>> newArrayList
+        val resourceList = <Pair<String, Object>> newArrayList
+        val closeables = <Closeable> newArrayList()
+        
         KielerServiceLoader.load(ISystemProvider).forEach[provider |
             provider.systems.forEach[ system |
-                resourceList += new Pair<String, String>(system, provider.bundleId) 
+            	if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+	                resourceList += new Pair<String, Object>(system, provider.bundleId) 
+            	} else {
+            		// Ensure that the package has been registered
+            		KiCoolPackage.eINSTANCE.eClass
+            		val URL url = provider.class.classLoader.getResource(system)
+            	    val stream = if (url.protocol == 'jar') {
+                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
+        	            closeables += file
+        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
+                	} else {
+                    	try {
+	                        FileSystems.getFileSystem(url.toURI);
+                    	} catch ( FileSystemNotFoundException e ) {
+                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
+	                    } catch ( Throwable t) {
+    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
+        	            }
+            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
+					}
+    	            resourceList += new Pair<String, Object>(system, stream)
+            	}
             ]
         ]
+        
+        for (c : closeables) {
+        	c.close
+        }
+        
         resourceList       
     }
     
-    static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
-        val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
+    static def EObject loadEObjectFromResourceLocation(String resourceLocation, Object access) throws IOException {
         val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
-        val Resource resource = resourceSet.getResource(uri, true)
+		val Resource resource = switch access {
+			String: {
+				val uri = URI.createPlatformPluginURI("/%s/%s".format(access, resourceLocation), false)
+	        	resourceSet.getResource(uri, true)
+	        }
+			ByteArrayInputStream: {
+				val uri = URI.createURI(resourceLocation)
+				val res = resourceSet.createResource(uri)
+				res.load(access, emptyMap)
+				res
+			}
+		}
         if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
             val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
             if (!validatorResults.empty) {
-                println("KiCool WARNING: There are error markers in system located at " + bundleId + ":" + resourceLocation + ": \n- " + validatorResults.map[message].join("\n- "))
+                println("KiCool WARNING: There are error markers in system located at " + access + ":" + resourceLocation + ": \n- " + validatorResults.map[message].join("\n- "))
             }
             val eobject = resource.getContents().get(0)
             return eobject
