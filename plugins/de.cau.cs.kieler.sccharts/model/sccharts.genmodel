@@ -96,5 +96,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sccharts.ecore#//PolicyClassDeclaration/policy"/>
     </genClasses>
     <genClasses ecoreClass="sccharts.ecore#//PolicyRegion"/>
+    <genClasses ecoreClass="sccharts.ecore#//CodeEffect"/>
   </genPackages>
 </genmodel:GenModel>

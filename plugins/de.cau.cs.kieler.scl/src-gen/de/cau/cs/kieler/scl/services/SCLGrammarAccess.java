@@ -1544,7 +1544,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAnnotationsAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
 		private final RuleCall cAnnotationsCommentAnnotatonSLParserRuleCall_7_1_0 = (RuleCall)cAnnotationsAssignment_7_1.eContents().get(0);
 		private final Assignment cDeclarationsAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
-		private final RuleCall cDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0 = (RuleCall)cDeclarationsAssignment_7_2.eContents().get(0);
+		private final RuleCall cDeclarationsDeclarationParserRuleCall_7_2_0 = (RuleCall)cDeclarationsAssignment_7_2.eContents().get(0);
 		private final Assignment cStatementsAssignment_7_3 = (Assignment)cGroup_7.eContents().get(3);
 		private final RuleCall cStatementsStatementParserRuleCall_7_3_0 = (RuleCall)cStatementsAssignment_7_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7_4 = (Keyword)cGroup_7.eContents().get(4);
@@ -1558,7 +1558,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 		//	('{'
 		//	annotations+=CommentAnnotatonSL?
-		//	declarations+=DeclarationWOSemicolon*
+		//	declarations+=Declaration*
 		//	statements+=Statement*
 		//	'}')?;
 		@Override public ParserRule getRule() { return rule; }
@@ -1566,7 +1566,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//{MethodImplementationDeclaration} annotations+=Annotation* access=AccessModifier? returnType=MethodReturnType?
 		//valuedObjects+=SimpleValuedObject ('(' parameterDeclarations+=VariableDeclarationWOSemicolon (','
 		//parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
-		//('{' annotations+=CommentAnnotatonSL? declarations+=DeclarationWOSemicolon* statements+=Statement* '}')?
+		//('{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')?
 		public Group getGroup() { return cGroup; }
 		
 		//{MethodImplementationDeclaration}
@@ -1643,7 +1643,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 		
-		//('{' annotations+=CommentAnnotatonSL? declarations+=DeclarationWOSemicolon* statements+=Statement* '}')?
+		//('{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')?
 		public Group getGroup_7() { return cGroup_7; }
 		
 		//'{'
@@ -1655,11 +1655,11 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//CommentAnnotatonSL
 		public RuleCall getAnnotationsCommentAnnotatonSLParserRuleCall_7_1_0() { return cAnnotationsCommentAnnotatonSLParserRuleCall_7_1_0; }
 		
-		//declarations+=DeclarationWOSemicolon*
+		//declarations+=Declaration*
 		public Assignment getDeclarationsAssignment_7_2() { return cDeclarationsAssignment_7_2; }
 		
-		//DeclarationWOSemicolon
-		public RuleCall getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0() { return cDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0; }
+		//Declaration
+		public RuleCall getDeclarationsDeclarationParserRuleCall_7_2_0() { return cDeclarationsDeclarationParserRuleCall_7_2_0; }
 		
 		//statements+=Statement*
 		public Assignment getStatementsAssignment_7_3() { return cStatementsAssignment_7_3; }
@@ -2114,7 +2114,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=DeclarationWOSemicolon*
+	//	declarations+=Declaration*
 	//	statements+=Statement*
 	//	'}')?;
 	public MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {

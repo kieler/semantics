@@ -43,6 +43,7 @@ import static org.eclipse.emf.common.util.URI.*
 
 import static extension com.google.common.collect.Sets.*
 import static extension de.cau.cs.kieler.core.uri.URIUtils.*
+import de.cau.cs.kieler.scl.validation.InternalSyntaxValidation
 
 /**
  * A customized {@link LazyLinkingResource}. Modifies the parsed model and fixes some runtime bugs.
@@ -56,7 +57,8 @@ public class SCTXResource extends LazyLinkingResource {
 
     @Inject extension PragmaExtensions
     @Inject extension KEffectsEmissionReferenceCallConverter
-
+    @Inject extension InternalSyntaxValidation
+    
     public static val FILE_EXTENSION = "sctx"
     private static val FILE_EXTENSION_INTERN = "." + FILE_EXTENSION
 
@@ -161,6 +163,14 @@ public class SCTXResource extends LazyLinkingResource {
             }
         }
     }    
+    
+    override addSyntaxErrors() {
+        super.addSyntaxErrors
+        if (!validationDisabled) {
+            // Semicolon error for scl in methods
+            getErrors().addAll(parseResult.createSemicolonErrors)
+        }
+    }
     
     // ---------------------------------------------------------------------------------------
     protected def void updateImports(SCCharts scc) {

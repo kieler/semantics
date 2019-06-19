@@ -18,6 +18,7 @@ import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.sccharts.Action;
+import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DelayType;
@@ -189,6 +190,13 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     private EClass policyRegionEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass codeEffectEClass = null;
 
     /**
      * <!-- begin-user-doc -->
@@ -851,6 +859,15 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getCodeEffect() {
+        return codeEffectEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     @Override
     public EEnum getPreemptionType() {
         return preemptionTypeEEnum;
@@ -1013,6 +1030,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
 
         policyRegionEClass = createEClass(POLICY_REGION);
 
+        codeEffectEClass = createEClass(CODE_EFFECT);
+
         // Create enums
         preemptionTypeEEnum = createEEnum(PREEMPTION_TYPE);
         historyTypeEEnum = createEEnum(HISTORY_TYPE);
@@ -1047,6 +1066,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         KExtPackage theKExtPackage = (KExtPackage)EPackage.Registry.INSTANCE.getEPackage(KExtPackage.eNS_URI);
         KExpressionsPackage theKExpressionsPackage = (KExpressionsPackage)EPackage.Registry.INSTANCE.getEPackage(KExpressionsPackage.eNS_URI);
         KEffectsPackage theKEffectsPackage = (KEffectsPackage)EPackage.Registry.INSTANCE.getEPackage(KEffectsPackage.eNS_URI);
+        SCLPackage theSCLPackage = (SCLPackage)EPackage.Registry.INSTANCE.getEPackage(SCLPackage.eNS_URI);
 
         // Create type parameters
 
@@ -1078,6 +1098,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         periodActionEClass.getESuperTypes().add(this.getLocalAction());
         policyClassDeclarationEClass.getESuperTypes().add(theKExtPackage.getClassDeclaration());
         policyRegionEClass.getESuperTypes().add(this.getControlflowRegion());
+        codeEffectEClass.getESuperTypes().add(theKEffectsPackage.getEffect());
+        codeEffectEClass.getESuperTypes().add(theSCLPackage.getScope());
 
         // Initialize classes and features; add operations and parameters
         initEClass(scChartsEClass, SCCharts.class, "SCCharts", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1157,6 +1179,8 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEReference(getPolicyClassDeclaration_Policy(), this.getPolicyRegion(), null, "policy", null, 0, 1, PolicyClassDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(policyRegionEClass, PolicyRegion.class, "PolicyRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+        initEClass(codeEffectEClass, CodeEffect.class, "CodeEffect", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         // Initialize enums and add enum literals
         initEEnum(preemptionTypeEEnum, PreemptionType.class, "PreemptionType");

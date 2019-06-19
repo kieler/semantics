@@ -12,42 +12,42 @@
  */
 package de.cau.cs.kieler.scg.processors.codegen.c
 
-import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.kexpressions.FunctionCall
+import de.cau.cs.kieler.kexpressions.IgnoreValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.PrintCall
+import de.cau.cs.kieler.kexpressions.RandomizeCall
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.Assignment
+import de.cau.cs.kieler.scg.Conditional
+import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
 import de.cau.cs.kieler.scg.Node
-import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.Conditional
-import java.util.List
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.scg.ControlFlow
-import java.util.Deque
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.VectorValue
+import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.ScgFactory
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.scg.codegen.SCGCodeGeneratorModule
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
+import java.util.Deque
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.IgnoreValue
-import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kexpressions.PrintCall
-import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kexpressions.RandomizeCall
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.kexpressions.FunctionCall
-import de.cau.cs.kieler.kexpressions.ReferenceCall
-import de.cau.cs.kieler.scg.SCGraph
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
-import de.cau.cs.kieler.scg.processors.SCGAnnotations
-import de.cau.cs.kieler.annotations.StringAnnotation
-import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * C Code Generator Logic Module
@@ -76,7 +76,10 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     /** Hash for already handles pre variables */    
     protected val preVariables = <String> newHashSet
     /** Conditional Stack that keeps track of the nesting depth of conditionals */
-    protected val conditionalStack = <Conditional> newLinkedList
+    protected val conditionalStack = <Conditional>newLinkedList
+    /** Controlflow that has been processed (analyzed if target node should be processed) */
+    protected val processedCF = <ControlFlow>newHashSet
+    protected val processedNodes = <Node>newHashSet
     
     override configure() {
         struct = (parent as CCodeGeneratorModule).struct as CCodeGeneratorStructModule
@@ -105,7 +108,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     override generate() {
         var nodes = newLinkedList => [ it += scg.nodes.head ]
         conditionalStack.clear
-        val processedNodes = <Node> newHashSet
+        processedCF.clear
+        processedNodes.clear
         
         // Iterate through all nodes. 
         // However, if the last node was already the actual node, then skip it, because
@@ -172,7 +176,7 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
     protected def dispatch void generate(Assignment assignment, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
-            assignment.handleConditionalNesting
+            assignment.handleConditionalNesting(false)
         }
 
         if (!assignment.isPartOfForLoopHeader) {
@@ -186,15 +190,23 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     }        
                 }
             }
-        }        
-        // If a new statement follows, add it to the node list.
-        if (assignment.next !== null) nodes.push(assignment.next.targetNode)
-    }
+        }
         
+        // Close loop body
+        if (assignment.next.isExplicitLoop) {
+            assignment.next.targetNode.handleConditionalNesting(true)
+        }
+        
+        // If a new statement follows, add it to the node list.
+        if (assignment.next !== null) {
+            nodes.pushNodeIfNextToProcess(assignment.next)
+        }
+    }
+
     protected def dispatch void generate(Conditional conditional, Deque<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         if (!conditionalStack.empty) {
             // Apparently, we are in a nested conditional. Handle it if necessary. 
-            conditional.handleConditionalNesting
+            conditional.handleConditionalNesting(false)
         }
 
         valuedObjectPrefix = struct.getVariableName + struct.separator
@@ -250,39 +262,74 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             code.append(") {\n")
         }
         
+                
+        // Close loop body if necessary
+        if (conditional.^then !== null && conditional.^then === conditional.^else && conditional.^then.isExplicitLoop) {
+            conditional.^then.targetNode.handleConditionalNesting(true)
+        }
+        
         conditionalStack.push(conditional)
         
-        if (conditional.^else !== null) nodes.push(conditional.^else.targetNode)        
-        if (conditional.^then !== null) nodes.push(conditional.^then.targetNode)
+        if (conditional.^else !== null) nodes.pushNodeIfNextToProcess(conditional.^else)        
+        if (conditional.^then !== null) nodes.pushNodeIfNextToProcess(conditional.^then)
     }
     
-    protected def void handleConditionalNesting(Node node) {
+    protected def void handleConditionalNesting(Node node, boolean endLoop) {
         // There are two cases. The else branch is distinct from the actual control flow or 
         // the actual branch joins with the else branch of the conditional directly. 
         // (In the latter case we can omit the "else" in C.)
-        val conditional = conditionalStack.peek
-        val incomingControlFlows = node.incomingLinks.filter(ControlFlow).toList
-        if (conditional.^else !== null && conditional.^else.target == node) {
-            if (conditional.isExplicitLoop) {
+        // Plus some more corner cases when mixed with conditionals that represent loops ;)
+        var conditional = conditionalStack.peek
+        if (endLoop && !conditional.isExplicitLoop) {
+            // close other (inner) conditionals normally
+            while(!conditional.isExplicitLoop) {
+                // process
                 indent(conditionalStack.size)
                 code.append("}\n")
                 conditionalStack.pop
-            } else if (incomingControlFlows.size == 1) {
+                // check next
+                conditional = conditionalStack.peek
+            }
+        }
+        val incomingControlFlows = if (endLoop) {
+            node.incomingLinks.filter(ControlFlow).toList
+        } else {
+            node.incomingLinks.filter(ControlFlow).filter[!isExplicitLoop].toList
+        }
+        if (!endLoop && conditional.^else !== null && conditional.^else.target == node) {
+            if (incomingControlFlows.size == 1 && 
+                // If this node is part of a loop header, then only add else if next node is not yet processed (hence, this node is not the node leading to a loop back)
+                (!node.isExplicitLoop || (node instanceof Assignment && !processedNodes.contains((node as Assignment).next.targetNode)))) {
                 // Apparently, it is the first assignment of a dedicated else branch. Handle it. 
                 indent(conditionalStack.size)
                 code.append("} else {\n")
             }
         }
         // If multiple control-flows are joining here, reduce the nesting depth accordingly.
-        if (incomingControlFlows.size > 1) for (i : 2..incomingControlFlows.size) {
-            indent(conditionalStack.size)
-            code.append("}\n")
-            conditionalStack.pop
+        if (incomingControlFlows.size > 1) {
+            for (i : 2 .. incomingControlFlows.size) {
+                indent(conditionalStack.size)
+                code.append("}\n")
+                conditionalStack.pop
+            }
         }            
     }
     
+    def void pushNodeIfNextToProcess(Deque<Node> nodes, ControlFlow cf) {
+        val node = cf.targetNode
+        // If next is the merge point of if and else branch and currently the else branch is processed,
+        // the node must not be added other wise the node would be illegally pulled into the then branch
+        if (node !== null && (conditionalStack.empty || nodes.empty ||
+                              node.allPrevious.filter[!processedCF.contains(it) && !isExplicitLoop].size <= 1)) {
+            nodes.push(node)
+        }
+        processedCF += cf
+    }
+        
+    
     protected def dispatch void generate(Entry entry, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
         nodes += entry.next?.targetNode
+        processedCF += entry.next
     }
     
     protected def dispatch void generate(Exit exit, List<Node> nodes, extension CCodeSerializeHRExtensions serializer) {
@@ -330,13 +377,14 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
             // Temporarily redirect struct module output to this module
             val structCode = struct.code
             struct.newCodeStringBuilder = code
-            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoopDeclaration && !isReturn].toList, 0, serializer)
+            struct.generateDeclarations(scg.declarations.filter[!parameter && !explicitLoop && !isReturn].toList, 0, serializer)
             struct.newCodeStringBuilder = structCode
             
             // Generate body
             conditionalStack.clear
+            processedNodes.clear
+            processedCF.clear
             var nodes = newLinkedList => [ it += scg.nodes.head ]
-            val processedNodes = <Node> newHashSet
             while(!nodes.empty) {
                 val node = nodes.pop
                 if (!processedNodes.contains(node)) {

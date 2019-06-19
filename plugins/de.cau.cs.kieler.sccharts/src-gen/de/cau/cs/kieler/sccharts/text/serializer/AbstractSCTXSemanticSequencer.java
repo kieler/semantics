@@ -51,6 +51,7 @@ import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
+import de.cau.cs.kieler.sccharts.CodeEffect;
 import de.cau.cs.kieler.sccharts.ControlflowRegion;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.DuringAction;
@@ -182,7 +183,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()) {
+				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getKEffectsEffectRule()) {
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
@@ -201,6 +203,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					return; 
 				}
 				else if (rule == grammarAccess.getEffectRule()
+						|| rule == grammarAccess.getKEffectsEffectRule()
 						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
 					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
 					return; 
@@ -804,10 +807,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()
+				else if (rule == grammarAccess.getKExtDeclarationRule()
 						|| rule == grammarAccess.getReferenceDeclarationRule()) {
 					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -819,10 +826,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()
+				else if (rule == grammarAccess.getKExtDeclarationRule()
 						|| rule == grammarAccess.getScheduleDeclarationRule()) {
 					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ScheduleDeclaration_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1041,10 +1052,14 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getVariableDeclarationRule()
-						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+				else if (rule == grammarAccess.getKExtDeclarationRule()
+						|| rule == grammarAccess.getVariableDeclarationRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_VariableDeclaration_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -1138,6 +1153,9 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			}
 		else if (epackage == SCChartsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case SCChartsPackage.CODE_EFFECT:
+				sequence_CodeEffect(context, (CodeEffect) semanticObject); 
+				return; 
 			case SCChartsPackage.CONTROLFLOW_REGION:
 				if (rule == grammarAccess.getRegionRule()
 						|| rule == grammarAccess.getControlflowRegionRule()) {
@@ -1548,9 +1566,11 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Declaration returns PolicyClassDeclaration
 	 *     ClassDeclarationWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationOrMethodWithKeywordWOSemicolon returns PolicyClassDeclaration
 	 *     DeclarationWOSemicolon returns PolicyClassDeclaration
+	 *     DeclarationOrMethod returns PolicyClassDeclaration
 	 *     DeclarationOrMethodWOSemicolon returns PolicyClassDeclaration
 	 *
 	 * Constraint:
@@ -1572,6 +1592,19 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_ClassDeclarationWOSemicolon(ISerializationContext context, PolicyClassDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Effect returns CodeEffect
+	 *     CodeEffect returns CodeEffect
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* declarations+=Declaration* statements+=Statement*)
+	 */
+	protected void sequence_CodeEffect(ISerializationContext context, CodeEffect semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1728,7 +1761,7 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (parameterDeclarations+=VariableDeclarationWOSemicolon parameterDeclarations+=VariableDeclarationWOSemicolon*)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         annotations+=CommentAnnotatonSL? 
-	 *         declarations+=DeclarationWOSemicolon* 
+	 *         declarations+=Declaration* 
 	 *         statements+=Statement*
 	 *     )
 	 */
@@ -1806,6 +1839,36 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	
 	/**
 	 * Contexts:
+	 *     Declaration returns ReferenceDeclaration
+	 *     DeclarationOrMethod returns ReferenceDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             (reference=[NamedObject|NamespaceID] | (extern+=ExternString extern+=ExternString*)) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ReferenceDeclaration_ReferenceDeclarationWOSemicolon(ISerializationContext context, ReferenceDeclaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     RootState returns State
 	 *
 	 * Constraint:
@@ -1832,6 +1895,40 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     (((pragmas+=Pragma | imports+=EString)+ rootStates+=RootState+) | rootStates+=RootState+)?
 	 */
 	protected void sequence_SCCharts(ISerializationContext context, SCCharts semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns ScheduleDeclaration
+	 *     DeclarationOrMethod returns ScheduleDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             name=STRING? 
+	 *             global=PriorityProtocol? 
+	 *             (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             name=STRING? 
+	 *             global=PriorityProtocol? 
+	 *             (priorities+=PriorityProtocol priorities+=PriorityProtocol*)? 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_ScheduleDeclaration_ScheduleDeclarationWOSemicolon(ISerializationContext context, ScheduleDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1935,6 +2032,46 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *     )
 	 */
 	protected void sequence_Transition(ISerializationContext context, Transition semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns VariableDeclaration
+	 *     DeclarationOrMethod returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             const?='const'? 
+	 *             input?='input'? 
+	 *             output?='output'? 
+	 *             global?='global'? 
+	 *             static?='static'? 
+	 *             ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         ) | 
+	 *         (
+	 *             annotations+=Annotation* 
+	 *             access=AccessModifier? 
+	 *             const?='const'? 
+	 *             input?='input'? 
+	 *             output?='output'? 
+	 *             global?='global'? 
+	 *             static?='static'? 
+	 *             ((signal?='signal'? type=ValueType) | signal?='signal' | (type=HostType hostType=STRING)) 
+	 *             valuedObjects+=ValuedObject 
+	 *             valuedObjects+=ValuedObject* 
+	 *             annotations+=CommentAnnotatonSL?
+	 *         )
+	 *     )
+	 */
+	protected void sequence_VariableDeclaration_VariableDeclarationWOSemicolon(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

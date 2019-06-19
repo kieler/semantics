@@ -235,7 +235,7 @@ MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
     ('schedule' schedule+=ScheduleObjectReference+)?
     ('{'
         annotations+=CommentAnnotatonSL?
-        declarations+=DeclarationWOSemicolon*
+        declarations+=Declaration*
         statements+=Statement*
     '}')?
 ;

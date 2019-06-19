@@ -53137,9 +53137,9 @@ rule__MethodDeclarationWOSemicolon__DeclarationsAssignment_7_2
 	}
 :
 	(
-		{ before(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0()); }
-		ruleDeclarationWOSemicolon
-		{ after(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0()); }
+		{ before(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0()); }
+		ruleDeclaration
+		{ after(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0()); }
 	)
 ;
 finally {

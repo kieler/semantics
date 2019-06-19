@@ -17,6 +17,7 @@ import de.cau.cs.kieler.annotations.AnnotationsPackage;
 
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -2421,6 +2422,79 @@ public interface SCChartsPackage extends EPackage {
     int POLICY_REGION_FEATURE_COUNT = CONTROLFLOW_REGION_FEATURE_COUNT + 0;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.sccharts.impl.CodeEffectImpl <em>Code Effect</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sccharts.impl.CodeEffectImpl
+     * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getCodeEffect()
+     * @generated
+     */
+    int CODE_EFFECT = 19;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__ANNOTATIONS = KEffectsPackage.EFFECT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__SCHEDULE = KEffectsPackage.EFFECT__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Outgoing Links</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__OUTGOING_LINKS = KEffectsPackage.EFFECT__OUTGOING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Incoming Links</b></em>' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__INCOMING_LINKS = KEffectsPackage.EFFECT__INCOMING_LINKS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__DECLARATIONS = KEffectsPackage.EFFECT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT__STATEMENTS = KEffectsPackage.EFFECT_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Code Effect</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int CODE_EFFECT_FEATURE_COUNT = KEffectsPackage.EFFECT_FEATURE_COUNT + 2;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2428,7 +2502,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getPreemptionType()
      * @generated
      */
-    int PREEMPTION_TYPE = 19;
+    int PREEMPTION_TYPE = 20;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.HistoryType <em>History Type</em>}' enum.
@@ -2438,7 +2512,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getHistoryType()
      * @generated
      */
-    int HISTORY_TYPE = 20;
+    int HISTORY_TYPE = 21;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.sccharts.DelayType <em>Delay Type</em>}' enum.
@@ -2448,7 +2522,7 @@ public interface SCChartsPackage extends EPackage {
      * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getDelayType()
      * @generated
      */
-    int DELAY_TYPE = 21;
+    int DELAY_TYPE = 22;
 
 
     /**
@@ -3082,6 +3156,16 @@ public interface SCChartsPackage extends EPackage {
     EClass getPolicyRegion();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.sccharts.CodeEffect <em>Code Effect</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Code Effect</em>'.
+     * @see de.cau.cs.kieler.sccharts.CodeEffect
+     * @generated
+     */
+    EClass getCodeEffect();
+
+    /**
      * Returns the meta object for enum '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3642,6 +3726,16 @@ public interface SCChartsPackage extends EPackage {
          * @generated
          */
         EClass POLICY_REGION = eINSTANCE.getPolicyRegion();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.impl.CodeEffectImpl <em>Code Effect</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.sccharts.impl.CodeEffectImpl
+         * @see de.cau.cs.kieler.sccharts.impl.SCChartsPackageImpl#getCodeEffect()
+         * @generated
+         */
+        EClass CODE_EFFECT = eINSTANCE.getCodeEffect();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.sccharts.PreemptionType <em>Preemption Type</em>}' enum.

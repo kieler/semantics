@@ -37420,7 +37420,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodDeclarationWOSemicolon"
-    // InternalEsterel.g:13217:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) ;
+    // InternalEsterel.g:13217:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) ;
     public final EObject ruleMethodDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -37456,11 +37456,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalEsterel.g:13223:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) )
-            // InternalEsterel.g:13224:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
+            // InternalEsterel.g:13223:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) )
+            // InternalEsterel.g:13224:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
             {
-            // InternalEsterel.g:13224:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
-            // InternalEsterel.g:13225:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
+            // InternalEsterel.g:13224:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
+            // InternalEsterel.g:13225:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
             {
             // InternalEsterel.g:13225:3: ()
             // InternalEsterel.g:13226:4: 
@@ -37910,7 +37910,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalEsterel.g:13397:3: (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
+            // InternalEsterel.g:13397:3: (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
             int alt318=2;
             int LA318_0 = input.LA(1);
 
@@ -37919,7 +37919,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             }
             switch (alt318) {
                 case 1 :
-                    // InternalEsterel.g:13398:4: otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}'
+                    // InternalEsterel.g:13398:4: otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}'
                     {
                     otherlv_13=(Token)match(input,100,FollowSets000.FOLLOW_168); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37973,25 +37973,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalEsterel.g:13421:4: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )*
+                    // InternalEsterel.g:13421:4: ( (lv_declarations_15_0= ruleDeclaration ) )*
                     loop316:
                     do {
                         int alt316=2;
                         alt316 = dfa316.predict(input);
                         switch (alt316) {
                     	case 1 :
-                    	    // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
+                    	    // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclaration )
                     	    {
-                    	    // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
-                    	    // InternalEsterel.g:13423:6: lv_declarations_15_0= ruleDeclarationWOSemicolon
+                    	    // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclaration )
+                    	    // InternalEsterel.g:13423:6: lv_declarations_15_0= ruleDeclaration
                     	    {
                     	    if ( state.backtracking==0 ) {
 
-                    	      						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0());
+                    	      						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0());
                     	      					
                     	    }
                     	    pushFollow(FollowSets000.FOLLOW_147);
-                    	    lv_declarations_15_0=ruleDeclarationWOSemicolon();
+                    	    lv_declarations_15_0=ruleDeclaration();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -38004,7 +38004,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     	      							current,
                     	      							"declarations",
                     	      							lv_declarations_15_0,
-                    	      							"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+                    	      							"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
                     	      						afterParserOrEnumRuleCall();
                     	      					
                     	    }
@@ -65206,19 +65206,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         EObject lv_declarations_15_0 = null;
 
 
-        // InternalEsterel.g:13422:5: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )
-        // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
+        // InternalEsterel.g:13422:5: ( (lv_declarations_15_0= ruleDeclaration ) )
+        // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclaration )
         {
-        // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
-        // InternalEsterel.g:13423:6: lv_declarations_15_0= ruleDeclarationWOSemicolon
+        // InternalEsterel.g:13422:5: (lv_declarations_15_0= ruleDeclaration )
+        // InternalEsterel.g:13423:6: lv_declarations_15_0= ruleDeclaration
         {
         if ( state.backtracking==0 ) {
 
-          						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0());
+          						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0());
           					
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        lv_declarations_15_0=ruleDeclarationWOSemicolon();
+        lv_declarations_15_0=ruleDeclaration();
 
         state._fsp--;
         if (state.failed) return ;
@@ -68789,82 +68789,82 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             return "()+ loopback of 11381:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+";
         }
     }
-    static final String dfa_79s = "\3\4\2\uffff\3\4\1\7\12\4\1\7\1\4\1\24\1\7\6\4\1\7\4\4\1\7\5\4\1\7\1\24\1\60\3\4\1\7\10\4\1\7\4\4\1\7\7\4\1\7\4\4\1\0";
-    static final String dfa_80s = "\2\u00a9\1\4\2\uffff\1\u00a9\1\4\1\10\1\7\1\u00a9\1\4\6\u00a9\2\4\1\7\2\122\1\10\6\u00a9\1\10\2\u00a9\2\4\1\7\1\122\4\4\1\7\1\122\1\60\3\u00a9\1\10\5\u00a9\1\122\2\4\1\7\1\4\3\u00a9\1\10\5\u00a9\2\4\1\7\1\4\3\u00a9\1\0";
+    static final String dfa_79s = "\3\4\2\uffff\3\4\1\7\10\4\1\24\2\4\1\7\1\4\1\7\2\4\1\7\7\4\1\7\2\4\1\24\1\60\3\4\1\7\6\4\1\7\3\4\1\7\6\4\1\7\7\4\1\7\5\4\1\0";
+    static final String dfa_80s = "\2\u00a9\1\4\2\uffff\1\u00a9\1\4\1\10\1\7\1\4\7\u00a9\1\122\2\4\1\7\1\122\1\10\2\4\1\7\1\122\6\u00a9\1\10\2\u00a9\1\122\1\60\3\u00a9\1\10\2\u00a9\4\4\1\7\1\122\2\4\1\7\6\u00a9\1\10\4\u00a9\3\4\1\7\3\u00a9\1\4\1\u00a9\1\0";
     static final String[] dfa_81s = {
             "\1\3\5\uffff\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\3\3\2\uffff\2\3\5\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
             "\1\3\5\uffff\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
             "\1\5",
             "",
             "",
-            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\12\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\11\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
             "\1\17",
             "\1\17\2\uffff\1\15\1\16",
             "\1\20",
-            "\1\3\5\uffff\1\1\7\uffff\1\3\1\uffff\1\21\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
-            "\1\25",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\26\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\27",
-            "\1\30",
-            "\1\31",
-            "\1\33\1\32\1\uffff\1\36\1\37\1\34\110\uffff\1\35",
-            "\1\40\25\uffff\1\42\5\uffff\1\43\41\uffff\1\41",
+            "\1\21",
+            "\1\3\5\uffff\1\1\7\uffff\1\3\1\uffff\1\22\3\uffff\1\25\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\12\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\11\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\12\1\13\1\uffff\1\15\1\16\1\14\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\1\uffff\1\11\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\26\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\27\25\uffff\1\31\5\uffff\1\32\41\uffff\1\30",
+            "\1\33",
+            "\1\34",
+            "\1\35",
+            "\1\37\1\36\1\uffff\1\42\1\43\1\40\110\uffff\1\41",
             "\1\15\1\16",
-            "\1\3\5\uffff\1\1\11\uffff\1\44\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\45\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\46\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\50\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\47\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\36\1\37",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\51",
-            "\1\51",
-            "\1\52",
-            "\1\54\1\53\1\uffff\1\57\1\60\1\55\110\uffff\1\56",
-            "\1\61",
-            "\1\30",
-            "\1\62",
-            "\1\62",
-            "\1\63",
-            "\1\40\25\uffff\1\42\5\uffff\1\43\41\uffff\1\41",
-            "\1\43",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\65\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\67\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\66\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\57\1\60",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\70\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\46\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\50\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\47\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\72\1\71\1\uffff\1\75\1\76\1\73\110\uffff\1\74",
+            "\1\44",
+            "\1\44",
+            "\1\45",
+            "\1\47\1\46\1\uffff\1\52\1\53\1\50\110\uffff\1\51",
+            "\1\3\5\uffff\1\1\11\uffff\1\54\3\uffff\1\25\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\55\3\uffff\1\25\11\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\56\3\uffff\1\25\11\uffff\2\4\1\uffff\1\3\4\uffff\1\60\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\57\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\42\1\43",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\27\25\uffff\1\31\5\uffff\1\32\41\uffff\1\30",
+            "\1\32",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\62\3\uffff\1\61\11\uffff\2\4\1\uffff\1\3\4\uffff\1\64\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\63\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\52\1\53",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\65",
+            "\1\34",
+            "\1\66",
+            "\1\66",
+            "\1\67",
+            "\1\71\1\70\1\uffff\1\74\1\75\1\72\110\uffff\1\73",
+            "\1\76",
+            "\1\76",
             "\1\77",
-            "\1\77",
-            "\1\100",
-            "\1\101",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\102\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\104\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\103\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\75\1\76",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\65\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\67\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\66\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\105\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\100\3\uffff\1\25\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\56\3\uffff\1\25\11\uffff\2\4\1\uffff\1\3\4\uffff\1\60\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\57\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\25\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\101\3\uffff\1\61\11\uffff\2\4\1\uffff\1\3\4\uffff\1\103\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\102\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\74\1\75",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\62\3\uffff\1\61\11\uffff\2\4\1\uffff\1\3\4\uffff\1\64\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\63\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\104",
+            "\1\105",
+            "\1\105",
             "\1\106",
-            "\1\106",
-            "\1\107",
+            "\1\3\5\uffff\1\1\11\uffff\1\107\3\uffff\1\25\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\101\3\uffff\1\61\11\uffff\2\4\1\uffff\1\3\4\uffff\1\103\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\102\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\61\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
             "\1\110",
-            "\1\3\5\uffff\1\1\11\uffff\1\102\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\104\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\103\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
-            "\1\3\5\uffff\1\1\11\uffff\1\111\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\111\3\uffff\1\25\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\24\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\23\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
             "\1\uffff"
     };
     static final char[] dfa_79 = DFA.unpackEncodedStringToUnsignedChars(dfa_79s);
@@ -70651,7 +70651,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.transition = dfa_101;
         }
         public String getDescription() {
-            return "()* loopback of 13421:4: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )*";
+            return "()* loopback of 13421:4: ( (lv_declarations_15_0= ruleDeclaration ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -71212,11 +71212,116 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_138s = "\114\uffff";
-    static final String dfa_139s = "\2\12\1\4\4\42\1\43\3\113\1\uffff\1\5\3\uffff\3\4\1\7\1\4\5\12\2\4\1\24\3\4\2\7\2\4\1\7\1\4\3\12\1\7\4\12\1\24\1\60\3\12\1\7\2\12\2\4\1\7\3\4\1\7\5\12\1\7\4\12\2\4\1\7\2\12";
-    static final String dfa_140s = "\2\u00a9\1\4\10\u00a6\1\uffff\1\u00a6\3\uffff\1\u00a9\1\4\1\10\1\7\1\4\7\u00a9\2\122\2\4\1\7\1\10\2\4\1\7\1\122\3\u00a9\1\10\4\u00a9\1\122\1\60\3\u00a9\1\10\2\u00a9\2\4\1\7\1\122\2\4\1\7\5\u00a9\1\10\4\u00a9\2\4\1\7\2\u00a9";
+    static final String dfa_139s = "\2\12\1\4\4\42\1\43\3\113\1\uffff\1\5\3\uffff\3\4\1\7\5\12\6\4\1\7\1\24\1\7\3\12\1\7\4\12\2\4\1\7\3\4\1\7\1\24\1\60\3\12\1\7\4\12\3\4\1\7\3\12\1\7\4\12\2\4\1\7\2\12";
+    static final String dfa_140s = "\2\u00a9\1\4\10\u00a6\1\uffff\1\u00a6\3\uffff\1\u00a9\1\4\1\10\1\7\5\u00a9\1\4\2\u00a9\1\122\2\4\1\7\1\122\1\10\3\u00a9\1\10\4\u00a9\2\4\1\7\1\122\2\4\1\7\1\122\1\60\3\u00a9\1\10\4\u00a9\1\122\2\4\1\7\3\u00a9\1\10\4\u00a9\2\4\1\7\2\u00a9";
     static final String dfa_141s = "\13\uffff\1\1\1\uffff\1\2\1\3\1\4\74\uffff";
     static final String dfa_142s = "\114\uffff}>";
     static final String[] dfa_143s = {
+            "\1\1\27\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\27\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\20",
+            "\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\16\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\16\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\16\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\7\1\10\47\uffff\1\13\45\uffff\1\11\1\12\1\14\20\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\10\47\uffff\1\13\45\uffff\1\11\1\12\1\14\20\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\13\45\uffff\1\11\1\12\1\14\20\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\13\46\uffff\1\12\1\14\20\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "\1\13\47\uffff\1\14\20\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17",
+            "",
+            "\1\13\u009f\uffff\2\17",
+            "",
+            "",
+            "",
+            "\1\25\1\24\1\uffff\1\27\1\30\1\26\1\1\11\uffff\1\21\15\uffff\1\7\1\10\6\uffff\1\23\4\uffff\1\31\33\uffff\1\13\6\uffff\1\22\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\32",
+            "\1\32\2\uffff\1\27\1\30",
+            "\1\33",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\35\3\uffff\1\34\11\uffff\1\7\1\10\6\uffff\1\37\40\uffff\1\13\6\uffff\1\36\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\40",
+            "\1\25\1\24\1\uffff\1\27\1\30\1\26\1\1\11\uffff\1\21\15\uffff\1\7\1\10\6\uffff\1\23\4\uffff\1\31\33\uffff\1\13\6\uffff\1\22\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\25\1\24\1\uffff\1\27\1\30\1\26\1\1\27\uffff\1\7\1\10\13\uffff\1\31\33\uffff\1\13\6\uffff\1\41\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\43\1\42\1\uffff\1\46\1\47\1\44\110\uffff\1\45",
+            "\1\50",
+            "\1\50",
+            "\1\51",
+            "\1\52\25\uffff\1\54\5\uffff\1\55\41\uffff\1\53",
+            "\1\27\1\30",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\56\3\uffff\1\34\11\uffff\1\7\1\10\6\uffff\1\60\40\uffff\1\13\6\uffff\1\57\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\46\1\47",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\35\3\uffff\1\34\11\uffff\1\7\1\10\6\uffff\1\37\40\uffff\1\13\6\uffff\1\36\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\61",
+            "\1\61",
+            "\1\62",
+            "\1\64\1\63\1\uffff\1\67\1\70\1\65\110\uffff\1\66",
+            "\1\71",
+            "\1\71",
+            "\1\72",
+            "\1\52\25\uffff\1\54\5\uffff\1\55\41\uffff\1\53",
+            "\1\55",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\74\3\uffff\1\73\11\uffff\1\7\1\10\6\uffff\1\76\40\uffff\1\13\6\uffff\1\75\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\67\1\70",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\56\3\uffff\1\34\11\uffff\1\7\1\10\6\uffff\1\60\40\uffff\1\13\6\uffff\1\57\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\34\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\100\1\77\1\uffff\1\103\1\104\1\101\110\uffff\1\102",
+            "\1\105",
+            "\1\105",
+            "\1\106",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\107\3\uffff\1\73\11\uffff\1\7\1\10\6\uffff\1\111\40\uffff\1\13\6\uffff\1\110\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\103\1\104",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\11\uffff\1\74\3\uffff\1\73\11\uffff\1\7\1\10\6\uffff\1\76\40\uffff\1\13\6\uffff\1\75\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\112",
+            "\1\112",
+            "\1\113",
+            "\1\1\11\uffff\1\107\3\uffff\1\73\11\uffff\1\7\1\10\6\uffff\1\111\40\uffff\1\13\6\uffff\1\110\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
+            "\1\1\15\uffff\1\73\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5"
+    };
+
+    static final short[] dfa_138 = DFA.unpackEncodedString(dfa_138s);
+    static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
+    static final char[] dfa_140 = DFA.unpackEncodedStringToUnsignedChars(dfa_140s);
+    static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
+    static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
+    static final short[][] dfa_143 = unpackEncodedStringArray(dfa_143s);
+
+    class DFA328 extends DFA {
+
+        public DFA328(BaseRecognizer recognizer) {
+            this.recognizer = recognizer;
+            this.decisionNumber = 328;
+            this.eot = dfa_138;
+            this.eof = dfa_138;
+            this.min = dfa_139;
+            this.max = dfa_140;
+            this.accept = dfa_141;
+            this.special = dfa_142;
+            this.transition = dfa_143;
+        }
+        public String getDescription() {
+            return "13811:2: (this_VariableDeclaration_0= ruleVariableDeclaration | this_ReferenceDeclaration_1= ruleReferenceDeclaration | this_ScheduleDeclaration_2= ruleScheduleDeclaration | this_ClassDeclaration_3= ruleClassDeclaration )";
+        }
+    }
+    static final String dfa_144s = "\2\12\1\4\4\42\1\43\3\113\1\uffff\1\5\3\uffff\3\4\1\7\1\4\5\12\2\4\1\24\3\4\2\7\2\4\1\7\1\4\3\12\1\7\4\12\1\24\1\60\3\12\1\7\2\12\2\4\1\7\3\4\1\7\5\12\1\7\4\12\2\4\1\7\2\12";
+    static final String dfa_145s = "\2\u00a9\1\4\10\u00a6\1\uffff\1\u00a6\3\uffff\1\u00a9\1\4\1\10\1\7\1\4\7\u00a9\2\122\2\4\1\7\1\10\2\4\1\7\1\122\3\u00a9\1\10\4\u00a9\1\122\1\60\3\u00a9\1\10\2\u00a9\2\4\1\7\1\122\2\4\1\7\5\u00a9\1\10\4\u00a9\2\4\1\7\2\u00a9";
+    static final String[] dfa_146s = {
             "\1\1\27\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
             "\1\1\27\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
             "\1\20",
@@ -71294,31 +71399,9 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\1\1\11\uffff\1\107\3\uffff\1\71\11\uffff\1\7\1\10\6\uffff\1\111\40\uffff\1\13\6\uffff\1\110\20\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5",
             "\1\1\15\uffff\1\71\11\uffff\1\7\1\10\47\uffff\1\13\27\uffff\1\16\14\uffff\1\6\1\11\1\12\1\14\2\15\13\uffff\1\2\2\uffff\1\13\3\uffff\1\13\1\uffff\1\13\30\uffff\2\13\2\17\1\3\1\4\1\5"
     };
-
-    static final short[] dfa_138 = DFA.unpackEncodedString(dfa_138s);
-    static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
-    static final char[] dfa_140 = DFA.unpackEncodedStringToUnsignedChars(dfa_140s);
-    static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
-    static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
-    static final short[][] dfa_143 = unpackEncodedStringArray(dfa_143s);
-
-    class DFA328 extends DFA {
-
-        public DFA328(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 328;
-            this.eot = dfa_138;
-            this.eof = dfa_138;
-            this.min = dfa_139;
-            this.max = dfa_140;
-            this.accept = dfa_141;
-            this.special = dfa_142;
-            this.transition = dfa_143;
-        }
-        public String getDescription() {
-            return "13811:2: (this_VariableDeclaration_0= ruleVariableDeclaration | this_ReferenceDeclaration_1= ruleReferenceDeclaration | this_ScheduleDeclaration_2= ruleScheduleDeclaration | this_ClassDeclaration_3= ruleClassDeclaration )";
-        }
-    }
+    static final char[] dfa_144 = DFA.unpackEncodedStringToUnsignedChars(dfa_144s);
+    static final char[] dfa_145 = DFA.unpackEncodedStringToUnsignedChars(dfa_145s);
+    static final short[][] dfa_146 = unpackEncodedStringArray(dfa_146s);
 
     class DFA329 extends DFA {
 
@@ -71327,24 +71410,24 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 329;
             this.eot = dfa_138;
             this.eof = dfa_138;
-            this.min = dfa_139;
-            this.max = dfa_140;
+            this.min = dfa_144;
+            this.max = dfa_145;
             this.accept = dfa_141;
             this.special = dfa_142;
-            this.transition = dfa_143;
+            this.transition = dfa_146;
         }
         public String getDescription() {
             return "13877:2: (this_VariableDeclarationWOSemicolon_0= ruleVariableDeclarationWOSemicolon | this_ReferenceDeclarationWOSemicolon_1= ruleReferenceDeclarationWOSemicolon | this_ScheduleDeclarationWOSemicolon_2= ruleScheduleDeclarationWOSemicolon | this_ClassDeclarationWOSemicolon_3= ruleClassDeclarationWOSemicolon )";
         }
     }
-    static final String dfa_144s = "\51\uffff";
-    static final String dfa_145s = "\1\1\50\uffff";
-    static final String dfa_146s = "\1\4\2\uffff\1\0\45\uffff";
-    static final String dfa_147s = "\1\u00aa\2\uffff\1\0\45\uffff";
-    static final String dfa_148s = "\1\uffff\1\2\46\uffff\1\1";
-    static final String dfa_149s = "\3\uffff\1\0\45\uffff}>";
-    static final String[] dfa_150s = {
-            "\1\1\5\uffff\2\1\14\uffff\1\3\1\1\4\uffff\1\1\3\uffff\2\1\1\uffff\1\1\7\uffff\1\1\13\uffff\1\1\21\uffff\1\1\1\uffff\1\1\24\uffff\5\1\2\uffff\2\1\5\uffff\6\1\13\uffff\1\1\2\uffff\1\1\3\uffff\1\1\1\uffff\1\1\30\uffff\10\1",
+    static final String dfa_147s = "\40\uffff";
+    static final String dfa_148s = "\1\1\37\uffff";
+    static final String dfa_149s = "\1\4\2\uffff\1\0\34\uffff";
+    static final String dfa_150s = "\1\u00aa\2\uffff\1\0\34\uffff";
+    static final String dfa_151s = "\1\uffff\1\2\35\uffff\1\1";
+    static final String dfa_152s = "\3\uffff\1\0\34\uffff}>";
+    static final String[] dfa_153s = {
+            "\1\1\5\uffff\2\1\14\uffff\1\3\1\1\4\uffff\1\1\3\uffff\2\1\47\uffff\1\1\27\uffff\1\1\1\uffff\1\1\12\uffff\6\1\13\uffff\1\1\2\uffff\1\1\3\uffff\1\1\1\uffff\1\1\30\uffff\10\1",
             "",
             "",
             "\1\uffff",
@@ -71375,38 +71458,29 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             ""
     };
 
-    static final short[] dfa_144 = DFA.unpackEncodedString(dfa_144s);
-    static final short[] dfa_145 = DFA.unpackEncodedString(dfa_145s);
-    static final char[] dfa_146 = DFA.unpackEncodedStringToUnsignedChars(dfa_146s);
-    static final char[] dfa_147 = DFA.unpackEncodedStringToUnsignedChars(dfa_147s);
+    static final short[] dfa_147 = DFA.unpackEncodedString(dfa_147s);
     static final short[] dfa_148 = DFA.unpackEncodedString(dfa_148s);
-    static final short[] dfa_149 = DFA.unpackEncodedString(dfa_149s);
-    static final short[][] dfa_150 = unpackEncodedStringArray(dfa_150s);
+    static final char[] dfa_149 = DFA.unpackEncodedStringToUnsignedChars(dfa_149s);
+    static final char[] dfa_150 = DFA.unpackEncodedStringToUnsignedChars(dfa_150s);
+    static final short[] dfa_151 = DFA.unpackEncodedString(dfa_151s);
+    static final short[] dfa_152 = DFA.unpackEncodedString(dfa_152s);
+    static final short[][] dfa_153 = unpackEncodedStringArray(dfa_153s);
 
     class DFA350 extends DFA {
 
         public DFA350(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 350;
-            this.eot = dfa_144;
-            this.eof = dfa_145;
-            this.min = dfa_146;
-            this.max = dfa_147;
-            this.accept = dfa_148;
-            this.special = dfa_149;
-            this.transition = dfa_150;
+            this.eot = dfa_147;
+            this.eof = dfa_148;
+            this.min = dfa_149;
+            this.max = dfa_150;
+            this.accept = dfa_151;
+            this.special = dfa_152;
+            this.transition = dfa_153;
         }
         public String getDescription() {
             return "()* loopback of 14449:3: (otherlv_13= ',' ( (lv_valuedObjects_14_0= ruleValuedObject ) ) )*";
@@ -71422,7 +71496,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         int index350_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred441_InternalEsterel()) ) {s = 40;}
+                        if ( (synpred441_InternalEsterel()) ) {s = 31;}
 
                         else if ( (true) ) {s = 1;}
 
@@ -71438,12 +71512,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_151s = "\31\uffff";
-    static final String dfa_152s = "\1\4\5\0\7\uffff\4\0\10\uffff";
-    static final String dfa_153s = "\1\u00aa\5\0\7\uffff\4\0\10\uffff";
-    static final String dfa_154s = "\6\uffff\1\1\20\uffff\1\2\1\uffff";
-    static final String dfa_155s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\7\uffff\1\5\1\6\1\7\1\10\10\uffff}>";
-    static final String[] dfa_156s = {
+    static final String dfa_154s = "\31\uffff";
+    static final String dfa_155s = "\1\4\5\0\7\uffff\4\0\10\uffff";
+    static final String dfa_156s = "\1\u00aa\5\0\7\uffff\4\0\10\uffff";
+    static final String dfa_157s = "\6\uffff\1\1\20\uffff\1\2\1\uffff";
+    static final String dfa_158s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\7\uffff\1\5\1\6\1\7\1\10\10\uffff}>";
+    static final String[] dfa_159s = {
             "\1\27\5\uffff\1\1\27\uffff\2\6\47\uffff\1\6\27\uffff\1\6\14\uffff\6\6\13\uffff\1\2\2\uffff\1\6\3\uffff\1\17\1\uffff\1\20\30\uffff\1\15\1\16\2\6\1\3\1\4\1\5\1\27",
             "\1\uffff",
             "\1\uffff",
@@ -71471,25 +71545,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_151 = DFA.unpackEncodedString(dfa_151s);
-    static final char[] dfa_152 = DFA.unpackEncodedStringToUnsignedChars(dfa_152s);
-    static final char[] dfa_153 = DFA.unpackEncodedStringToUnsignedChars(dfa_153s);
     static final short[] dfa_154 = DFA.unpackEncodedString(dfa_154s);
-    static final short[] dfa_155 = DFA.unpackEncodedString(dfa_155s);
-    static final short[][] dfa_156 = unpackEncodedStringArray(dfa_156s);
+    static final char[] dfa_155 = DFA.unpackEncodedStringToUnsignedChars(dfa_155s);
+    static final char[] dfa_156 = DFA.unpackEncodedStringToUnsignedChars(dfa_156s);
+    static final short[] dfa_157 = DFA.unpackEncodedString(dfa_157s);
+    static final short[] dfa_158 = DFA.unpackEncodedString(dfa_158s);
+    static final short[][] dfa_159 = unpackEncodedStringArray(dfa_159s);
 
     class DFA368 extends DFA {
 
         public DFA368(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 368;
-            this.eot = dfa_151;
-            this.eof = dfa_151;
-            this.min = dfa_152;
-            this.max = dfa_153;
-            this.accept = dfa_154;
-            this.special = dfa_155;
-            this.transition = dfa_156;
+            this.eot = dfa_154;
+            this.eof = dfa_154;
+            this.min = dfa_155;
+            this.max = dfa_156;
+            this.accept = dfa_157;
+            this.special = dfa_158;
+            this.transition = dfa_159;
         }
         public String getDescription() {
             return "14866:2: (this_Declaration_0= ruleDeclaration | this_MethodDeclaration_1= ruleMethodDeclaration )";
@@ -71641,26 +71715,17 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_157s = "\46\uffff";
-    static final String dfa_158s = "\1\4\45\uffff";
-    static final String dfa_159s = "\1\4\3\0\42\uffff";
-    static final String dfa_160s = "\1\u00aa\3\0\42\uffff";
-    static final String dfa_161s = "\4\uffff\1\2\40\uffff\1\1";
-    static final String dfa_162s = "\1\uffff\1\0\1\1\1\2\42\uffff}>";
-    static final String[] dfa_163s = {
-            "\1\3\5\uffff\1\1\1\4\26\uffff\2\4\1\uffff\1\4\7\uffff\1\4\13\uffff\1\4\21\uffff\1\4\1\uffff\1\4\24\uffff\5\4\2\uffff\2\4\5\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\10\4",
+    static final String dfa_160s = "\35\uffff";
+    static final String dfa_161s = "\1\4\34\uffff";
+    static final String dfa_162s = "\1\4\3\0\31\uffff";
+    static final String dfa_163s = "\1\u00aa\3\0\31\uffff";
+    static final String dfa_164s = "\4\uffff\1\2\27\uffff\1\1";
+    static final String dfa_165s = "\1\uffff\1\0\1\1\1\2\31\uffff}>";
+    static final String[] dfa_166s = {
+            "\1\3\5\uffff\1\1\1\4\26\uffff\2\4\47\uffff\1\4\27\uffff\1\4\1\uffff\1\4\12\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\10\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -71688,26 +71753,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_157 = DFA.unpackEncodedString(dfa_157s);
-    static final short[] dfa_158 = DFA.unpackEncodedString(dfa_158s);
-    static final char[] dfa_159 = DFA.unpackEncodedStringToUnsignedChars(dfa_159s);
-    static final char[] dfa_160 = DFA.unpackEncodedStringToUnsignedChars(dfa_160s);
+    static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
     static final short[] dfa_161 = DFA.unpackEncodedString(dfa_161s);
-    static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
-    static final short[][] dfa_163 = unpackEncodedStringArray(dfa_163s);
+    static final char[] dfa_162 = DFA.unpackEncodedStringToUnsignedChars(dfa_162s);
+    static final char[] dfa_163 = DFA.unpackEncodedStringToUnsignedChars(dfa_163s);
+    static final short[] dfa_164 = DFA.unpackEncodedString(dfa_164s);
+    static final short[] dfa_165 = DFA.unpackEncodedString(dfa_165s);
+    static final short[][] dfa_166 = unpackEncodedStringArray(dfa_166s);
 
     class DFA383 extends DFA {
 
         public DFA383(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 383;
-            this.eot = dfa_157;
-            this.eof = dfa_158;
-            this.min = dfa_159;
-            this.max = dfa_160;
-            this.accept = dfa_161;
-            this.special = dfa_162;
-            this.transition = dfa_163;
+            this.eot = dfa_160;
+            this.eof = dfa_161;
+            this.min = dfa_162;
+            this.max = dfa_163;
+            this.accept = dfa_164;
+            this.special = dfa_165;
+            this.transition = dfa_166;
         }
         public String getDescription() {
             return "15176:3: ( ( (lv_valuedObjects_19_0= ruleValuedObject ) ) (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )* )?";
@@ -71723,7 +71788,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         int index383_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred474_InternalEsterel()) ) {s = 37;}
+                        if ( (synpred474_InternalEsterel()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -71738,7 +71803,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         int index383_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred474_InternalEsterel()) ) {s = 37;}
+                        if ( (synpred474_InternalEsterel()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -71753,7 +71818,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         int index383_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred474_InternalEsterel()) ) {s = 37;}
+                        if ( (synpred474_InternalEsterel()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -71775,13 +71840,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         public DFA385(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 385;
-            this.eot = dfa_151;
-            this.eof = dfa_151;
-            this.min = dfa_152;
-            this.max = dfa_153;
-            this.accept = dfa_154;
-            this.special = dfa_155;
-            this.transition = dfa_156;
+            this.eot = dfa_154;
+            this.eof = dfa_154;
+            this.min = dfa_155;
+            this.max = dfa_156;
+            this.accept = dfa_157;
+            this.special = dfa_158;
+            this.transition = dfa_159;
         }
         public String getDescription() {
             return "15259:2: (this_DeclarationWOSemicolon_0= ruleDeclarationWOSemicolon | this_MethodDeclarationWOSemicolon_1= ruleMethodDeclarationWOSemicolon )";
@@ -71933,12 +71998,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_164s = "\15\uffff";
-    static final String dfa_165s = "\1\4\3\0\11\uffff";
-    static final String dfa_166s = "\1\u0081\3\0\11\uffff";
-    static final String dfa_167s = "\4\uffff\1\4\1\6\1\7\1\10\1\1\1\2\1\3\1\5\1\11";
-    static final String dfa_168s = "\1\uffff\1\0\1\1\1\2\11\uffff}>";
-    static final String[] dfa_169s = {
+    static final String dfa_167s = "\15\uffff";
+    static final String dfa_168s = "\1\4\3\0\11\uffff";
+    static final String dfa_169s = "\1\u0081\3\0\11\uffff";
+    static final String dfa_170s = "\4\uffff\1\4\1\6\1\7\1\10\1\1\1\2\1\3\1\5\1\11";
+    static final String dfa_171s = "\1\uffff\1\0\1\1\1\2\11\uffff}>";
+    static final String[] dfa_172s = {
             "\1\3\1\uffff\1\4\3\uffff\1\1\152\uffff\1\5\1\6\1\7\11\uffff\1\2",
             "\1\uffff",
             "\1\uffff",
@@ -71954,25 +72019,25 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_164 = DFA.unpackEncodedString(dfa_164s);
-    static final char[] dfa_165 = DFA.unpackEncodedStringToUnsignedChars(dfa_165s);
-    static final char[] dfa_166 = DFA.unpackEncodedStringToUnsignedChars(dfa_166s);
     static final short[] dfa_167 = DFA.unpackEncodedString(dfa_167s);
-    static final short[] dfa_168 = DFA.unpackEncodedString(dfa_168s);
-    static final short[][] dfa_169 = unpackEncodedStringArray(dfa_169s);
+    static final char[] dfa_168 = DFA.unpackEncodedStringToUnsignedChars(dfa_168s);
+    static final char[] dfa_169 = DFA.unpackEncodedStringToUnsignedChars(dfa_169s);
+    static final short[] dfa_170 = DFA.unpackEncodedString(dfa_170s);
+    static final short[] dfa_171 = DFA.unpackEncodedString(dfa_171s);
+    static final short[][] dfa_172 = unpackEncodedStringArray(dfa_172s);
 
     class DFA421 extends DFA {
 
         public DFA421(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 421;
-            this.eot = dfa_164;
-            this.eof = dfa_164;
-            this.min = dfa_165;
-            this.max = dfa_166;
-            this.accept = dfa_167;
-            this.special = dfa_168;
-            this.transition = dfa_169;
+            this.eot = dfa_167;
+            this.eof = dfa_167;
+            this.min = dfa_168;
+            this.max = dfa_169;
+            this.accept = dfa_170;
+            this.special = dfa_171;
+            this.transition = dfa_172;
         }
         public String getDescription() {
             return "16442:2: (this_Assignment_0= ruleAssignment | this_PostfixEffect_1= rulePostfixEffect | this_ValuedEmission_2= ruleValuedEmission | this_HostcodeEffect_3= ruleHostcodeEffect | this_ReferenceCallEffect_4= ruleReferenceCallEffect | this_FunctionCallEffect_5= ruleFunctionCallEffect | this_PrintCallEffect_6= rulePrintCallEffect | this_RandomizeCallEffect_7= ruleRandomizeCallEffect | this_PureEmission_8= rulePureEmission )";
@@ -72068,18 +72133,18 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_170s = "\1\1\1\uffff\2\1\1\uffff";
-    static final String dfa_171s = "\1\4\1\uffff\2\4\1\uffff";
-    static final String[] dfa_172s = {
+    static final String dfa_173s = "\1\1\1\uffff\2\1\1\uffff";
+    static final String dfa_174s = "\1\4\1\uffff\2\4\1\uffff";
+    static final String[] dfa_175s = {
             "\1\2\1\uffff\1\1\3\uffff\1\1\132\uffff\1\1\10\uffff\2\1\5\uffff\3\1\11\uffff\1\1",
             "",
             "\1\1\1\uffff\1\1\1\4\2\uffff\1\1\11\uffff\1\1\6\uffff\1\1\1\uffff\1\1\1\uffff\1\1\17\uffff\1\1\63\uffff\1\1\1\uffff\1\1\10\uffff\2\1\5\uffff\3\1\6\uffff\1\3\2\uffff\1\1\16\uffff\17\1",
             "\1\1\1\uffff\1\1\1\4\2\uffff\1\1\11\uffff\1\1\6\uffff\1\1\1\uffff\1\1\1\uffff\1\1\17\uffff\1\1\63\uffff\1\1\1\uffff\1\1\10\uffff\2\1\5\uffff\3\1\6\uffff\1\3\2\uffff\1\1\16\uffff\17\1",
             ""
     };
-    static final short[] dfa_170 = DFA.unpackEncodedString(dfa_170s);
-    static final char[] dfa_171 = DFA.unpackEncodedStringToUnsignedChars(dfa_171s);
-    static final short[][] dfa_172 = unpackEncodedStringArray(dfa_172s);
+    static final short[] dfa_173 = DFA.unpackEncodedString(dfa_173s);
+    static final char[] dfa_174 = DFA.unpackEncodedStringToUnsignedChars(dfa_174s);
+    static final short[][] dfa_175 = unpackEncodedStringArray(dfa_175s);
 
     class DFA423 extends DFA {
 
@@ -72087,12 +72152,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 423;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 16612:4: ( (lv_schedule_3_0= ruleScheduleObjectReference ) )+";
@@ -72105,12 +72170,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 426;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 16721:4: ( (lv_schedule_6_0= ruleScheduleObjectReference ) )+";
@@ -72123,12 +72188,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 429;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 16841:4: ( (lv_schedule_5_0= ruleScheduleObjectReference ) )+";
@@ -72141,12 +72206,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 432;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 16942:4: ( (lv_schedule_4_0= ruleScheduleObjectReference ) )+";
@@ -72159,12 +72224,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 440;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 17195:4: ( (lv_schedule_14_0= ruleScheduleObjectReference ) )+";
@@ -72177,23 +72242,23 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 447;
             this.eot = dfa_72;
-            this.eof = dfa_170;
-            this.min = dfa_171;
+            this.eof = dfa_173;
+            this.min = dfa_174;
             this.max = dfa_75;
             this.accept = dfa_76;
             this.special = dfa_77;
-            this.transition = dfa_172;
+            this.transition = dfa_175;
         }
         public String getDescription() {
             return "()+ loopback of 17439:4: ( (lv_schedule_8_0= ruleScheduleObjectReference ) )+";
         }
     }
-    static final String dfa_173s = "\1\1\11\uffff";
-    static final String dfa_174s = "\1\117\5\uffff\1\0\3\uffff";
-    static final String dfa_175s = "\1\175\5\uffff\1\0\3\uffff";
-    static final String dfa_176s = "\1\uffff\1\2\7\uffff\1\1";
-    static final String dfa_177s = "\6\uffff\1\0\3\uffff}>";
-    static final String[] dfa_178s = {
+    static final String dfa_176s = "\1\1\11\uffff";
+    static final String dfa_177s = "\1\117\5\uffff\1\0\3\uffff";
+    static final String dfa_178s = "\1\175\5\uffff\1\0\3\uffff";
+    static final String dfa_179s = "\1\uffff\1\2\7\uffff\1\1";
+    static final String dfa_180s = "\6\uffff\1\0\3\uffff}>";
+    static final String[] dfa_181s = {
             "\1\1\1\6\2\1\50\uffff\3\1",
             "",
             "",
@@ -72205,12 +72270,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final short[] dfa_173 = DFA.unpackEncodedString(dfa_173s);
-    static final char[] dfa_174 = DFA.unpackEncodedStringToUnsignedChars(dfa_174s);
-    static final char[] dfa_175 = DFA.unpackEncodedStringToUnsignedChars(dfa_175s);
     static final short[] dfa_176 = DFA.unpackEncodedString(dfa_176s);
-    static final short[] dfa_177 = DFA.unpackEncodedString(dfa_177s);
-    static final short[][] dfa_178 = unpackEncodedStringArray(dfa_178s);
+    static final char[] dfa_177 = DFA.unpackEncodedStringToUnsignedChars(dfa_177s);
+    static final char[] dfa_178 = DFA.unpackEncodedStringToUnsignedChars(dfa_178s);
+    static final short[] dfa_179 = DFA.unpackEncodedString(dfa_179s);
+    static final short[] dfa_180 = DFA.unpackEncodedString(dfa_180s);
+    static final short[][] dfa_181 = unpackEncodedStringArray(dfa_181s);
 
     class DFA470 extends DFA {
 
@@ -72218,12 +72283,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 470;
             this.eot = dfa_37;
-            this.eof = dfa_173;
-            this.min = dfa_174;
-            this.max = dfa_175;
-            this.accept = dfa_176;
-            this.special = dfa_177;
-            this.transition = dfa_178;
+            this.eof = dfa_176;
+            this.min = dfa_177;
+            this.max = dfa_178;
+            this.accept = dfa_179;
+            this.special = dfa_180;
+            this.transition = dfa_181;
         }
         public String getDescription() {
             return "()* loopback of 18693:5: (otherlv_4= '*' ( (lv_subExpressions_5_0= ruleNegExpression ) ) )*";
@@ -72255,10 +72320,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_179s = "\1\117\6\uffff\1\0\2\uffff";
-    static final String dfa_180s = "\1\175\6\uffff\1\0\2\uffff";
-    static final String dfa_181s = "\7\uffff\1\0\2\uffff}>";
-    static final String[] dfa_182s = {
+    static final String dfa_182s = "\1\117\6\uffff\1\0\2\uffff";
+    static final String dfa_183s = "\1\175\6\uffff\1\0\2\uffff";
+    static final String dfa_184s = "\7\uffff\1\0\2\uffff}>";
+    static final String[] dfa_185s = {
             "\1\7\3\1\50\uffff\3\1",
             "",
             "",
@@ -72270,10 +72335,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_179 = DFA.unpackEncodedStringToUnsignedChars(dfa_179s);
-    static final char[] dfa_180 = DFA.unpackEncodedStringToUnsignedChars(dfa_180s);
-    static final short[] dfa_181 = DFA.unpackEncodedString(dfa_181s);
-    static final short[][] dfa_182 = unpackEncodedStringArray(dfa_182s);
+    static final char[] dfa_182 = DFA.unpackEncodedStringToUnsignedChars(dfa_182s);
+    static final char[] dfa_183 = DFA.unpackEncodedStringToUnsignedChars(dfa_183s);
+    static final short[] dfa_184 = DFA.unpackEncodedString(dfa_184s);
+    static final short[][] dfa_185 = unpackEncodedStringArray(dfa_185s);
 
     class DFA471 extends DFA {
 
@@ -72281,12 +72346,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 471;
             this.eot = dfa_37;
-            this.eof = dfa_173;
-            this.min = dfa_179;
-            this.max = dfa_180;
-            this.accept = dfa_176;
-            this.special = dfa_181;
-            this.transition = dfa_182;
+            this.eof = dfa_176;
+            this.min = dfa_182;
+            this.max = dfa_183;
+            this.accept = dfa_179;
+            this.special = dfa_184;
+            this.transition = dfa_185;
         }
         public String getDescription() {
             return "()* loopback of 18769:5: (otherlv_9= '/' ( (lv_subExpressions_10_0= ruleNegExpression ) ) )*";
@@ -72318,10 +72383,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_183s = "\1\117\7\uffff\1\0\1\uffff";
-    static final String dfa_184s = "\1\175\7\uffff\1\0\1\uffff";
-    static final String dfa_185s = "\10\uffff\1\0\1\uffff}>";
-    static final String[] dfa_186s = {
+    static final String dfa_186s = "\1\117\7\uffff\1\0\1\uffff";
+    static final String dfa_187s = "\1\175\7\uffff\1\0\1\uffff";
+    static final String dfa_188s = "\10\uffff\1\0\1\uffff}>";
+    static final String[] dfa_189s = {
             "\4\1\50\uffff\2\1\1\10",
             "",
             "",
@@ -72333,10 +72398,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\1\uffff",
             ""
     };
-    static final char[] dfa_183 = DFA.unpackEncodedStringToUnsignedChars(dfa_183s);
-    static final char[] dfa_184 = DFA.unpackEncodedStringToUnsignedChars(dfa_184s);
-    static final short[] dfa_185 = DFA.unpackEncodedString(dfa_185s);
-    static final short[][] dfa_186 = unpackEncodedStringArray(dfa_186s);
+    static final char[] dfa_186 = DFA.unpackEncodedStringToUnsignedChars(dfa_186s);
+    static final char[] dfa_187 = DFA.unpackEncodedStringToUnsignedChars(dfa_187s);
+    static final short[] dfa_188 = DFA.unpackEncodedString(dfa_188s);
+    static final short[][] dfa_189 = unpackEncodedStringArray(dfa_189s);
 
     class DFA472 extends DFA {
 
@@ -72344,12 +72409,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 472;
             this.eot = dfa_37;
-            this.eof = dfa_173;
-            this.min = dfa_183;
-            this.max = dfa_184;
-            this.accept = dfa_176;
-            this.special = dfa_185;
-            this.transition = dfa_186;
+            this.eof = dfa_176;
+            this.min = dfa_186;
+            this.max = dfa_187;
+            this.accept = dfa_179;
+            this.special = dfa_188;
+            this.transition = dfa_189;
         }
         public String getDescription() {
             return "()* loopback of 18845:5: (otherlv_14= '%' ( (lv_subExpressions_15_0= ruleNegExpression ) ) )*";
@@ -72381,11 +72446,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_187s = "\1\4\14\0\2\uffff";
-    static final String dfa_188s = "\1\u0083\14\0\2\uffff";
-    static final String dfa_189s = "\15\uffff\1\1\1\2";
-    static final String dfa_190s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
-    static final String[] dfa_191s = {
+    static final String dfa_190s = "\1\4\14\0\2\uffff";
+    static final String dfa_191s = "\1\u0083\14\0\2\uffff";
+    static final String dfa_192s = "\15\uffff\1\1\1\2";
+    static final String dfa_193s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\2\uffff}>";
+    static final String[] dfa_194s = {
             "\1\4\1\14\1\13\1\1\1\2\1\6\1\11\22\uffff\1\3\101\uffff\1\5\41\uffff\1\12\1\7\1\10",
             "\1\uffff",
             "\1\uffff",
@@ -72402,11 +72467,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_187 = DFA.unpackEncodedStringToUnsignedChars(dfa_187s);
-    static final char[] dfa_188 = DFA.unpackEncodedStringToUnsignedChars(dfa_188s);
-    static final short[] dfa_189 = DFA.unpackEncodedString(dfa_189s);
-    static final short[] dfa_190 = DFA.unpackEncodedString(dfa_190s);
-    static final short[][] dfa_191 = unpackEncodedStringArray(dfa_191s);
+    static final char[] dfa_190 = DFA.unpackEncodedStringToUnsignedChars(dfa_190s);
+    static final char[] dfa_191 = DFA.unpackEncodedStringToUnsignedChars(dfa_191s);
+    static final short[] dfa_192 = DFA.unpackEncodedString(dfa_192s);
+    static final short[] dfa_193 = DFA.unpackEncodedString(dfa_193s);
+    static final short[][] dfa_194 = unpackEncodedStringArray(dfa_194s);
 
     class DFA474 extends DFA {
 
@@ -72415,11 +72480,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 474;
             this.eot = dfa_49;
             this.eof = dfa_49;
-            this.min = dfa_187;
-            this.max = dfa_188;
-            this.accept = dfa_189;
-            this.special = dfa_190;
-            this.transition = dfa_191;
+            this.min = dfa_190;
+            this.max = dfa_191;
+            this.accept = dfa_192;
+            this.special = dfa_193;
+            this.transition = dfa_194;
         }
         public String getDescription() {
             return "18890:2: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) ) | this_AtomicValuedExpression_4= ruleAtomicValuedExpression )";
@@ -72616,13 +72681,13 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_192s = "\152\uffff";
-    static final String dfa_193s = "\1\1\151\uffff";
-    static final String dfa_194s = "\1\4\40\uffff\1\0\110\uffff";
-    static final String dfa_195s = "\1\u00aa\40\uffff\1\0\110\uffff";
-    static final String dfa_196s = "\1\uffff\1\2\147\uffff\1\1";
-    static final String dfa_197s = "\41\uffff\1\0\110\uffff}>";
-    static final String[] dfa_198s = {
+    static final String dfa_195s = "\152\uffff";
+    static final String dfa_196s = "\1\1\151\uffff";
+    static final String dfa_197s = "\1\4\40\uffff\1\0\110\uffff";
+    static final String dfa_198s = "\1\u00aa\40\uffff\1\0\110\uffff";
+    static final String dfa_199s = "\1\uffff\1\2\147\uffff\1\1";
+    static final String dfa_200s = "\41\uffff\1\0\110\uffff}>";
+    static final String[] dfa_201s = {
             "\1\1\1\uffff\1\1\3\uffff\2\1\6\uffff\4\1\2\uffff\2\1\1\uffff\1\1\1\uffff\3\1\2\uffff\2\1\1\uffff\1\1\5\uffff\1\1\1\uffff\1\1\1\uffff\1\41\1\1\4\uffff\3\1\1\uffff\2\1\1\uffff\1\1\2\uffff\1\1\2\uffff\1\1\5\uffff\1\1\2\uffff\1\1\1\uffff\1\1\1\uffff\12\1\1\uffff\4\1\2\uffff\1\1\1\uffff\11\1\1\uffff\22\1\3\uffff\2\1\1\uffff\1\1\3\uffff\1\1\1\uffff\1\1\5\uffff\17\1\3\uffff\11\1",
             "",
             "",
@@ -72731,26 +72796,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_192 = DFA.unpackEncodedString(dfa_192s);
-    static final short[] dfa_193 = DFA.unpackEncodedString(dfa_193s);
-    static final char[] dfa_194 = DFA.unpackEncodedStringToUnsignedChars(dfa_194s);
-    static final char[] dfa_195 = DFA.unpackEncodedStringToUnsignedChars(dfa_195s);
+    static final short[] dfa_195 = DFA.unpackEncodedString(dfa_195s);
     static final short[] dfa_196 = DFA.unpackEncodedString(dfa_196s);
-    static final short[] dfa_197 = DFA.unpackEncodedString(dfa_197s);
-    static final short[][] dfa_198 = unpackEncodedStringArray(dfa_198s);
+    static final char[] dfa_197 = DFA.unpackEncodedStringToUnsignedChars(dfa_197s);
+    static final char[] dfa_198 = DFA.unpackEncodedStringToUnsignedChars(dfa_198s);
+    static final short[] dfa_199 = DFA.unpackEncodedString(dfa_199s);
+    static final short[] dfa_200 = DFA.unpackEncodedString(dfa_200s);
+    static final short[][] dfa_201 = unpackEncodedStringArray(dfa_201s);
 
     class DFA479 extends DFA {
 
         public DFA479(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 479;
-            this.eot = dfa_192;
-            this.eof = dfa_193;
-            this.min = dfa_194;
-            this.max = dfa_195;
-            this.accept = dfa_196;
-            this.special = dfa_197;
-            this.transition = dfa_198;
+            this.eot = dfa_195;
+            this.eof = dfa_196;
+            this.min = dfa_197;
+            this.max = dfa_198;
+            this.accept = dfa_199;
+            this.special = dfa_200;
+            this.transition = dfa_201;
         }
         public String getDescription() {
             return "()* loopback of 19175:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*";
@@ -72782,11 +72847,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_199s = "\1\4\15\0\3\uffff";
-    static final String dfa_200s = "\1\u0083\15\0\3\uffff";
-    static final String dfa_201s = "\16\uffff\1\1\1\3\1\2";
-    static final String dfa_202s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
-    static final String[] dfa_203s = {
+    static final String dfa_202s = "\1\4\15\0\3\uffff";
+    static final String dfa_203s = "\1\u0083\15\0\3\uffff";
+    static final String dfa_204s = "\16\uffff\1\1\1\3\1\2";
+    static final String dfa_205s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
+    static final String[] dfa_206s = {
             "\1\5\1\15\1\14\1\2\1\3\1\7\1\12\22\uffff\1\4\64\uffff\1\1\6\uffff\1\16\5\uffff\1\6\37\uffff\1\17\1\uffff\1\13\1\10\1\11",
             "\1\uffff",
             "\1\uffff",
@@ -72805,11 +72870,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_199 = DFA.unpackEncodedStringToUnsignedChars(dfa_199s);
-    static final char[] dfa_200 = DFA.unpackEncodedStringToUnsignedChars(dfa_200s);
-    static final short[] dfa_201 = DFA.unpackEncodedString(dfa_201s);
-    static final short[] dfa_202 = DFA.unpackEncodedString(dfa_202s);
-    static final short[][] dfa_203 = unpackEncodedStringArray(dfa_203s);
+    static final char[] dfa_202 = DFA.unpackEncodedStringToUnsignedChars(dfa_202s);
+    static final char[] dfa_203 = DFA.unpackEncodedStringToUnsignedChars(dfa_203s);
+    static final short[] dfa_204 = DFA.unpackEncodedString(dfa_204s);
+    static final short[] dfa_205 = DFA.unpackEncodedString(dfa_205s);
+    static final short[][] dfa_206 = unpackEncodedStringArray(dfa_206s);
 
     class DFA484 extends DFA {
 
@@ -72818,11 +72883,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 484;
             this.eot = dfa_94;
             this.eof = dfa_94;
-            this.min = dfa_199;
-            this.max = dfa_200;
-            this.accept = dfa_201;
-            this.special = dfa_202;
-            this.transition = dfa_203;
+            this.min = dfa_202;
+            this.max = dfa_203;
+            this.accept = dfa_204;
+            this.special = dfa_205;
+            this.transition = dfa_206;
         }
         public String getDescription() {
             return "19567:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
@@ -73034,12 +73099,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_204s = "\2\uffff\1\6\5\uffff\2\6";
-    static final String dfa_205s = "\1\52\5\4\2\uffff\2\4";
-    static final String dfa_206s = "\1\52\1\4\1\u0081\1\4\1\10\1\7\2\uffff\2\u0081";
-    static final String dfa_207s = "\6\uffff\1\1\1\2\2\uffff";
-    static final String dfa_208s = "\12\uffff}>";
-    static final String[] dfa_209s = {
+    static final String dfa_207s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_208s = "\1\52\5\4\2\uffff\2\4";
+    static final String dfa_209s = "\1\52\1\4\1\u0081\1\4\1\10\1\7\2\uffff\2\u0081";
+    static final String dfa_210s = "\6\uffff\1\1\1\2\2\uffff";
+    static final String dfa_211s = "\12\uffff}>";
+    static final String[] dfa_212s = {
             "\1\1",
             "\1\2",
             "\2\6\1\uffff\4\6\6\uffff\1\6\2\uffff\1\3\25\uffff\1\5\47\uffff\1\4\21\uffff\1\7\34\uffff\1\6",
@@ -73051,12 +73116,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\2\6\1\uffff\4\6\6\uffff\1\6\2\uffff\1\3\25\uffff\1\5\47\uffff\1\4\21\uffff\1\7\34\uffff\1\6",
             "\2\6\1\uffff\4\6\6\uffff\1\6\30\uffff\1\6\47\uffff\1\6\21\uffff\1\7\34\uffff\1\6"
     };
-    static final short[] dfa_204 = DFA.unpackEncodedString(dfa_204s);
-    static final char[] dfa_205 = DFA.unpackEncodedStringToUnsignedChars(dfa_205s);
-    static final char[] dfa_206 = DFA.unpackEncodedStringToUnsignedChars(dfa_206s);
     static final short[] dfa_207 = DFA.unpackEncodedString(dfa_207s);
-    static final short[] dfa_208 = DFA.unpackEncodedString(dfa_208s);
-    static final short[][] dfa_209 = unpackEncodedStringArray(dfa_209s);
+    static final char[] dfa_208 = DFA.unpackEncodedStringToUnsignedChars(dfa_208s);
+    static final char[] dfa_209 = DFA.unpackEncodedStringToUnsignedChars(dfa_209s);
+    static final short[] dfa_210 = DFA.unpackEncodedString(dfa_210s);
+    static final short[] dfa_211 = DFA.unpackEncodedString(dfa_211s);
+    static final short[][] dfa_212 = unpackEncodedStringArray(dfa_212s);
 
     class DFA491 extends DFA {
 
@@ -73064,22 +73129,22 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 491;
             this.eot = dfa_37;
-            this.eof = dfa_204;
-            this.min = dfa_205;
-            this.max = dfa_206;
-            this.accept = dfa_207;
-            this.special = dfa_208;
-            this.transition = dfa_209;
+            this.eof = dfa_207;
+            this.min = dfa_208;
+            this.max = dfa_209;
+            this.accept = dfa_210;
+            this.special = dfa_211;
+            this.transition = dfa_212;
         }
         public String getDescription() {
             return "20167:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )";
         }
     }
-    static final String dfa_210s = "\3\uffff\1\1\4\uffff\2\1";
-    static final String dfa_211s = "\1\12\1\uffff\4\4\1\7\1\uffff\2\4";
-    static final String dfa_212s = "\1\u0081\1\uffff\1\4\1\u0081\2\4\1\7\1\uffff\2\u0081";
-    static final String dfa_213s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
-    static final String[] dfa_214s = {
+    static final String dfa_213s = "\3\uffff\1\1\4\uffff\2\1";
+    static final String dfa_214s = "\1\12\1\uffff\4\4\1\7\1\uffff\2\4";
+    static final String dfa_215s = "\1\u0081\1\uffff\1\4\1\u0081\2\4\1\7\1\uffff\2\u0081";
+    static final String dfa_216s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
+    static final String[] dfa_217s = {
             "\1\1\166\uffff\1\2",
             "",
             "\1\3",
@@ -73091,11 +73156,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\2\1\4\uffff\1\1\11\uffff\1\4\25\uffff\1\6\4\uffff\1\1\42\uffff\1\5\21\uffff\1\7\34\uffff\1\1",
             "\2\1\4\uffff\1\1\44\uffff\1\1\64\uffff\1\7\34\uffff\1\1"
     };
-    static final short[] dfa_210 = DFA.unpackEncodedString(dfa_210s);
-    static final char[] dfa_211 = DFA.unpackEncodedStringToUnsignedChars(dfa_211s);
-    static final char[] dfa_212 = DFA.unpackEncodedStringToUnsignedChars(dfa_212s);
     static final short[] dfa_213 = DFA.unpackEncodedString(dfa_213s);
-    static final short[][] dfa_214 = unpackEncodedStringArray(dfa_214s);
+    static final char[] dfa_214 = DFA.unpackEncodedStringToUnsignedChars(dfa_214s);
+    static final char[] dfa_215 = DFA.unpackEncodedStringToUnsignedChars(dfa_215s);
+    static final short[] dfa_216 = DFA.unpackEncodedString(dfa_216s);
+    static final short[][] dfa_217 = unpackEncodedStringArray(dfa_217s);
 
     class DFA492 extends DFA {
 
@@ -73103,19 +73168,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 492;
             this.eot = dfa_37;
-            this.eof = dfa_210;
-            this.min = dfa_211;
-            this.max = dfa_212;
-            this.accept = dfa_213;
-            this.special = dfa_208;
-            this.transition = dfa_214;
+            this.eof = dfa_213;
+            this.min = dfa_214;
+            this.max = dfa_215;
+            this.accept = dfa_216;
+            this.special = dfa_211;
+            this.transition = dfa_217;
         }
         public String getDescription() {
             return "20209:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_215s = "\2\uffff\1\7\5\uffff\2\7";
-    static final String[] dfa_216s = {
+    static final String dfa_218s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String[] dfa_219s = {
             "\1\1",
             "\1\2",
             "\2\6\1\uffff\3\6\1\7\6\uffff\1\7\2\uffff\1\3\25\uffff\1\5\47\uffff\1\4\56\uffff\1\7",
@@ -73127,8 +73192,8 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\2\6\1\uffff\3\6\1\7\6\uffff\1\7\2\uffff\1\3\25\uffff\1\5\47\uffff\1\4\56\uffff\1\7",
             "\2\6\1\uffff\3\6\1\7\6\uffff\1\7\30\uffff\1\7\47\uffff\1\6\56\uffff\1\7"
     };
-    static final short[] dfa_215 = DFA.unpackEncodedString(dfa_215s);
-    static final short[][] dfa_216 = unpackEncodedStringArray(dfa_216s);
+    static final short[] dfa_218 = DFA.unpackEncodedString(dfa_218s);
+    static final short[][] dfa_219 = unpackEncodedStringArray(dfa_219s);
 
     class DFA493 extends DFA {
 
@@ -73136,23 +73201,23 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 493;
             this.eot = dfa_37;
-            this.eof = dfa_215;
-            this.min = dfa_205;
-            this.max = dfa_206;
-            this.accept = dfa_207;
-            this.special = dfa_208;
-            this.transition = dfa_216;
+            this.eof = dfa_218;
+            this.min = dfa_208;
+            this.max = dfa_209;
+            this.accept = dfa_210;
+            this.special = dfa_211;
+            this.transition = dfa_219;
         }
         public String getDescription() {
             return "20251:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
         }
     }
-    static final String dfa_217s = "\13\uffff";
-    static final String dfa_218s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
-    static final String dfa_219s = "\1\u0081\1\uffff\1\4\1\122\1\4\1\10\1\7\2\uffff\2\122";
-    static final String dfa_220s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
-    static final String dfa_221s = "\13\uffff}>";
-    static final String[] dfa_222s = {
+    static final String dfa_220s = "\13\uffff";
+    static final String dfa_221s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
+    static final String dfa_222s = "\1\u0081\1\uffff\1\4\1\122\1\4\1\10\1\7\2\uffff\2\122";
+    static final String dfa_223s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
+    static final String dfa_224s = "\13\uffff}>";
+    static final String[] dfa_225s = {
             "\1\1\166\uffff\1\2",
             "",
             "\1\3",
@@ -73166,37 +73231,37 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\2\7\1\uffff\3\7\45\uffff\1\10\42\uffff\1\7"
     };
 
-    static final short[] dfa_217 = DFA.unpackEncodedString(dfa_217s);
-    static final char[] dfa_218 = DFA.unpackEncodedStringToUnsignedChars(dfa_218s);
-    static final char[] dfa_219 = DFA.unpackEncodedStringToUnsignedChars(dfa_219s);
     static final short[] dfa_220 = DFA.unpackEncodedString(dfa_220s);
-    static final short[] dfa_221 = DFA.unpackEncodedString(dfa_221s);
-    static final short[][] dfa_222 = unpackEncodedStringArray(dfa_222s);
+    static final char[] dfa_221 = DFA.unpackEncodedStringToUnsignedChars(dfa_221s);
+    static final char[] dfa_222 = DFA.unpackEncodedStringToUnsignedChars(dfa_222s);
+    static final short[] dfa_223 = DFA.unpackEncodedString(dfa_223s);
+    static final short[] dfa_224 = DFA.unpackEncodedString(dfa_224s);
+    static final short[][] dfa_225 = unpackEncodedStringArray(dfa_225s);
 
     class DFA494 extends DFA {
 
         public DFA494(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 494;
-            this.eot = dfa_217;
-            this.eof = dfa_217;
-            this.min = dfa_218;
-            this.max = dfa_219;
-            this.accept = dfa_220;
-            this.special = dfa_221;
-            this.transition = dfa_222;
+            this.eot = dfa_220;
+            this.eof = dfa_220;
+            this.min = dfa_221;
+            this.max = dfa_222;
+            this.accept = dfa_223;
+            this.special = dfa_224;
+            this.transition = dfa_225;
         }
         public String getDescription() {
             return "20293:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
         }
     }
-    static final String dfa_223s = "\14\uffff";
-    static final String dfa_224s = "\3\uffff\1\7\6\uffff\2\7";
-    static final String dfa_225s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
-    static final String dfa_226s = "\1\u0081\1\uffff\1\4\1\u0081\2\4\1\7\3\uffff\2\u0081";
-    static final String dfa_227s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
-    static final String dfa_228s = "\14\uffff}>";
-    static final String[] dfa_229s = {
+    static final String dfa_226s = "\14\uffff";
+    static final String dfa_227s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_228s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
+    static final String dfa_229s = "\1\u0081\1\uffff\1\4\1\u0081\2\4\1\7\3\uffff\2\u0081";
+    static final String dfa_230s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_231s = "\14\uffff}>";
+    static final String[] dfa_232s = {
             "\1\1\166\uffff\1\2",
             "",
             "\1\3",
@@ -73211,38 +73276,38 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             "\1\7\1\11\4\uffff\1\7\44\uffff\1\10\121\uffff\1\7"
     };
 
-    static final short[] dfa_223 = DFA.unpackEncodedString(dfa_223s);
-    static final short[] dfa_224 = DFA.unpackEncodedString(dfa_224s);
-    static final char[] dfa_225 = DFA.unpackEncodedStringToUnsignedChars(dfa_225s);
-    static final char[] dfa_226 = DFA.unpackEncodedStringToUnsignedChars(dfa_226s);
+    static final short[] dfa_226 = DFA.unpackEncodedString(dfa_226s);
     static final short[] dfa_227 = DFA.unpackEncodedString(dfa_227s);
-    static final short[] dfa_228 = DFA.unpackEncodedString(dfa_228s);
-    static final short[][] dfa_229 = unpackEncodedStringArray(dfa_229s);
+    static final char[] dfa_228 = DFA.unpackEncodedStringToUnsignedChars(dfa_228s);
+    static final char[] dfa_229 = DFA.unpackEncodedStringToUnsignedChars(dfa_229s);
+    static final short[] dfa_230 = DFA.unpackEncodedString(dfa_230s);
+    static final short[] dfa_231 = DFA.unpackEncodedString(dfa_231s);
+    static final short[][] dfa_232 = unpackEncodedStringArray(dfa_232s);
 
     class DFA495 extends DFA {
 
         public DFA495(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 495;
-            this.eot = dfa_223;
-            this.eof = dfa_224;
-            this.min = dfa_225;
-            this.max = dfa_226;
-            this.accept = dfa_227;
-            this.special = dfa_228;
-            this.transition = dfa_229;
+            this.eot = dfa_226;
+            this.eof = dfa_227;
+            this.min = dfa_228;
+            this.max = dfa_229;
+            this.accept = dfa_230;
+            this.special = dfa_231;
+            this.transition = dfa_232;
         }
         public String getDescription() {
             return "20347:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
-    static final String dfa_230s = "\126\uffff";
-    static final String dfa_231s = "\1\1\125\uffff";
-    static final String dfa_232s = "\1\4\62\uffff\1\0\42\uffff";
-    static final String dfa_233s = "\1\u00aa\62\uffff\1\0\42\uffff";
-    static final String dfa_234s = "\1\uffff\1\2\123\uffff\1\1";
-    static final String dfa_235s = "\63\uffff\1\0\42\uffff}>";
-    static final String[] dfa_236s = {
+    static final String dfa_233s = "\126\uffff";
+    static final String dfa_234s = "\1\1\125\uffff";
+    static final String dfa_235s = "\1\4\62\uffff\1\0\42\uffff";
+    static final String dfa_236s = "\1\u00aa\62\uffff\1\0\42\uffff";
+    static final String dfa_237s = "\1\uffff\1\2\123\uffff\1\1";
+    static final String dfa_238s = "\63\uffff\1\0\42\uffff}>";
+    static final String[] dfa_239s = {
             "\7\1\6\uffff\2\1\1\uffff\1\125\2\uffff\2\1\1\uffff\1\1\1\uffff\2\1\2\uffff\6\1\1\uffff\2\1\1\uffff\1\1\1\uffff\20\1\1\uffff\2\1\1\uffff\2\1\1\uffff\4\1\1\uffff\7\1\3\uffff\1\63\6\uffff\1\1\5\uffff\1\1\2\uffff\3\1\12\uffff\11\1\11\uffff\4\1\3\uffff\1\1\1\uffff\1\1\30\uffff\10\1",
             "",
             "",
@@ -73331,26 +73396,26 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_230 = DFA.unpackEncodedString(dfa_230s);
-    static final short[] dfa_231 = DFA.unpackEncodedString(dfa_231s);
-    static final char[] dfa_232 = DFA.unpackEncodedStringToUnsignedChars(dfa_232s);
-    static final char[] dfa_233 = DFA.unpackEncodedStringToUnsignedChars(dfa_233s);
+    static final short[] dfa_233 = DFA.unpackEncodedString(dfa_233s);
     static final short[] dfa_234 = DFA.unpackEncodedString(dfa_234s);
-    static final short[] dfa_235 = DFA.unpackEncodedString(dfa_235s);
-    static final short[][] dfa_236 = unpackEncodedStringArray(dfa_236s);
+    static final char[] dfa_235 = DFA.unpackEncodedStringToUnsignedChars(dfa_235s);
+    static final char[] dfa_236 = DFA.unpackEncodedStringToUnsignedChars(dfa_236s);
+    static final short[] dfa_237 = DFA.unpackEncodedString(dfa_237s);
+    static final short[] dfa_238 = DFA.unpackEncodedString(dfa_238s);
+    static final short[][] dfa_239 = unpackEncodedStringArray(dfa_239s);
 
     class DFA506 extends DFA {
 
         public DFA506(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 506;
-            this.eot = dfa_230;
-            this.eof = dfa_231;
-            this.min = dfa_232;
-            this.max = dfa_233;
-            this.accept = dfa_234;
-            this.special = dfa_235;
-            this.transition = dfa_236;
+            this.eot = dfa_233;
+            this.eof = dfa_234;
+            this.min = dfa_235;
+            this.max = dfa_236;
+            this.accept = dfa_237;
+            this.special = dfa_238;
+            this.transition = dfa_239;
         }
         public String getDescription() {
             return "()* loopback of 21366:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*";
@@ -73382,6 +73447,87 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
+    static final String dfa_240s = "\3\4\2\uffff\3\4\1\7\12\4\1\7\1\4\1\24\1\7\6\4\1\7\4\4\1\7\5\4\1\7\1\24\1\60\3\4\1\7\10\4\1\7\4\4\1\7\7\4\1\7\4\4\1\0";
+    static final String dfa_241s = "\2\u00a9\1\4\2\uffff\1\u00a9\1\4\1\10\1\7\1\u00a9\1\4\6\u00a9\2\4\1\7\2\122\1\10\6\u00a9\1\10\2\u00a9\2\4\1\7\1\122\4\4\1\7\1\122\1\60\3\u00a9\1\10\5\u00a9\1\122\2\4\1\7\1\4\3\u00a9\1\10\5\u00a9\2\4\1\7\1\4\3\u00a9\1\0";
+    static final String[] dfa_242s = {
+            "\1\3\5\uffff\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\3\3\2\uffff\2\3\5\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\5",
+            "",
+            "",
+            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\17",
+            "\1\17\2\uffff\1\15\1\16",
+            "\1\20",
+            "\1\3\5\uffff\1\1\7\uffff\1\3\1\uffff\1\21\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\25",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\11\uffff\1\6\15\uffff\2\4\1\uffff\1\3\4\uffff\1\10\2\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\7\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\11\1\13\1\uffff\1\15\1\16\1\14\1\1\27\uffff\2\4\1\uffff\1\3\7\uffff\1\3\1\uffff\1\12\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\26\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\27",
+            "\1\30",
+            "\1\31",
+            "\1\33\1\32\1\uffff\1\36\1\37\1\34\110\uffff\1\35",
+            "\1\40\25\uffff\1\42\5\uffff\1\43\41\uffff\1\41",
+            "\1\15\1\16",
+            "\1\3\5\uffff\1\1\11\uffff\1\44\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\45\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\46\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\50\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\47\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\36\1\37",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\51",
+            "\1\51",
+            "\1\52",
+            "\1\54\1\53\1\uffff\1\57\1\60\1\55\110\uffff\1\56",
+            "\1\61",
+            "\1\30",
+            "\1\62",
+            "\1\62",
+            "\1\63",
+            "\1\40\25\uffff\1\42\5\uffff\1\43\41\uffff\1\41",
+            "\1\43",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\65\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\67\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\66\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\57\1\60",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\70\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\46\3\uffff\1\24\11\uffff\2\4\1\uffff\1\3\4\uffff\1\50\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\47\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\24\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\72\1\71\1\uffff\1\75\1\76\1\73\110\uffff\1\74",
+            "\1\77",
+            "\1\77",
+            "\1\100",
+            "\1\101",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\102\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\104\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\103\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\75\1\76",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\65\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\67\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\66\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\105\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\106",
+            "\1\106",
+            "\1\107",
+            "\1\110",
+            "\1\3\5\uffff\1\1\11\uffff\1\102\3\uffff\1\64\11\uffff\2\4\1\uffff\1\3\4\uffff\1\104\2\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\103\17\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\15\uffff\1\64\11\uffff\2\4\1\uffff\1\3\7\uffff\1\3\13\uffff\1\3\21\uffff\1\4\1\uffff\1\3\24\uffff\1\3\1\4\1\3\13\uffff\6\4\13\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\30\uffff\7\4",
+            "\1\3\5\uffff\1\1\11\uffff\1\111\3\uffff\1\24\2\uffff\1\3\6\uffff\2\4\1\uffff\1\3\4\uffff\1\23\2\uffff\1\3\1\uffff\1\3\11\uffff\1\3\21\uffff\1\4\1\uffff\1\3\4\uffff\1\22\17\uffff\1\3\1\4\1\3\13\uffff\6\4\10\uffff\1\3\2\uffff\1\2\2\uffff\1\4\3\uffff\1\4\1\uffff\1\4\5\uffff\17\3\4\uffff\7\4",
+            "\1\uffff"
+    };
+    static final char[] dfa_240 = DFA.unpackEncodedStringToUnsignedChars(dfa_240s);
+    static final char[] dfa_241 = DFA.unpackEncodedStringToUnsignedChars(dfa_241s);
+    static final short[][] dfa_242 = unpackEncodedStringArray(dfa_242s);
 
     class DFA619 extends DFA {
 
@@ -73390,11 +73536,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 619;
             this.eot = dfa_7;
             this.eof = dfa_7;
-            this.min = dfa_79;
-            this.max = dfa_80;
+            this.min = dfa_240;
+            this.max = dfa_241;
             this.accept = dfa_63;
             this.special = dfa_64;
-            this.transition = dfa_81;
+            this.transition = dfa_242;
         }
         public String getDescription() {
             return "()* loopback of 11977:5: ( (lv_declarations_3_0= ruleDeclaration ) )*";

@@ -7406,7 +7406,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodDeclarationWOSemicolon"
-    // InternalSCL.g:2651:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) ;
+    // InternalSCL.g:2651:1: ruleMethodDeclarationWOSemicolon returns [EObject current=null] : ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) ;
     public final EObject ruleMethodDeclarationWOSemicolon() throws RecognitionException {
         EObject current = null;
 
@@ -7442,11 +7442,11 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalSCL.g:2657:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) )
-            // InternalSCL.g:2658:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
+            // InternalSCL.g:2657:2: ( ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? ) )
+            // InternalSCL.g:2658:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
             {
-            // InternalSCL.g:2658:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
-            // InternalSCL.g:2659:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
+            // InternalSCL.g:2658:2: ( () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )? )
+            // InternalSCL.g:2659:3: () ( (lv_annotations_1_0= ruleAnnotation ) )* ( (lv_access_2_0= ruleAccessModifier ) )? ( (lv_returnType_3_0= ruleMethodReturnType ) )? ( (lv_valuedObjects_4_0= ruleSimpleValuedObject ) ) ( (otherlv_5= '(' ( (lv_parameterDeclarations_6_0= ruleVariableDeclarationWOSemicolon ) ) (otherlv_7= ',' ( (lv_parameterDeclarations_8_0= ruleVariableDeclarationWOSemicolon ) ) )* otherlv_9= ')' ) | otherlv_10= '()' ) (otherlv_11= 'schedule' ( (lv_schedule_12_0= ruleScheduleObjectReference ) )+ )? (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
             {
             // InternalSCL.g:2659:3: ()
             // InternalSCL.g:2660:4: 
@@ -7896,7 +7896,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalSCL.g:2831:3: (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
+            // InternalSCL.g:2831:3: (otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}' )?
             int alt86=2;
             int LA86_0 = input.LA(1);
 
@@ -7905,7 +7905,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             }
             switch (alt86) {
                 case 1 :
-                    // InternalSCL.g:2832:4: otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}'
+                    // InternalSCL.g:2832:4: otherlv_13= '{' ( (lv_annotations_14_0= ruleCommentAnnotatonSL ) )? ( (lv_declarations_15_0= ruleDeclaration ) )* ( (lv_statements_16_0= ruleStatement ) )* otherlv_17= '}'
                     {
                     otherlv_13=(Token)match(input,25,FollowSets000.FOLLOW_53); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -7959,25 +7959,25 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalSCL.g:2855:4: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )*
+                    // InternalSCL.g:2855:4: ( (lv_declarations_15_0= ruleDeclaration ) )*
                     loop84:
                     do {
                         int alt84=2;
                         alt84 = dfa84.predict(input);
                         switch (alt84) {
                     	case 1 :
-                    	    // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
+                    	    // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclaration )
                     	    {
-                    	    // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
-                    	    // InternalSCL.g:2857:6: lv_declarations_15_0= ruleDeclarationWOSemicolon
+                    	    // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclaration )
+                    	    // InternalSCL.g:2857:6: lv_declarations_15_0= ruleDeclaration
                     	    {
                     	    if ( state.backtracking==0 ) {
 
-                    	      						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0());
+                    	      						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0());
                     	      					
                     	    }
                     	    pushFollow(FollowSets000.FOLLOW_24);
-                    	    lv_declarations_15_0=ruleDeclarationWOSemicolon();
+                    	    lv_declarations_15_0=ruleDeclaration();
 
                     	    state._fsp--;
                     	    if (state.failed) return current;
@@ -7990,7 +7990,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                     	      							current,
                     	      							"declarations",
                     	      							lv_declarations_15_0,
-                    	      							"de.cau.cs.kieler.kexpressions.kext.KExt.DeclarationWOSemicolon");
+                    	      							"de.cau.cs.kieler.kexpressions.kext.KExt.Declaration");
                     	      						afterParserOrEnumRuleCall();
                     	      					
                     	    }
@@ -38220,19 +38220,19 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
         EObject lv_declarations_15_0 = null;
 
 
-        // InternalSCL.g:2856:5: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )
-        // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
+        // InternalSCL.g:2856:5: ( (lv_declarations_15_0= ruleDeclaration ) )
+        // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclaration )
         {
-        // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclarationWOSemicolon )
-        // InternalSCL.g:2857:6: lv_declarations_15_0= ruleDeclarationWOSemicolon
+        // InternalSCL.g:2856:5: (lv_declarations_15_0= ruleDeclaration )
+        // InternalSCL.g:2857:6: lv_declarations_15_0= ruleDeclaration
         {
         if ( state.backtracking==0 ) {
 
-          						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationWOSemicolonParserRuleCall_7_2_0());
+          						newCompositeNode(grammarAccess.getMethodDeclarationWOSemicolonAccess().getDeclarationsDeclarationParserRuleCall_7_2_0());
           					
         }
         pushFollow(FollowSets000.FOLLOW_2);
-        lv_declarations_15_0=ruleDeclarationWOSemicolon();
+        lv_declarations_15_0=ruleDeclaration();
 
         state._fsp--;
         if (state.failed) return ;
@@ -42160,7 +42160,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             this.transition = dfa_33;
         }
         public String getDescription() {
-            return "()* loopback of 2855:4: ( (lv_declarations_15_0= ruleDeclarationWOSemicolon ) )*";
+            return "()* loopback of 2855:4: ( (lv_declarations_15_0= ruleDeclaration ) )*";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -42896,26 +42896,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_84s = "\51\uffff";
-    static final String dfa_85s = "\1\1\50\uffff";
-    static final String dfa_86s = "\1\4\2\uffff\1\0\45\uffff";
-    static final String dfa_87s = "\1\170\2\uffff\1\0\45\uffff";
-    static final String dfa_88s = "\1\uffff\1\2\46\uffff\1\1";
-    static final String dfa_89s = "\3\uffff\1\0\45\uffff}>";
+    static final String dfa_84s = "\40\uffff";
+    static final String dfa_85s = "\1\1\37\uffff";
+    static final String dfa_86s = "\1\4\2\uffff\1\0\34\uffff";
+    static final String dfa_87s = "\1\170\2\uffff\1\0\34\uffff";
+    static final String dfa_88s = "\1\uffff\1\2\35\uffff\1\1";
+    static final String dfa_89s = "\3\uffff\1\0\34\uffff}>";
     static final String[] dfa_90s = {
-            "\1\1\5\uffff\2\1\7\uffff\10\1\3\uffff\1\1\2\uffff\1\1\1\uffff\3\1\1\3\10\uffff\11\1\26\uffff\1\1\34\uffff\7\1\3\uffff\4\1",
+            "\1\1\5\uffff\2\1\10\uffff\1\1\1\uffff\1\1\3\uffff\1\1\10\uffff\1\1\2\uffff\1\3\10\uffff\11\1\26\uffff\1\1\34\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -42981,7 +42972,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int index118_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred139_InternalSCL()) ) {s = 40;}
+                        if ( (synpred139_InternalSCL()) ) {s = 31;}
 
                         else if ( (true) ) {s = 1;}
 
@@ -43200,26 +43191,17 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_97s = "\46\uffff";
-    static final String dfa_98s = "\1\4\45\uffff";
-    static final String dfa_99s = "\1\4\3\0\42\uffff";
-    static final String dfa_100s = "\1\170\3\0\42\uffff";
-    static final String dfa_101s = "\4\uffff\1\2\40\uffff\1\1";
-    static final String dfa_102s = "\1\uffff\1\0\1\1\1\2\42\uffff}>";
+    static final String dfa_97s = "\35\uffff";
+    static final String dfa_98s = "\1\4\34\uffff";
+    static final String dfa_99s = "\1\4\3\0\31\uffff";
+    static final String dfa_100s = "\1\170\3\0\31\uffff";
+    static final String dfa_101s = "\4\uffff\1\2\27\uffff\1\1";
+    static final String dfa_102s = "\1\uffff\1\0\1\1\1\2\31\uffff}>";
     static final String[] dfa_103s = {
-            "\1\3\5\uffff\1\1\1\4\7\uffff\1\4\1\uffff\6\4\3\uffff\1\4\2\uffff\1\4\2\uffff\2\4\11\uffff\11\4\26\uffff\1\2\34\uffff\7\4\3\uffff\4\4",
+            "\1\3\5\uffff\1\1\1\4\12\uffff\1\4\3\uffff\1\4\24\uffff\11\4\26\uffff\1\2\34\uffff\7\4\3\uffff\4\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -43282,7 +43264,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int index151_1 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred172_InternalSCL()) ) {s = 37;}
+                        if ( (synpred172_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -43297,7 +43279,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int index151_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred172_InternalSCL()) ) {s = 37;}
+                        if ( (synpred172_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -43312,7 +43294,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         int index151_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred172_InternalSCL()) ) {s = 37;}
+                        if ( (synpred172_InternalSCL()) ) {s = 28;}
 
                         else if ( (true) ) {s = 4;}
 
@@ -46320,7 +46302,7 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
     static final String dfa_195s = "\1\12\1\uffff\4\4\1\7\4\4\1\0\1\22\2\4\1\uffff\24\4\1\0\4\4\1\0\2\4\1\0";
     static final String dfa_196s = "\1\116\1\uffff\1\4\1\170\1\4\1\150\1\7\1\167\3\170\1\0\1\152\1\4\1\150\1\uffff\2\170\2\4\1\150\3\170\3\4\3\170\3\4\3\170\1\0\2\4\2\170\1\0\1\4\1\170\1\0";
     static final String dfa_197s = "\1\uffff\1\1\15\uffff\1\2\35\uffff";
-    static final String dfa_198s = "\13\uffff\1\2\30\uffff\1\0\4\uffff\1\1\2\uffff\1\3}>";
+    static final String dfa_198s = "\13\uffff\1\1\30\uffff\1\0\4\uffff\1\2\2\uffff\1\3}>";
     static final String[] dfa_199s = {
             "\1\1\103\uffff\1\2",
             "",
@@ -46413,21 +46395,6 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA282_41 = input.LA(1);
-
-                         
-                        int index282_41 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred330_InternalSCL()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 15;}
-
-                         
-                        input.seek(index282_41);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA282_11 = input.LA(1);
 
                          
@@ -46440,6 +46407,21 @@ public class InternalSCLParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index282_11);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA282_41 = input.LA(1);
+
+                         
+                        int index282_41 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred330_InternalSCL()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 15;}
+
+                         
+                        input.seek(index282_41);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
