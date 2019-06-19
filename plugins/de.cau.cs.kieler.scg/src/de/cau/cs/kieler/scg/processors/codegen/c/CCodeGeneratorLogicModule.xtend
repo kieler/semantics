@@ -216,8 +216,8 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
         if (conditional.isExplicitLoop) {
             if (conditional.isPartOfForLoopHeader) {
                 val prev = conditional.allPrevious.map[eContainer as Assignment]
-                val init = prev.findFirst[annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("init")]]
-                val decl = if (init !== null && init.annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("init")]) {
+                val init = prev.findFirst[isLoopHeaderPart("init")]
+                val decl = if (init !== null && init.isLoopHeaderPart("decl")) {
                     init.valuedObject.variableDeclaration
                 }
                 val after = prev.findFirst[annotations.filter(StringAnnotation).exists[SCGAnnotations.ANNOTATION_LOOP.equals(name) && values.contains("after")]]
@@ -228,9 +228,9 @@ class CCodeGeneratorLogicModule extends SCGCodeGeneratorModule {
                     code.append(init.valuedObject.name)
                     code.append(" = ")
                     code.append(init.expression.serializeHR)
-                } else if (init !== null){
+                } else if (init !== null) {
                     code.append(init.valuedObject.name)
-                    code.append(" ").append(init.operator.serializeAssignOperator).append(" ")
+                    code.append(init.operator.serializeAssignOperator)
                     code.append(init.expression.serializeHR)
                 }
                 code.append("; ")
