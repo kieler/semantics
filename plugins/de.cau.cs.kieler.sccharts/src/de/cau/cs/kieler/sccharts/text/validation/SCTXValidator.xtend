@@ -56,6 +56,7 @@ import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
 import org.eclipse.elk.core.data.LayoutMetaDataService
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -942,6 +943,33 @@ class SCTXValidator extends AbstractSCTXValidator {
                     "If you want to create a relative write in new syntax, please use an infix assignment operator.", assignment, null
                 )
             }
+        }
+    }
+
+
+    @Check
+    def void checkCountDelayBeforeSubExpressionWarning(de.cau.cs.kieler.sccharts.Action action) {
+        if (action.triggerDelay > 1) {
+            if (action.trigger instanceof OperatorExpression) {
+                if ((action.trigger as OperatorExpression).hasLeftUnarySubExpression) {
+                    warning("A count delay was recognized in front of an unary operation.\n" + 
+                        "If this is not intended, use parentheses to surround your expression.",
+                        action, null)
+                }
+            }
+        }
+    } 
+    
+    private def boolean hasLeftUnarySubExpression(OperatorExpression operatorExpression) {
+        val firstExpression = operatorExpression.subExpressions.head
+        if (firstExpression instanceof OperatorExpression) {
+            if (firstExpression.operator == OperatorType.SUB && firstExpression.subExpressions.size == 1) {
+                return true
+            } else {
+                return firstExpression.hasLeftUnarySubExpression
+            }
+        } else {
+            return false
         }
     }
 
