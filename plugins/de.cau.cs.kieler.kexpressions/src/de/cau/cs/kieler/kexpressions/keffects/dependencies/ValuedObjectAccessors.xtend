@@ -46,6 +46,14 @@ class ValuedObjectAccessors {
         accesses.remove(VOI, VOA)
         accessLUT.remove(VOA)   
     }
+    def removeAllAccesses(ValuedObjectIdentifier VOI) {
+        accesses.removeAll(VOI)
+        accessLUT.entrySet.removeIf[value == VOI]  
+    }    
+    def removeAllAccesses(ValuedObject vo) {
+        accesses.entries.removeIf[key.valuedObject == vo]
+        accessLUT.entrySet.removeIf[value.valuedObject == vo]  
+    }
     
     def getAccesses(ValuedObjectIdentifier VOI) {
         accesses.get(VOI)
