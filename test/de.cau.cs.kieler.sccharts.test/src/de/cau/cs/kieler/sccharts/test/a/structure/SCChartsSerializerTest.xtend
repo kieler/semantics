@@ -114,7 +114,7 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
 
             val scope = new FilterComparisonScope(scc, parsed, null)
             scope.EObjectContentFilter = [ EObject o |
-                if (o instanceof CommentAnnotation || o instanceof TextExpression) {
+                if (o instanceof CommentAnnotation) {
                     return false
                 }
                 return true
