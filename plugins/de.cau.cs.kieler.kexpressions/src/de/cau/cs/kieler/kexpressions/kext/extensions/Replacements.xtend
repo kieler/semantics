@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.kexpressions.kext.extensions
 
-import java.util.HashMap
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import java.util.Stack
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import java.util.HashMap
+import java.util.Stack
 
 /**
  * Class for handling valued object replacements in referenced SCCharts and bindings.
@@ -51,7 +51,7 @@ class Replacements extends HashMap<String, Stack<Expression>> {
     /** Peek the expression of a given name. */
     def Expression peek(String valuedObjectName) {
         val stack = get(valuedObjectName)
-        if (stack === null) {
+        if (stack === null || stack.length == 0) {
             return null
         } else {
             return stack.peek
