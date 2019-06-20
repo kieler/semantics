@@ -185,7 +185,7 @@ class EnvironmentPropertyHolder extends MapPropertyHolder {
             NullValue: {
                 null
             }
-            Value: {
+            default: {
                 val attr = value.eClass.EAttributes.findFirst["value".equals(name)]
                 if (attr !== null) {
                     value.eGet(attr)
