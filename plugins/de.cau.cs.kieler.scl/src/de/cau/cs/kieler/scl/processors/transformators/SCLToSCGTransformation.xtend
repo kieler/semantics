@@ -280,6 +280,12 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             container.statements.add(container.statements.indexOf(ret) + 1, sclFactory.createGoto => [target = exitL])
         }
         
+        method.removeDoubleJumps
+        method.removeLocalDeclarations
+//        method.removeRedundantForks
+        method.optimizeLabels
+        method.removeUnreachableCode
+        
         val scg = createSCGraph
         val declMapping = newHashMap
         val declVOMapping = newHashMap
@@ -330,12 +336,6 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             }
             // Do not init paramter
         ]
-        
-        method.removeDoubleJumps
-        method.removeLocalDeclarations
-//        method.removeRedundantForks
-        method.optimizeLabels
-        method.removeUnreachableCode
         
         // Transform
         val entry = createEntry.trace(method).createNodeList(method) as Entry => [
