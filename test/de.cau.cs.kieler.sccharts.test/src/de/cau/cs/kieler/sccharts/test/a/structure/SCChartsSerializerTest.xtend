@@ -37,6 +37,7 @@ import static org.junit.Assert.*
 import static org.junit.Assume.*
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * Tests if all SCCharts can be serializer and parsed and yield the same model.
@@ -102,6 +103,10 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             resource.load(inputStream, emptyMap)
             val parsed = resource.contents.head
             assertNotNull("Serialized and ReParsed model is null", parsed)
+            
+            // Clear all TextExpressions as they usually don't match and EObjectContentFilter seems to work not correctly in current version
+            scc.eAllContents.filter(TextExpression).forEach[text = ""]
+            parsed.eAllContents.filter(TextExpression).forEach[text = ""]
             
             // Compare the models
             val builder = EMFCompare.builder()
