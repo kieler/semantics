@@ -39,6 +39,6 @@ abstract class IntermediateProcessor<Source, Target> extends Processor<Source, T
     /** 
      * The process method. It is called whenever the processor is invoked.
      */    
-    public def void processBefore() {}    
+    def void processBefore() {}    
     
 }

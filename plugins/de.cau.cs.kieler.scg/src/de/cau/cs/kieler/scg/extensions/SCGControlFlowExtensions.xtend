@@ -342,8 +342,17 @@ class SCGControlFlowExtensions {
     def void markLoopHeaderPart(Annotatable anno, String... type) {
         anno.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, type)
     }
-    def Iterable<String> getMarkLoopHeaderPart(Annotatable anno) {
+    def Iterable<String> getLoopHeaderPartTags(Annotatable anno) {
         return anno.getAnnotations(SCGAnnotations.ANNOTATION_LOOP).filter(StringAnnotation).map[values].flatten
+    }
+    def boolean isLoopHeaderPart(Annotatable anno) {
+        return anno.hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    def boolean isLoopHeaderPart(Annotatable anno, String type) {
+        if (anno.isLoopHeaderPart && type !== null) {
+            return anno.loopHeaderPartTags.exists[type.equals(it)]
+        }
+        return false
     }
     
     def boolean markExplicitLoop(Annotatable anno) {

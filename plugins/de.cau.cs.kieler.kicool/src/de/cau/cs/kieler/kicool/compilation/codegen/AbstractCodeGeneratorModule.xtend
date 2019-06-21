@@ -239,7 +239,7 @@ abstract class AbstractCodeGeneratorModule {
         var first = true
         for (s2 : args) {
             for (s : s2.toString.split(NL_MAGIC)) {
-                if (!(s instanceof String && (s as String).nullOrEmpty)) { 
+                if (!s.nullOrEmpty) { 
                     if (!first) {
                         sb.append(StaticWhitespace.getSpace(spaces))
                         sb.append(" * ")

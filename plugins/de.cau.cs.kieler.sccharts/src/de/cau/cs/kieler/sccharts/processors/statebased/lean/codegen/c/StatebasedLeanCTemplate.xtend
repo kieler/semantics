@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.sccharts.State
 import com.google.inject.Inject
-import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -27,6 +26,7 @@ import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate
+import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 
 /**
  * @author ssm
@@ -39,7 +39,8 @@ class StatebasedLeanCTemplate extends AbstractStatebasedLeanTemplate {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
-    @Inject extension StatebasedCCodeSerializeHRExtensions
+    
+    @Accessors extension StatebasedCCodeSerializeHRExtensions serializer
     
     @Accessors val header = new StringBuilder
     @Accessors val source = new StringBuilder

@@ -226,6 +226,15 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
         return "srand(time(NULL))"
     }
     
+    override dispatch CharSequence serializeHR(RandomizeCallEffect randomizeCallEffect) {
+        randomizeCallEffect.serialize
+    }
+    
+    override dispatch CharSequence serializeHR(RandomizeCall randomizeCall) {
+        randomizeCall.serialize
+    }
+    
+    
     protected def getCodeAnnotation() {
         CODE_ANNOTATION
     }

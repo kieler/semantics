@@ -38,7 +38,7 @@ import org.eclipse.xtext.util.Strings
  * 
  * @author chsch ssm
  */
-public class AnnotationsValueConverter extends DefaultTerminalConverters {
+class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     static val Injector injector = new AnnotationsStandaloneSetup().createInjectorAndDoEMFRegistration();
 
@@ -59,10 +59,10 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                     var add = true
                     val newLine = lines.get(i).replaceFirst("^\\s*\\*\\s*", "")
                     
-                    if (newLine.startsWith("@")) {
+                    if (newLine.startsWith("@@")) {
                         val commentAnnotation = node.parent.semanticElement
                         if (commentAnnotation instanceof CommentAnnotation) {
-                            if (commentAnnotation.parseAnnotation(newLine)) add = false        
+                            if (commentAnnotation.parseAnnotation(newLine.substring(1))) add = false        
                         }             
                     }
                     
@@ -107,14 +107,14 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
     
     
     
-    @Inject private QualifiedIDValueConverter qualifiedIDValueConverter;
+    @Inject QualifiedIDValueConverter qualifiedIDValueConverter;
     
     @ValueConverter(rule = "QualifiedID") 
     def IValueConverter<String> convertQualifiedID() {
         return qualifiedIDValueConverter;
     }
     
-    @Inject private ExtendedIDValueConverter extendedIDValueConverter;
+    @Inject ExtendedIDValueConverter extendedIDValueConverter;
     
     @ValueConverter(rule = "ExtendedID") 
     def IValueConverter<String> convertExtendedID() {
@@ -175,7 +175,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     }
     
-    public static def String removeEscapeChars(String string) {
+    static def String removeEscapeChars(String string) {
         return string.replaceAll("\\\\\\\"", "\"").replaceAll("\\\\\\\\", "\\\\");
     }    
 }
