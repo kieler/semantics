@@ -77,20 +77,12 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 			}
 		} else if (contextContainer instanceof ValuedObjectReference && (contextContainer as ValuedObjectReference).subReference === context) {
 		    // The context is a subreference!
-		    // If it is inside an assignment, it must point to the inputs of the referenced declarations (assignments).
-		    // Otherwise, use the outputs (subreferences).
-		    val contextContainerContainer = contextContainer.eContainer
-		    if (contextContainerContainer instanceof Assignment) {
-//                return contextContainerContainer.getScopeForReferencedDeclarationFromAssignment(reference)
-                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)    
-		    } else {
-                return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
-		    }
+		    return contextContainer.getScopeForReferencedDeclarationFromSubReference(reference)
 		} 
 		else if (context instanceof ValuedObjectReference) {
 		    if (contextContainer instanceof Assignment) {
 		        // The context is a subreference inside of an assignment!
-		        if (context.subReference != null && context.subReference.valuedObject == null) {
+		        if (context.subReference !== null && context.subReference.valuedObject === null) {
                     return context.getScopeForReferencedDeclarationFromSubReference(reference)
 		        }
 		        
@@ -126,7 +118,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 	        if (context.valuedObject !== null) {
     	        if (context.eContainer !== null) {
                     var parentVO = context as ValuedObjectReference
-                    while(parentVO.eContainer instanceof ValuedObjectReference) {
+                    while(parentVO.eContainer instanceof ValuedObjectReference && (parentVO.eContainer as ValuedObjectReference).subReference === parentVO) {
                         parentVO = parentVO.eContainer as ValuedObjectReference
                     }
                     if (parentVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
