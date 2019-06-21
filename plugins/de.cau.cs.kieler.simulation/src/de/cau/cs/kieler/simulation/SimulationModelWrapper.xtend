@@ -51,7 +51,7 @@ class SimulationModelWrapper implements Simulatable {
     protected var SimulationVariableStore variables
 
     // Internal Process
-    private val timeLimiter = SimpleTimeLimiter.create(POOL)
+    private val timeLimiter = new SimpleTimeLimiter(POOL)
     private var timeout = SimulationContext.REACTION_TIMEOUT_IN_SECONDS.^default
     private var Process process
     private var AsynchronousRedirect out
@@ -144,7 +144,7 @@ class SimulationModelWrapper implements Simulatable {
             // Kill the process and wait until it has been destroyed,
             // but with a time limit in case the process cannot be killed or does not respond at all.
             try {
-                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2 * timeout, TimeUnit.SECONDS)
+                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2 * timeout, TimeUnit.SECONDS, true)
             } catch(UncheckedTimeoutException e) {
                 throw new IOException("Failed attempt to kill simulation process '" + executable.file.toString + "'", e)
             } finally {
