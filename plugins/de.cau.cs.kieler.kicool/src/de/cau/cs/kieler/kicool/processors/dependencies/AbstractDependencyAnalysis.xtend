@@ -222,10 +222,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processEffect(Effect effect, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val vo = if (effect instanceof ReferenceCallEffect) {
-            effect.valuedObject
-        }
-
         val writeVOI = if (effect instanceof ReferenceCallEffect) {
             new ValuedObjectIdentifier(effect)
         } else if (effect instanceof PrintCallEffect) {

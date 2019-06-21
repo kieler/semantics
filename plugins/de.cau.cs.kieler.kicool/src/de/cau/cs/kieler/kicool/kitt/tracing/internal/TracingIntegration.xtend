@@ -13,8 +13,9 @@
  */
 package de.cau.cs.kieler.kicool.kitt.tracing.internal;
 
+import com.google.inject.Binder
 import com.google.inject.Module
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
+import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
 import de.cau.cs.kieler.kicool.compilation.IntermediateProcessor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.kicool.environments.Environment
@@ -27,8 +28,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
 import static de.cau.cs.kieler.kicool.environments.Environment.*
-import com.google.inject.Binder
-import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
 
 /**
  * This class integrates Tracing into KiCo.
@@ -38,7 +37,7 @@ import de.cau.cs.kieler.kexpressions.extensions.EcoreUtilExtensions
  * @kieler.rating 2015-04-27 proposed yellow
  *
  */
-public class TracingIntegration extends IntermediateProcessor<EObject, EObject> {
+class TracingIntegration extends IntermediateProcessor<EObject, EObject> {
     
     public static val MODULE = new Module() {
         
