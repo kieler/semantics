@@ -135,6 +135,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String INHERITANCE_VO_NAME_CLASH = "There is a name clash between declared valued object in inheritance hierarchy. Valued object with name %s is declared multiple times (%s)."
     static val String INHERITANCE_REGION_NAME_CLASH = "There is a name clash between regions IDs in inheritance hierarchy. Region with name %s is declared multiple times (%s)."  
 
+    static val String NO_ASSIGNMENTS_TO_REF = "Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region)."  
+
     static val String REGION_OVERRIDE_ANONYMOUS = "Cannot override anonymous region." 
     static val String REGION_OVERRIDE_SUPERFLOUSE = "The is no region to override."  
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
@@ -146,7 +148,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         val decl = asm.reference?.valuedObject?.eContainer
         if (decl instanceof ReferenceDeclaration) {
             if (asm.reference.subReference === null && decl.reference instanceof de.cau.cs.kieler.sccharts.State && !(asm.eContainer instanceof DataflowRegion)) {
-                error("Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region).", asm.reference, null, -1)
+                error(NO_ASSIGNMENTS_TO_REF, asm.reference, null, -1)
             }
         }
     }
