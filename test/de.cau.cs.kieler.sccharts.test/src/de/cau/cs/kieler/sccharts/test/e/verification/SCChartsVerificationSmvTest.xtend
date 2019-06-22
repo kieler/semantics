@@ -59,12 +59,10 @@ class SCChartsVerificationSmvTest extends AbstractSCChartsVerificationTest {
     @Test
     def void testNuxmvVerification(SCCharts scc, TestModelData modelData) {
         initializeVerification(scc, modelData)
-        
         println('''>>>>> testNuxmvVerification «modelData.modelFile» <<<<<''')
         println()
-        
-        println('''Testing VerificationProperties "«verificationProperties.map[ '''"«it.name»"''' ]»"''')
-        startVerification(verificationProperties, verificationAssumptions)    
+        println("Testing VerificationProperties \"" + verificationProperties.map["\"" + name + "\""].join + "\"")
+        startVerification(verificationProperties, verificationAssumptions)
         println()
     }
     

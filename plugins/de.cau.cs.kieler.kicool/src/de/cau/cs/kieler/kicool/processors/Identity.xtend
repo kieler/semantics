@@ -14,7 +14,6 @@ package de.cau.cs.kieler.kicool.processors
 
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import org.eclipse.emf.ecore.EObject
 
 /**
  * Test processor that does nothing.

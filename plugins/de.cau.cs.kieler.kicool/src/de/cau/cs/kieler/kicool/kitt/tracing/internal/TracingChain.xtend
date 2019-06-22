@@ -103,7 +103,7 @@ class TracingChain {
                         mapping.put(it.key as EObject, it.value as EObject);
                     }
                 ]
-                if (leaf == null) { // create root
+                if (leaf === null) { // create root
                     leaf = mapping.initializeTransformationTree(map.title, first,
                         first.class.simpleName, second, second.class.simpleName);
                 } else { // append next leaf
@@ -113,7 +113,7 @@ class TracingChain {
             }
             leaf.root;
         } catch (Exception e) {
-            if (leaf != null) {
+            if (leaf !== null) {
                 leaf.root;
             } else {
                 null;

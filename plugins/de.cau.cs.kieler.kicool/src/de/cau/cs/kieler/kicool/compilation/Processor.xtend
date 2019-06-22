@@ -12,26 +12,22 @@
  */
 package de.cau.cs.kieler.kicool.compilation
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import com.google.common.reflect.TypeToken
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
+import de.cau.cs.kieler.kicool.environments.Snapshot
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
-import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.kicool.environments.AnnotationModel
-import de.cau.cs.kieler.kicool.environments.Snapshot
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.

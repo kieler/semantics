@@ -21,8 +21,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
  */
 class SourceTargetPair<Source, Target> {
 
-    @Accessors(PUBLIC_GETTER) private Source source
-    @Accessors(PUBLIC_GETTER) private Target target
+    @Accessors(PUBLIC_GETTER) Source source
+    @Accessors(PUBLIC_GETTER) Target target
     
     new(Source source, Target target) {
         this.source = source
