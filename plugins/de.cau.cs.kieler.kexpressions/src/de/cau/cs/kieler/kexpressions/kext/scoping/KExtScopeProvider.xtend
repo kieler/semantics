@@ -117,12 +117,13 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 	    if (context instanceof ValuedObjectReference) {
 	        if (context.valuedObject !== null) {
     	        if (context.eContainer !== null) {
-                    var parentVO = context as ValuedObjectReference
-                    while(parentVO.eContainer instanceof ValuedObjectReference && (parentVO.eContainer as ValuedObjectReference).subReference === parentVO) {
-                        parentVO = parentVO.eContainer as ValuedObjectReference
+    	            val parentVO = context as ValuedObjectReference
+                    var topLevelVO = parentVO
+                    while(topLevelVO.eContainer instanceof ValuedObjectReference && (topLevelVO.eContainer as ValuedObjectReference).subReference === topLevelVO) {
+                        topLevelVO = topLevelVO.eContainer as ValuedObjectReference
                     }
-                    if (parentVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
-                        return (parentVO.valuedObject.eContainer as ReferenceDeclaration).
+                    if (topLevelVO.valuedObject?.eContainer instanceof ReferenceDeclaration) {
+                        return (topLevelVO.valuedObject.eContainer as ReferenceDeclaration).
                             getScopeForReferencedDeclarationObject(context)[ output || input ]
                     }
                     if (parentVO.valuedObject.eContainer instanceof ClassDeclaration) {
