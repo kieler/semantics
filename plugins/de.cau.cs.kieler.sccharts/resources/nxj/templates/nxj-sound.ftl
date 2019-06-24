@@ -56,7 +56,7 @@
 -->
 <#macro BeepSequence position>
 <#if position=="output">
-<#list parameters["Buzz"] as parameters>
+<#list parameters["BeepSequence"] as parameters>
         // Play sequence of beep tones
         if(scchart.${parameters.varName}) {
             scchart.${parameters.varName} = false;
@@ -74,7 +74,7 @@
 </#macro>
 
 <#-- PlayTone -->
-<#-- As output variable, plays specific tone .
+<#-- As output variable, plays specific tone.
      The macro must specify the tone, the duration and optional the volume.
      
      Example for SCCharts:
@@ -91,6 +91,58 @@
         if(scchart.${parameters.varName}) {
             scchart.${parameters.varName} = false;
             Sound.playTone(${parameters.parameter1}, ${parameters.parameter2!100}, ${parameters.parameter3!100});
+        }
+</#list>        
+</#if>
+</#macro>
+
+<#-- PlayFrequency -->
+<#-- As output variable, plays specific frequency.
+     The macro can specify the duration and optional the volume.
+     
+     Example for SCCharts:
+         ouput int 
+         @macro "PlayFrequency", "440", "100" A4
+     Optional:
+         int: duration (100)
+         int: volume (100)
+-->
+<#macro PlayFrequency position>
+<#if position=="init">
+<#list parameters["PlayFrequency"] as parameters>
+int frequency${parameters.varName} = -900000;
+</#list>
+</#if> 
+<#if position=="output">
+<#list parameters["PlayFrequency"] as parameters>
+        // Plays a specific frequency.
+        if(scchart.${parameters.varName} != frequency${parameters.varName}) {
+            Sound.playTone(scchart.${parameters.varName}, ${parameters.parameter1!100}, ${parameters.parameter2!100});
+            frequency${parameters.varName} = scchart.${parameters.varName};
+        }
+</#list>        
+</#if>
+</#macro>
+
+<#-- Volume -->
+<#-- Sets the volume.
+     
+     Example for SCCharts:
+         ouput int
+         @macro "Volume" col
+-->
+<#macro Volume position>
+<#if position=="init">
+<#list parameters["Volume"] as parameters>
+int lastVolume${parameters.varName} = -90000;
+</#list>
+</#if> 
+<#if position=="output">
+<#list parameters["Volume"] as parameters>
+        // Plays a specific tone.
+        if(scchart.${parameters.varName} != lastVolume${parameters.varName}) {
+            Sound.setVolume(scchart.${parameters.varName});
+            lastVolume${parameters.varName} = scchart.${parameters.varName};
         }
 </#list>        
 </#if>
