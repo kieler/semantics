@@ -23,6 +23,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * SCCharts ValuedObject Transformation transforming local variables into global ones.
@@ -89,6 +91,12 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
                     } else {
                         voStore.update(valuedObject)
                     }
+                }
+            }
+            if (declaration instanceof ClassDeclaration) {
+                declaration.uniqueName
+                for (vo : declaration.eAllContents.filter(Declaration).map[valuedObjects.iterator].flatten.toIterable) {
+                    voStore.update(vo)
                 }
             }
         }

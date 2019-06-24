@@ -628,9 +628,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                     container = container.eContainer
                 }
                 
-                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject.name + ") that is not contained in the model!", container, true)
+                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject?.name + ") that is not contained in the model!", container, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
-                    vor.valuedObject.name + " " + vor + " " + (container as State).name)
+                    vor.valuedObject?.name + " " + vor + " " + (container as State).name)
                 success = false
             }
         }
@@ -659,7 +659,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                         for (vor : method.eAllContents.filter(ValuedObjectReference).toIterable) {
                             val oldDecl = vor.valuedObject.declaration
                             if (oldDecl.eContainer instanceof State) {
-                                vor.valuedObject = classDecl.declarations.map[valuedObjects].flatten.findFirst[vor.valuedObject.name.equals(name)]
+                                vor.valuedObject = classDecl.innerValuedObjects.findFirst[vor.valuedObject.name.equals(name)]
                             }
                         }
                     }
@@ -696,7 +696,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                             val decl = parent.valuedObject.eContainer as Declaration
                             if (decl instanceof ClassDeclaration) {
                                 // Find by name
-                                sub.valuedObject = decl.declarations.map[valuedObjects].flatten.findFirst[vo.name.equals(name)]
+                                sub.valuedObject = decl.innerValuedObjects.findFirst[vo.name.equals(name)]
                             }
                             sub = sub.subReference
                         }
