@@ -74,26 +74,11 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         val cc = new CodeContainer
 
         for (scg : model.scgs) {
-            cc.add(scg.name + ".vhd", scg.generateVHDL(model.pragmas).toString)
+            cc.add(scg.name + ".vhd", scg.copy.generateVHDL(model.pragmas).toString)
         }
         
         model = cc
     }
-    
-    protected def String removeDoubleUnderscore(String s) {
-        //if (s.length() ==0) return ""
-        //var String out = "" + s.charAt(0) 
-        //var char last = s.charAt(0) 
-        //for (var int i = 1 ; i< s.length(); i++){
-        //  if (s.charAt(i) !='_' || last != '_'){
-        //      out+= s.charAt(i)
-        //      last= s.charAt(i)
-        ////      }  
-        //}
-        return s.replaceAll("_+","_")
-        
-    }
-    
     
     protected def generateVHDL(SCGraph scg, List<Pragma> pragmas) {
         
@@ -161,9 +146,9 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         for (ioDecl : scg.variableDeclarations.filter[!input && !output].toList) {
             for (vo : ioDecl.valuedObjects) {
                 if (vo.name.startsWith("_")) {
-                    vo.name = "local"+ name
+                    vo.name = "local"+ vo.name
                 }
-                vo.name.removeDoubleUnderscore
+                vo.name = vo.name.replaceAll("_+","_")
             }
         }
         
@@ -188,7 +173,6 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         ARCHITECTURE behavior OF «scg.name» IS
             -- control
             signal pre_reset: boolean;
-            signal GO : boolean;
             -- local variables
             «FOR decl : scg.variableDeclarations.filter[isSSA && !it.valuedObjects.empty]»
                 signal «decl.serialize»;
@@ -246,9 +230,9 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
             wait until rising_edge(tick);
                 pre_reset <= reset; -- has no reset input
                 if(reset = true) then
-                    GO <= false;
+                    local_GO <= false;
                 else
-                    GO <= pre_reset;
+                    local_GO <= pre_reset;
                 end if;
             end process;
         end behavior;
