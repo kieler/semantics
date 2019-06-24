@@ -72,3 +72,26 @@
 </#list>        
 </#if>
 </#macro>
+
+<#-- PlayTone -->
+<#-- As output variable, plays specific tone .
+     The macro must specify the tone, the duration and optional the volume.
+     
+     Example for SCCharts:
+         ouput bool 
+         @macro "PlayTone", "440", "100" A4
+     Optional:
+         int: duration (100)
+         int: volume (100)
+-->
+<#macro PlayTone position>
+<#if position=="output">
+<#list parameters["PlayTone"] as parameters>
+        // Plays a specific tone.
+        if(scchart.${parameters.varName}) {
+            scchart.${parameters.varName} = false;
+            Sound.playTone(${parameters.parameter1}, ${parameters.parameter2!100}, ${parameters.parameter3!100});
+        }
+</#list>        
+</#if>
+</#macro>
