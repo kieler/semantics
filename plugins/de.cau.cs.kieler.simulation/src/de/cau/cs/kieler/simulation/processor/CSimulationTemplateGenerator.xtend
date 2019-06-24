@@ -286,7 +286,7 @@ class CSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     
     def serializeMember(Pair<String, VariableInformation> variable, String accessPrefix, String item, int depth) {
         val store = VariableStore.getVariableStore(environment)
-        val members = store.orderedVariables.filter[value.encapsulatedIn.contains(variable.key)]
+        val members = store.orderedVariables.filter[variable.value.containerName.equals(value.encapsulatedIn)]
         return '''
             «FOR member : members»
                 // Add member «member.key.simpleName»
