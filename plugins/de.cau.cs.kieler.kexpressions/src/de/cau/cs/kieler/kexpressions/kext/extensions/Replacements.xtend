@@ -28,6 +28,23 @@ import java.util.Stack
  */
 class Replacements extends HashMap<String, Stack<Expression>> {
     
+    new () {
+        super()
+    }
+    
+    new (Replacements replacements) {
+        super()
+        
+        for (k : replacements.keySet) {
+            val st = replacements.get(k)
+            // The iterator method on java.util.Stack iterates through a Stack from the bottom up. ;-)
+            for (s : st) {
+                this.push(k, s)
+            }    
+        }
+    }
+    
+    
     /** Push the replacement expression of a valued object onto the stack. */
     def push(ValuedObject valuedObject, Expression expression) {
         push(valuedObject.name, expression)

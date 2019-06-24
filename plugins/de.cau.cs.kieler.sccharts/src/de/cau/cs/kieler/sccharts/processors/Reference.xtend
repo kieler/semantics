@@ -156,9 +156,9 @@ class Reference extends SCChartsProcessor implements Traceable {
             rootState.handleSCChartsDatatype
             
             if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
                 val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
-                for (state : statesWithReferences2.toList) {
+                for (state : statesWithReferences2) {
                     state.expandReferencedScope(new Replacements)
                 }
                 for (region : regionsWithReferences2) {
@@ -256,8 +256,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-            for (state : statesWithReferences.toList) {
+            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
         }
@@ -302,7 +302,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : state.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            state.expandReferencedScope(replacements)
+            state.expandReferencedScope(new Replacements(replacements))
         }
         
         // Delegate the region replacement.
@@ -330,7 +330,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : region.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            region.expandReferencedScope(replacements)
+            region.expandReferencedScope(new Replacements(replacements))
         }
         
         if (region instanceof ControlflowRegion) {
