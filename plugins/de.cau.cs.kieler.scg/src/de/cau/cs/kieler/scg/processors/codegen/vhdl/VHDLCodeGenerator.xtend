@@ -96,47 +96,56 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     
     
     protected def generateVHDL(SCGraph scg, List<Pragma> pragmas) {
+        
         // Split input+output variables
+        var splitOutputs = newHashMap
         for (ioDecl : scg.variableDeclarations.filter[input && output && !isSSA].toList) {
             val copy = ioDecl.copy
             ioDecl.output = false
             copy.input = false
             copy.valuedObjects.forEach[name = name + OUTPUT_POSTFIX.property]
             scg.declarations.add(scg.declarations.indexOf(ioDecl) + 1, copy)
+            for (voIdx : ioDecl.valuedObjects.indexed) {
+                splitOutputs.put(voIdx.value, copy.valuedObjects.get(voIdx.key))
+            }
         }
+        
         // Find written VOs
         val writtenVOs = scg.nodes.filter(Assignment).map[valuedObject].filterNull.toSet
         val bufferInput = newLinkedHashMap
+        val writeOutput = newLinkedHashMap
         val preserveState = newLinkedHashMap
         val preGuards = newLinkedHashMap
+        
         // Rename SSAed variables
         for (decl : scg.variableDeclarations.filter[isSSA]) {
             // Change last to original name
-            if (decl.input && decl.output) {
-                decl.valuedObjects.last.name = decl.ssaOrigVO.name + OUTPUT_POSTFIX.property
+            if (!(decl.input || decl.output)) {
+                decl.valuedObjects.last.name = decl.ssaOrigVO.name
             } else if (decl.input && decl.valuedObjects.size == 1) { // SSA does not index inputs when only read
                 // but we want to do so here (for buffering)
                 val name = decl.valuedObjects.head.name
                 decl.valuedObjects.head.name = name + if (name.charAt(name.length - 1).isDigit) "_0" else "0"
-            } else {
-                decl.valuedObjects.last.name = decl.ssaOrigVO.name
             }
-            if (decl.output) { // No dublicate output declaration
-                decl.valuedObjects.last.ignoreInSerializer
-                if (decl.valuedObjects.size == 1 && writtenVOs.contains(decl.valuedObjects.head)) { // only one and always written
-                    decl.ignoreInSerializer // Ignore whole declaration
-                }
-            }
-            if (decl.input && !writtenVOs.contains(decl.valuedObjects.head)) { // Buffer input
+            if (decl.input && decl.valuedObjects.size > 0 && !writtenVOs.contains(decl.valuedObjects.head)) { // Buffer input
                 bufferInput.put(decl.valuedObjects.head, decl.ssaOrigVO)
             }
-            if (!decl.input && decl.valuedObjects.size > 1 && !writtenVOs.contains(decl.valuedObjects.head)) { // first version is only read
+            if (decl.output && decl.valuedObjects.size > 0) { // Assign output
+                if (decl.input) {
+                    writeOutput.put(splitOutputs.get(decl.ssaOrigVO), decl.valuedObjects.last)
+                } else {
+                    writeOutput.put(decl.ssaOrigVO, decl.valuedObjects.last)
+                }
+            }
+            if ((!decl.input || decl.output) && decl.valuedObjects.size > 1 && !writtenVOs.contains(decl.valuedObjects.head)) { // first version is only read
                 preserveState.put(decl.valuedObjects.head, decl.valuedObjects.last)
             }
+            
             // Keep all variables as local variables
             decl.input = false
             decl.output = false
         }
+        
         // Transform pre guards
         for (pre : scg.nodes.filter(Assignment).map[eAllContents.toIterable].flatten.filter(OperatorExpression).filter[operator == OperatorType.PRE].toList) {
             val vo = (pre.subExpressions.head as ValuedObjectReference).valuedObject
@@ -147,20 +156,16 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
             preserveState.remove(vo)
             preGuards.put(vo, vo.declaration.valuedObjects.last)
         }
-        // remove double underscore
         
-      
-        // remove leading undercore by adding variable type information
-        //for (ioDecl : scg.variableDeclarations.filter[input && !output].toList) 
-        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("in_"+ name)]
-        //for (ioDecl : scg.variableDeclarations.filter[!input && output ].toList) 
-        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("out_"+ name)]
-        //for (ioDecl : scg.variableDeclarations.filter[!input && !output && isSSA].toList) 
-        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("ssa_"+ name)]
-        for (ioDecl : scg.variableDeclarations.filter[!input && !output].toList) 
-            ioDecl.valuedObjects.forEach[name =((name.charAt(0)))==(new String("_").charAt(0))?removeDoubleUnderscore("local_"+ name):removeDoubleUnderscore(name)]
-
-       
+        // remove double underscore and remove leading undercore by adding variable type information
+        for (ioDecl : scg.variableDeclarations.filter[!input && !output].toList) {
+            for (vo : ioDecl.valuedObjects) {
+                if (vo.name.startsWith("_")) {
+                    vo.name = "local"+ name
+                }
+                vo.name.removeDoubleUnderscore
+            }
+        }
         
         // Generate code
         return '''
@@ -185,13 +190,17 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
             signal pre_reset: boolean;
             signal GO : boolean;
             -- local variables
-            «FOR decl : scg.variableDeclarations.filter[isSSA && !isIgnoredInSerializer]»
+            «FOR decl : scg.variableDeclarations.filter[isSSA && !it.valuedObjects.empty]»
                 signal «decl.serialize»;
             «ENDFOR»
             begin
                 -- logic
                 «FOR asm : scg.allAssignments»
                     «asm.serialize»;
+                «ENDFOR»
+                -- write outputs
+                «FOR kv : writeOutput.entrySet»
+                    «kv.key.name» <= «kv.value.name»;
                 «ENDFOR»
                 
             -- ---------------------

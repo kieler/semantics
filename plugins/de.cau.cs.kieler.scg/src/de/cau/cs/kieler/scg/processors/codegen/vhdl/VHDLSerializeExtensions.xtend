@@ -33,18 +33,9 @@ import de.cau.cs.kieler.kexpressions.IntValue
 @Singleton
 class VHDLSerializeExtensions extends CCodeSerializeHRExtensions {
     
-    val ignore = <EObject>newHashSet
-    
-    def ignoreInSerializer(EObject obj) {
-        ignore += obj
-    }
-    def isIgnoredInSerializer(EObject obj) {
-        ignore.contains(obj)
-    }
-    
     def dispatch CharSequence serialize(VariableDeclaration decl) {
         val sb = new StringBuilder
-        sb.append(decl.valuedObjects.filter[!isIgnoredInSerializer].map[name].join(", "))
+        sb.append(decl.valuedObjects.map[name].join(", "))
         sb.append(": ")
         if (decl.input) {
             sb.append("IN ")
