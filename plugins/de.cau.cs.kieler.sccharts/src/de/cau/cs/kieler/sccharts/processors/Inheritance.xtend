@@ -15,20 +15,21 @@ package de.cau.cs.kieler.sccharts.processors
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.LinkedHashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import java.util.ArrayList
 import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.AccessModifier
-import de.cau.cs.kieler.kexpressions.VariableDeclaration
-import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 
 /**
  * 
@@ -37,6 +38,8 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 class Inheritance extends SCChartsProcessor implements Traceable {
 
     @Inject extension SCChartsInheritanceExtensions
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension KExpressionsDeclarationExtensions
     
     public static val GENERATED_PREFIX = "_"
     
@@ -145,6 +148,17 @@ class Inheritance extends SCChartsProcessor implements Traceable {
     def replaceVOR(EObject object, java.util.Map<ValuedObject, ValuedObject> replacements) {
         for (vor: object.eAllContents.filter(ValuedObjectReference).filter[replacements.containsKey(valuedObject)].toList) {
             vor.valuedObject = replacements.get(vor.valuedObject)
+            vor.subReference.replaceSubVOR(vor.valuedObject)
+        }
+    }
+    
+    def void replaceSubVOR(ValuedObjectReference vor, ValuedObject parent) {
+        if (vor !== null && parent !== null) {
+            val decl = parent.declaration
+            if (decl instanceof ClassDeclaration) {
+                vor.valuedObject = decl.innerValuedObjects.findFirst[it.name == vor.valuedObject.name]
+                vor.subReference.replaceSubVOR(vor.valuedObject)
+            }
         }
     }
 }
