@@ -22,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.IntValue
 
 /**
  * @author ssm
@@ -94,6 +95,7 @@ class VHDLSerializeExtensions extends CCodeSerializeHRExtensions {
     override dispatch CharSequence serialize(ValueType valueType) {
         return switch (valueType) {
             case ValueType.BOOL: "boolean"
+            case ValueType.INT:  "signed(63 downto 0)"
             default: valueType.literal
         }
     }
@@ -105,6 +107,18 @@ class VHDLSerializeExtensions extends CCodeSerializeHRExtensions {
     
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
         return valuedObjectReference.serializeVOR
+    }
+    
+    override dispatch CharSequence serialize(IntValue expression) {
+        var String bin = Integer.toBinaryString(expression.value);
+        if (expression.value >= 0){
+                while (bin.length()< 64) bin = "0"+ bin
+                return  '''"«bin»"'''
+            
+            }else{
+                while (bin.length()< 64) bin = "1"+ bin
+                return '''"«bin»"'''
+            }
     }
     
 }

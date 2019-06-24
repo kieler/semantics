@@ -80,6 +80,21 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         model = cc
     }
     
+    protected def String removeDoubleUnderscore(String s) {
+        //if (s.length() ==0) return ""
+        //var String out = "" + s.charAt(0) 
+        //var char last = s.charAt(0) 
+        //for (var int i = 1 ; i< s.length(); i++){
+        //  if (s.charAt(i) !='_' || last != '_'){
+        //      out+= s.charAt(i)
+        //      last= s.charAt(i)
+        ////      }  
+        //}
+        return s.replaceAll("_+","_")
+        
+    }
+    
+    
     protected def generateVHDL(SCGraph scg, List<Pragma> pragmas) {
         // Split input+output variables
         for (ioDecl : scg.variableDeclarations.filter[input && output && !isSSA].toList) {
@@ -132,27 +147,46 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
             preserveState.remove(vo)
             preGuards.put(vo, vo.declaration.valuedObjects.last)
         }
+        // remove double underscore
+        
+      
+        // remove leading undercore by adding variable type information
+        //for (ioDecl : scg.variableDeclarations.filter[input && !output].toList) 
+        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("in_"+ name)]
+        //for (ioDecl : scg.variableDeclarations.filter[!input && output ].toList) 
+        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("out_"+ name)]
+        //for (ioDecl : scg.variableDeclarations.filter[!input && !output && isSSA].toList) 
+        //    ioDecl.valuedObjects.forEach[name =removeDoubleUnderscore("ssa_"+ name)]
+        for (ioDecl : scg.variableDeclarations.filter[!input && !output].toList) 
+            ioDecl.valuedObjects.forEach[name =((name.charAt(0)))==(new String("_").charAt(0))?removeDoubleUnderscore("local_"+ name):removeDoubleUnderscore(name)]
+
+       
         
         // Generate code
         return '''
+        library IEEE;
+        use IEEE.STD_LOGIC_1164.ALL;
+        use IEEE.NUMERIC_STD.ALL;
+        
         ENTITY «scg.name» IS
         PORT(
             -- control
             tick: IN std_logic;
             reset: IN boolean;
             -- input/output
-            «FOR decl : scg.variableDeclarations.filter[(input || output) && !isSSA]»
-                «decl.serialize»;
+            «FOR decl : scg.variableDeclarations.filter[(input || output) && !isSSA]SEPARATOR ';'»
+                «decl.serialize»
             «ENDFOR»
         );
         END «scg.name»;
         
         ARCHITECTURE behavior OF «scg.name» IS
             -- control
-            pre_reset: boolean;
+            signal pre_reset: boolean;
+            signal GO : boolean;
             -- local variables
             «FOR decl : scg.variableDeclarations.filter[isSSA && !isIgnoredInSerializer]»
-                «decl.serialize»;
+                signal «decl.serialize»;
             «ENDFOR»
             begin
                 -- logic
@@ -179,6 +213,7 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
                     «FOR kv : preserveState.entrySet»
                         «kv.key.name» <= «kv.value.name»;
                     «ENDFOR»
+                end if;
             end process;
             
             -- Input Buffering
@@ -222,10 +257,13 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
     }
     
     def resetValue(ValuedObject vo) {
+        var String int0 = ""
+        while (int0.length()< 64) int0 = "0"+ int0
+        int0= "\""+int0 +"\""
         return switch(vo.variableDeclaration.type) {
             case BOOL: "false"
             case FLOAT: "0.0"
-            case INT: "0"
+            case INT: int0
             default: "false"
         }
     }
