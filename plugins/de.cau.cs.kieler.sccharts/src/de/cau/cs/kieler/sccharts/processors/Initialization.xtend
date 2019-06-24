@@ -14,9 +14,12 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -24,11 +27,11 @@ import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import java.util.List
 
 import static de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 
 /**
  * SCCharts Initialization Transformation.
@@ -56,7 +59,8 @@ class Initialization extends SCChartsProcessor implements Traceable {
 
 
     //-------------------------------------------------------------------------
-    @Inject extension KExpressionsValuedObjectExtensions    
+    @Inject extension KExpressionsValuedObjectExtensions  
+    @Inject extension KExpressionsDeclarationExtensions  
     @Inject extension KEffectsExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCChartsScopeExtensions
@@ -80,8 +84,52 @@ class Initialization extends SCChartsProcessor implements Traceable {
 
     // Traverse all states and transform macro states that have actions to transform
     def void transformInitialization(Scope scope, State targetRootState) {
-        for (valuedObject : scope.valuedObjects.filter[initialValue !== null].toList.reverseView) {
+        val initVOs = <List<ValuedObject>>newArrayList
+        // Find VO that need to be initialized
+        for (decl : scope.declarations) {
+            if (decl instanceof ClassDeclaration) {
+                for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
+                    // Calculate paths to all initialized members
+                    var paths = newArrayList(newArrayList(nestedVO))
+                    var ClassDeclaration parent = nestedVO.declaration.eContainer as ClassDeclaration
+                    while(parent !== null) {
+                        val oldPaths = paths
+                        paths = newArrayList
+                        for (parentVO : parent.valuedObjects) {
+                            if (parentVO.cardinalities.nullOrEmpty) {
+                                for (oldPath : oldPaths) {
+                                    val newPath = newArrayList(parentVO)
+                                    newPath.addAll(oldPath)
+                                    paths += newPath
+                                }
+                            } else {
+                                environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
+                            }
+                        }
+                        if (parent == decl) {
+                            parent = null
+                        } else {
+                            parent = parent.eContainer as ClassDeclaration
+                        }
+                    }
+                    initVOs += paths
+                }
+            } else {
+                initVOs += decl.valuedObjects.filter[initialValue !== null].map[newArrayList(it)]
+            }
+        }
+        initVOs.reverse
+        for (valuedObjects : initVOs) {
+            val valuedObject = valuedObjects.last
             setDefaultTrace(valuedObject, valuedObject.declaration)
+            
+            val assignment = valuedObjects.head.createAssignment(valuedObject.initialValue.copy)
+            // Initialize class members
+            var vor = assignment.reference
+            for (subVO : valuedObjects.drop(1)) {
+                vor.subReference = subVO.reference
+                vor = vor.subReference
+            }
             
             // Initialization combined with existing entry action: The order in which new, 
             // additional initialization-entry actions are added matters for the semantics.
@@ -90,10 +138,10 @@ class Initialization extends SCChartsProcessor implements Traceable {
             // entry actions to keep the original order. 
             if (scope instanceof State) {
                 val entryAction = scope.createEntryAction(0)
-                entryAction.addAssignment(valuedObject.createAssignment(valuedObject.initialValue.copy))
+                entryAction.addAssignment(assignment)
             } else if (scope instanceof ControlflowRegion) {
                 val entryAction = scope.states.findFirst[initial].createEntryAction(0)
-                entryAction.addAssignment(valuedObject.createAssignment(valuedObject.initialValue.copy))
+                entryAction.addAssignment(assignment)
             }
             valuedObject.setInitialValue(null)
         }

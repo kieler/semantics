@@ -43,6 +43,7 @@ class SCLValidator extends AbstractSCLValidator {
     
     static val String CLASS_NO_NAME = "A class/struct must have a unique name."
     static val String CLASS_NO_VO = "A class/struct should have at least one variable defined (Type definitions are not supported)."
+    static val String CLASS_INIT = "Composed types (class/struct) cannot be initialized. Please initialize each field individually."
 
     @Check
     def checkClassDeclaration(ClassDeclaration decl) {
@@ -51,6 +52,12 @@ class SCLValidator extends AbstractSCLValidator {
         }
         if (decl.valuedObjects.nullOrEmpty) {
             warning(CLASS_NO_VO, decl, null, -1)
+        } else {
+            for (vo : decl.valuedObjects) {
+                if (vo.initialValue !== null) {
+                    error(CLASS_INIT, vo.initialValue, null, -1)
+                }
+            }
         }
     }
 
