@@ -113,7 +113,7 @@ class KiCoolRegistration {
     }
     
     static def System getProcessorSystemModel(String locationString) {
-        modelsMap.get(locationString) as System
+        modelsMap.get(locationString)
     }
     
     static def loadRegisteredSystemModels() {

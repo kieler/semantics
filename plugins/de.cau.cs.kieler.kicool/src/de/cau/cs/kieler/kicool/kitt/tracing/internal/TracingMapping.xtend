@@ -36,19 +36,19 @@ import static extension com.google.common.collect.Multimaps.*
 class TracingMapping {
 
     /** Internal data-structure for model element relations. */
-    private val HashMultimap<Object, Object> mapping;
+    val HashMultimap<Object, Object> mapping;
 
     /** Reverse mapping */
-    private val HashMultimap<Object, Object> rmapping;
+    val HashMultimap<Object, Object> rmapping;
 
-    /** OPtional title of the associated transformation */
-    private var String title = null;
+    /** Optional title of the associated transformation */
+    var String title = null;
 
     /** 
      * If delegate is given the transformation is inplace
      * and all tracing relations will be applied to the delegated TracingMapping
      */
-    private val TracingMapping delegate;
+    val TracingMapping delegate;
 
     /**
      * Creates a new tracing mapping with give title
@@ -362,7 +362,7 @@ class TracingMapping {
      * @return title string.
      */
     def getTitle() {
-        return if (title == null) {
+        return if (title === null) {
             ""
         } else {
             title
@@ -381,7 +381,7 @@ class TracingMapping {
      * @return true if this mapping is an in-place mapping.
      */
     def isInPlace() {
-        return delegate != null;
+        return delegate !== null;
     }
 
 }

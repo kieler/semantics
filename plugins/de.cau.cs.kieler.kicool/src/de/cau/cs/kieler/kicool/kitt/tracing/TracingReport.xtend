@@ -45,19 +45,19 @@ class TracingReport {
 
         //find correct source and target models due to inplace transformation delegation
         if (mapping.inPlace) {
-            val realSource = tracing.getTracingChain().getModels(mapping).key as EObject;
+            val realSource = tracing.getTracingChain().getModels(mapping).key;
             if (realSource instanceof EObject) {
-                source = realSource as EObject;
+                source = realSource;
             } else {
                 source = null
             }
         } else if (sourceModel instanceof EObject) {
-            source = sourceModel as EObject;
+            source = sourceModel;
         } else {
             source = null
         }
         if (targetModel instanceof EObject) {
-            target = targetModel as EObject;
+            target = targetModel;
         } else {
             target = null
         }
@@ -79,7 +79,7 @@ class TracingReport {
         ];
 
         //check source elements
-        if (source != null) {
+        if (source !== null) {
             source.eAllContents.fold(newArrayList(source))[list, item|list.add(item); list].forEach [
                 if (mapping.internalMapping.containsKey(it)) {
                     sourceElementInMapping.add(it);
@@ -94,7 +94,7 @@ class TracingReport {
         }
 
         //check target elements
-        if (target != null) {
+        if (target !== null) {
             target.eAllContents.fold(newArrayList(target))[list, item|list.add(item); list].forEach [
                 if (mapping.internalReverseMapping.containsKey(it)) {
                     targetElementInMapping.add(it);
