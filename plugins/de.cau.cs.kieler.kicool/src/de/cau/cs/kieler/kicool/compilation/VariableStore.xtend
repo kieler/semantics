@@ -173,7 +173,7 @@ class VariableStore implements IKiCoolCloneable {
         
         info.valuedObject = vo
         if (!vo.cardinalities.nullOrEmpty) {
-            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0]
+            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0].toList
         } else {
             info.dimensions.clear
         }

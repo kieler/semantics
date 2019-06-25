@@ -81,6 +81,9 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
         for(declaration : scope.declarations.immutableCopy) {
             targetScope.declarations.add(declaration)
+            if (declaration instanceof ClassDeclaration) {
+                declaration.uniqueName // Before renaming the VOs!
+            }
             for(valuedObject : declaration.valuedObjects) {
                 val oldName = valuedObject.name
                 valuedObject.name = "_" + hierarchicalScopeName + "_" + valuedObject.name
@@ -94,7 +97,7 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
                 }
             }
             if (declaration instanceof ClassDeclaration) {
-                declaration.uniqueName
+                // After renaming the parent VOs!
                 for (vo : declaration.eAllContents.filter(Declaration).map[valuedObjects.iterator].flatten.toIterable) {
                     voStore.update(vo)
                 }
