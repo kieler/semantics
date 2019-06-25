@@ -3,24 +3,25 @@
  */
 package de.cau.cs.kieler.scl.validation
 
-import de.cau.cs.kieler.scl.Label
-import de.cau.cs.kieler.scl.SCLProgram
-import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.scl.SequencePart
-import org.eclipse.emf.ecore.EObject
-import java.util.List
-import de.cau.cs.kieler.scl.SCLPackage
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.TextExpression
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.scl.Conditional
-import de.cau.cs.kieler.scl.ScopeStatement
-import org.eclipse.xtext.validation.CheckType
-import de.cau.cs.kieler.scl.SCLResource
-import org.eclipse.xtext.Keyword
-import de.cau.cs.kieler.scl.Return
+import de.cau.cs.kieler.scl.Label
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
-import de.cau.cs.kieler.scl.Statement
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
-import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.scl.Return
+import de.cau.cs.kieler.scl.SCLProgram
+import de.cau.cs.kieler.scl.SCLResource
+import de.cau.cs.kieler.scl.Statement
+import org.eclipse.xtext.Keyword
+import org.eclipse.xtext.validation.Check
+import org.eclipse.xtext.validation.CheckType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -36,6 +37,42 @@ class SCLValidator extends AbstractSCLValidator {
     public static val RETURN_NOT_IN_METHOD = "Return statements can only be used in method bodies."
     public static val RETURN_NO_TYPE = "Return statement is used but no return type is declared in method signature."
     public static val RESTRICTED_METHOD_STATEMENTS = "This statement is not allowed in method bodies."
+    
+    static val String NO_ASSIGNMENTS_TO_CLASS = "Assignments to class/struct types are not supported. Please specify a member."
+    static val String NO_REFERENCE_TO_CLASS = "Referencing class/struct types is not supported. Please specify a member."  
+    
+    static val String CLASS_NO_NAME = "A class/struct must have a unique name."
+    static val String CLASS_NO_VO = "A class/struct should have at least one variable defined (Type definitions are not supported)."
+
+    @Check
+    def checkClassDeclaration(ClassDeclaration decl) {
+        if (decl.name.nullOrEmpty) {
+            error(CLASS_NO_NAME, decl, null, -1)
+        }
+        if (decl.valuedObjects.nullOrEmpty) {
+            warning(CLASS_NO_VO, decl, null, -1)
+        }
+    }
+
+    @Check
+    def checkClassReference(ValuedObjectReference ref) {
+        val decl = ref.valuedObject?.eContainer
+        if (decl instanceof ClassDeclaration) {
+            if (ref.subReference === null && !(ref.eContainer instanceof ValuedObjectReference)) {
+                error(NO_REFERENCE_TO_CLASS, ref, null, -1)
+            }
+        }
+    }
+    
+    @Check
+    def void checkReferenceAssignment(Assignment asm) {
+        val decl = asm.reference?.valuedObject?.eContainer
+        if (decl instanceof ClassDeclaration) {
+            if (asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
+                error(NO_ASSIGNMENTS_TO_CLASS, asm.reference, null, -1)
+            }
+        }
+    }
 
     @Check
     def checkReturn(Return ret) {
