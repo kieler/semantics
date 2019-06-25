@@ -50,6 +50,7 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
     
     public static val INCLUDES = "includes"
     protected var CODE_ANNOTATION = "C"
+    protected var CONDITIONAL_PLACEHOLDER = " : __CONDSELF__"
     
     @Inject extension AnnotationsExtensions
     @Inject extension KEffectsExtensions    
@@ -156,7 +157,10 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
             } else {
                 assignmentStr = valuedObjectName + assignment.operator.serializeAssignOperator + assignmentText
             }
-            assignmentStr
+            
+            assignmentStr = assignmentStr.replaceAll(CONDITIONAL_PLACEHOLDER, " : " + valuedObjectName)
+            
+            return assignmentStr
         } else if (assignment.expression instanceof TextExpression) {
             (assignment.expression as TextExpression).text
         } else if (assignment.expression instanceof FunctionCall) {
@@ -272,5 +276,27 @@ class StatebasedCCodeSerializeHRExtensions extends SCChartsSerializeHRExtensions
             return referenceCall.serializeVOR.toString + referenceCall.parameters.serializeParameters
         }
     }    
+    
+    override CharSequence serializeOperatorExpressionConditional(OperatorExpression expression) {
+        if (expression.subExpressions.size == 2 || expression.subExpressions.size == 3 ) {
+            return expression.subExpressions.head.serialize + " ? " +
+                expression.subExpressions.get(1).serialize 
+                + if (expression.subExpressions.size == 3) " : " + expression.subExpressions.get(2).serialize else CONDITIONAL_PLACEHOLDER  
+        } else {
+            throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
+                expression.subExpressions.size + " arguments.")
+        }
+    }  
+    
+    override CharSequence serializeHROperatorExpressionConditional(OperatorExpression expression) {
+        if (expression.subExpressions.size == 2 || expression.subExpressions.size == 3 ) {
+            return expression.subExpressions.head.serializeHR + " ? " +
+                expression.subExpressions.get(1).serializeHR
+                + if (expression.subExpressions.size == 3) " : " + expression.subExpressions.get(2).serializeHR else CONDITIONAL_PLACEHOLDER
+        } else {
+            throw new IllegalArgumentException("An OperatorExpression with a ternary conditional has " + 
+                expression.subExpressions.size + " arguments.")
+        }
+    }     
     
 }
