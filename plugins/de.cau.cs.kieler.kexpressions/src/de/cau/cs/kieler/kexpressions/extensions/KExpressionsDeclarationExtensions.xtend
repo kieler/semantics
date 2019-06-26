@@ -291,7 +291,7 @@ class KExpressionsDeclarationExtensions {
     def getInnerValuedObjects(ClassDeclaration decl) {
         return decl.declarations.map[valuedObjects].flatten
     }
-    
+
     def getAllNestedValuedObjects(ClassDeclaration decl) {
         return decl.innerValuedObjects + decl.declarations.filter(ClassDeclaration).map[innerValuedObjects].flatten
     }
