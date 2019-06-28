@@ -13,16 +13,19 @@
 package de.cau.cs.kieler.kivis.ui.views
 
 import com.google.gson.JsonElement
-import com.google.gson.JsonPrimitive
+import com.google.gson.JsonNull
+import com.google.gson.JsonParser
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kivis.KiVisConstants
 import de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.io.File
 import java.net.URL
@@ -47,10 +50,6 @@ import org.eclipse.ui.internal.browser.WebBrowserUtil
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
-import de.cau.cs.kieler.kivis.ui.views.KiVisView.ActionIndicatorFunction
-import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
-import com.google.gson.JsonNull
-import com.google.gson.JsonParser
 
 /**
  * The KiVis View.
@@ -58,7 +57,7 @@ import com.google.gson.JsonParser
  * @author als
  * 
  */
-class KiVisView extends ViewPart implements SimulationListener {
+class KiVisView extends ViewPart implements ISimulationListener {
 
     /**
      * The id of the view, that is set in the plugin.xml
@@ -153,7 +152,7 @@ class KiVisView extends ViewPart implements SimulationListener {
     }
 
     new() {
-        SimulationUI.registerObserver(this);
+        CentralSimulation.addListener(this)
     }
 
     /**

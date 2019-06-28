@@ -22,7 +22,6 @@ import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
 import de.cau.cs.kieler.simulation.mode.ManualMode
@@ -38,13 +37,14 @@ import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author aas, als
  *
  */
 @RunWith(ModelsRepositoryTestRunner)
-abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextModelRepositoryTest<T> implements SimulationListener {
+abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextModelRepositoryTest<T> implements ISimulationListener {
 
     private val simulationTraceEventData = Collections.synchronizedMap(new WeakHashMap<SimulationContext, SimulationEvent>)
     
