@@ -73,7 +73,8 @@ class ValuedObjectAccess {
         this.scheduleObject = scheduleObject
         this.priority = VOA.priority
         this.forkStack = new ForkStack(VOA.forkStack)
-        this.isSpecific = isSpecific
+        this.isSpecific = VOA.isSpecific
+        this.isWriteAccess = VOA.isWriteAccess
     }
     
     

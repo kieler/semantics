@@ -64,7 +64,7 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
         scg.declarations.generateDeclarations(0, serializer)
     }
     
-    protected def void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
+    def void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
         for (declaration : declarations) {
             if (declaration instanceof ClassDeclaration) {
                 (0..depth).forEach[code.append(indentation)]

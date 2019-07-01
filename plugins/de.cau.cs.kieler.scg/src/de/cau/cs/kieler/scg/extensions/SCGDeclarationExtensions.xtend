@@ -188,7 +188,7 @@ class SCGDeclarationExtensions {
         if (valuedObject === null) {
             throw new IllegalArgumentException("Can't copy valued object. Valued object is null!")
         }
-        val vo = map.get(valuedObject).peek
+        val vo = map.get(valuedObject)?.peek
         if (vo === null) {
             return valuedObject // TODO: Remove
             //throw new Exception("Valued Object not found! ["+valuedObject.name+"]")
@@ -252,6 +252,7 @@ class SCGDeclarationExtensions {
             var oldSub = assignment.reference?.subReference
             while (oldSub !== null) {
                 val ref = oldSub.valuedObject.getValuedObjectCopyWNULL(map).reference
+                ref.indices += oldSub.indices.map[copySCGExpression(map)]
                 newVOR.subReference = ref
                 newVOR = ref
                 oldSub = oldSub.subReference

@@ -35,6 +35,7 @@ import static extension  org.eclipse.xtext.EcoreUtil2.*
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FloatValue
+import java.util.Map
 
 /**
  * The class models a wiring instance if given a list of equations (assignments).
@@ -340,23 +341,27 @@ class Wiring {
         if (source.isSameValuedObjectInReference(wire.sink)) {
             wire.sourceIsEquationTarget = true
         } else {
-            val visited = <Wire> newHashSet
+            val visited = <Wire, Boolean> newHashMap
             source.isSelfReferencingEquation(source, wire, visited)
         }
     }
     
-    protected def boolean isSelfReferencingEquation(Expression source, ValuedObjectReference target, Wire wire, Set<Wire> visited) {
-        println(wire)
-        if (visited.contains(wire)) return false;
-        visited += wire
+    protected def boolean isSelfReferencingEquation(Expression source, ValuedObjectReference target, Wire wire, 
+        Map<Wire, Boolean> visited
+    ) {
+//        println(wire)
+        if (visited.containsKey(wire)) return visited.get(wire);
+        visited.put(wire, false)
 
         if (wire.sink != target && wire.sink.isSameValuedObjectInReference(target)) {
+            visited.put(wire, true)
             return true
         }
         
         switch(source) {
             ValuedObjectReference: {
                 if (source != target && source.isSameValuedObjectInReference(target)) {
+                    visited.put(wire, true)
                     return true
                 } else {
                     val targetWires = wires.filter[ 
@@ -365,6 +370,7 @@ class Wiring {
                     ].toList                    
                     if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
                         wire.sourceIsEquationTarget = true
+//                        targetWires.forEach[ it.source.isSelfReferencingEquation(target, it, visited) ]
                     }
                     return false
                 }
@@ -375,8 +381,10 @@ class Wiring {
                         it.source == wire.sink ||
                         it.source.isSameValuedObjectInReference(wire.sink)
                     ].toList
-                    println(targetWires)
+//                    println(targetWires)
                     if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
+//                        targetWires.forEach[ it.source.isSelfReferencingEquation(target, it, visited) ]
+                        visited.put(wire, true)
                         return true
                     }
 //                }

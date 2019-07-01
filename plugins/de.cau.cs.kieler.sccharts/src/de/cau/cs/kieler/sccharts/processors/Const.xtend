@@ -35,6 +35,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * SCCharts Const Transformation.
@@ -101,10 +103,17 @@ class Const extends SCChartsProcessor implements Traceable {
             
             // Replace references
             for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].toIterable) {
-                if (replacement instanceof Value && vor.eContainer instanceof Assignment && vor.eContainingFeature == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
+                val container = vor.eContainer
+                val coniainingFeature = vor.eContainingFeature 
+                if (replacement instanceof Value && container instanceof Assignment && coniainingFeature == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
                     environment.errors.add("Cannot replace left hand side of assignment by a value. (Trying to replace " + vor?.valuedObject + " by " + replacement + " in " + (vor.eContainer as Assignment) + ")")
                 } else {
                     vor.replace(replacement.copy)
+                    // If replaced size in array cardinality
+                    if (container instanceof ValuedObject && coniainingFeature == KExpressionsPackage.Literals.VALUED_OBJECT__CARDINALITIES) {
+                        // Update size in VO store
+                        voStore.update(container as ValuedObject)
+                    }
                 }
             }
             

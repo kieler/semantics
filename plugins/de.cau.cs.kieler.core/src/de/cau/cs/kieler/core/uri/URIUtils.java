@@ -186,6 +186,9 @@ public final class URIUtils {
 				final IPath location = file.getLocation();
 				return location.toFile();
 			}
+			if (uri.toFileString() == null) {
+			    return null;
+			}
 			return new File(uri.toFileString());
 		} catch (final URISyntaxException ex) {
 			return null;

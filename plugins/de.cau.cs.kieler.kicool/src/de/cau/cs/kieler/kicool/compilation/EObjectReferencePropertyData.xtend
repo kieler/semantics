@@ -24,7 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 class EObjectReferencePropertyData implements IKiCoolCloneable {
     
     @Accessors(PUBLIC_GETTER)
-    private var EObject object
+    var EObject object
     
     new(EObject object) {
         this.object = object

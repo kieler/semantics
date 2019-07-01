@@ -54,6 +54,7 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.processors.synchronizer.SynchronizerSelector
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -98,6 +99,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     @Inject extension AnnotationsExtensions
     @Inject extension SynchronizerSelector
     @Inject extension KEffectsExtensions
+    @Inject extension SCGMethodExtensions
 
     protected val schedulingBlocks = <SchedulingBlock>newArrayList
     protected val schedulingBlockCache = new HashMap<Node, SchedulingBlock>
@@ -113,7 +115,7 @@ class SimpleGuardExpressions extends InplaceProcessor<SCGraphs> implements Trace
     
     
     override process() {
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.process
         }
     }

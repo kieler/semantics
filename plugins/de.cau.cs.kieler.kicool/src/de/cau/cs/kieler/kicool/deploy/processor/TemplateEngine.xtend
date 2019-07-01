@@ -120,11 +120,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 
                 var Map<String, Object> additionalTemplateEnvironment = newHashMap
                 if (additionalTemplateEnvironments.containsKey(entry.value)) {
-                    if (additionalTemplateEnvironment instanceof Map<?, ?>) {
-                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
-                    } else if (additionalTemplateEnvironment !== null) {
-                        logger.println("WARNING: Additional template environment is specified but not of type Map<String, String> but " + additionalTemplateEnvironment.class.name)
-                    }
+                    additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
                 }
                 
                 additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET, target.toString) 

@@ -17,7 +17,7 @@ import de.cau.cs.kieler.kicool.registration.ISystemProvider
 /**
  * Provider to make systems available to KiCool.
  * 
- * @author Wechselberg
+ * @author als ssm Wechselberg
  */
 class SCGSystemProvider implements ISystemProvider {
     
@@ -38,7 +38,9 @@ class SCGSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.netlist.sccp.kico", 
             "system/de.cau.cs.kieler.sccharts.scssa.kico",  
             "system/de.cau.cs.kieler.scg.priority.kico",  
-            "system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico"
+            "system/de.cau.cs.kieler.sccharts.netlist.guardOpt.kico",
+            "system/de.cau.cs.kieler.sccharts.priority.legacy.kico",
+            "system/de.cau.cs.kieler.sccharts.priority.java.legacy.kico"
         ]
     }
 }

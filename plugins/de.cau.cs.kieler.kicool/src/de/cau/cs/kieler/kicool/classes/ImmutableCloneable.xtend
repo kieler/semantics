@@ -22,7 +22,7 @@ import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
  */
 class ImmutableCloneable<T> implements IKiCoolCloneable {
     
-    private T object
+    T object
     
     new(T object) {
         this.object = object

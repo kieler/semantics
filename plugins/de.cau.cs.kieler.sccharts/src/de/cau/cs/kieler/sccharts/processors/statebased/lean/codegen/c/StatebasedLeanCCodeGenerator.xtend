@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.c
 
-import com.google.common.collect.HashMultimap
-import com.google.common.collect.Multimap
 import com.google.inject.Inject
 import com.google.inject.Injector
 import de.cau.cs.kieler.annotations.StringPragma
@@ -32,6 +30,7 @@ import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
 
 import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.codegen.AbstractStatebasedLeanTemplate.hostcodeSafeName
+import de.cau.cs.kieler.sccharts.processors.statebased.codegen.StatebasedCCodeSerializeHRExtensions
 
 /**
  * C Code Generator for the Statebased code generation using templates.
@@ -44,6 +43,7 @@ import static extension de.cau.cs.kieler.sccharts.processors.statebased.lean.cod
 class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeContainer> {
     
     @Inject extension PragmaExtensions
+    @Inject StatebasedCCodeSerializeHRExtensions serializer
     @Inject protected Injector injector
     
     public static val IProperty<String> SIMULTATION_C_STRUCT_ACCESS = 
@@ -59,7 +59,6 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     public static val INCLUDES = "includes"
     
     @Accessors Map<CodeGeneratorNames, String> naming = <CodeGeneratorNames, String> newHashMap
-    @Accessors val Multimap<String, String> modifications = HashMultimap.create
     
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.codegen.statebased.lean.c"
@@ -71,6 +70,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     
     override process() {
         val template = injector.getInstance(StatebasedLeanCTemplate) as StatebasedLeanCTemplate
+        template.serializer = serializer
         template.debug = environment.getProperty(PRINT_DEBUG)
         template.create(model.rootStates.head)
         
@@ -125,7 +125,7 @@ class StatebasedLeanCCodeGenerator extends ExogenousProcessor<SCCharts, CodeCont
     }      
     
     protected def void hostcodeAdditions(StringBuilder sb, SCCharts scc) {
-        val includes = modifications.get(INCLUDES)
+        val includes = serializer.modifications.get(INCLUDES)
         for (include : includes)  {
             sb.append("#include " + include + "\n")
         }

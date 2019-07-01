@@ -175,6 +175,15 @@ public interface SCChartsFactory extends EFactory {
     PolicyRegion createPolicyRegion();
 
     /**
+     * Returns a new object of class '<em>Code Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Code Effect</em>'.
+     * @generated
+     */
+    CodeEffect createCodeEffect();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

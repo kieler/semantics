@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.deploy
 
-import de.cau.cs.kieler.kicool.environments.Environment
-
 /**
  * @author als
  * @kieler.design proposed

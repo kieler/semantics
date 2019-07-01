@@ -29,6 +29,7 @@ import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.scoping.IScopeProvider
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.replace
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * @author als
@@ -78,7 +79,7 @@ class KEffectsEmissionReferenceCallConverter {
                                 if (candidate !== null) {
                                     val vo = candidate.EObjectOrProxy
                                     if (vo instanceof ValuedObject) {
-                                        if (vo.eContainer instanceof ReferenceDeclaration) {
+                                        if (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration) {
                                             toConvert.put(emission, vo)
                                         }
                                     }

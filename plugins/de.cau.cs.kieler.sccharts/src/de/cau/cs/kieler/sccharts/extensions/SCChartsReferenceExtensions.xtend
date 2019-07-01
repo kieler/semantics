@@ -42,7 +42,7 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
-        scope.createBindings(new Replacements)    
+        scope.createBindings(new Replacements())    
     }
     
     /** Creates all bindings for a referenced scope. 

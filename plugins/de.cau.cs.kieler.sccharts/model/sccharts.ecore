@@ -194,4 +194,5 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PolicyRegion" eSuperTypes="#//ControlflowRegion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeEffect" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect ../../de.cau.cs.kieler.scl/model/scl.ecore#//Scope"/>
 </ecore:EPackage>

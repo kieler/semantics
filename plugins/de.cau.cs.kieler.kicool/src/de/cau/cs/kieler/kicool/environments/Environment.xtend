@@ -19,6 +19,8 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -47,6 +49,9 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")
 
+    public static val IProperty<CompilationContext> PRECEEDING_COMPILATION_CONTEXT = 
+        new Property<CompilationContext>("de.cau.cs.kieler.kicool.preceedingCompilationContext")
+        
     public static val IProperty<ProcessorReference> PROCESSOR_REFERENCE = 
         new Property<ProcessorReference>("de.cau.cs.kieler.kicool.processorReference")
 
@@ -149,6 +154,31 @@ class Environment extends EnvironmentPropertyHolder {
     
     def isInDeveloperMode() {
         getProperty(DEVELOPER_MODE)
+    }
+    
+    def Resource findResource() {
+        return findResource(null)
+    }
+    
+    def Resource findResource(Object model) {
+        var Resource res = null
+        var candidate = model
+        // First try given model
+        if (candidate instanceof EObject) {
+            res = candidate.eResource
+        }
+        // Next try original model
+        if (res === null) {
+            candidate = getProperty(ORIGINAL_MODEL)
+            if (candidate instanceof EObject) {
+                res = candidate.eResource
+            }
+        }
+        // Next try preceeding compilation model
+        if (res === null) {
+            res = getProperty(PRECEEDING_COMPILATION_CONTEXT)?.result?.findResource
+        }
+        return res
     }
     
     /** 
