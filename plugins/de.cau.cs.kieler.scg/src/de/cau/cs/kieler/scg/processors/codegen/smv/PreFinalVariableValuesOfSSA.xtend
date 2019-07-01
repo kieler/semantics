@@ -23,10 +23,10 @@ import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
-import javax.inject.Inject
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import de.cau.cs.kieler.scg.processors.ssa.IOPreserverExtensions
+import com.google.inject.Inject
 
 /**
  * @author aas

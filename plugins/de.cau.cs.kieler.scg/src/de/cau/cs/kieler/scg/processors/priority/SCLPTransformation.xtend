@@ -31,7 +31,6 @@ import java.util.ArrayList
 import java.util.HashMap
 import java.util.HashSet
 import java.util.Stack
-import javax.inject.Inject
 
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.scg.SCGraphs
@@ -52,6 +51,7 @@ import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import com.google.inject.Inject
 
 /**
  * Class to perform the transformation of an SCG to C code in the priority based compilation chain.
@@ -135,9 +135,6 @@ class SCLPTransformation extends Processor<SCGraphs, CodeContainer> {
     override process() {
         val code = new CodeContainer
         transform(getModel.scgs.head, code)
-        
-        // Handle hierarchical VO declarations in VariableStore
-        VariableStore.get(environment)?.flattenAllHierarchicalObjects
         
         setModel(code)
     }

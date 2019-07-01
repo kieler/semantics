@@ -105,7 +105,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             node.addRegionFigure => [
                 setAsExpandedView
                 associateWith(region)
-                addDoubleClickAction(ReferenceExpandAction::ID)
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
                 if (region.override) addOverrideRegionStyle
                 if (region.final) addFinalRegionStyle
                 if (region.declarations.empty && region.actions.empty) {
@@ -125,7 +125,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                     // Add actions
                     for (action : region.actions) {
-                        addActionLabel(action.serializeHighlighted(true)) => [
+                        addActionLabel(action.serializeHighlighted(true, SHOW_USER_LABELS.booleanValue)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(action);
                             eAllContentsOfType2(KRendering).forEach[
@@ -137,7 +137,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 }
                 if (region.schedule.size > 0) it.setUserScheduleStyle
                 // Add Button after area to assure correct overlapping
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addCollapseButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
                 if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
 
@@ -146,10 +149,13 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 setAsCollapsedView
                 associateWith(region)
                 if (region.schedule.size > 0) it.setUserScheduleStyle
-                addDoubleClickAction(ReferenceExpandAction::ID)
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
                 if (region.override) addOverrideRegionStyle
                 if (region.final) addFinalRegionStyle
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addExpandButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ] 
                 if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
             
@@ -228,7 +234,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(label?:"").addDoubleClickAction(ReferenceExpandAction::ID)
+            addCollapseButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
@@ -236,7 +245,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.addRegionFigure => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(label?:"").addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 

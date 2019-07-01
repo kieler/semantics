@@ -54,7 +54,7 @@ knode operator {
     size: width = 2 height = 2
     properties: de.cau.cs.kieler.portSide = NORTH
                 org.eclipse.elk.port.borderOffset = 0.0
-                org.eclipse.elk.layered.northOrSouthPort = true
+                org.eclipse.elk.layered.northOrSouthPort = false
     
     klabel "set" {
         ktext {

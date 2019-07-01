@@ -38,6 +38,7 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * @author ssm
@@ -119,12 +120,19 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 }
             }
         }    
-        val label = if(region.label.nullOrEmpty) "" else " " + region.label + sLabel.toString
+        val label = region.serializeHighlighted(true) 
+
+        if (region.hasAnnotation("style")) {
+            label.set(0, new Pair(label.head.key, TextFormat.KEYWORD))
+        }
 
         // Expanded
         node.addRegionFigure => [
+            if (region.hasAnnotation("style")) {
+                it.addRegionStyle(region.getStringAnnotationValue("style"))
+            }
             setAsExpandedView
-            addDoubleClickAction(ReferenceExpandAction::ID)
+            addDoubleClickAction(MemorizingExpandCollapseAction::ID)
             if (region.declarations.empty) {
                 addStatesArea(!label.nullOrEmpty);
             } else {
@@ -141,18 +149,22 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             if (sLabel.length > 0) it.setUserScheduleStyle
             // Add Button after area to assure correct overlapping
             if (!CIRCUIT.booleanValue)
-//                addCollapseButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addCollapseButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
         ]
 
         // Collapsed
         node.addRegionFigure => [
             setAsCollapsedView
             if (sLabel.length > 0) it.setUserScheduleStyle
-            addDoubleClickAction(ReferenceExpandAction::ID)
+            addDoubleClickAction(MemorizingExpandCollapseAction::ID)
             if (!CIRCUIT.booleanValue)
-//                addExpandButton(label).addDoubleClickAction(KlighdConstants::ACTION_COLLAPSE_EXPAND);
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addExpandButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
         ]
         
         node.setSelectionStyle
@@ -203,14 +215,14 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
                 addDoubleClickAction(ReferenceExpandAction::ID)
                 // Add Button after area to assure correct overlapping
                 // Use special expand action to resolve references
-                addCollapseButton.addDoubleClickAction(ReferenceExpandAction::ID);
+                addCollapseButton.addSingleClickAction(ReferenceExpandAction::ID);
             ]
    
             // Collapsed
             node.addRegionFigure => [
                 setAsCollapsedView;
                 addDoubleClickAction(ReferenceExpandAction::ID)
-                addExpandButton.addDoubleClickAction(ReferenceExpandAction::ID);
+                addExpandButton.addSingleClickAction(ReferenceExpandAction::ID);
             ]
         }
 

@@ -30,6 +30,9 @@ import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.sccharts.extensions.TextFormat
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
+
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
 /**
  * Styles for {@link DataflowRegion}.
@@ -42,16 +45,44 @@ import de.cau.cs.kieler.sccharts.extensions.TextFormat
 @ViewSynthesisShared
 class DataflowRegionStyles extends ControlflowRegionStyles {
 
-    @Inject
-    extension KRenderingExtensions
+    @Inject extension KRenderingExtensions
+    @Inject extension KContainerRenderingExtensions
+    @Inject extension StateStyles
+    @Inject extension ColorStore
+    @Inject extension KColorExtensions
 
-    @Inject
-    extension KContainerRenderingExtensions
 
-    @Inject
-    extension StateStyles
-    
-    @Inject
-    extension ColorStore
-
+    def KRectangle addRegionStyle(KRectangle rect, String style) {
+        switch(style) {
+            case 'entry': {
+                return rect => [
+//                    foreground = REGION_FOREGROUND.color
+//                    setBackgroundGradient('#fff'.color, '#cfc'.color, 0);
+                    lineWidth = 3f;
+                ]
+            }
+            case 'during': {
+                return rect => [
+//                    foreground = REGION_FOREGROUND.color
+//                    background = '#ffc'.color
+//                    setBackgroundGradient('#cfc'.color, '#fcc'.color, 0);
+//                    lineWidth = 1.3f;
+                ]
+            }
+            case 'exit': {
+//                return rect => [
+//                    foreground = REGION_FOREGROUND.color
+//                    setBackgroundGradient('#fff'.color, '#fcc'.color, 180);
+//                    lineWidth = 1.3f;
+//                ]
+                return rect.addRectangle => [
+                    background = rect.background.copy
+                    foreground = rect.foreground.copy
+                    lineWidth = rect.lineWidthValue;
+                    setSurroundingSpace(3, 0);
+                ]                
+            }
+            default: return rect
+        }
+    }
 }

@@ -222,10 +222,6 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     
     /** Protected prototype method to find dependencies in keffects assignments. */
     protected def void processEffect(Effect effect, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
-        val vo = if (effect instanceof ReferenceCallEffect) {
-            effect.valuedObject
-        }
-
         val writeVOI = if (effect instanceof ReferenceCallEffect) {
             new ValuedObjectIdentifier(effect)
         } else if (effect instanceof PrintCallEffect) {
@@ -356,13 +352,26 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
     }
     
     protected def void processDependency(ValuedObjectIdentifier valuedObjectIdentifier, ValuedObjectAccess source, ValuedObjectAccess target) {
-        if (source.associatedNode == target.associatedNode) return
-        val type = source.accessType(target)
+        if (source.associatedNode == target.associatedNode) return;
+        
+        var ttype = source.accessType(target)
+        
+        // check if a former shortcut syntax (*=) is conflicting with another one with a different operator.
+        if (source.priority == GLOBAL_RELATIVE_WRITE && target.priority == GLOBAL_RELATIVE_WRITE) {
+            if (source.node instanceof Assignment && target.node instanceof Assignment) {
+                if (!isCommuting(source.node.asAssignment.operator, target.node.asAssignment.operator)) {
+                    ttype = WRITE_WRITE
+                }
+            }
+        } 
+        
+        val type = ttype
         if (type == IGNORE) return
         val saveOnlyConflicting = environment.getProperty(SAVE_ONLY_CONFLICTING_DEPENDENCIES)
         val concurrent = source.isConcurrentTo(target)
         if (!concurrent && saveOnlyConflicting) return
         val confluent = (type == WRITE_WRITE && source.isConfluentTo(target))
+                
         if (confluent && saveOnlyConflicting) return
         
         val dependency = source.node.createDependency(target.node) => [
@@ -375,6 +384,11 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
         dependency.trace(source.node)       
         dependency.postProcessDependency(valuedObjectIdentifier, source, target)      
         dependencies += dependency       
+    }
+    
+    val opPlusMinus = newHashSet(AssignOperator.POSTFIXADD, AssignOperator.POSTFIXSUB, AssignOperator.ASSIGNADD, AssignOperator.ASSIGNSUB)
+    def boolean isCommuting(AssignOperator operator, AssignOperator operator2) {
+        return operator == operator2 || (opPlusMinus.contains(operator) && opPlusMinus.contains(operator2))
     }
     
     protected def accessType(ValuedObjectAccess source, ValuedObjectAccess target) {
@@ -471,7 +485,12 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                             return true
                         }
                     }
-                } 
+                } else {
+                    if (source.node.asAssignment.operator == target.node.asAssignment.operator) {
+                        // Check for same operator
+                        return true
+                    }
+                }
             }
         }
         return false

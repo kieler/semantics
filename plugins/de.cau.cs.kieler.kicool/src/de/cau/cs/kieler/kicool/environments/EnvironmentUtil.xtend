@@ -27,7 +27,7 @@ class EnvironmentUtil {
         val result = <EObject> newLinkedList
         for(object : iterator.toIterable.filter[ it !== null ]) {
             if (copier.containsKey(object)) {
-                result += copier.get(object) as EObject
+                result += copier.get(object)
             }
         }
         result

@@ -31,6 +31,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Halt State Remover
@@ -45,6 +46,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     
     public static val IProperty<Boolean> HALT_STATE_REMOVER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.haltStateRemover", false)    
@@ -62,7 +64,7 @@ class HaltStateRemover extends InplaceProcessor<SCGraphs> {
         
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performHaltStateRemove
         }
         VariableStore.get(environment).removeAllUncontainedVO(model, environment)

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.registration
 
 import com.google.inject.Guice
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.classes.SourceTargetPair
@@ -22,7 +23,6 @@ import java.io.IOException
 import java.util.HashMap
 import java.util.List
 import java.util.Map
-import org.eclipse.core.runtime.Platform
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
@@ -35,6 +35,10 @@ import org.eclipse.xtext.validation.IResourceValidator
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorSystem
 
 /**
  * Main class for the registration of systems and processors.
@@ -49,17 +53,17 @@ class KiCoolRegistration {
     public static val EXTENSION_POINT_SYSTEM = "de.cau.cs.kieler.kicool.system"
     public static val EXTENSION_POINT_PROCESSOR = "de.cau.cs.kieler.kicool.processor"
     
-    private static val injector = Guice.createInjector(TracingIntegration.MODULE)
-    private static val kicoolXtextInjector = KiCoolStandaloneSetup.doSetup
+    static val injector = Guice.createInjector(TracingIntegration.MODULE)
+    static val kicoolXtextInjector = KiCoolStandaloneSetup.doSetup
     
-    private static val Map<String, System> modelsMap = new HashMap<String, System>()
-    private static val Map<String, System> modelsIdMap = new HashMap<String, System>()
-    private static val List<System> systemsModels = loadRegisteredSystemModels
-    private static val Map<String, System> temporarySystems = <String, System> newHashMap
+    static val Map<String, System> modelsMap = new HashMap<String, System>()
+    static val Map<String, System> modelsIdMap = new HashMap<String, System>()
+    static val List<System> systemsModels = loadRegisteredSystemModels
+    static val Map<String, System> temporarySystems = <String, System> newHashMap
     
-    private static val Map<String, Class<? extends Processor<?,?>>> processorMap = new HashMap<String, Class<? extends Processor<?,?>>>()
-    private static val Map<String, SourceTargetPair<?,?>> processorModelTypes = new HashMap<String, SourceTargetPair<?,?>>()
-    private static val List<Class<? extends Processor<?,?>>> processorList = loadRegisteredProcessors
+    static val Map<String, Class<? extends Processor<?,?>>> processorMap = new HashMap<String, Class<? extends Processor<?,?>>>()
+    static val Map<String, SourceTargetPair<?,?>> processorModelTypes = new HashMap<String, SourceTargetPair<?,?>>()
+    static val List<Class<? extends Processor<?,?>>> processorList = loadRegisteredProcessors
     
     
     static def getInjector() {
@@ -109,7 +113,7 @@ class KiCoolRegistration {
     }
     
     static def System getProcessorSystemModel(String locationString) {
-        modelsMap.get(locationString) as System
+        modelsMap.get(locationString)
     }
     
     static def loadRegisteredSystemModels() {
@@ -133,10 +137,11 @@ class KiCoolRegistration {
 
     static def getRegisteredSystems() {
         val resourceList = <Pair<String, String>> newArrayList
-        val systems = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_SYSTEM);
-        for(system : systems) {
-            resourceList += new Pair<String, String>(system.getAttribute("system"), system.contributor.name)
-        }
+        KielerServiceLoader.load(ISystemProvider).forEach[provider |
+            provider.systems.forEach[ system |
+                resourceList += new Pair<String, String>(system, provider.bundleId) 
+            ]
+        ]
         resourceList       
     }
     
@@ -177,19 +182,9 @@ class KiCoolRegistration {
     }
     
     static def getRegisteredProcessors() {
-        val resourceList = <Class<? extends Processor<?,?>>> newArrayList
-        val processors = Platform.getExtensionRegistry().getConfigurationElementsFor(EXTENSION_POINT_PROCESSOR);
-        for(processor : processors) {
-            try {
-                val instance = processor.createExecutableExtension("class")
-                val clazz = instance.getClass
-                resourceList += clazz as Class<? extends Processor<?,?>> 
-                //Class.forName(processor.name) as Class<? extends Processor>
-            } catch(Throwable e) {
-                java.lang.System.err.println("KiCool: Cannot load processor " + processor.getAttribute("class"));
-            }
-        }
-        resourceList       
+        KielerServiceLoader.load(IProcessorProvider).map[
+            it.processors
+        ].flatten.toList
     }    
     
     static def getProcessorClass(String id) {
@@ -218,4 +213,51 @@ class KiCoolRegistration {
         } 
         return true
     }
+    
+    static def getModelTypes(String id) {
+        return processorModelTypes.get(id)
+    }
+    
+    
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorReference processor) {
+        return processor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorGroup processorGroup) {
+        return processorGroup.processors.head.getFirstProcessor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorAlternativeGroup processorGroup) {
+        return processorGroup.processors.head.getFirstProcessor
+    }
+
+    static def dispatch ProcessorReference getFirstProcessor(ProcessorSystem processorSystem) {
+        return processorSystem.id.getSystemById.processors.getFirstProcessor
+    }
+    
+    static def dispatch ProcessorReference getFirstProcessor(System system) {
+        return system.processors.getFirstProcessor
+    }
+    
+    
+    static def dispatch ProcessorReference getLastProcessor(ProcessorReference processor) {
+        return processor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorGroup processorGroup) {
+        return processorGroup.processors.last.getLastProcessor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorAlternativeGroup processorGroup) {
+        return processorGroup.processors.last.getLastProcessor
+    }
+
+    static def dispatch ProcessorReference getLastProcessor(ProcessorSystem processorSystem) {
+        return processorSystem.id.getSystemById.processors.getLastProcessor
+    }
+    
+    static def dispatch ProcessorReference getLastProcessor(System system) {
+        return system.processors.getLastProcessor
+    }
+    
 }

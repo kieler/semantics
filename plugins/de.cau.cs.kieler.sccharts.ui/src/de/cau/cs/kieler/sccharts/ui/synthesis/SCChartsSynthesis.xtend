@@ -58,7 +58,6 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject extension KNodeExtensions
     @Inject extension KEdgeExtensions
     @Inject extension KRenderingExtensions
-    @Inject extension SCChartsCoreExtensions 
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension PragmaExtensions
     @Inject extension TransitionStyles
@@ -71,7 +70,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     @Inject MethodSynthesis methodSynthesis
     @Inject PolicySynthesis policySynthesis
         
-    @Inject SynthesisHooks hooks  
+    @Inject package SynthesisHooks hooks  
     
     public static final IProperty<String> SKINPATH = new Property<String>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.skinPath", "");
@@ -98,7 +97,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
+        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, DEBUGGING, LAYOUT)
         
         // General options
         options.addAll(
@@ -108,6 +107,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_INHERITANCE_EDGES,
             SHOW_BINDINGS,
             SHOW_COMMENTS,
+            SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW
         )
 
@@ -124,7 +124,9 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         options.addAll(policySynthesis.displayedSynthesisOptions)
         
         // Add options of hooks
-        hooks.allHooks.forEach[options.addAll(displayedSynthesisOptions)]
+        hooks.allHooks.forEach[
+            if (displayedSynthesisOptions !== null) options.addAll(displayedSynthesisOptions)
+        ]
         
         return options.toList
     }

@@ -94,7 +94,7 @@ class SCChartsAnnotationModelCreatorForUnschedulableNodes implements IAnnotation
     
     private def boolean heuristicallyTheSameTo(Assignment assignment, List<Assignment> assignments) {
         for (compAss : assignments) {
-            if (assignment.valuedObject.name == compAss.valuedObject.name) {
+            if (assignment.valuedObject?.name == compAss.valuedObject?.name) {
                 // TODO: This is a PROTOTYPE. Use compare extension to get a better match.
                 return true
             }

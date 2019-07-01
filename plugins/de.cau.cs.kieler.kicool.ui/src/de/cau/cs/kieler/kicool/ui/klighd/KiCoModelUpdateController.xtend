@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.kicool.ui.klighd
 
 import de.cau.cs.kieler.kicool.kitt.tracing.Tracing
-import de.cau.cs.kieler.kicool.registration.ResourceExtension
 import de.cau.cs.kieler.kicool.ui.KiCoolUiModule
 import de.cau.cs.kieler.kicool.ui.kitt.update.TracingVisualizationUpdateStrategy
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
@@ -67,6 +66,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ui.editor.XtextEditor
 import org.eclipse.xtext.ui.util.ResourceUtil
 import org.eclipse.xtext.util.StringInputStream
+import de.cau.cs.kieler.kicool.registration.ModelInformation
 
 /**
  * Controller for the ModelView to handle models interacting with KiCo.
@@ -657,13 +657,23 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
                 filename = filename.substring(0, filename.lastIndexOf('.'))
             }
             // Adding correct file extension if available
-            val ext = ResourceExtension.getResourceExtension(model)
+            val ext = ModelInformation.getResourceExtension(model)
             if (ext !== null) {
-                filename += "." + ext.getFileExtension()
+                filename += "." + ext
             }
             return filename
         }
         return ""
+    }
+    
+    public def getCurrentCompilationContext() {
+        if (compilerToggleAction.isChecked && !compiledModel.empty) {
+            val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
+            if (compiler !== null) {
+                return compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
+            }
+        }
+        return null
     }
 
     // -- Model Update
@@ -742,10 +752,7 @@ class KiCoModelUpdateController extends AbstractViewUpdateController implements 
             properties.setProperty(KlighdSynthesisProperties.REQUESTED_UPDATE_STRATEGY,
                     "de.cau.cs.kieler.kitt.klighd.tracing.TracingVisualizationUpdateStrategy")
             // Give model synthesis access to the compilation result
-            val compiler = CompilerView.getVIEWS().findFirst[editPartSystemManager.activeEditor == editor]
-            val cc = if (compiler !== null) {
-                compiler.editPartSystemManager.editPartCompilationContextMap.get(editor)
-            }
+            val cc = currentCompilationContext
             properties.setProperty(KiCoDiagramViewProperties.COMPILATION_CONTEXT, cc)
 
             // Create model to passed to update

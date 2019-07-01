@@ -73,7 +73,7 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             vo = vo + "[" + index.serializeHR + "]"
         }
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
-            vo = vo + "." + valuedObjectReference.subReference.serializeHR
+            vo = vo + "." + valuedObjectReference.subReference.serializeVOR
         }
         vo
     }

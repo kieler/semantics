@@ -19,9 +19,17 @@ package de.cau.cs.kieler.core
 class Platform {
     
     public static val MAX_PATH_LENGTH = 64
+    static val OS = System.getProperty("os.name").toLowerCase();
   
     static def boolean isWindows() {
-        return (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0);
-    }  
+        return (OS.indexOf("win") >= 0);
+    }
     
+    static def boolean isMac() {
+        return (OS.indexOf("mac") >= 0);
+    }
+    
+    static def boolean isUnix() {
+        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0);
+    }
 }

@@ -14,6 +14,7 @@ package de.cau.cs.kieler.kicool.compilation
 
 import com.google.common.collect.HashMultimap
 import com.google.common.collect.Sets
+import de.cau.cs.kieler.annotations.Annotation
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
@@ -21,6 +22,7 @@ import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.environments.Environment
 import java.util.Comparator
@@ -32,10 +34,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.ToString
 
 import static de.cau.cs.kieler.kexpressions.KExpressionsPackage.*
+
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
-import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * @author als
@@ -143,9 +143,16 @@ class VariableStore implements IKiCoolCloneable {
     }
 
     // -- Convenience for Valued Objects --
+    def VariableInformation getInfo(ValuedObject vo) {
+        var info = variables.get(vo.hierarchicalName).findFirst[valuedObject == vo]
+        if (info === null) {
+            info = variables.entries.findFirst[value.valuedObject == vo]?.value
+        }
+        return info
+    }
         
     def VariableInformation update(ValuedObject vo, String... properties) {
-        var info = variables.get(vo.name).findFirst[valuedObject == vo]
+        var info = variables.get(vo.hierarchicalName).findFirst[valuedObject == vo]
         if (info === null) {
             val entry = variables.entries.findFirst[value.valuedObject == vo]
             if (entry !== null && !entry.key.equals(vo.name)) {
@@ -166,7 +173,7 @@ class VariableStore implements IKiCoolCloneable {
         
         info.valuedObject = vo
         if (!vo.cardinalities.nullOrEmpty) {
-            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0]
+            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0].toList
         } else {
             info.dimensions.clear
         }
@@ -175,7 +182,8 @@ class VariableStore implements IKiCoolCloneable {
         if (decl instanceof VariableDeclaration) {
             // flags
             for (flags : DECL_FLAGS.entrySet) {
-                if (decl.eIsSet(decl.eClass.getEStructuralFeature(flags.key))) {
+                val value = decl.eGet(decl.eClass.getEStructuralFeature(flags.key))
+                if (decl.eIsSet(decl.eClass.getEStructuralFeature(flags.key)) && value instanceof Boolean && value as Boolean) {
                     info.properties += flags.value
                 }
             }
@@ -206,11 +214,39 @@ class VariableStore implements IKiCoolCloneable {
             info.annotations += it.copy
         ]
         
-        val classDecl = if (decl.eContainer instanceof ClassDeclaration) decl.eContainer as ClassDeclaration
-        info.encapsulated = classDecl !== null
+        // Handle hierachy
+        var classDecl = if (decl.eContainer instanceof ClassDeclaration) decl.eContainer as ClassDeclaration
+        var superClassPrefix = ""
+        if (classDecl !== null) {
+            var superClass = classDecl.eContainer
+            while (superClass instanceof ClassDeclaration) {
+                superClassPrefix = superClass.name + "." + superClassPrefix
+                superClass = superClass.eContainer
+            }
+            superClassPrefix += classDecl.name
+            info.encapsulatedIn = superClassPrefix
+        }
+        if (decl instanceof ClassDeclaration) {
+            info.containerName = !superClassPrefix.nullOrEmpty ? superClassPrefix + "." + decl.name : decl.name
+        }
         
-        variables.put(vo.name, info)
+        var name = vo.name
+        if (classDecl !== null) {
+            name = superClassPrefix + "." + name
+        }
+        
+        variables.put(name, info)
         return info
+    }
+    
+    protected def getHierarchicalName(ValuedObject vo) {
+        var name = vo.name
+        var classDecl = vo.eContainer?.eContainer
+        while (classDecl instanceof ClassDeclaration) {
+            name = classDecl.name + "." + name
+            classDecl = classDecl.eContainer
+        }
+        return name
     }
     
     def boolean remove(ValuedObject vo) {
@@ -257,48 +293,6 @@ class VariableStore implements IKiCoolCloneable {
         ]        
     }
     
-    /**
-     * Depends on correct association to valued objects
-     */
-    def void flattenAllHierarchicalObjects() {
-        val classDecl = newHashSet
-        val encapsulatedVOs = newHashSet
-        for (info : variables.values) {
-            if (info.valuedObject !== null) {
-                if (info.valuedObject.eContainer instanceof ClassDeclaration) {
-                    classDecl += info
-                } else if (info.encapsulated) {
-                    encapsulatedVOs += info
-                }
-            }
-        }
-        variables.values.removeAll(classDecl)
-        variables.values.removeAll(encapsulatedVOs)
-        for (info: encapsulatedVOs) {
-            val nameHierarchy = <List<String>>newArrayList
-            var decl = info.valuedObject.eContainer
-            if (decl instanceof Declaration) decl = decl.eContainer // ignore self (sibling VOs)
-            while (decl instanceof ClassDeclaration) {
-                nameHierarchy += decl.valuedObjects.map[name].toList
-                decl = decl.eContainer
-            }
-            var List<String> names = newArrayList(info.valuedObject.name)
-            for (level : nameHierarchy) {
-                val currentNames = newArrayList
-                currentNames.addAll(names)
-                names.clear
-                for (name : level) {
-                    for (subName : currentNames) {
-                        names += name + "." + subName
-                    }
-                }
-            }
-            for (name : names) {
-                variables.put(name, info.clone)
-            }
-        }
-    }
-    
     // Functions without VO
         
     def VariableInformation add(CharSequence name, String... properties) {
@@ -308,8 +302,7 @@ class VariableStore implements IKiCoolCloneable {
     }
     
     
-    // Clonable
-    
+    // Cloneable
     override isMutable() {
         true
     }
@@ -384,7 +377,11 @@ class VariableInformation {
     
     /** Sub variable in class */
     @Accessors
-    var boolean encapsulated = false
+    var String encapsulatedIn
+    
+    /** name of this container for encapsulation */
+    @Accessors
+    var String containerName
     
     override VariableInformation clone() {
         val clone = new VariableInformation
@@ -394,7 +391,8 @@ class VariableInformation {
         clone.typeName = typeName
         clone.format = format
         clone.properties.addAll(properties)
-        clone.encapsulated = encapsulated
+        clone.encapsulatedIn = encapsulatedIn
+        clone.containerName = containerName
         annotations.forEach[ clone.annotations += it.copy ]
         return clone
     }
@@ -431,4 +429,11 @@ class VariableInformation {
         return !externalName.nullOrEmpty
     }
     
+    def isEncapsulated() {
+        return !encapsulatedIn.nullOrEmpty
+    }  
+    
+    def isContainer() {
+        return !containerName.nullOrEmpty
+    }  
 }

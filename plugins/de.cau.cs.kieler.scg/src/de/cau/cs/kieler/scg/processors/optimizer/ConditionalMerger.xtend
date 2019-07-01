@@ -28,6 +28,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Conditional Merger
@@ -42,6 +43,7 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     
     public static val IProperty<Boolean> CONDITIONAL_MERGER_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger", false)    
@@ -59,7 +61,7 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
         
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performConditionalMerge
         }
     }
