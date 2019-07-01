@@ -24,7 +24,10 @@ class CSCChartsProcessorProvider implements IProcessorProvider {
     override getProcessors() {
         #[
             de.cau.cs.kieler.c.sccharts.processors.CDTProcessor,
-            de.cau.cs.kieler.c.sccharts.processors.CParserProcessor
+            de.cau.cs.kieler.c.sccharts.processors.CParserProcessor,
+            de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor,
+            de.cau.cs.kieler.c.sccharts.processors.StatemachineExtractor,
+            de.cau.cs.kieler.c.sccharts.processors.DataflowExtractorV2
         ]
     }
     
