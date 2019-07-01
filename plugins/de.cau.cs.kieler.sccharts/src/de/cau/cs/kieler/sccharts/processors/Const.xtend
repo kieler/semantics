@@ -37,6 +37,7 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * SCCharts Const Transformation.
@@ -108,7 +109,35 @@ class Const extends SCChartsProcessor implements Traceable {
                 if (replacement instanceof Value && container instanceof Assignment && coniainingFeature == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
                     environment.errors.add("Cannot replace left hand side of assignment by a value. (Trying to replace " + vor?.valuedObject + " by " + replacement + " in " + (vor.eContainer as Assignment) + ")")
                 } else {
-                    vor.replace(replacement.copy)
+                    if (!vor.indices.nullOrEmpty) {
+                        var arrayElement = replacement
+                        for (idx : vor.indices) {
+                            if (arrayElement !== null) {
+                                if (idx instanceof IntValue) {
+                                    val idxVal = idx.value
+                                    if (arrayElement instanceof VectorValue) {
+                                        if (idxVal >= 0 && idxVal < arrayElement.values.size) {
+                                            arrayElement = arrayElement.values.get(idxVal)
+                                        } else {
+                                            environment.errors.add("Cannot insert const array element. Array %s does not provide a value for index %s.".format(const.name, idxVal))
+                                            arrayElement = null
+                                        }
+                                    } else {
+                                        environment.errors.add("Cannot insert const array element. Array %s must be initialized with a vector value.".format(const.name))
+                                        arrayElement = null
+                                    }
+                                } else {
+                                    environment.errors.add("Cannot insert const array element. %s is not a valid index (integer value).".format(idx?.toString))
+                                    arrayElement = null
+                                }
+                            }
+                        }
+                        if (arrayElement !== null) {
+                            vor.replace(arrayElement.copy)
+                        }
+                    } else {
+                        vor.replace(replacement.copy)
+                    }
                     // If replaced size in array cardinality
                     if (container instanceof ValuedObject && coniainingFeature == KExpressionsPackage.Literals.VALUED_OBJECT__CARDINALITIES) {
                         // Update size in VO store
