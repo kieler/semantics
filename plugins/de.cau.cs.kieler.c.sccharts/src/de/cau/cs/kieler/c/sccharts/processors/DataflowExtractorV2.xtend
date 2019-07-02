@@ -62,6 +62,7 @@ import org.eclipse.cdt.internal.core.dom.parser.c.CASTEqualsInitializer
 import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTWhileStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTCaseStatement
 
 /**
  * @author lan
@@ -431,23 +432,23 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         val cRegion = swState.createControlflowRegion("")
         val initState = cRegion.createState("Init")
         initState.initial = true
-        /*
-        val thenState = cRegion.createState("Then")
-        val thenCompound = ifStmt.getThenClause as CASTCompoundStatement
-        val thenRegion = buildCompound(thenCompound, ifState)
-        thenState.label = "Then"
-        thenState.regions += thenRegion
-        val thenTransition = initState.createTransitionTo(thenState)
-        println("thenTransition: " + thenTransition)
-        thenTransition.trigger = (ifStmt.getConditionExpression).createKExpression(ifState)
         
-        val elseState = cRegion.createState("Else")
-        val elseCompound = ifStmt.getElseClause as CASTCompoundStatement
-        val elseRegion = buildCompound(elseCompound, ifState)
-        elseState.label = "Else"
-        elseState.regions += elseRegion
-        initState.createTransitionTo(elseState)
-        */
+        val finalState = cRegion.createState("Fin")
+        finalState.final = true
+        
+        val swBody = swStmt.getBody as CASTCompoundStatement
+
+        for (var i = 0; i < swBody.children.length; i++) {
+            
+            var child = swBody.children.get(i)
+            
+            if(child instanceof CASTCaseStatement) {
+                val caseState = cRegion.createState("")
+                val caseTransition = initState.createTransitionTo(caseState)
+                caseTransition.trigger = (child as CASTCaseStatement).getExpression.createKExpression(swState)
+            }
+        }        
+
         topCRegion.states+= swState
         
         println("")        
@@ -552,7 +553,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         val whileDBodyRegion = buildCompound(whileStmt.getBody as CASTCompoundStatement, whileState) 
         whileState.regions += whileDBodyRegion
-        whileDBodyRegion.label = "Body"
+        whileDBodyRegion.label = whileState.label
         
         topCRegion.states+= whileState
         
@@ -583,7 +584,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         val doDBodyRegion = buildCompound(doStmt.getBody as CASTCompoundStatement, doState) 
         doState.regions += doDBodyRegion
-        doDBodyRegion.label = "Body"
+        doDBodyRegion.label = doState.label
         
         topCRegion.states+= doState
         
