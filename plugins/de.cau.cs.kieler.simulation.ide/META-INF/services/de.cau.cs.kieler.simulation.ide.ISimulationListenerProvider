@@ -1,1 +1,2 @@
 de.cau.cs.kieler.simulation.ide.IdeSimulationListenerProvider
+de.cau.cs.kieler.simulation.ide.server.ServerSimulationListenerProvider
