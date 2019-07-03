@@ -110,6 +110,7 @@ public class IfTestImpl extends StatementImpl implements IfTest {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.IF_TEST__STATEMENTS);
@@ -122,6 +123,7 @@ public class IfTestImpl extends StatementImpl implements IfTest {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -146,6 +148,7 @@ public class IfTestImpl extends StatementImpl implements IfTest {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;
@@ -165,6 +168,7 @@ public class IfTestImpl extends StatementImpl implements IfTest {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElsIf> getElseif() {
         if (elseif == null) {
             elseif = new EObjectContainmentEList<ElsIf>(ElsIf.class, this, EsterelPackage.IF_TEST__ELSEIF);
@@ -177,6 +181,7 @@ public class IfTestImpl extends StatementImpl implements IfTest {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getElseStatements() {
         if (elseStatements == null) {
             elseStatements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.IF_TEST__ELSE_STATEMENTS);

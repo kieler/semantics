@@ -189,7 +189,7 @@ abstract class DiagramHighlighter implements SimulationListener {
      * @param eObjects The objects
      * @return the graph elements that represent the given objects.
      */
-    protected def List<Highlighting> getHighlighting(Iterable<EObject> eObjects, KForeground style) {
+    protected def List<Highlighting> getHighlighting(Iterable<? extends EObject> eObjects, KForeground style) {
         val highlighting = <Highlighting> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));

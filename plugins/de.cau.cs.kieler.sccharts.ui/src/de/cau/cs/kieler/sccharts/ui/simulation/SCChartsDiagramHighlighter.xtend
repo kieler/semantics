@@ -28,8 +28,8 @@ import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -51,7 +51,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     /**
      * Single instance.
      */
-    private static var SCChartsDiagramHighlighter instance
+    static var SCChartsDiagramHighlighter instance
     
     /**
      * The traversed transitions.
@@ -80,17 +80,17 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
     /**
      * The highlighting style for traversed states and transitions
      */
-    private static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
+    static val KForeground TRAVERSED_ELEMENT_STYLE = createTraversedElementStyle
     
     /**
      * The highlighting style for current states
      */
-    private static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
+    static val KForeground CURRENT_ELEMENT_STYLE = createCurrentStateStyle
 
     /**
      * The size of the taken transitions signaling array.
      */
-    private var takenTransitionArraySize = 0
+    var takenTransitionArraySize = 0
 
 
     private new() {}
@@ -207,7 +207,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         traversedTransitions.clear
         traversedStates.clear
         // Get the traversed transitions array from the data pool
-        if(pool == null) {
+        if(pool === null) {
             return
         }
         val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
@@ -223,8 +223,13 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             if(!currentDiagramModel.rootStates.isEmpty) {
                 rootState = currentDiagramModel.rootStates.get(0)
             }            
+        } else if (currentDiagramModel instanceof ModelChain) {
+            val scc = currentDiagramModel.models.findFirst[ it instanceof SCCharts ] as SCCharts
+            if (!scc.rootStates.empty) {
+                rootState = scc.rootStates.head
+            }
         }
-        if(rootState == null) {
+        if(rootState === null) {
             return
         }
         val transitions = TakenTransitionSignaling.getTransitions(rootState)

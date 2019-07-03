@@ -72,6 +72,7 @@ public class EsterelVariableDeclarationImpl extends DeclarationImpl implements E
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeIdentifier getType() {
         return type;
     }
@@ -96,6 +97,7 @@ public class EsterelVariableDeclarationImpl extends DeclarationImpl implements E
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setType(TypeIdentifier newType) {
         if (newType != type) {
             NotificationChain msgs = null;

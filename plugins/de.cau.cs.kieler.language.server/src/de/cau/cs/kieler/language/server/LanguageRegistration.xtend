@@ -26,8 +26,9 @@ import org.eclipse.xtext.util.Modules2
  */
 class LanguageRegistration {
     
-    def bindAndRegisterLanguages() {
-        val injectorKGraph = KGraphLSSetup.doLSSetup()
+    def bindAndRegisterLanguages() {        
+        // Bind and register all needed languages.
+        KGraphLSSetup.doLSSetup
         new ElkGraphStandaloneSetup {
             
             override createInjector() {
@@ -38,6 +39,5 @@ class LanguageRegistration {
         for (contribution: KielerServiceLoader.load(ILSSetupContribution)) {
             contribution.LSSetup.doLSSetup()
         }
-        return injectorKGraph
     }
 }

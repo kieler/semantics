@@ -46,6 +46,11 @@ import org.eclipse.ui.IMemento
 import org.eclipse.ui.IViewSite
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.swt.widgets.Text
+import org.eclipse.swt.SWT
+import org.eclipse.swt.layout.FormLayout
+import org.eclipse.swt.layout.RowLayout
+import org.eclipse.swt.layout.FillLayout
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -226,6 +231,21 @@ class CompilerView extends DiagramViewPart {
                 @SuppressWarnings("deprecation")
                 public override IStatus runInUIThread(IProgressMonitor monitor) {
                     DiagramViewManager.initializeView(instance, model, null, properties);
+                    
+                    val canvas = viewer.getControl() as Composite
+                    
+                    val container = new Composite(canvas, SWT.BORDER) 
+                    => [
+                        setSize(400, 100)
+                    ]
+                    container.setLayout(new FillLayout())                    
+                    container.visible = false
+                    
+                    val text = new Text(container, SWT.WRAP)
+                    text.setText("This is a longer text.")
+//                    container.pack
+                    canvas.layout(true, true)
+                    
                     return Status.OK_STATUS;
                 }
             }.schedule

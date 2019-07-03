@@ -92,6 +92,7 @@ public class IntValueImpl extends EObjectImpl implements IntValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.INT_VALUE__SCHEDULE);
@@ -104,6 +105,7 @@ public class IntValueImpl extends EObjectImpl implements IntValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Integer getValue() {
         return value;
     }
@@ -113,6 +115,7 @@ public class IntValueImpl extends EObjectImpl implements IntValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(Integer newValue) {
         Integer oldValue = value;
         value = newValue;

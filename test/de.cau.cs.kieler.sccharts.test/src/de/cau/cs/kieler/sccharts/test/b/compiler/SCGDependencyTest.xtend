@@ -75,7 +75,7 @@ class SCGDependencyTest extends AbstractXTextModelRepositoryTest<SCCharts> {
         && !modelData.modelProperties.contains("must-fail")
     }
     
-    @Test(timeout=10000)
+    @Test(timeout=16000)
     def void testDependendcy(SCCharts scc, TestModelData modelData) {
         
         val annotationMap = <String, StringAnnotation> newHashMap

@@ -64,6 +64,7 @@ public class JsonAnnotationImpl extends AnnotationImpl implements JsonAnnotation
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public JsonObjectValue getValue() {
         return value;
     }
@@ -88,6 +89,7 @@ public class JsonAnnotationImpl extends AnnotationImpl implements JsonAnnotation
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(JsonObjectValue newValue) {
         if (newValue != value) {
             NotificationChain msgs = null;

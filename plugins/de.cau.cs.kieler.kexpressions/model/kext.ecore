@@ -22,5 +22,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="declarations" upperBound="-1"
         eType="ecore:EClass kexpressions.ecore#//Declaration" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StructDeclaration" eSuperTypes="#//DeclarationScope kexpressions.ecore#//VariableDeclaration ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassDeclaration" eSuperTypes="#//DeclarationScope kexpressions.ecore#//VariableDeclaration ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="host" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
 </ecore:EPackage>

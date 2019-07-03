@@ -13,11 +13,16 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Parameter
 import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -27,28 +32,31 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.SCChartsFactory
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.Replacements
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Return
+import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import java.util.Stack
-import java.util.Set
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 
 /**
  * Give me a state, Vasili. One state only please.
@@ -68,13 +76,16 @@ class Reference extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsReferenceExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
+    extension SCChartsFactory = SCChartsFactory.eINSTANCE
     
+    public static val IProperty<Boolean> EXPAND_REFERENCED_STATES = 
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.expandStates", true)
     public static val IProperty<Boolean> RENAME_SHADOWED_VARIABLES = 
-       new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
+        new Property<Boolean>("de.cau.cs.kieler.sccharts.reference.renameShadowsVariables", true)      
     public static val IProperty<String> VARIABLE_RENAME_PREFIX =
-       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenamePrefix", "_")      
+        new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenamePrefix", "_")      
     public static val IProperty<String> VARIABLE_RENAME_SUFFIX =
-       new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenameSuffix", "_")      
+        new Property<String>("de.cau.cs.kieler.sccharts.reference.variableRenameSuffix", "_")      
     
     protected var Dataflow dataflowProcessor = null
     protected var Inheritance inheritanceProcessor = null
@@ -86,7 +97,7 @@ class Reference extends SCChartsProcessor implements Traceable {
     }
     
     override getName() {
-        "Reference V2"
+        "Reference Expansion"
     }
     
     override process() {
@@ -98,40 +109,67 @@ class Reference extends SCChartsProcessor implements Traceable {
         
         val model = getModel
         
-        // For now, just expand the root state. Alternative methods may create different results with multiple SCCharts.
-        for(rootState : newArrayList(model.rootStates.head)) {
-            // Inherit from base states
-            inheritanceProcessor?.inheritBaseStates(rootState)
+        // Process root states depending on expansion is triggered or not.
+        val rootStateList = if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+            newArrayList(model.rootStates.head)
+        } else {
+            model.rootStates.immutableCopy
+        }
+        for(rootState : rootStateList) {
+            rootState.expandRoot(true)
+        }
+        
+        if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+            val firstRoot = model.rootStates.head
+            model.rootStates.removeIf[ it !== firstRoot ]
             
+            model.imports.clear
+        }
+    }
+    
+    protected def void expandRoot(State rootState, boolean validate) {
+        // Handle inheritance
+        val statesWithInheritance = rootState.allContainedStates.filter[ !baseStates.nullOrEmpty ].toList
+        
+        for (state : statesWithInheritance) {
+            inheritanceProcessor?.inheritBaseStates(state)
+        }
+        inheritanceProcessor?.inheritBaseStates(rootState)
+        
+        if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
             val statesWithReferences = rootState.allContainedStates.filter[ reference !== null && reference.scope !== null ].toList
             val regionsWithReferences = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
-            
+        
             for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
-            
+        
             for (region : regionsWithReferences) {
                 region.expandReferencedScope(new Replacements)
             }
-            
-            if (dataflowProcessor !== null) {
-                // Optimize this.
-                dataflowProcessor.processState(rootState)
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-                for (state : statesWithReferences2.toList) {
-                    state.expandReferencedScope(new Replacements)
-                }
-            }
-            
-            if (!rootState.validate) 
-                throw new IllegalStateException("References objects are not contained in the resource!")
         }
         
-        val firstRoot = model.rootStates.head
-        model.rootStates.removeIf[it !== firstRoot]
+        if (dataflowProcessor !== null) {
+            // Optimize this.
+            dataflowProcessor.processState(rootState)
+            // Handle reference declarations not handled by dataflow
+            rootState.handleSCChartsDatatype
+            
+            if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+                val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
+                for (state : statesWithReferences2) {
+                    state.expandReferencedScope(new Replacements)
+                }
+                for (region : regionsWithReferences2) {
+                    region.expandReferencedScope(new Replacements)
+                }
+            }
+        }
         
-        model.imports.clear
-    }   
+        if (validate && !rootState.validate)
+            throw new IllegalStateException("References objects are not contained in the resource!")
+    }
     
     /** Expands one referenced state and keeps track of the replacement stack. */
     protected def void expandReferencedScope(Scope scopeWithReference, Replacements replacements) {
@@ -218,8 +256,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-            for (state : statesWithReferences.toList) {
+            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
         }
@@ -247,6 +285,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given state. */
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : state.declarations.immutableCopy) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
@@ -259,7 +302,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : state.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            state.expandReferencedScope(replacements)
+            state.expandReferencedScope(new Replacements(replacements))
         }
         
         // Delegate the region replacement.
@@ -270,6 +313,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given region. */
     protected def replaceValuedObjectReferencesInRegion(Region region, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : region.declarations.immutableCopy) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : region.actions) {
@@ -282,7 +330,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : region.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            region.expandReferencedScope(replacements)
+            region.expandReferencedScope(new Replacements(replacements))
         }
         
         if (region instanceof ControlflowRegion) {
@@ -301,6 +349,69 @@ class Reference extends SCChartsProcessor implements Traceable {
         action.trigger?.replaceReferences(replacements)
         for (effect : action.effects) {
             effect.replaceReferences(replacements)
+        }
+    }
+    
+    /** Replaces valued object references inside declarations. */
+    protected def replaceValuedObjectReferencesInDeclaration(Declaration decl, Replacements replacements) {
+        if (decl instanceof MethodImplementationDeclaration) {
+            decl.replaceValuedObjectReferencesInSclScope(replacements)
+        }
+        for (vo : decl.valuedObjects) {
+            // Handle cardinalities
+            for (cardinal : vo.cardinalities.filterNull) {
+                cardinal.replaceReferences(replacements)
+            }
+            if (vo.initialValue !== null) {
+                vo.initialValue.replaceReferences(replacements)
+            }
+        }
+    }
+    
+    /** Replaces valued object references inside scope from scl (due to methods). */
+    protected def void replaceValuedObjectReferencesInSclScope(de.cau.cs.kieler.scl.Scope scope, Replacements replacements) {
+        val VOs = <ValuedObject>newArrayList
+        // Push this scopes variables onto the replacement stack.
+        if (scope instanceof Conditional) {
+            scope.expression.replaceReferences(replacements)
+        } else if (scope instanceof MethodImplementationDeclaration) {
+            VOs += scope.parameterDeclarations.map[valuedObjects].flatten.toList
+        } else if (scope instanceof Loop) {
+            if (scope.initializationDeclaration !== null) {
+                VOs += scope.initializationDeclaration.valuedObjects
+            }
+        }
+        VOs += scope.declarations.map[valuedObjects].flatten.toList
+        for (valuedObject : VOs) {
+            replacements.push(valuedObject, valuedObject.reference)
+        }
+        
+        if (scope instanceof Loop) {
+            scope.initialization?.replaceReferences(replacements)
+            scope.initializationDeclaration?.valuedObjects?.head?.initialValue?.replaceReferences(replacements)
+            scope.condition?.replaceReferences(replacements)
+            scope.afterthought?.replaceReferences(replacements)
+        }
+        
+        // Process statements
+        for (stm : scope.statements) {
+            if (stm instanceof de.cau.cs.kieler.scl.Scope) {
+                stm.replaceValuedObjectReferencesInSclScope(replacements)
+            } else if (stm instanceof de.cau.cs.kieler.scl.Assignment) {
+                stm.replaceReferences(replacements)
+            } else if (stm instanceof Return) {
+                stm.expression?.replaceReferences(replacements)
+            }
+        }
+        
+        // Pop this scopes variables from the replacement stack.
+        for (valuedObject : VOs) {
+            replacements.pop(valuedObject)
+        }
+        
+        // Process else scope in conditional
+        if (scope instanceof Conditional) {
+            scope.^else?.replaceValuedObjectReferencesInSclScope(replacements)
         }
     }
     
@@ -461,6 +572,11 @@ class Reference extends SCChartsProcessor implements Traceable {
         }        
     }
     
+    /** Handle Code Effect. */
+    protected dispatch def void replaceReferences(CodeEffect code, Replacements replacements) {
+        code.replaceValuedObjectReferencesInSclScope(replacements)       
+    }
+    
     
     protected def void resolveNameClashes(Scope scope, Scope oldScope, Replacements replacements) {
         if (!environment.getProperty(RENAME_SHADOWED_VARIABLES))
@@ -512,13 +628,90 @@ class Reference extends SCChartsProcessor implements Traceable {
                     container = container.eContainer
                 }
                 
-                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject.name + ") that is not contained in the model!", container, true)
+                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject?.name + ") that is not contained in the model!", container, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
-                    vor.valuedObject.name + " " + vor + " " + (container as State).name)
+                    vor.valuedObject?.name + " " + vor + " " + (container as State).name)
                 success = false
             }
         }
         success
+    }
+    
+    def void handleSCChartsDatatype(State state) {
+        val scopesWithReferencesDecl = state.allScopes.filter[ !declarations.filter(ReferenceDeclaration).filter[reference !== null].empty ].toList
+        for (scope : scopesWithReferencesDecl) {
+            val refs = scope.declarations.filter(ReferenceDeclaration).filter[reference !== null].toList
+            for (ref : refs) {
+                var refTarget = ref.reference
+                if (refTarget instanceof State) {
+                    val newState = refTarget.copy as State
+                    newState.expandRoot(false)
+                    val classDecl = createPolicyClassDeclaration => [
+                        type = ValueType.CLASS
+                        name = newState.name
+                        valuedObjects += ref.valuedObjects
+                        declarations += newState.declarations
+                    ]
+                    ref.replace(classDecl)
+                    
+                    // Fix Methods
+                    for (method : classDecl.declarations.filter(MethodImplementationDeclaration)) {
+                        for (vor : method.eAllContents.filter(ValuedObjectReference).toIterable) {
+                            val oldDecl = vor.valuedObject.declaration
+                            if (oldDecl.eContainer instanceof State) {
+                                vor.valuedObject = classDecl.innerValuedObjects.findFirst[vor.valuedObject.name.equals(name)]
+                            }
+                        }
+                    }
+                    
+                    // Copy inner behavior
+                    for (vo : classDecl.valuedObjects) {
+                        for (region : newState.regions) {
+                            val newRegion = region.copy
+                            newRegion.name = vo.name + region.name
+                            for (vor : newRegion.eAllContents.filter(ValuedObjectReference).toList) {
+                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                    vor.prependReferenceToVO(vo)
+                                }
+                            }
+                            state.regions += newRegion
+                        }
+                        for (action : newState.actions) {
+                            val newAction = action.copy
+                            for (vor : newAction.eAllContents.filter(ValuedObjectReference).toList) {
+                                if (!(vor.eContainer instanceof ValuedObjectReference)) {// Not a sub reference
+                                    vor.prependReferenceToVO(vo)
+                                }
+                            }
+                            state.actions += newAction
+                        }
+                    }
+                    
+                    // Fix (sub) VORs
+                    for (vor : state.eAllContents.filter(ValuedObjectReference).filter[classDecl.valuedObjects.contains(it.valuedObject)].toList) {
+                        var sub = vor.subReference
+                        while (sub !== null) {
+                            val vo = sub.valuedObject
+                            val parent = sub.eContainer as ValuedObjectReference
+                            val decl = parent.valuedObject.eContainer as Declaration
+                            if (decl instanceof ClassDeclaration) {
+                                // Find by name
+                                sub.valuedObject = decl.innerValuedObjects.findFirst[vo.name.equals(name)]
+                            }
+                            sub = sub.subReference
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    protected def prependReferenceToVO(ValuedObjectReference vor, ValuedObject vo) {
+        val newSub = vor.valuedObject.reference
+        newSub.subReference = vor.subReference
+        newSub.indices += vor.indices
+        vor.valuedObject = vo
+        vor.subReference = newSub
     }
 
 }

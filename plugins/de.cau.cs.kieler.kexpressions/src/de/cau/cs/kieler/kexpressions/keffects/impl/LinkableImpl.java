@@ -80,6 +80,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, KEffectsPackage.LINKABLE__OUTGOING_LINKS);
@@ -92,6 +93,7 @@ public abstract class LinkableImpl extends MinimalEObjectImpl.Container implemen
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, KEffectsPackage.LINKABLE__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);

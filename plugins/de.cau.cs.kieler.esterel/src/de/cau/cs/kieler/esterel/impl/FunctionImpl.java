@@ -82,6 +82,7 @@ public class FunctionImpl extends ValuedObjectImpl implements Function {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<TypeIdentifier> getParameterTypes() {
         if (parameterTypes == null) {
             parameterTypes = new EObjectContainmentEList<TypeIdentifier>(TypeIdentifier.class, this, EsterelPackage.FUNCTION__PARAMETER_TYPES);
@@ -94,6 +95,7 @@ public class FunctionImpl extends ValuedObjectImpl implements Function {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public TypeIdentifier getReturnType() {
         return returnType;
     }
@@ -118,6 +120,7 @@ public class FunctionImpl extends ValuedObjectImpl implements Function {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReturnType(TypeIdentifier newReturnType) {
         if (newReturnType != returnType) {
             NotificationChain msgs = null;

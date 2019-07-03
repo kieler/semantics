@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.lustre.scoping;
 
-import org.eclipse.xtext.scoping.impl.DelegatingScopeProvider;
+import de.cau.cs.kieler.kexpressions.kext.scoping.KExtScopeProvider;
 
-public abstract class AbstractLustreScopeProvider extends DelegatingScopeProvider {
+public abstract class AbstractLustreScopeProvider extends KExtScopeProvider {
 }

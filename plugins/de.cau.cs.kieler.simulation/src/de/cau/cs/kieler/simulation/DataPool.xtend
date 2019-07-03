@@ -98,7 +98,19 @@ class DataPool implements IKiCoolCloneable {
         val input = new JsonObject
         val infos = entries
         for (entry : pool.entrySet) {
-            val properties = infos.get(entry.key)?.combinedProperties
+            val properties = infos.get(entry.key)?.getCombinedProperties
+            if (properties !== null && properties.contains(VariableStore.INPUT)) {
+                input.add(entry.key, entry.value)
+            }
+        }
+        return input
+    }
+    
+    def JsonObject getInput(Simulatable sim) {
+        val input = new JsonObject
+        val infos = entries
+        for (entry : pool.entrySet) {
+            val properties = infos.get(entry.key)?.getCombinedProperties(sim)
             if (properties !== null && properties.contains(VariableStore.INPUT)) {
                 input.add(entry.key, entry.value)
             }
@@ -122,17 +134,16 @@ class DataPool implements IKiCoolCloneable {
         if (pool === null || pool.size == 0) {
             pool = otherPool.pool
         } else {
-            pool.mergeObjects(otherPool.pool, null)
+            pool.mergeObjects(otherPool.pool)
         }
     }
 
-    private def void mergeObjects(JsonObject left, JsonObject rigth, String prefix) {
+    private def void mergeObjects(JsonObject left, JsonObject rigth) {
         for (entry : rigth.entrySet) {
             if (left.has(entry.key) && left.get(entry.key).jsonObject && entry.value.jsonObject) {
-                left.get(entry.key).asJsonObject.mergeObjects(entry.value.asJsonObject, (if (prefix.nullOrEmpty) "" else prefix) + entry.key + ".")
+                left.get(entry.key).asJsonObject.mergeObjects(entry.value.asJsonObject)
             } else {
-                val key = (if (prefix.nullOrEmpty) "" else prefix) + entry.key
-                left.add(key, entry.value)
+                left.add(entry.key, entry.value)
             }
         }
     }
@@ -421,14 +432,14 @@ class DataPoolEntry {
     }
     
     def getCombinedProperties(Simulatable sim) {
-        return this.getVariableInformation(sim)?.map[properties].flatten.toSet
+        return this.getVariableInformation(sim).map[properties].flatten.toSet
     }
     
     def getVariableInformation(Simulatable sim) {
         if (relatedSimulatables.contains(sim)) {
             return sim.variableInformation.variables.get(name)
         }
-        return null
+        return emptySet
     }
     
     def isInput() {

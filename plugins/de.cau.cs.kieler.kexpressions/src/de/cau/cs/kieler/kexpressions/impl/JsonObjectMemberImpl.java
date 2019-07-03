@@ -84,6 +84,7 @@ public class JsonObjectMemberImpl extends EObjectImpl implements JsonObjectMembe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getKey() {
         return key;
     }
@@ -93,6 +94,7 @@ public class JsonObjectMemberImpl extends EObjectImpl implements JsonObjectMembe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setKey(String newKey) {
         String oldKey = key;
         key = newKey;
@@ -105,6 +107,7 @@ public class JsonObjectMemberImpl extends EObjectImpl implements JsonObjectMembe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Value getValue() {
         return value;
     }
@@ -129,6 +132,7 @@ public class JsonObjectMemberImpl extends EObjectImpl implements JsonObjectMembe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValue(Value newValue) {
         if (newValue != value) {
             NotificationChain msgs = null;

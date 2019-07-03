@@ -68,6 +68,7 @@ public class NullValueImpl extends EObjectImpl implements NullValue {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.NULL_VALUE__SCHEDULE);

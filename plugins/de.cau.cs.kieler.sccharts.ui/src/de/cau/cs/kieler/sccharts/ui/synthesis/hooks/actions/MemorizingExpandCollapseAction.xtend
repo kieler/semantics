@@ -16,11 +16,14 @@ import de.cau.cs.kieler.klighd.IAction
 import de.cau.cs.kieler.klighd.IViewer
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions
 import java.util.WeakHashMap
+import org.eclipse.emf.ecore.EObject
 
 import static extension com.google.common.base.Preconditions.*
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
+import de.cau.cs.kieler.klighd.krendering.KRendering
 
 /**
  * Remembers the expansion state of regions when collapsed or expanded.
@@ -39,22 +42,30 @@ class MemorizingExpandCollapseAction implements IAction {
     .setCategory(GeneralSynthesisOptions::NAVIGATION);      
     
     /** Memory-leak-free cache of region expansion states */
-    public static final WeakHashMap<Region, Boolean> REGION_STATES = new WeakHashMap
+    public static final WeakHashMap<EObject, Boolean> SCOPE_STATES = new WeakHashMap
     
     /**
      * Sets the expansion state of the region node and save it for future synthesis.
      */
-    static def setExpansionState(KNode node, Region region, IViewer viewer, boolean expand) {
+    static def setExpansionState(KNode node, EObject eObject, IViewer viewer, boolean expand) {
         node.checkNotNull
-        region.checkNotNull
+        eObject.checkNotNull
         
         // Store new state if activated
         if (viewer.viewContext.getOptionValue(MEMORIZE_EXPANSION_STATES) as Boolean) {
-            REGION_STATES.put(region, expand)
+            SCOPE_STATES.put(eObject, expand)
         }
         
         // Apply state
         if (expand) {
+            if (eObject instanceof ValuedObjectReference) {
+                if (node.eContents.filter(KRendering).exists[ getActions.exists[ getActionId == ReferenceExpandAction.ID] ]) {
+                    val rea = new ReferenceExpandAction
+                    val ac = new ActionContext(viewer, null, node, null)
+                    rea.execute(ac)
+                }
+            }
+            
             viewer.expand(node)
         } else {
             viewer.collapse(node)
@@ -64,8 +75,8 @@ class MemorizingExpandCollapseAction implements IAction {
     /**
      * @return the memorized expansion state of the given region or null if not memorized
      */
-    static def getExpansionState(Region region) {
-        return REGION_STATES.get(region)
+    static def getExpansionState(EObject eObject) {
+        return SCOPE_STATES.get(eObject)
     }    
     
     //-----------------------------------------------------------------------------------------------------------------
@@ -74,14 +85,14 @@ class MemorizingExpandCollapseAction implements IAction {
         val vc = context.viewContext
         val v = vc.viewer 
         val node = context.KNode
-        val region = vc.getSourceElement(node)
+        val eObject = vc.getSourceElement(node)
         
-        if (region instanceof Region) {
+        if (eObject instanceof EObject) {
             if (v.isExpanded(node)) {
-                node.setExpansionState(region, v, false)
+                node.setExpansionState(eObject, v, false)
             } else {
-                node.setExpansionState(region, v, true)
-            }
+                node.setExpansionState(eObject, v, true)
+            }                      
         }
         
         return ActionResult.createResult(true);

@@ -43,6 +43,7 @@ import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import org.eclipse.elk.core.math.ElkMargin
 import java.util.EnumSet
+import de.cau.cs.kieler.klighd.krendering.KFontSize
 
 /**
  * Styles for {@link Equations}.
@@ -168,12 +169,53 @@ class EquationStyles {
                 return null
             }
         }
+        
+        return cc.addText(text) => [
+            fontSize = fontsize;
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, 4, 0, TOP, 0, 0).to(RIGHT, 4, 0, BOTTOM, 1, 0);
+        ]
+    }       
+    
+    def KText addNodeLabel(KNode node, String text, int fontsize, int portFontsize) {
+        var cc = node.contentContainer
+        if (cc === null) {
+            cc = node.data.filter(KContainerRendering).head
+            if (cc === null) {
+                return null
+            }
+        }
+        
+        for (p : node.ports) {
+            val textStyle = p.labels?.head?.data.filter(KText)?.head?.styles.filter(KFontSize)?.head
+            if (textStyle !== null) {
+                textStyle.size = portFontsize
+            }
+        }
+        
         return cc.addText(text) => [
             fontSize = fontsize;
             // Add surrounding space
             setGridPlacementData().from(LEFT, 1, 0, TOP, 0, 0).to(RIGHT, 1, 0, BOTTOM, 0, 0);
         ]
     }    
+
+    def KText addNodeLabelWithPadding(KNode node, String text, int fontsize, int leftPadding, int rightPadding) {
+        var cc = node.contentContainer
+        if (cc === null) {
+            cc = node.data.filter(KContainerRendering).head
+            if (cc === null) {
+                return null
+            }
+        }
+        
+        return cc.addText(text) => [
+            fontSize = fontsize;
+            // Add surrounding space
+            setGridPlacementData().from(LEFT, leftPadding, 0, TOP, 0, 0).to(RIGHT, rightPadding, 0, BOTTOM, 1, 0);
+        ]
+    }       
+ 
 
     /**
      * Adds a title label to a macro state figure.

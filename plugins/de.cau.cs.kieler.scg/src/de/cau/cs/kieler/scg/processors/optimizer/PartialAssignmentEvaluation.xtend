@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -44,11 +45,18 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
 
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
 
+    public static val IProperty<Boolean> PARTIAL_ASSIGNMENT_EVALUATION_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation", false)
     public static val IProperty<Boolean> PAE_REMOVE_SOURCENODE = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeSourceNode", true) 
     public static val IProperty<Boolean> PAE_REMOVE_UNUSEDCONDITIONALBRANCHES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeUnusedConditionalBranches", true) 
+    public static val IProperty<Boolean> PAE_REMOVE_INTERFACE_INPUT_VARIABLES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeInterfaceInputVariables", false) 
+    public static val IProperty<Boolean> PAE_REMOVE_INTERFACE_OUTPUT_VARIABLES = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation.removeInterfaceOutputVariables", false) 
 
     override getId() {
         return "de.cau.cs.kieler.scg.processors.partialAssignmentEvaluation"
@@ -60,14 +68,16 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     
     
     override process() {
-        model.scgs.forEach[ transform ]
+        if (!environment.getProperty(PARTIAL_ASSIGNMENT_EVALUATION_ENABLED)) return;
+        
+        model.scgs.ignoreMethods.forEach[ transform ]
         model = model
     }
 
     def SCGraph transform(SCGraph scg) {
         val PartialExpressionEvaluator parEval = new PartialExpressionEvaluator(<ValuedObject, Value> newHashMap) => [ 
             compute = true
-            inplace = true
+            inplace = false
         ]
             
         val nextNodes = <Node> newLinkedList(scg.nodes.head)
@@ -93,7 +103,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
                 if (node.expression !== null) {
                    val references = node.expression.allReferences
                    
-            	   node.expression.replace(parEval.evaluate(node.expression))
+            	   node.expression.replace(parEval.evaluate(node.expression)?:node.expression)
             	   
             	   val newReferences = node.expression.allReferences
             	   for (r : references) {
@@ -117,7 +127,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
                         ref = node.condition as ValuedObjectReference
                     }
                     
-                    node.condition.replace(parEval.evaluate(node.condition))
+                    node.condition.replace(parEval.evaluate(node.condition)?:node.condition)
                     
                     if (ref instanceof ValuedObjectReference && node.condition instanceof Value && candidates.keySet.contains(ref.valuedObject)) {
                         if (environment.getProperty(PAE_REMOVE_SOURCENODE)) {
@@ -208,6 +218,13 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     //                    Assignments before the deletion
     private def isIneffective(Assignment assignment, SCGraph scg) {
         val valuedObject = assignment.reference.valuedObject
+        if (valuedObject !== null) {
+            if (valuedObject.isInput && !PAE_REMOVE_INTERFACE_INPUT_VARIABLES.property.booleanValue) return false;
+            if (valuedObject.isOutput && !PAE_REMOVE_INTERFACE_OUTPUT_VARIABLES.property.booleanValue) return false;
+        } else {
+            return false
+        }
+        
         for (n : scg.nodes) {
             if (n instanceof Assignment) {
                 if (n.reference.valuedObject == valuedObject) {

@@ -58,11 +58,11 @@ class SustainKernelTransformation extends InplaceProcessor<EsterelProgram> imple
     // -- Injections 
     // -------------------------------------------------------------------------
     
-    extension EsterelFactory = EsterelFactory.eINSTANCE
+    extension EsterelFactory eFac = EsterelFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     
     def transform(Sustain sus) {
-        sus.replace(createLoop.trace(sus) => [
+        sus.replace(eFac.createLoop.trace(sus) => [
             statements += createEmit.trace(sus) => [signal = sus.signal]
             statements += createPause.trace(sus)
         ])

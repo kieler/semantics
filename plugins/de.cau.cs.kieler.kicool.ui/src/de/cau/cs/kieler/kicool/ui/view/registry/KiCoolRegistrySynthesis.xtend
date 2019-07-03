@@ -43,12 +43,9 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import org.eclipse.elk.alg.layered.options.LayerConstraint
 
 /**
- * Generic synthesis for strings.
- * I use this for displaying messages in the model view.
- * 
  * @author ssm
- * @kieler.design 2016-10-20 proposed 
- * @kieler.rating 2016-10-20 proposed yellow
+ * @kieler.design 2018-06-01 proposed
+ * @kieler.rating 2018-06-01 proposed yellow 
  */
 @ViewSynthesisShared
 class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySummary> {
@@ -281,7 +278,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
                     ]
                 ]
                 
-                processorConnections.put(p.id, processorConnections.get(p.id) + 1)
+//                processorConnections.put(p.id, processorConnections.get(p.id) + 1)
             }
         }
         

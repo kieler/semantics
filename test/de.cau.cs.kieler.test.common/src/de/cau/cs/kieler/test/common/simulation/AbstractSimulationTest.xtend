@@ -14,8 +14,11 @@ package de.cau.cs.kieler.test.common.simulation
 
 import com.google.common.io.Files
 import com.google.inject.Injector
+import de.cau.cs.kieler.core.Platform
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationEvent
@@ -29,13 +32,12 @@ import de.cau.cs.kieler.test.common.repository.ModelsRepositoryTestRunner
 import de.cau.cs.kieler.test.common.repository.TestModelData
 import java.io.PrintWriter
 import java.io.StringWriter
+import java.util.Collections
+import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
 import org.junit.runner.RunWith
 
 import static org.junit.Assert.*
-import java.util.WeakHashMap
-import java.util.Collections
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 
 /**
  * @author aas, als
@@ -68,8 +70,10 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
      */
     protected def void startSimulationTest(String system, EObject model, TestModelData modelData, String testID) {
         val ccontext = Compile.createCompilationContext(system, model)
-        ccontext.startEnvironment.setProperty(Environment.INPLACE, true)
-        ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, this.class.simpleName + "-" + testID)
+        ccontext.startEnvironment.setProperty(Environment.INPLACE, false) // FIXME diabled inplace only for debugging
+        ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, 
+            (if (!Platform.isWindows) this.class.simpleName + "-" else "") + testID
+        )
         val simContext = ccontext.createSimulationContext
         simContext.runSimulationTraces(modelData)
     }
@@ -85,13 +89,29 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
         for (iResult : ccontext.processorInstancesSequence) {
             // Check compiler errors
             if (!iResult.environment.errors.empty) {
-                fail("Error in compilation for simulation (" + iResult.id + "): \n- " + iResult.environment.errors.get(Environment.REPORT_ROOT).map[ err |
-                     if (err.exception !== null) {
-                         ((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString()
-                     } else {
-                        err.message
-                     }
-                ].join("\n- "))
+                val msg = new StringBuilder
+                msg.append("Error in compilation for simulation (").append(iResult.id).append("): \n")
+                for (err : iResult.environment.errors.get(Environment.REPORT_ROOT)) {
+                    msg.append("- ")
+                    if (err.exception !== null) {
+                        msg.append(((new StringWriter) => [err.exception.printStackTrace(new PrintWriter(it))]).toString())
+                    } else {
+                        msg.append(err.message)
+                    }
+                    msg.append("\n")
+                }
+                // Find logs
+                val snapshots = iResult.environment.getProperty(Environment.SNAPSHOTS)
+                val logs = snapshots.map[object].filter(CodeContainer).map[files].flatten.filter[fileName?.endsWith('.log')].toList
+                if (!logs.empty) {
+                    for (log : logs) {
+                        msg.append("Related log file ")
+                        msg.append(log.fileName).append(":\n")
+                        msg.append(log.code).append("\n")
+                    }
+                }
+                
+                fail(msg.toString)
             }
         }
         

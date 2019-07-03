@@ -3,7 +3,7 @@
  */
 package de.cau.cs.kieler.annotations.validation
 
-//import org.eclipse.xtext.validation.Check
+import org.eclipse.emf.ecore.EObject
 
 /**
  * This class contains custom validation rules. 
@@ -12,14 +12,12 @@ package de.cau.cs.kieler.annotations.validation
  */
 class AnnotationsValidator extends AbstractAnnotationsValidator {
 
-//  public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MyDslPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+    protected def boolean hasParent(EObject eObj, Class<? extends EObject> parentType) {
+        var test = eObj.eContainer
+        while(test !== null) {
+            if (parentType.isInstance(test))
+            test = test.eContainer
+        }
+        return false
+    }
 }

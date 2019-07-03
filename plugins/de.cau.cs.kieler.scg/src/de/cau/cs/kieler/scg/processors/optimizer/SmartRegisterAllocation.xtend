@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.Set
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Smart Register Allocation
@@ -44,13 +45,18 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
  *
  */
 class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
-    
+
+    public static val IProperty<Boolean> SMART_REGISTER_ALLOCATION_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.smartRegisterAllocation", false)
     public static val IProperty<Boolean> SMART_REGISTER_ALLLOCATION_CONSIDER_CONDITIONAL_GUARDS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.considerConditionalGuards", false)     
             
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExtDeclarationExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
+    
+    val replacedNodeReference = <Pair<Node, ValuedObjectReference>> newHashSet
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.smartRegisterAllocation"
@@ -61,9 +67,11 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(SMART_REGISTER_ALLOCATION_ENABLED)) return;
+        
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performSmartRegisterAllocation
         }
         VariableStore.get(environment).removeAllUncontainedVO(model, environment)
@@ -179,8 +187,10 @@ class SmartRegisterAllocation extends InplaceProcessor<SCGraphs> {
     private def void replaceExpression(Expression expression, Replacements replacements, Node node) {
         if (expression instanceof ValuedObjectReference) {
             if (replacements.keySet.contains(expression.valuedObject.name)) { 
+                if (replacedNodeReference.contains(new Pair<Node, ValuedObjectReference>(node, expression))) return;
                 val VOR = replacements.peek(expression.valuedObject.name) as ValuedObjectReference
                 environment.infos.add("SRA: " + expression.valuedObject.name + " / " + VOR.valuedObject.name, node, true)
+                replacedNodeReference.add(new Pair<Node, ValuedObjectReference>(node, expression))
                 expression.valuedObject = VOR.valuedObject
             } else {
                 // Should only happen at GO guard. Do nothing.

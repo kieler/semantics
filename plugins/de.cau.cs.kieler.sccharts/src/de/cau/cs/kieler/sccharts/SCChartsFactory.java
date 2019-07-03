@@ -157,6 +157,33 @@ public interface SCChartsFactory extends EFactory {
     PeriodAction createPeriodAction();
 
     /**
+     * Returns a new object of class '<em>Policy Class Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Policy Class Declaration</em>'.
+     * @generated
+     */
+    PolicyClassDeclaration createPolicyClassDeclaration();
+
+    /**
+     * Returns a new object of class '<em>Policy Region</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Policy Region</em>'.
+     * @generated
+     */
+    PolicyRegion createPolicyRegion();
+
+    /**
+     * Returns a new object of class '<em>Code Effect</em>'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return a new object of class '<em>Code Effect</em>'.
+     * @generated
+     */
+    CodeEffect createCodeEffect();
+
+    /**
      * Returns the package supported by this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->

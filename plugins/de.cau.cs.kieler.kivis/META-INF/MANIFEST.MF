@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.kivis
 Bundle-Vendor: Kiel University
-Bundle-Version: 1.0.0.qualifier
+Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.kivis;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
@@ -17,7 +17,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
  de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.simulation.ui;bundle-version="0.13.0",
  com.google.gson;bundle-version="2.7.0",
  de.cau.cs.kieler.kicool;bundle-version="0.13.0",
  org.eclipse.core.resources;bundle-version="3.12.0"

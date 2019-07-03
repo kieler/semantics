@@ -1,0 +1,5 @@
+system de.cau.cs.kieler.sccharts.verification.spin
+	label "SPIN Model Checker"
+
+system de.cau.cs.kieler.sccharts.netlist.promela
+de.cau.cs.kieler.sccharts.verification.runSpin

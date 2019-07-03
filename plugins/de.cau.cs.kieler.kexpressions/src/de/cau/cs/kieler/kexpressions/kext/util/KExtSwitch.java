@@ -115,15 +115,15 @@ public class KExtSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
-            case KExtPackage.STRUCT_DECLARATION: {
-                StructDeclaration structDeclaration = (StructDeclaration)theEObject;
-                T result = caseStructDeclaration(structDeclaration);
-                if (result == null) result = caseDeclarationScope(structDeclaration);
-                if (result == null) result = caseVariableDeclaration(structDeclaration);
-                if (result == null) result = caseNamedObject(structDeclaration);
-                if (result == null) result = caseDeclaration(structDeclaration);
-                if (result == null) result = caseNameable(structDeclaration);
-                if (result == null) result = caseAnnotatable(structDeclaration);
+            case KExtPackage.CLASS_DECLARATION: {
+                ClassDeclaration classDeclaration = (ClassDeclaration)theEObject;
+                T result = caseClassDeclaration(classDeclaration);
+                if (result == null) result = caseDeclarationScope(classDeclaration);
+                if (result == null) result = caseVariableDeclaration(classDeclaration);
+                if (result == null) result = caseNamedObject(classDeclaration);
+                if (result == null) result = caseDeclaration(classDeclaration);
+                if (result == null) result = caseNameable(classDeclaration);
+                if (result == null) result = caseAnnotatable(classDeclaration);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -207,17 +207,17 @@ public class KExtSwitch<T> extends Switch<T> {
     }
 
     /**
-     * Returns the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
+     * Returns the result of interpreting the object as an instance of '<em>Class Declaration</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
      * returning a non-null result will terminate the switch.
      * <!-- end-user-doc -->
      * @param object the target of the switch.
-     * @return the result of interpreting the object as an instance of '<em>Struct Declaration</em>'.
+     * @return the result of interpreting the object as an instance of '<em>Class Declaration</em>'.
      * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
      * @generated
      */
-    public T caseStructDeclaration(StructDeclaration object) {
+    public T caseClassDeclaration(ClassDeclaration object) {
         return null;
     }
 

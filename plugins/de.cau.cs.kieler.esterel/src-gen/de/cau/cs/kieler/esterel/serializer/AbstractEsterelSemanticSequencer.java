@@ -117,18 +117,20 @@ import de.cau.cs.kieler.kexpressions.keffects.PrintCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect;
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect;
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.KExtPackage;
 import de.cau.cs.kieler.kexpressions.kext.KExtScope;
 import de.cau.cs.kieler.kexpressions.kext.Kext;
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
 import de.cau.cs.kieler.scl.Pause;
+import de.cau.cs.kieler.scl.Return;
 import de.cau.cs.kieler.scl.SCLPackage;
 import de.cau.cs.kieler.scl.SCLProgram;
 import de.cau.cs.kieler.scl.ScopeStatement;
@@ -436,8 +438,23 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 		else if (epackage == KEffectsPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case KEffectsPackage.ASSIGNMENT:
-				sequence_PostfixEffect(context, (Assignment) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getAssignmentRule()) {
+					sequence_Assignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectRule()) {
+					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getEffectOrAssignmentRule()) {
+					sequence_EffectOrAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getPostfixEffectRule()) {
+					sequence_PostfixEffect(context, (Assignment) semanticObject); 
+					return; 
+				}
+				else break;
 			case KEffectsPackage.EMISSION:
 				if (rule == grammarAccess.getPureEmissionRule()) {
 					sequence_PureEmission(context, (Emission) semanticObject); 
@@ -538,27 +555,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_AddExpression_AndExpression_BitwiseNotExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getDivModExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_DivModExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getTernaryOperationRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getFBYExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
+				else if (rule == grammarAccess.getInitExpressionRule()) {
+					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getMultDivExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultDivExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getMultModExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_MultModExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftExpressionsRule()) {
+				else if (rule == grammarAccess.getShiftExpressionsRule()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -566,45 +574,27 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getShiftLeftRightExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftLeftRightUnsignedExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getShiftRightRightUnsignedExpressionRule()) {
-					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftExpressionsAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftLeftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getShiftRightRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+				else if (action == grammarAccess.getShiftLeftExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| action == grammarAccess.getShiftRightUnsignedExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getSumExpressionRule()) {
+						|| rule == grammarAccess.getSumExpressionRule()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_SumExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getSumExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| rule == grammarAccess.getProductExpressionRule()) {
+				else if (rule == grammarAccess.getProductExpressionRule()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
+						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -633,16 +623,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getRootRule()
-						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getProductExpressionAccess().getOperatorExpressionSubExpressionsAction_1_2_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultDivExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getMultModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0_0()
-						|| action == grammarAccess.getDivModExpressionAccess().getOperatorExpressionSubExpressionsAction_1_1_0()) {
+						|| action == grammarAccess.getBitwiseAndExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
 					sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -683,8 +664,15 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				}
 				else break;
 			case KExpressionsPackage.PARAMETER:
-				sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getModuleCallParameterRule()) {
+					sequence_ModuleCallParameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterRule()) {
+					sequence_Parameter(context, (de.cau.cs.kieler.kexpressions.Parameter) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.RANDOM_CALL:
 				sequence_RandomCall(context, (RandomCall) semanticObject); 
 				return; 
@@ -696,11 +684,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				return; 
 			case KExpressionsPackage.REFERENCE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getReferenceDeclarationWOSemicolonRule()) {
 					sequence_ReferenceDeclarationWOSemicolon(context, (ReferenceDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getReferenceDeclarationRule()) {
 					sequence_ReferenceDeclaration(context, (ReferenceDeclaration) semanticObject); 
 					return; 
@@ -708,11 +698,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				else break;
 			case KExpressionsPackage.SCHEDULE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()
 						|| rule == grammarAccess.getScheduleDeclarationWOSemicolonRule()) {
 					sequence_ScheduleDeclarationWOSemicolon(context, (ScheduleDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()
 						|| rule == grammarAccess.getScheduleDeclarationRule()) {
 					sequence_ScheduleDeclaration(context, (ScheduleDeclaration) semanticObject); 
 					return; 
@@ -728,19 +720,28 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 				sequence_TextExpression(context, (TextExpression) semanticObject); 
 				return; 
 			case KExpressionsPackage.VALUED_OBJECT:
-				sequence_ValuedObject(context, (ValuedObject) semanticObject); 
-				return; 
+				if (rule == grammarAccess.getSimpleValuedObjectRule()) {
+					sequence_SimpleValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getValuedObjectRule()) {
+					sequence_ValuedObject(context, (ValuedObject) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExpressionsPackage.VALUED_OBJECT_REFERENCE:
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
 				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()) {
+						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getVariableDeclarationRule()) {
+						|| rule == grammarAccess.getVariableDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
 					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
@@ -754,6 +755,20 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExtPackage.ANNOTATED_EXPRESSION:
 				sequence_AnnotatedExpression(context, (AnnotatedExpression) semanticObject); 
 				return; 
+			case KExtPackage.CLASS_DECLARATION:
+				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getClassDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_ClassDeclarationWOSemicolon(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationRule()
+						|| rule == grammarAccess.getClassDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_ClassDeclaration(context, (ClassDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case KExtPackage.KEXT_SCOPE:
 				if (rule == grammarAccess.getRootScopeRule()) {
 					sequence_RootScope(context, (KExtScope) semanticObject); 
@@ -767,18 +782,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case KExtPackage.KEXT:
 				sequence_Kext(context, (Kext) semanticObject); 
 				return; 
-			case KExtPackage.STRUCT_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
-						|| rule == grammarAccess.getStructDeclarationWOSemicolonRule()) {
-					sequence_StructDeclarationWOSemicolon(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getDeclarationRule()
-						|| rule == grammarAccess.getStructDeclarationRule()) {
-					sequence_StructDeclaration(context, (StructDeclaration) semanticObject); 
-					return; 
-				}
-				else break;
 			case KExtPackage.TEST_ENTITY:
 				sequence_TestEntity(context, (TestEntity) semanticObject); 
 				return; 
@@ -786,19 +789,25 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 		else if (epackage == SCLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
 			case SCLPackage.ASSIGNMENT:
-				if (rule == grammarAccess.getStatementRule()
-						|| rule == grammarAccess.getAssignmentRule()
-						|| rule == grammarAccess.getEffectRule()) {
-					sequence_Assignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getInstructionStatementRule()
+				if (rule == grammarAccess.getInstructionStatementRule()
 						|| rule == grammarAccess.getEsterelParallelRule()
 						|| action == grammarAccess.getEsterelParallelAccess().getEsterelParallelStatementsAction_1_0()
 						|| rule == grammarAccess.getEsterelThreadRule()
 						|| action == grammarAccess.getEsterelThreadAccess().getEsterelThreadStatementsAction_1_0()
 						|| rule == grammarAccess.getEsterelAssignmentRule()) {
 					sequence_EsterelAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSclAssignmentRule()) {
+					sequence_SclAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_SclAssignment_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getSclPostfixAssignmentRule()) {
+					sequence_SclPostfixAssignment(context, (de.cau.cs.kieler.scl.Assignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -832,6 +841,32 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.LOOP:
+				if (rule == grammarAccess.getForLoopRule()) {
+					sequence_ForLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getStatementRule()) {
+					sequence_ForLoop_WhileLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWhileLoopRule()) {
+					sequence_WhileLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else break;
+			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
+				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
+						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
+					sequence_MethodDeclarationWOSemicolon(context, (MethodImplementationDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getMethodDeclarationRule()
+						|| rule == grammarAccess.getDeclarationOrMethodRule()) {
+					sequence_MethodDeclaration(context, (MethodImplementationDeclaration) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.MODULE:
 				if (rule == grammarAccess.getEsterelModuleRule()) {
 					sequence_EsterelModule(context, (de.cau.cs.kieler.scl.Module) semanticObject); 
@@ -864,6 +899,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					return; 
 				}
 				else break;
+			case SCLPackage.RETURN:
+				sequence_Return(context, (Return) semanticObject); 
+				return; 
 			case SCLPackage.SCL_PROGRAM:
 				sequence_SCLProgram(context, (SCLProgram) semanticObject); 
 				return; 
@@ -1144,43 +1182,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     DivModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_0_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=DivModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_DivModExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     TernaryOperation returns OperatorExpression
 	 *
 	 * Constraint:
@@ -1201,19 +1202,19 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             operator=ConditionalOperator 
 	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression
+	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression)
 	 *     )
 	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     FBYExpression returns OperatorExpression
+	 *     InitExpression returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1229,84 +1230,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=FBYOperator subExpressions+=AtomicValuedExpression)
+	 *         (subExpressions+=AtomicValuedExpression operator=InitOperator subExpressions+=AtomicValuedExpression)
 	 *     )
 	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FBYExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultDivExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultDivExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultDivExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     MultModExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=MultModExpression_OperatorExpression_1_1_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_MultModExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1314,6 +1241,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	/**
 	 * Contexts:
 	 *     ShiftExpressions returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1332,41 +1262,36 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_0_0 
 	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_1_0 
 	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
 	 *             subExpressions+=ShiftExpressions_OperatorExpression_1_2_0 
 	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression 
+	 *             subExpressions+=SumExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
+	 *         ) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1398,143 +1323,24 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=ShiftRightExpression 
 	 *             subExpressions+=ShiftRightExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftLeftRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftLeftOperator 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression 
-	 *             subExpressions+=ShiftRightRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftLeftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1563,86 +1369,24 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=ShiftRightUnsignedExpression 
 	 *             subExpressions+=ShiftRightUnsignedExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     ShiftRightRightUnsignedExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 (operator=EsterelOrOperator subExpressions+=AndExpression)+) | 
-	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 (operator=EsterelAndOperator subExpressions+=CompareOperation)+) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=EsterelCompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (operator=EsterelNotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 (operator=EsterelAddOperator subExpressions+=SubExpression)+) | 
-	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 (operator=EsterelSubOperator subExpressions+=MultExpression)+) | 
-	 *         (subExpressions+=MultExpression_OperatorExpression_1_0 (operator=EsterelMultOperator subExpressions+=DivExpression)+) | 
-	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
-	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
-	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_0_0 
-	 *             operator=ShiftRightOperator 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression 
-	 *             subExpressions+=ShiftLeftRightUnsignedExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ShiftRightRightUnsignedExpression_OperatorExpression_1_1_0 
-	 *             operator=ShiftRightUnsignedOperator 
-	 *             subExpressions+=ShiftLeftRightExpression 
-	 *             subExpressions+=ShiftLeftRightExpression*
-	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
-	 *     )
-	 */
-	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1671,26 +1415,21 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=SumExpression 
 	 *             subExpressions+=SumExpression*
 	 *         ) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_ShiftRightUnsignedExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1700,19 +1439,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     ShiftExpressions.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftExpressions.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftExpressions.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ShiftRightUnsignedExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     SumExpression returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1728,26 +1460,21 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_0_0 operator=AddOperator subExpressions+=SubExpression subExpressions+=SubExpression*) | 
-	 *         (subExpressions+=SumExpression_OperatorExpression_1_1_0 operator=SubOperator subExpressions+=AddExpression subExpressions+=AddExpression*) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
+	 *             operator=AddOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
 	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
+	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
+	 *             operator=SubOperator 
+	 *             subExpressions+=ProductExpression 
+	 *             subExpressions+=ProductExpression*
 	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_SumExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1757,9 +1484,10 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
-	 *     SumExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     SumExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *     ProductExpression returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
+	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1775,24 +1503,9 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=DivModExpression 
-	 *             subExpressions+=DivModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=MultModExpression 
-	 *             subExpressions+=MultModExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=MultDivExpression 
-	 *             subExpressions+=MultDivExpression*
-	 *         )
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_0_0 operator=MultOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
+	 *         (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*)
 	 *     )
 	 */
 	protected void sequence_AddExpression_AndExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_ProductExpression_SubExpression_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
@@ -1828,15 +1541,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     Root returns OperatorExpression
 	 *     BitwiseAndExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     ProductExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     ProductExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     ProductExpression.OperatorExpression_1_2_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns OperatorExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns OperatorExpression
 	 *
 	 * Constraint:
 	 *     (
@@ -1962,15 +1666,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns ConstantExpression
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns ConstantExpression
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns ConstantExpression
-	 *     ShiftLeftRightExpression returns ConstantExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns ConstantExpression
-	 *     ShiftLeftRightUnsignedExpression returns ConstantExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns ConstantExpression
-	 *     ShiftRightRightUnsignedExpression returns ConstantExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns ConstantExpression
 	 *     ShiftLeftExpression returns ConstantExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns ConstantExpression
 	 *     ShiftRightExpression returns ConstantExpression
@@ -1984,17 +1679,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_0_0 returns ConstantExpression
 	 *     ProductExpression.OperatorExpression_1_1_0 returns ConstantExpression
 	 *     ProductExpression.OperatorExpression_1_2_0 returns ConstantExpression
-	 *     MultDivExpression returns ConstantExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns ConstantExpression
-	 *     MultModExpression returns ConstantExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns ConstantExpression
-	 *     DivModExpression returns ConstantExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns ConstantExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns ConstantExpression
 	 *     TernaryOperation returns ConstantExpression
-	 *     FBYExpression returns ConstantExpression
+	 *     InitExpression returns ConstantExpression
 	 *     VectorValueMember returns ConstantExpression
 	 *
 	 * Constraint:
@@ -2134,15 +1820,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns EsterelFunctionCall
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns EsterelFunctionCall
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns EsterelFunctionCall
-	 *     ShiftLeftRightExpression returns EsterelFunctionCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
-	 *     ShiftLeftRightUnsignedExpression returns EsterelFunctionCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
-	 *     ShiftRightRightUnsignedExpression returns EsterelFunctionCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
 	 *     ShiftLeftExpression returns EsterelFunctionCall
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns EsterelFunctionCall
 	 *     ShiftRightExpression returns EsterelFunctionCall
@@ -2156,17 +1833,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
 	 *     ProductExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
 	 *     ProductExpression.OperatorExpression_1_2_0 returns EsterelFunctionCall
-	 *     MultDivExpression returns EsterelFunctionCall
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
-	 *     MultModExpression returns EsterelFunctionCall
-	 *     MultModExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     MultModExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
-	 *     DivModExpression returns EsterelFunctionCall
-	 *     DivModExpression.OperatorExpression_1_0_0 returns EsterelFunctionCall
-	 *     DivModExpression.OperatorExpression_1_1_0 returns EsterelFunctionCall
 	 *     TernaryOperation returns EsterelFunctionCall
-	 *     FBYExpression returns EsterelFunctionCall
+	 *     InitExpression returns EsterelFunctionCall
 	 *     VectorValueMember returns EsterelFunctionCall
 	 *
 	 * Constraint:
@@ -3093,15 +2761,6 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ShiftExpressions.OperatorExpression_1_0_0 returns TrapExpression
 	 *     ShiftExpressions.OperatorExpression_1_1_0 returns TrapExpression
 	 *     ShiftExpressions.OperatorExpression_1_2_0 returns TrapExpression
-	 *     ShiftLeftRightExpression returns TrapExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     ShiftLeftRightExpression.OperatorExpression_1_1_0 returns TrapExpression
-	 *     ShiftLeftRightUnsignedExpression returns TrapExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     ShiftLeftRightUnsignedExpression.OperatorExpression_1_1_0 returns TrapExpression
-	 *     ShiftRightRightUnsignedExpression returns TrapExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     ShiftRightRightUnsignedExpression.OperatorExpression_1_1_0 returns TrapExpression
 	 *     ShiftLeftExpression returns TrapExpression
 	 *     ShiftLeftExpression.OperatorExpression_1_0 returns TrapExpression
 	 *     ShiftRightExpression returns TrapExpression
@@ -3115,17 +2774,8 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_0_0 returns TrapExpression
 	 *     ProductExpression.OperatorExpression_1_1_0 returns TrapExpression
 	 *     ProductExpression.OperatorExpression_1_2_0 returns TrapExpression
-	 *     MultDivExpression returns TrapExpression
-	 *     MultDivExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     MultDivExpression.OperatorExpression_1_1_0 returns TrapExpression
-	 *     MultModExpression returns TrapExpression
-	 *     MultModExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     MultModExpression.OperatorExpression_1_1_0 returns TrapExpression
-	 *     DivModExpression returns TrapExpression
-	 *     DivModExpression.OperatorExpression_1_0_0 returns TrapExpression
-	 *     DivModExpression.OperatorExpression_1_1_0 returns TrapExpression
 	 *     TernaryOperation returns TrapExpression
-	 *     FBYExpression returns TrapExpression
+	 *     InitExpression returns TrapExpression
 	 *     VectorValueMember returns TrapExpression
 	 *
 	 * Constraint:

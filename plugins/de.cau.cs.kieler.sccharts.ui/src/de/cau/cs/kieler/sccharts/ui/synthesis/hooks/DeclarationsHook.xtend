@@ -63,7 +63,7 @@ class DeclarationsHook extends SynthesisHook {
     }
 
     override processRegion(Region region, KNode node) {
-        if (region instanceof ControlflowRegion && !region.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
+        if (region instanceof Region && !region.declarations.empty && !SHOW_DECLARATIONS.booleanValue) {
             val parent = node.regionExtendedContainer
             val declarations = parent?.getProperty(ControlflowRegionStyles.DECLARATIONS_CONTAINER)
             if (declarations !== null) {

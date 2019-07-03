@@ -156,7 +156,7 @@ class ExpandCollapseHook extends SynthesisHook {
     }
 
     override processRegion(Region region, KNode node) {
-        if (region.reference === null && region.parentState.reference === null) {
+        if (region.reference === null && region.parentState?.reference === null) {
             if (INITIALLY_COLLAPSE_ALL.booleanValue) {
                 node.initiallyCollapse
             } else if (MEMORIZE_EXPANSION_STATES.booleanValue && region.expansionState !== null) {

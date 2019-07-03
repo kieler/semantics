@@ -14,8 +14,20 @@ knode operator {
             background = 248r, 249g, 253b, 255a -> 205r, 220g, 243b, 243a (90)
   }
 
-  kport in2 {
+  kport in1 {
     pos: x = -2 y = 7
+    size: width = 2 height = 2
+    properties: de.cau.cs.kieler.portSide = WEST
+    
+    klabel "T" { 
+        ktext {
+            styles: fontSize = 3pt
+        }
+    }
+  }
+  
+  kport in2 {
+    pos: x = -2 y = 16
     size: width = 2 height = 2
     properties: de.cau.cs.kieler.portSide = WEST
         
@@ -26,17 +38,6 @@ knode operator {
     }
   }
   
-  kport in1 {
-    pos: x = -2 y = 16
-    size: width = 2 height = 2
-    properties: de.cau.cs.kieler.portSide = WEST
-    
-    klabel "T" { 
-        ktext {
-            styles: fontSize = 3pt
-        }
-    }
-  }
 
   kport in0 {
     pos: x = 6 y = 25
