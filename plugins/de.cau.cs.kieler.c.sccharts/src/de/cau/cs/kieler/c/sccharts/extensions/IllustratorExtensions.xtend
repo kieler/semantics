@@ -234,7 +234,7 @@ class IllustratorExtensions {
         cRegion.states += initState
         
         var condExpr = ifStatement.getConditionExpression
-        var condKExpr = (condExpr as CASTBinaryExpression).createKExpression(funcState)
+        var condKExpr = condExpr.createKExpression(funcState)
         
         
         val thenState = createState
@@ -243,7 +243,7 @@ class IllustratorExtensions {
         thenState.regions += (ifStatement.getThenClause as CASTCompoundStatement).illustrate(funcState)
         cRegion.states += thenState
         val thenTransition = initState.createTransitionTo(thenState)
-        thenTransition.trigger = condKExpr.head
+        thenTransition.trigger = condKExpr
         
         val elseState = createState
         elseState.final = true
@@ -314,8 +314,8 @@ class IllustratorExtensions {
         var resLabel = "Do ... while ("
         
         //Cond Expression
-        val condStatement = doStatement.getCondition as CASTBinaryExpression
-        val condKExpr = condStatement.createKExpression(funcState).head
+        val condStatement = doStatement.getCondition
+        val condKExpr = condStatement.createKExpression(funcState)
         resLabel += condKExpr.serialize + ")"
         
         //Body
@@ -332,8 +332,8 @@ class IllustratorExtensions {
         var resLabel = "while ("
         
         //Cond Expression
-        val condStatement = whileStatement.getCondition as CASTBinaryExpression
-        val condKExpr = condStatement.createKExpression(funcState).head
+        val condStatement = whileStatement.getCondition
+        val condKExpr = condStatement.createKExpression(funcState)
         resLabel += condKExpr.serialize + ")"
         
         //Body
@@ -359,12 +359,12 @@ class IllustratorExtensions {
         
         //Conditional Expression
         val condStatement = forStatement.getConditionExpression as CASTBinaryExpression
-        val condKExpr = condStatement.createKExpression(funcState).head
+        val condKExpr = condStatement.createKExpression(funcState)
         resLabel += condKExpr.serialize + "; "
                 
         //Attribute Modifier
         val itStatement = forStatement.getIterationExpression as CASTUnaryExpression
-        val itKExpr = itStatement.createKExpression(funcState).head
+        val itKExpr = itStatement.createKExpression(funcState)
         resLabel += itKExpr.serialize + ")"
         
         res.label = resLabel

@@ -109,18 +109,18 @@ class ExpressionConverterExtensionsV2 {
             res = expr.createValue
         }
         
-        println("KExpression erstellt: " + res.serialize)
+//        println("KExpression erstellt: " + res.serialize)
         
         res
     }
     
     def ArrayList<Expression> createKExpression(CASTBinaryExpression binExpr, State funcState) {
-        println("")
+//        println("")
         println("Inside createKExpression BinaryExpression: " + binExpr.getOperand1.toString + " " + binExpr.getOperator.toString + " " + binExpr.getOperand2.toString)
             var opType = binExpr.getOperator().CDTBinaryOpTypeConversion
-            println("Operator bestimmt: " + opType)
+//            println("Operator bestimmt: " + opType)
             var binKExpr = opType.createOperatorExpression
-            println("KExpression erstellt")
+//            println("KExpression erstellt")
             
             for (operand : binExpr.children) {
                 
@@ -147,18 +147,18 @@ class ExpressionConverterExtensionsV2 {
                 */
             }
             
-        println("")
+//        println("")
             var res = new ArrayList<Expression>
             res.add(binKExpr)
             res
     }
     
     def ArrayList<Expression> createKExpression(CASTUnaryExpression unExpr, State funcState) {
-        println("")
-        println("inside createKExpression Unary for CDTOperator: " + unExpr.getOperator)
+//        println("")
+//        println("inside createKExpression Unary for CDTOperator: " + unExpr.getOperator)
         var res = new ArrayList<Expression>
         var opType = unExpr.getOperator.CDTUnaryOpTypeConversion
-        println("KExpr opType: " + opType)
+//        println("KExpr opType: " + opType)
         var OperatorExpression unKExpr
         if(opType !== null) {
             unKExpr = opType.createOperatorExpression
@@ -179,7 +179,7 @@ class ExpressionConverterExtensionsV2 {
                 res = (operand as CASTBinaryExpression).createKExpression(funcState)
             }
         }
-        println("")
+//        println("")
         res
         
     }    

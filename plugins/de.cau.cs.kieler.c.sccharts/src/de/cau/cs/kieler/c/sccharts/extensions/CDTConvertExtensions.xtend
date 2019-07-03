@@ -53,9 +53,9 @@ class CDTConvertExtensions {
             //case 25: opType = ">>="
             //case 26: opType = "&="
             //case 27: opType = "^="
-            //case 28: opType = "|="
-            case 29: opType = OperatorType::EQ
-            case 30: opType = OperatorType::NE
+            case 28: opType = OperatorType::EQ
+            case 29: opType = OperatorType::NE
+//            case 30: opType = OperatorType::NE
             //case 31: opType = "pointer to member field dereference"
             //case 32: opType = "pointer to member pointer dereference"
             //case 33: opType = "op_max >?"

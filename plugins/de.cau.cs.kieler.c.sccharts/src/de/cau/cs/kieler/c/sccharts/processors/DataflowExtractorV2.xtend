@@ -63,6 +63,10 @@ import de.cau.cs.kieler.c.sccharts.extensions.ValueExtensions
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTWhileStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTDoStatement
 import org.eclipse.cdt.internal.core.dom.parser.c.CASTCaseStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTBreakStatement
+import org.eclipse.cdt.internal.core.dom.parser.c.CASTDefaultStatement
+import de.cau.cs.kieler.c.sccharts.extensions.BuilderExtensions
+import org.eclipse.cdt.core.dom.ast.IASTExpression
 
 /**
  * @author lan
@@ -85,6 +89,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
     @Inject extension CDTConvertExtensions
     @Inject extension ExpressionConverterExtensionsV2
     @Inject extension ValueExtensions
+    @Inject extension BuilderExtensions
     
      var functions = <String, State> newHashMap
      var ifCounter = 0;
@@ -92,6 +97,8 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
      var forCounter = 0;
      var whileCounter = 0;
      var doCounter = 0;
+    
+    var State baseState = null
 
     var ControlflowRegion topCRegion
 
@@ -118,31 +125,34 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         val SCChart = createSCChart
         
-        val rootState = createState("")
-        rootState.label = "Welcome to Dataflow Extractor V2"
+        baseState = createState("")
+        baseState.label = "Welcome to Dataflow Extractor V2"
         
-        SCChart.rootStates += rootState
+        SCChart.rootStates += baseState
         
-        topCRegion = rootState.createControlflowRegion("")
+        topCRegion = baseState.createControlflowRegion("")
         
         //auto created dataflow graph
         for(child : ast.children) {
             
             if(child instanceof CASTFunctionDefinition) {
-                val state = buildFunction(child, rootState)
+                val state = buildFunction(child, baseState)
                 functions.put(state.label, state)
                 topCRegion.states += state
             } else if(child instanceof CASTSimpleDeclaration){
                 val decl = createVariableDeclaration
                 decl.type = ((child as CASTSimpleDeclaration).getDeclSpecifier as CASTSimpleDeclSpecifier).type.CDTTypeConversion
                 
-                rootState.declarations += decl
+                baseState.declarations += decl
                 
                 val declarators = (child as CASTSimpleDeclaration).getDeclarators
                 for(declarator : declarators) {
                     val VO = decl.createValuedObject(declarator.getName.toString)
                     if (declarator.getInitializer !== null) {
                         println(declarator.getName.toString + " hat initializer")
+                        if(declarator.getInitializer instanceof CASTEqualsInitializer) {
+                            VO.initialValue = createValue(declarator.getInitializer.children.head)
+                        }
                     }
                 } 
             }
@@ -306,114 +316,10 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         elseState.regions += elseRegion
         initState.createTransitionTo(elseState)
         
-        topCRegion.states+= ifState
+//        topCRegion.states+= ifState
         
         println("")
         
-    }
-    
-    def ArrayList<String> removeDuplicates(ArrayList<String> list) {
-       var res = <String> newArrayList
-       
-       for(elem : list) {
-           var found = false
-           
-           for(var i = 0; (i < res.length) && (!found); i++) {
-               found = res.get(i).equals(elem)
-           }
-           
-           if(!found) {
-               res += elem
-           }
-       }
-       
-       res 
-    }
-    
-    def setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
-        var outputs = findOutputs(stmt)
-        outputs = removeDuplicates(outputs)
-        for(output : outputs) {
-            println("Output found: " + output)
-            val outputVO = rootState.findValuedObjectByName(output)
-            val outputRootDecl = outputVO.getVariableDeclaration
-            val outputType = outputRootDecl.getType
-            
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = outputType
-            decl.output = true
-            val innerOutputVO = decl.createValuedObject(output)
-            
-            val target = outputVO
-            val source = refObj.reference => [
-                subReference = innerOutputVO.reference
-            ]
-            dRegion.equations += createAssignment(target, source)
-        }
-    }
-    
-    def ArrayList<String> findOutputs(IASTNode stmt) {
-        var res = <String> newArrayList
-        
-        if (stmt instanceof CASTBinaryExpression) {
-            val binExpr = stmt as CASTBinaryExpression
-            if (binExpr.getOperator == 17) {
-                res += (binExpr.getOperand1 as CASTIdExpression).getName.toString
-            }
-        } else {
-            for (child : stmt.children) {
-                res += findOutputs(child)
-            }
-        }
-        
-        res
-    }
-    
-    def setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
-        var inputs = findInputs(stmt)
-        inputs = removeDuplicates(inputs)
-        for (input : inputs) {
-            println("Input found: " + input)
-            val inputVO = rootState.findValuedObjectByName(input)
-            val inputRootDecl = inputVO.getVariableDeclaration
-            val inputType = inputRootDecl.getType
-            
-            val decl = createVariableDeclaration
-            newState.declarations += decl
-            decl.type = inputType
-            decl.input = true
-            val innerInputVO = decl.createValuedObject(input)
-                
-            dRegion.equations += createAssignment(refObj, innerInputVO, inputVO.reference)
-        }
-    }
-    
-    def ArrayList<String> findInputs(IASTNode stmt) {
-        var res = <String> newArrayList
-            
-            if(stmt instanceof CASTIdExpression) {
-                res += (stmt as CASTIdExpression).getName.toString
-            } else if (stmt instanceof CASTBinaryExpression) {
-                val binExpr = stmt as CASTBinaryExpression
-                if(binExpr.getOperator == 17) {
-                    res = findInputs(binExpr.getOperand2)
-                } else {
-                    res = findInputs(binExpr.getOperand1)
-                    res += findInputs(binExpr.getOperand2)
-                }
-            } else if (stmt instanceof CASTFunctionCallExpression) {
-                val arguments = (stmt as CASTFunctionCallExpression).getArguments
-                for(argument : arguments) {
-                    res += findInputs(argument)
-                }
-            } else {
-                for(child : stmt.children) {
-                    res += findInputs(child)
-                }
-            }
-            
-        res
     }
     
     def buildSwitch(CASTSwitchStatement swStmt, State rootState, DataflowRegion dRegion) {
@@ -429,7 +335,12 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         
         setInputs(swStmt, rootState, swState, dRegion, swObj)
         setOutputs(swStmt, rootState, swState, dRegion, swObj)
+        
         val cRegion = swState.createControlflowRegion("")
+        
+        val controller = (swStmt.getControllerExpression).createKExpression(swState)
+        cRegion.label = "switch (" + controller.serialize + ")"
+        
         val initState = cRegion.createState("Init")
         initState.initial = true
         
@@ -437,19 +348,55 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         finalState.final = true
         
         val swBody = swStmt.getBody as CASTCompoundStatement
-
+        
         for (var i = 0; i < swBody.children.length; i++) {
             
             var child = swBody.children.get(i)
-            
+            var State prevNoBreak = null
             if(child instanceof CASTCaseStatement) {
                 val caseState = cRegion.createState("")
+                if(prevNoBreak !== null) {
+                    prevNoBreak.createTransitionTo(caseState)
+                    prevNoBreak = null
+                }
                 val caseTransition = initState.createTransitionTo(caseState)
                 caseTransition.trigger = (child as CASTCaseStatement).getExpression.createKExpression(swState)
+                
+                caseState.label = controller.serialize + " == " + caseTransition.trigger.serialize
+                
+                var caseBody = new CASTCompoundStatement
+                while (!(swBody.children.get(i + 1) instanceof CASTCaseStatement) && !(swBody.children.get(i + 1) instanceof CASTBreakStatement) && !(swBody.children.get(i + 1) instanceof CASTDefaultStatement)) {
+                    i++
+                    val stmt = swBody.children.get(i)
+                    caseBody.addStatement((stmt as IASTStatement).copy())
+                }
+                caseState.regions += buildCompound(caseBody,swState)
+                
+                if (swBody.children.get(i + 1) instanceof CASTBreakStatement) {
+                    caseState.createTransitionTo(finalState)
+                    i++
+                } else {
+                    prevNoBreak = caseState
+                }
+            } else if (child instanceof CASTDefaultStatement) {
+                val defaultState = cRegion.createState("default")
+                if(prevNoBreak !== null) {
+                    prevNoBreak.createTransitionTo(defaultState)
+                }
+                val defaultTransition = initState.createTransitionTo(defaultState)
+                
+                var defaultBody = new CASTCompoundStatement
+                while((i+1) < swBody.children.length) {
+                    i++
+                    val stmt = swBody.children.get(i)
+                    defaultBody.addStatement((stmt as IASTStatement).copy())
+                }
+                defaultState.regions += buildCompound(defaultBody, swState)
+                val finTransition = defaultState.createTransitionTo(finalState)
             }
         }        
 
-        topCRegion.states+= swState
+//        topCRegion.states+= swState
         
         println("")        
     }
@@ -523,7 +470,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         }
         
         
-        topCRegion.states+= forState
+//        topCRegion.states+= forState
         
         println("")
         
@@ -555,7 +502,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         whileState.regions += whileDBodyRegion
         whileDBodyRegion.label = whileState.label
         
-        topCRegion.states+= whileState
+//        topCRegion.states+= whileState
         
         println("")
     }
@@ -586,7 +533,7 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
         doState.regions += doDBodyRegion
         doDBodyRegion.label = doState.label
         
-        topCRegion.states+= doState
+//        topCRegion.states+= doState
         
         println("")        
     }
@@ -608,12 +555,153 @@ class DataflowExtractorV2 extends ExogenousProcessor<IASTTranslationUnit, SCChar
                 println("hat initializer")
                 val initializer = decl.getInitializer
                 if (initializer instanceof CASTEqualsInitializer) {
-                    dRegion.equations += createAssignment(vo, createValue(initializer.children.head))
+                    if(!(initializer.children.head instanceof CASTFunctionCallExpression)) {
+                        println("Erstelle initialisierung für: " + vo)
+                        
+                        val initExpr = createKExpression(initializer.children.head, state)
+                        println("InitExpr: " + initExpr.serialize)
+                        dRegion.equations += createAssignment(vo, initExpr)
+                    } else {
+                        //TODO function initialisierung anfügen
+                        val funcInit = initializer.children.head as CASTFunctionCallExpression
+                        val funcName = (funcInit.getFunctionNameExpression as CASTIdExpression).getName.toString
+                        println("Init with function: " + funcName)
+                        val funcState = findFunctionState(funcName)
+                        
+                        val refDecl = createReferenceDeclaration
+                        state.declarations += refDecl
+                        refDecl.setReference(funcState)
+                        
+                        val refObj = refDecl.createValuedObject("Initializer")
+                        
+                        val outputSource = funcState.findValuedObjectByName("res")
+                        val outputExpr = refObj.reference => [
+                            subReference = outputSource.reference
+                        ]
+                        dRegion.equations += createAssignment(vo, outputExpr)
+                        
+                        var i = 0
+                        for (argument : funcInit.getArguments) {
+                            val funcObjArg = funcState.declarations.filter(VariableDeclaration).map[valuedObjects].flatten.get(i)
+                            val connectObj = state.findValuedObjectByName((argument as CASTIdExpression).getName.toString)
+                            var ass = createAssignment(refObj, funcObjArg, connectObj.reference)
+                            dRegion.equations += ass
+                            i++
+                        }
+                        
+                    }
                 }
             }
         }
         
         println("End addDeclaration")
+        res
+    }
+    
+    def ArrayList<String> removeDuplicates(ArrayList<String> list) {
+       var res = <String> newArrayList
+       
+       for(elem : list) {
+           var found = false
+           
+           for(var i = 0; (i < res.length) && (!found); i++) {
+               found = res.get(i).equals(elem)
+           }
+           
+           if(!found) {
+               res += elem
+           }
+       }
+       
+       res 
+    }
+    
+    def setOutputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        var outputs = findOutputs(stmt)
+        outputs = removeDuplicates(outputs)
+        for(output : outputs) {
+            println("Output found: " + output)
+            val outputVO = rootState.findValuedObjectByName(output)
+            val outputRootDecl = outputVO.getVariableDeclaration
+            val outputType = outputRootDecl.getType
+            
+            val decl = createVariableDeclaration
+            newState.declarations += decl
+            decl.type = outputType
+            decl.output = true
+            val innerOutputVO = decl.createValuedObject(output)
+            
+            val target = outputVO
+            val source = refObj.reference => [
+                subReference = innerOutputVO.reference
+            ]
+            dRegion.equations += createAssignment(target, source)
+        }
+    }
+    
+    def ArrayList<String> findOutputs(IASTNode stmt) {
+        var res = <String> newArrayList
+        
+        if (stmt instanceof CASTBinaryExpression) {
+            val binExpr = stmt as CASTBinaryExpression
+            if (binExpr.getOperator == 17) {
+                res += (binExpr.getOperand1 as CASTIdExpression).getName.toString
+            }
+        } else {
+            for (child : stmt.children) {
+                res += findOutputs(child)
+            }
+        }
+        
+        res
+    }
+    
+    def setInputs(IASTNode stmt, State rootState, State newState, DataflowRegion dRegion, ValuedObject refObj) {
+        var inputs = findInputs(stmt)
+        inputs = removeDuplicates(inputs)
+        for (input : inputs) {
+            println("Input found: " + input)
+            var inputVO = rootState.findValuedObjectByName(input)
+            if (inputVO === null) {
+                inputVO = baseState.findValuedObjectByName(input)
+            }
+            val inputRootDecl = inputVO.getVariableDeclaration
+            val inputType = inputRootDecl.getType
+            
+            val decl = createVariableDeclaration
+            newState.declarations += decl
+            decl.type = inputType
+            decl.input = true
+            val innerInputVO = decl.createValuedObject(input)
+                
+            dRegion.equations += createAssignment(refObj, innerInputVO, inputVO.reference)
+        }
+    }
+    
+    def ArrayList<String> findInputs(IASTNode stmt) {
+        var res = <String> newArrayList
+            
+            if(stmt instanceof CASTIdExpression) {
+                res += (stmt as CASTIdExpression).getName.toString
+            } else if (stmt instanceof CASTBinaryExpression) {
+                val binExpr = stmt as CASTBinaryExpression
+                if(binExpr.getOperator == 17) {
+                    res = findInputs(binExpr.getOperand2)
+                } else {
+                    res = findInputs(binExpr.getOperand1)
+                    res += findInputs(binExpr.getOperand2)
+                }
+            } else if (stmt instanceof CASTFunctionCallExpression) {
+                val arguments = (stmt as CASTFunctionCallExpression).getArguments
+                for(argument : arguments) {
+                    res += findInputs(argument)
+                }
+            } else {
+                for(child : stmt.children) {
+                    res += findInputs(child)
+                }
+            }
+            
         res
     }
 

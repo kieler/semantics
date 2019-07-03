@@ -13,17 +13,17 @@ class ValueExtensions {
     
     def Expression createValue(IASTNode value) {
         var Expression res
-        println("")
-        println("inside createvalue mit node: " + value.toString)
-        println("")
+//        println("")
+//        println("inside createvalue mit node: " + value.toString)
+//        println("")
         if(value instanceof CASTLiteralExpression) {
             val iastType = (value as CASTLiteralExpression).getExpressionType
-            println("    IType vom Literal: " + iastType)
+//            println("    IType vom Literal: " + iastType)
             if(iastType instanceof IBasicType) {
                 
-                println("        iastType ist IBasicType")
+//                println("        iastType ist IBasicType")
                 val iastBasicKind = (iastType as IBasicType). getKind
-                println("        BasicKind vom Literal: " + iastBasicKind)
+//                println("        BasicKind vom Literal: " + iastBasicKind)
                 switch(iastBasicKind) {
                     case IBasicType.Kind.eInt:
                         res = createIntValue(Integer.parseInt(value.toString))
@@ -35,10 +35,10 @@ class ValueExtensions {
                         println("        keinen passenden IBasicType definiert") 
                 }
             } else {
-                println("    iastType ist NICHT IBasicType")
+//                println("    iastType ist NICHT IBasicType")
             }  
         } else {
-            println("    IASTNode ist nicht CASTLiteralExpression")
+//            println("    IASTNode ist nicht CASTLiteralExpression")
         }     
         
         return res
