@@ -5345,12 +5345,15 @@ public class InternalSCTXLexer extends Lexer {
         "\2\uffff\1\1\1\2";
     static final String DFA18_specialS =
         "\4\uffff}>";
-    static final String[] DFA18_transitionS = {
-            "\12\1",
-            "\1\2\1\uffff\12\1\54\uffff\1\3",
-            "",
-            ""
-    };
+    static final String[] DFA18_transitionS = DFA18_transitionS_.DFA18_transitionS;
+    private static final class DFA18_transitionS_ {
+        static final String[] DFA18_transitionS = {
+                "\12\1",
+                "\1\2\1\uffff\12\1\54\uffff\1\3",
+                "",
+                ""
+        };
+    }
 
     static final short[] DFA18_eot = DFA.unpackEncodedString(DFA18_eotS);
     static final short[] DFA18_eof = DFA.unpackEncodedString(DFA18_eofS);
