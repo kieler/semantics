@@ -507,6 +507,21 @@ class ProcessorDataManager {
                     intermediatePosX += intermediatePosXInc
                 }
             }
+            
+            val logs = processorInstance.environment.getProperty(LOGS)
+            if (logs !== null && logs.files.size > 0) {
+                val logNode = intermediateKGT.copy
+                logNode.xpos = intermediatePosX
+                logNode.container.addAction(Trigger::SINGLECLICK, SelectIntermediateAction.ID)
+                logNode.container.setFBColor(LOG)
+                intermediateRootNode.children += logNode
+                 
+                logNode.setProperty(INTERMEDIATE_DATA, 
+                    new IntermediateData(processorInstance, processorNotification.compilationContext, logs, 
+                        view, intermediateModelCounter++, logNode
+                    ))
+                intermediatePosX += intermediatePosXInc
+            }
         }               
         
         if (processorNotification instanceof ProcessorProgress) {

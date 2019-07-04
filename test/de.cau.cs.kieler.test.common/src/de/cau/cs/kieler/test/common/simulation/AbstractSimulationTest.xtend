@@ -70,7 +70,7 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
      */
     protected def void startSimulationTest(String system, EObject model, TestModelData modelData, String testID) {
         val ccontext = Compile.createCompilationContext(system, model)
-        ccontext.startEnvironment.setProperty(Environment.INPLACE, false) // FIXME diabled inplace only for debugging
+        ccontext.startEnvironment.setProperty(Environment.INPLACE, true)
         ccontext.startEnvironment.setProperty(ProjectInfrastructure.TEMPORARY_PROJECT_NAME, 
             (if (!Platform.isWindows) this.class.simpleName + "-" else "") + testID
         )
@@ -101,10 +101,8 @@ abstract class AbstractSimulationTest<T extends EObject> extends AbstractXTextMo
                     msg.append("\n")
                 }
                 // Find logs
-                val snapshots = iResult.environment.getProperty(Environment.SNAPSHOTS)
-                val logs = snapshots.map[object].filter(CodeContainer).map[files].flatten.filter[fileName?.endsWith('.log')].toList
-                if (!logs.empty) {
-                    for (log : logs) {
+                if (iResult.environment.logs !== null && !iResult.environment.logs.files.empty) {
+                    for (log : iResult.environment.logs.files) {
                         msg.append("Related log file ")
                         msg.append(log.fileName).append(":\n")
                         msg.append(log.code).append("\n")
