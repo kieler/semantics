@@ -170,7 +170,7 @@ abstract class AbstractDependencyAnalysis<P extends EObject, S extends EObject>
                 valuedObjectAccessors.removeAccess(writeVOI, readAccess)
             }        
             
-            for(index : assignment.indices) {
+            for(index : assignment.indicesAndSubIndices) {
                 val indexReaderVOIs = assignment.processExpressionReader(index, forkStack, valuedObjectAccessors)
                 if (indexReaderVOIs.contains(writeVOI)) {
                     environment.warnings.add("The index variable is written by the same assignment. However, the new assignment will only have effect afterwards.",

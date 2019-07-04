@@ -373,4 +373,9 @@ class KExpressionsValuedObjectExtensions {
         expression as OperatorExpression
     }
     
+    def Iterable<Expression> getIndicesAndSubIndices(ValuedObjectReference vor) {
+        if (vor === null) return emptyList
+        return (vor.indices?:emptyList) + vor.subReference.indicesAndSubIndices
+    }
+    
 }
