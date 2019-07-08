@@ -36,10 +36,6 @@ public interface AState extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -63,10 +59,6 @@ public interface AState extends EObject
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Assignment}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Equations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Equations</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Equations()
@@ -79,10 +71,6 @@ public interface AState extends EObject
    * Returns the value of the '<em><b>Assertions</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Assertions</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Assertions</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Assertions()
@@ -95,10 +83,6 @@ public interface AState extends EObject
    * Returns the value of the '<em><b>Automatons</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Automaton}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Automatons</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Automatons</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Automatons()
@@ -111,10 +95,6 @@ public interface AState extends EObject
    * Returns the value of the '<em><b>Transitions</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ATransition}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Transitions</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Transitions</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Transitions()

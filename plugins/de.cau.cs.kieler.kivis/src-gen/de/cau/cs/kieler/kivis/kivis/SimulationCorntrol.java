@@ -73,10 +73,6 @@ public enum SimulationCorntrol implements Enumerator
   /**
    * The '<em><b>NONE</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>NONE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #NONE
    * @model literal="nothing"
@@ -88,10 +84,6 @@ public enum SimulationCorntrol implements Enumerator
   /**
    * The '<em><b>STEP</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>STEP</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #STEP
    * @model literal="step"
@@ -103,10 +95,6 @@ public enum SimulationCorntrol implements Enumerator
   /**
    * The '<em><b>STOP</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>STOP</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #STOP
    * @model literal="stop"
@@ -118,10 +106,6 @@ public enum SimulationCorntrol implements Enumerator
   /**
    * The '<em><b>PAUSE</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>PAUSE</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #PAUSE
    * @model literal="pause"
@@ -133,10 +117,6 @@ public enum SimulationCorntrol implements Enumerator
   /**
    * The '<em><b>PLAY</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>PLAY</b></em>' literal object isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #PLAY
    * @model literal="play"
@@ -271,6 +251,7 @@ public enum SimulationCorntrol implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public int getValue()
   {
     return value;
@@ -281,6 +262,7 @@ public enum SimulationCorntrol implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -291,6 +273,7 @@ public enum SimulationCorntrol implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getLiteral()
   {
     return literal;

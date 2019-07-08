@@ -285,6 +285,12 @@ class Pre extends SCChartsProcessor implements Traceable {
                         isReplaced = true
                     }
                 }
+                ValuedObjectReference : {
+                    if(container.indices.contains(pre)) {
+                        container.indices.set(container.indices.indexOf(pre), replacementExpression)
+                        isReplaced = true
+                    }
+                }
                 default: {
                     environment.errors.add(new Exception("Pre expressions are only supported in assignments, triggers and other pre expressions, but got "+container))
                     // Don't show the generic error that the expression could not be replaced. It would be redundant

@@ -73,6 +73,7 @@ public class EquationImpl extends AssignmentImpl implements Equation
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ValuedObjectReference> getReferences()
   {
     if (references == null)

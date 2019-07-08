@@ -33,10 +33,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Dom Event</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dom Event</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Dom Event</em>' attribute.
    * @see #setDomEvent(String)
@@ -59,10 +55,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Multimatch</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Multimatch</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Multimatch</em>' attribute.
    * @see #setMultimatch(boolean)
@@ -85,10 +77,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dom Element</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Dom Element</em>' attribute.
    * @see #setDomElement(String)
@@ -111,10 +99,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Deferred Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Deferred Interface</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Deferred Interface</em>' containment reference.
    * @see #setDeferredInterface(Interface)
@@ -137,10 +121,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Deferred Script</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Deferred Script</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Deferred Script</em>' attribute.
    * @see #setDeferredScript(String)
@@ -164,10 +144,6 @@ public interface Action extends Content
    * Returns the value of the '<em><b>Setter</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kivis.kivis.Setter}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Setter</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Setter</em>' containment reference list.
    * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getAction_Setter()
@@ -179,10 +155,6 @@ public interface Action extends Content
   /**
    * Returns the value of the '<em><b>Signal</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Signal</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Signal</em>' attribute.
    * @see #setSignal(String)
@@ -206,10 +178,6 @@ public interface Action extends Content
    * Returns the value of the '<em><b>Control</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.kivis.kivis.SimulationCorntrol}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Control</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Control</em>' attribute.
    * @see de.cau.cs.kieler.kivis.kivis.SimulationCorntrol

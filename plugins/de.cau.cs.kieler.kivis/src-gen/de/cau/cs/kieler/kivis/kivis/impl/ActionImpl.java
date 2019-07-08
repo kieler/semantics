@@ -212,6 +212,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDomEvent()
   {
     return domEvent;
@@ -222,6 +223,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDomEvent(String newDomEvent)
   {
     String oldDomEvent = domEvent;
@@ -235,6 +237,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isMultimatch()
   {
     return multimatch;
@@ -245,6 +248,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setMultimatch(boolean newMultimatch)
   {
     boolean oldMultimatch = multimatch;
@@ -258,6 +262,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDomElement()
   {
     return domElement;
@@ -268,6 +273,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDomElement(String newDomElement)
   {
     String oldDomElement = domElement;
@@ -281,6 +287,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Interface getDeferredInterface()
   {
     return deferredInterface;
@@ -308,6 +315,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDeferredInterface(Interface newDeferredInterface)
   {
     if (newDeferredInterface != deferredInterface)
@@ -329,6 +337,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDeferredScript()
   {
     return deferredScript;
@@ -339,6 +348,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDeferredScript(String newDeferredScript)
   {
     String oldDeferredScript = deferredScript;
@@ -352,6 +362,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Setter> getSetter()
   {
     if (setter == null)
@@ -366,6 +377,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getSignal()
   {
     return signal;
@@ -376,6 +388,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setSignal(String newSignal)
   {
     String oldSignal = signal;
@@ -389,6 +402,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public SimulationCorntrol getControl()
   {
     return control;
@@ -399,6 +413,7 @@ public class ActionImpl extends ContentImpl implements Action
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setControl(SimulationCorntrol newControl)
   {
     SimulationCorntrol oldControl = control;

@@ -57,6 +57,10 @@ public class ColorStore {
         INFO_BACKGROUND(250, 250, 250),
         INFO_BACKGROUND_TARGET(230, 230, 230),
         
+        LOG_FOREGROUND(219, 156, 255),
+        LOG_BACKGROUND(219, 156, 255),
+        LOG_BACKGROUND_TARGET(185, 62, 255),
+        
         PROGRESSBAR_FOREGROUND(200, 200, 200),
         PROGRESSBAR_BACKGROUND(120, 120, 200),
         

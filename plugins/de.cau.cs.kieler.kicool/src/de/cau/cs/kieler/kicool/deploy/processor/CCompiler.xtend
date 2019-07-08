@@ -125,7 +125,7 @@ class CCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableContai
         model = new ExecutableContainer(targetExe)
         
         // report
-        logger.closeLog("gcc-compiler-report.log").snapshot
+        logger.saveLog(environment, "gcc-compiler.log")
         infra.refresh
     }
 

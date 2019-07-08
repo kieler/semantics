@@ -32,10 +32,6 @@ public interface ModelDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -59,10 +55,6 @@ public interface ModelDeclaration extends EObject
    * Returns the value of the '<em><b>Uses Ids</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Uses Ids</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Uses Ids</em>' attribute list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getModelDeclaration_UsesIds()
@@ -75,10 +67,6 @@ public interface ModelDeclaration extends EObject
    * Returns the value of the '<em><b>Needs Params</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticParam}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Needs Params</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Needs Params</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getModelDeclaration_NeedsParams()
@@ -91,10 +79,6 @@ public interface ModelDeclaration extends EObject
    * Returns the value of the '<em><b>Provisions</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.Provide}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Provisions</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Provisions</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getModelDeclaration_Provisions()
@@ -106,10 +90,6 @@ public interface ModelDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Body</em>' containment reference.
    * @see #setBody(PackBody)

@@ -4052,7 +4052,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ForLoop Loop:
-	//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
 	//	';'
 	//	condition=BoolExpression
 	//	';'
@@ -4068,6 +4068,16 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getForLoopRule() {
 		return getForLoopAccess().getRule();
+	}
+	
+	//LoopDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=Annotation* (type=super::ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+	public SCLGrammarAccess.LoopDeclarationElements getLoopDeclarationAccess() {
+		return gaSCL.getLoopDeclarationAccess();
+	}
+	
+	public ParserRule getLoopDeclarationRule() {
+		return getLoopDeclarationAccess().getRule();
 	}
 	
 	//EffectOrAssignment keffects::Assignment:

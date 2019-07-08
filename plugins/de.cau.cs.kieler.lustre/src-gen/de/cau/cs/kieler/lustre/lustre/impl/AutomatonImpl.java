@@ -72,6 +72,7 @@ public class AutomatonImpl extends MinimalEObjectImpl.Container implements Autom
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<AState> getStates()
   {
     if (states == null)

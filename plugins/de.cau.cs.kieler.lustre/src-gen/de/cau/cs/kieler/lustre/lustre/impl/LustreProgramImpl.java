@@ -96,6 +96,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getIncludes()
   {
     if (includes == null)
@@ -110,6 +111,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackBody getPackBody()
   {
     return packBody;
@@ -137,6 +139,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPackBody(PackBody newPackBody)
   {
     if (newPackBody != packBody)
@@ -158,6 +161,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackList getPackList()
   {
     return packList;
@@ -185,6 +189,7 @@ public class LustreProgramImpl extends MinimalEObjectImpl.Container implements L
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPackList(PackList newPackList)
   {
     if (newPackList != packList)

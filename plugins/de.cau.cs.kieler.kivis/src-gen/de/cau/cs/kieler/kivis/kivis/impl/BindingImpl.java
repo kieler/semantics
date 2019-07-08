@@ -94,6 +94,7 @@ public class BindingImpl extends ContentImpl implements Binding
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getVariable()
   {
     return variable;
@@ -104,6 +105,7 @@ public class BindingImpl extends ContentImpl implements Binding
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVariable(String newVariable)
   {
     String oldVariable = variable;
@@ -117,6 +119,7 @@ public class BindingImpl extends ContentImpl implements Binding
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getDomElement()
   {
     return domElement;
@@ -127,6 +130,7 @@ public class BindingImpl extends ContentImpl implements Binding
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setDomElement(String newDomElement)
   {
     String oldDomElement = domElement;

@@ -36,10 +36,6 @@ public interface StaticArg extends EObject
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' attribute.
    * @see de.cau.cs.kieler.kexpressions.ValueType
@@ -64,10 +60,6 @@ public interface StaticArg extends EObject
   /**
    * Returns the value of the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expr</em>' containment reference.
    * @see #setExpr(Expression)
@@ -90,10 +82,6 @@ public interface StaticArg extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' containment reference.
    * @see #setName(ValuedObjectReference)
@@ -117,10 +105,6 @@ public interface StaticArg extends EObject
    * Returns the value of the '<em><b>Static Args</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticArg}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Static Args</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Static Args</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getStaticArg_StaticArgs()

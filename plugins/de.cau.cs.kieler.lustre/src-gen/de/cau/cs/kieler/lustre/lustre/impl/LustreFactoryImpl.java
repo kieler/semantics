@@ -98,6 +98,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LustreProgram createLustreProgram()
   {
     LustreProgramImpl lustreProgram = new LustreProgramImpl();
@@ -109,6 +110,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackList createPackList()
   {
     PackListImpl packList = new PackListImpl();
@@ -120,6 +122,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ModelDeclaration createModelDeclaration()
   {
     ModelDeclarationImpl modelDeclaration = new ModelDeclarationImpl();
@@ -131,6 +134,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Provide createProvide()
   {
     ProvideImpl provide = new ProvideImpl();
@@ -142,6 +146,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackageDeclaration createPackageDeclaration()
   {
     PackageDeclarationImpl packageDeclaration = new PackageDeclarationImpl();
@@ -153,6 +158,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackageEquation createPackageEquation()
   {
     PackageEquationImpl packageEquation = new PackageEquationImpl();
@@ -164,6 +170,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackBody createPackBody()
   {
     PackBodyImpl packBody = new PackBodyImpl();
@@ -175,6 +182,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TypeDeclaration createTypeDeclaration()
   {
     TypeDeclarationImpl typeDeclaration = new TypeDeclarationImpl();
@@ -186,6 +194,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ExternalNodeDeclaration createExternalNodeDeclaration()
   {
     ExternalNodeDeclarationImpl externalNodeDeclaration = new ExternalNodeDeclarationImpl();
@@ -197,6 +206,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Automaton createAutomaton()
   {
     AutomatonImpl automaton = new AutomatonImpl();
@@ -208,6 +218,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public AState createAState()
   {
     AStateImpl aState = new AStateImpl();
@@ -219,6 +230,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ATransition createATransition()
   {
     ATransitionImpl aTransition = new ATransitionImpl();
@@ -230,6 +242,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params createParams()
   {
     ParamsImpl params = new ParamsImpl();
@@ -241,6 +254,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public StaticParam createStaticParam()
   {
     StaticParamImpl staticParam = new StaticParamImpl();
@@ -252,6 +266,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public StaticArg createStaticArg()
   {
     StaticArgImpl staticArg = new StaticArgImpl();
@@ -263,6 +278,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ByNameStaticArg createByNameStaticArg()
   {
     ByNameStaticArgImpl byNameStaticArg = new ByNameStaticArgImpl();
@@ -274,6 +290,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ClockedVariableDeclaration createClockedVariableDeclaration()
   {
     ClockedVariableDeclarationImpl clockedVariableDeclaration = new ClockedVariableDeclarationImpl();
@@ -285,6 +302,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeDeclaration createNodeDeclaration()
   {
     NodeDeclarationImpl nodeDeclaration = new NodeDeclarationImpl();
@@ -296,6 +314,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeValuedObject createNodeValuedObject()
   {
     NodeValuedObjectImpl nodeValuedObject = new NodeValuedObjectImpl();
@@ -307,6 +326,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Equation createEquation()
   {
     EquationImpl equation = new EquationImpl();
@@ -318,6 +338,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Assertion createAssertion()
   {
     AssertionImpl assertion = new AssertionImpl();
@@ -329,6 +350,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LustreValuedObject createLustreValuedObject()
   {
     LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
@@ -340,6 +362,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public NodeReference createNodeReference()
   {
     NodeReferenceImpl nodeReference = new NodeReferenceImpl();
@@ -351,6 +374,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LustrePackage getLustrePackage()
   {
     return (LustrePackage)getEPackage();
