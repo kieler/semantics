@@ -31,10 +31,6 @@ public interface PackList extends EObject
    * Returns the value of the '<em><b>Model Declarations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Model Declarations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Model Declarations</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getPackList_ModelDeclarations()
@@ -47,10 +43,6 @@ public interface PackList extends EObject
    * Returns the value of the '<em><b>Package Declarations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Package Declarations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Package Declarations</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getPackList_PackageDeclarations()
@@ -63,10 +55,6 @@ public interface PackList extends EObject
    * Returns the value of the '<em><b>Package Equations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.PackageEquation}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Package Equations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Package Equations</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getPackList_PackageEquations()

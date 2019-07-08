@@ -35,10 +35,6 @@ public interface TypeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -62,10 +58,6 @@ public interface TypeDeclaration extends EObject
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' attribute.
    * @see de.cau.cs.kieler.kexpressions.ValueType
@@ -91,10 +83,6 @@ public interface TypeDeclaration extends EObject
    * Returns the value of the '<em><b>Enums</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Enums</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Enums</em>' attribute list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getTypeDeclaration_Enums()
@@ -106,10 +94,6 @@ public interface TypeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Variables</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variables</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variables</em>' containment reference.
    * @see #setVariables(VariableDeclaration)
@@ -133,10 +117,6 @@ public interface TypeDeclaration extends EObject
    * Returns the value of the '<em><b>Values</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Values</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Values</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getTypeDeclaration_Values()

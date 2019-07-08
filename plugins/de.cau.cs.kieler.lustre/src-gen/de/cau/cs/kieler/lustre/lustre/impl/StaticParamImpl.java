@@ -122,6 +122,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -132,6 +133,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -145,6 +147,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -155,6 +158,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -168,6 +172,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getNodeInput()
   {
     return nodeInput;
@@ -195,6 +200,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNodeInput(Params newNodeInput)
   {
     if (newNodeInput != nodeInput)
@@ -216,6 +222,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getNodeOutput()
   {
     return nodeOutput;
@@ -243,6 +250,7 @@ public class StaticParamImpl extends MinimalEObjectImpl.Container implements Sta
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNodeOutput(Params newNodeOutput)
   {
     if (newNodeOutput != nodeOutput)

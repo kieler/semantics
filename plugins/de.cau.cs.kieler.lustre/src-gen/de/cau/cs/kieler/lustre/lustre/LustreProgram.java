@@ -31,10 +31,6 @@ public interface LustreProgram extends EObject
    * Returns the value of the '<em><b>Includes</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Includes</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Includes</em>' attribute list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getLustreProgram_Includes()
@@ -46,10 +42,6 @@ public interface LustreProgram extends EObject
   /**
    * Returns the value of the '<em><b>Pack Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Pack Body</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Pack Body</em>' containment reference.
    * @see #setPackBody(PackBody)
@@ -72,10 +64,6 @@ public interface LustreProgram extends EObject
   /**
    * Returns the value of the '<em><b>Pack List</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Pack List</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Pack List</em>' containment reference.
    * @see #setPackList(PackList)
