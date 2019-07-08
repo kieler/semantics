@@ -205,7 +205,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id, system.public))
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public, system.simulation))
         }
         return systemDescription
     }
