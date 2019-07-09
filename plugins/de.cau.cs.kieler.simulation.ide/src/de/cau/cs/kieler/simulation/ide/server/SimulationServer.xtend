@@ -24,7 +24,7 @@ import org.eclipse.jetty.servlet.ServletHandler
  */
 class SimulationServer {
     
-    static val PORT = 5010
+    public static val PORT = 5010
     private static val JOB = new Job("Simulation Server") {
 
         override protected run(IProgressMonitor monitor) {
