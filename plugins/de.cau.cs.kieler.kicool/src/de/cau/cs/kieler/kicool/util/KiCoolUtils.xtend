@@ -12,15 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.util
 
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 import de.cau.cs.kieler.kicool.ProcessorEntry
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import java.lang.reflect.ParameterizedType
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorSystem
-import de.cau.cs.kieler.kicool.ProcessorGroup
-import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
 
 /**
  * Generic utility class
@@ -34,11 +33,11 @@ class KiCoolUtils {
     /**
      * Retrieve the meta system of a meta processor.
      */
-    static def de.cau.cs.kieler.kicool.System getSystem(de.cau.cs.kieler.kicool.ProcessorEntry entry) {
-        if (entry.eContainer instanceof de.cau.cs.kieler.kicool.System) {
-            entry.eContainer as de.cau.cs.kieler.kicool.System
+    static def System getSystem(ProcessorEntry entry) {
+        if (entry.eContainer instanceof System) {
+            entry.eContainer as System
         } else {
-            (entry.eContainer as de.cau.cs.kieler.kicool.ProcessorEntry).getSystem
+            (entry.eContainer as ProcessorEntry).getSystem
         }
     }
     
@@ -66,7 +65,7 @@ class KiCoolUtils {
         try {
             val p = system.processors.firstProcessor
             if (p !== null) {
-                return p.sourceTargetTypes.source as Class<?>
+                return p.sourceTargetTypes.source
             }
         } catch (Exception e) {}
         return null

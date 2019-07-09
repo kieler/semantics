@@ -62,6 +62,13 @@ class SimulationIDE {
             currentSimulation.addObserver(listener)
         }
     }
+    
+    static def removeObserver(SimulationListener listener) {
+        listeners -= listener
+        if (currentSimulation !== null) {
+            currentSimulation.deleteObserver(listener)
+        }
+    }
 
     static def getObservers() {
         listeners.unmodifiableView

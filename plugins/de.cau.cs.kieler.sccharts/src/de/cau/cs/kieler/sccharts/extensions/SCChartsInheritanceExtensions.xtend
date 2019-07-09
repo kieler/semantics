@@ -21,6 +21,7 @@ import de.cau.cs.kieler.sccharts.State
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * @author als
@@ -57,7 +58,7 @@ class SCChartsInheritanceExtensions {
      * Conflicting duplicates will be included.
      */
     def Iterable<Declaration> getAllVisibleInheritedDeclarations(State state) {
-        return state.getAllInheritedStates.map[it.declarations].flatten.filter[!private]
+        return state.getAllInheritedStates.map[it.declarations].flatten.filter[access !== AccessModifier.PRIVATE]
     }
     
     /**

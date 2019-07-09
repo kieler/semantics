@@ -41,4 +41,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="semicolon" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Return" eSuperTypes="#//Statement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MethodImplementationDeclaration" eSuperTypes="../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//MethodDeclaration #//Scope"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Loop" eSuperTypes="#//Statement #//Scope">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialization" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initializationDeclaration"
+        eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="afterthought" eType="ecore:EClass ../../de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
+        containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -49,6 +49,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -76,6 +77,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension AnnotationsExtensions
+    @Inject extension SCGMethodExtensions
     
     public static val String GUARDPREFIX = "_g"
 	protected val SPLITSCHEDULINGBLOCKSATENTRY = false
@@ -94,7 +96,7 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
     }
     
     override process() {
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.transform
         }
     }
@@ -158,10 +160,10 @@ class BasicBlockTransformation extends InplaceProcessor<SCGraphs> implements Tra
                 for (SchedulingBlock sb : bb.schedulingBlocks) {
                     val nodes = sb.nodes;
                     sb.trace(nodes);
-                    sb.guards.head?.trace(nodes);
-                    sb.guards.head?.valuedObject?.trace(nodes);
+//                    sb.guards.head?.trace(nodes);
+//                    sb.guards.head?.valuedObject?.trace(nodes);
                     bb.trace(nodes);
-                    bb.predecessors.trace(nodes);
+//                    bb.predecessors.trace(nodes);
                 }
             }
         }

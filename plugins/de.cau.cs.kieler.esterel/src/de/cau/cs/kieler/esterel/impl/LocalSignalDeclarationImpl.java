@@ -5,6 +5,7 @@ package de.cau.cs.kieler.esterel.impl;
 import de.cau.cs.kieler.esterel.EsterelPackage;
 import de.cau.cs.kieler.esterel.LocalSignalDeclaration;
 
+import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
@@ -39,7 +40,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalSignalDeclarationImpl#getStatements <em>Statements</em>}</li>
  *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalSignalDeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalSignalDeclarationImpl#isPrivate <em>Private</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.esterel.impl.LocalSignalDeclarationImpl#getAccess <em>Access</em>}</li>
  * </ul>
  *
  * @generated
@@ -66,24 +67,24 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
     protected EList<ValuedObject> valuedObjects;
 
     /**
-     * The default value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The default value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected static final boolean PRIVATE_EDEFAULT = false;
+    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.PUBLIC;
 
     /**
-     * The cached value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The cached value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected boolean private_ = PRIVATE_EDEFAULT;
+    protected AccessModifier access = ACCESS_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -109,6 +110,7 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.LOCAL_SIGNAL_DECLARATION__STATEMENTS);
@@ -121,6 +123,7 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getValuedObjects() {
         if (valuedObjects == null) {
             valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS);
@@ -133,8 +136,9 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isPrivate() {
-        return private_;
+    @Override
+    public AccessModifier getAccess() {
+        return access;
     }
 
     /**
@@ -142,11 +146,12 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPrivate(boolean newPrivate) {
-        boolean oldPrivate = private_;
-        private_ = newPrivate;
+    @Override
+    public void setAccess(AccessModifier newAccess) {
+        AccessModifier oldAccess = access;
+        access = newAccess == null ? ACCESS_EDEFAULT : newAccess;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE, oldPrivate, private_));
+            eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS, oldAccess, access));
     }
 
     /**
@@ -177,8 +182,8 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
                 return getStatements();
             case EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS:
                 return getValuedObjects();
-            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE:
-                return isPrivate();
+            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS:
+                return getAccess();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -200,8 +205,8 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
                 getValuedObjects().clear();
                 getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
-            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE:
-                setPrivate((Boolean)newValue);
+            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS:
+                setAccess((AccessModifier)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -221,8 +226,8 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
             case EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 return;
-            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE:
-                setPrivate(PRIVATE_EDEFAULT);
+            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS:
+                setAccess(ACCESS_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -240,8 +245,8 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
                 return statements != null && !statements.isEmpty();
             case EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS:
                 return valuedObjects != null && !valuedObjects.isEmpty();
-            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE:
-                return private_ != PRIVATE_EDEFAULT;
+            case EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS:
+                return access != ACCESS_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -262,7 +267,7 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
         if (baseClass == Declaration.class) {
             switch (derivedFeatureID) {
                 case EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS: return KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
-                case EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE: return KExpressionsPackage.DECLARATION__PRIVATE;
+                case EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS: return KExpressionsPackage.DECLARATION__ACCESS;
                 default: return -1;
             }
         }
@@ -285,7 +290,7 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
         if (baseClass == Declaration.class) {
             switch (baseFeatureID) {
                 case KExpressionsPackage.DECLARATION__VALUED_OBJECTS: return EsterelPackage.LOCAL_SIGNAL_DECLARATION__VALUED_OBJECTS;
-                case KExpressionsPackage.DECLARATION__PRIVATE: return EsterelPackage.LOCAL_SIGNAL_DECLARATION__PRIVATE;
+                case KExpressionsPackage.DECLARATION__ACCESS: return EsterelPackage.LOCAL_SIGNAL_DECLARATION__ACCESS;
                 default: return -1;
             }
         }
@@ -302,8 +307,8 @@ public class LocalSignalDeclarationImpl extends StatementImpl implements LocalSi
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (private: ");
-        result.append(private_);
+        result.append(" (access: ");
+        result.append(access);
         result.append(')');
         return result.toString();
     }

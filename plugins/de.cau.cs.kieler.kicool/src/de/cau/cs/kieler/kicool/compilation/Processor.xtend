@@ -14,22 +14,20 @@ package de.cau.cs.kieler.kicool.compilation
 
 import com.google.common.reflect.TypeToken
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.kicool.classes.IKiCoolCloneable
 import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorProgress
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorSnapshot
+import de.cau.cs.kieler.kicool.environments.AnnotationModel
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.environments.EnvironmentPair
+import de.cau.cs.kieler.kicool.environments.Snapshot
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static de.cau.cs.kieler.kicool.environments.Environment.*
-import static extension de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder.*
-
-import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier
-import de.cau.cs.kieler.kicool.environments.AnnotationModel
-import de.cau.cs.kieler.kicool.environments.Snapshot
 
 /**
  * The abstract class of a processor. Every invokable unit in kico is a processor.
@@ -54,7 +52,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
      * Set the environments after construction. 
      * However, preserve the enabled flag.
      */
-    public def setEnvironment(Environment environment, Environment environmentPrime) {
+    def setEnvironment(Environment environment, Environment environmentPrime) {
         if (environments !== null && environments.source !== null) {
             val enabledFlag = environments.source.getProperty(ENABLED)
             environment.setProperty(ENABLED, enabledFlag)
@@ -69,15 +67,15 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * Return the prime environment.
      */
-    public def Environment getEnvironment() {
-        return environments.target
+    def Environment getEnvironment() {
+        return environments?.target
     }
     
     /**
      * Return the source environment.
      */
-    public def Environment getSourceEnvironment() {
-        return environments.source
+    def Environment getSourceEnvironment() {
+        return environments?.source
     }
     
     /**
@@ -97,15 +95,29 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /** 
      * Directly return the compilation context of this processor.
      */
-    public def getCompilationContext() {
+    def getCompilationContext() {
         environments.source.getProperty(COMPILATION_CONTEXT)
     }
     
     /**
      * Directly return the meta processor of this processor instance.
      */
-    public def getProcessorReference() {
+    def getProcessorReference() {
         environments.source.getProperty(PROCESSOR_REFERENCE)
+    }
+    
+    /**
+     * Convenient getter to fetch properties from the environment.
+     */
+    def <T> T getProperty(IProperty<T> property) {
+        environment.getProperty(property)
+    }
+    
+    /**
+     * Convenient setter to change properties in the environment.
+     */
+    def <T> void setProperty(IProperty<? super T> property, T value) {
+        environment.setProperty(property, value)
     }
     
     /**
@@ -154,10 +166,10 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * Protected convenient method to trigger a snapshot.
      */
-    protected def void snapshot(Object model) {
+    protected  def <T> T snapshot(T model) {
         val snapshotsEnabled = environment.getProperty(SNAPSHOTS_ENABLED) 
         val inplace = environment.getProperty(INPLACE)
-        if (inplace || !snapshotsEnabled) return
+        if (inplace || !snapshotsEnabled) return model;
         
         val snapshots = environment.getProperty(SNAPSHOTS)
         
@@ -165,7 +177,7 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         var Object snapshotModel = model
         var Copier copier = null 
         if (model instanceof EObject) {
-            val snapshotModelPair = model.copyEObjectAndReturnCopier
+            val snapshotModelPair = (model as EObject).copyEObjectAndReturnCopier
             snapshotModel = snapshotModelPair.key
             copier = snapshotModelPair.value
         }
@@ -178,6 +190,8 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
         compilationContext.notify(
             new ProcessorSnapshot(snapshotModel, compilationContext, processorReference, this)
         )
+        
+        return model
     }
     
     /**
@@ -272,21 +286,21 @@ abstract class Processor<Source, Target> implements IKiCoolCloneable {
     /**
      * ID of the processor.
      */
-    abstract public def String getId()
+    abstract def String getId()
     
     /**
      * Give a processor a name. A processor needs a name.
      */
-    abstract public def String getName()
+    abstract def String getName()
     
     /**
      * Type of the processor.
      */
-    abstract public def ProcessorType getType()
+    abstract def ProcessorType getType()
     
     /** 
      * The process method. It is called whenever the processor is invoked.
      */
-    abstract public def void process()
+    abstract def void process()
     
 }

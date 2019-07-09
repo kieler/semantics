@@ -68,6 +68,7 @@ public class AssignmentImpl extends de.cau.cs.kieler.kexpressions.keffects.impl.
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isSemicolon() {
         return semicolon;
     }
@@ -77,6 +78,7 @@ public class AssignmentImpl extends de.cau.cs.kieler.kexpressions.keffects.impl.
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSemicolon(boolean newSemicolon) {
         boolean oldSemicolon = semicolon;
         semicolon = newSemicolon;

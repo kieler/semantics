@@ -16,17 +16,20 @@ package de.cau.cs.kieler.sccharts.ui.synthesis.styles
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
-import de.cau.cs.kieler.kexpressions.keffects.DataDependencyType
 import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.KColor
 import de.cau.cs.kieler.klighd.krendering.KContainerRendering
 import de.cau.cs.kieler.klighd.krendering.KRectangle
 import de.cau.cs.kieler.klighd.krendering.KRoundedRectangle
 import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.LineStyle
+import de.cau.cs.kieler.klighd.krendering.Underline
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
+import de.cau.cs.kieler.klighd.krendering.extensions.KColorExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KContainerRenderingExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
@@ -71,6 +74,7 @@ class StateStyles {
     @Inject extension KContainerRenderingExtensions
     @Inject extension ColorStore
     @Inject extension AnnotationsExtensions
+    @Inject extension KColorExtensions
     
     /** This property is set a rendering and indicates the content container */
     public static final IProperty<Boolean> IS_CONTENT_CONTAINER = new Property<Boolean>(
@@ -226,7 +230,8 @@ class StateStyles {
             
             fontBold = true
             fontSize = stateLabelTextSize
-            //suppressSelectability
+            suppressSelectability
+            selectionTextUnderline = Underline.NONE // prevents default selection style
         ]
     }
 
@@ -240,7 +245,8 @@ class StateStyles {
                 
             eAllContents.filter(KText).forEach[
                 fontSize = stateLabelTextSize
-                //suppressSelectability
+                suppressSelectability
+                selectionTextUnderline = Underline.NONE // prevents default selection style
             ]
 
             children.head => [
@@ -305,6 +311,7 @@ class StateStyles {
                 	if (builder.length > 0 && keyword != entry.value) {
 		                ktext = it.addText(builder.append(" ").toString) => [
                             horizontalAlignment = H_LEFT
+                            selectionTextUnderline = Underline.SINGLE
                         ]
 		                if (keyword == TextFormat.KEYWORD) {
 		                	ktext.highlightKeyword
@@ -324,6 +331,7 @@ class StateStyles {
                 }
                 ktext = addText(builder.toString) => [
                     horizontalAlignment = H_LEFT
+                    selectionTextUnderline = Underline.SINGLE
                 ]
                 if (keyword == TextFormat.KEYWORD) {
                 	ktext.highlightKeyword
@@ -430,18 +438,33 @@ class StateStyles {
      
     
     def createDependencyEdge(Dependency dependency, KNode sourceNode, KNode targetNode) {
+        var color = "#000".color 
+        if (dependency instanceof DataDependency) {
+            switch(dependency.type) {
+                case WRITE_READ: color = DEPENDENCY_ABSWRITEREAD.color
+                case WRITE_RELATIVEWRITE: color = DEPENDENCY_ABSWRITERELWRITE.color
+                case WRITE_WRITE: color = DEPENDENCY_ABSWRITEABSWRITE.color
+                default: color = "#000".color
+            }
+        } else if (dependency instanceof ControlDependency) {
+            color = "#555".color
+        }
+        dependency.createDependencyEdge(sourceNode, targetNode, color)
+    }
+    
+    def createDependencyEdge(Dependency dependency, KNode sourceNode, KNode targetNode, KColor color) {
         createNewEdge() => [ edge |
             edge.source = sourceNode
             edge.target = targetNode
             if (dependency instanceof DataDependency) {
-                edge.addRoundedBendsPolyline(8, 2) => [
-                    if (dependency.type == DataDependencyType.WRITE_READ) {
-                        it.foreground = DEPENDENCY_ABSWRITEREAD.color
-                    } else  if (dependency.type == DataDependencyType.WRITE_RELATIVEWRITE) { 
-                        it.foreground = DEPENDENCY_ABSWRITERELWRITE.color
-                    } else if (dependency.type == DataDependencyType.WRITE_WRITE) {
-                        it.foreground = DEPENDENCY_ABSWRITEABSWRITE.color
-                    }
+                edge.addRoundedBendsPolyline(2, 2) => [
+                    it.foreground = color
+                    it.lineStyle = LineStyle::DASH
+                    it.addArrowDecorator
+                ]
+            } else if (dependency instanceof ControlDependency) {
+                edge.addRoundedBendsPolyline(2, 2) => [
+                    it.foreground = color
                     it.lineStyle = LineStyle::DASH
                     it.addArrowDecorator
                 ]

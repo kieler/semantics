@@ -13,6 +13,8 @@
 package de.cau.cs.kieler.scg.processors.optimizer
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
@@ -26,6 +28,7 @@ import de.cau.cs.kieler.scg.ControlFlow
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Conditional Merger
@@ -40,6 +43,10 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
+    
+    public static val IProperty<Boolean> CONDITIONAL_MERGER_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.conditionalMerger", false)    
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.conditionalMerger"
@@ -50,9 +57,11 @@ class ConditionalMerger extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(CONDITIONAL_MERGER_ENABLED)) return;
+        
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performConditionalMerge
         }
     }

@@ -19,7 +19,6 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
@@ -47,6 +46,8 @@ import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * @author ssm
@@ -58,6 +59,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDependencyExtensions    
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGMethodExtensions
     
     var AnnotationModel<SCGraphs> annotationModel 
     
@@ -78,7 +80,7 @@ class SimpleGuardOptimization extends Processor<SCGraphs, SCGraphs> implements T
         annotationModel = model.createAnnotationModel
         environment.setProperty(LoopAnalyzerV2.LOOP_DATA, null)
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.optimizeGuards
         }        
     }    

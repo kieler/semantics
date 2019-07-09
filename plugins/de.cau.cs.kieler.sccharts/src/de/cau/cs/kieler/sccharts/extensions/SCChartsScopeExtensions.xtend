@@ -199,9 +199,8 @@ class SCChartsScopeExtensions {
         }
     }
 
-
-
-
-    
+    def isReferencing(Scope scope) {
+        scope.reference !== null && scope.reference.scope !== null
+    }
     
 }

@@ -14,11 +14,13 @@ package de.cau.cs.kieler.kicool.environments
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorStatus
+import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.EObject
 
 /**
  * Class for a processor environment, which is basically a key value map with some convenient methods.
@@ -47,6 +49,9 @@ class Environment extends EnvironmentPropertyHolder {
     public static val IProperty<CompilationContext> COMPILATION_CONTEXT = 
         new Property<CompilationContext>("de.cau.cs.kieler.kicool.compilationContext")
 
+    public static val IProperty<CompilationContext> PRECEEDING_COMPILATION_CONTEXT = 
+        new Property<CompilationContext>("de.cau.cs.kieler.kicool.preceedingCompilationContext")
+        
     public static val IProperty<ProcessorReference> PROCESSOR_REFERENCE = 
         new Property<ProcessorReference>("de.cau.cs.kieler.kicool.processorReference")
 
@@ -79,7 +84,10 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Long> OVERALL_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.overallTimestamp", new Long(0))
-        
+    
+    public static val IProperty<Long> OVERALL_TIME = 
+        new Property<Long>("de.cau.cs.kieler.kicool.overallTime", new Long(0))
+    
     public static val IProperty<Long> PTIME = 
         new Property<Long>("de.cau.cs.kieler.kicool.pTime", new Long(0))
 
@@ -105,7 +113,7 @@ class Environment extends EnvironmentPropertyHolder {
         new Property<Boolean>("de.cau.cs.kieler.kicool.debugEnvironmentModels", false)
         
     public static val REPORT_ROOT = MessageObjectReferences.ROOT
-             
+    
     new() {
     }
     
@@ -148,6 +156,31 @@ class Environment extends EnvironmentPropertyHolder {
         getProperty(DEVELOPER_MODE)
     }
     
+    def Resource findResource() {
+        return findResource(null)
+    }
+    
+    def Resource findResource(Object model) {
+        var Resource res = null
+        var candidate = model
+        // First try given model
+        if (candidate instanceof EObject) {
+            res = candidate.eResource
+        }
+        // Next try original model
+        if (res === null) {
+            candidate = getProperty(ORIGINAL_MODEL)
+            if (candidate instanceof EObject) {
+                res = candidate.eResource
+            }
+        }
+        // Next try preceeding compilation model
+        if (res === null) {
+            res = getProperty(PRECEEDING_COMPILATION_CONTEXT)?.result?.findResource
+        }
+        return res
+    }
+    
     /** 
      * Convenient toString method mainly for debugging purposes.
      */
@@ -168,6 +201,5 @@ class Environment extends EnvironmentPropertyHolder {
         }
         
         return text.toString
-    }    
-  
+    }
 }

@@ -24,7 +24,7 @@ abstract class ExogenousProcessor<S, T> extends Processor<S, T> {
     /**
      * Type of the processor.
      */
-    override final def ProcessorType getType() {
+    override final ProcessorType getType() {
         return ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
         

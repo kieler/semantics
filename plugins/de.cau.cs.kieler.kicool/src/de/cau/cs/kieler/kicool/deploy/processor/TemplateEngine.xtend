@@ -27,6 +27,7 @@ import java.util.Locale
 import java.util.Map
 
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
+import static extension de.cau.cs.kieler.kicool.deploy.InfrastructureMacroNames.*
 
 /**
  * @author als
@@ -80,6 +81,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         generalTemplateEnvironment.put(CommonTemplateVariables.BASE_DIR, infra.generatedCodeFolder.toString)       
         // Injection
         generalTemplateEnvironment.registerTemplateInjection(environment)
+        generalTemplateEnvironment.put(CommonTemplateVariables.MODEL_NAME, infra.sourceCode.head.modelName)
         
         for (entry : generalTemplateEnvironment.entrySet) {
             logger.println(entry.key + ": " + entry.value)
@@ -94,7 +96,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         
         val templates = environment.getProperty(TEMPLATES)?:emptyMap
         for (entry : templates.entrySet) {
-            val target = new File(infra.generatedCodeFolder, entry.value)
+            val target = new File(infra.generatedCodeFolder, entry.value.resolveMacros(infra))
             val relativeTemplatePath = entry.key
             val template = new File(infra.generatedCodeFolder, relativeTemplatePath)
             
@@ -118,11 +120,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 
                 var Map<String, Object> additionalTemplateEnvironment = newHashMap
                 if (additionalTemplateEnvironments.containsKey(entry.value)) {
-                    if (additionalTemplateEnvironment instanceof Map<?, ?>) {
-                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
-                    } else if (additionalTemplateEnvironment !== null) {
-                        logger.println("WARNING: Additional template environment is specified but not of type Map<String, String> but " + additionalTemplateEnvironment.class.name)
-                    }
+                    additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
                 }
                 
                 additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET, target.toString) 

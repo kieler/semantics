@@ -3,11 +3,13 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
+import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
-import de.cau.cs.kieler.lustre.lustre.Assertion;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
-import de.cau.cs.kieler.lustre.lustre.Equation;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import java.util.Collection;
@@ -73,7 +75,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @generated
    * @ordered
    */
-  protected EList<Equation> equations;
+  protected EList<Assignment> equations;
 
   /**
    * The cached value of the '{@link #getAssertions() <em>Assertions</em>}' containment reference list.
@@ -83,7 +85,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @generated
    * @ordered
    */
-  protected EList<Assertion> assertions;
+  protected EList<Expression> assertions;
 
   /**
    * The cached value of the '{@link #getAutomatons() <em>Automatons</em>}' containment reference list.
@@ -154,11 +156,11 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Equation> getEquations()
+  public EList<Assignment> getEquations()
   {
     if (equations == null)
     {
-      equations = new EObjectContainmentEList<Equation>(Equation.class, this, LustrePackage.ASTATE__EQUATIONS);
+      equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, LustrePackage.ASTATE__EQUATIONS);
     }
     return equations;
   }
@@ -168,11 +170,11 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Assertion> getAssertions()
+  public EList<Expression> getAssertions()
   {
     if (assertions == null)
     {
-      assertions = new EObjectContainmentEList<Assertion>(Assertion.class, this, LustrePackage.ASTATE__ASSERTIONS);
+      assertions = new EObjectContainmentEList<Expression>(Expression.class, this, LustrePackage.ASTATE__ASSERTIONS);
     }
     return assertions;
   }
@@ -267,11 +269,11 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
         return;
       case LustrePackage.ASTATE__EQUATIONS:
         getEquations().clear();
-        getEquations().addAll((Collection<? extends Equation>)newValue);
+        getEquations().addAll((Collection<? extends Assignment>)newValue);
         return;
       case LustrePackage.ASTATE__ASSERTIONS:
         getAssertions().clear();
-        getAssertions().addAll((Collection<? extends Assertion>)newValue);
+        getAssertions().addAll((Collection<? extends Expression>)newValue);
         return;
       case LustrePackage.ASTATE__AUTOMATONS:
         getAutomatons().clear();
@@ -348,7 +350,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (name: ");
     result.append(name);
     result.append(')');

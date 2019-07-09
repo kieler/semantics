@@ -28,7 +28,7 @@ import de.cau.cs.kieler.kicool.ProcessorReference
 class RuntimeSystems {
     
     /** The storage */
-    private static val systems = new HashMap<System, CompilationContext>()
+    static val systems = new HashMap<System, CompilationContext>()
     
     /** Add a new runtime system. */
     static def add(System system, CompilationContext cc) {
@@ -46,10 +46,10 @@ class RuntimeSystems {
     }
     
     /** Retrieve a specific processor instance for a meta processor. */
-    static def de.cau.cs.kieler.kicool.compilation.Processor getProcessorInstance(ProcessorReference processorReference) {
+    static def Processor<?, ?> getProcessorInstance(ProcessorReference processorReference) {
         val system = processorReference.getSystem
         val cc = systems.get(system)
-        if (cc == null) {
+        if (cc === null) {
             // There is no running instance of this processor, return a new instance
             return KiCoolRegistration.getProcessorInstance(processorReference.id)
         } else {

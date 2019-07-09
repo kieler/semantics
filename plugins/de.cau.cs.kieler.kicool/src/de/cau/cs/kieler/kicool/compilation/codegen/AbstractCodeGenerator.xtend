@@ -12,20 +12,19 @@
  */
 package de.cau.cs.kieler.kicool.compilation.codegen
 
-import de.cau.cs.kieler.kicool.compilation.Processor
-import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import com.google.inject.Inject
 import com.google.inject.Injector
-import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorModule
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Map
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.annotations.Pragmatable
 import de.cau.cs.kieler.annotations.StringPragma
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
-import de.cau.cs.kieler.annotations.Pragmatable
+import de.cau.cs.kieler.annotations.registry.PragmaRegistry
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * Abstract Code Generation Processor
@@ -84,7 +83,6 @@ abstract class AbstractCodeGenerator<T, E> extends Processor<T, CodeContainer> {
         }
         
         createModuleMap(rootModel, moduleMap)
-        val commentsEnabled = environment.getProperty(COMMENTS_ENABLED)
         
         for (moduleObject : moduleMap.keySet) {
             moduleMap.get(moduleObject) => [

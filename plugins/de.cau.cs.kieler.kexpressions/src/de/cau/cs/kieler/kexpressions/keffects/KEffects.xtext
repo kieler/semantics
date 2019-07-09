@@ -82,8 +82,8 @@ PureOrValuedEmission returns keffects::Emission:
 Assignment returns keffects::Assignment:
     (annotations+=Annotation)*    
 	reference=ValuedObjectReference
-	 operator=AssignOperator expression = Expression
-	 ('schedule' schedule+=ScheduleObjectReference+)?;
+	operator=AssignOperator expression = Expression
+	('schedule' schedule+=ScheduleObjectReference+)?;
 	 
 //SubReferenceAssignment returns keffects::Assignment:
 //    (annotations+=Annotation)*    
@@ -98,8 +98,8 @@ Assignment returns keffects::Assignment:
 PostfixEffect returns keffects::Assignment:
     (annotations+=Annotation)*    
     reference=ValuedObjectReference
-     operator=PostfixOperator
-     ('schedule' schedule+=ScheduleObjectReference+)?;
+    operator=PostfixOperator
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 // Hostcode Effect Rule
 // A hostcode effect is an effect that include hostcode. It may be preceded by a list of annotations.
@@ -113,7 +113,10 @@ HostcodeEffect returns keffects::HostcodeEffect:
 ReferenceCallEffect returns keffects::ReferenceCallEffect:
     (annotations+=Annotation)*    
     valuedObject=[kexpressions::ValuedObject|PrimeID]
-        (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()');
+    ('[' indices+=Expression ']')*
+    ('.' subReference=ValuedObjectReference)?
+    (('(' parameters += Parameter (',' parameters += Parameter)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
     
 // Function Call Effect Rule
 // A function call effect works similar to the function call expression. Additionally, it may be
@@ -131,7 +134,8 @@ FunctionCallEffect returns keffects::FunctionCallEffect:
 PrintCallEffect returns keffects::PrintCallEffect:
     (annotations+=Annotation)*
     'print' 
-    ('(' parameters += Parameter (',' parameters += Parameter)* ')');
+    ('(' parameters += Parameter (',' parameters += Parameter)* ')')
+    ('schedule' schedule+=ScheduleObjectReference+)?;
 
 RandomizeCallEffect returns keffects::RandomizeCallEffect:
     {keffects::RandomizeCallEffect}

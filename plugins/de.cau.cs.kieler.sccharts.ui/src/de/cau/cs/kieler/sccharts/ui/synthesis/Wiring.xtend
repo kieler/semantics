@@ -32,6 +32,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import java.util.Set
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import static extension  org.eclipse.xtext.EcoreUtil2.*
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import java.util.Map
 
 /**
  * The class models a wiring instance if given a list of equations (assignments).
@@ -69,6 +73,9 @@ class Wiring {
                 processedEquations += eq
             }
         }
+        
+        // Things that must be done after all wires were created are placed in postProcess.
+        postProcess
     }
     
     private def boolean unprocessedEquation(Assignment equation, Set<Assignment> processedEquations) {
@@ -83,7 +90,7 @@ class Wiring {
     
     /** Create a wiring for a a single assignment. */
     def void createWires(Assignment equation) {
-        equation.expression.create(equation.reference)
+        equation.expression.create(equation.reference, equation)
     }
     
     /** 
@@ -94,13 +101,20 @@ class Wiring {
      * As another example, if the source is a vector of values then create a wire for each of the values and 
      * connect them to the sink.
      */
-    private def Wire create(Expression source, Expression sink) {
+    private def Wire create(Expression originalSource, Expression sink, Assignment equation) {
+        var source = originalSource
         if (source instanceof VectorValue) {
             // Vectors a treated differently because they potentially result in more than one wire.
-            return source.resolveVectorValueSource(sink)
+            return source.resolveVectorValueSource(sink, equation)
+        }
+        if (source instanceof OperatorExpression) {
+            if (source.operator == OperatorType.SUB && source.subExpressions.size == 1) {
+                source = source.resolveSubOperatorExpressionPrefix(sink, equation)
+            }
         }
         
         val wire = createWire(source, sink)
+        wire.equation = equation
         
         // Depending on the source's (sink's) type, we have to set wire characteristics.
         // In the case of an operator expression, we also have to create more wires.
@@ -125,7 +139,7 @@ class Wiring {
             }
             OperatorExpression: {
                 for (expression : src.subExpressions.indexed) {
-                    val w = expression.value.create(source)
+                    val w = expression.value.create(source, equation)
                     w.sinkIndex = expression.key
                 }    
             }
@@ -156,11 +170,55 @@ class Wiring {
         wire 
     }
     
+    protected def void postProcess() {
+        for (wire : wires) {
+            wire.postProcess
+        }
+        
+        for (wire : wires.filter[ sourceIsEquationTarget ].toList) {
+            val semanticSinks = wires.filter[ semanticSink == wire.semanticSink ].toList
+            for (w : semanticSinks.filter[ it != wire ].toList) {
+                w.semanticSink = w.sink
+                w.semanticSinkReferenceDeclaration = null
+            }
+//            if (wire.source instanceof ValuedObjectReference) {
+//                wire.semanticSource = wire.source
+//            }
+        }
+        
+        for (wire : wires.filter[ sourceIsEquationTarget ].toList) {
+            // This looks weird without the declaredScope test. 
+            // If you want to improve this, compare DF-0018 and DX-03.
+            if (wire.source instanceof OperatorExpression || wire.isSourceIsDeclaredInEquationScope) {
+                wire.sourceIsEquationTarget = false
+            }
+//            if (!sourceWires.nullOrEmpty) {
+//                wire.sourceIsEquationTarget = false
+//            }
+        }
+    }
+    
+    protected def void postProcess(Wire wire) {
+        var src = wire.source
+        if (src instanceof ValuedObjectReference) {
+            val declaration = src.valuedObject.declaration
+            if (declaration instanceof VariableDeclaration) {
+//                if (declaration.input) {
+//                    if (src.isSelfReferencingEquation(wire.equation, wire)) {
+//                        if (!(wire.sink instanceof ValuedObjectReference) || (wire.sink.asValuedObjectReference.valuedObject == src.valuedObject))
+//                            wire.sourceIsEquationTarget = true
+//                    }
+                    src.markSelfReferencingEquation(wire)
+//                }
+            }
+        }                
+    }
+    
     /** 
      * This method splits up vector values and creates wires for each value.
      * This is only possible if the sink is a referenced object (with more input ports).
      */
-    protected def Wire resolveVectorValueSource(VectorValue source, Expression sink) {
+    protected def Wire resolveVectorValueSource(VectorValue source, Expression sink, Assignment equation) {
         var sinkTarget = sink
         val isReferenceSink = sink.getReferenceDeclarationReference instanceof DeclarationScope
         val valuedObjectList = if (isReferenceSink) sink.getReferenceDeclarationReference.asDeclarationScope.valuedObjects.filter[ input ].toList 
@@ -176,7 +234,7 @@ class Wiring {
                          sinkTarget = sink
                      }
                 }
-                vector.create(sinkTarget)
+                vector.create(sinkTarget, equation)
             }
             i++
         }
@@ -200,58 +258,62 @@ class Wiring {
         var semanticSink = sink
         
         if (source instanceof ValuedObjectReference) {
+//            if (source.isInputVariableReference) {
             
-            if (source.subReference !== null) {
-                wire.semanticSourceSubReference = source.subReference
-            }
-            
-            var existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null))
-            if (existingSemanticReference !== null) {
-                // Directly connect the semantic source to the source of an already existing wire. 
-                if (existingSemanticReference instanceof ValuedObjectReference) {
-                    if (source.subReference === null) {
-                        val existingWire = existingSemanticReference.getSemanticSinkWire
-                        if (existingWire !== null) {
-                            // We don't want to use the existing semantic wire to the node if the subreference points to 
-                            // a referenced node. Therefore, only redirect to the existing wire if there is no subreference. 
-                            semanticSource = existingWire.semanticSource
-                            wire.semanticSourceSubReference = existingWire.semanticSourceSubReference
+                if (source.subReference !== null) {
+                    wire.semanticSourceSubReference = source.subReference
+                }
+                
+                var existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null))
+                if (existingSemanticReference !== null) {
+                    // Directly connect the semantic source to the source of an already existing wire. 
+                    if (existingSemanticReference instanceof ValuedObjectReference) {
+                        if (source.subReference === null) {
+                            val existingWire = existingSemanticReference.getSemanticSinkWire
+                            if (existingWire !== null) {
+                                // We don't want to use the existing semantic wire to the node if the subreference points to 
+                                // a referenced node. Therefore, only redirect to the existing wire if there is no subreference. 
+                                semanticSource = existingWire.semanticSource
+                                wire.semanticSourceSubReference = existingWire.semanticSourceSubReference
+                            } else {
+                                semanticSource = existingSemanticReference
+                            }
                         } else {
                             semanticSource = existingSemanticReference
                         }
-                    } else {
-                        semanticSource = existingSemanticReference
                     }
+                } else {
+                    semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null), source)
                 }
-            } else {
-                semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(source.valuedObject, null), source)
-            }
+//            }
         }
         
          
         if (sink instanceof ValuedObjectReference) {
+//            if (sink.isOutputVariableReference) {
             
-            if (sink.subReference !== null) {
-                wire.semanticSinkSubReference = sink.subReference
-            }
-            
-            val srValuedObject = null // if (sink.subReference != null) sink.subReference.valuedObject else null
-            val existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject))
-            if (existingSemanticReference !== null) {
-                if (existingSemanticReference instanceof ValuedObjectReference) {
-                    if (sink.subReference === null) {
-                        val existingWire = existingSemanticReference.getSemanticSourceWire
-                        if (existingWire !== null) {
-                            semanticSink = existingWire.semanticSink
-                            wire.semanticSinkSubReference = existingWire.semanticSinkSubReference
-                        } 
-                    } else {
-                        semanticSink = existingSemanticReference
-                    }
+                if (sink.subReference !== null) {
+                    wire.semanticSinkSubReference = sink.subReference
                 }
-            } else {
-                semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject), sink)
-            }
+                
+                val srValuedObject = null // if (sink.subReference != null) sink.subReference.valuedObject else null
+                val existingSemanticReference = semanticReferenceIndex.get(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject))
+                if (existingSemanticReference !== null) {
+                    if (existingSemanticReference instanceof ValuedObjectReference) {
+                        if (sink.subReference === null) {
+                            val existingWire = existingSemanticReference.getSemanticSourceWire
+                            if (existingWire !== null) {
+                                semanticSink = existingWire.semanticSink
+                                wire.semanticSinkSubReference = existingWire.semanticSinkSubReference
+                            } 
+                        } else {
+                            semanticSink = existingSemanticReference
+                        }
+                    }
+                } else {
+                    semanticReferenceIndex.put(new Pair<ValuedObject, ValuedObject>(sink.valuedObject, srValuedObject), sink)
+                }
+//            }
         }
         wire.semanticSource = semanticSource
         wire.semanticSink = semanticSink
@@ -260,6 +322,77 @@ class Wiring {
         index.put(new Pair<Expression, Expression>(source, sink), wire)
         
         return wire
+    }
+    
+    protected def Expression resolveSubOperatorExpressionPrefix(OperatorExpression source, Expression sink, Assignment equation) {
+        val subExpression = source.subExpressions.head
+        if (subExpression instanceof IntValue) {
+            subExpression.value = -subExpression.value
+            return subExpression
+        } else if (subExpression instanceof FloatValue) {
+            subExpression.value = -subExpression.value
+            return subExpression
+        }
+        
+        return source
+    }
+    
+    protected def void markSelfReferencingEquation(ValuedObjectReference source, Wire wire) {
+        if (source.isSameValuedObjectInReference(wire.sink)) {
+            wire.sourceIsEquationTarget = true
+        } else {
+            val visited = <Wire, Boolean> newHashMap
+            source.isSelfReferencingEquation(source, wire, visited)
+        }
+    }
+    
+    protected def boolean isSelfReferencingEquation(Expression source, ValuedObjectReference target, Wire wire, 
+        Map<Wire, Boolean> visited
+    ) {
+//        println(wire)
+        if (visited.containsKey(wire)) return visited.get(wire);
+        visited.put(wire, false)
+
+        if (wire.sink != target && wire.sink.isSameValuedObjectInReference(target)) {
+            visited.put(wire, true)
+            return true
+        }
+        
+        switch(source) {
+            ValuedObjectReference: {
+                if (source != target && source.isSameValuedObjectInReference(target)) {
+                    visited.put(wire, true)
+                    return true
+                } else {
+                    val targetWires = wires.filter[ 
+                        it.source == wire.sink ||
+                        it.source.isSameValuedObjectInReference(wire.sink)
+                    ].toList                    
+                    if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
+                        wire.sourceIsEquationTarget = true
+//                        targetWires.forEach[ it.source.isSelfReferencingEquation(target, it, visited) ]
+                    }
+                    return false
+                }
+            }
+            OperatorExpression: {
+//                for (sre : source.subExpressions) {
+                    val targetWires = wires.filter[ 
+                        it.source == wire.sink ||
+                        it.source.isSameValuedObjectInReference(wire.sink)
+                    ].toList
+//                    println(targetWires)
+                    if (targetWires.exists[ it.source.isSelfReferencingEquation(target, it, visited) ]) {
+//                        targetWires.forEach[ it.source.isSelfReferencingEquation(target, it, visited) ]
+                        visited.put(wire, true)
+                        return true
+                    }
+//                }
+                return false
+            }
+            default: {}
+        }
+        return false
     }
     
     /** Retrieve an existing wire from the index. */

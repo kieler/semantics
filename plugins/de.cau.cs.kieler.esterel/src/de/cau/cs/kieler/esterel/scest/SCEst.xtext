@@ -45,7 +45,7 @@ InstructionStatement returns scl::Statement:
 ;
 
 SCLStatement returns scl::Statement:
-    Assignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
+    SclAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | ModuleCall | ScopeStatement
 ;
 
 @Override

@@ -59,6 +59,7 @@ class SCChartsNetlistTransformationTest extends AbstractXTextModelRepositoryTest
         && !modelData.modelProperties.contains("known-to-fail") // TODO Test them anyway?
         && !modelData.modelProperties.contains("must-fail")
         && !modelData.modelProperties.contains("not-sasc")
+        && !modelData.modelProperties.contains("not-asc")
         && !modelData.modelProperties.contains("netlist-fails")
         && !modelData.modelProperties.contains("issues") // since most models focus on grammar/modeling issues rather than compiling
     }

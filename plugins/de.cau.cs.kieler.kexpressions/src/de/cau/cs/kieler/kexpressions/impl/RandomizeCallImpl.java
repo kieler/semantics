@@ -80,6 +80,7 @@ public class RandomizeCallImpl extends EObjectImpl implements RandomizeCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.RANDOMIZE_CALL__SCHEDULE);
@@ -92,6 +93,7 @@ public class RandomizeCallImpl extends EObjectImpl implements RandomizeCall {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.RANDOMIZE_CALL__PARAMETERS);

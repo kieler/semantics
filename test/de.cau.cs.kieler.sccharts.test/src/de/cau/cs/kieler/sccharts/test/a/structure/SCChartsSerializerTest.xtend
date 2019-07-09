@@ -37,6 +37,7 @@ import static org.junit.Assert.*
 import static org.junit.Assume.*
 
 import static extension java.lang.String.*
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 
 /**
  * Tests if all SCCharts can be serializer and parsed and yield the same model.
@@ -103,6 +104,10 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             val parsed = resource.contents.head
             assertNotNull("Serialized and ReParsed model is null", parsed)
             
+            // Clear all TextExpressions as they usually don't match and EObjectContentFilter seems to work not correctly in current version
+            scc.eAllContents.filter(TextExpression).forEach[text = ""]
+            parsed.eAllContents.filter(TextExpression).forEach[text = ""]
+            
             // Compare the models
             val builder = EMFCompare.builder()
             builder.matchEngineFactoryRegistry = new MatchEngineFactoryRegistryImpl() => [
@@ -114,7 +119,7 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
 
             val scope = new FilterComparisonScope(scc, parsed, null)
             scope.EObjectContentFilter = [ EObject o |
-                if (o instanceof CommentAnnotation || o instanceof TextExpression) {
+                if (o instanceof CommentAnnotation) {
                     return false
                 }
                 return true

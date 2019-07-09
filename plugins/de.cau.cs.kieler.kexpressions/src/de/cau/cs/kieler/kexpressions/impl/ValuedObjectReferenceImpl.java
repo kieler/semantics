@@ -106,6 +106,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE);
@@ -118,6 +119,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getValuedObject() {
         if (valuedObject != null && valuedObject.eIsProxy()) {
             InternalEObject oldValuedObject = (InternalEObject)valuedObject;
@@ -144,6 +146,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setValuedObject(ValuedObject newValuedObject) {
         ValuedObject oldValuedObject = valuedObject;
         valuedObject = newValuedObject;
@@ -156,6 +159,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getIndices() {
         if (indices == null) {
             indices = new EObjectContainmentEList<Expression>(Expression.class, this, KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES);
@@ -168,6 +172,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObjectReference getSubReference() {
         return subReference;
     }
@@ -192,6 +197,7 @@ public class ValuedObjectReferenceImpl extends EObjectImpl implements ValuedObje
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSubReference(ValuedObjectReference newSubReference) {
         if (newSubReference != subReference) {
             NotificationChain msgs = null;

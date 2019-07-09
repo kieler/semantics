@@ -31,7 +31,6 @@ import org.eclipse.emf.compare.EMFCompare
 import org.eclipse.emf.compare.match.DefaultComparisonFactory
 import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
 import org.eclipse.emf.compare.match.DefaultMatchEngine
-import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin
 import org.eclipse.emf.compare.scope.FilterComparisonScope
 import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
@@ -39,6 +38,8 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
+import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
+import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -59,14 +60,14 @@ class TracingTreeExtensions {
 	 * @return root model-node.
 	 */
     def ModelWrapper root(ModelWrapper modelNode) {
-        if (modelNode == null) {
+        if (modelNode === null) {
             return null;
         }
         var root = modelNode;
 
         //this could end up in endless loop, 
         // but containment references of transformation tree in meta-model prevent cycles
-        while (root.parent != null) {
+        while (root.parent !== null) {
             root = root.parent;
         }
         return root;
@@ -80,11 +81,11 @@ class TracingTreeExtensions {
 	 * @return parent model or null
 	 */
     def ModelWrapper parent(ModelWrapper modelNode) {
-        if (modelNode == null) {
+        if (modelNode === null) {
             return null;
         }
         val sourceTransformation = modelNode.sourceTransformation;
-        if (sourceTransformation != null) {
+        if (sourceTransformation !== null) {
             return sourceTransformation.source;
         }
         return null;
@@ -96,7 +97,7 @@ class TracingTreeExtensions {
      * @return child models
      */
     def List<ModelWrapper> children(ModelWrapper modelNode) {
-        if (modelNode == null) {
+        if (modelNode === null) {
             return emptyList;
         }
         return (modelNode.targetTransformations ?: emptyList).map[it.target];
@@ -114,7 +115,7 @@ class TracingTreeExtensions {
 
         //Simple implementation of breadth-first search.
         //visited nodes are not marked because we can estimate valid (acyclic) tree
-        if (modelNode != null) {
+        if (modelNode !== null) {
             val queue = new LinkedList<ModelWrapper>();
             queue.add(modelNode);
             while (!queue.empty) {
@@ -146,9 +147,9 @@ class TracingTreeExtensions {
      */
     def int depth(ModelWrapper modelNode) {
         var depth = 0;
-        if (modelNode != null) {
+        if (modelNode !== null) {
             var node = modelNode;
-            while (node.parent != null) {
+            while (node.parent !== null) {
                 node = node.parent;
                 depth = depth + 1;
             }
@@ -184,7 +185,7 @@ class TracingTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Tree Modifiers
-    private val TracingTreeFactory factory = TracingTreeFactory.eINSTANCE;
+    val TracingTreeFactory factory = TracingTreeFactory.eINSTANCE;
 
     /**
      * Creates a new transformation tree containing given mapping as first transformation.
@@ -299,11 +300,11 @@ class TracingTreeExtensions {
         checkNotNull(targetModelTypeID, "targetModelTypeID is null");
 
         //check if source model has same type as modelNode
-        if (modelNode != null && !modelNode.transient &&
+        if (modelNode !== null && !modelNode.transient &&
             modelNode.rootObject.EObject.eClass.equals(sourceModelRoot.eClass)) {
 
             val sourceModelMap = matchModels(sourceModelRoot, modelNode.rootObject.EObject);
-            if (sourceModelMap == null) {
+            if (sourceModelMap === null) {
                 return null; //sourceModel and model represented by modelNode don't match
             }
 
@@ -333,7 +334,7 @@ class TracingTreeExtensions {
                 val eTransformation = factory.createEObjectTransformation;
                 eTransformation.modelTransformation = mTransformation;
                 val sourceElem = source.modelObjects.findFirst[it.EObject == sourceModelMap.get(entry.key)];
-                if (sourceElem != null) {
+                if (sourceElem !== null) {
                     eTransformation.source = sourceElem;
                 } else {
 
@@ -364,7 +365,7 @@ class TracingTreeExtensions {
 
         //if has source then detach model transformation and all elements
         //they will be deleted when all references are lost
-        if (source != null) {
+        if (source !== null) {
             modelNode.sourceTransformation.source = null;
             modelNode.sourceTransformation.objectTransformations.forEach[it.source = null];
         }
@@ -384,7 +385,7 @@ class TracingTreeExtensions {
      * @return modelNode itself
      */
     def ModelWrapper makeTransient(ModelWrapper modelNode) {
-        if (modelNode != null) {
+        if (modelNode !== null) {
             modelNode.transient = true;
             modelNode.modelObjects.forEach[it.EObject = null];
         }
@@ -393,7 +394,7 @@ class TracingTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Analyzer
-    private val LinkedList<Class<? extends EObject>> matchIgnoreClasses = new LinkedList;
+    val LinkedList<Class<? extends EObject>> matchIgnoreClasses = new LinkedList;
 
     /**
      * Returns a mutable list of classes which instances should be excluded in matching process.
@@ -417,7 +418,7 @@ class TracingTreeExtensions {
      * @return Pair with matching modelNode in tree and map of model matching or null.
      */
     def ModelWrapper findModelInTree(ModelWrapper tree, EObject modelRoot, String modelTypeID) {
-        return if (tree == null || modelRoot == null || modelTypeID == null) {
+        return if (tree === null || modelRoot === null || modelTypeID === null) {
             null;
         } else {
 
@@ -428,7 +429,7 @@ class TracingTreeExtensions {
                 it.modelTypeID.equals(modelTypeID);
             ].findFirst [ //find matching model to given instance
                 it.rootObject.EObject.eClass.equals(modelRoot.eClass) &&
-                    matchModels(it.rootObject.EObject, modelRoot) != null;
+                    matchModels(it.rootObject.EObject, modelRoot) !== null;
             ];
         }
     }
@@ -447,11 +448,11 @@ class TracingTreeExtensions {
      */
     def Map<EObjectWrapper, EObject> modelInstanceMapping(ModelWrapper modelNode, EObject model) {
 
-        if (modelNode != null && model != null && !modelNode.transient &&
+        if (modelNode !== null && model !== null && !modelNode.transient &&
             modelNode.rootObject.EObject.eClass.equals(model.eClass)) {
             val mapping = new HashMap;
             val matching = matchModels(modelNode.rootObject.EObject, model);
-            if (matching != null) {
+            if (matching !== null) {
                 modelNode.modelObjects.forEach [
                     mapping.put(it, matching.get(it.EObject));
                 ]
@@ -486,13 +487,13 @@ class TracingTreeExtensions {
 
         //get mapping for given source model instance
         val sourceMapping = sourceModelNode.modelInstanceMapping(sourceModel);
-        if (sourceMapping == null) {
+        if (sourceMapping === null) {
             return null;
         }
 
         //get mapping for given target model instance
         val targetMapping = targetModelNode.modelInstanceMapping(targetModel);
-        if (targetMapping == null) {
+        if (targetMapping === null) {
             return null;
         }
 
@@ -559,7 +560,7 @@ class TracingTreeExtensions {
             var node = targetModelNode; //Iteration variable for models on paths
             do {
                 val sourceTransformation = node.sourceTransformation;
-                node = if (sourceTransformation != null) {
+                node = if (sourceTransformation !== null) {
                     targetUpPath.add(sourceTransformation); //add transformation to path
                     sourceTransformation.source; //set next model node
                 } else {
@@ -570,15 +571,15 @@ class TracingTreeExtensions {
                     downwardIndex = -1; //this path is always downward
                     node = null; //break loop
                 }
-            } while (node != null);
+            } while (node !== null);
 
             //If no path is found yet, create a path from source model upward to root
             // if target model is found meanwhile stop and use existing path
-            if (path == null) {
+            if (path === null) {
                 node = sourceModelNode;
                 do {
                     val sourceTransformation = node.sourceTransformation;
-                    node = if (sourceTransformation != null) {
+                    node = if (sourceTransformation !== null) {
                         sourceUpPath.add(sourceTransformation); //add transformation to path
                         sourceTransformation.source; //set next model node
                     } else {
@@ -589,17 +590,17 @@ class TracingTreeExtensions {
                         downwardIndex = path.size; //this path is always upward
                         node = null; //break loop
                     }
-                } while (node != null);
+                } while (node !== null);
             }
 
             //if no simply upward or downward path exist there might be a leaf-to-leaf-path with change of direction
             // Therefore find a least common ancestor node (at least root) as connection between both paths
-            if (path == null) {
+            if (path === null) {
 
                 //search for a connection between the two upward paths
                 val connection = sourceUpPath.findFirst[targetUpPath.contains(it)];
 
-                if (connection == null) {
+                if (connection === null) {
 
                     //If no connection is found, the two paths are connected via root node,
                     // which can not be found by comparing the paths because path contains out of 
@@ -668,7 +669,7 @@ class TracingTreeExtensions {
      * @return true if saving was successful else false
      */
     def boolean saveTracingTree(ModelWrapper tracingTree, Resource resource) {
-        if (tracingTree != null) {
+        if (tracingTree !== null) {
             // Add the model objects to the contents.
             resource.contents.add(tracingTree);
             resource.contents.add(tracingTree.rootObject.EObject);
@@ -720,17 +721,17 @@ class TracingTreeExtensions {
      * @return null if models are not identically else bijective mapping between matching objects
      */
     private def matchModels(EObject left, EObject right) {
-        if (left == null || right == null) {
+        if (left === null || right === null) {
             return null;
         }
   
-        val matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
-        val comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
-        val matchEngine = new DefaultMatchEngine(matcher, comparisonFactory);
-        val matchEngineRegistry = EMFCompareRCPPlugin.getDefault().getMatchEngineFactoryRegistry();
-        val postProcessorRegistry = EMFCompareRCPPlugin.getDefault().getPostProcessorRegistry();
-        val comparator = EMFCompare.builder().setMatchEngineFactoryRegistry(matchEngineRegistry).
-            setPostProcessorRegistry(postProcessorRegistry).build();
+        val builder = EMFCompare.builder()
+        builder.matchEngineFactoryRegistry = new MatchEngineFactoryRegistryImpl() => [
+            val matchEngineFactory = new MatchEngineFactoryImpl(UseIdentifiers.NEVER)
+            matchEngineFactory.setRanking(1000)
+            add(matchEngineFactory)
+        ]
+        val comparator = builder.build
 
         val scope = new FilterComparisonScope(left, right, null);
         scope.setEObjectContentFilter(

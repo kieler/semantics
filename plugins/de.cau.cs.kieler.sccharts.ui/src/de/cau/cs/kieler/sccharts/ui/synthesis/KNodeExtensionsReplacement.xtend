@@ -142,6 +142,14 @@ class KNodeExtensionsReplacement {
     def KNode getNode(Object o1, Object o2) {
         newArrayList(o1, o2).internalCreateNode
     }
+
+    /**
+     * A convenient getter preserving the element image relation by a create extension.
+     */ 
+    def KNode getNode(Object o1, Object o2, Object o3) {
+        newArrayList(o1, o2, o3).internalCreateNode
+    }
+
     
     def KNode getExistingNode(Object o) {
         if (o.nodeExists) return newArrayList(o).internalCreateNode else return null
@@ -149,6 +157,10 @@ class KNodeExtensionsReplacement {
     
     def KNode getExistingNode(Object o1, Object o2) {
         if (o1.nodeExists(o2)) return newArrayList(o1, o2).internalCreateNode else return null
+    }
+
+    def KNode getExistingNode(Object o1, Object o2, Object o3) {
+        if (o1.nodeExists(o2, o3)) return newArrayList(o1, o2, o3).internalCreateNode else return null
     }
     
     
@@ -174,6 +186,15 @@ class KNodeExtensionsReplacement {
     def KNode createNode(Object o1, Object o2) {
         return o1.getNode(o2)
     }
+
+    /**
+     * An alias of {@link #getNode} allowing to express in business that the KNode will
+     * be created at this place. It is just syntactic sugar.  
+     */
+    def KNode createNode(Object o1, Object o2, Object o3) {
+        return o1.getNode(o2, o3)
+    }
+
     
     def Pair<Float, Float> getNodeSize(KNode node) {
         return new Pair<Float, Float> => [

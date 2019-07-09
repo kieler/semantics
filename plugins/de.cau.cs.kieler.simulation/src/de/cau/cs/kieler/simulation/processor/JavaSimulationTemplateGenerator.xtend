@@ -28,10 +28,8 @@ import de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames
 
 /**
  * @author als
- * @kieler.design proposed
- * @kieler.rating proposed yellow
  */
-class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor<Object> {
+class JavaSimulationTemplateGenerator extends AbstractSimulationTemplateGenerator {
     
     public static val FILE_NAME = "java-simulation.ftl" 
     
@@ -68,6 +66,14 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             logger.println("WARNING:VariableStore contains ambiguous information for variables. Only first match will be used!")
         }
         
+        if (store.variables.values.exists[container]) {
+            if (store.variables.values.exists[(input || output) && container]) {
+                environment.errors.add("Input/Output variables of type object (class/struct) are currently not supported and will be ignored.")
+            } else {
+                environment.warnings.add("Variables of type object (class/struct) are currently not supported and will be ignored.")
+            }
+        }
+        
         val cc = new CodeContainer
         val code = 
             '''
@@ -95,7 +101,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                         String line = stdInReader.readLine();
                         JSONObject json = new JSONObject(line);
                         
-                        «FOR v : store.orderedVariables»
+                        «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                             // Receive «v.key»
                             if (json.has("«v.key»")) {
                                 «v.parse("json")»
@@ -111,7 +117,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
                 private static void sendVariables() {
                     JSONObject json = new JSONObject();
                     
-                    «FOR v : store.orderedVariables»
+                    «FOR v : store.orderedVariables.dropBlacklisted.filter[!value.encapsulated && !value.container]»
                         // Send «v.key»
                         «v.serialize("json")»
                     «ENDFOR»
@@ -137,10 +143,12 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         val varName = variable.key
         val info = variable.value
         if (info.array) {
-            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variabels.")
+            if (info.isExternal) throw new UnsupportedOperationException("Cannot handle external array variables.")
             return '''«json».put("«varName»", JSONObject.wrap(${tickdata_name}.«varName»));'''
         } else if (info.isExternal) {
             return '''«json».put("«varName»", «info.externalName»);'''
+        } else if (info.isContainer) {
+            throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
             return '''«json».put("«varName»", ${tickdata_name}.«varName»);'''
         }
@@ -150,7 +158,7 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
         val varName = variable.key
         val info = variable.value
         if (info.array) {
-            if (info.external) throw new UnsupportedOperationException("Cannot handle external array variabels.")
+            if (info.external) throw new UnsupportedOperationException("Cannot handle external array variables.")
             return '''
                 JSONArray _array = «json».getJSONArray("«varName»");
                 for (int i = 0; i < _array.length(); i++) {
@@ -159,6 +167,8 @@ class JavaSimulationTemplateGenerator extends AbstractTemplateGeneratorProcessor
             '''
         } else if (info.external) {
             return '''«info.externalName» = «json».«info.jsonTypeGetter»("«varName»");'''
+        } else if (info.isContainer) {
+            throw new UnsupportedOperationException("Cannot handle class type variables.")
         } else {
             return '''${tickdata_name}.«varName» = «json».«info.jsonTypeGetter»("«varName»");'''
         }

@@ -152,6 +152,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PreemptionType getPreemption() {
         return preemption;
     }
@@ -161,6 +162,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setPreemption(PreemptionType newPreemption) {
         PreemptionType oldPreemption = preemption;
         preemption = newPreemption == null ? PREEMPTION_EDEFAULT : newPreemption;
@@ -173,6 +175,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public boolean isDeferred() {
         return deferred;
     }
@@ -182,6 +185,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDeferred(boolean newDeferred) {
         boolean oldDeferred = deferred;
         deferred = newDeferred;
@@ -194,6 +198,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public HistoryType getHistory() {
         return history;
     }
@@ -203,6 +208,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHistory(HistoryType newHistory) {
         HistoryType oldHistory = history;
         history = newHistory == null ? HISTORY_EDEFAULT : newHistory;
@@ -215,6 +221,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public State getTargetState() {
         if (targetState != null && targetState.eIsProxy()) {
             InternalEObject oldTargetState = (InternalEObject)targetState;
@@ -256,6 +263,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTargetState(State newTargetState) {
         if (newTargetState != targetState) {
             NotificationChain msgs = null;
@@ -275,6 +283,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public State getSourceState() {
         if (eContainerFeatureID() != SCChartsPackage.TRANSITION__SOURCE_STATE) return null;
         return (State)eInternalContainer();
@@ -295,6 +304,7 @@ public class TransitionImpl extends ActionImpl implements Transition {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSourceState(State newSourceState) {
         if (newSourceState != eInternalContainer() || (eContainerFeatureID() != SCChartsPackage.TRANSITION__SOURCE_STATE && newSourceState != null)) {
             if (EcoreUtil.isAncestor(this, newSourceState))

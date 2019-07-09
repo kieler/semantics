@@ -81,7 +81,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation")
+                new SimulationStartedMessage(false, "Last compilation command was no simulation command")
             ]
         }
         // Get simulation context and dataPool
@@ -106,12 +106,12 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             datapool = this.nextDataPool
         } else {
             return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No previous simulation")
+                new SimulationStartedMessage(false, "No simulation context could be found for this uri")
             ]
         }
         val finalPool = datapool
         // Get properties categories additional to input and output (e.g. guard, ...)
-        var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.filter[!"input".equals(it.toLowerCase) && !"output".equals(it.toLowerCase)].toSet
+        var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.toSet
         val propertyFilter = <String, Boolean>newHashMap
         for (property : properties) {
             val key = property.toLowerCase
@@ -134,8 +134,8 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             }
             propertySet.put(key, list)
         ]
-        // Return the whole data pool, the inputs, the outputs, and properties with their respective elements
-        val message = new SimulationStartedMessage(true, "", datapool.pool, datapool.input, datapool.output, propertySet)
+        // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
+        val message = new SimulationStartedMessage(true, "", datapool.pool, propertySet)
         return this.requestManager.runRead[ cancelIndicator |
             message
         ]

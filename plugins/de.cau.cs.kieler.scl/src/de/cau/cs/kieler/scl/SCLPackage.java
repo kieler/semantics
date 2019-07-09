@@ -872,6 +872,237 @@ public interface SCLPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.ReturnImpl <em>Return</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.ReturnImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getReturn()
+     * @generated
+     */
+    int RETURN = 16;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__SEMICOLON = STATEMENT__SEMICOLON;
+
+    /**
+     * The feature id for the '<em><b>Expression</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN__EXPRESSION = STATEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Return</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int RETURN_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl <em>Method Implementation Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getMethodImplementationDeclaration()
+     * @generated
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION = 17;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__ANNOTATIONS = KExpressionsPackage.METHOD_DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.METHOD_DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__ACCESS = KExpressionsPackage.METHOD_DECLARATION__ACCESS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__SCHEDULE = KExpressionsPackage.METHOD_DECLARATION__SCHEDULE;
+
+    /**
+     * The feature id for the '<em><b>Return Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__RETURN_TYPE = KExpressionsPackage.METHOD_DECLARATION__RETURN_TYPE;
+
+    /**
+     * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__PARAMETER_DECLARATIONS = KExpressionsPackage.METHOD_DECLARATION__PARAMETER_DECLARATIONS;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__DECLARATIONS = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION__STATEMENTS = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The number of structural features of the '<em>Method Implementation Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_IMPLEMENTATION_DECLARATION_FEATURE_COUNT = KExpressionsPackage.METHOD_DECLARATION_FEATURE_COUNT + 2;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.scl.impl.LoopImpl <em>Loop</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.scl.impl.LoopImpl
+     * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getLoop()
+     * @generated
+     */
+    int LOOP = 18;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__ANNOTATIONS = STATEMENT__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Semicolon</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__SEMICOLON = STATEMENT__SEMICOLON;
+
+    /**
+     * The feature id for the '<em><b>Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__DECLARATIONS = STATEMENT_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Statements</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__STATEMENTS = STATEMENT_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Initialization</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__INITIALIZATION = STATEMENT_FEATURE_COUNT + 2;
+
+    /**
+     * The feature id for the '<em><b>Initialization Declaration</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__INITIALIZATION_DECLARATION = STATEMENT_FEATURE_COUNT + 3;
+
+    /**
+     * The feature id for the '<em><b>Condition</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__CONDITION = STATEMENT_FEATURE_COUNT + 4;
+
+    /**
+     * The feature id for the '<em><b>Afterthought</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP__AFTERTHOUGHT = STATEMENT_FEATURE_COUNT + 5;
+
+    /**
+     * The number of structural features of the '<em>Loop</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int LOOP_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 6;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.scl.SCLProgram <em>Program</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1120,6 +1351,91 @@ public interface SCLPackage extends EPackage {
     EAttribute getSequencePart_Semicolon();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Return <em>Return</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Return</em>'.
+     * @see de.cau.cs.kieler.scl.Return
+     * @generated
+     */
+    EClass getReturn();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Return#getExpression <em>Expression</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Expression</em>'.
+     * @see de.cau.cs.kieler.scl.Return#getExpression()
+     * @see #getReturn()
+     * @generated
+     */
+    EReference getReturn_Expression();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.MethodImplementationDeclaration <em>Method Implementation Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Method Implementation Declaration</em>'.
+     * @see de.cau.cs.kieler.scl.MethodImplementationDeclaration
+     * @generated
+     */
+    EClass getMethodImplementationDeclaration();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.scl.Loop <em>Loop</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Loop</em>'.
+     * @see de.cau.cs.kieler.scl.Loop
+     * @generated
+     */
+    EClass getLoop();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Loop#getInitialization <em>Initialization</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Initialization</em>'.
+     * @see de.cau.cs.kieler.scl.Loop#getInitialization()
+     * @see #getLoop()
+     * @generated
+     */
+    EReference getLoop_Initialization();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Loop#getInitializationDeclaration <em>Initialization Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Initialization Declaration</em>'.
+     * @see de.cau.cs.kieler.scl.Loop#getInitializationDeclaration()
+     * @see #getLoop()
+     * @generated
+     */
+    EReference getLoop_InitializationDeclaration();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Loop#getCondition <em>Condition</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Condition</em>'.
+     * @see de.cau.cs.kieler.scl.Loop#getCondition()
+     * @see #getLoop()
+     * @generated
+     */
+    EReference getLoop_Condition();
+
+    /**
+     * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.scl.Loop#getAfterthought <em>Afterthought</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference '<em>Afterthought</em>'.
+     * @see de.cau.cs.kieler.scl.Loop#getAfterthought()
+     * @see #getLoop()
+     * @generated
+     */
+    EReference getLoop_Afterthought();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1364,6 +1680,76 @@ public interface SCLPackage extends EPackage {
          * @generated
          */
         EAttribute SEQUENCE_PART__SEMICOLON = eINSTANCE.getSequencePart_Semicolon();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.ReturnImpl <em>Return</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.ReturnImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getReturn()
+         * @generated
+         */
+        EClass RETURN = eINSTANCE.getReturn();
+
+        /**
+         * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference RETURN__EXPRESSION = eINSTANCE.getReturn_Expression();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl <em>Method Implementation Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.MethodImplementationDeclarationImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getMethodImplementationDeclaration()
+         * @generated
+         */
+        EClass METHOD_IMPLEMENTATION_DECLARATION = eINSTANCE.getMethodImplementationDeclaration();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.scl.impl.LoopImpl <em>Loop</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.scl.impl.LoopImpl
+         * @see de.cau.cs.kieler.scl.impl.SCLPackageImpl#getLoop()
+         * @generated
+         */
+        EClass LOOP = eINSTANCE.getLoop();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LOOP__INITIALIZATION = eINSTANCE.getLoop_Initialization();
+
+        /**
+         * The meta object literal for the '<em><b>Initialization Declaration</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LOOP__INITIALIZATION_DECLARATION = eINSTANCE.getLoop_InitializationDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LOOP__CONDITION = eINSTANCE.getLoop_Condition();
+
+        /**
+         * The meta object literal for the '<em><b>Afterthought</b></em>' containment reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference LOOP__AFTERTHOUGHT = eINSTANCE.getLoop_Afterthought();
 
     }
 

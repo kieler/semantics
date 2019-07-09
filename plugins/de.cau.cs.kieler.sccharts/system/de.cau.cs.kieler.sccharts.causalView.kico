@@ -1,0 +1,4 @@
+developer system de.cau.cs.kieler.sccharts.causalView
+	label "SCCharts Causal View"
+    
+de.cau.cs.kieler.sccharts.processors.controlDependencies

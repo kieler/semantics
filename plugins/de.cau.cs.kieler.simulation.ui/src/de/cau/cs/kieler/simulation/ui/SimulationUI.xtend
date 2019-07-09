@@ -36,7 +36,6 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
-import de.cau.cs.kieler.simulation.ide.SimulationIDE
 
 /**
  * Handles the one simulation that should be shown in the UI.
@@ -114,7 +113,7 @@ class SimulationUI {
     }
     
     static def startSimulation(SimulationContext context) {
-        SimulationIDE.startSimulation(context)
+        startSimulation(context)
         val console = Consoles.getConsole(SIMULATION_CONSOLE_NAME)
         currentSimulation.outputStream = console.getInfoStream()
         currentSimulation.errorStream = console.getErrorStream()
@@ -131,6 +130,10 @@ class SimulationUI {
     }
     
     static def compileAndStartSimulation(String system, Object model) {
+        compileAndStartSimulation(system, model, null)
+    }
+    
+    static def compileAndStartSimulation(String system, Object model, Environment startEnvironment) {
         Job.create("Simulation Compilation", new IJobFunction() {
             
             override run(IProgressMonitor monitor) {
@@ -140,6 +143,7 @@ class SimulationUI {
                 try {
                     val context = Compile.createCompilationContext(system, model)
                     context.startEnvironment.setProperty(Environment.INPLACE, true)
+                    context.startEnvironment.copyProperties(startEnvironment)
                     context.compile
                     
                     if (monitor.canceled) {return Status.CANCEL_STATUS}
@@ -178,7 +182,7 @@ class SimulationUI {
             priority = Job.INTERACTIVE
             schedule()
         ]
-    }  
+    }
 
     static def updateUI(() => void task) {
         updateUI(true, task)

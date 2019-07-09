@@ -3,9 +3,10 @@
 package de.cau.cs.kieler.kexpressions.impl;
 
 import de.cau.cs.kieler.annotations.impl.AnnotatableImpl;
+
+import de.cau.cs.kieler.kexpressions.AccessModifier;
 import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.kexpressions.ValueType;
 import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import java.util.Collection;
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl#getValuedObjects <em>Valued Objects</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl#isPrivate <em>Private</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.DeclarationImpl#getAccess <em>Access</em>}</li>
  * </ul>
  *
  * @generated
@@ -49,23 +50,24 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
     protected EList<ValuedObject> valuedObjects;
 
     /**
-     * The default value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The default value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected static final boolean PRIVATE_EDEFAULT = false;
+    protected static final AccessModifier ACCESS_EDEFAULT = AccessModifier.PUBLIC;
+
     /**
-     * The cached value of the '{@link #isPrivate() <em>Private</em>}' attribute.
+     * The cached value of the '{@link #getAccess() <em>Access</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #isPrivate()
+     * @see #getAccess()
      * @generated
      * @ordered
      */
-    protected boolean private_ = PRIVATE_EDEFAULT;
+    protected AccessModifier access = ACCESS_EDEFAULT;
 
     /**
      * <!-- begin-user-doc -->
@@ -91,6 +93,7 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ValuedObject> getValuedObjects() {
         if (valuedObjects == null) {
             valuedObjects = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, KExpressionsPackage.DECLARATION__VALUED_OBJECTS);
@@ -103,8 +106,9 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
-    public boolean isPrivate() {
-        return private_;
+    @Override
+    public AccessModifier getAccess() {
+        return access;
     }
 
     /**
@@ -112,11 +116,12 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
      * <!-- end-user-doc -->
      * @generated
      */
-    public void setPrivate(boolean newPrivate) {
-        boolean oldPrivate = private_;
-        private_ = newPrivate;
+    @Override
+    public void setAccess(AccessModifier newAccess) {
+        AccessModifier oldAccess = access;
+        access = newAccess == null ? ACCESS_EDEFAULT : newAccess;
         if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__PRIVATE, oldPrivate, private_));
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.DECLARATION__ACCESS, oldAccess, access));
     }
 
     /**
@@ -143,8 +148,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
         switch (featureID) {
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 return getValuedObjects();
-            case KExpressionsPackage.DECLARATION__PRIVATE:
-                return isPrivate();
+            case KExpressionsPackage.DECLARATION__ACCESS:
+                return getAccess();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -162,8 +167,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
                 getValuedObjects().clear();
                 getValuedObjects().addAll((Collection<? extends ValuedObject>)newValue);
                 return;
-            case KExpressionsPackage.DECLARATION__PRIVATE:
-                setPrivate((Boolean)newValue);
+            case KExpressionsPackage.DECLARATION__ACCESS:
+                setAccess((AccessModifier)newValue);
                 return;
         }
         super.eSet(featureID, newValue);
@@ -180,8 +185,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 getValuedObjects().clear();
                 return;
-            case KExpressionsPackage.DECLARATION__PRIVATE:
-                setPrivate(PRIVATE_EDEFAULT);
+            case KExpressionsPackage.DECLARATION__ACCESS:
+                setAccess(ACCESS_EDEFAULT);
                 return;
         }
         super.eUnset(featureID);
@@ -197,8 +202,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
         switch (featureID) {
             case KExpressionsPackage.DECLARATION__VALUED_OBJECTS:
                 return valuedObjects != null && !valuedObjects.isEmpty();
-            case KExpressionsPackage.DECLARATION__PRIVATE:
-                return private_ != PRIVATE_EDEFAULT;
+            case KExpressionsPackage.DECLARATION__ACCESS:
+                return access != ACCESS_EDEFAULT;
         }
         return super.eIsSet(featureID);
     }
@@ -213,8 +218,8 @@ public abstract class DeclarationImpl extends AnnotatableImpl implements Declara
         if (eIsProxy()) return super.toString();
 
         StringBuilder result = new StringBuilder(super.toString());
-        result.append(" (private: ");
-        result.append(private_);
+        result.append(" (access: ");
+        result.append(access);
         result.append(')');
         return result.toString();
     }

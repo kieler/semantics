@@ -15,12 +15,9 @@ package de.cau.cs.kieler.kicool.ui.view.registry
 import org.eclipse.swt.events.DisposeEvent
 import org.eclipse.swt.events.DisposeListener
 import org.eclipse.swt.widgets.Composite
-import org.eclipse.ui.IEditorPart
-import org.eclipse.ui.IEditorReference
 import org.eclipse.ui.IPartListener2
 import org.eclipse.ui.IWorkbenchPartReference
-import org.eclipse.ui.PlatformUI
-import org.eclipse.ui.part.EditorPart
+import de.cau.cs.kieler.klighd.ui.parts.DiagramViewPart
 
 /**
  * Own PartListener for the compilation registry view
@@ -31,7 +28,7 @@ import org.eclipse.ui.part.EditorPart
  */
 class CompilerRegistryViewPartListener implements IPartListener2 {
     
-    private CompilerRegistryView view
+    var CompilerRegistryView view
     
     new(CompilerRegistryView view, Composite parent) {
         this.view = view
@@ -45,15 +42,11 @@ class CompilerRegistryViewPartListener implements IPartListener2 {
         });        
     }
     
-    def updateCompilerView(IWorkbenchPartReference partRef) {
-        view.updateView
-    }    
-    
     override partActivated(IWorkbenchPartReference partRef) {
         val part = partRef.getPart(false)
         if (part === null) return;
         if (part instanceof CompilerRegistryView) {
-            view.updateView
+            (view as IDiagramViewUpdate).updateView
         }
     }
     
@@ -76,7 +69,7 @@ class CompilerRegistryViewPartListener implements IPartListener2 {
         val part = partRef.getPart(false)
         if (part === null) return;
         if (part instanceof CompilerRegistryView) {
-            view.updateView
+            (view as IDiagramViewUpdate).updateView
         }
     }
     

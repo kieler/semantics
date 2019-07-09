@@ -202,6 +202,15 @@ public class KEffectsSwitch<T> extends Switch<T> {
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
+            case KEffectsPackage.CONTROL_DEPENDENCY: {
+                ControlDependency controlDependency = (ControlDependency)theEObject;
+                T result = caseControlDependency(controlDependency);
+                if (result == null) result = caseDependency(controlDependency);
+                if (result == null) result = caseLink(controlDependency);
+                if (result == null) result = caseAnnotatable(controlDependency);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
             default: return defaultCase(theEObject);
         }
     }
@@ -383,6 +392,21 @@ public class KEffectsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseDataDependency(DataDependency object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Control Dependency</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Control Dependency</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseControlDependency(ControlDependency object) {
         return null;
     }
 

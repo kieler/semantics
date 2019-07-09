@@ -16,13 +16,19 @@ package de.cau.cs.kieler.scl.processors.transformators
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
@@ -39,28 +45,35 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGThreadExtensions
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import de.cau.cs.kieler.scl.Goto
 import de.cau.cs.kieler.scl.Label
+import de.cau.cs.kieler.scl.Loop
+import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import de.cau.cs.kieler.scl.Module
 import de.cau.cs.kieler.scl.Parallel
 import de.cau.cs.kieler.scl.Pause
+import de.cau.cs.kieler.scl.Return
 import de.cau.cs.kieler.scl.SCLFactory
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.Scope
 import de.cau.cs.kieler.scl.Statement
+import de.cau.cs.kieler.scl.StatementContainer
 import de.cau.cs.kieler.scl.extensions.SCLExtensions
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
+import java.util.Map
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtend.lib.annotations.Accessors
 
+import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
+
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static de.cau.cs.kieler.scg.processors.SCGAnnotations.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
 
 /** 
  * SCL to SCG Transformation 
@@ -75,7 +88,8 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     private static val String ANNOTATION_CONTROLFLOWTHREADPATHTYPE = "cfPathType"
 
     @Inject extension SCGControlFlowExtensions 
-    @Inject extension SCGThreadExtensions    
+    @Inject extension SCGThreadExtensions   
+    @Inject extension SCGMethodExtensions   
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension AnnotationsExtensions
@@ -83,6 +97,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     @Inject extension KEffectsExtensions
     static val sCGFactory = ScgFactory.eINSTANCE
     extension ScgFactory = ScgFactory::eINSTANCE
+    static val sclFactory = SCLFactory::eINSTANCE
 
     // -------------------------------------------------------------------------
     // -- Processor
@@ -122,6 +137,7 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
     private val labelMapping = new HashMap<Label, Node>()
     private val gotoFlows = new HashMap<Goto, List<ControlFlow>>()
     private val unmappedLabels = new LinkedList<Label>
+    private var ValuedObject returnVO = null
     
     /*
      * Transformation method
@@ -140,22 +156,28 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
             module.initialize
             	
             // ... and copy declarations.
-            for (declaration : module.declarations) {
-                val newDeclaration = createDeclaration(declaration).trace(declaration)
-                newDeclaration.annotations.addAll(declaration.annotations.map[copy])
-                for (valuedObject : declaration.valuedObjects) {
-                    val newValuedObject = createValuedObject(valuedObject.name).trace(valuedObject)
-                    newDeclaration.valuedObjects += newValuedObject
-                    valuedObjectMapping.put(valuedObject, newValuedObject)
-                
-                    // Fix VO association in VariableStore
-                    if (voStore !== null) {
-                        val info = voStore.variables.get(valuedObject.name).findFirst[it.valuedObject == valuedObject]
-                        if (info !== null) info.valuedObject = newValuedObject
+            val declMapping = newHashMap
+            scg.declarations += module.declarations.copyDeclarations(valuedObjectMapping, declMapping)
+            declMapping.entrySet.forEach[
+                value.trace(key)
+                // Convert method body
+                if (key instanceof MethodImplementationDeclaration) {
+                    val method = key as MethodImplementationDeclaration
+                    if (!method.statements.nullOrEmpty) {
+                        scgs.scgs += method.transformMethod(value as MethodDeclaration, valuedObjectMapping)
                     }
                 }
-                scg.declarations += newDeclaration
-            }
+            ]
+            valuedObjectMapping.entrySet.forEach[
+                value.trace(key)
+                
+                // Fix VO association in VariableStore
+                if (voStore !== null) {
+                    val oldVO = key
+                    val info = voStore.getInfo(oldVO)
+                    if (info !== null) info.valuedObject = value
+                }
+            ]
     
             module.transform(scg, null)
             module.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
@@ -173,7 +195,6 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                     entry.createStringAnnotation(ANNOTATION_CONTROLFLOWTHREADPATHTYPE, threadPathTypes.get(entry).toString2)
             }             
         }
-        
         return scgs
     }
     
@@ -225,6 +246,166 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         toDelete.forEach[it.remove]
     }
     
+    def SCGraph transformMethod(MethodImplementationDeclaration method, MethodDeclaration newMethod, Map<ValuedObject, ValuedObject> voMappig) {
+        val voStore = if (environments !== null) VariableStore.get(environment)
+        
+        // Save state
+        val _valuedObjectMapping = new HashMap<ValuedObject, ValuedObject>
+        _valuedObjectMapping.putAll(valuedObjectMapping)
+        valuedObjectMapping.clear
+        valuedObjectMapping.putAll(voMappig)
+        val _nodeMapping = new HashMap<EObject, List<Node>>()
+        _nodeMapping.putAll(nodeMapping)
+        nodeMapping.clear
+        val _reverseNodeMapping = new HashMap<Node, EObject>()
+        _reverseNodeMapping.putAll(reverseNodeMapping)
+        reverseNodeMapping.clear
+        val _labelMapping = new HashMap<Label, Node>()
+        _labelMapping.putAll(labelMapping)
+        labelMapping.clear
+        val _gotoFlows = new HashMap<Goto, List<ControlFlow>>()
+        _gotoFlows.putAll(gotoFlows)
+        gotoFlows.clear
+        val _unmappedLabels = new LinkedList<Label>
+        _unmappedLabels.addAll(unmappedLabels)
+        unmappedLabels.clear
+                
+        returnVO = null
+        
+        // Add goto after return
+        val exitL = sclFactory.createLabel => [name = "_end"]
+        method.statements.add(method.statements.size, exitL)
+        for (ret : method.eAllContents.filter(Return).toList) {
+            val container = ret.eContainer as StatementContainer
+            container.statements.add(container.statements.indexOf(ret) + 1, sclFactory.createGoto => [target = exitL])
+        }
+        
+        method.removeDoubleJumps
+        method.removeLocalDeclarations
+//        method.removeRedundantForks
+        method.optimizeLabels
+        method.removeUnreachableCode
+        
+        val scg = createSCGraph
+        val declMapping = newHashMap
+        val declVOMapping = newHashMap
+        // Inner declarations
+        scg.declarations += method.declarations.copyDeclarations(declVOMapping, declMapping)
+        declMapping.entrySet.forEach[
+            value.trace(key)
+            // Convert method body
+            if (key instanceof MethodImplementationDeclaration) {
+                throw new IllegalArgumentException("Cannot handle method declarations in methods")
+            }
+        ]
+        declVOMapping.entrySet.forEach[
+            val oldVO = key
+            val newVO = value
+            newVO.trace(oldVO)
+            valuedObjectMapping.put(oldVO, newVO)
+            // Fix VO association in VariableStore
+            if (voStore !== null) {
+                val info = voStore.getInfo(oldVO)
+                if (info !== null) info.valuedObject = newVO
+            }
+            // Initialize
+            if (newVO.initialValue !== null) {
+                method.statements.add(0,
+                    SCLFactory::eINSTANCE.createAssignment => [
+                        it.trace(newVO)
+                        valuedObject = oldVO // replaced later in translation
+                        expression = oldVO.initialValue.copy // replaced later in translation
+                    ])
+            }
+        ]
+        // Parameters
+        declMapping.clear
+        declVOMapping.clear
+        scg.declarations += method.parameterDeclarations.copyDeclarations(declVOMapping, declMapping)
+        declMapping.entrySet.forEach[key.trace(value)]
+        declVOMapping.entrySet.forEach[
+            val oldVO = key
+            val newVO = value
+            newVO.trace(oldVO)
+            valuedObjectMapping.put(oldVO, newVO)
+            newVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, method.parameterDeclarations.indexOf(oldVO.eContainer))
+            // Fix VO association in VariableStore
+            if (voStore !== null) {
+                val info = voStore.variables.get(oldVO.name).findFirst[it.valuedObject == oldVO]
+                if (info !== null) info.valuedObject = newVO
+            }
+            // Do not init paramter
+        ]
+        
+        // Transform
+        val entry = createEntry.trace(method).createNodeList(method) as Entry => [
+            scg.nodes += it
+        ]
+        method.statements.transform(scg, entry.createControlFlow.toList) => [ continuation |
+            createExit.trace(method).createNodeList(method) as Exit => [
+                scg.nodes += it
+                it.entry = entry
+                it.controlFlowTarget(continuation.getControlFlows)
+                labelMapping.put(continuation.label, it)
+                for (l : unmappedLabels)
+                    labelMapping.put(l, it)
+                unmappedLabels.clear
+            ]
+        ]
+        method.eAllContents.filter(Goto).forEach[transform(scg, gotoFlows.get(it))]
+
+        // Add return
+        if (returnVO !== null) {
+            scg.declarations += createVariableDeclaration(method.returnType) => [valuedObjects += returnVO]
+            returnVO.addTagAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)
+        }
+        
+        if (newMethod !== null) {
+            scg.addReferenceAnnotation(SCGAnnotations.ANNOTATION_METHOD_REFERENCE, newMethod)
+            // Handle self object reference
+            if (newMethod.eContainer instanceof ClassDeclaration) {
+                val classDecl = newMethod.eContainer as ClassDeclaration
+                val innerVOs = classDecl.declarations.map[valuedObjects].flatten.toList
+                val VORtoInner = scg.nodes.map[eAllContents.filter(ValuedObjectReference).toIterable].flatten.filter[innerVOs.contains(valuedObject)].toList
+                if (!VORtoInner.empty) {
+                    if (classDecl.eContainer instanceof ClassDeclaration) {
+                        throw new IllegalArgumentException("Cannot handle methods in nested classes")
+                    } else {
+                        val selfVO = createValuedObject("self")
+                        scg.declarations += createVariableDeclaration(ValueType.HOST) => [
+                            valuedObjects += selfVO
+                            hostType = classDecl.name
+                        ]
+                        selfVO.addIntAnnotation(SCGAnnotations.ANNOTATION_METHOD_PARAMETER, -1)
+                        // Fix VOR
+                        for (vor : VORtoInner) {
+                            val wrapper = selfVO.reference
+                            vor.replace(wrapper)
+                            wrapper.subReference = vor
+                        }
+                    }
+                }
+            }
+        }
+        
+        scg.removeSuperflousConditionals
+        scg.markAllLocalVariables
+        
+        // restore state
+        valuedObjectMapping.clear
+        valuedObjectMapping.putAll(_valuedObjectMapping)
+        nodeMapping.clear
+        nodeMapping.putAll(_nodeMapping)
+        reverseNodeMapping.clear
+        reverseNodeMapping.putAll(_reverseNodeMapping)
+        labelMapping.clear
+        labelMapping.putAll(_labelMapping)
+        gotoFlows.clear
+        gotoFlows.putAll(_gotoFlows)
+        unmappedLabels.clear
+        unmappedLabels.addAll(_unmappedLabels)
+        return scg
+    }
 
     private dispatch def SCLContinuation transform(Module program, SCGraph scg, List<ControlFlow> incoming) {
         val entry = createEntry.trace(program).createNodeList(program) as Entry => [
@@ -303,8 +484,8 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
                 node = sCGFactory.createAssignment.trace(assignment).createNodeList(assignment) as Assignment => [
                     scg.nodes += it
                     it.operator = assignment.operator
-                    it.expression = assignment.expression.copyExpression
-                    it.valuedObject = assignment.valuedObject.copyValuedObject
+                    if (assignment.expression !== null) it.expression = assignment.expression.copyExpression
+                    it.reference = assignment.reference.copyReference
                     it.controlFlowTarget(incoming)
                     for(annotation : assignment.annotations) {
                         it.annotations += annotation.copy
@@ -399,22 +580,126 @@ class SCLToSCGTransformation extends Processor<SCLProgram, SCGraphs> implements 
         ]
     }
     
+    private dispatch def SCLContinuation transform(Return ret, SCGraph scg,
+        List<ControlFlow> incoming) {
+        new SCLContinuation => [
+            node = sCGFactory.createAssignment.trace(ret).createNodeList(ret) as Assignment => [
+                scg.nodes += it
+                if (ret.expression !== null) it.expression = ret.expression.copyExpression
+                if (returnVO === null) returnVO = createValuedObject => [name = "return"]
+                it.valuedObject = returnVO
+                it.controlFlowTarget(incoming)
+                it.addTagAnnotation(SCGAnnotations.ANNOTATION_RETURN_NODE)
+                for(annotation : ret.annotations) {
+                    it.annotations += annotation.copy
+                }
+            ]
+            controlFlows += node.createControlFlow
+        ]
+    }
+    
     private dispatch def SCLContinuation transform(Scope scope, SCGraph scg, List<ControlFlow> incoming) {
     	transform(scope.statements, scg, incoming)
+    }
+    
+    private dispatch def SCLContinuation transform(Loop loop, SCGraph scg, List<ControlFlow> incoming) {
+        new SCLContinuation => [ continue |
+            var cf = incoming
+            // init
+            if (loop.initialization !== null) {
+                val init = loop.initialization
+                val asm = sCGFactory.createAssignment.trace(loop, init).createNodeList(init) as Assignment
+                scg.nodes += asm
+                asm.expression = init.expression.copyExpression
+                asm.reference = init.reference.copyReference
+                asm.operator = init.operator
+                asm.controlFlowTarget(cf)
+                asm.markLoopHeaderPart("init")
+                asm.annotations += init.annotations.map[copy]
+                cf = newArrayList(asm.createControlFlow)
+            } else if (loop.initializationDeclaration !== null) {
+                val decl = loop.initializationDeclaration
+                scg.declarations += newArrayList(decl as Declaration).copyDeclarations(valuedObjectMapping, null)
+                VariableStore.get(environment)?.remove(decl.valuedObjects.head)
+                scg.declarations.last => [
+                    trace(decl)
+                    markLoopHeaderPart("init")
+                ]
+                for (vo : decl.valuedObjects) {
+                    if (vo.initialValue !== null) {
+                        val init = vo.initialValue
+                        val asm = sCGFactory.createAssignment.trace(loop, decl).createNodeList(vo) as Assignment
+                        scg.nodes += asm
+                        asm.expression = init.copyExpression
+                        asm.valuedObject = vo.copyValuedObject
+                        asm.operator = AssignOperator.ASSIGN
+                        asm.controlFlowTarget(cf)
+                        asm.markLoopHeaderPart("init", "decl")
+                        asm.annotations += vo.annotations.map[copy]
+                        cf = newArrayList(asm.createControlFlow)
+                    }
+                }
+            }
+            
+            // condition
+            val cond = createConditional.trace(loop, loop.condition).createNodeList(loop) as Conditional
+            continue.node = cond
+            scg.nodes += cond
+            cond.condition = loop.condition.copyExpression
+            cond.controlFlowTarget(cf)
+            cond.markLoopHeaderPart("condition")
+            cond.then = createControlFlow
+            cond.^else = createControlFlow
+            continue.controlFlows = newArrayList(cond.^else)
+            
+            val body = loop.statements.transform(scg, newArrayList(cond.then))
+            cf = body.controlFlows
+            // increment
+            if (loop.afterthought !== null && !cf.nullOrEmpty) {
+                val incr = loop.afterthought
+                val asm = sCGFactory.createAssignment.trace(loop, incr).createNodeList(incr) as Assignment
+                scg.nodes += asm
+                asm.expression = incr.expression.copyExpression
+                asm.reference = incr.reference.copyReference
+                asm.operator = incr.operator
+                asm.controlFlowTarget(cf)
+                asm.markLoopHeaderPart("after")
+                asm.annotations += incr.annotations.map[copy]
+                cf = newArrayList(asm.createControlFlow)
+            }
+            
+            // loop
+            cf?.forEach[
+                markExplicitLoop
+                target = cond
+            ]
+        ]
     }
 
     // Valued objects must be set according to the mapping!
     private def ValuedObject copyValuedObject(ValuedObject valuedObject) {
         valuedObjectMapping.get(valuedObject)
     }
+    
+    private def ValuedObjectReference copyReference(ValuedObjectReference vor) {
+        if (vor === null) return null
+        if (vor.valuedObject === null) return null.reference
+        
+        val newVOR = vor.valuedObject.copyValuedObject.reference
+        newVOR.subReference = vor.subReference.copyReference
+        newVOR.indices += vor.indices.map[copyExpression]
+        return newVOR
+    }
 
     // References in expressions must be corrected as well!
     private def Expression copyExpression(Expression expression) {
         val newExpression = expression.copy
         if (newExpression instanceof ValuedObjectReference) {
-            (newExpression as ValuedObjectReference).valuedObject = (expression as ValuedObjectReference).valuedObject.
-                copyValuedObject
-        } else {
+            newExpression.valuedObject = (expression as ValuedObjectReference).valuedObject.copyValuedObject
+            newExpression.subReference = (expression as ValuedObjectReference).subReference.copyReference
+            newExpression.indices.clear
+            newExpression.indices += (expression as ValuedObjectReference).indices.map[copyExpression]
+        } else if (newExpression !== null) {
             newExpression.eAllContents.filter(typeof(ValuedObjectReference)).forEach[vor|
                 vor.valuedObject = vor.valuedObject.copyValuedObject]
         }

@@ -67,6 +67,7 @@ public class ReferenceCallImpl extends ValuedObjectReferenceImpl implements Refe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Parameter> getParameters() {
         if (parameters == null) {
             parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, KExpressionsPackage.REFERENCE_CALL__PARAMETERS);

@@ -19,18 +19,25 @@ import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.TextExpression
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.State
-
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.sccharts.Scope
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.eval.PartialExpressionEvaluator
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.VectorValue
 
 /**
  * SCCharts Const Transformation.
@@ -57,17 +64,10 @@ class Const extends SCChartsProcessor implements Traceable {
     }
 
 
-//    override getExpandsFeatureId() {
-//        return SCChartsFeature::CONST_ID
-//    }
-//
-//    override getProducesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::CONNECTOR_ID)
-//    }
-//
-//    override getNotHandlesFeatureIds() {
-//        return Sets.newHashSet(SCChartsFeature::REFERENCE_ID)
-//    }
+    extension PartialExpressionEvaluator par = new PartialExpressionEvaluator() => [ 
+        compute = true
+        inplace = true
+    ]
 
     // -------------------------------------------------------------------------
     @Inject extension AnnotationsExtensions
@@ -87,8 +87,9 @@ class Const extends SCChartsProcessor implements Traceable {
         var targetRootState = rootState
 
         // Traverse all states
-        for (scopes : targetRootState.getAllScopes.toList) {
-            scopes.transformConst
+        for (scope : targetRootState.getAllScopes.filter[ it.declarations.filter(VariableDeclaration).exists[ isConst ] ].toList) {
+            scope.evaluateExpressions
+            scope.transformConst
         }
         targetRootState;
     }
@@ -103,7 +104,46 @@ class Const extends SCChartsProcessor implements Traceable {
             
             // Replace references
             for (vor : scope.eAllContents.filter(ValuedObjectReference).filter[valuedObject == const].toIterable) {
-                vor.replace(replacement.copy)
+                val container = vor.eContainer
+                val coniainingFeature = vor.eContainingFeature 
+                if (replacement instanceof Value && container instanceof Assignment && coniainingFeature == KEffectsPackage.Literals.ASSIGNMENT__REFERENCE) {
+                    environment.errors.add("Cannot replace left hand side of assignment by a value. (Trying to replace " + vor?.valuedObject + " by " + replacement + " in " + (vor.eContainer as Assignment) + ")")
+                } else {
+                    if (!vor.indices.nullOrEmpty) {
+                        var arrayElement = replacement
+                        for (idx : vor.indices) {
+                            if (arrayElement !== null) {
+                                if (idx instanceof IntValue) {
+                                    val idxVal = idx.value
+                                    if (arrayElement instanceof VectorValue) {
+                                        if (idxVal >= 0 && idxVal < arrayElement.values.size) {
+                                            arrayElement = arrayElement.values.get(idxVal)
+                                        } else {
+                                            environment.errors.add("Cannot insert const array element. Array %s does not provide a value for index %s.".format(const.name, idxVal))
+                                            arrayElement = null
+                                        }
+                                    } else {
+                                        environment.errors.add("Cannot insert const array element. Array %s must be initialized with a vector value.".format(const.name))
+                                        arrayElement = null
+                                    }
+                                } else {
+                                    environment.errors.add("Cannot insert const array element. %s is not a valid index (integer value).".format(idx?.toString))
+                                    arrayElement = null
+                                }
+                            }
+                        }
+                        if (arrayElement !== null) {
+                            vor.replace(arrayElement.copy)
+                        }
+                    } else {
+                        vor.replace(replacement.copy)
+                    }
+                    // If replaced size in array cardinality
+                    if (container instanceof ValuedObject && coniainingFeature == KExpressionsPackage.Literals.VALUED_OBJECT__CARDINALITIES) {
+                        // Update size in VO store
+                        voStore.update(container as ValuedObject)
+                    }
+                }
             }
             
             if (const.declaration.hasAnnotation(HOSTCODE_ANNOTATION)) {
@@ -124,6 +164,18 @@ class Const extends SCChartsProcessor implements Traceable {
         constObjects.forEach[ removeFromContainmentAndCleanup; voStore.remove(it) ]
 
     }
+    
+    def void evaluateExpressions(Scope scope) {
+        val constObjects = scope.valuedObjects.filter[isConst && initialValue !== null].toList
+        
+        for (vo : constObjects) {
+            vo.initialValue.replace(vo.initialValue.evaluate)
+            if (vo.initialValue instanceof Value) {
+                par.values.put(vo, vo.initialValue as Value)
+            } 
+        }
+    }
+    
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [ rootStates.forEach[ transform ] ]
