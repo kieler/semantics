@@ -82,6 +82,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 
 /**
  * Displays the data of a running simulation.
@@ -140,6 +141,7 @@ class DataPoolView extends ViewPart implements ISimulationListener {
     private var IAction menuResetSelectedUserValue
     private var MenuManager menuSimulationListenersSubmenu
     private var IMenuListener menuSimulationListenersSubmenuPoplulator
+    private var IAction menuStartSever
     private var IAction menuHelp
 
     // -- Toolbar --
@@ -383,6 +385,13 @@ class DataPoolView extends ViewPart implements ISimulationListener {
                 }
             }
         }
+        menuStartSever = new Action("Start Simulation Server") {
+            override run() {
+                SimulationServer.start
+            }
+        }
+        menuStartSever.toolTipText = "Starts the simulation server to allow remote connetions to the simulation"
+        
         // The toolbar items are ordered from left to right in the order that they are added
         menuHelp = new Action("Show Controls") {
             override run() {
@@ -410,6 +419,8 @@ class DataPoolView extends ViewPart implements ISimulationListener {
             add(new Separator)
             add(menuResetAllUserValues)
             add(menuResetSelectedUserValue)
+            add(new Separator)
+            add(menuStartSever)
             add(menuHelp)
         ]
 
