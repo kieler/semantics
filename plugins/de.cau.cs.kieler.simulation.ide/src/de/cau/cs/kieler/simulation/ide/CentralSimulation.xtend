@@ -77,10 +77,11 @@ class CentralSimulation {
         for (listener : listeners) {
             // Add Listeners
             currentSimulation.addObserver(listener)
-            if (listener instanceof ISimulationListenerProvider) {
-                // Prepare context
-                listener.prepareNewSimulation(currentSimulation)
-            }
+        }
+        
+        for (provider : PROVIDERS) {
+            // Prepare context
+            provider.prepareNewSimulation(currentSimulation)
         }
         
         currentSimulation.start(true)

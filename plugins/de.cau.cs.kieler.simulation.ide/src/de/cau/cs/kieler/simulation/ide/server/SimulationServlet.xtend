@@ -12,11 +12,10 @@
  */
 package de.cau.cs.kieler.simulation.ide.server
 
-import java.io.IOException
+import org.eclipse.jetty.websocket.api.Session
 import org.eclipse.jetty.websocket.api.WebSocketAdapter
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory
-import org.eclipse.jetty.websocket.api.Session
 
 /**
  * @author als

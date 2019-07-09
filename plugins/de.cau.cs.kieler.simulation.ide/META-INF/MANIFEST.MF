@@ -21,11 +21,15 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.jetty.server;bundle-version="9.4.15",
  org.eclipse.jetty.util;bundle-version="9.4.15",
  org.eclipse.jetty.servlet;bundle-version="9.4.15",
+ org.eclipse.jetty.websocket.server;bundle-version="9.4.15",
  org.eclipse.jetty.websocket.servlet;bundle-version="9.4.15",
  org.eclipse.jetty.websocket.api;bundle-version="9.4.15",
  javax.servlet;bundle-version="3.1.0",
  com.google.gson;bundle-version="2.7.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.simulation.ide,
+ de.cau.cs.kieler.simulation.ide.processor,
+ de.cau.cs.kieler.simulation.ide.provider,
+ de.cau.cs.kieler.simulation.ide.server,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr,
  de.cau.cs.kieler.simulation.ide.trace.contentassist.antlr.internal

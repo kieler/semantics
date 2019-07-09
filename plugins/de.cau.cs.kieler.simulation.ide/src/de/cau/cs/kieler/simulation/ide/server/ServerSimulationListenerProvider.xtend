@@ -17,6 +17,10 @@ import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.ISimulationListenerProvider
+import de.cau.cs.kieler.simulation.ide.processor.RemoteSimulationValues
+import de.cau.cs.kieler.kicool.KiCoolFactory
+import com.google.gson.JsonElement
+import de.cau.cs.kieler.kicool.ProcessorGroup
 
 /**
  * @author als
@@ -34,8 +38,10 @@ class ServerSimulationListenerProvider implements ISimulationListenerProvider {
         }
         
         override update(SimulationContext context, SimulationEvent e) {
-            if (e instanceof SimulationControlEvent) {
-                SimulationCommunication.broadcastControlEvent(e, context)
+            if (SimulationServer.running) {
+                if (e instanceof SimulationControlEvent) {
+                    SimulationCommunication.broadcastControlEvent(e, context)
+                }
             }
         }
         
@@ -47,4 +53,18 @@ class ServerSimulationListenerProvider implements ISimulationListenerProvider {
     override getListeners() {
         return newArrayList(EVENT_FORWARDING)
     }
+    
+    /**
+     * Add remote value processor
+     */
+    override prepareNewSimulation(SimulationContext ctx) {
+        val root = ctx.system.processors as ProcessorGroup
+        if (!root.processors.exists[RemoteSimulationValues.ID.equals(id)]) {
+            root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [
+                id = RemoteSimulationValues.ID
+            ])
+        }
+        ctx.startEnvironment.setProperty(RemoteSimulationValues.VALUES, <String, JsonElement>newHashMap);
+    }
+    
 }

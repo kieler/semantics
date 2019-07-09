@@ -23,8 +23,8 @@ import org.eclipse.jetty.servlet.ServletHandler
  * @author als
  */
 class SimulationServer {
-
-    public static var PORT = 5010
+    
+    static val PORT = 5010
     private static val JOB = new Job("Simulation Server") {
 
         override protected run(IProgressMonitor monitor) {
@@ -68,4 +68,9 @@ class SimulationServer {
             JOB.cancel()
         }
     }
+    
+    def static isRunning() {
+        return JOB.state !== Job.NONE
+    }
+    
 }

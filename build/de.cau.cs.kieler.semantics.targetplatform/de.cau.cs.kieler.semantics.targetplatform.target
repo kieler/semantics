@@ -51,6 +51,7 @@
       <unit id="org.eclipse.jetty.server" version="0.0.0"/>
       <unit id="org.eclipse.jetty.servlet" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.servlet" version="0.0.0"/>
+      <unit id="org.eclipse.jetty.websocket.server" version="0.0.0"/>
       <repository location="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/"/>
     </location>
   </locations>
