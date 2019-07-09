@@ -18,7 +18,7 @@ import com.google.gson.JsonParser
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kivis.KiVisConstants
-import de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
+import de.cau.cs.kieler.kivis.ui.processor.SimulationVisualizationValues
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
@@ -141,7 +141,7 @@ class KiVisView extends ViewPart implements ISimulationListener {
             if (variable instanceof String) {
                 val sim = SimulationUI.currentSimulation
                 if (sim !== null) {
-                    val patch = sim.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
+                    val patch = sim.startEnvironment.getProperty(SimulationVisualizationValues.VALUES)
                     synchronized (patch) {
                         patch.put(variable, value)
                     }
@@ -243,7 +243,7 @@ class KiVisView extends ViewPart implements ISimulationListener {
                                 id = SimulationVisualizationValues.ID
                             ])
                         }
-                        ctx.startEnvironment.setProperty(KiVisConstants.VISUALIZATION_INPUTS, <String, JsonElement>newHashMap);
+                        ctx.startEnvironment.setProperty(SimulationVisualizationValues.VALUES, <String, JsonElement>newHashMap);
                         SimulationUI.updateUI[loadVisualization(ctx)]
                     }
                     case STEP: {
@@ -273,7 +273,7 @@ class KiVisView extends ViewPart implements ISimulationListener {
                 val json = DataPool.serializeJSON(context.dataPool.rawData)
                 val resultJson = browser.evaluate("return " + KiVisConstants.VISUALIZATION_FUNCTION + "(" + json + ");", true);
                 if (resultJson instanceof String) {
-                    val patch = context.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
+                    val patch = context.startEnvironment.getProperty(SimulationVisualizationValues.VALUES)
                     synchronized (patch) {
                         val newPatch = context.dataPool.createPatch(DataPool.parseJSON(resultJson))
                         newPatch.entrySet.removeIf[patch.containsKey(it.key)] // Don reset unprocessed action indicators
