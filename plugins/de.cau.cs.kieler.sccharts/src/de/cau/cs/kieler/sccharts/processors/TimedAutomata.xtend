@@ -238,8 +238,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                     for (subState : region.states.toList) {
                         // error case
                         if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
-                            if (subState.actions.exists[trigger.eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]] ||
-                                subState.controlflowRegions.exists[eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]]) {
+                            if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
+                                subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
                                     environment.errors.add("Cannot handle hierarchical timed automata.", subState)
                             }
                         }
