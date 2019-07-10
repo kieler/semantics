@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kivis.providers
+package de.cau.cs.kieler.kivis.ui.provider
 
 import de.cau.cs.kieler.kicool.registration.IProcessorProvider
 
@@ -19,12 +19,11 @@ import de.cau.cs.kieler.kicool.registration.IProcessorProvider
  * 
  * @author Wechselberg
  */
-class KiVisProcessorProvider implements IProcessorProvider {
+class KiVisUiProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
-            de.cau.cs.kieler.kivis.processor.KiVisJSGenerator,
-            de.cau.cs.kieler.kivis.processor.VisualizationGenerator
+            de.cau.cs.kieler.kivis.ui.processor.SimulationVisualizationValues
         ]
     }
     
