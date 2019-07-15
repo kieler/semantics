@@ -12,20 +12,33 @@
  */
 package de.cau.cs.kieler.kicool.registration
 
+import com.google.common.io.ByteStreams
 import com.google.inject.Guice
 import de.cau.cs.kieler.core.services.KielerServiceLoader
+import de.cau.cs.kieler.kicool.KiCoolPackage
 import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.classes.SourceTargetPair
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kicool.kitt.tracing.internal.TracingIntegration
+import java.io.ByteArrayInputStream
+import java.io.Closeable
 import java.io.IOException
+import java.net.URL
+import java.nio.file.FileSystemNotFoundException
+import java.nio.file.FileSystems
+import java.nio.file.Files
+import java.nio.file.Paths
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import java.util.jar.JarFile
+import org.eclipse.emf.common.EMFPlugin
 import org.eclipse.emf.common.util.URI
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.diagnostics.Severity
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
@@ -35,10 +48,6 @@ import org.eclipse.xtext.validation.IResourceValidator
 import static com.google.common.base.Preconditions.*
 
 import static extension java.lang.String.format
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.ProcessorGroup
-import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
-import de.cau.cs.kieler.kicool.ProcessorSystem
 
 /**
  * Main class for the registration of systems and processors.
@@ -117,48 +126,76 @@ class KiCoolRegistration {
     }
     
     static def loadRegisteredSystemModels() {
-        val systems = getRegisteredSystems
         val modelList = <System> newArrayList
+        val closeables = <Closeable> newArrayList()
         modelsMap.clear
         modelsIdMap.clear
-        for(system : systems) {
-            try {
-                val model = loadEObjectFromResourceLocation(system.key, system.value)
-                modelList += model as System
-                modelsMap.put(system.key, model as System) 
-                modelsIdMap.put((model as System).id, model as System)
-            } catch (Exception e) {
-                java.lang.System.err.println("There was an error loading the registered processor system " + system.toString)
-                e.printStackTrace
-            }
-        }
+        
+        val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
+
+        // Get the registered systems from the service loader
+        KielerServiceLoader.load(ISystemProvider).forEach[provider |
+        	// Do stuff for each system in the current provider
+            provider.systems.forEach[ system |
+            	// Check if we run in eclipse or as a standalone application
+            	val resource = if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+            		// Just let eclipse platform handle the loading of files
+					val uri = URI.createPlatformPluginURI("/%s/%s".format(provider.bundleId, system), false)
+		        	resourceSet.getResource(uri, true)
+            	} else {
+            		// Ensure that the package has been registered im EMF
+            		KiCoolPackage.eINSTANCE.eClass
+            		val URL url = provider.class.classLoader.getResource(system)
+            	    val stream = if (url.protocol == 'jar') {
+            	    	// Fetch data from inside the jar file
+                    	val file = new JarFile(url.file.substring(0, url.file.indexOf('!')).replaceFirst('^file:', ''))
+                    	// Mark the file for later closing
+        	            closeables += file
+        	            // Create the needed Stream from inside the jar
+        	            new ByteArrayInputStream(ByteStreams.toByteArray(file.getInputStream(file.getEntry(system))))
+                	} else {
+                		// Access the file directly, given the url
+                    	try {
+                    		// Check if we already have some file system as a handler
+	                        FileSystems.getFileSystem(url.toURI);
+                    	} catch ( FileSystemNotFoundException e ) {
+                    		// If no file system ready, create a new one, but mark for closure later
+                        	closeables += FileSystems.newFileSystem(url.toURI, emptyMap)
+	                    } catch ( Throwable t) {
+    	                    // do nothing; chsch: on osx I get an IllegalArgumentException if the path is unequal to '/'
+        	            }
+        	            // Create the stream from the file system
+            	        new ByteArrayInputStream(Files.readAllBytes(Paths.get(url.toURI)))
+					}
+					val uri = URI.createURI(system)
+					val res = resourceSet.createResource(uri)
+					res.load(stream, emptyMap)
+					res
+            	}
+
+		        if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
+		            val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
+		            if (!validatorResults.empty) {
+		                println("KiCool WARNING: There are error markers in system located at " + provider.bundleId + ":" + system + ": \n- " + validatorResults.map[message].join("\n- "))
+		            }
+		            val model = resource.getContents().get(0) as System 
+	                modelList += model
+	                modelsMap.put(system, model) 
+	                modelsIdMap.put(model.id, model)
+		        } else {
+			        throw new IOException("Could not load resource '" + system + "'!" + if (resource !== null && !resource.errors.nullOrEmpty) " Errors: " + resource.errors.map[toString].join(", ") else "");
+		        }
+
+            ]
+        ]
+        
         modelList
     }
 
     static def getRegisteredSystems() {
-        val resourceList = <Pair<String, String>> newArrayList
-        KielerServiceLoader.load(ISystemProvider).forEach[provider |
-            provider.systems.forEach[ system |
-                resourceList += new Pair<String, String>(system, provider.bundleId) 
-            ]
-        ]
-        resourceList       
+        systemsModels;       
     }
     
-    static def EObject loadEObjectFromResourceLocation(String resourceLocation, String bundleId) throws IOException {
-        val uri = URI.createPlatformPluginURI("/%s/%s".format(bundleId, resourceLocation), false)
-        val XtextResourceSet resourceSet = kicoolXtextInjector.getInstance(XtextResourceSet)
-        val Resource resource = resourceSet.getResource(uri, true)
-        if (resource !== null && resource.getContents() !== null && resource.getContents().size() > 0) {
-            val validatorResults = kicoolXtextInjector.getInstance(IResourceValidator).validate(resource, CheckMode.ALL, CancelIndicator.NullImpl).filter[severity === Severity.ERROR].toList
-            if (!validatorResults.empty) {
-                println("KiCool WARNING: There are error markers in system located at " + bundleId + ":" + resourceLocation + ": \n- " + validatorResults.map[message].join("\n- "))
-            }
-            val eobject = resource.getContents().get(0)
-            return eobject
-        }
-        throw new IOException("Could not load resource '" + resourceLocation + "'!" + if (resource !== null && !resource.errors.nullOrEmpty) " Errors: " + resource.errors.map[toString].join(", ") else "");
-    }
     
     static def void addProcessor(Processor<?,?> processor) {
         processorMap.put(processor.id, processor.class as Class<? extends Processor<?,?>>)
