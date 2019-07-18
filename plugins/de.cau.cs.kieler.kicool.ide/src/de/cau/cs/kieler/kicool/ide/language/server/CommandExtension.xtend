@@ -30,7 +30,7 @@ interface CommandExtension {
      * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonNotification('compile')
-    def void compile(String uri, String clientId, String command, boolean inplace);
+    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel);
     
     /**
      * Cancels the current compilation by stopping the current compilation thread.
