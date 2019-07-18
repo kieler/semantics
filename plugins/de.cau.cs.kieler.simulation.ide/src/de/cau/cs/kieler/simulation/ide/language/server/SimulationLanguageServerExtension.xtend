@@ -37,6 +37,7 @@ import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
 import java.util.HashMap
 import java.util.ArrayList
+import com.google.inject.Singleton
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -45,6 +46,7 @@ import java.util.ArrayList
  * @author sdo
  *
  */
+ @Singleton
 class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, SimulationListener {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
@@ -75,9 +77,13 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         registerObserver(this)
     }
     
+    @Accessors(PUBLIC_GETTER)
+    var String currentlySimulatedModel
+    
     override synchronized start(String uri, String simulationType) {
         stepNumber = 0
         stopAndRemoveSimulation
+        currentlySimulatedModel = uri
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
             return this.requestManager.runRead[ cancelIndicator |
@@ -161,6 +167,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
         stepNumber = -1
+        currentlySimulatedModel = null
         return this.requestManager.runRead[cancelIndicator |
             new SimulationStoppedMessage(true, "Stopped simulation")
         ]
