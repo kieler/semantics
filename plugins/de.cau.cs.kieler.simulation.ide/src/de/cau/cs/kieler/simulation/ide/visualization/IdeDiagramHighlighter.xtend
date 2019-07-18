@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.EObject
 import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
 
 /**
+ * This diagram highĺighter one abstraction layer between the diagram highlighter used for the LS and for eclipse.
  * @author sdo
  *
  */
@@ -143,7 +144,7 @@ abstract class IdeDiagramHighlighter implements SimulationListener {
      * @param eObjects The objects
      * @return the graph elements that represent the given objects.
      */
-    protected def List<Highlighting> getHighlighting(Iterable<EObject> eObjects, KForeground style) {
+    protected def List<Highlighting> getHighlighting(Iterable<? extends EObject> eObjects, KForeground style) {
         val highlighting = <Highlighting> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));

@@ -35,7 +35,7 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 
 /**
- * Highlighter for SCCharts diagrams.
+ * Highlighter for SCCharts diagrams for the language server.
  * The traversed states and transitions are shown using the output of the TakenTransitionSignaling transformation.
  * Furthermore this information is used, to calculate and highlight states in which the control flow will continue in the next tick.
  * 
@@ -44,7 +44,8 @@ import com.google.inject.Injector
  * 
  * FIXME This class is instantiated via bundle start!
  * 
- * @author aas
+ * @author sdo
+ * @see de.cau.cs.kieler.sccharts.ui.simulation.SCChartsDiagramHighligher
  *
  */
 class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDiagramHighlighter {

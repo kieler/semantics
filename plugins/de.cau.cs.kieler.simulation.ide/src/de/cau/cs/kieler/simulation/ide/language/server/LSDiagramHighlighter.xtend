@@ -13,27 +13,33 @@
 package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.klighd.ViewContext
+import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
+import de.cau.cs.kieler.klighd.lsp.SprottyViewer
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
+import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.visualization.IdeDiagramHighlighter
-import de.cau.cs.kieler.klighd.lsp.SprottyViewer
-import de.cau.cs.kieler.klighd.ZoomStyle
+import java.net.URLDecoder
 
 /**
+ * Works similar to the DiagramHighlighter. After each stop, start, or step action the diagram layout is updated.
+ * This includes the styles, therefore the taken transitions are marked.
+ * 
  * @author sdo
+ * @see de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
  *
  */
 abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
     
-    /**
-     * Compiler LS extension to access the compilation snapshots, namely the simulation executable.
-     */
-    @Inject extension KiCoolLanguageServerExtension kicool
+    @Inject SimulationLanguageServerExtension simulationExt
 
-    @Inject extension KGraphLanguageServerExtension kgraphExt
+    @Inject KGraphLanguageServerExtension kgraphExt
+    
+    @Inject KGraphDiagramState diagramState
     
     override update(SimulationContext ctx, SimulationEvent e) {
         if (e instanceof SimulationControlEvent) {
@@ -42,32 +48,48 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
             if(diagramModel === null) {
                 return;
             }
-            // TODO apply update the correct way
-            startDiagramBatchUpdate
-            applyDiagramBatchUpdate
-            show(lastUri, lastClientId, -1)
+            
+            try {
+                switch(e.operation) {
+                    case START : initialize(ctx)
+                    case STOP : stop(ctx)
+                    case STEP: update(ctx)
+                }
+            } catch(Exception ex) {
+                ex.printStackTrace
+            } finally {
+                if (e.operation == SimulationOperation.START ||
+                    e.operation == SimulationOperation.STOP ||
+                    e.operation == SimulationOperation.STEP
+                ) {
+                    kgraphExt.updateLayout(simulationExt.currentlySimulatedModel)
+                }
+            }
         }
     }
     
-    override protected getDiagramViewContext() {
-        if (diagramState === null) {
-            return null
+    override protected ViewContext getDiagramViewContext() {
+        synchronized (diagramState) {
+            if (diagramState === null) {
+                return null
+            }
+            return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
         }
-        return diagramState.getKGraphContext(lastUri)
         
     }
     
     override protected startDiagramBatchUpdate() {
         val viewer = diagramViewContext.viewer
         if (viewer instanceof SprottyViewer) {
-            // handle this
+            viewer.startRecording
         }
     }
     
     override protected applyDiagramBatchUpdate() {
         val viewer = diagramViewContext.viewer
         if(viewer instanceof SprottyViewer) {
-            viewer.zoom(ZoomStyle.NONE, 0)
+            viewer.stopRecording(ZoomStyle.NONE, null, 0)
+            viewer.viewContext
         }
     }
     
