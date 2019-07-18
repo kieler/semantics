@@ -43,14 +43,18 @@ class KeithCompilationUpdater implements Observer {
     val String clientId
     val String command
     val boolean inplace
+    val boolean showResultingModel
     
-    new(KiCoolLanguageServerExtension kicoolExt, CompilationContext context, String uri, String clientId, String command, boolean inplace) {
+    new(KiCoolLanguageServerExtension kicoolExt, CompilationContext context, String uri, String clientId,
+        String command, boolean inplace, boolean showResultingModel
+    ) {
         this.kicoolExt = kicoolExt
         this.context = context
         this.uri = uri
         this.clientId = clientId
         this.command = command
         this.inplace = inplace
+        this.showResultingModel = showResultingModel
     }
     
     def update(AbstractContextNotification notification) {
@@ -70,7 +74,7 @@ class KeithCompilationUpdater implements Observer {
                 currentSnapshotList.add(new SnapshotDescription(processor.name, currentSnapshotList.length, errors, warnings, infos))
                 // Add snapshot to map
                 kicoolExt.objectMap.get(uri).add(notification.snapshot)
-                kicoolExt.update(uri, context, clientId, command, inplace, false, false)
+                kicoolExt.update(uri, context, clientId, command, inplace, false, false, showResultingModel)
             }
             ProcessorFinished: {
                 val currentSnapshotList = kicoolExt.snapshotMap.get(uri).last
@@ -82,14 +86,14 @@ class KeithCompilationUpdater implements Observer {
                 val infos = environment.infos
                 currentSnapshotList.add(new SnapshotDescription(processor.name, currentSnapshotList.length, errors, warnings, infos))
                 kicoolExt.objectMap.get(uri).add(impl)
-                kicoolExt.update(uri, context, clientId, command, inplace, false, false)
+                kicoolExt.update(uri, context, clientId, command, inplace, false, false, showResultingModel)
             }
             CompilationStart: {
                 kicoolExt.snapshotMap.put(uri, newLinkedList)
                 kicoolExt.objectMap.put(uri, newLinkedList)
             }
             CompilationFinished: {
-                kicoolExt.update(uri, context, clientId, command, inplace, !kicoolExt.compilationThread.terminated, true)
+                kicoolExt.update(uri, context, clientId, command, inplace, !kicoolExt.compilationThread.terminated, true, showResultingModel)
             }
         }
     }
