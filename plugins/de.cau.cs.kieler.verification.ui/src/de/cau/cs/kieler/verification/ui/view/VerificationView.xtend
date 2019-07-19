@@ -23,13 +23,13 @@ import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.ui.view.DiagramView
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.simulation.ide.SimulationIDE
-import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.verification.VerificationAssumption
+import de.cau.cs.kieler.verification.VerificationContext
 import de.cau.cs.kieler.verification.VerificationProperty
 import de.cau.cs.kieler.verification.VerificationPropertyChanged
 import de.cau.cs.kieler.verification.VerificationPropertyStatus
@@ -71,7 +71,6 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
-import de.cau.cs.kieler.verification.VerificationContext
 
 /** 
  * @author aas
@@ -510,17 +509,17 @@ Example commands:
             try {
                 // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                val addCounterexampleSimulationListener = new SimulationListener() {
+                val addCounterexampleSimulationListener = new ISimulationListener() {
                     
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
                             if(e.operation == SimulationControlEvent.SimulationOperation.START) {
                                 val counterexampleLocation = property.counterexampleFile.location.toOSString
                                 val traceFile = TraceFileUtil.loadTraceFile(new File(counterexampleLocation))
-                                SimulationIDE.currentSimulation.setTrace(traceFile.traces.head, true, true)
+                                CentralSimulation.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 // The listener did what it should and must be removed now.
                                 // Otherwise it will add the counterexample to following simulations as well.
-                                SimulationIDE.removeObserver(this)
+                                CentralSimulation.addListener(this)
                             }    
                         }
                     }
@@ -530,8 +529,8 @@ Example commands:
                     }
                     
                 }
-                SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                SimulationIDE.registerObserver(addCounterexampleSimulationListener)
+                CentralSimulation.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
+                CentralSimulation.addListener(addCounterexampleSimulationListener)
 
             } catch (Exception e) {
                 e.showInDialog

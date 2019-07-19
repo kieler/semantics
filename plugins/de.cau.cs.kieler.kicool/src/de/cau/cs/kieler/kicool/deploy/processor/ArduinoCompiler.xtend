@@ -125,7 +125,7 @@ class ArduinoCompiler extends AbstractSystemCompilerProcessor<Object, GenericCom
         model = new GenericCompilationResult
         
         // report
-        logger.closeLog("arduino-compiler-report.log").snapshot
+        logger.saveLog(environment, "arduino-compiler-report.log")
         infra.refresh
     }
 

@@ -125,7 +125,7 @@ class GCCAST extends AbstractSystemCompilerProcessor<CodeContainer, CodeContaine
         }
         
         // report
-        logger.closeLog("gcc-compiler-report.log").snapshot
+        logger.saveLog(environment, "gcc-compiler-report.log")
         infra.refresh
     }
 

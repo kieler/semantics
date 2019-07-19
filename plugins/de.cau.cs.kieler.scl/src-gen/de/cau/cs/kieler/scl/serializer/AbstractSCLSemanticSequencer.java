@@ -401,7 +401,11 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getLoopDeclarationRule()) {
+					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -619,7 +623,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *
 	 * Constraint:
 	 *     (
-	 *         (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)? 
+	 *         (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)? 
 	 *         condition=BoolExpression 
 	 *         afterthought=EffectOrAssignment? 
 	 *         declarations+=Declaration* 
@@ -639,7 +643,7 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 * Constraint:
 	 *     (
 	 *         (
-	 *             (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)? 
+	 *             (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)? 
 	 *             condition=BoolExpression 
 	 *             afterthought=EffectOrAssignment? 
 	 *             declarations+=Declaration* 
@@ -700,6 +704,18 @@ public abstract class AbstractSCLSemanticSequencer extends KExtSemanticSequencer
 	 *     (annotations+=Annotation* statements+=Statement*)
 	 */
 	protected void sequence_LegacyElseScope(ISerializationContext context, ElseScope semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LoopDeclaration returns VariableDeclaration
+	 *
+	 * Constraint:
+	 *     (annotations+=Annotation* (type=ValueType | (type=HostType hostType=STRING)) valuedObjects+=ValuedObject)
+	 */
+	protected void sequence_LoopDeclaration(ISerializationContext context, VariableDeclaration semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -17,20 +17,20 @@ import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import java.util.List
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
 
-import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 
 /**
  * This diagram highĺighter one abstraction layer between the diagram highlighter used for the LS and for eclipse.
  * @author sdo
  *
  */
-abstract class IdeDiagramHighlighter implements SimulationListener {
+abstract class IdeDiagramHighlighter implements ISimulationListener {
     
     /**
      * The elements that have been highlighted since the last call of unhighlightDiagram.
@@ -55,7 +55,7 @@ abstract class IdeDiagramHighlighter implements SimulationListener {
      * Registers the simulation listener for this instance.
      */
     new() {
-        registerObserver(this)
+        addListener(this)
     }
 
     /**

@@ -122,6 +122,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isStrong()
   {
     return strong;
@@ -132,6 +133,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setStrong(boolean newStrong)
   {
     boolean oldStrong = strong;
@@ -145,6 +147,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getCondition()
   {
     return condition;
@@ -172,6 +175,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCondition(Expression newCondition)
   {
     if (newCondition != condition)
@@ -193,6 +197,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isHistory()
   {
     return history;
@@ -203,6 +208,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHistory(boolean newHistory)
   {
     boolean oldHistory = history;
@@ -216,6 +222,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public AState getNextState()
   {
     if (nextState != null && nextState.eIsProxy())
@@ -246,6 +253,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNextState(AState newNextState)
   {
     AState oldNextState = nextState;

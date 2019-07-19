@@ -31,10 +31,6 @@ public interface Params extends EObject
    * Returns the value of the '<em><b>Parameter</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Parameter</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Parameter</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getParams_Parameter()

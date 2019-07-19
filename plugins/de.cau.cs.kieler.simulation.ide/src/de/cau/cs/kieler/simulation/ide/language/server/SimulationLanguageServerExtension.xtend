@@ -14,18 +14,20 @@ package de.cau.cs.kieler.simulation.ide.language.server
 
 import com.google.gson.JsonObject
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
-import java.util.HashSet
+import java.util.ArrayList
+import java.util.HashMap
 import java.util.List
 import org.apache.log4j.Logger
 import org.eclipse.xtend.lib.annotations.Accessors
@@ -33,11 +35,9 @@ import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
-import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
-import java.util.HashMap
-import java.util.ArrayList
-import com.google.inject.Singleton
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -47,7 +47,7 @@ import com.google.inject.Singleton
  *
  */
  @Singleton
-class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, SimulationListener {
+class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ISimulationListener {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
@@ -74,7 +74,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     }
     
     new() {
-        registerObserver(this)
+        addListener(this)
     }
     
     @Accessors(PUBLIC_GETTER)
@@ -95,7 +95,8 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         val sim = resultArray.last()
         var DataPool datapool
         if (sim instanceof SimulationContext) {
-            startSimulation(sim as SimulationContext)
+            prepareSimulation(sim as SimulationContext)
+            SimulationServer.start
             // Add user value processor
             val root = currentSimulation.system.processors as ProcessorGroup
             root.processors.add(0, KiCoolFactory.eINSTANCE.createProcessorReference => [

@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
@@ -29,20 +29,21 @@ import org.eclipse.jface.action.IToolBarManager
 import org.eclipse.jface.action.Separator
 import org.eclipse.ui.IMemento
 
-import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
+import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author als
  *
  */
-class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, SimulationListener {
+class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimulationListener {
     
     private val simulateActions = new WeakHashMap<KiCoModelUpdateController, SimulationAction>()
     private var long simulationResourceTimeStamp = URIConverter.NULL_TIME_STAMP
     
     new() {
-        registerObserver(this)
+        CentralSimulation.addListener(this)
     }
     
     override contributeControls(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {
@@ -58,8 +59,8 @@ class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, Simulat
     override contributeDiagramWarnings(KiCoModelUpdateController muc, Object model, KlighdSynthesisProperties properties) {
         simulateActions.get(muc)?.update(model)
         
-        if (currentSimulation !== null) {
-            val simCC = currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
+        if (SimulationUI.currentSimulation !== null) {
+            val simCC = SimulationUI.currentSimulation.startEnvironment.getProperty(SimulationContext.SOURCE_COMPILATION_CONTEXT)
             val input = simCC?.originalModel
             var inputIsShown = false
             if (input !== null) {

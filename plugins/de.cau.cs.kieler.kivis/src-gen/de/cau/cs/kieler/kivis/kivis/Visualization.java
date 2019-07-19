@@ -32,10 +32,6 @@ public interface Visualization extends EObject
    * Returns the value of the '<em><b>Images</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Images</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Images</em>' attribute list.
    * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVisualization_Images()
@@ -48,10 +44,6 @@ public interface Visualization extends EObject
    * Returns the value of the '<em><b>Loads</b></em>' attribute list.
    * The list contents are of type {@link java.lang.String}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Loads</em>' attribute list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Loads</em>' attribute list.
    * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVisualization_Loads()
@@ -63,10 +55,6 @@ public interface Visualization extends EObject
   /**
    * Returns the value of the '<em><b>Init</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Init</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Init</em>' attribute.
    * @see #setInit(String)
@@ -90,10 +78,6 @@ public interface Visualization extends EObject
    * Returns the value of the '<em><b>Content</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.kivis.kivis.Content}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Content</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Content</em>' containment reference list.
    * @see de.cau.cs.kieler.kivis.kivis.KivisPackage#getVisualization_Content()

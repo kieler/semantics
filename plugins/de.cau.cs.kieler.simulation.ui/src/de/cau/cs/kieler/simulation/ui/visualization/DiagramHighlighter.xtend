@@ -26,7 +26,7 @@ import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
  * 
- * @author aas
+ * @author aas, sdo
  *
  */
 abstract class DiagramHighlighter extends IdeDiagramHighlighter {

@@ -111,6 +111,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -121,6 +122,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -134,6 +136,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -144,6 +147,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -157,6 +161,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getExpr()
   {
     return expr;
@@ -184,6 +189,7 @@ public class ByNameStaticArgImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)

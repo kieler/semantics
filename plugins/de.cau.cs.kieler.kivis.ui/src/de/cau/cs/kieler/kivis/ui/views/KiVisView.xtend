@@ -18,14 +18,15 @@ import com.google.gson.JsonParser
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kivis.KiVisConstants
-import de.cau.cs.kieler.kivis.processor.SimulationVisualizationValues
+import de.cau.cs.kieler.kivis.ui.processor.SimulationVisualizationValues
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
-import de.cau.cs.kieler.simulation.ide.SimulationIDE
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.io.File
 import java.net.URL
@@ -33,6 +34,8 @@ import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import org.eclipse.core.runtime.IProgressMonitor
 import org.eclipse.core.runtime.Status
+import org.eclipse.jface.action.Action
+import org.eclipse.jface.action.IAction
 import org.eclipse.jface.resource.JFaceResources
 import org.eclipse.swt.SWT
 import org.eclipse.swt.SWTError
@@ -46,6 +49,7 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Label
 import org.eclipse.swt.widgets.Text
 import org.eclipse.ui.IWorkbenchPart
+import org.eclipse.ui.internal.browser.WebBrowserUIPlugin
 import org.eclipse.ui.internal.browser.WebBrowserUtil
 import org.eclipse.ui.part.ViewPart
 import org.eclipse.ui.progress.UIJob
@@ -57,7 +61,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author als
  * 
  */
-class KiVisView extends ViewPart implements SimulationListener {
+class KiVisView extends ViewPart implements ISimulationListener {
 
     /**
      * The id of the view, that is set in the plugin.xml
@@ -96,7 +100,7 @@ class KiVisView extends ViewPart implements SimulationListener {
 
         override function(Object[] arguments) {
             val command = if(arguments.length === 1) arguments.head;
-            val sim = SimulationIDE.currentSimulation
+            val sim = SimulationUI.currentSimulation
             if (sim !== null) {
                 new UIJob("Simulation - Visualization Action") {
                     
@@ -139,9 +143,9 @@ class KiVisView extends ViewPart implements SimulationListener {
                 JsonNull.INSTANCE
             }
             if (variable instanceof String) {
-                val sim = SimulationIDE.currentSimulation
+                val sim = SimulationUI.currentSimulation
                 if (sim !== null) {
-                    val patch = sim.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
+                    val patch = sim.startEnvironment.getProperty(SimulationVisualizationValues.VALUES)
                     synchronized (patch) {
                         patch.put(variable, value)
                     }
@@ -152,7 +156,7 @@ class KiVisView extends ViewPart implements SimulationListener {
     }
 
     new() {
-        SimulationIDE.registerObserver(this);
+        CentralSimulation.addListener(this)
     }
 
     /**
@@ -161,6 +165,16 @@ class KiVisView extends ViewPart implements SimulationListener {
     override createPartControl(Composite parent) {
         // Remember the instance
         instance = this
+        
+        getViewSite().getActionBars().getToolBarManager() => [
+            add(new Action("Open in external Browser", IAction.AS_PUSH_BUTTON) {
+                override run() {
+                    SimulationServer.start
+                    val browserSupport = WebBrowserUIPlugin.getInstance().getWorkbench().getBrowserSupport()
+                    browserSupport.externalBrowser?.openURL(new URL("http://localhost:" + SimulationServer.PORT + "/visualization"))
+                }
+            })
+        ]
 
         try {
             browser = new Browser(parent, SWT.NONE)
@@ -178,8 +192,8 @@ class KiVisView extends ViewPart implements SimulationListener {
                     new SimulationControlFunction(browser);
                     new ActionIndicatorFunction(browser);
                     // Initialize Vizualization
-                    if (SimulationIDE.currentSimulation !== null) {
-                        updateView(SimulationIDE.currentSimulation);
+                    if (SimulationUI.currentSimulation !== null) {
+                        updateView(SimulationUI.currentSimulation);
                     }
                 }
     
@@ -210,9 +224,9 @@ class KiVisView extends ViewPart implements SimulationListener {
         }
         
         // Late start
-        if (SimulationIDE.currentSimulation !== null && SimulationIDE.currentSimulation.running) {
+        if (SimulationUI.currentSimulation !== null && SimulationUI.currentSimulation.running) {
             // Reemit missed start
-            this.update(SimulationIDE.currentSimulation, new SimulationControlEvent(SimulationIDE.currentSimulation, SimulationOperation.START))
+            this.update(SimulationUI.currentSimulation, new SimulationControlEvent(SimulationUI.currentSimulation, SimulationOperation.START))
         }
     }
 
@@ -243,7 +257,7 @@ class KiVisView extends ViewPart implements SimulationListener {
                                 id = SimulationVisualizationValues.ID
                             ])
                         }
-                        ctx.startEnvironment.setProperty(KiVisConstants.VISUALIZATION_INPUTS, <String, JsonElement>newHashMap);
+                        ctx.startEnvironment.setProperty(SimulationVisualizationValues.VALUES, <String, JsonElement>newHashMap);
                         SimulationUI.updateUI[loadVisualization(ctx)]
                     }
                     case STEP: {
@@ -273,7 +287,7 @@ class KiVisView extends ViewPart implements SimulationListener {
                 val json = DataPool.serializeJSON(context.dataPool.rawData)
                 val resultJson = browser.evaluate("return " + KiVisConstants.VISUALIZATION_FUNCTION + "(" + json + ");", true);
                 if (resultJson instanceof String) {
-                    val patch = context.startEnvironment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
+                    val patch = context.startEnvironment.getProperty(SimulationVisualizationValues.VALUES)
                     synchronized (patch) {
                         val newPatch = context.dataPool.createPatch(DataPool.parseJSON(resultJson))
                         newPatch.entrySet.removeIf[patch.containsKey(it.key)] // Don reset unprocessed action indicators

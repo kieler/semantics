@@ -77,6 +77,7 @@ public class LustreValuedObjectImpl extends ValuedObjectImpl implements LustreVa
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -87,6 +88,7 @@ public class LustreValuedObjectImpl extends ValuedObjectImpl implements LustreVa
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;

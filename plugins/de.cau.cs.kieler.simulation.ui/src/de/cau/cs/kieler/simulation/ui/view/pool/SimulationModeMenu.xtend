@@ -35,8 +35,6 @@ import org.eclipse.swt.widgets.Text
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
 
-import static de.cau.cs.kieler.simulation.ide.SimulationIDE.*
-
 /**
  * @author als
  * @kieler.design proposed
@@ -77,8 +75,8 @@ class SimulationModeMenu implements SelectionListener {
             spinner.addSelectionListener(new SelectionAdapter() {
                 override widgetSelected(SelectionEvent e) {
                     period = spinner.selection
-                    if (currentSimulation !== null) {
-                        val mode = currentSimulation.mode
+                    if (SimulationUI.currentSimulation !== null) {
+                        val mode = SimulationUI.currentSimulation.mode
                         if (mode instanceof PeriodicMode) {
                             mode.period = period
                         }
@@ -144,8 +142,8 @@ class SimulationModeMenu implements SelectionListener {
             val newMode = MODES.get(combo.selectionIndex).value
             if (newMode !== currentMode) {
                 currentMode = newMode
-                if (currentSimulation !== null) {
-                    currentSimulation.mode = currentMode
+                if (SimulationUI.currentSimulation !== null) {
+                    SimulationUI.currentSimulation.mode = currentMode
                 }
                 updateToolbarVisibility()
                 DataPoolView.instance?.updateToolbar
@@ -174,8 +172,8 @@ class SimulationModeMenu implements SelectionListener {
     def updateDynamicInfoLabel(boolean isUI) {
         var deltaT = 0.0
         var sleepT = 0.0
-        if (currentSimulation !== null) {
-            val mode = currentSimulation.mode
+        if (SimulationUI.currentSimulation !== null) {
+            val mode = SimulationUI.currentSimulation.mode
             if (mode instanceof DynamicTickMode) {
                 deltaT = mode.deltaT
                 sleepT = mode.sleepT
@@ -199,7 +197,7 @@ class DynamicInfoLabelUpdater extends Thread {
     
     override run() {
         name = this.class.simpleName
-        while (currentSimulation !== null) {
+        while (SimulationUI.currentSimulation !== null) {
             // work, sleep and loop
             try {
                 menu.updateDynamicInfoLabel(false)

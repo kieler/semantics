@@ -26,6 +26,8 @@ import de.cau.cs.kieler.kivis.kivis.Action
 import de.cau.cs.kieler.kivis.kivis.Interface
 import de.cau.cs.kieler.kivis.kivis.SimulationCorntrol
 
+import static de.cau.cs.kieler.simulation.SimulationCommunicationAPI.*
+
 /**
  * @author als
  * @kieler.design proposed
@@ -53,6 +55,40 @@ class KiVisJSGenerator extends Processor<Visualization, CodeContainer> {
     
     def translate(Visualization viz) {
         return '''
+            // Communication with simulation server
+            if (!«SIMULATION_CONTROL_CALLBACK» && !«ACTION_SETTER_CALLBACK») {
+                // Not in eclipse embedded mode -> connect to simulation web socket
+                var connection = new WebSocket("ws://" + window.location.hostname + ":" + window.location.port + "/simulation");
+                
+                connection.onmessage = function (msg) {
+                    if (msg && msg.data) {
+                        var msgObj = JSON.parse(msg.data);
+                        if (msgObj.«EVENT_KEY» === "«EVENT_STEP_KEY»") {
+                            «VISUALIZATION_FUNCTION»(msgObj.«POOL_KEY»);
+                            connection.send(JSON.stringify({
+                                "«ACTION_KEY»": "«ACTION_PATCH_KEY»",
+                                "«TICK_KEY»": msgObj.«TICK_KEY»,
+                                "«POOL_KEY»": msgObj.«POOL_KEY»
+                            }));
+                        }
+                    }
+                };
+                
+                function «SIMULATION_CONTROL_CALLBACK»(action) {
+                    connection.send(JSON.stringify({
+                        "«ACTION_KEY»": action
+                    }));
+                }
+                
+                function «ACTION_SETTER_CALLBACK»(name, value) {
+                    var data = {
+                        "«ACTION_KEY»": "«ACTION_SET_KEY»",
+                        "«POOL_KEY»": {}
+                    };
+                    data.pool[name] = JSON.parse(value);
+                    connection.send(JSON.stringify(data));
+                }
+            }
             «IF viz.content.filter(Action).exists[!deferredScript.nullOrEmpty]»
                 var _kivis_deferred_actions = [];
             «ENDIF»

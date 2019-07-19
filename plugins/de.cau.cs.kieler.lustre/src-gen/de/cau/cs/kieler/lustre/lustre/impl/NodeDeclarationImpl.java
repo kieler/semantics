@@ -226,6 +226,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isIsUnsafe()
   {
     return isUnsafe;
@@ -236,6 +237,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setIsUnsafe(boolean newIsUnsafe)
   {
     boolean oldIsUnsafe = isUnsafe;
@@ -249,6 +251,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isHasState()
   {
     return hasState;
@@ -259,6 +262,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHasState(boolean newHasState)
   {
     boolean oldHasState = hasState;
@@ -272,6 +276,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<StaticParam> getStaticParams()
   {
     if (staticParams == null)
@@ -286,6 +291,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getInput()
   {
     return input;
@@ -313,6 +319,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInput(Params newInput)
   {
     if (newInput != input)
@@ -334,6 +341,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getOutput()
   {
     return output;
@@ -361,6 +369,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOutput(Params newOutput)
   {
     if (newOutput != output)
@@ -382,6 +391,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValuedObjectReference getEffectiveNode()
   {
     return effectiveNode;
@@ -409,6 +419,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEffectiveNode(ValuedObjectReference newEffectiveNode)
   {
     if (newEffectiveNode != effectiveNode)
@@ -430,6 +441,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<StaticArg> getStaticArgs()
   {
     if (staticArgs == null)
@@ -444,6 +456,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<VariableDeclaration> getConstants()
   {
     if (constants == null)
@@ -458,6 +471,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ClockedVariableDeclaration> getVariables()
   {
     if (variables == null)
@@ -472,6 +486,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Assignment> getEquations()
   {
     if (equations == null)
@@ -486,6 +501,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Expression> getAssertions()
   {
     if (assertions == null)
@@ -500,6 +516,7 @@ public class NodeDeclarationImpl extends DeclarationImpl implements NodeDeclarat
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Automaton> getAutomatons()
   {
     if (automatons == null)

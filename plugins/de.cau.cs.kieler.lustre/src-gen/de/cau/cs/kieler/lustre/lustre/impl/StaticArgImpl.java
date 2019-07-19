@@ -120,6 +120,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -130,6 +131,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -143,6 +145,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getExpr()
   {
     return expr;
@@ -170,6 +173,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)
@@ -191,6 +195,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValuedObjectReference getName()
   {
     return name;
@@ -218,6 +223,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(ValuedObjectReference newName)
   {
     if (newName != name)
@@ -239,6 +245,7 @@ public class StaticArgImpl extends MinimalEObjectImpl.Container implements Stati
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<StaticArg> getStaticArgs()
   {
     if (staticArgs == null)

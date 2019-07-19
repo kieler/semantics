@@ -131,6 +131,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -141,6 +142,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -154,6 +156,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getUsesIds()
   {
     if (usesIds == null)
@@ -168,6 +171,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<StaticParam> getNeedsParams()
   {
     if (needsParams == null)
@@ -182,6 +186,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Provide> getProvisions()
   {
     if (provisions == null)
@@ -196,6 +201,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackBody getBody()
   {
     return body;
@@ -223,6 +229,7 @@ public class ModelDeclarationImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBody(PackBody newBody)
   {
     if (newBody != body)

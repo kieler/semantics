@@ -18,19 +18,19 @@ import java.util.concurrent.TimeUnit
 import de.cau.cs.kieler.kicool.ProcessorGroup
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.simulation.internal.processor.DynamicTickInput
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOperation
 import de.cau.cs.kieler.core.definitions.DynamicTicks
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class DynamicTickMode extends TimedSimulationMode implements SimulationListener {
+class DynamicTickMode extends TimedSimulationMode implements ISimulationListener {
     
     private var boolean async = false
     private var volatile boolean playing = false
