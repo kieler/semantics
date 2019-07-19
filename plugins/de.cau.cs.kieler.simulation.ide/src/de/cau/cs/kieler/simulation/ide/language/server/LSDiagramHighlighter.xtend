@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2019 by
@@ -34,40 +34,42 @@ import java.net.URLDecoder
  *
  */
 abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
-    
+
     @Inject SimulationLanguageServerExtension simulationExt
 
     @Inject KGraphLanguageServerExtension kgraphExt
-    
+
     @Inject KGraphDiagramState diagramState
-    
+
     override update(SimulationContext ctx, SimulationEvent e) {
         if (e instanceof SimulationControlEvent) {
+            if (e.operation != SimulationOperation.START && e.operation != SimulationOperation.STOP &&
+                e.operation != SimulationOperation.STEP) {
+                return
+            }
             diagramModel = getDiagramModel
             // If there is no model in the diagram, then there is nothing to highlight
-            if(diagramModel === null) {
+            if (diagramModel === null) {
                 return;
             }
-            
+
             try {
-                switch(e.operation) {
-                    case START : initialize(ctx)
-                    case STOP : stop(ctx)
+                switch (e.operation) {
+                    case START: initialize(ctx)
+                    case STOP: stop(ctx)
                     case STEP: update(ctx)
                 }
-            } catch(Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace
             } finally {
-                if (e.operation == SimulationOperation.START ||
-                    e.operation == SimulationOperation.STOP ||
-                    e.operation == SimulationOperation.STEP
-                ) {
+                if (e.operation == SimulationOperation.START || e.operation == SimulationOperation.STOP ||
+                    e.operation == SimulationOperation.STEP) {
                     kgraphExt.updateLayout(simulationExt.currentlySimulatedModel)
                 }
             }
         }
     }
-    
+
     override protected ViewContext getDiagramViewContext() {
         synchronized (diagramState) {
             if (diagramState === null) {
@@ -75,22 +77,22 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
             }
             return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
         }
-        
+
     }
-    
+
     override protected startDiagramBatchUpdate() {
         val viewer = diagramViewContext.viewer
         if (viewer instanceof SprottyViewer) {
             viewer.startRecording
         }
     }
-    
+
     override protected applyDiagramBatchUpdate() {
         val viewer = diagramViewContext.viewer
-        if(viewer instanceof SprottyViewer) {
+        if (viewer instanceof SprottyViewer) {
             viewer.stopRecording(ZoomStyle.NONE, null, 0)
             viewer.viewContext
         }
     }
-    
+
 }
