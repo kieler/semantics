@@ -127,8 +127,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     protected def didCompile(String uri, boolean sameCompilation, String clientId, CancelIndicator cancelIndicator) {
         if (sameCompilation) {
-
-            showSnapshot(uri, clientId, this.objectMap.get(uri).get(currentIndex), cancelIndicator, true)
+            var Object model
+            if (currentIndex == -1) {
+                model = getEObjectFromUri(uri)
+            } else {
+                model = this.objectMap.get(uri).get(currentIndex)
+            }
+            showSnapshot(uri, clientId, model, cancelIndicator, true)
         } else {
             val newIndex = this.objectMap.get(uri).size - 1
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
