@@ -16,6 +16,7 @@ import org.eclipse.core.resources.IFile
 import org.osgi.framework.BundleContext
 import org.osgi.framework.FrameworkUtil
 import org.osgi.framework.Bundle
+import de.cau.cs.kieler.kicool.compilation.Processor
 
 /**
  * Class for handling runtime registration of processors.
@@ -36,9 +37,9 @@ class Register {
     private def register(IFile file) {        
         val class = file.createClassFromClassFile
         
-        if (class == null) return
+        if (class === null) return
         
-        val instance = class.newInstance as de.cau.cs.kieler.kicool.compilation.Processor
+        val instance = class.newInstance as Processor<?, ?>
         KiCoolRegistration.addProcessor(instance)
     }
     

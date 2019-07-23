@@ -25,5 +25,6 @@ import org.eclipse.xtend.lib.annotations.Data
     String label
     String id
     boolean isPublic
+    boolean simulation
     
 }

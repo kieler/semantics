@@ -108,10 +108,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     
     public KeithLanguageClient client
     
-    override compile(String uri, String clientId, String command, boolean inplace) {
+    override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel) {
         val eobject = getEObjectFromUri(uri)
         val context = compile(eobject, command, inplace)
-        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace))
+        context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace, showResultingModel))
         return
     }
 
@@ -205,7 +205,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     def List<SystemDescription> getSystemDescription(List<System> systems) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id, system.public))
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public, system.simulation))
         }
         return systemDescription
     }
@@ -254,7 +254,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param inplace Whether the command was invoked with inplace compilation. Only relevant if showSnapshot is true.
      * @param showSnapshot indicates whether diagram should be updated on client side.
      */
-    def update(String uri, CompilationContext context, String clientId, String command, boolean inplace, boolean showSnapshot, boolean finished) {
+    def update(String uri, CompilationContext context, String clientId, String command, boolean inplace,
+        boolean showSnapshot, boolean finished, boolean showResultingModel
+    ) {
         val sameCompilation = command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace
         var future = new CompletableFuture()
         future.complete(void)
@@ -271,7 +273,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
                 lastCommand = command
                 lastInplace = inplace
                 future.thenRun [
-                    didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
+                    if (showResultingModel) {
+                        didCompile(uri, sameCompilation, clientId, CancelIndicator.NullImpl)
+                    }
                 ].exceptionally [ throwable |
                     LOG.error('Error while running additional compilation effects.', throwable)
                     return null

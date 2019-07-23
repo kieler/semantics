@@ -21,7 +21,7 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.processors.ssa.IOPreserverExtensions
 import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
 import java.util.List
-import javax.inject.Inject
+import com.google.inject.Inject
 
 /**
  * @author aas

@@ -12,8 +12,6 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File

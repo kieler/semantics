@@ -126,7 +126,7 @@ class AnnotationsExtensions {
         eObject as Annotatable
     }
     
-    def addStringAnnotation(Annotatable annotatable, String name, String text) {
+    def addStringAnnotation(Annotatable annotatable, String name, String... text) {
         annotatable.annotations += AnnotationsFactory.eINSTANCE.createStringAnnotation => [
             it.name = name
             values += text

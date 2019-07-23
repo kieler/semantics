@@ -19,8 +19,8 @@ import de.cau.cs.kieler.scg.Node
 import java.util.HashMap
 import java.util.LinkedList
 import java.util.List
-import javax.inject.Inject
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
+import com.google.inject.Inject
 
 /**
  * Class for the calculation of node priorities of an SCG.

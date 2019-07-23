@@ -472,12 +472,6 @@
        </action>
     </extension>
     <extension
-          point="de.cau.cs.kieler.kicool.processor">
-       <Processor
-             class="de.cau.cs.kieler.simulation.ui.internal.processor.UserValues">
-       </Processor>
-    </extension>
-    <extension
           point="de.cau.cs.kieler.klighd.ui.view.editor">
        <editor
              controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"

@@ -13,6 +13,11 @@
  */
 package de.cau.cs.kieler.scg.extensions
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotatable
+import de.cau.cs.kieler.annotations.StringAnnotation
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Link
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.ControlFlow
@@ -24,9 +29,8 @@ import de.cau.cs.kieler.scg.Join
 import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.processors.SCGAnnotations
 import java.util.List
-import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.keffects.Link
 
 /**
  * The SCG Extensions are a collection of common methods for SCG queries and manipulation.
@@ -52,6 +56,7 @@ import de.cau.cs.kieler.kexpressions.keffects.Link
 class SCGControlFlowExtensions {
     
     @Inject extension SCGCoreExtensions 
+    @Inject extension AnnotationsExtensions 
     
     private int MAX_CONTROLFLOW_ACCUMULATION = 100;
 
@@ -330,5 +335,43 @@ class SCGControlFlowExtensions {
         }
         
         return false
-    }    
+    }
+    
+    // LOOPs
+    
+    def void markLoopHeaderPart(Annotatable anno, String... type) {
+        anno.addStringAnnotation(SCGAnnotations.ANNOTATION_LOOP, type)
+    }
+    def Iterable<String> getLoopHeaderPartTags(Annotatable anno) {
+        return anno.getAnnotations(SCGAnnotations.ANNOTATION_LOOP).filter(StringAnnotation).map[values].flatten
+    }
+    def boolean isLoopHeaderPart(Annotatable anno) {
+        return anno.hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    def boolean isLoopHeaderPart(Annotatable anno, String type) {
+        if (anno.isLoopHeaderPart && type !== null) {
+            return anno.loopHeaderPartTags.exists[type.equals(it)]
+        }
+        return false
+    }
+    
+    def boolean markExplicitLoop(Annotatable anno) {
+        return anno.addTagAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    def boolean isExplicitLoop(Annotatable anno) {
+        if (anno === null) return false
+        return anno.hasAnnotation(SCGAnnotations.ANNOTATION_LOOP)
+    }
+    
+    def boolean isPartOfForLoopHeader(Node node) {
+        if (node.isExplicitLoop) {
+            if (node instanceof Assignment) {
+                return node.next?.targetNode?.isPartOfForLoopHeader
+            } else if (node instanceof Conditional) {
+                val prev = node.allPrevious.map[eContainer as Node].filterNull
+                return prev.size <= 2 && prev.forall[it instanceof Assignment && isExplicitLoop]
+            }
+        }
+        return false
+    }
 }

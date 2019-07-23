@@ -386,6 +386,10 @@
             class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis"
             id="de.cau.cs.kieler.kicool.ui.synthesis.KASTSynthesis">
       </diagramSynthesis>
+      <diagramSynthesis
+            class="de.cau.cs.kieler.klighd.syntheses.GuiceBasedSynthesisFactory:de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis"
+            id="de.cau.cs.kieler.kicool.ui.view.registry.KiCoolSystemsSynthesis">
+      </diagramSynthesis>
    </extension>
        <extension
              point="org.eclipse.ui.views">
@@ -403,6 +407,14 @@
                 icon="icons/IMBC_key.png"
                 id="de.cau.cs.kieler.kicool.ui.view.compiler.registry"
                 name="Kieler Compiler Registry"
+                restorable="true">
+          </view>
+          <view
+                category="de.cau.cs.kieler"
+                class="de.cau.cs.kieler.kicool.ui.view.registry.CompilerSystemsView"
+                icon="icons/IMBC_lightning.png"
+                id="de.cau.cs.kieler.kicool.ui.view.compiler.systems"
+                name="Kieler Compiler Systems"
                 restorable="true">
           </view>
        </extension>

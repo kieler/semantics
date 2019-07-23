@@ -31,8 +31,7 @@ RootState returns sccharts::State:
 	'scchart' name=ExtendedID label=STRING?
 	('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	'{'
-		declarations+=DeclarationWOSemicolon*
-		('method' declarations+=MethodDeclarationWOSemicolon)*
+		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	'}';
@@ -52,8 +51,7 @@ State returns sccharts::State:
 	    ('extends' baseStates += [sccharts::State|ID] (',' baseStates += [sccharts::State|ID])*)?
 	    ('schedule' schedule+=ScheduleObjectReference+)?
 	   '{'
-		declarations+=DeclarationWOSemicolon*
-        ('method' declarations+=MethodDeclarationWOSemicolon)*
+		declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
 		actions+=LocalAction*
 		(regions+=ImplicitControlflowRegion | regions+=Region*)
 	   '}')
@@ -135,15 +133,13 @@ ControlflowRegion returns sccharts::ControlflowRegion:
         ('schedule' schedule+=ScheduleObjectReference+)?
         ((
             '{'
-            declarations+=DeclarationWOSemicolon*
-            ('method' declarations+=MethodDeclarationWOSemicolon)*
+            declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
             actions+=LocalAction*
             (states+=ImplicitState | states+=State+)
             '}'
         )|(
             ':'
-            declarations+=DeclarationWOSemicolon*
-            ('method' declarations+=MethodDeclarationWOSemicolon)*
+            declarations+=DeclarationOrMethodWithKeywordWOSemicolon*
             actions+=LocalAction*
             states+=State*
         ))
@@ -222,10 +218,31 @@ PeriodAction returns sccharts::PeriodAction:
 // ----- //
 //  SCL  // 
 // ----- //
+
+// SCL has uses declarations with semicolon -> make it optional
+@Override
+Declaration returns kexpressions::Declaration:
+    super | DeclarationWOSemicolon
+;
+
 @Override
 Statement returns scl::Statement:
     // Only allow restricted set of SCL statements
-    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return
+    SclAssignment | SclPostfixAssignment | Label | Conditional | Goto | ScopeStatement | Return | ForLoop | WhileLoop
+;
+
+@Override
+Effect returns keffects::Effect: 
+    super |
+    CodeEffect;
+    
+CodeEffect returns sccharts::CodeEffect:
+    {sccharts::CodeEffect}
+    (annotations += Annotation)*
+    '{'
+        (declarations+=Declaration)*
+        (statements += Statement)*
+    '}'
 ;
 
 // --------------- //
@@ -283,6 +300,26 @@ PolicyTransition returns sccharts::Transition:
     'go to'
     targetState=[sccharts::State|ID]    
     ('label' label=STRING)?;
+    
+DeclarationOrMethodWithKeywordWOSemicolon returns kexpressions::Declaration:
+    DeclarationWOSemicolon | KeywordMethodDeclarationWOSemicolon
+;
+
+KeywordMethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+    {scl::MethodImplementationDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    'method'
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    ('{'
+        annotations+=CommentAnnotatonSL?
+        declarations+=Declaration*
+        statements+=Statement*
+    '}')?
+;
 
 // ------------ //
 //  Enum Rules  // 

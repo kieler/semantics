@@ -23,8 +23,12 @@ class SCTXStandaloneSetup extends SCTXStandaloneSetupGenerated {
     
     protected static var Injector injector
 
+    /**
+     * Used by LS to override previously created injector, if the current injector does not contain an SCTXIdeSetup
+     */
+    public static var boolean force
 	def static doSetup() {
-	    if (injector === null) {
+	    if (injector === null || force) {
 	        injector = new SCTXStandaloneSetup().createInjectorAndDoEMFRegistration()
 	    }
 	    return injector

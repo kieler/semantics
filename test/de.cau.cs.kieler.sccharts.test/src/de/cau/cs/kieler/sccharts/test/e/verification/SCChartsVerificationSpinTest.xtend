@@ -55,6 +55,7 @@ class SCChartsVerificationSpinTest extends AbstractSCChartsVerificationTest {
             && !modelData.modelProperties.contains("spin-known-to-fail")
             && !modelData.modelProperties.contains("known-to-fail")
             && !modelData.modelProperties.contains("must-fail")
+            && false // disable
     }
 
     @Test

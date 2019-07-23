@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Loop;
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
@@ -275,6 +276,18 @@ public class SCLSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(methodImplementationDeclaration);
                 if (result == null) result = caseStatementContainer(methodImplementationDeclaration);
                 if (result == null) result = caseAnnotatable(methodImplementationDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCLPackage.LOOP: {
+                Loop loop = (Loop)theEObject;
+                T result = caseLoop(loop);
+                if (result == null) result = caseStatement(loop);
+                if (result == null) result = caseScope(loop);
+                if (result == null) result = caseSequencePart(loop);
+                if (result == null) result = caseDeclarationScope(loop);
+                if (result == null) result = caseStatementContainer(loop);
+                if (result == null) result = caseAnnotatable(loop);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -549,6 +562,21 @@ public class SCLSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseMethodImplementationDeclaration(MethodImplementationDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Loop</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Loop</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseLoop(Loop object) {
         return null;
     }
 

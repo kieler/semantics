@@ -12,12 +12,14 @@
  */
 package de.cau.cs.kieler.kicool.compilation.internal
 
-import de.cau.cs.kieler.kicool.compilation.CompilationContext
-import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
-import de.cau.cs.kieler.kicool.compilation.Compile
-import de.cau.cs.kieler.kicool.ProcessorReference
 import de.cau.cs.kieler.kicool.IntermediateReference
+import de.cau.cs.kieler.kicool.ProcessorAlternativeGroup
+import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.ProcessorSystem
+import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 
 /**
  * Internal class that creates all necessary instances of a compilation context.
@@ -70,19 +72,19 @@ class ContextPopulation {
         cc.processorMap.put(intermediateReference, processorInstance)
     }
     
-    static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorGroup processorGroup, CompilationContext cc) {
+    static dispatch def void populate(ProcessorGroup processorGroup, CompilationContext cc) {
         for(processor : processorGroup.processors) {
             processor.populate(cc)
         }        
     }
 
-    static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorAlternativeGroup processorAlternativeGroup, CompilationContext cc) {
+    static dispatch def void populate(ProcessorAlternativeGroup processorAlternativeGroup, CompilationContext cc) {
         for(processor : processorAlternativeGroup.processors) {
             processor.populate(cc)
         }
     }
     
-    static dispatch def void populate(de.cau.cs.kieler.kicool.ProcessorSystem processorSystem, CompilationContext cc) {
+    static dispatch def void populate(ProcessorSystem processorSystem, CompilationContext cc) {
         throw new IllegalArgumentException("A context should not contain ProcessorSystem entries. See SystemTransformation.")
     }
     

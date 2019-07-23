@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.sccharts.ide.text
 
 import com.google.inject.Guice
-import de.cau.cs.kieler.kexpressions.ide.kext.KExtIdeSetup
 import de.cau.cs.kieler.sccharts.text.SCTXRuntimeModule
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import org.eclipse.xtext.util.Modules2
+import de.cau.cs.kieler.scl.ide.SCLIdeSetup
 
 /**
  * Initialization support for running Xtext languages as language servers.
@@ -31,14 +31,17 @@ class SCTXIdeSetup extends SCTXStandaloneSetup {
 	}
 	
 	def static doSetup() {
-        if (injector === null) {
+	    // Check whether the current injector is already an injector created by this class
+        force = injector.getInstance(SCTXIdeModule) !== null
+        if (injector === null || force) {
             injector = new SCTXIdeSetup().createInjectorAndDoEMFRegistration()
         }
+        force = false
         return injector
     }
     
     override createInjectorAndDoEMFRegistration() {
-        KExtIdeSetup.doSetup();
+        SCLIdeSetup.doSetup();
 
         val injector = createInjector();
         register(injector);

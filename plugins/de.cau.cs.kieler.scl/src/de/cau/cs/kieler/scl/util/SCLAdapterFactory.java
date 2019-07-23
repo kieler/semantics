@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scl.Conditional;
 import de.cau.cs.kieler.scl.ElseScope;
 import de.cau.cs.kieler.scl.Goto;
 import de.cau.cs.kieler.scl.Label;
+import de.cau.cs.kieler.scl.Loop;
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration;
 import de.cau.cs.kieler.scl.ModuleCall;
 import de.cau.cs.kieler.scl.Parallel;
@@ -170,6 +171,10 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
             @Override
             public Adapter caseMethodImplementationDeclaration(MethodImplementationDeclaration object) {
                 return createMethodImplementationDeclarationAdapter();
+            }
+            @Override
+            public Adapter caseLoop(Loop object) {
+                return createLoopAdapter();
             }
             @Override
             public Adapter casePragmatable(Pragmatable object) {
@@ -492,6 +497,20 @@ public class SCLAdapterFactory extends AdapterFactoryImpl {
      * @generated
      */
     public Adapter createMethodImplementationDeclarationAdapter() {
+        return null;
+    }
+
+    /**
+     * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.scl.Loop <em>Loop</em>}'.
+     * <!-- begin-user-doc -->
+     * This default implementation returns null so that we can easily ignore cases;
+     * it's useful to ignore a case when inheritance will catch all the cases anyway.
+     * <!-- end-user-doc -->
+     * @return the new adapter.
+     * @see de.cau.cs.kieler.scl.Loop
+     * @generated
+     */
+    public Adapter createLoopAdapter() {
         return null;
     }
 

@@ -23,6 +23,7 @@ import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -32,6 +33,7 @@ import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 class IneffectiveGuardRemover extends InplaceProcessor<SCGraphs> implements Traceable {
 
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.ineffectiveGuardRemover"
@@ -44,7 +46,7 @@ class IneffectiveGuardRemover extends InplaceProcessor<SCGraphs> implements Trac
     override process() {
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performIneffectiveGuardRemoval
         }
     }

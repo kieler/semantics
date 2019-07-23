@@ -7,7 +7,7 @@ Bundle-Activator: de.cau.cs.kieler.verification.VerificationPlugin
 Bundle-Vendor: Kiel University
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Require-Bundle: com.google.guava,
+Require-Bundle: com.google.guava;bundle-version="[21.0.0,22.0.0)",
  com.google.inject,
  org.eclipse.core.resources,
  org.eclipse.core.runtime,
