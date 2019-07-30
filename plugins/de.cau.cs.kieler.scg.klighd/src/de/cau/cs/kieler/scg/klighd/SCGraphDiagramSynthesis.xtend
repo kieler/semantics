@@ -885,7 +885,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
     //                node.addPort("DEBUGPORT", MINIMALWIDTH, MINIMALHEIGHT / 2, 1, PortSide::SOUTH)
                 } else {
                     node.addPort("dummyN", 27, 0, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 0)
-                    node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
+                    node.addPort(SCGPORTID_INCOMING, 0, 12.5f, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                     node.addPort("dummyS", 27, 0, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
                     node.addPort(SCGPORTID_OUTGOING, 75, 12.5f, 1, PortSide::EAST).setLayoutOption(CoreOptions::PORT_INDEX, 1)
                     node.addPort(SCGPORTID_INCOMINGDEPENDENCY, 0, 19, 1, PortSide::WEST).setLayoutOption(CoreOptions::PORT_INDEX, 2)
