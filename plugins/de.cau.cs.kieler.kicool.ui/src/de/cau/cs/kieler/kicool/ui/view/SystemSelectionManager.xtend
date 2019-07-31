@@ -25,9 +25,16 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
-import org.eclipse.swt.widgets.Display
 import org.eclipse.jface.dialogs.MessageDialog
 import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import org.eclipse.emf.ecore.resource.ResourceSet
+import de.cau.cs.kieler.kicool.impl.KiCoolFactoryImpl
+import java.util.Date
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.common.util.URI
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -97,6 +104,41 @@ class SystemSelectionManager implements SelectionListener {
             if (KiCoolRegistration.isTemporarySystem(id)) name = TEMPORARY_SYSTEM_PREFIX + name
             combo.add(name)
             index.add(system.id)
+        }
+        
+        val editor = CompilerViewPartListener.getActiveEditor();
+        if (editor !== null) {
+            val input = editor.getEditorInput();
+        
+            var IProject project = input.getAdapter(IProject);
+            if (project === null) {
+                val resource = input.getAdapter(IResource);
+                if (resource !== null) {
+                    project = resource.getProject();
+                }
+            }
+            for( file : project.members)
+            {
+                if( file.getName().endsWith( ".kico" ) )
+                {
+                    val injector = KiCoolStandaloneSetup.doSetup
+                    val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
+                    val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
+                    val newSystem = resource.getContents().head
+                    if( newSystem instanceof System )
+                    {
+                        val system = newSystem as System
+                        system.id = system.id + "." + new Date().time
+                        KiCoolRegistration.registerTemporarySystem(system)
+                        val id = system.id
+                        var name = system.label
+                        if (name.nullOrEmpty) name = id
+                        if (KiCoolRegistration.isTemporarySystem(id)) name = TEMPORARY_SYSTEM_PREFIX + name
+                        combo.add(name)
+                        index.add(system.id)              
+                    }
+                }
+           }
         }
         
         // Base default
