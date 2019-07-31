@@ -117,16 +117,13 @@ class SystemSelectionManager implements SelectionListener {
                     project = resource.getProject();
                 }
             }
-            for( file : project.members)
-            {
-                if( file.getName().endsWith( ".kico" ) )
-                {
+            for(file : project.members) {
+                if (file.getName().endsWith(".kico")) {
                     val injector = KiCoolStandaloneSetup.doSetup
                     val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
                     val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
                     val newSystem = resource.getContents().head
-                    if( newSystem instanceof System )
-                    {
+                    if (newSystem instanceof System) {
                         val system = newSystem as System
                         system.id = system.id + "." + new Date().time
                         KiCoolRegistration.registerTemporarySystem(system)
