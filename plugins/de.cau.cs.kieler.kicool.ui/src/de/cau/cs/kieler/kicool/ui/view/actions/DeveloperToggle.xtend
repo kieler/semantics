@@ -34,9 +34,6 @@ class DeveloperToggle extends AbstractAction {
     
     private var Separator separator
     private var OpenSystemAction openSystemAction
-    private var LoadSystemAction loadSystemAction
-    private var StoreSystemAction storeSystemAction
-    private var RegisterProcessorAction registerProcessorAction
     
     new(CompilerView view) {
         super(view, 
@@ -53,9 +50,6 @@ class DeveloperToggle extends AbstractAction {
         isChecked = action.isChecked
         separator.visible = action.isChecked
         toolBar.find(openSystemAction.action.id).visible = action.isChecked
-        toolBar.find(loadSystemAction.action.id).visible = action.isChecked
-        toolBar.find(storeSystemAction.action.id).visible = action.isChecked
-        toolBar.find(registerProcessorAction.action.id).visible = action.isChecked
         toolBar.find(view.flattenSystemViewToggle.action.id).visible = action.isChecked
         view.viewSite.actionBars.updateActionBars
     }
@@ -65,15 +59,9 @@ class DeveloperToggle extends AbstractAction {
         this.toolBar = toolBar
         separator = new Separator
         openSystemAction = new OpenSystemAction(view)
-        loadSystemAction = new LoadSystemAction(view)
-        storeSystemAction = new StoreSystemAction(view)
-        registerProcessorAction = new RegisterProcessorAction(view)
         
         toolBar.add(separator)
         toolBar.add(openSystemAction.action)
-        toolBar.add(loadSystemAction.action)
-        toolBar.add(storeSystemAction.action)
-        toolBar.add(registerProcessorAction.action)
         toolBar.add(view.flattenSystemViewToggle.action)
         
         invoke
