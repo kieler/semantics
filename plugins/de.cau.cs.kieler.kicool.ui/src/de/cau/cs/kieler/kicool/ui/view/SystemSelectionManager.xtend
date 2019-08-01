@@ -35,6 +35,7 @@ import de.cau.cs.kieler.kicool.impl.KiCoolFactoryImpl
 import java.util.Date
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.common.util.URI
+import java.util.Map
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -49,7 +50,7 @@ class SystemSelectionManager implements SelectionListener {
     public static val PROJECT_SYSTEM_PREFIX = "PROJECT "
     
     private val index = new ArrayList<String>(KiCoolRegistration.getSystemModels.size + 10)
-    private var projectSystems = new ArrayList<String>()
+    static val Map<String, String> projectSystemFiles = <String, String> newHashMap
     private var CompilerView view
     private var Class<?> modelClassFilter
     private var Combo combo;
@@ -89,10 +90,10 @@ class SystemSelectionManager implements SelectionListener {
         combo.removeAll
         index.clear
         
-        for(s : projectSystems) {
+        for(s : projectSystemFiles.keySet) {
             KiCoolRegistration.removeTemporarySystem(s)
         }
-        projectSystems.clear
+        projectSystemFiles.clear
         
         val model = if(filter) ModelReaderUtil.readModelFromEditor(view.editPartSystemManager.activeEditor)
         if (model !== null && model.class !== modelClassFilter) {
@@ -136,7 +137,7 @@ class SystemSelectionManager implements SelectionListener {
                             val system = newSystem as System
                             system.id = system.id + "." + new Date().time
                             KiCoolRegistration.registerTemporarySystem(system)
-                            projectSystems.add(system.id)
+                            projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
                             val id = system.id
                             var name = system.label
                             if (name.nullOrEmpty) name = id
@@ -201,6 +202,14 @@ class SystemSelectionManager implements SelectionListener {
         }
         updateSystemList
         view.updateToolbar
+    }
+    
+    def isProjectSystem(String id) {
+        projectSystemFiles.containsKey(id)
+    }
+    
+    def getProjectSystemFilePath(String id) {
+        projectSystemFiles.get(id)
     }
     
     override widgetDefaultSelected(SelectionEvent e) {
