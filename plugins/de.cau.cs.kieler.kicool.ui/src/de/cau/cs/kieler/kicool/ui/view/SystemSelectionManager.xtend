@@ -124,26 +124,29 @@ class SystemSelectionManager implements SelectionListener {
                     project = resource.getProject();
                 }
             }
-            for(file : project.members) {
-                if (file.getName().endsWith(".kico")) {
-                    val injector = KiCoolStandaloneSetup.doSetup
-                    val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
-                    val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
-                    val newSystem = resource.getContents().head
-                    if (newSystem instanceof System) {
-                        val system = newSystem as System
-                        system.id = system.id + "." + new Date().time
-                        KiCoolRegistration.registerTemporarySystem(system)
-                        projectSystems.add(system.id)
-                        val id = system.id
-                        var name = system.label
-                        if (name.nullOrEmpty) name = id
-                        name = PROJECT_SYSTEM_PREFIX + name
-                        combo.add(name)
-                        index.add(system.id)              
+            if(project !== null)
+            {
+                for(file : project.members) {
+                    if (file.getName().endsWith(".kico")) {
+                        val injector = KiCoolStandaloneSetup.doSetup
+                        val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
+                        val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
+                        val newSystem = resource.getContents().head
+                        if (newSystem instanceof System) {
+                            val system = newSystem as System
+                            system.id = system.id + "." + new Date().time
+                            KiCoolRegistration.registerTemporarySystem(system)
+                            projectSystems.add(system.id)
+                            val id = system.id
+                            var name = system.label
+                            if (name.nullOrEmpty) name = id
+                            name = PROJECT_SYSTEM_PREFIX + name
+                            combo.add(name)
+                            index.add(system.id)              
+                        }
                     }
                 }
-           }
+            }
         }
         
         // Base default
