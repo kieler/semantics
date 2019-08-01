@@ -46,8 +46,10 @@ import org.eclipse.emf.common.util.URI
 class SystemSelectionManager implements SelectionListener {
     
     public static val TEMPORARY_SYSTEM_PREFIX = "TMP "
+    public static val PROJECT_SYSTEM_PREFIX = "PROJECT "
     
     private val index = new ArrayList<String>(KiCoolRegistration.getSystemModels.size + 10)
+    private var projectSystems = new ArrayList<String>()
     private var CompilerView view
     private var Class<?> modelClassFilter
     private var Combo combo;
@@ -86,6 +88,11 @@ class SystemSelectionManager implements SelectionListener {
         if (combo === null || combo.disposed) return;
         combo.removeAll
         index.clear
+        
+        for(s : projectSystems) {
+            KiCoolRegistration.removeTemporarySystem(s)
+        }
+        projectSystems.clear
         
         val model = if(filter) ModelReaderUtil.readModelFromEditor(view.editPartSystemManager.activeEditor)
         if (model !== null && model.class !== modelClassFilter) {
@@ -127,10 +134,11 @@ class SystemSelectionManager implements SelectionListener {
                         val system = newSystem as System
                         system.id = system.id + "." + new Date().time
                         KiCoolRegistration.registerTemporarySystem(system)
+                        projectSystems.add(system.id)
                         val id = system.id
                         var name = system.label
                         if (name.nullOrEmpty) name = id
-                        if (KiCoolRegistration.isTemporarySystem(id)) name = TEMPORARY_SYSTEM_PREFIX + name
+                        name = PROJECT_SYSTEM_PREFIX + name
                         combo.add(name)
                         index.add(system.id)              
                     }
