@@ -36,6 +36,7 @@ import java.util.Date
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.common.util.URI
 import java.util.Map
+import org.eclipse.core.resources.IContainer
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -85,6 +86,32 @@ class SystemSelectionManager implements SelectionListener {
         updateSystemList(true, false)
     }
     
+    private def processProjectFiles(IResource[] files) {
+        for(file : files) {
+            if (file instanceof IContainer) {
+                (file as IContainer).members.processProjectFiles
+            }
+            else if (file.getName().endsWith(".kico")) {
+                val injector = KiCoolStandaloneSetup.doSetup
+                val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
+                val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
+                val newSystem = resource.getContents().head
+                if (newSystem instanceof System) {
+                    val system = newSystem as System
+                    system.id = system.id + "." + new Date().time
+                    KiCoolRegistration.registerTemporarySystem(system)
+                    projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
+                    val id = system.id
+                    var name = system.label
+                    if (name.nullOrEmpty) name = id
+                    name = PROJECT_SYSTEM_PREFIX + name
+                    combo.add(name)
+                    index.add(system.id)              
+                }
+            }
+        }
+    }
+    
     private def updateSystemList(boolean filter, boolean updateView) {
         if (combo === null || combo.disposed) return;
         combo.removeAll
@@ -125,28 +152,8 @@ class SystemSelectionManager implements SelectionListener {
                     project = resource.getProject();
                 }
             }
-            if(project !== null)
-            {
-                for(file : project.members) {
-                    if (file.getName().endsWith(".kico")) {
-                        val injector = KiCoolStandaloneSetup.doSetup
-                        val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
-                        val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
-                        val newSystem = resource.getContents().head
-                        if (newSystem instanceof System) {
-                            val system = newSystem as System
-                            system.id = system.id + "." + new Date().time
-                            KiCoolRegistration.registerTemporarySystem(system)
-                            projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
-                            val id = system.id
-                            var name = system.label
-                            if (name.nullOrEmpty) name = id
-                            name = PROJECT_SYSTEM_PREFIX + name
-                            combo.add(name)
-                            index.add(system.id)              
-                        }
-                    }
-                }
+            if(project !== null) {
+                project.members.processProjectFiles
             }
         }
         
