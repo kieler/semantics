@@ -6,3 +6,4 @@ bin/
 xtend-gen/
 target/
 **/.antlr-generator
+dependencies.txt
