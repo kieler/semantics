@@ -38,6 +38,10 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
 import de.cau.cs.kieler.simulation.ide.server.SimulationServer
+import de.cau.cs.kieler.language.server.KeithLanguageClient
+import de.cau.cs.kieler.language.server.ILanguageClientProvider
+import org.eclipse.lsp4j.services.LanguageClient
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
@@ -47,7 +51,7 @@ import de.cau.cs.kieler.simulation.ide.server.SimulationServer
  *
  */
  @Singleton
-class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ISimulationListener {
+class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ISimulationListener, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
@@ -68,6 +72,8 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      * Counts the steps of a simulation. -1 for no simulation running.
      */
     var int stepNumber = -1
+    
+    public KeithLanguageClient client
     
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
@@ -156,12 +162,6 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         setSimulationType(simulationType)
         // Execute an asynchronous simulation step
         new Thread([currentSimulation.step()]).start
-        // Wait for the update function to write to the next data pool
-        wait()
-        val result = this.requestManager.runRead[
-            new SimulationStepMessage(true, "", this.nextDataPool.pool)
-        ]
-        return result
     }
     
     override stop() {
@@ -179,6 +179,17 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             if (stepNumber >= 0) {
                 this.nextDataPool = ctx.dataPool
                 notify()
+            }
+            switch (e.operation) {
+                // case START: Someone else started this. I could care less
+                case STOP: // Send stop message to Theia client.
+                    this.client.sendExternalStopSimulation()
+                case STEP: {
+                    println("Step")
+                    this.client.sendSimulationStepData(
+                        new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
+                    )
+                }
             }
         }
     }
@@ -198,6 +209,14 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 currentSimulation.mode = DynamicTickMode
             default : currentSimulation.mode = ManualMode
         }
+    }
+    
+    override setLanguageClient(LanguageClient client) {
+        this.client = client as KeithLanguageClient
+    }
+    
+    override getLanguageClient() {
+        return this.client
     }
     
 }
