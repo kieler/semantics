@@ -32,6 +32,12 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
  */
  @Singleton
 class RegistrationLanguageServerExtension implements ILanguageServerExtension, CommandExtension {
+    
+    /**
+     * Will be written to after the Language Server connects
+     */
+     
+    public static List<String> registeredLanguageExtensions = newArrayList
 
     protected static val LOG = Logger.getLogger(RegistrationLanguageServerExtension)
     
@@ -66,6 +72,9 @@ class RegistrationLanguageServerExtension implements ILanguageServerExtension, C
         for (contribution : KielerServiceLoader.load(IHighlightingContribution)) {
             val highlighting = contribution.highlighting
         	languages.add(new Language(highlighting.getId, highlighting.name, highlighting.keywords))
+        }
+        for (language : languages) {
+            registeredLanguageExtensions.add(language.id)
         }
         return requestManager.runRead[ cancelIndicator |
             languages
