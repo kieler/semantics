@@ -39,6 +39,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
+import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -116,6 +117,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel) {
         val eobject = getEObjectFromUri(uri)
+        if (eobject === null) {
+            return
+        }
         val context = compile(eobject, command, inplace)
         context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace, showResultingModel))
         return
@@ -193,6 +197,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             fileUri = fileUri.substring(7)
         }
         val uriObject = URI.createFileURI(fileUri)
+        val ext = uriObject.fileExtension()
+        if (!RegistrationLanguageServerExtension.registeredLanguageExtensions.contains(ext)) {
+            return null
+        }
         val resource = uriObject.xtextResourceSet.getResource(uriObject, true)
 
         return resource.getContents().head
