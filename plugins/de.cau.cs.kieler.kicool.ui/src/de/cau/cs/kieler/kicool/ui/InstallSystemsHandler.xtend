@@ -16,7 +16,6 @@ import org.eclipse.core.commands.AbstractHandler
 import org.eclipse.core.commands.ExecutionEvent
 import org.eclipse.core.commands.ExecutionException
 import org.eclipse.ui.dialogs.FilteredItemsSelectionDialog
-import java.util.ArrayList
 import org.eclipse.swt.widgets.Control
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.core.runtime.IProgressMonitor
@@ -26,7 +25,21 @@ import java.util.Comparator
 import org.eclipse.core.runtime.IStatus
 import org.eclipse.core.runtime.Status
 import org.eclipse.swt.widgets.Shell
-import org.eclipse.ui.IMemento
+import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
+import de.cau.cs.kieler.kicool.System
+import java.util.LinkedList
+import org.eclipse.jface.viewers.StructuredSelection
+import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.jface.viewers.IStructuredSelection
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import org.eclipse.jface.viewers.ISelection
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
+import org.eclipse.xtext.serializer.ISerializer
+import java.io.File
+import org.eclipse.jface.dialogs.MessageDialog
+import java.io.BufferedWriter
+import java.io.FileWriter
 
 /**
  * @author kolja
@@ -34,22 +47,37 @@ import org.eclipse.ui.IMemento
  */
 class InstallSystemsHandler extends AbstractHandler {
 
+    static val injector = KiCoolStandaloneSetup.doSetup
+    static val serializer = injector.getInstance(typeof(ISerializer))
+
     static class SystemDialog extends FilteredItemsSelectionDialog {
 
-        static val resources = new ArrayList();
+        static class SystemDialogItem {
+            var System system = null
 
-        static def generateRescourcesTestCases(char startChar, char endChar, int length, String resource) {
-            for (var ch = startChar; ch <= endChar; ch++) {
+            new(System s) {
+                system = s
+            }
 
-                var res = resource + String.valueOf(ch);
-                if (length == res.length()) {
-                    resources.add(res);
-                } else if ((res.trim().length() % 2) == 0) {
-                    generateRescourcesTestCases(Character.toUpperCase((startChar + 1) as char),
-                        Character.toUpperCase((endChar + 1) as char), length, res);
-                } else
-                    generateRescourcesTestCases(Character.toLowerCase((startChar + 1) as char),
-                        Character.toLowerCase((endChar + 1) as char), length, res);
+            override toString() {
+                return system.label + " (id:" + system.id + ")"
+            }
+
+            def getSystem() {
+                return system
+            }
+        }
+
+        val LinkedList<SystemDialogItem> systems = newLinkedList
+        var LinkedList<SystemDialogItem> selected = newLinkedList
+
+        new(Shell shell) {
+            super(shell, true)
+            setTitle("Select Systems to install")
+            for (s : KiCoolRegistration.getSystemModels.filter(System)) {
+                if (!KiCoolRegistration.isTemporarySystem(s.id)) {
+                    systems.add(new SystemDialogItem(s))
+                }
             }
         }
 
@@ -60,43 +88,47 @@ class InstallSystemsHandler extends AbstractHandler {
         override protected ItemsFilter createFilter() {
             return new ItemsFilter() {
                 override boolean matchItem(Object item) {
-                    return matches(item.toString());
+                    if (item instanceof SystemDialogItem)
+                        return (item as SystemDialogItem).getSystem.id.matches || (item as SystemDialogItem).getSystem.label.matches
+                    return item.toString.matches
                 }
 
                 override boolean isConsistentItem(Object item) {
-                    return true;
+                    return true
                 }
             };
         }
 
         override protected fillContentProvider(AbstractContentProvider contentProvider, ItemsFilter itemsFilter,
             IProgressMonitor progressMonitor) throws CoreException {
-            progressMonitor.beginTask("Searching", resources.size()); // $NON-NLS-1$
-            for (val iter = resources.iterator(); iter.hasNext();) {
-                contentProvider.add(iter.next(), itemsFilter);
-                progressMonitor.worked(1);
+            progressMonitor.beginTask("Searching", systems.size())
+            for (s : systems) {
+                contentProvider.add(s, itemsFilter)
+                progressMonitor.worked(1)
             }
-            progressMonitor.done();
+            progressMonitor.done()
         }
 
-        static val DIALOG_SETTINGS = "FilteredResourcesSelectionDialogExampleSettings";
+        static val DIALOG_SETTINGS = "InstyllSystemsSelectionDialog";
 
         override protected getDialogSettings() {
-            var settings = Activator.getDefault().getDialogSettings().getSection(DIALOG_SETTINGS);
+            var settings = Activator.getDefault().getDialogSettings().getSection(DIALOG_SETTINGS)
             if (settings === null) {
-                settings = Activator.getDefault().getDialogSettings().addNewSection(DIALOG_SETTINGS);
+                settings = Activator.getDefault().getDialogSettings().addNewSection(DIALOG_SETTINGS)
             }
             return settings;
         }
 
         override getElementName(Object item) {
-            return item.toString();
+            return item.toString()
         }
 
-        override protected getItemsComparator() {
+        override protected Comparator<Object> getItemsComparator() {
             return new Comparator() {
                 override compare(Object arg0, Object arg1) {
-                    return arg0.toString().compareTo(arg1.toString());
+                    if (arg0 instanceof SystemDialogItem && arg1 instanceof SystemDialogItem)
+                        return (arg0 as SystemDialogItem).getSystem.label.compareTo((arg1 as SystemDialogItem).getSystem.label)
+                    return arg0.toString().compareTo(arg1.toString())
                 }
             };
         }
@@ -105,33 +137,70 @@ class InstallSystemsHandler extends AbstractHandler {
             return Status.OK_STATUS;
         }
 
-        new(Shell shell, boolean multi) {
-            super(shell, multi);
-            setTitle("Filtered Resources Selection Dialog Example");
-            setSelectionHistory(new ResourceSelectionHistory());
+        override handleSelected(StructuredSelection selection) {
+            selected.clear
+            for (s : selection.toArray()) {
+                selected.add(s as SystemDialogItem)
+            }
+            super.handleSelected(selection)
         }
 
-        private static class ResourceSelectionHistory extends SelectionHistory {
-            override protected Object restoreItemFromMemento(IMemento element) {
-                return null;
+        def LinkedList<System> getSelectedSystems() {
+            val LinkedList<System> list = newLinkedList
+            for (s : selected) {
+                list.add(s.getSystem())
             }
-
-            override protected storeItemToMemento(
-                Object item,
-                IMemento element
-            ) {
-            }
+            return list
         }
     }
 
     override execute(ExecutionEvent event) throws ExecutionException {
 
-        val dialog = new SystemDialog(new Shell(), true);
-        SystemDialog.generateRescourcesTestCases('A', 'C', 8, "")
-        SystemDialog.generateRescourcesTestCases('a', 'c', 4, "")
-        dialog.setInitialPattern("a");
-        dialog.open();
-        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+        val dialog = new SystemDialog(HandlerUtil.getActiveWorkbenchWindow(event).getShell())
+        dialog.setInitialPattern("de.*")
+        dialog.refresh()
+        if (dialog.open() == SystemDialog.OK) {
+            val window = HandlerUtil.getActiveWorkbenchWindow(event)
+            val selection = window.getSelectionService().getSelection() as ISelection;
+            if (selection instanceof IStructuredSelection) {
+                val element = (selection as IStructuredSelection).getFirstElement();
+                var String path = null
+                if (element instanceof IProject) {
+                    path = (element as IProject).location.makeAbsolute.toString
+                } else if (element instanceof IResource) {
+                    path = (element as IResource).rawLocation.makeAbsolute.toString
+                }
+                if (path !== null) {
+                    for (s : dialog.selectedSystems) {
+                        val filePath = path + "/" + s.id + ".kico"
+                        val newFile = new File(filePath);
+                        if (newFile.exists()) {
+                            val question = new MessageDialog(HandlerUtil.getActiveWorkbenchWindow(event).getShell(),
+                                "File override warning", null,
+                                "The file '" + path + "/" + s.id + ".kico" + "' would be overwritten.",
+                                MessageDialog.WARNING, 0, #["continue", "skip"]) {
+                                override buttonPressed(int buttonId) {
+                                    if (buttonId == 0) {
+                                        createSystem(filePath, s)
+                                    }
+                                    close()
+                                }
+                            }
+                            question.open()
+                        } else {
+                            createSystem(filePath, s)
+                        }
+                    }
+                }
+            }
+        }
+        return 0
     }
 
+    private def createSystem(String path, System system) {
+        val contend = serializer.serialize(system)
+        val writer = new BufferedWriter(new FileWriter(path));
+        writer.write(contend);
+        writer.close();
+    }
 }

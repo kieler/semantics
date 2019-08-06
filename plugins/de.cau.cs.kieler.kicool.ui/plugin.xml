@@ -149,7 +149,7 @@
     </extension>
     <extension point="org.eclipse.ui.menus">
         <menuContribution
-            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer">
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
              <command
                    commandId="de.cau.cs.kieler.kicool.ui.installSystems"
                    label="Install Systems ..."
