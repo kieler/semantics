@@ -87,9 +87,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     public static val IProperty<Boolean> NO_PRE_IN_WHEN_TRANSFORMATION = new Property<Boolean>(
         "de.cau.cs.kieler.lustre.processors.lustreToSCC.noPreInWhenTransformation", false)
 
-    public static final String DATAFLOW_REGION_PREFIX = "df"
-    public static final String CONTROLFLOW_REGION_PREFIX = "cf"
-    public static final String ALIBI = "alibi_"
+    public static final String DATAFLOW_REGION_NAME = ""
+    public static final String CONTROLFLOW_REGION_NAME = ""
+    public static final String DUMMY = "dummy"
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -107,7 +107,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected HashMap<ValuedObject, ValuedObject> scchartsToLustreValuedObjectMap = new HashMap
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<AState, State> lustreStateToScchartsStateMap = new HashMap
-    protected int controlflowRegionCounter
 
     /* --------------------------------------------------------------------------------------------
      * Structural methods
@@ -140,7 +139,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         scchartsToLustreValuedObjectMap.clear
         nodeToStateMap.clear
         lustreStateToScchartsStateMap.clear
-        controlflowRegionCounter = 0
     }
 
     /* --------------------------------------------------------------------------------------------
@@ -148,7 +146,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
      * ----------------------------------------------------------------------------------------- */
     protected def processPackBody(PackBody packBody, SCCharts scchartsProgram) {
         val constantsState = createState => [
-            name = "_constants"
+            name = "constants"
         ]
 
         // ----- Constants
@@ -165,7 +163,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         for (node : packBody.nodes) {
             if (node instanceof NodeDeclaration) {
                 var nodeState = createState => [
-                    name = "_" + node.valuedObjects.head.name
+                    name = node.valuedObjects.head.name
                 ]
                 processNodeDeclarations(node, nodeState)
                 if (constantsExist) {
@@ -235,8 +233,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         if (rootState.regions.isEmpty) {
             // If there is no region yet, create one otherwise the model is terminated
-            var cfRegion = rootState.createControlflowRegion(ALIBI + "region") => [label = it.ID]
-            cfRegion.createInitialState(ALIBI + "state")
+            var cfRegion = rootState.createControlflowRegion(DUMMY)
+            cfRegion.createInitialState(DUMMY)
         }
     }
 
@@ -255,13 +253,13 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
             state.annotations += assertionAnnotation
         } catch (Exception e) {
-            environment.warnings.add("A problem occurred in the transformation of the assertion: " + assertion.expr.stringRepresentation, e)
+            environment.warnings.add("A problem occurred in the transformation of the assertion: " +
+                assertion.expr.stringRepresentation, e)
         }
     }
 
     protected def void processAutomaton(Automaton automaton, State state) {
-        var controlflowRegion = createControlflowRegion(CONTROLFLOW_REGION_PREFIX + controlflowRegionCounter)
-        state.regions += controlflowRegion
+        var controlflowRegion = state.createControlflowRegion(CONTROLFLOW_REGION_NAME)
 
         var initialState = true;
         for (AState lusState : automaton.states) {
@@ -469,6 +467,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
                 return conditional
             }
+        } else if (containingElement instanceof Parameter) {
+            return realExpression
         }
 
         // Returning null will cause the containing assignment to not be added
@@ -702,7 +702,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         if (!lustreStateToScchartsStateMap.containsKey(kExpression.valuedObject)) {
             val calledValuedObject = createValuedObject => [
-                name = "_ref" + calledState.name
+                name = calledState.name
                 uniqueName
             ]
             lustreToScchartsValuedObjectMap.put(kExpression.valuedObject, calledValuedObject)
@@ -719,7 +719,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         ArrayList<ValuedObject> inputValuedObjects) {
 
         if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
-            state.regions += createDataflowRegion(DATAFLOW_REGION_PREFIX).uniqueName => [label = it.ID]
+            createDataflowRegion(state,
+                de.cau.cs.kieler.lustre.processors.lustreToScc.CoreLustreToSCC.DATAFLOW_REGION_NAME)
         }
         var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
 
