@@ -72,7 +72,7 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
 
     override protected ViewContext getDiagramViewContext() {
         synchronized (diagramState) {
-            if (diagramState === null) {
+            if (diagramState === null || simulationExt.currentlySimulatedModel === null) {
                 return null
             }
             return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
