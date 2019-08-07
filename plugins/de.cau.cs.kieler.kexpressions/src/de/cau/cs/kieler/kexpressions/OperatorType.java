@@ -343,7 +343,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    FBY(25, "FBY", "FBY"), /**
+    FBY(25, "FBY", "fby"), /**
      * The '<em><b>CURRENT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -351,7 +351,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    CURRENT(26, "CURRENT", "CURRENT"), /**
+    CURRENT(26, "CURRENT", "current"), /**
      * The '<em><b>WHEN</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -359,7 +359,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    WHEN(27, "WHEN", "WHEN"), /**
+    WHEN(27, "WHEN", "when"), /**
      * The '<em><b>INIT</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -367,7 +367,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    INIT(28, "INIT", "INIT"), /**
+    INIT(28, "INIT", "->"), /**
      * The '<em><b>INTDIV</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -375,7 +375,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    INTDIV(29, "INTDIV", "INTDIV"), /**
+    INTDIV(29, "INTDIV", "div"), /**
      * The '<em><b>LOGICAL XOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -383,7 +383,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    LOGICAL_XOR(30, "LOGICAL_XOR", "LOGICAL_XOR"), /**
+    LOGICAL_XOR(30, "LOGICAL_XOR", "xor"), /**
      * The '<em><b>IMPLIES</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -391,7 +391,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    IMPLIES(31, "IMPLIES", "IMPLIES"), /**
+    IMPLIES(31, "IMPLIES", "=>"), /**
      * The '<em><b>ATMOSTONEOF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -399,7 +399,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    ATMOSTONEOF(32, "ATMOSTONEOF", "ATMOSTONEOF"), /**
+    ATMOSTONEOF(32, "ATMOSTONEOF", "#"), /**
      * The '<em><b>NOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -407,7 +407,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    NOR(33, "NOR", "NOR");
+    NOR(33, "NOR", "nor");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -794,7 +794,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #FBY
-     * @model
+     * @model literal="fby"
      * @generated
      * @ordered
      */
@@ -809,7 +809,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #CURRENT
-     * @model
+     * @model literal="current"
      * @generated
      * @ordered
      */
@@ -824,7 +824,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #WHEN
-     * @model
+     * @model literal="when"
      * @generated
      * @ordered
      */
@@ -839,7 +839,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #INIT
-     * @model
+     * @model literal="-&gt;"
      * @generated
      * @ordered
      */
@@ -854,7 +854,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #INTDIV
-     * @model
+     * @model literal="div"
      * @generated
      * @ordered
      */
@@ -869,7 +869,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #LOGICAL_XOR
-     * @model
+     * @model literal="xor"
      * @generated
      * @ordered
      */
@@ -884,7 +884,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #IMPLIES
-     * @model
+     * @model literal="=&gt;"
      * @generated
      * @ordered
      */
@@ -895,7 +895,7 @@ public enum OperatorType implements Enumerator {
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @see #ATMOSTONEOF
-     * @model
+     * @model literal="#"
      * @generated
      * @ordered
      */
@@ -910,7 +910,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #NOR
-     * @model
+     * @model literal="nor"
      * @generated
      * @ordered
      */

@@ -120,7 +120,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         var scchartsProgram = createSCChart
 
         if (p.includes !== null) {
-            // TODO: Handle inputs
+            // TODO: Handle includes
         }
 
         if (p.packList !== null) {
@@ -282,12 +282,11 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     /* --------------------------------------------------------------------------------------------
      * Methods used in basic methods.
      * ----------------------------------------------------------------------------------------- */
-    // Assertion transformation: Get a string representation of a boolean expression for SCC Model Checking
     private def String getStringRepresentation(Expression expression) {
         var String result = ""
         if (expression instanceof OperatorExpression) {
             if (expression.subExpressions.length == 1) {
-                result = expression.operator.toString + "(" +
+                result = expression.operator.literal + "(" +
                     getStringRepresentation(expression.subExpressions.get(0)) + ")"
             } else {
                 for (Expression expr : expression.subExpressions) {
@@ -308,6 +307,21 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
         return result
     }
+    
+    protected def getStringRepresentation(Equation equation) {
+        if (equation.reference !== null && equation.expression !== null) {
+            return equation.reference.valuedObject.name + " = " + getStringRepresentation(equation.expression)
+        } else if (equation.references !== null && equation.expression !== null) {
+            return "(" 
+                + equation.references.map[valuedObject.name].join(", ") 
+                + ")"
+                + " = "
+                + getStringRepresentation(equation.expression)
+        }
+        
+        return ""
+    }
+    
 
     // Automaton transformation: Transform a state
     protected def processState(AState lusState, State state) {
