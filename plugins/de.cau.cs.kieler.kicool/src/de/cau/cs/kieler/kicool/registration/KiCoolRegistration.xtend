@@ -104,6 +104,10 @@ class KiCoolRegistration {
         temporarySystems.put(id, system)
     }
     
+    static def removeTemporarySystem(String id) {
+        temporarySystems.remove(id)
+    }
+    
     static def boolean isTemporarySystem(String id) {
         return temporarySystems.containsKey(id)
     }
