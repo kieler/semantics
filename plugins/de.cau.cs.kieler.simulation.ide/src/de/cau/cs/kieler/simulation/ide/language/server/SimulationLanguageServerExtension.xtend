@@ -183,6 +183,11 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 notify()
             }
             switch (e.operation) {
+                case STOP: {
+                    // Send stop message to Theia client.
+//                    println("Stopping simulation")
+//                    this.client.sendExternalStopSimulation()
+                }
                 case STEP: {
                     this.client.sendSimulationStepData(
                         new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
