@@ -12,10 +12,10 @@
  */
 package de.cau.cs.kieler.language.server
 
-import org.eclipse.lsp4j.services.LanguageClient
+import com.google.gson.JsonObject
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
-import com.google.gson.JsonObject
+import org.eclipse.lsp4j.services.LanguageClient
 
 /**
  * LanguageClient that implements additional methods necessary for server client communication in KEITH.
@@ -48,4 +48,10 @@ interface KeithLanguageClient extends LanguageClient {
     
     @JsonNotification("simulation/externalStop")
     def void sendExternalStopSimulation()
+    
+    /**
+     * Send to client if a simulation was started. Argument should be {@code SimulationStartedMessage}.
+     */
+    @JsonNotification("simulation/started")
+    def void startedSimulation(Object message)
 }
