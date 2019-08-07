@@ -87,14 +87,21 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     var String currentlySimulatedModel
     
     override synchronized start(String uri, String simulationType) {
+        val message = startSimulation(uri, simulationType)
+        startedSimulation(message)
+    }
+    
+    def startedSimulation(SimulationStartedMessage message) {
+        client.startedSimulation(message)
+    }
+    
+    def SimulationStartedMessage startSimulation(String uri, String simulationType) {
         stepNumber = 0
         stopAndRemoveSimulation
         currentlySimulatedModel = uri
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
-            return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "Last compilation command was no simulation command")
-            ]
+            return new SimulationStartedMessage(false, "Last compilation command was no simulation command")
         }
         // Get simulation context and dataPool
         val List<Object> resultArray = objectMap.get(lastUri)
@@ -118,9 +125,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             wait()
             datapool = this.nextDataPool
         } else {
-            return this.requestManager.runRead[ cancelIndicator |
-                new SimulationStartedMessage(false, "No simulation context could be found for this uri")
-            ]
+            return new SimulationStartedMessage(false, "No simulation context could be found for this uri")
         }
         val finalPool = datapool
         // Get properties categories additional to input and output (e.g. guard, ...)
@@ -148,10 +153,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             propertySet.put(key, list)
         ]
         // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
-        val message = new SimulationStartedMessage(true, "", datapool.pool, propertySet)
-        return this.requestManager.runRead[ cancelIndicator |
-            message
-        ]
+        return new SimulationStartedMessage(true, "", datapool.pool, propertySet)
     }
     
     override synchronized step(JsonObject valuesForNextStep, String simulationType) {
@@ -181,8 +183,6 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 notify()
             }
             switch (e.operation) {
-                case STOP: // Send stop message to Theia client.
-                    this.client.sendExternalStopSimulation()
                 case STEP: {
                     this.client.sendSimulationStepData(
                         new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
@@ -190,6 +190,12 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 }
             }
         }
+    }
+    
+    override simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType) {
+        compile(uri, clientId, command, true, true)
+        val message = startSimulation(uri, simulationType)
+        startedSimulation(message)
     }
     
     override getName() {

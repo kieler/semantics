@@ -31,8 +31,8 @@ interface CommandExtension {
      * Simulates a model given by uri. It is assumed that the model was compiled via a simulation CS before.
      * The client should take care that this happened.
      */
-    @JsonRequest('start')
-    def CompletableFuture<SimulationStartedMessage> start(String uri, String simulationType);
+    @JsonNotification('start')
+    def void start(String uri, String simulationType);
     
     /**
      * Performs a step.
@@ -45,4 +45,7 @@ interface CommandExtension {
      */
     @JsonRequest('stop')
     def CompletableFuture<SimulationStoppedMessage> stop()
+    
+    @JsonNotification('simulateCurrentlyOpenedModel')
+    def void simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType)
 }
