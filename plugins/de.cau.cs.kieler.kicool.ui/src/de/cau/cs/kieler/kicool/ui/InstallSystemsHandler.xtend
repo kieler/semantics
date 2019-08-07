@@ -40,6 +40,7 @@ import java.io.File
 import org.eclipse.jface.dialogs.MessageDialog
 import java.io.BufferedWriter
 import java.io.FileWriter
+import de.cau.cs.kieler.kicool.ui.view.CompilerView
 
 /**
  * @author kolja
@@ -47,6 +48,7 @@ import java.io.FileWriter
  */
 class InstallSystemsHandler extends AbstractHandler {
 
+    static public var CompilerView view = null
     static val injector = KiCoolStandaloneSetup.doSetup
     static val serializer = injector.getInstance(typeof(ISerializer))
 
@@ -89,7 +91,8 @@ class InstallSystemsHandler extends AbstractHandler {
             return new ItemsFilter() {
                 override boolean matchItem(Object item) {
                     if (item instanceof SystemDialogItem)
-                        return (item as SystemDialogItem).getSystem.id.matches || (item as SystemDialogItem).getSystem.label.matches
+                        return (item as SystemDialogItem).getSystem.id.matches ||
+                            (item as SystemDialogItem).getSystem.label.matches
                     return item.toString.matches
                 }
 
@@ -127,7 +130,8 @@ class InstallSystemsHandler extends AbstractHandler {
             return new Comparator() {
                 override compare(Object arg0, Object arg1) {
                     if (arg0 instanceof SystemDialogItem && arg1 instanceof SystemDialogItem)
-                        return (arg0 as SystemDialogItem).getSystem.label.compareTo((arg1 as SystemDialogItem).getSystem.label)
+                        return (arg0 as SystemDialogItem).getSystem.label.compareTo(
+                            (arg1 as SystemDialogItem).getSystem.label)
                     return arg0.toString().compareTo(arg1.toString())
                 }
             };
@@ -165,10 +169,13 @@ class InstallSystemsHandler extends AbstractHandler {
             if (selection instanceof IStructuredSelection) {
                 val element = (selection as IStructuredSelection).getFirstElement();
                 var String path = null
+                var IProject project = null
                 if (element instanceof IProject) {
                     path = (element as IProject).location.makeAbsolute.toString
+                    project = (element as IProject)
                 } else if (element instanceof IResource) {
                     path = (element as IResource).rawLocation.makeAbsolute.toString
+                    project = (element as IResource).getProject()
                 }
                 if (path !== null) {
                     for (s : dialog.selectedSystems) {
@@ -190,6 +197,12 @@ class InstallSystemsHandler extends AbstractHandler {
                         } else {
                             createSystem(filePath, s)
                         }
+                    }
+                    if (project !== null) {
+                        project.refreshLocal(IResource.DEPTH_INFINITE, null)
+                    }
+                    if (view !== null) {
+                        view.systemSelectionManager.updateSystemList
                     }
                 }
             }
