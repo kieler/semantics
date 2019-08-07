@@ -166,11 +166,10 @@ NodeValuedObject returns kexpressions::ValuedObject:
 Equation returns keffects::Assignment:
     {Equation}
     (
-        ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference 
-        (',' references+=ValuedObjectReference)* ')') |
-        (references+=ValuedObjectReference ',' references+=ValuedObjectReference 
-        (',' references+=ValuedObjectReference)*) |
-        reference=ValuedObjectReference
+        // Left side: (x, y, ...) or x, y, ... or x 
+        ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')')
+        | (references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)*)
+        | reference=ValuedObjectReference
     )
     operator=AssignOperator 
     expression=Expression   
