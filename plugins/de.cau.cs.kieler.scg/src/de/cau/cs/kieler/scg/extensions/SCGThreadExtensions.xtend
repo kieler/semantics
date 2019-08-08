@@ -545,8 +545,12 @@ class SCGThreadExtensions {
                     if (tempThreadTypes.containsKey(s))
                         sourcesType = sourcesType.combineThreadTypeFork(tempThreadTypes.get(s))
                     else {
-                        allDefined = false;
-                        next.add(0, s as Node)
+                        if (next.contains(s))
+                            sourcesType = sourcesType.combineThreadTypeFork(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                        else {
+                            allDefined = false;
+                            next.add(0, s as Node)
+                        }
                     }
                 }
                 if (allDefined) {
@@ -556,7 +560,7 @@ class SCGThreadExtensions {
             } else if (n instanceof Surface) {
                 tempThreadTypes.put(n, ThreadPathType::DELAYED)
                 next.remove(0)
-                if (!tempThreadTypes.containsKey((n as Surface).depth))
+                if (!tempThreadTypes.containsKey((n as Surface).depth) && !next.contains((n as Surface).depth))
                     next.add((n as Surface).depth) // add at the end because it is not necessary to compute this for the current path
             } else {
                 val targets = n.allNext.map[target]
@@ -566,8 +570,12 @@ class SCGThreadExtensions {
                     if (tempThreadTypes.containsKey(t))
                         type = type.combineThreadTypeDirect(tempThreadTypes.get(t))
                     else {
-                        allDefined = false;
-                        next.add(0, t as Node)
+                        if (next.contains(t))
+                            type = type.combineThreadTypeDirect(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                        else {
+                            allDefined = false;
+                            next.add(0, t as Node)
+                        }
                     }
                 }
                 if (allDefined) {
