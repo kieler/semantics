@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
+import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
 import java.net.URLDecoder
 import java.util.HashMap
 import java.util.List
@@ -39,7 +40,7 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
-import de.cau.cs.kieler.language.server.registration.RegistrationLanguageServerExtension
+import java.util.Observer
 
 /**
  * Implements methods to extend the LSP to allow compilation
@@ -111,7 +112,9 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     protected Thread getSystemsThread
     protected Thread compilationListenerThread
     
-    private var EObject model
+    private var Object model
+    
+    private List<Observer> compilationObservers = newArrayList
     
     public KeithLanguageClient client
     
@@ -149,6 +152,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     private def compile(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
+        compilationObservers.forEach[observer | context.addObserver(observer)]
         this.compilationThread = new CompilationThread(context)
         this.compilationThread.start()
         return context
@@ -170,8 +174,20 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
 
     override getSystems(String uri, boolean filter) {
+        val systemDescriptions = getCompilationSystems(uri, -1, false)
+        return requestManager.runRead[ cancelIndicator |
+            systemDescriptions
+        ]
+    }
+    
+    def getCompilationSystems(String uri, int index, boolean filterForSimulation) {
         this.getSystemsThread = new GetSystemsThread([
-            this.model = getEObjectFromUri(uri)
+            if (index != -1) {
+                this.model = this.objectMap.get(uri).get(index)
+            } else {
+                // get eObject of model specified by uri   
+                this.model = getEObjectFromUri(uri)
+            }
         ])
         this.getSystemsThread.start
         this.getSystemsThread.join()
@@ -179,7 +195,16 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             modelClassFilter = model.class
         }
         var systems = getSystemModels(true, modelClassFilter)
-        val systemDescriptions = getSystemDescription(systems)
+        var systemDescriptions = getSystemDescription(systems)
+        
+        if (filterForSimulation) {
+            return systemDescriptions.filter[system | system.simulation].toList
+        }
+        return systemDescriptions
+    }
+    
+    override getSimulationSystemsForModel(String uri, int index) {
+        val systemDescriptions = getCompilationSystems(uri, index, true)
         return requestManager.runRead[ cancelIndicator |
             systemDescriptions
         ]
@@ -300,6 +325,17 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
                     return null
                 ]
             }
+        }
+    }
+    
+    def registerObserverOnCompilation(Observer o) {
+        this.compilationObservers.add(o)
+    }
+    
+    def removeObserOnCompilation(Observer o) {
+        this.compilationObservers.remove(o)
+        if (compilationThread !== null) {
+            this.compilationThread.context.deleteObserver(o)
         }
     }
     

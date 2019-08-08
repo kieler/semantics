@@ -58,4 +58,7 @@ interface CommandExtension {
      */
     @JsonRequest('cancel-get-systems')
     def CompletableFuture<Boolean> cancelGetSystems();
+    
+    @JsonRequest('get-model-systems')
+    def CompletableFuture<Object> getSimulationSystemsForModel(String uri, int index)
 }

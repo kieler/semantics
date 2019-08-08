@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2019 by
@@ -42,66 +42,75 @@ import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import org.eclipse.lsp4j.services.LanguageClient
 import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
+import java.util.Observable
+import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
  * Play and pause are not supported, since a play requires to send data from the server to the client without an request.
  * 
  * @author sdo
- *
+ * 
  */
- @Singleton
+@Singleton
 class SimulationLanguageServerExtension implements ILanguageServerExtension, CommandExtension, ISimulationListener, ILanguageClientProvider {
 
     protected static val LOG = Logger.getLogger(SimulationLanguageServerExtension)
     protected extension ILanguageServerAccess languageServerAccess
-    
+
     @Inject @Accessors(PUBLIC_GETTER) RequestManager requestManager
-    
+
     /**
      * Compiler LS extension to access the compilation snapshots, namely the simulation executable.
      */
     @Inject extension KiCoolLanguageServerExtension
-    
+
     /**
      * Data pool that will be send to the client in start of step function.
      */
     var DataPool nextDataPool
-    
+
     /**
      * Counts the steps of a simulation. -1 for no simulation running.
      */
     var int stepNumber = -1
-    
+
     public KeithLanguageClient client
-    
+
+    var currentUri = ""
+    var currentSimulationType = ""
+
     override initialize(ILanguageServerAccess access) {
         this.languageServerAccess = access
     }
-    
+
     new() {
         addListener(this)
     }
-    
+
     @Accessors(PUBLIC_GETTER)
     var String currentlySimulatedModel
-    
-    override synchronized start(String uri, String simulationType) {
+
+    override start(String uri, String simulationType) {
         val message = startSimulation(uri, simulationType)
-        startedSimulation(message)
+        if (message !== "") {
+            startedSimulation(new SimulationStartedMessage(false, message))
+        }
     }
-    
+
     def startedSimulation(SimulationStartedMessage message) {
         client.startedSimulation(message)
     }
-    
-    def SimulationStartedMessage startSimulation(String uri, String simulationType) {
+
+    def String startSimulation(String uri, String simulationType) {
         stepNumber = 0
-        stopAndRemoveSimulation
+        // stopAndRemoveSimulation
         currentlySimulatedModel = uri
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
-            return new SimulationStartedMessage(false, "Last compilation command was no simulation command")
+            return "Last compilation command was no simulation command"
         }
         // Get simulation context and dataPool
         val List<Object> resultArray = objectMap.get(lastUri)
@@ -120,42 +129,13 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             setSimulationType(simulationType)
             // Start a new start which starts the simulation to be able to wait for the updates
             // TODO add try catch block
-            new Thread([currentSimulation.start(true)]).start
-            // Wait for the update function to write the initial data pool
-            wait()
-            datapool = this.nextDataPool
+            currentSimulation.start(true)
+            return ""
         } else {
-            return new SimulationStartedMessage(false, "No simulation context could be found for this uri")
+            return "No simulation context could be found for this uri"
         }
-        val finalPool = datapool
-        // Get properties categories additional to input and output (e.g. guard, ...)
-        var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.toSet
-        val propertyFilter = <String, Boolean>newHashMap
-        for (property : properties) {
-            val key = property.toLowerCase
-            if (!propertyFilter.containsKey(key)) {
-                propertyFilter.put(property, true)
-            }
-        }
-        // Add all properties with their respective elements
-        val HashMap<String, ArrayList<String>> propertySet  = newHashMap
-        propertyFilter.forEach[key, value|
-            propertySet.put(key, newArrayList)
-        ]
-        propertySet.forEach[key, list|
-            val infos = finalPool.entries
-            for (entry : finalPool.entries.entrySet) {
-                val combinedProperties = infos.get(entry.key)?.combinedProperties
-                if (combinedProperties !== null && combinedProperties.contains(key)) {
-                    list.add(entry.key)
-                }
-            }
-            propertySet.put(key, list)
-        ]
-        // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
-        return new SimulationStartedMessage(true, "", datapool.pool, propertySet)
     }
-    
+
     override synchronized step(JsonObject valuesForNextStep, String simulationType) {
         // Set the values used by the UserValues processor de.cau.cs.kieler.simulation.ide.language.server.uservalues
         ClientInputs.values = valuesForNextStep
@@ -163,69 +143,126 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // Set simulation mode, default mode is manual mode
         setSimulationType(simulationType)
         // Execute an asynchronous simulation step
-        new Thread([currentSimulation.step()]).start
+        new Thread([println("Doing step"); currentSimulation.step()]).start
     }
-    
+
     override stop() {
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
         stepNumber = -1
         currentlySimulatedModel = null
-        return this.requestManager.runRead[cancelIndicator |
+        return this.requestManager.runRead [ cancelIndicator |
             new SimulationStoppedMessage(true, "Stopped simulation")
         ]
     }
-    
-    override synchronized update(SimulationContext ctx, SimulationEvent e) {
-        if (e instanceof SimulationControlEvent) {
-            if (stepNumber >= 0) {
-                this.nextDataPool = ctx.dataPool
-                notify()
-            }
-            switch (e.operation) {
-                case STOP: {
-                    // Send stop message to Theia client.
-//                    println("Stopping simulation")
-//                    this.client.sendExternalStopSimulation()
+
+    /**
+     * Handle compilation events.
+     */
+    override synchronized update(Observable o, Object e) {
+        if (e instanceof AbstractContextNotification) {
+            switch e {
+                // Case a snapshot was compiled, for simulation, since currentUri and currentSimulationtype are set.
+                CompilationFinished: {
+                    if (currentUri !== "" && currentSimulationType !== "") {
+                        val message = startSimulation(currentUri, currentSimulationType)
+                        if (message !== "") {
+                            startedSimulation(new SimulationStartedMessage(false, message))
+                        }
+                        currentUri = ""
+                        currentSimulationType = ""
+                        removeObserOnCompilation(this)
+                    }
                 }
+            }
+        } else if (e instanceof SimulationControlEvent && o instanceof SimulationContext) {
+            if (stepNumber >= 0) {
+                this.doChangeDatapool((o as SimulationContext).dataPool)
+            }
+            switch ((e as SimulationControlEvent).operation) {
                 case STEP: {
                     this.client.sendSimulationStepData(
                         new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
                     )
                 }
+                case START: {
+                    var datapool = this.nextDataPool
+
+                    val finalPool = datapool
+                    // Get properties categories additional to input and output (e.g. guard, ...)
+                    var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.toSet
+                    val propertyFilter = <String, Boolean>newHashMap
+                    for (property : properties) {
+                        val key = property.toLowerCase
+                        if (!propertyFilter.containsKey(key)) {
+                            propertyFilter.put(property, true)
+                        }
+                    }
+                    // Add all properties with their respective elements
+                    val HashMap<String, ArrayList<String>> propertySet = newHashMap
+                    propertyFilter.forEach [ key, value |
+                        propertySet.put(key, newArrayList)
+                    ]
+                    propertySet.forEach [ key, list |
+                        val infos = finalPool.entries
+                        for (entry : finalPool.entries.entrySet) {
+                            val combinedProperties = infos.get(entry.key)?.combinedProperties
+                            if (combinedProperties !== null && combinedProperties.contains(key)) {
+                                list.add(entry.key)
+                            }
+                        }
+                        propertySet.put(key, list)
+                    ]
+                    // Return the whole data pool, and properties with their respective elements (this includes inputs and outputs)
+                    startedSimulation(new SimulationStartedMessage(true, "", datapool.pool, propertySet))
+                }
             }
+        } else {
+            println(e.class + ", " + o.class)
         }
     }
-    
-    override simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType) {
-        compile(uri, clientId, command, true, true)
-        val message = startSimulation(uri, simulationType)
-        startedSimulation(message)
+
+    def synchronized doChangeDatapool(DataPool datapool) {
+        this.nextDataPool = datapool
+        notify()
+
     }
-    
+
+    override simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType) {
+        registerObserverOnCompilation(this)
+        this.currentSimulationType = simulationType
+        this.currentUri = uri
+        compile(uri, clientId, command, true, false)
+    }
+
     override getName() {
         return this.class.simpleName
     }
-    
-    def setSimulationType(String simulationType) {        
+
+    def setSimulationType(String simulationType) {
         // Set simulation mode, default mode is manual mode
-        switch(simulationType) {
-            case "Manual" :
+        switch (simulationType) {
+            case "Manual":
                 currentSimulation.mode = ManualMode
-            case "Periodic" :
+            case "Periodic":
                 currentSimulation.mode = PeriodicMode
-            case "Dynamic" :
+            case "Dynamic":
                 currentSimulation.mode = DynamicTickMode
-            default : currentSimulation.mode = ManualMode
+            default:
+                currentSimulation.mode = ManualMode
         }
     }
-    
+
     override setLanguageClient(LanguageClient client) {
         this.client = client as KeithLanguageClient
     }
-    
+
     override getLanguageClient() {
         return this.client
     }
-    
+
+    override update(SimulationContext ctx, SimulationEvent e) {
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
+    }
+
 }
