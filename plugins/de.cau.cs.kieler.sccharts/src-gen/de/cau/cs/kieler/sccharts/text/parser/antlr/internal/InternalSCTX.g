@@ -6040,9 +6040,9 @@ ruleForLoop returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getForLoopAccess().getInitializationDeclarationVariableDeclarationWOSemicolonParserRuleCall_2_0_0());
+						newCompositeNode(grammarAccess.getForLoopAccess().getInitializationDeclarationLoopDeclarationParserRuleCall_2_0_0());
 					}
-					lv_initializationDeclaration_2_0=ruleVariableDeclarationWOSemicolon
+					lv_initializationDeclaration_2_0=ruleLoopDeclaration
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getForLoopRule());
@@ -6051,7 +6051,7 @@ ruleForLoop returns [EObject current=null]
 							$current,
 							"initializationDeclaration",
 							lv_initializationDeclaration_2_0,
-							"de.cau.cs.kieler.kexpressions.kext.KExt.VariableDeclarationWOSemicolon");
+							"de.cau.cs.kieler.scl.SCL.LoopDeclaration");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -6187,6 +6187,124 @@ ruleForLoop returns [EObject current=null]
 				}
 			)
 		)?
+	)
+;
+
+// Entry rule entryRuleLoopDeclaration
+entryRuleLoopDeclaration returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLoopDeclarationRule()); }
+	iv_ruleLoopDeclaration=ruleLoopDeclaration
+	{ $current=$iv_ruleLoopDeclaration.current; }
+	EOF;
+
+// Rule LoopDeclaration
+ruleLoopDeclaration returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLoopDeclarationAccess().getAnnotationsAnnotationParserRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLoopDeclarationRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"de.cau.cs.kieler.kexpressions.KExpressions.Annotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLoopDeclarationAccess().getTypeValueTypeEnumRuleCall_1_0_0());
+					}
+					lv_type_1_0=ruleValueType
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLoopDeclarationRule());
+						}
+						set(
+							$current,
+							"type",
+							lv_type_1_0,
+							"de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			    |
+			(
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getLoopDeclarationAccess().getTypeHostTypeEnumRuleCall_1_1_0_0());
+						}
+						lv_type_2_0=ruleHostType
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getLoopDeclarationRule());
+							}
+							set(
+								$current,
+								"type",
+								lv_type_2_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.HostType");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						lv_hostType_3_0=RULE_STRING
+						{
+							newLeafNode(lv_hostType_3_0, grammarAccess.getLoopDeclarationAccess().getHostTypeSTRINGTerminalRuleCall_1_1_1_0());
+						}
+						{
+							if ($current==null) {
+								$current = createModelElement(grammarAccess.getLoopDeclarationRule());
+							}
+							setWithLastConsumed(
+								$current,
+								"hostType",
+								lv_hostType_3_0,
+								"de.cau.cs.kieler.annotations.Annotations.STRING");
+						}
+					)
+				)
+			)
+		)
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLoopDeclarationAccess().getValuedObjectsValuedObjectParserRuleCall_2_0());
+				}
+				lv_valuedObjects_4_0=ruleValuedObject
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLoopDeclarationRule());
+					}
+					add(
+						$current,
+						"valuedObjects",
+						lv_valuedObjects_4_0,
+						"de.cau.cs.kieler.kexpressions.kext.KExt.ValuedObject");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
 	)
 ;
 

@@ -173,7 +173,7 @@ class VariableStore implements IKiCoolCloneable {
         
         info.valuedObject = vo
         if (!vo.cardinalities.nullOrEmpty) {
-            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0]
+            info.dimensions = vo.cardinalities.map[if (it instanceof IntValue) it.value else 0].toList
         } else {
             info.dimensions.clear
         }
@@ -215,21 +215,24 @@ class VariableStore implements IKiCoolCloneable {
         ]
         
         // Handle hierachy
-        if (decl instanceof ClassDeclaration) info.containerName = decl.name
         var classDecl = if (decl.eContainer instanceof ClassDeclaration) decl.eContainer as ClassDeclaration
         var superClassPrefix = ""
         if (classDecl !== null) {
-            info.encapsulatedIn = classDecl.valuedObjects.map[name].toSet
             var superClass = classDecl.eContainer
             while (superClass instanceof ClassDeclaration) {
                 superClassPrefix = superClass.name + "." + superClassPrefix
                 superClass = superClass.eContainer
             }
+            superClassPrefix += classDecl.name
+            info.encapsulatedIn = superClassPrefix
+        }
+        if (decl instanceof ClassDeclaration) {
+            info.containerName = !superClassPrefix.nullOrEmpty ? superClassPrefix + "." + decl.name : decl.name
         }
         
         var name = vo.name
         if (classDecl !== null) {
-            name = superClassPrefix + classDecl.name + "." + name
+            name = superClassPrefix + "." + name
         }
         
         variables.put(name, info)
@@ -374,7 +377,7 @@ class VariableInformation {
     
     /** Sub variable in class */
     @Accessors
-    var Set<String> encapsulatedIn = newHashSet
+    var String encapsulatedIn
     
     /** name of this container for encapsulation */
     @Accessors
@@ -388,7 +391,7 @@ class VariableInformation {
         clone.typeName = typeName
         clone.format = format
         clone.properties.addAll(properties)
-        clone.encapsulatedIn.addAll(encapsulatedIn)
+        clone.encapsulatedIn = encapsulatedIn
         clone.containerName = containerName
         annotations.forEach[ clone.annotations += it.copy ]
         return clone

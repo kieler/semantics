@@ -119,6 +119,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -129,6 +130,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -142,6 +144,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getUsesIds()
   {
     if (usesIds == null)
@@ -156,6 +159,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Provide> getProvisions()
   {
     if (provisions == null)
@@ -170,6 +174,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public PackBody getBody()
   {
     return body;
@@ -197,6 +202,7 @@ public class PackageDeclarationImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setBody(PackBody newBody)
   {
     if (newBody != body)

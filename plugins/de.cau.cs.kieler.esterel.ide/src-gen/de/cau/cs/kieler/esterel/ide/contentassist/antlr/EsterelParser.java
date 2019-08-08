@@ -100,6 +100,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getConditionalAccess().getAlternatives_7(), "rule__Conditional__Alternatives_7");
 			builder.put(grammarAccess.getThreadAccess().getAlternatives_1(), "rule__Thread__Alternatives_1");
 			builder.put(grammarAccess.getForLoopAccess().getAlternatives_2(), "rule__ForLoop__Alternatives_2");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getAlternatives_1(), "rule__LoopDeclaration__Alternatives_1");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getAlternatives_1(), "rule__EffectOrAssignment__Alternatives_1");
 			builder.put(grammarAccess.getModuleCallAccess().getAlternatives_3(), "rule__ModuleCall__Alternatives_3");
 			builder.put(grammarAccess.getMethodDeclarationAccess().getAlternatives_5(), "rule__MethodDeclaration__Alternatives_5");
@@ -415,6 +416,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getParallelAccess().getGroup_1_1(), "rule__Parallel__Group_1_1__0");
 			builder.put(grammarAccess.getScopeStatementAccess().getGroup(), "rule__ScopeStatement__Group__0");
 			builder.put(grammarAccess.getForLoopAccess().getGroup(), "rule__ForLoop__Group__0");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getGroup(), "rule__LoopDeclaration__Group__0");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getGroup_1_1(), "rule__LoopDeclaration__Group_1_1__0");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getGroup(), "rule__EffectOrAssignment__Group__0");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getGroup_1_0(), "rule__EffectOrAssignment__Group_1_0__0");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getGroup_1_1(), "rule__EffectOrAssignment__Group_1_1__0");
@@ -994,6 +997,11 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getForLoopAccess().getDeclarationsAssignment_9(), "rule__ForLoop__DeclarationsAssignment_9");
 			builder.put(grammarAccess.getForLoopAccess().getStatementsAssignment_10(), "rule__ForLoop__StatementsAssignment_10");
 			builder.put(grammarAccess.getForLoopAccess().getSemicolonAssignment_12(), "rule__ForLoop__SemicolonAssignment_12");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getAnnotationsAssignment_0(), "rule__LoopDeclaration__AnnotationsAssignment_0");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getTypeAssignment_1_0(), "rule__LoopDeclaration__TypeAssignment_1_0");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getTypeAssignment_1_1_0(), "rule__LoopDeclaration__TypeAssignment_1_1_0");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getHostTypeAssignment_1_1_1(), "rule__LoopDeclaration__HostTypeAssignment_1_1_1");
+			builder.put(grammarAccess.getLoopDeclarationAccess().getValuedObjectsAssignment_2(), "rule__LoopDeclaration__ValuedObjectsAssignment_2");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getAnnotationsAssignment_0(), "rule__EffectOrAssignment__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getReferenceAssignment_1_0_0(), "rule__EffectOrAssignment__ReferenceAssignment_1_0_0");
 			builder.put(grammarAccess.getEffectOrAssignmentAccess().getOperatorAssignment_1_0_1(), "rule__EffectOrAssignment__OperatorAssignment_1_0_1");

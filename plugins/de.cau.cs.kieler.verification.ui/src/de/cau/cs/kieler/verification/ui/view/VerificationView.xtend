@@ -25,7 +25,6 @@ import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.verification.VerificationAssumption
@@ -71,6 +70,8 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static extension de.cau.cs.kieler.simulation.ui.view.pool.DataPoolView.createTableColumn
 import de.cau.cs.kieler.verification.VerificationContext
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /** 
  * @author aas
@@ -509,7 +510,7 @@ Example commands:
             try {
                 // Start a simulation, and when the simulation is started, load the trace from the counterexample
                 val simulationSystemId = "de.cau.cs.kieler.sccharts.simulation.tts.netlist.c"
-                val addCounterexampleSimulationListener = new SimulationListener() {
+                val addCounterexampleSimulationListener = new ISimulationListener() {
                     
                     override update(SimulationContext ctx, SimulationEvent e) {
                         if(e instanceof SimulationControlEvent) {
@@ -519,7 +520,7 @@ Example commands:
                                 SimulationUI.currentSimulation.setTrace(traceFile.traces.head, true, true)
                                 // The listener did what it should and must be removed now.
                                 // Otherwise it will add the counterexample to following simulations as well.
-                                SimulationUI.removeObserver(this)
+                                CentralSimulation.addListener(this)
                             }    
                         }
                     }
@@ -529,8 +530,8 @@ Example commands:
                     }
                     
                 }
-                SimulationUI.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
-                SimulationUI.registerObserver(addCounterexampleSimulationListener)
+                CentralSimulation.compileAndStartSimulation(simulationSystemId, currentDiagramModel)
+                CentralSimulation.addListener(addCounterexampleSimulationListener)
 
             } catch (Exception e) {
                 e.showInDialog

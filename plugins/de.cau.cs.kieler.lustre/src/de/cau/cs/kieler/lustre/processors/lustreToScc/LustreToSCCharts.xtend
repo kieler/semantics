@@ -44,32 +44,39 @@ class LustreToSCCharts extends CoreLustreToSCC {
     }
 
     override processEquation(Equation equation, State state) {
-        // Search for a dataflow region within the state
-        val dataFlowRegionsList = getDataflowRegions(state)
-
-        // If there is no dataflow region, create one
-        if (dataFlowRegionsList.length == 0) {
-            var dfRegion = createDataflowRegion(DATAFLOW_REGION_PREFIX + state.name, DATAFLOW_REGION_PREFIX + state.name)
-            state.regions += dfRegion
-        }
+        var dataflowRegion = getDataflowRegionFromState(state)
         
-        // Take the first dataflow region for creating the equation
-        var dataflowRegion = dataFlowRegionsList.head as DataflowRegion
-        
-        // The left side of the equation should be a known valued object (either simple like 'x = ...' or complex like '(x,y) = ...'
-        if ((equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject))
-            || lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])) {
-                
+        if (isEquationReferenceKnown(equation)) {
                 var dataflowAssignment = createAssignment
+                
+                // Complex references like (x, y, ... ) = ... are not linked because this is handled in the reference transformation
                 if (equation.reference !== null) {
                     var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
                     dataflowAssignment.reference = kExpressionValuedObject.reference
                 }
+                
                 dataflowAssignment.expression = equation.expression.transformExpression(state)
-    
                 if (dataflowAssignment.expression !== null) {
                     dataflowRegion.equations += dataflowAssignment
                 }
         }
     }   
+    
+    private def getDataflowRegionFromState(State state) {
+        val dataFlowRegionsList = getDataflowRegions(state)
+
+        // If there is no dataflow region, create one
+        if (dataFlowRegionsList.length == 0) {
+            createDataflowRegion(state, de.cau.cs.kieler.lustre.processors.lustreToScc.CoreLustreToSCC.DATAFLOW_REGION_NAME)
+        }
+        
+        return dataFlowRegionsList.head as DataflowRegion
+    }
+    
+    private def isEquationReferenceKnown(Equation equation) {
+        val isKnownSimpleReference = equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject)
+        val isKnownComplexReference = equation.reference === null && lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])
+        
+        return isKnownSimpleReference || isKnownComplexReference
+    }
 }

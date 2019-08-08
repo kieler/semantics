@@ -9072,7 +9072,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ForLoop Loop:
-	//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
 	//	';'
 	//	condition=BoolExpression
 	//	';'
@@ -9088,6 +9088,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getForLoopRule() {
 		return getForLoopAccess().getRule();
+	}
+	
+	//LoopDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=super::Annotation* (type=ValueType | type=HostType hostType=super::STRING) valuedObjects+=ValuedObject;
+	public SCLGrammarAccess.LoopDeclarationElements getLoopDeclarationAccess() {
+		return gaSCL.getLoopDeclarationAccess();
+	}
+	
+	public ParserRule getLoopDeclarationRule() {
+		return getLoopDeclarationAccess().getRule();
 	}
 	
 	//EffectOrAssignment keffects::Assignment:

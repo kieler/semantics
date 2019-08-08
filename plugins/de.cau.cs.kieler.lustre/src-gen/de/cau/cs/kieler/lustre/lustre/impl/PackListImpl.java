@@ -96,6 +96,7 @@ public class PackListImpl extends MinimalEObjectImpl.Container implements PackLi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ModelDeclaration> getModelDeclarations()
   {
     if (modelDeclarations == null)
@@ -110,6 +111,7 @@ public class PackListImpl extends MinimalEObjectImpl.Container implements PackLi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<PackageDeclaration> getPackageDeclarations()
   {
     if (packageDeclarations == null)
@@ -124,6 +126,7 @@ public class PackListImpl extends MinimalEObjectImpl.Container implements PackLi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<PackageEquation> getPackageEquations()
   {
     if (packageEquations == null)

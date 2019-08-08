@@ -135,7 +135,7 @@ class XESCompiler extends AbstractSystemCompilerProcessor<ExecutableContainer, E
         }
         
         // report
-        logger.closeLog("xes-compiler-report.log").snapshot
+        logger.saveLog(environment, "xes-compiler.log")
         infra.refresh
     }
     

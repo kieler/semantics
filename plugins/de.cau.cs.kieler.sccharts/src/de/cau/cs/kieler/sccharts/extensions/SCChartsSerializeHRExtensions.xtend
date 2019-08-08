@@ -521,9 +521,9 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }     
     def dispatch CharSequence serialize(CodeEffect code) {
         if (sclSerializer !== null) {
-            return sclSerializer.serialize(code)
+            return sclSerializer.serialize(code) => [it.subSequence(1, it.length - 1)]
         } else {
-            return "{<code>}"
+            return "<code>"
         }
     }
      

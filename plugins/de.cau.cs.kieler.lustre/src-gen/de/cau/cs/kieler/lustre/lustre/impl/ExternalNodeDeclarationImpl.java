@@ -141,6 +141,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isIsUnsafe()
   {
     return isUnsafe;
@@ -151,6 +152,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setIsUnsafe(boolean newIsUnsafe)
   {
     boolean oldIsUnsafe = isUnsafe;
@@ -164,6 +166,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isHasState()
   {
     return hasState;
@@ -174,6 +177,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHasState(boolean newHasState)
   {
     boolean oldHasState = hasState;
@@ -187,6 +191,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -197,6 +202,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -210,6 +216,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getInput()
   {
     return input;
@@ -237,6 +244,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInput(Params newInput)
   {
     if (newInput != input)
@@ -258,6 +266,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getOutput()
   {
     return output;
@@ -285,6 +294,7 @@ public class ExternalNodeDeclarationImpl extends MinimalEObjectImpl.Container im
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOutput(Params newOutput)
   {
     if (newOutput != output)

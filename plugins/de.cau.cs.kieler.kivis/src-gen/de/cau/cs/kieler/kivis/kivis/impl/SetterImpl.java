@@ -109,6 +109,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getVariable()
   {
     return variable;
@@ -119,6 +120,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVariable(String newVariable)
   {
     String oldVariable = variable;
@@ -132,6 +134,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Interface getInterface()
   {
     return interface_;
@@ -159,6 +162,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInterface(Interface newInterface)
   {
     if (newInterface != interface_)
@@ -180,6 +184,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getScript()
   {
     return script;
@@ -190,6 +195,7 @@ public class SetterImpl extends MinimalEObjectImpl.Container implements Setter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setScript(String newScript)
   {
     String oldScript = script;
