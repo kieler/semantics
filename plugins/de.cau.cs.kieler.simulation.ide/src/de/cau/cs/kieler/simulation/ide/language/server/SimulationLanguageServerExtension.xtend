@@ -143,7 +143,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         // Set simulation mode, default mode is manual mode
         setSimulationType(simulationType)
         // Execute an asynchronous simulation step
-        new Thread([println("Doing step"); currentSimulation.step()]).start
+        new Thread([currentSimulation.step()]).start
     }
 
     override stop() {
