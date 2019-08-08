@@ -533,23 +533,27 @@ class SCGThreadExtensions {
                 var fork = n as Fork
                 var joinType = ThreadPathType::DISCONNECTED
                 var allDefined = true
-                if (tempThreadTypes.containsKey(fork.join))
-                    joinType = tempThreadTypes.get(fork.join)
-                else {
-                    allDefined = false
-                    next.add(0, fork.join)
+                if (fork.join !== null) {
+                    if (tempThreadTypes.containsKey(fork.join))
+                        joinType = tempThreadTypes.get(fork.join)
+                    else {
+                        allDefined = false
+                        next.add(0, fork.join)
+                    }
                 }
                 var sourcesType = ThreadPathType::DISCONNECTED
                 var sources = fork.allNext.map[target]
                 for (s : sources) {
-                    if (tempThreadTypes.containsKey(s))
-                        sourcesType = sourcesType.combineThreadTypeFork(tempThreadTypes.get(s))
-                    else {
-                        if (next.contains(s))
-                            sourcesType = sourcesType.combineThreadTypeFork(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                    if (s !== null) {
+                        if (tempThreadTypes.containsKey(s))
+                            sourcesType = sourcesType.combineThreadTypeFork(tempThreadTypes.get(s))
                         else {
-                            allDefined = false;
-                            next.add(0, s as Node)
+                            if (next.contains(s))
+                                sourcesType = sourcesType.combineThreadTypeFork(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                            else {
+                                allDefined = false;
+                                next.add(0, s as Node)
+                            }
                         }
                     }
                 }
@@ -567,14 +571,16 @@ class SCGThreadExtensions {
                 var type = ThreadPathType::DISCONNECTED
                 var allDefined = true
                 for (t : targets) {
-                    if (tempThreadTypes.containsKey(t))
-                        type = type.combineThreadTypeDirect(tempThreadTypes.get(t))
-                    else {
-                        if (next.contains(t))
-                            type = type.combineThreadTypeDirect(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                    if (t !== null) {
+                        if (tempThreadTypes.containsKey(t))
+                            type = type.combineThreadTypeDirect(tempThreadTypes.get(t))
                         else {
-                            allDefined = false;
-                            next.add(0, t as Node)
+                            if (next.contains(t))
+                                type = type.combineThreadTypeDirect(ThreadPathType::INSTANTANEOUS) // in this case we have an instantaneous loop
+                            else {
+                                allDefined = false;
+                                next.add(0, t as Node)
+                            }
                         }
                     }
                 }
