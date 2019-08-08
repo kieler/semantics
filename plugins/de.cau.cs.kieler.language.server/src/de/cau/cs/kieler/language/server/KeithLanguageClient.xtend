@@ -19,6 +19,7 @@ import org.eclipse.lsp4j.services.LanguageClient
 
 /**
  * LanguageClient that implements additional methods necessary for server client communication in KEITH.
+ * Notifications are preferred, since they allow more asynchronity and the server should not depend on the client to answer him.
  * 
  * @author sdo
  *
@@ -46,6 +47,10 @@ interface KeithLanguageClient extends LanguageClient {
     @JsonNotification("simulation/valuesForNextStep")
     def void sendExternalSimulationUserData(JsonObject values)
     
+    /**
+     * Something stopped the simulation. Report this to the client.
+     * TODO actually use this
+     */
     @JsonNotification("simulation/externalStop")
     def void sendExternalStopSimulation()
     

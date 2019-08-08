@@ -59,6 +59,10 @@ interface CommandExtension {
     @JsonRequest('cancel-get-systems')
     def CompletableFuture<Boolean> cancelGetSystems();
     
+    /**
+     * Get simulation compilation system for model specified by uri and index.
+     * TODO Get model from KGraphLanguageServerExtension and remove uri.
+     */
     @JsonRequest('get-model-systems')
     def CompletableFuture<Object> getSimulationSystemsForModel(String uri, int index)
 }

@@ -13,6 +13,7 @@
 package de.cau.cs.kieler.kicool.ide.language.server
 
 import java.lang.Thread
+import java.util.List
 
 /**
  * @author sdo
@@ -20,7 +21,15 @@ import java.lang.Thread
  */
 class GetSystemsThread extends Thread {
     
+    var protected volatile List<SystemDescription> systemDescriptions
+    
     new(Runnable target) {
         super(null, target, "Get System Thread", 0);
+        
     }
+    
+    
+    
+    
+    
 }

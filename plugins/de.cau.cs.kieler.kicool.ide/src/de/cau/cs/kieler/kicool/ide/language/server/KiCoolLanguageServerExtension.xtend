@@ -43,7 +43,8 @@ import org.eclipse.xtext.util.CancelIndicator
 import java.util.Observer
 
 /**
- * Implements methods to extend the LSP to allow compilation
+ * Implements methods to extend the LSP to allow compilation. Moreoever, getting compilation systems and showing
+ * compiled snapshot models is supported.
  * 
  * @author sdo
  * 
@@ -108,22 +109,41 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      */
     protected boolean lastInplace
     
+    /**
+     * Compilation thread, used to invoke a compilation in an own Thread. The {@code KeithCompilationUpdater} is
+     * registered as an observer and gets all event.
+     */
     protected CompilationThread compilationThread
-    protected Thread getSystemsThread
-    protected Thread compilationListenerThread
     
-    private var Object model
+    /**
+     * Used to retrieve the compilation systems for a model.
+     * This is done in an own thread to be able to cancel this.
+     * TODO get cancelling to work.
+     */
+    protected GetSystemsThread getSystemsThread
     
+    /**
+     * Observers that are added to a started compilation.
+     * Currently this should only be the SimulationLanguageServerExtension which might do this.
+     */
     private List<Observer> compilationObservers = newArrayList
     
-    public KeithLanguageClient client
+    /**
+     * The language client allows to send notifications or requests from the server to the client.
+     * Notifications are preferred, since they allow more asynchronity.
+     */
+    private KeithLanguageClient client
     
+    /**
+     * Called by the client to compile a model
+     */
     override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel) {
         val eobject = getEObjectFromUri(uri)
         if (eobject === null) {
             return
         }
-        val context = compile(eobject, command, inplace)
+        val context = createContextAndStartCompilationThread(eobject, command, inplace)
+        // Add listener that sends snapshot descriptions to client and updates the diagram on finish if requested.
         context.addObserver(new KeithCompilationUpdater(this, context, uri, clientId, command, inplace, showResultingModel))
         return
     }
@@ -133,7 +153,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * such as requesting a new diagram for the previously shown snapshot.
      */
     protected def didCompile(String uri, boolean sameCompilation, String clientId, CancelIndicator cancelIndicator) {
-        if (sameCompilation) {
+        if (sameCompilation) { // if is the same compilation the model can be retrieved via the old index
             var Object model
             if (currentIndex == -1) {
                 model = getEObjectFromUri(uri)
@@ -149,7 +169,15 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         return
     }
 
-    private def compile(EObject eobject, String systemId, boolean inplace) {
+    /**
+     * Starts the compilation thread with the context created by the given EObject, the compilation system id.
+     * 
+     * @param eobject EObject of model to compile
+     * @param systemId id of compilation system
+     * @param inplace whether inplace compilation should be enabled or disabled
+     * @return compilation context that was used to create the newly started compilation thread.
+     */
+    private def CompilationContext createContextAndStartCompilationThread(EObject eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         compilationObservers.forEach[observer | context.addObserver(observer)]
@@ -158,12 +186,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         return context
     }
 
+    /**
+     * Display the current snapshot given by uri and index on the diagram widget given by the clientId.
+     * 
+     * @param uri uri of model
+     * @param clientId id of diagramServer
+     * @param index index of snapshot. -1 equals the original model.
+     * @return completable future with index and id of showed model
+     */
     override show(String uri, String clientId, int index) {
         var Object model
         if (index != -1) {
+            // get snapshto model from compiled models
             model = this.objectMap.get(uri).get(index)
         } else {
-            // get eObject of model specified by uri        
+            // get eObject of model specified by uri
             model = getEObjectFromUri(uri)
         }
         val modelToSend = model
@@ -173,6 +210,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         ]
     }
 
+    /**
+     * Returns compilation systems on request
+     * 
+     * @param uri uri of model
+     * @param filter Currently unused, CS are filtered on the client.
+     * @return completable future of all compilation system descriptions {@code List<SystemDescription}
+     */
     override getSystems(String uri, boolean filter) {
         val systemDescriptions = getCompilationSystems(uri, -1, false)
         return requestManager.runRead[ cancelIndicator |
@@ -180,29 +224,57 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         ]
     }
     
+    /**
+     * Returns the compilation systems for model given by uri.
+     * 
+     * @param uri Uri of model
+     * @param index index of snapshot, -1 for original model
+     * @param filterForSimulation true if only simulation cs should be returned
+     * @return CS specified by the above parameters.
+     */
     def getCompilationSystems(String uri, int index, boolean filterForSimulation) {
+        var Object model
+        if (index != -1) {
+            model = this.objectMap.get(uri).get(index)
+        } else {
+            // get eObject of model specified by uri   
+            model = getEObjectFromUri(uri)
+        }
+        return getCompilationSystems(model, filterForSimulation)
+    }
+    
+    /**
+     * Returns the compilation systems for model given by uri.
+     * 
+     * @param model Model for which the CS are requested.
+     * @param filterForSimulation true if only simulation cs should be returned
+     * @return CS specified by the above parameters.
+     */
+    def getCompilationSystems(Object model, boolean filterForSimulation) {
         this.getSystemsThread = new GetSystemsThread([
-            if (index != -1) {
-                this.model = this.objectMap.get(uri).get(index)
+            if (model !== null && model.class !== modelClassFilter) {
+                modelClassFilter = model.class
+            }
+            var systems = getSystemModels(true, modelClassFilter)
+            var systemDescriptions = getSystemDescription(systems)
+            if (filterForSimulation) {
+                getSystemsThread.systemDescriptions = systemDescriptions.filter[system | system.simulation].toList
             } else {
-                // get eObject of model specified by uri   
-                this.model = getEObjectFromUri(uri)
+                getSystemsThread.systemDescriptions = systemDescriptions
             }
         ])
         this.getSystemsThread.start
         this.getSystemsThread.join()
-        if (model !== null && model.class !== modelClassFilter) {
-            modelClassFilter = model.class
-        }
-        var systems = getSystemModels(true, modelClassFilter)
-        var systemDescriptions = getSystemDescription(systems)
-        
-        if (filterForSimulation) {
-            return systemDescriptions.filter[system | system.simulation].toList
-        }
-        return systemDescriptions
+        return this.getSystemsThread.systemDescriptions
     }
     
+    /**
+     * Request to get all simulation systems for a model given by uri and index.
+     * 
+     * @param uri uri of model
+     * @param index index of snapshot to get systems for
+     * @return completable future of all simulation compilation systems for specified model
+     */
     override getSimulationSystemsForModel(String uri, int index) {
         val systemDescriptions = getCompilationSystems(uri, index, true)
         return requestManager.runRead[ cancelIndicator |
@@ -258,6 +330,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         this.languageServerAccess = access
     }
     
+    /**
+     * Called on notification to cancel the compilation.
+     * Sets {@code CANCEL_COMPILATION} property on all processors.
+     */
     override cancelCompilation() {
         if (compilationThread.alive) {
             this.compilationThread.terminated = true
@@ -270,6 +346,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         return
     }
     
+    /**
+     * Called on request to cancel the get systems process.
+     * TODO currently does not work correctly.
+     */
     override cancelGetSystems() {
         println("Interrupt thread")
         if (getSystemsThread.alive) {
@@ -290,7 +370,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     }
     
     /**
-     * Send list of current snapshots in snapshotMap to the client.
+     * Send list of current snapshots in snapshot map to the client.
      * @param uri uri of model file
      * @param context CompilationContext of current compilation
      * @param clientId identifier used by the client to identify the diagram widget that should be updated. Only relevant if showSnapshot is true.
@@ -328,10 +408,21 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         }
     }
     
+    /**
+     * Register observer to be included on start of new compilation.
+     * 
+     * @param o observer to be registered
+     */
     def registerObserverOnCompilation(Observer o) {
         this.compilationObservers.add(o)
     }
     
+    /**
+     * Removes observer form list of processors that should be registered as compilation observers.
+     * Also removes observer from compilationThread if it exists.
+     * 
+     * @param o observer to be removed
+     */
     def removeObserOnCompilation(Observer o) {
         this.compilationObservers.remove(o)
         if (compilationThread !== null) {
