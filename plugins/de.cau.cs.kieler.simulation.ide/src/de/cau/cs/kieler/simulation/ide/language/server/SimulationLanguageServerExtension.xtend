@@ -223,9 +223,14 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             }
             switch ((e as SimulationControlEvent).operation) {
                 case STEP: { // Send step data if a step occurred.
-                    this.client.sendSimulationStepData(
-                        new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
-                    )
+                    try {
+                        this.client.sendSimulationStepData(
+                            new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
+                        )
+                    } catch (Exception exp) {
+                        exp.printStackTrace
+                        // TODO send notification that LS has to be restarted
+                    } 
                 }
                 case START: { // Start the simulation. Send corresponding message to client.
                     var datapool = this.nextDataPool
