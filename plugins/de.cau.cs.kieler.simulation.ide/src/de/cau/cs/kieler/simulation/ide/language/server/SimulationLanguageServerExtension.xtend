@@ -188,6 +188,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     override stop() {
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
+        SimulationServer.stop()
         stepNumber = -1
         currentlySimulatedModel = null
         return this.requestManager.runRead [ cancelIndicator |
