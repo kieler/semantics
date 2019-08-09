@@ -18,11 +18,14 @@ import java.util.HashMap
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Data send to the client on start of a simulation.
+ * This includes whether the start was successful, an error string that is non empty on error, the initial datapool, and
+ * the propertySet which also includes what inputs, outputs, and e.g. internal variables are.
+ * 
  * @author sdo
  *
  */
 @Data class SimulationStartedMessage {
-    
     
     boolean successful
     String error

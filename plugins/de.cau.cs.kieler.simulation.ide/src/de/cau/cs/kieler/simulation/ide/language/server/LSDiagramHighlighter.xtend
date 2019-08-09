@@ -75,6 +75,7 @@ abstract class LSDiagramHighlighter extends IdeDiagramHighlighter {
             if (diagramState === null || simulationExt.currentlySimulatedModel === null) {
                 return null
             }
+            // TODO Get model of snapshots model (currently saved in different fields
             return diagramState.getKGraphContext(URLDecoder.decode(simulationExt.currentlySimulatedModel, "UTF-8"))
         }
 

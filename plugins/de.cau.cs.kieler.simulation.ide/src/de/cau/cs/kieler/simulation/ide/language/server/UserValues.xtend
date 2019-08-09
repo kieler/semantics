@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ide.language.server
 import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
 
 /**
+ * User values processor. Allows to set user values by the client.
  * @author sdo
  */
 class UserValues extends SimulationProcessor {

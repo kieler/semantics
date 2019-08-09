@@ -16,6 +16,9 @@ import com.google.gson.JsonObject
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Message to be send to the client after a step.
+ * Includes new values and error string as well as success boolean.
+ * 
  * @author sdo
  *
  */

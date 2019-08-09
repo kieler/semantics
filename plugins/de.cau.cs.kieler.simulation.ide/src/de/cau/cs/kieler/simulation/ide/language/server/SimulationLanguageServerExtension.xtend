@@ -17,19 +17,27 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import de.cau.cs.kieler.kicool.KiCoolFactory
 import de.cau.cs.kieler.kicool.ProcessorGroup
+import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
+import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.ide.language.server.KiCoolLanguageServerExtension
+import de.cau.cs.kieler.language.server.ILanguageClientProvider
+import de.cau.cs.kieler.language.server.KeithLanguageClient
 import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.ISimulationListener
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 import de.cau.cs.kieler.simulation.mode.DynamicTickMode
 import de.cau.cs.kieler.simulation.mode.ManualMode
 import de.cau.cs.kieler.simulation.mode.PeriodicMode
 import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
+import java.util.Observable
 import org.apache.log4j.Logger
+import org.eclipse.lsp4j.services.LanguageClient
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtext.ide.server.ILanguageServerAccess
 import org.eclipse.xtext.ide.server.ILanguageServerExtension
@@ -37,19 +45,11 @@ import org.eclipse.xtext.ide.server.concurrent.RequestManager
 
 import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
 import static de.cau.cs.kieler.simulation.ide.language.server.ClientInputs.*
-import de.cau.cs.kieler.simulation.ide.server.SimulationServer
-import de.cau.cs.kieler.language.server.KeithLanguageClient
-import de.cau.cs.kieler.language.server.ILanguageClientProvider
-import org.eclipse.lsp4j.services.LanguageClient
-import de.cau.cs.kieler.simulation.ide.CentralSimulation
-import de.cau.cs.kieler.kicool.compilation.observer.AbstractContextNotification
-import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
-import java.util.Observable
-import de.cau.cs.kieler.kicool.compilation.observer.ProcessorFinished
 
 /**
  * LS extension to simulate models. Supports starting, stepping, and stopping or simulations.
  * Play and pause are not supported, since a play requires to send data from the server to the client without an request.
+ * Play and pause is realized on the client side via stepping.
  * 
  * @author sdo
  * 
@@ -77,9 +77,18 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      */
     var int stepNumber = -1
 
+    /**
+     * Used to send notification (or request) to the client.
+     */
     public KeithLanguageClient client
 
+    /**
+     * Uri of compiled model which should be directly simulated afterwards.
+     */
     var currentUri = ""
+    /**
+     * Simulation type with which the new simulation of an compiled model should be started.
+     */
     var currentSimulationType = ""
 
     override initialize(ILanguageServerAccess access) {
@@ -87,26 +96,45 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     }
 
     new() {
+        // Register the class itself as simulation listener on creation.
         addListener(this)
     }
 
+    /**
+     * Uri of model which is currently being simulated.
+     */
     @Accessors(PUBLIC_GETTER)
     var String currentlySimulatedModel
 
+    /**
+     * Called on client notification and starts a simulation for specified uri and simulation type.
+     * @param uri uri of model
+     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     */
     override start(String uri, String simulationType) {
         val message = startSimulation(uri, simulationType)
-        if (message !== "") {
+        // If message is not empty an error occurred. Answer the via the corresponding notification.
+        // Otherwise the corresponding simulation event is caught and the client is notified about the correct start.
+        if (message !== "") { 
             startedSimulation(new SimulationStartedMessage(false, message))
         }
     }
 
+    /**
+     * Sends {@code SimulationStartedMessage} to the client.
+     */
     def startedSimulation(SimulationStartedMessage message) {
         client.startedSimulation(message)
     }
 
+    /**
+     * Starts the simulation thread. This will terminate all previous simulations.
+     * @param uri uri of model
+     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     * @return empty string if successful, error message otherwise.
+     */
     def String startSimulation(String uri, String simulationType) {
         stepNumber = 0
-        // stopAndRemoveSimulation
         currentlySimulatedModel = uri
         // hacky way to find out if a simulation exists (TODO fix this)
         if (lastCommand === null || !lastCommand.contains("simulation")) {
@@ -136,6 +164,13 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         }
     }
 
+    /**
+     * Called on client notification if a simulation step should be executed.
+     * This method has to be synchronized, since no two steps shall be executed at the same time.
+     * 
+     * @param valuesForNextStep input values set by client
+     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     */
     override synchronized step(JsonObject valuesForNextStep, String simulationType) {
         // Set the values used by the UserValues processor de.cau.cs.kieler.simulation.ide.language.server.uservalues
         ClientInputs.values = valuesForNextStep
@@ -146,6 +181,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         new Thread([currentSimulation.step()]).start
     }
 
+    /**
+     * Called on client request to stop the simulation.
+     * Answers with true if this was successful.
+     */
     override stop() {
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
@@ -158,9 +197,11 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
 
     /**
      * Handle compilation events.
+     * @param o observable compilation of simulation context
+     * @param e AbstractContextNotification for compilation listener or SimulationControlEvent for simulation listener
      */
     override synchronized update(Observable o, Object e) {
-        if (e instanceof AbstractContextNotification) {
+        if (e instanceof AbstractContextNotification) { // Handle compilation events
             switch e {
                 // Case a snapshot was compiled, for simulation, since currentUri and currentSimulationtype are set.
                 CompilationFinished: {
@@ -175,17 +216,17 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                     }
                 }
             }
-        } else if (e instanceof SimulationControlEvent && o instanceof SimulationContext) {
+        } else if (e instanceof SimulationControlEvent && o instanceof SimulationContext) { // Handle simulation events
             if (stepNumber >= 0) {
                 this.doChangeDatapool((o as SimulationContext).dataPool)
             }
             switch ((e as SimulationControlEvent).operation) {
-                case STEP: {
+                case STEP: { // Send step data if a step occurred.
                     this.client.sendSimulationStepData(
                         new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
                     )
                 }
-                case START: {
+                case START: { // Start the simulation. Send corresponding message to client.
                     var datapool = this.nextDataPool
 
                     val finalPool = datapool
@@ -217,21 +258,35 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                     startedSimulation(new SimulationStartedMessage(true, "", datapool.pool, propertySet))
                 }
             }
-        } else {
+        } else { // Handle unknown events, log the classes for which this is executed.
             println(e.class + ", " + o.class)
         }
     }
 
+    /**
+     * Set new data pool and notify observers about it.
+     */
     def synchronized doChangeDatapool(DataPool datapool) {
         this.nextDataPool = datapool
         notify()
-
     }
 
+    /**
+     * Called on client notification to simulate a snapshot.
+     * Such a snapshot has to be compiled first. Starting of the simulation is done by the registered listener.
+     * TODO uri and command might be obsolete, since this should be saved in the diagramLSExt
+     * @param uri rui of model
+     * @param clientId id of diagram server
+     * @param command compilation system id
+     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     */
     override simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType) {
+        // Registers itself as compilation listener to continue after compilation is finished.
         registerObserverOnCompilation(this)
+        // Save data to be used by simulation.
         this.currentSimulationType = simulationType
         this.currentUri = uri
+        // Start compilation process.
         compile(uri, clientId, command, true, false)
     }
 
@@ -239,6 +294,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         return this.class.simpleName
     }
 
+    /**
+     * Set simulation type according to string send by the client
+     * @param simulationType should be one of Manual, Periodic, and Dynamic
+     */
     def setSimulationType(String simulationType) {
         // Set simulation mode, default mode is manual mode
         switch (simulationType) {
@@ -261,6 +320,9 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         return this.client
     }
 
+    /**
+     * Is overridden by by Observer interface, should be called.
+     */
     override update(SimulationContext ctx, SimulationEvent e) {
         throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }

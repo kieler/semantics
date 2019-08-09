@@ -15,6 +15,7 @@ package de.cau.cs.kieler.simulation.ide.language.server
 import org.eclipse.xtend.lib.annotations.Data
 
 /**
+ * Send to the client as answer on request to stop a simulation.
  * @author sdo
  *
  */

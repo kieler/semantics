@@ -15,6 +15,8 @@ package de.cau.cs.kieler.simulation.ide.language.server
 import com.google.gson.JsonObject
 
 /**
+ * Class to statically some new values for simulation in UserValue processor.
+ * 
  * @author sdo
  *
  */
