@@ -28,14 +28,14 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
  * @kieler.rating 2019-08-08 proposed yellow
  *
  */
-class SCGComplexity extends InplaceProcessor<SCGraphs> {
+class SCGValuedObjectComplexity extends InplaceProcessor<SCGraphs> {
     
     override getId() {
-        "de.cau.cs.kieler.scg.processors.complexity"
+        "de.cau.cs.kieler.scg.processors.complexity.valuedObject"
     }
     
     override getName() {
-        "Complexity"
+        "Valued Object Complexity"
     }
     
     override process() {
@@ -43,30 +43,9 @@ class SCGComplexity extends InplaceProcessor<SCGraphs> {
     }
     
     private def calculateComplexity(SCGraph scg) {
-        val expressions = <Expression> newLinkedList
-        for (n : scg.nodes) {
-            if (n instanceof Assignment) {
-                expressions += n.expression
-            }            
-            else if (n instanceof Conditional) {
-                expressions += n.condition
-            }
-        }
-        
-        var complexity = 0;        
-        
-        for (e : expressions) {
-            complexity += e.complexity
-        }
-        
+        var complexity = scg.declarations.map[ valuedObjects ].fold(0, [a, b | a + 1]);        
+                
         println(complexity)
     }
     
-    private def int complexity(Expression e) {
-        switch(e) {
-            Value,
-            ValuedObjectReference: return 1
-            OperatorExpression: return e.subExpressions.map[complexity].fold(0, [a, b | a + b]) + 1
-        }
-    } 
 }
