@@ -56,6 +56,10 @@
 				</and>
             </activeWhen>
         </handler>
+        <handler
+              class="de.cau.cs.kieler.kicool.ui.InstallSystemsHandler"
+              commandId="de.cau.cs.kieler.kicool.ui.installSystems">
+        </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
         <definition id="de.cau.cs.kieler.kicool.KiCool.Editor.opened">
@@ -144,6 +148,60 @@
       </command>
     </extension>
     <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+             <command
+                   commandId="de.cau.cs.kieler.kicool.ui.installSystems"
+                   label="Install Systems ..."
+                   mnemonic="S"
+                   style="push">
+               <visibleWhen
+                      checkEnabled="true">
+                   <with
+                         variable="selection">
+                      <iterate
+                            ifEmpty="false"
+                            operator="and">
+                         <or>
+                             <adapt
+                                   type="org.eclipse.core.resources.IProject">
+                             </adapt>
+                             <adapt
+                                   type="org.eclipse.core.resources.IFolder">
+                             </adapt>
+                         </or>
+                      </iterate>
+                   </with>
+                </visibleWhen>
+             </command>
+        </menuContribution>
+        <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+             <command
+                   commandId="de.cau.cs.kieler.kicool.ui.installSystems"
+                   label="Install Systems ..."
+                   mnemonic="S"
+                   style="push">
+               <visibleWhen
+                      checkEnabled="true">
+                   <with
+                         variable="selection">
+                      <iterate
+                            ifEmpty="false"
+                            operator="and">
+                         <or>
+                             <adapt
+                                   type="org.eclipse.core.resources.IProject">
+                             </adapt>
+                             <adapt
+                                   type="org.eclipse.core.resources.IFolder">
+                             </adapt>
+                         </or>
+                      </iterate>
+                   </with>
+                </visibleWhen>
+             </command>
+        </menuContribution>
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
