@@ -72,7 +72,7 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
                             try {
                                 val complexity = file.complexity
                                 maxFileNameLength = Math.max(file.name.length, maxFileNameLength)
-                                complexityMap.put(file.name, complexity)
+                                complexityMap.put(file.projectRelativePath.toString, complexity)
                             } catch (Exception e) {
                                 StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.ui", e.message, e), StatusManager.LOG)
                                 StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.ui", e.message, e.cause), StatusManager.SHOW)
@@ -84,7 +84,7 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
                         // Show Results
                         val maxFileNameLengthFinal = maxFileNameLength
                         val stringBuilder = new StringBuilder
-                        complexityMap.forEach[filename, complexity| stringBuilder.append(formatFileLine(filename, complexity, maxFileNameLengthFinal, false))]
+                        complexityMap.forEach[filepath, complexity| stringBuilder.append(formatFileLine(filepath, complexity, maxFileNameLengthFinal, false))]
                         println(stringBuilder.toString)
 
                         return Status.OK_STATUS
@@ -120,7 +120,8 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
         }
     }
     
-    def formatFileLine(String fileName, int complexity, int maxFileNameLength, boolean tabular) {
+    def formatFileLine(String filePath, int complexity, int maxFileNameLength, boolean tabular) {
+        var fileName = filePath.split("/").last
         
         var separator = ""
         if (tabular) {
