@@ -43,6 +43,8 @@ class SCChartsSystemProvider implements ISystemProvider {
             "system/de.cau.cs.kieler.sccharts.csv.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.lean.arduino.deploy.kico",
             "system/de.cau.cs.kieler.sccharts.netlist.arduino.deploy.kico",
+            "system/de.cau.cs.kieler.sccharts.netlist.complexity.expression.kico",
+            "system/de.cau.cs.kieler.sccharts.netlist.complexity.valuedObject.kico",
             "system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.kico",
             "system/de.cau.cs.kieler.sccharts.netlist.nxj.deploy.RConsole.kico",
             "system/de.cau.cs.kieler.sccharts.expansion.only.kico",

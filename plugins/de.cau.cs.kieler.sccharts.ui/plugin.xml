@@ -570,6 +570,16 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
             id="de.cau.cs.kieler.sccharts.ui.reserialize"
             name="Reserialize SCTX">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.ui.devel.category"
+            id="de.cau.cs.kieler.sccharts.ui.complexity.valuedObject"
+            name="Count Valued Objects in SCG">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler.sccharts.ui.devel.category"
+            id="de.cau.cs.kieler.sccharts.ui.complexity.expression"
+            name="Count expression elements in SCG">
+      </command>
       <category
             id="de.cau.cs.kieler.sccharts.ui.devel.category"
             name="KIELER SCCharts Development Tools">
@@ -580,6 +590,14 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
       <handler
             class="de.cau.cs.kieler.sccharts.ui.debug.ReserializeCommand"
             commandId="de.cau.cs.kieler.sccharts.ui.reserialize">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.complexity.ValuedObjectComplexityHandler"
+            commandId="de.cau.cs.kieler.sccharts.ui.complexity.valuedObject">
+      </handler>
+      <handler
+            class="de.cau.cs.kieler.sccharts.ui.complexity.ExpressionComplexityHandler"
+            commandId="de.cau.cs.kieler.sccharts.ui.complexity.expression">
       </handler>
    </extension>
    <extension
@@ -651,6 +669,75 @@ controllerID="de.cau.cs.kieler.kicool.ui.klighd.KiCoModelUpdateController"
                </with>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.jdt.ui.PackageExplorer">
+         <menu
+               label="Complexity"
+               mnemonic="C">
+            <command
+                  commandId="de.cau.cs.kieler.sccharts.ui.complexity.valuedObject"
+                  label="Count Valued Objects in SCG"
+                  mnemonic="C"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                           </adapt>
+                           <adapt
+                                 type="org.eclipse.core.resources.IFolder">
+                           </adapt>
+                           <adapt
+                                 type="org.eclipse.core.resources.IFile">
+                              <test
+                                    property="org.eclipse.core.resources.extension"
+                                    value="sctx">
+                              </test>
+                           </adapt>
+                        </or>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.cau.cs.kieler.sccharts.ui.complexity.expression"
+                  label="Count Expressions in SCG"
+                  mnemonic="C"
+                  style="push">
+               <visibleWhen
+                     checkEnabled="true">
+                  <with
+                        variable="selection">
+                     <iterate
+                           ifEmpty="false"
+                           operator="and">
+                        <or>
+                           <adapt
+                                 type="org.eclipse.core.resources.IProject">
+                           </adapt>
+                           <adapt
+                                 type="org.eclipse.core.resources.IFolder">
+                           </adapt>
+                           <adapt
+                                 type="org.eclipse.core.resources.IFile">
+                              <test
+                                    property="org.eclipse.core.resources.extension"
+                                    value="sctx">
+                              </test>
+                           </adapt>
+                        </or>
+                     </iterate>
+                  </with>
+               </visibleWhen>
+            </command>
+         </menu>
       </menuContribution>
    </extension>
    
