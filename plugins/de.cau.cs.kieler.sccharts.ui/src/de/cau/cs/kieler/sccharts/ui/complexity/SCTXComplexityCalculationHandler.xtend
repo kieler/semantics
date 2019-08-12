@@ -16,6 +16,9 @@ import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
 import de.cau.cs.kieler.scg.processors.analyzer.AbstractSCGComplexity
+import java.io.File
+import java.io.FileWriter
+import java.util.Date
 import java.util.List
 import java.util.TreeMap
 import org.eclipse.core.commands.AbstractHandler
@@ -77,15 +80,24 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
                                 StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.ui", e.message, e), StatusManager.LOG)
                                 StatusManager.getManager().handle(new Status(Status.WARNING, "de.cau.cs.kieler.sccharts.ui", e.message, e.cause), StatusManager.SHOW)
                             }
-
                             monitor.worked(1)
                         }
                         
-                        // Show Results
+                        // Format Results
                         val maxFileNameLengthFinal = maxFileNameLength
                         val stringBuilder = new StringBuilder
                         complexityMap.forEach[filepath, complexity| stringBuilder.append(formatFileLine(filepath, complexity, maxFileNameLengthFinal, false))]
-                        println(stringBuilder.toString)
+
+                        // Write result File
+                        var stamp = (new Date()).toString.replace(" ", "_").replace(":", "-")
+                        var resultsFileName = "complexity_" + stamp + ".csv"
+                        var projectPath = files.head?.project.location.toString
+                        var newFile = new File(projectPath + File.separator + resultsFileName)
+                        if (newFile.createNewFile) {
+                            var writer = new FileWriter(newFile);
+                            writer.write(stringBuilder.toString);
+                            writer.close();
+                        }
 
                         return Status.OK_STATUS
                     }
@@ -121,18 +133,16 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
     }
     
     def formatFileLine(String filePath, int complexity, int maxFileNameLength, boolean tabular) {
-        var fileName = filePath.split("/").last
-        
         var separator = ""
         if (tabular) {
-            for (var i = fileName.length; i <= maxFileNameLength; i++) {
+            for (var i = filePath.length; i <= maxFileNameLength; i++) {
                 separator += " "
             }
         } else {
             separator = ","
         }
         
-        return fileName + separator + complexity + "\n"
+        return filePath + separator + complexity + "\n"
                 
     }
 
