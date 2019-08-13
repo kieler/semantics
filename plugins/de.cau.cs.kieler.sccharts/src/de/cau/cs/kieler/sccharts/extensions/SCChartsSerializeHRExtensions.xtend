@@ -476,6 +476,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
+        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
+            vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
@@ -487,6 +489,8 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
+        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
+            vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
