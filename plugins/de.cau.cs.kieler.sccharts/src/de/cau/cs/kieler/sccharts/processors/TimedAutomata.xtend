@@ -95,8 +95,11 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val DEVIATION_OUTPUT_DEFAULT = false
     public static val TIME_FORMAT_NAME = "TimePrintFormat"
     public static val TIME_FORMAT_DEFAULT = "%.4f"
-//    public static val CATCH_UP_NAME = "CatchUp"
-//    public static val CATCH_UP_DEFAULT = false
+    public static val INT_CLOCK_NAME = "IntegralClockType"
+    public static val INT_CLOCK_NAME_2 = "IntegerClockType"
+    public static val USE_SD_NAME = "ClocksUseSD"
+    
+    var isIntClockType = false
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
@@ -109,16 +112,18 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
         val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
         val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
         val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equals(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equals(name)].values.head else TIME_FORMAT_DEFAULT
+        isIntClockType = allAnnotations.exists[INT_CLOCK_NAME.equals(name) || INT_CLOCK_NAME_2.equals(name) ]
+        val clockType = ValueType.get(isIntClockType ? DynamicTicks.INT_TYPE : DynamicTicks.FLOAT_TYPE)
         
         if (rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]) {
             // Create time vars
             val deltaT = if (rootState.valuedObjectsList.exists[DELTA_T_NAME.equals(name)]) {
                 val vo = rootState.valuedObjectsList.findFirst[DELTA_T_NAME.equals(name)]
                 if (vo.initialValue === null) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || !vo.type.toString.equals(DynamicTicks.TYPE)) {
-                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                if (!vo.input || vo.type !== clockType) {
+                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
                 } else {
                     environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
@@ -129,9 +134,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 vo
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
-                vo.initialValue = createFloatValue(0)
+                vo.initialValue = createClockValue(0)
                 rootState.declarations += createDeclaration => [
-                    type = ValueType.get(DynamicTicks.TYPE)
+                    type = clockType
                     input = true
                     valuedObjects += vo
                 ]
@@ -143,10 +148,10 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             val sleepT = if (rootState.valuedObjectsList.exists[SLEEP_T_NAME.equals(name)]) {
                 val vo = rootState.valuedObjectsList.findFirst[SLEEP_T_NAME.equals(name)]
                 if (vo.initialValue === null) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || vo.type.toString.equals(DynamicTicks.TYPE)) {
-                    environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                if (!vo.input || vo.type !== clockType) {
+                    environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
                 } else {
                     environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                 }
@@ -158,9 +163,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             } else {
                 val vo = createValuedObject(SLEEP_T_NAME)
                 if (!noSleep) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                     rootState.declarations += createDeclaration => [
-                        type = ValueType.get(DynamicTicks.TYPE)
+                        type = clockType
                         output = true
                         valuedObjects += vo
                     ]
@@ -173,9 +178,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             // DeviationOutput
             if(deviationOutput && !noSleep) {
                 val vo = createValuedObject(DEVIATION_NAME).uniqueName
-                vo.initialValue = createFloatValue(0)
+                vo.initialValue = createClockValue(0)
                 rootState.declarations += createDeclaration => [
-                    type = ValueType.get(DynamicTicks.TYPE)
+                    type = clockType
                     output = true
                     valuedObjects += vo
                 ]
@@ -192,7 +197,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             if (!noSleep) {
                 rootState.createImmediateDuringAction => [
                     // start sleep time collection
-                    effects += createAssignment(sleepT, createFloatValue(maxSleep))
+                    effects += createAssignment(sleepT, createClockValue(maxSleep))
                 ]
             
                 if (simulateTime) {
@@ -208,12 +213,12 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             // Handle clock
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
-                    clock.declaration.asVariableDeclaration.type = ValueType.get(DynamicTicks.TYPE)
+                    clock.declaration.asVariableDeclaration.type = clockType
                     if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                         clock.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     }
                     voStore.update(clock, SCCHARTS_GENERATED)
-                    if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
+                    if (clock.initialValue === null) clock.initialValue = createClockValue(0)
                     
                     var region = state.controlflowRegions.head
                     if (state.controlflowRegions.size > 1) {
@@ -332,8 +337,8 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                                 thresholds.sortInplace
                                 for (threshold : thresholds.indexed) {
                                     val during = subState.createImmediateDuringAction
-                                    during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
-                                    during.createAssignment(sleepT, createSubExpression(createFloatValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
+                                    during.trigger = createLEExpression(clock.reference, createClockValue(threshold.value))
+                                    during.createAssignment(sleepT, createSubExpression(createClockValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
                                 }
                             }
                         }
@@ -390,6 +395,15 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             }
         }
         return false
+    }
+    
+    
+    def createClockValue(Number n) {
+        if (isIntClockType) {
+            createIntValue(n.intValue)
+        } else {
+            createFloatValue(n.doubleValue)
+        }
     }
 
 }
