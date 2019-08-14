@@ -26,12 +26,15 @@ import de.cau.cs.kieler.lustre.lustre.Equation
 import java.util.HashSet
 import java.util.List
 import java.util.Set
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.FloatValue
 
 /**
  * @author lgr
  *
  */
-class LustreElementOperationsExtensions {
+class LustreUtilityExtensions {
     
     static val String CLOCK_EXPRESSION_MISMATCH_INFO = "Received %s."
     
@@ -164,6 +167,46 @@ class LustreElementOperationsExtensions {
         }
         
         return valuedObjects
+    }
+    
+    dispatch def String getStringRepresentation(Expression expression) {
+        var String result = ""
+        if (expression instanceof OperatorExpression) {
+            if (expression.subExpressions.length == 1) {
+                result = expression.operator.literal + "(" +
+                    getStringRepresentation(expression.subExpressions.get(0)) + ")"
+            } else {
+                for (Expression expr : expression.subExpressions) {
+                    result += getStringRepresentation(expr)
+                    if (expression.subExpressions.indexOf(expr) < expression.subExpressions.length - 1) {
+                        result += " " + expression.operator.toString + " "
+                    }
+                }
+            }
+        } else if (expression instanceof ValuedObjectReference) {
+            result = expression.valuedObject.name
+        } else if (expression instanceof IntValue) {
+            result = expression.value.toString
+        } else if (expression instanceof BoolValue) {
+            result = expression.value.toString
+        } else if (expression instanceof FloatValue) {
+            result = expression.value.toString
+        }
+        return result
+    }
+    
+    dispatch def String getStringRepresentation(Equation equation) {
+        if (equation.reference !== null && equation.expression !== null) {
+            return equation.reference.valuedObject.name + " = " + getStringRepresentation(equation.expression)
+        } else if (equation.references !== null && equation.expression !== null) {
+            return "(" 
+                + equation.references.map[valuedObject.name].join(", ") 
+                + ")"
+                + " = "
+                + getStringRepresentation(equation.expression)
+        }
+        
+        return ""
     }
     
 }

@@ -27,7 +27,7 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.lustre.extensions.LustreElementOperationsExtensions
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 
 /**
  * This class contains custom validation rules. 
@@ -47,7 +47,7 @@ class LustreValidator extends AbstractLustreValidator {
     static val String MULTIPLE_DEFINITIONS = "The variable is defined multiple times through equations."
 
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension LustreElementOperationsExtensions
+    @Inject extension LustreUtilityExtensions
 
     /*
      * Checks for not supported language features.

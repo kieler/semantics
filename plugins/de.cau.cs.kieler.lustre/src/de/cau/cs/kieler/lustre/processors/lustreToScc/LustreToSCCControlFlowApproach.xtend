@@ -41,6 +41,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 
 /**
  * @author cpa, lgr
@@ -59,6 +60,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsTypeExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension LustreUtilityExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsControlflowRegionExtensions

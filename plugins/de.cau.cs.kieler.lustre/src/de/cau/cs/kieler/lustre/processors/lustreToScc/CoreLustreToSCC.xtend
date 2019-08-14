@@ -16,11 +16,8 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.FloatValue
-import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.Parameter
@@ -37,6 +34,7 @@ import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 import de.cau.cs.kieler.lustre.lustre.AState
 import de.cau.cs.kieler.lustre.lustre.ATransition
 import de.cau.cs.kieler.lustre.lustre.Assertion
@@ -95,6 +93,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
+    @Inject extension LustreUtilityExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
@@ -118,14 +117,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     def SCCharts transform(LustreProgram p) {
         var scchartsProgram = createSCChart
-
-        if (p.includes !== null) {
-            // TODO: Handle includes
-        }
-
-        if (p.packList !== null) {
-            // TODO: Handle module an package elements
-        }
+        
+        // Note: p.includes and p.packList are not handled
 
         if (p.packBody !== null) {
             p.packBody.processPackBody(scchartsProgram)
@@ -183,8 +176,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 scchartsProgram.rootStates += nodeState
             }
         }
-
-    // TODO: TypeDeclarations and ExternalNodeDeclarations
+        
+        // Note: TypeDeclarations and ExternalNodeDeclarations are not handled
     }
 
     protected def processConstantDeclaration(VariableDeclaration variableDeclaration, State rootState) {
@@ -282,47 +275,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     /* --------------------------------------------------------------------------------------------
      * Methods used in basic methods.
      * ----------------------------------------------------------------------------------------- */
-    private def String getStringRepresentation(Expression expression) {
-        var String result = ""
-        if (expression instanceof OperatorExpression) {
-            if (expression.subExpressions.length == 1) {
-                result = expression.operator.literal + "(" +
-                    getStringRepresentation(expression.subExpressions.get(0)) + ")"
-            } else {
-                for (Expression expr : expression.subExpressions) {
-                    result += getStringRepresentation(expr)
-                    if (expression.subExpressions.indexOf(expr) < expression.subExpressions.length - 1) {
-                        result += " " + expression.operator.toString + " "
-                    }
-                }
-            }
-        } else if (expression instanceof ValuedObjectReference) {
-            result = expression.valuedObject.name
-        } else if (expression instanceof IntValue) {
-            result = expression.value.toString
-        } else if (expression instanceof BoolValue) {
-            result = expression.value.toString
-        } else if (expression instanceof FloatValue) {
-            result = expression.value.toString
-        }
-        return result
-    }
     
-    protected def getStringRepresentation(Equation equation) {
-        if (equation.reference !== null && equation.expression !== null) {
-            return equation.reference.valuedObject.name + " = " + getStringRepresentation(equation.expression)
-        } else if (equation.references !== null && equation.expression !== null) {
-            return "(" 
-                + equation.references.map[valuedObject.name].join(", ") 
-                + ")"
-                + " = "
-                + getStringRepresentation(equation.expression)
-        }
-        
-        return ""
-    }
-    
-
     // Automaton transformation: Transform a state
     protected def processState(AState lusState, State state) {
 
@@ -414,11 +367,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 return convertedExpression
 
             } else if (kExpression instanceof ReferenceCall) {
-                // A different lustre node is called here
                 return processReferenceCall(kExpression, state)
 
             } else if (kExpression instanceof ValuedObjectReference) {
-                // Simple reference: Search for the equivalent sccharts reference
                 if (lustreToScchartsValuedObjectMap.containsKey(kExpression.valuedObject)) {
                     return lustreToScchartsValuedObjectMap.get(kExpression.valuedObject).reference
                 } else
@@ -734,7 +685,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
             createDataflowRegion(state,
-                de.cau.cs.kieler.lustre.processors.lustreToScc.CoreLustreToSCC.DATAFLOW_REGION_NAME)
+                CoreLustreToSCC.DATAFLOW_REGION_NAME)
         }
         var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
 
