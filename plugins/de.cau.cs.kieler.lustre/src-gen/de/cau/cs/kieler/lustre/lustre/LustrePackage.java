@@ -594,13 +594,22 @@ public interface LustrePackage extends EPackage
   int AUTOMATON = 9;
 
   /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTOMATON__NAME = 0;
+
+  /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTOMATON__STATES = 0;
+  int AUTOMATON__STATES = 1;
 
   /**
    * The number of structural features of the '<em>Automaton</em>' class.
@@ -609,7 +618,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTOMATON_FEATURE_COUNT = 1;
+  int AUTOMATON_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl <em>AState</em>}' class.
@@ -622,13 +631,40 @@ public interface LustrePackage extends EPackage
   int ASTATE = 10;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Initial</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASTATE__NAME = 0;
+  int ASTATE__INITIAL = 0;
+
+  /**
+   * The feature id for the '<em><b>Valued Object</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASTATE__VALUED_OBJECT = 1;
+
+  /**
+   * The feature id for the '<em><b>Constants</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASTATE__CONSTANTS = 2;
+
+  /**
+   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASTATE__VARIABLES = 3;
 
   /**
    * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -637,7 +673,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__EQUATIONS = 1;
+  int ASTATE__EQUATIONS = 4;
 
   /**
    * The feature id for the '<em><b>Assertions</b></em>' containment reference list.
@@ -646,7 +682,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__ASSERTIONS = 2;
+  int ASTATE__ASSERTIONS = 5;
 
   /**
    * The feature id for the '<em><b>Automatons</b></em>' containment reference list.
@@ -655,7 +691,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__AUTOMATONS = 3;
+  int ASTATE__AUTOMATONS = 6;
 
   /**
    * The feature id for the '<em><b>Transitions</b></em>' containment reference list.
@@ -664,7 +700,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__TRANSITIONS = 4;
+  int ASTATE__TRANSITIONS = 7;
 
   /**
    * The number of structural features of the '<em>AState</em>' class.
@@ -673,7 +709,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE_FEATURE_COUNT = 5;
+  int ASTATE_FEATURE_COUNT = 8;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl <em>ATransition</em>}' class.
@@ -695,31 +731,13 @@ public interface LustrePackage extends EPackage
   int ATRANSITION__STRONG = 0;
 
   /**
-   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * The feature id for the '<em><b>Actions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ATRANSITION__CONDITION = 1;
-
-  /**
-   * The feature id for the '<em><b>History</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATRANSITION__HISTORY = 2;
-
-  /**
-   * The feature id for the '<em><b>Next State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ATRANSITION__NEXT_STATE = 3;
+  int ATRANSITION__ACTIONS = 1;
 
   /**
    * The number of structural features of the '<em>ATransition</em>' class.
@@ -728,7 +746,62 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ATRANSITION_FEATURE_COUNT = 4;
+  int ATRANSITION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AnActionImpl <em>An Action</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.lustre.impl.AnActionImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAnAction()
+   * @generated
+   */
+  int AN_ACTION = 12;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AN_ACTION__CONDITION = 0;
+
+  /**
+   * The feature id for the '<em><b>Effects</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AN_ACTION__EFFECTS = 1;
+
+  /**
+   * The feature id for the '<em><b>History</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AN_ACTION__HISTORY = 2;
+
+  /**
+   * The feature id for the '<em><b>Next State</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AN_ACTION__NEXT_STATE = 3;
+
+  /**
+   * The number of structural features of the '<em>An Action</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AN_ACTION_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl <em>Params</em>}' class.
@@ -738,7 +811,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getParams()
    * @generated
    */
-  int PARAMS = 12;
+  int PARAMS = 13;
 
   /**
    * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
@@ -766,7 +839,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticParam()
    * @generated
    */
-  int STATIC_PARAM = 13;
+  int STATIC_PARAM = 14;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -821,7 +894,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticArg()
    * @generated
    */
-  int STATIC_ARG = 14;
+  int STATIC_ARG = 15;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -876,7 +949,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getByNameStaticArg()
    * @generated
    */
-  int BY_NAME_STATIC_ARG = 15;
+  int BY_NAME_STATIC_ARG = 16;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -922,7 +995,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getClockedVariableDeclaration()
    * @generated
    */
-  int CLOCKED_VARIABLE_DECLARATION = 16;
+  int CLOCKED_VARIABLE_DECLARATION = 17;
 
   /**
    * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
@@ -959,7 +1032,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeDeclaration()
    * @generated
    */
-  int NODE_DECLARATION = 17;
+  int NODE_DECLARATION = 18;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1113,7 +1186,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeValuedObject()
    * @generated
    */
-  int NODE_VALUED_OBJECT = 18;
+  int NODE_VALUED_OBJECT = 19;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1177,7 +1250,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getEquation()
    * @generated
    */
-  int EQUATION = 19;
+  int EQUATION = 20;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1277,7 +1350,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAssertion()
    * @generated
    */
-  int ASSERTION = 20;
+  int ASSERTION = 21;
 
   /**
    * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1307,6 +1380,70 @@ public interface LustrePackage extends EPackage
   int ASSERTION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StateValuedObjectImpl <em>State Valued Object</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.lustre.impl.StateValuedObjectImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStateValuedObject()
+   * @generated
+   */
+  int STATE_VALUED_OBJECT = 22;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__COMBINE_OPERATOR = KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR;
+
+  /**
+   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__INITIAL_VALUE = KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE;
+
+  /**
+   * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+  /**
+   * The number of structural features of the '<em>State Valued Object</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1314,7 +1451,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
    * @generated
    */
-  int LUSTRE_VALUED_OBJECT = 21;
+  int LUSTRE_VALUED_OBJECT = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1387,7 +1524,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeReference()
    * @generated
    */
-  int NODE_REFERENCE = 22;
+  int NODE_REFERENCE = 24;
 
   /**
    * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1965,6 +2102,17 @@ public interface LustrePackage extends EPackage
   EClass getAutomaton();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.Automaton#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.Automaton#getName()
+   * @see #getAutomaton()
+   * @generated
+   */
+  EAttribute getAutomaton_Name();
+
+  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.Automaton#getStates <em>States</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1986,15 +2134,48 @@ public interface LustrePackage extends EPackage
   EClass getAState();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.AState#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.AState#isInitial <em>Initial</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.AState#getName()
+   * @return the meta object for the attribute '<em>Initial</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AState#isInitial()
    * @see #getAState()
    * @generated
    */
-  EAttribute getAState_Name();
+  EAttribute getAState_Initial();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.AState#getValuedObject <em>Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Valued Object</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AState#getValuedObject()
+   * @see #getAState()
+   * @generated
+   */
+  EReference getAState_ValuedObject();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AState#getConstants <em>Constants</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Constants</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AState#getConstants()
+   * @see #getAState()
+   * @generated
+   */
+  EReference getAState_Constants();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AState#getVariables <em>Variables</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Variables</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AState#getVariables()
+   * @see #getAState()
+   * @generated
+   */
+  EReference getAState_Variables();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AState#getEquations <em>Equations</em>}'.
@@ -2062,37 +2243,69 @@ public interface LustrePackage extends EPackage
   EAttribute getATransition_Strong();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ATransition#getCondition <em>Condition</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.ATransition#getActions <em>Actions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Actions</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ATransition#getActions()
+   * @see #getATransition()
+   * @generated
+   */
+  EReference getATransition_Actions();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.AnAction <em>An Action</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>An Action</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction
+   * @generated
+   */
+  EClass getAnAction();
+
+  /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.AnAction#getCondition <em>Condition</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Condition</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ATransition#getCondition()
-   * @see #getATransition()
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction#getCondition()
+   * @see #getAnAction()
    * @generated
    */
-  EReference getATransition_Condition();
+  EReference getAnAction_Condition();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ATransition#isHistory <em>History</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AnAction#getEffects <em>Effects</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Effects</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction#getEffects()
+   * @see #getAnAction()
+   * @generated
+   */
+  EReference getAnAction_Effects();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.AnAction#isHistory <em>History</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>History</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ATransition#isHistory()
-   * @see #getATransition()
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction#isHistory()
+   * @see #getAnAction()
    * @generated
    */
-  EAttribute getATransition_History();
+  EAttribute getAnAction_History();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.lustre.lustre.ATransition#getNextState <em>Next State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.lustre.lustre.AnAction#getNextState <em>Next State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Next State</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ATransition#getNextState()
-   * @see #getATransition()
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction#getNextState()
+   * @see #getAnAction()
    * @generated
    */
-  EReference getATransition_NextState();
+  EReference getAnAction_NextState();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.Params <em>Params</em>}'.
@@ -2491,6 +2704,16 @@ public interface LustrePackage extends EPackage
    * @generated
    */
   EReference getAssertion_Expr();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.StateValuedObject <em>State Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>State Valued Object</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.StateValuedObject
+   * @generated
+   */
+  EClass getStateValuedObject();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject <em>Valued Object</em>}'.
@@ -2959,6 +3182,14 @@ public interface LustrePackage extends EPackage
     EClass AUTOMATON = eINSTANCE.getAutomaton();
 
     /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTOMATON__NAME = eINSTANCE.getAutomaton_Name();
+
+    /**
      * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2977,12 +3208,36 @@ public interface LustrePackage extends EPackage
     EClass ASTATE = eINSTANCE.getAState();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Initial</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ASTATE__NAME = eINSTANCE.getAState_Name();
+    EAttribute ASTATE__INITIAL = eINSTANCE.getAState_Initial();
+
+    /**
+     * The meta object literal for the '<em><b>Valued Object</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASTATE__VALUED_OBJECT = eINSTANCE.getAState_ValuedObject();
+
+    /**
+     * The meta object literal for the '<em><b>Constants</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASTATE__CONSTANTS = eINSTANCE.getAState_Constants();
+
+    /**
+     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASTATE__VARIABLES = eINSTANCE.getAState_Variables();
 
     /**
      * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
@@ -3035,12 +3290,38 @@ public interface LustrePackage extends EPackage
     EAttribute ATRANSITION__STRONG = eINSTANCE.getATransition_Strong();
 
     /**
+     * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ATRANSITION__ACTIONS = eINSTANCE.getATransition_Actions();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AnActionImpl <em>An Action</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.lustre.impl.AnActionImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAnAction()
+     * @generated
+     */
+    EClass AN_ACTION = eINSTANCE.getAnAction();
+
+    /**
      * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ATRANSITION__CONDITION = eINSTANCE.getATransition_Condition();
+    EReference AN_ACTION__CONDITION = eINSTANCE.getAnAction_Condition();
+
+    /**
+     * The meta object literal for the '<em><b>Effects</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AN_ACTION__EFFECTS = eINSTANCE.getAnAction_Effects();
 
     /**
      * The meta object literal for the '<em><b>History</b></em>' attribute feature.
@@ -3048,7 +3329,7 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ATRANSITION__HISTORY = eINSTANCE.getATransition_History();
+    EAttribute AN_ACTION__HISTORY = eINSTANCE.getAnAction_History();
 
     /**
      * The meta object literal for the '<em><b>Next State</b></em>' reference feature.
@@ -3056,7 +3337,7 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ATRANSITION__NEXT_STATE = eINSTANCE.getATransition_NextState();
+    EReference AN_ACTION__NEXT_STATE = eINSTANCE.getAnAction_NextState();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl <em>Params</em>}' class.
@@ -3371,6 +3652,16 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EReference ASSERTION__EXPR = eINSTANCE.getAssertion_Expr();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StateValuedObjectImpl <em>State Valued Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.lustre.impl.StateValuedObjectImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStateValuedObject()
+     * @generated
+     */
+    EClass STATE_VALUED_OBJECT = eINSTANCE.getStateValuedObject();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.

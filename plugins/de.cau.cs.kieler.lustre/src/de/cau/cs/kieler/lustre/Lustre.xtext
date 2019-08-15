@@ -184,21 +184,43 @@ Assertion returns kexpressions::Expression:
 
 // Node Declaration - Body Part 3: Automatons
 Automaton:
-    'automaton' states+=AState ('|' states+=AState)* 'end' ';' 
+    'automaton' name=ID states+=AState (states+=AState)* 'returns' '..' ';' 
 ;
 
 AState:
-    name=ID '->'
+    (initial?='initial')? 'state' valuedObject=StateValuedObject
+    // Local Declarations
     (
-        equations+=Equation | 
-        assertions+=Assertion |
-        automatons+=Automaton
+        ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* ) 
+        | 
+        ('var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')
     )*
+    
+    // Body 
+    ('let' 
+        (
+            equations+=Equation 
+            | assertions+=Assertion 
+            | automatons+=Automaton
+        )*
+    'tel')?
+    
+    ('.' | (';')?)
     transitions+=ATransition*
 ;
 
+StateValuedObject returns kexpressions::ValuedObject:
+    {StateValuedObject}
+    name=ID
+;
+
 ATransition:
-    ('until'|strong?='unless') condition=Expression ('then'|history?='continue') nextState=[AState|ID] ';'    
+    {ATransition} 
+    ('until'|strong?='unless') actions+=AnAction*
+;
+
+AnAction:
+    ('if' condition=BoolExpression)? ('do' effects+=Equation*)? ('restart'|history?='resume') nextState=[StateValuedObject] ';'
 ;
 
 /**

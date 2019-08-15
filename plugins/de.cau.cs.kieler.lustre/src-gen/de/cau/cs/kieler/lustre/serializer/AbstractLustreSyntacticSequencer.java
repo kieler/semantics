@@ -22,6 +22,9 @@ import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected LustreGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q;
+	protected AbstractElementAlias match_AState___LetKeyword_4_0_TelKeyword_4_2__q;
+	protected AbstractElementAlias match_AnAction_DoKeyword_1_0_q;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p;
 	protected AbstractElementAlias match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q;
@@ -49,6 +52,9 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (LustreGrammarAccess) access;
+		match_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q = new AlternativeAlias(false, true, new TokenAlias(false, false, grammarAccess.getAStateAccess().getFullStopKeyword_5_0()), new TokenAlias(false, false, grammarAccess.getAStateAccess().getSemicolonKeyword_5_1()));
+		match_AState___LetKeyword_4_0_TelKeyword_4_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAStateAccess().getLetKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAStateAccess().getTelKeyword_4_2()));
+		match_AnAction_DoKeyword_1_0_q = new TokenAlias(false, true, grammarAccess.getAnActionAccess().getDoKeyword_1_0());
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a = new GroupAlias(true, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p = new GroupAlias(true, false, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()));
 		match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0()), new GroupAlias(true, true, new TokenAlias(true, true, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_4_0()), new TokenAlias(false, false, grammarAccess.getAtomicExpressionAccess().getLeftParenthesisKeyword_1_0())));
@@ -86,7 +92,13 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
+			if (match_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q.equals(syntax))
+				emit_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AState___LetKeyword_4_0_TelKeyword_4_2__q.equals(syntax))
+				emit_AState___LetKeyword_4_0_TelKeyword_4_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AnAction_DoKeyword_1_0_q.equals(syntax))
+				emit_AnAction_DoKeyword_1_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__a(semanticObject, getLastNavigableState(), syntaxNodes);
 			else if (match_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p.equals(syntax))
 				emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_LeftParenthesisKeyword_4_0_a__p(semanticObject, getLastNavigableState(), syntaxNodes);
@@ -136,6 +148,58 @@ public abstract class AbstractLustreSyntacticSequencer extends AbstractSyntactic
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ('.' | ';')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     assertions+=Assertion 'tel' (ambiguity) (rule end)
+	 *     assertions+=Assertion 'tel' (ambiguity) transitions+=ATransition
+	 *     automatons+=Automaton 'tel' (ambiguity) (rule end)
+	 *     automatons+=Automaton 'tel' (ambiguity) transitions+=ATransition
+	 *     constants+=VariableDeclaration ';' ('let' 'tel')? (ambiguity) (rule end)
+	 *     constants+=VariableDeclaration ';' ('let' 'tel')? (ambiguity) transitions+=ATransition
+	 *     equations+=Equation 'tel' (ambiguity) (rule end)
+	 *     equations+=Equation 'tel' (ambiguity) transitions+=ATransition
+	 *     valuedObject=StateValuedObject ('let' 'tel')? (ambiguity) (rule end)
+	 *     valuedObject=StateValuedObject ('let' 'tel')? (ambiguity) transitions+=ATransition
+	 *     variables+=ClockedVariableDeclaration ';' ('let' 'tel')? (ambiguity) (rule end)
+	 *     variables+=ClockedVariableDeclaration ';' ('let' 'tel')? (ambiguity) transitions+=ATransition
+	 */
+	protected void emit_AState___FullStopKeyword_5_0_or_SemicolonKeyword_5_1__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ('let' 'tel')?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     constants+=VariableDeclaration ';' (ambiguity) ('.' | ';')? (rule end)
+	 *     constants+=VariableDeclaration ';' (ambiguity) ('.' | ';')? transitions+=ATransition
+	 *     valuedObject=StateValuedObject (ambiguity) ('.' | ';')? (rule end)
+	 *     valuedObject=StateValuedObject (ambiguity) ('.' | ';')? transitions+=ATransition
+	 *     variables+=ClockedVariableDeclaration ';' (ambiguity) ('.' | ';')? (rule end)
+	 *     variables+=ClockedVariableDeclaration ';' (ambiguity) ('.' | ';')? transitions+=ATransition
+	 */
+	protected void emit_AState___LetKeyword_4_0_TelKeyword_4_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     'do'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) 'restart' nextState=[StateValuedObject|ID]
+	 *     (rule start) (ambiguity) history?='resume'
+	 *     condition=BoolExpression (ambiguity) 'restart' nextState=[StateValuedObject|ID]
+	 *     condition=BoolExpression (ambiguity) history?='resume'
+	 */
+	protected void emit_AnAction_DoKeyword_1_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     ('(' '('*)*

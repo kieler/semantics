@@ -172,6 +172,13 @@ public class LustreSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case LustrePackage.AN_ACTION:
+      {
+        AnAction anAction = (AnAction)theEObject;
+        T result = caseAnAction(anAction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case LustrePackage.PARAMS:
       {
         Params params = (Params)theEObject;
@@ -246,6 +253,18 @@ public class LustreSwitch<T> extends Switch<T>
         T result = caseAssertion(assertion);
         if (result == null) result = caseExpression(assertion);
         if (result == null) result = caseSchedulable(assertion);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case LustrePackage.STATE_VALUED_OBJECT:
+      {
+        StateValuedObject stateValuedObject = (StateValuedObject)theEObject;
+        T result = caseStateValuedObject(stateValuedObject);
+        if (result == null) result = caseValuedObject(stateValuedObject);
+        if (result == null) result = caseNamedObject(stateValuedObject);
+        if (result == null) result = caseAnnotatable(stateValuedObject);
+        if (result == null) result = caseReferenceable(stateValuedObject);
+        if (result == null) result = caseNameable(stateValuedObject);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -468,6 +487,22 @@ public class LustreSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>An Action</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>An Action</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnAction(AnAction object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Params</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -607,6 +642,22 @@ public class LustreSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAssertion(Assertion object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>State Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>State Valued Object</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStateValuedObject(StateValuedObject object)
   {
     return null;
   }

@@ -9,6 +9,9 @@ import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.AnAction
+import de.cau.cs.kieler.lustre.lustre.Automaton
 
 /**
  * This class contains custom scoping description.
@@ -24,6 +27,7 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
         
         switch(context) {
             ReferenceCall: return getScopeForNodeReference(context, reference)
+            AnAction: return getScopeForAction(context, reference)
         }
         
         return super.getScope(context, reference);
@@ -39,6 +43,10 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
                 NodeDeclaration: {
                     declarations.addAll(superContext.input.parameter)
                     declarations.addAll(superContext.output.parameter)
+                    declarations.addAll(superContext.constants)
+                    declarations.addAll(superContext.variables.map[vardecl])
+                }
+                AState: {
                     declarations.addAll(superContext.constants)
                     declarations.addAll(superContext.variables.map[vardecl])
                 }
@@ -61,6 +69,17 @@ class LustreScopeProvider extends AbstractLustreScopeProvider {
                 return Scopes.scopeFor(body.nodes.map[valuedObjects.head])
             }
             body = body.eContainer
+        }
+        return IScope.NULLSCOPE
+    }
+    
+    def IScope getScopeForAction(AnAction context, EReference reference) {
+        var EObject automaton = context
+        while (automaton !== null) {
+            if (automaton instanceof Automaton) {
+                return Scopes.scopeFor(automaton.states.map[valuedObject])
+            } 
+            automaton = automaton.eContainer
         }
         return IScope.NULLSCOPE
     }

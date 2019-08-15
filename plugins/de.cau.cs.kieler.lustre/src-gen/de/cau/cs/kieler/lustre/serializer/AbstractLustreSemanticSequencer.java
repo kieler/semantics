@@ -55,6 +55,7 @@ import de.cau.cs.kieler.kexpressions.kext.TestEntity;
 import de.cau.cs.kieler.kexpressions.kext.serializer.KExtSemanticSequencer;
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
+import de.cau.cs.kieler.lustre.lustre.AnAction;
 import de.cau.cs.kieler.lustre.lustre.Assertion;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
 import de.cau.cs.kieler.lustre.lustre.ByNameStaticArg;
@@ -74,6 +75,7 @@ import de.cau.cs.kieler.lustre.lustre.PackageDeclaration;
 import de.cau.cs.kieler.lustre.lustre.PackageEquation;
 import de.cau.cs.kieler.lustre.lustre.Params;
 import de.cau.cs.kieler.lustre.lustre.Provide;
+import de.cau.cs.kieler.lustre.lustre.StateValuedObject;
 import de.cau.cs.kieler.lustre.lustre.StaticArg;
 import de.cau.cs.kieler.lustre.lustre.StaticParam;
 import de.cau.cs.kieler.lustre.lustre.TypeDeclaration;
@@ -511,6 +513,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case LustrePackage.ATRANSITION:
 				sequence_ATransition(context, (ATransition) semanticObject); 
 				return; 
+			case LustrePackage.AN_ACTION:
+				sequence_AnAction(context, (AnAction) semanticObject); 
+				return; 
 			case LustrePackage.ASSERTION:
 				sequence_Assertion(context, (Assertion) semanticObject); 
 				return; 
@@ -565,6 +570,9 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 			case LustrePackage.PROVIDE:
 				sequence_Provide(context, (Provide) semanticObject); 
 				return; 
+			case LustrePackage.STATE_VALUED_OBJECT:
+				sequence_StateValuedObject(context, (StateValuedObject) semanticObject); 
+				return; 
 			case LustrePackage.STATIC_ARG:
 				sequence_StaticArg(context, (StaticArg) semanticObject); 
 				return; 
@@ -584,7 +592,16 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     AState returns AState
 	 *
 	 * Constraint:
-	 *     (name=ID (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition*)
+	 *     (
+	 *         initial?='initial'? 
+	 *         valuedObject=StateValuedObject 
+	 *         (
+	 *             (constants+=VariableDeclaration constants+=VariableDeclaration*) | 
+	 *             (variables+=ClockedVariableDeclaration variables+=ClockedVariableDeclaration*)
+	 *         )* 
+	 *         (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 
+	 *         transitions+=ATransition*
+	 *     )
 	 */
 	protected void sequence_AState(ISerializationContext context, AState semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -596,7 +613,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     ATransition returns ATransition
 	 *
 	 * Constraint:
-	 *     (strong?='unless'? condition=Expression history?='continue'? nextState=[AState|ID])
+	 *     (strong?='unless'? actions+=AnAction*)
 	 */
 	protected void sequence_ATransition(ISerializationContext context, ATransition semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -696,6 +713,18 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     AnAction returns AnAction
+	 *
+	 * Constraint:
+	 *     (condition=BoolExpression? effects+=Equation* history?='resume'? nextState=[StateValuedObject|ID])
+	 */
+	protected void sequence_AnAction(ISerializationContext context, AnAction semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Assertion returns Assertion
 	 *
 	 * Constraint:
@@ -717,7 +746,7 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 *     Automaton returns Automaton
 	 *
 	 * Constraint:
-	 *     (states+=AState states+=AState*)
+	 *     (name=ID states+=AState states+=AState*)
 	 */
 	protected void sequence_Automaton(ISerializationContext context, Automaton semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2272,6 +2301,24 @@ public abstract class AbstractLustreSemanticSequencer extends KExtSemanticSequen
 	 */
 	protected void sequence_Provide(ISerializationContext context, Provide semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StateValuedObject returns StateValuedObject
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_StateValuedObject(ISerializationContext context, StateValuedObject semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, AnnotationsPackage.Literals.NAMED_OBJECT__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getStateValuedObjectAccess().getNameIDTerminalRuleCall_1_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	

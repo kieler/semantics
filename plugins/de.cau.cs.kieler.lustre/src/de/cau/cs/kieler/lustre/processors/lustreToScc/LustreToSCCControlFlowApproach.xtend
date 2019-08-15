@@ -161,7 +161,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 }
             }
         }
-
+        
     }
 
     private def Expression transformExpressionToSimple(ValuedObject valObj, Expression expression, State state, State varState, ControlflowRegion controlflowRegion) {

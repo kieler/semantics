@@ -132,6 +132,15 @@ public interface LustreFactory extends EFactory
   ATransition createATransition();
 
   /**
+   * Returns a new object of class '<em>An Action</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>An Action</em>'.
+   * @generated
+   */
+  AnAction createAnAction();
+
+  /**
    * Returns a new object of class '<em>Params</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -211,6 +220,15 @@ public interface LustreFactory extends EFactory
    * @generated
    */
   Assertion createAssertion();
+
+  /**
+   * Returns a new object of class '<em>State Valued Object</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>State Valued Object</em>'.
+   * @generated
+   */
+  StateValuedObject createStateValuedObject();
 
   /**
    * Returns a new object of class '<em>Valued Object</em>'.

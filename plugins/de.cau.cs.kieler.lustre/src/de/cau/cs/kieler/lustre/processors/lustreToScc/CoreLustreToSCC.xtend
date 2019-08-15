@@ -62,6 +62,8 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.lustre.lustre.AnAction
+import de.cau.cs.kieler.lustre.lustre.StateValuedObject
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -105,7 +107,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected HashMap<ValuedObject, ValuedObject> lustreToScchartsValuedObjectMap = new HashMap
     protected HashMap<ValuedObject, ValuedObject> scchartsToLustreValuedObjectMap = new HashMap
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
-    protected HashMap<AState, State> lustreStateToScchartsStateMap = new HashMap
+    protected HashMap<StateValuedObject, State> lustreStateToScchartsStateMap = new HashMap
 
     /* --------------------------------------------------------------------------------------------
      * Structural methods
@@ -117,12 +119,9 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     def SCCharts transform(LustreProgram p) {
         var scchartsProgram = createSCChart
-        
-        // Note: p.includes and p.packList are not handled
 
-        if (p.packBody !== null) {
-            p.packBody.processPackBody(scchartsProgram)
-        }
+        // Note: p.includes and p.packList are not handled
+        p.packBody?.processPackBody(scchartsProgram)
 
         scchartsProgram
     }
@@ -176,8 +175,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 scchartsProgram.rootStates += nodeState
             }
         }
-        
-        // Note: TypeDeclarations and ExternalNodeDeclarations are not handled
+
+    // Note: TypeDeclarations and ExternalNodeDeclarations are not handled
     }
 
     protected def processConstantDeclaration(VariableDeclaration variableDeclaration, State rootState) {
@@ -241,7 +240,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             val transformedAssertion = transformExpression(assertion.expr, state)
             val assertionAnnotation = AnnotationsFactory::eINSTANCE.createStringAnnotation => [
                 name = "Assume"
-                values += transformedAssertion.getStringRepresentation
+                values += transformedAssertion?.getStringRepresentation
             ]
 
             state.annotations += assertionAnnotation
@@ -254,30 +253,32 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected def void processAutomaton(Automaton automaton, State state) {
         var controlflowRegion = state.createControlflowRegion(CONTROLFLOW_REGION_NAME)
 
-        var initialState = true;
         for (AState lusState : automaton.states) {
             var newState = createState => [
-                name = lusState.name
+                name = lusState.valuedObject.name
             ]
-            if (initialState) {
-                newState.initial = true
-                initialState = false
-            }
+            newState.initial = lusState.initial
             controlflowRegion.states += newState
-            lustreStateToScchartsStateMap.put(lusState, newState)
+            lustreStateToScchartsStateMap.put(lusState.valuedObject as StateValuedObject, newState)
         }
 
         for (AState lusState : automaton.states) {
-            processState(lusState, lustreStateToScchartsStateMap.get(lusState))
+            processState(lusState, lustreStateToScchartsStateMap.get(lusState.valuedObject))
         }
     }
 
     /* --------------------------------------------------------------------------------------------
      * Methods used in basic methods.
      * ----------------------------------------------------------------------------------------- */
-    
     // Automaton transformation: Transform a state
     protected def processState(AState lusState, State state) {
+        for (constVariable : lusState.constants) {
+            state.declarations += constVariable.createConstantDeclaration(state)
+        }
+
+        for (variable : lusState.variables) {
+            state.declarations += variable.createVariableDeclarationFromLustreClockedVariableDeclaration(state)
+        }
 
         for (Assignment equation : lusState.equations) {
             processEquation(equation as Equation, state)
@@ -298,20 +299,33 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     // Automaton transformation: Transform a transition
     protected def processTransition(ATransition transition, State source) {
-        var newTransition = createTransition => [
-            sourceState = source
-            targetState = lustreStateToScchartsStateMap.get(transition.nextState)
-        ]
 
-        var trigger = transformExpression(transition.condition, source)
-        if (trigger !== null) {
-            newTransition.trigger = trigger
-        }
-        if (transition.strong) {
-            newTransition.preemption = PreemptionType.STRONGABORT
-        }
-        if (transition.history) {
-            newTransition.history = HistoryType.DEEP
+        for (AnAction action : transition.actions) {
+            var newTransition = createTransition => [
+                sourceState = source
+                targetState = lustreStateToScchartsStateMap.get(action.nextState)
+            ]
+
+            var trigger = transformExpression(action.condition, source)
+            if (trigger !== null) {
+                newTransition.trigger = trigger
+            }
+
+            for (Assignment effect : action.effects) {
+                if (effect instanceof Equation) {
+                    var assignment = getAssignmentForEquation(effect, source.root as State)
+                    if (assignment !== null) {
+                        newTransition.effects.add(assignment)
+                    }
+                }
+            }
+            
+            if (transition.strong) {
+                newTransition.preemption = PreemptionType.STRONGABORT
+            }
+            if (action.history) {
+                newTransition.history = HistoryType.DEEP
+            }
         }
     }
 
@@ -684,8 +698,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         ArrayList<ValuedObject> inputValuedObjects) {
 
         if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
-            createDataflowRegion(state,
-                CoreLustreToSCC.DATAFLOW_REGION_NAME)
+            createDataflowRegion(state, CoreLustreToSCC.DATAFLOW_REGION_NAME)
         }
         var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
 
@@ -874,5 +887,29 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         } else {
             return clockList.get(0)
         }
+    }
+    
+    protected def getAssignmentForEquation(Equation equation, State state) {
+        if (isEquationReferenceKnown(equation)) {
+            var dataflowAssignment = createAssignment
+            
+            // Complex references like (x, y, ... ) = ... are not linked because this is handled in the reference transformation
+            if (equation.reference !== null) {
+                var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
+                dataflowAssignment.reference = kExpressionValuedObject.reference
+            }
+            
+            dataflowAssignment.expression = equation.expression.transformExpression(state)
+            if (dataflowAssignment.expression !== null) {
+                return dataflowAssignment
+            }
+        }
+    }
+    
+    private def isEquationReferenceKnown(Equation equation) {
+        val isKnownSimpleReference = equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject)
+        val isKnownComplexReference = equation.reference === null && lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])
+        
+        return isKnownSimpleReference || isKnownComplexReference
     }
 }

@@ -46,19 +46,9 @@ class LustreToSCCharts extends CoreLustreToSCC {
     override processEquation(Equation equation, State state) {
         var dataflowRegion = getDataflowRegionFromState(state)
         
-        if (isEquationReferenceKnown(equation)) {
-                var dataflowAssignment = createAssignment
-                
-                // Complex references like (x, y, ... ) = ... are not linked because this is handled in the reference transformation
-                if (equation.reference !== null) {
-                    var kExpressionValuedObject = lustreToScchartsValuedObjectMap.get(equation.reference.valuedObject)
-                    dataflowAssignment.reference = kExpressionValuedObject.reference
-                }
-                
-                dataflowAssignment.expression = equation.expression.transformExpression(state)
-                if (dataflowAssignment.expression !== null) {
-                    dataflowRegion.equations += dataflowAssignment
-                }
+        var assignment = getAssignmentForEquation(equation, state)
+        if (assignment !== null) {
+            dataflowRegion.equations += assignment
         }
     }   
     
@@ -71,12 +61,5 @@ class LustreToSCCharts extends CoreLustreToSCC {
         }
         
         return dataFlowRegionsList.head as DataflowRegion
-    }
-    
-    private def isEquationReferenceKnown(Equation equation) {
-        val isKnownSimpleReference = equation.reference !== null && lustreToScchartsValuedObjectMap.containsKey(equation.reference.valuedObject)
-        val isKnownComplexReference = equation.reference === null && lustreToScchartsValuedObjectMap.keySet.containsAll(equation.references.map[valuedObject])
-        
-        return isKnownSimpleReference || isKnownComplexReference
     }
 }

@@ -151,6 +151,11 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
         return createATransitionAdapter();
       }
       @Override
+      public Adapter caseAnAction(AnAction object)
+      {
+        return createAnActionAdapter();
+      }
+      @Override
       public Adapter caseParams(Params object)
       {
         return createParamsAdapter();
@@ -194,6 +199,11 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAssertion(Assertion object)
       {
         return createAssertionAdapter();
+      }
+      @Override
+      public Adapter caseStateValuedObject(StateValuedObject object)
+      {
+        return createStateValuedObjectAdapter();
       }
       @Override
       public Adapter caseLustreValuedObject(LustreValuedObject object)
@@ -468,6 +478,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.AnAction <em>An Action</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.AnAction
+   * @generated
+   */
+  public Adapter createAnActionAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.Params <em>Params</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -598,6 +623,21 @@ public class LustreAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAssertionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.lustre.StateValuedObject <em>State Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.lustre.StateValuedObject
+   * @generated
+   */
+  public Adapter createStateValuedObjectAdapter()
   {
     return null;
   }

@@ -77,6 +77,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.AUTOMATON: return createAutomaton();
       case LustrePackage.ASTATE: return createAState();
       case LustrePackage.ATRANSITION: return createATransition();
+      case LustrePackage.AN_ACTION: return createAnAction();
       case LustrePackage.PARAMS: return createParams();
       case LustrePackage.STATIC_PARAM: return createStaticParam();
       case LustrePackage.STATIC_ARG: return createStaticArg();
@@ -86,6 +87,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
       case LustrePackage.NODE_VALUED_OBJECT: return createNodeValuedObject();
       case LustrePackage.EQUATION: return createEquation();
       case LustrePackage.ASSERTION: return createAssertion();
+      case LustrePackage.STATE_VALUED_OBJECT: return createStateValuedObject();
       case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
       case LustrePackage.NODE_REFERENCE: return createNodeReference();
       default:
@@ -243,6 +245,18 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * @generated
    */
   @Override
+  public AnAction createAnAction()
+  {
+    AnActionImpl anAction = new AnActionImpl();
+    return anAction;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Params createParams()
   {
     ParamsImpl params = new ParamsImpl();
@@ -343,6 +357,18 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     AssertionImpl assertion = new AssertionImpl();
     return assertion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public StateValuedObject createStateValuedObject()
+  {
+    StateValuedObjectImpl stateValuedObject = new StateValuedObjectImpl();
+    return stateValuedObject;
   }
 
   /**

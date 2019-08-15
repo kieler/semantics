@@ -1034,8 +1034,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//	{NodeDeclaration} isUnsafe?='unsafe'? ('function' | hasState?='node') valuedObjects+=NodeValuedObject ('<<'
 		//	staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')? (input=Params 'returns' output=Params ('='
 		//	effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')? | ';'? ('const'
-		//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration
-		//	(';' variables+=ClockedVariableDeclaration)* ';')*
+		//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var'
+		//	variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')*
 		//	// Body 
 		//	'let' (equations+=Equation
 		//	| assertions+=Assertion
@@ -1108,15 +1108,15 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getGreaterThanSignGreaterThanSignKeyword_4_3() { return cGreaterThanSignGreaterThanSignKeyword_4_3; }
 		
 		//input=Params 'returns' output=Params ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';'
-		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')*
-		//| 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
+		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration
+		//';')* | 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
 		//'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 'tel' ('.' | ';'?)) | // --- Effective Node (without interface)
 		//'=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//input=Params 'returns' output=Params ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';'
-		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')*
-		//| 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
+		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration
+		//';')* | 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
 		//'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 'tel' ('.' | ';'?))
 		public Group getGroup_5_0() { return cGroup_5_0; }
 		
@@ -1386,8 +1386,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//// Node Declaration - Body Part 1: Equations
 		//Equation keffects::Assignment:
 		//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+		//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
@@ -1406,6 +1406,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//reference=ValuedObjectReference
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
+		//// Left side: (x, y, ...) or x, y, ... or x 
 		//'(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
@@ -1530,173 +1531,365 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Automaton");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cAutomatonKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cStatesAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cStatesAStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cVerticalLineKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cStatesAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cStatesAStateParserRuleCall_2_1_0 = (RuleCall)cStatesAssignment_2_1.eContents().get(0);
-		private final Keyword cEndKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cStatesAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cStatesAStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
+		private final Assignment cStatesAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cStatesAStateParserRuleCall_3_0 = (RuleCall)cStatesAssignment_3.eContents().get(0);
+		private final Keyword cReturnsKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cFullStopFullStopKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cSemicolonKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//// Node Declaration - Body Part 3: Automatons
 		//Automaton:
-		//	'automaton' states+=AState ('|' states+=AState)* 'end' ';';
+		//	'automaton' name=ID states+=AState states+=AState* 'returns' '..' ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'automaton' states+=AState ('|' states+=AState)* 'end' ';'
+		//'automaton' name=ID states+=AState states+=AState* 'returns' '..' ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'automaton'
 		public Keyword getAutomatonKeyword_0() { return cAutomatonKeyword_0; }
 		
-		//states+=AState
-		public Assignment getStatesAssignment_1() { return cStatesAssignment_1; }
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//AState
-		public RuleCall getStatesAStateParserRuleCall_1_0() { return cStatesAStateParserRuleCall_1_0; }
-		
-		//('|' states+=AState)*
-		public Group getGroup_2() { return cGroup_2; }
-		
-		//'|'
-		public Keyword getVerticalLineKeyword_2_0() { return cVerticalLineKeyword_2_0; }
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
 		//states+=AState
-		public Assignment getStatesAssignment_2_1() { return cStatesAssignment_2_1; }
+		public Assignment getStatesAssignment_2() { return cStatesAssignment_2; }
 		
 		//AState
-		public RuleCall getStatesAStateParserRuleCall_2_1_0() { return cStatesAStateParserRuleCall_2_1_0; }
+		public RuleCall getStatesAStateParserRuleCall_2_0() { return cStatesAStateParserRuleCall_2_0; }
 		
-		//'end'
-		public Keyword getEndKeyword_3() { return cEndKeyword_3; }
+		//states+=AState*
+		public Assignment getStatesAssignment_3() { return cStatesAssignment_3; }
+		
+		//AState
+		public RuleCall getStatesAStateParserRuleCall_3_0() { return cStatesAStateParserRuleCall_3_0; }
+		
+		//'returns'
+		public Keyword getReturnsKeyword_4() { return cReturnsKeyword_4; }
+		
+		//'..'
+		public Keyword getFullStopFullStopKeyword_5() { return cFullStopFullStopKeyword_5; }
 		
 		//';'
-		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
+		public Keyword getSemicolonKeyword_6() { return cSemicolonKeyword_6; }
 	}
 	public class AStateElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AState");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Keyword cHyphenMinusGreaterThanSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Assignment cEquationsAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cEquationsEquationParserRuleCall_2_0_0 = (RuleCall)cEquationsAssignment_2_0.eContents().get(0);
-		private final Assignment cAssertionsAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final RuleCall cAssertionsAssertionParserRuleCall_2_1_0 = (RuleCall)cAssertionsAssignment_2_1.eContents().get(0);
-		private final Assignment cAutomatonsAssignment_2_2 = (Assignment)cAlternatives_2.eContents().get(2);
-		private final RuleCall cAutomatonsAutomatonParserRuleCall_2_2_0 = (RuleCall)cAutomatonsAssignment_2_2.eContents().get(0);
-		private final Assignment cTransitionsAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTransitionsATransitionParserRuleCall_3_0 = (RuleCall)cTransitionsAssignment_3.eContents().get(0);
+		private final Assignment cInitialAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cInitialInitialKeyword_0_0 = (Keyword)cInitialAssignment_0.eContents().get(0);
+		private final Keyword cStateKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValuedObjectAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuedObjectStateValuedObjectParserRuleCall_2_0 = (RuleCall)cValuedObjectAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cConstKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cConstantsAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cConstantsVariableDeclarationParserRuleCall_3_0_1_0 = (RuleCall)cConstantsAssignment_3_0_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3_0_2 = (Keyword)cGroup_3_0.eContents().get(2);
+		private final Group cGroup_3_0_3 = (Group)cGroup_3_0.eContents().get(3);
+		private final Assignment cConstantsAssignment_3_0_3_0 = (Assignment)cGroup_3_0_3.eContents().get(0);
+		private final RuleCall cConstantsVariableDeclarationParserRuleCall_3_0_3_0_0 = (RuleCall)cConstantsAssignment_3_0_3_0.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3_0_3_1 = (Keyword)cGroup_3_0_3.eContents().get(1);
+		private final Group cGroup_3_1 = (Group)cAlternatives_3.eContents().get(1);
+		private final Keyword cVarKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
+		private final Assignment cVariablesAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
+		private final RuleCall cVariablesClockedVariableDeclarationParserRuleCall_3_1_1_0 = (RuleCall)cVariablesAssignment_3_1_1.eContents().get(0);
+		private final Group cGroup_3_1_2 = (Group)cGroup_3_1.eContents().get(2);
+		private final Keyword cSemicolonKeyword_3_1_2_0 = (Keyword)cGroup_3_1_2.eContents().get(0);
+		private final Assignment cVariablesAssignment_3_1_2_1 = (Assignment)cGroup_3_1_2.eContents().get(1);
+		private final RuleCall cVariablesClockedVariableDeclarationParserRuleCall_3_1_2_1_0 = (RuleCall)cVariablesAssignment_3_1_2_1.eContents().get(0);
+		private final Keyword cSemicolonKeyword_3_1_3 = (Keyword)cGroup_3_1.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLetKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Alternatives cAlternatives_4_1 = (Alternatives)cGroup_4.eContents().get(1);
+		private final Assignment cEquationsAssignment_4_1_0 = (Assignment)cAlternatives_4_1.eContents().get(0);
+		private final RuleCall cEquationsEquationParserRuleCall_4_1_0_0 = (RuleCall)cEquationsAssignment_4_1_0.eContents().get(0);
+		private final Assignment cAssertionsAssignment_4_1_1 = (Assignment)cAlternatives_4_1.eContents().get(1);
+		private final RuleCall cAssertionsAssertionParserRuleCall_4_1_1_0 = (RuleCall)cAssertionsAssignment_4_1_1.eContents().get(0);
+		private final Assignment cAutomatonsAssignment_4_1_2 = (Assignment)cAlternatives_4_1.eContents().get(2);
+		private final RuleCall cAutomatonsAutomatonParserRuleCall_4_1_2_0 = (RuleCall)cAutomatonsAssignment_4_1_2.eContents().get(0);
+		private final Keyword cTelKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Keyword cFullStopKeyword_5_0 = (Keyword)cAlternatives_5.eContents().get(0);
+		private final Keyword cSemicolonKeyword_5_1 = (Keyword)cAlternatives_5.eContents().get(1);
+		private final Assignment cTransitionsAssignment_6 = (Assignment)cGroup.eContents().get(6);
+		private final RuleCall cTransitionsATransitionParserRuleCall_6_0 = (RuleCall)cTransitionsAssignment_6.eContents().get(0);
 		
 		//AState:
-		//	name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
-		//	transitions+=ATransition*;
+		//	initial?='initial'? 'state' valuedObject=StateValuedObject ('const' constants+=VariableDeclaration ';'
+		//	(constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration (';'
+		//	variables+=ClockedVariableDeclaration)* ';')* ('let' (equations+=Equation
+		//	| assertions+=Assertion
+		//	| automatons+=Automaton)*
+		//	'tel')? ('.' | ';'?) transitions+=ATransition*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* transitions+=ATransition*
+		//initial?='initial'? 'state' valuedObject=StateValuedObject ('const' constants+=VariableDeclaration ';'
+		//(constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration (';'
+		//variables+=ClockedVariableDeclaration)* ';')* ('let' (equations+=Equation | assertions+=Assertion |
+		//automatons+=Automaton)* 'tel')? ('.' | ';'?) transitions+=ATransition*
 		public Group getGroup() { return cGroup; }
 		
-		//name=ID
-		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+		//initial?='initial'?
+		public Assignment getInitialAssignment_0() { return cInitialAssignment_0; }
 		
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		//'initial'
+		public Keyword getInitialInitialKeyword_0_0() { return cInitialInitialKeyword_0_0; }
 		
-		//'->'
-		public Keyword getHyphenMinusGreaterThanSignKeyword_1() { return cHyphenMinusGreaterThanSignKeyword_1; }
+		//'state'
+		public Keyword getStateKeyword_1() { return cStateKeyword_1; }
+		
+		//valuedObject=StateValuedObject
+		public Assignment getValuedObjectAssignment_2() { return cValuedObjectAssignment_2; }
+		
+		//StateValuedObject
+		public RuleCall getValuedObjectStateValuedObjectParserRuleCall_2_0() { return cValuedObjectStateValuedObjectParserRuleCall_2_0; }
+		
+		//('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var'
+		//variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')*
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+		
+		//'const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')*
+		public Group getGroup_3_0() { return cGroup_3_0; }
+		
+		//'const'
+		public Keyword getConstKeyword_3_0_0() { return cConstKeyword_3_0_0; }
+		
+		//constants+=VariableDeclaration
+		public Assignment getConstantsAssignment_3_0_1() { return cConstantsAssignment_3_0_1; }
+		
+		//VariableDeclaration
+		public RuleCall getConstantsVariableDeclarationParserRuleCall_3_0_1_0() { return cConstantsVariableDeclarationParserRuleCall_3_0_1_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_3_0_2() { return cSemicolonKeyword_3_0_2; }
+		
+		//(constants+=VariableDeclaration ';')*
+		public Group getGroup_3_0_3() { return cGroup_3_0_3; }
+		
+		//constants+=VariableDeclaration
+		public Assignment getConstantsAssignment_3_0_3_0() { return cConstantsAssignment_3_0_3_0; }
+		
+		//VariableDeclaration
+		public RuleCall getConstantsVariableDeclarationParserRuleCall_3_0_3_0_0() { return cConstantsVariableDeclarationParserRuleCall_3_0_3_0_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_3_0_3_1() { return cSemicolonKeyword_3_0_3_1; }
+		
+		//'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';'
+		public Group getGroup_3_1() { return cGroup_3_1; }
+		
+		//'var'
+		public Keyword getVarKeyword_3_1_0() { return cVarKeyword_3_1_0; }
+		
+		//variables+=ClockedVariableDeclaration
+		public Assignment getVariablesAssignment_3_1_1() { return cVariablesAssignment_3_1_1; }
+		
+		//ClockedVariableDeclaration
+		public RuleCall getVariablesClockedVariableDeclarationParserRuleCall_3_1_1_0() { return cVariablesClockedVariableDeclarationParserRuleCall_3_1_1_0; }
+		
+		//(';' variables+=ClockedVariableDeclaration)*
+		public Group getGroup_3_1_2() { return cGroup_3_1_2; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_3_1_2_0() { return cSemicolonKeyword_3_1_2_0; }
+		
+		//variables+=ClockedVariableDeclaration
+		public Assignment getVariablesAssignment_3_1_2_1() { return cVariablesAssignment_3_1_2_1; }
+		
+		//ClockedVariableDeclaration
+		public RuleCall getVariablesClockedVariableDeclarationParserRuleCall_3_1_2_1_0() { return cVariablesClockedVariableDeclarationParserRuleCall_3_1_2_1_0; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_3_1_3() { return cSemicolonKeyword_3_1_3; }
+		
+		//('let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 'tel')?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'let'
+		public Keyword getLetKeyword_4_0() { return cLetKeyword_4_0; }
 		
 		//(equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
-		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+		public Alternatives getAlternatives_4_1() { return cAlternatives_4_1; }
 		
 		//equations+=Equation
-		public Assignment getEquationsAssignment_2_0() { return cEquationsAssignment_2_0; }
+		public Assignment getEquationsAssignment_4_1_0() { return cEquationsAssignment_4_1_0; }
 		
 		//Equation
-		public RuleCall getEquationsEquationParserRuleCall_2_0_0() { return cEquationsEquationParserRuleCall_2_0_0; }
+		public RuleCall getEquationsEquationParserRuleCall_4_1_0_0() { return cEquationsEquationParserRuleCall_4_1_0_0; }
 		
 		//assertions+=Assertion
-		public Assignment getAssertionsAssignment_2_1() { return cAssertionsAssignment_2_1; }
+		public Assignment getAssertionsAssignment_4_1_1() { return cAssertionsAssignment_4_1_1; }
 		
 		//Assertion
-		public RuleCall getAssertionsAssertionParserRuleCall_2_1_0() { return cAssertionsAssertionParserRuleCall_2_1_0; }
+		public RuleCall getAssertionsAssertionParserRuleCall_4_1_1_0() { return cAssertionsAssertionParserRuleCall_4_1_1_0; }
 		
 		//automatons+=Automaton
-		public Assignment getAutomatonsAssignment_2_2() { return cAutomatonsAssignment_2_2; }
+		public Assignment getAutomatonsAssignment_4_1_2() { return cAutomatonsAssignment_4_1_2; }
 		
 		//Automaton
-		public RuleCall getAutomatonsAutomatonParserRuleCall_2_2_0() { return cAutomatonsAutomatonParserRuleCall_2_2_0; }
+		public RuleCall getAutomatonsAutomatonParserRuleCall_4_1_2_0() { return cAutomatonsAutomatonParserRuleCall_4_1_2_0; }
+		
+		//'tel'
+		public Keyword getTelKeyword_4_2() { return cTelKeyword_4_2; }
+		
+		//'.' | ';'?
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_5_0() { return cFullStopKeyword_5_0; }
+		
+		//';'?
+		public Keyword getSemicolonKeyword_5_1() { return cSemicolonKeyword_5_1; }
 		
 		//transitions+=ATransition*
-		public Assignment getTransitionsAssignment_3() { return cTransitionsAssignment_3; }
+		public Assignment getTransitionsAssignment_6() { return cTransitionsAssignment_6; }
 		
 		//ATransition
-		public RuleCall getTransitionsATransitionParserRuleCall_3_0() { return cTransitionsATransitionParserRuleCall_3_0; }
+		public RuleCall getTransitionsATransitionParserRuleCall_6_0() { return cTransitionsATransitionParserRuleCall_6_0; }
+	}
+	public class StateValuedObjectElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.StateValuedObject");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cStateValuedObjectAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//StateValuedObject kexpressions::ValuedObject:
+		//	{StateValuedObject} name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{StateValuedObject} name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//{StateValuedObject}
+		public Action getStateValuedObjectAction_0() { return cStateValuedObjectAction_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 	}
 	public class ATransitionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ATransition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
-		private final Keyword cUntilKeyword_0_0 = (Keyword)cAlternatives_0.eContents().get(0);
-		private final Assignment cStrongAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
-		private final Keyword cStrongUnlessKeyword_0_1_0 = (Keyword)cStrongAssignment_0_1.eContents().get(0);
-		private final Assignment cConditionAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cConditionExpressionParserRuleCall_1_0 = (RuleCall)cConditionAssignment_1.eContents().get(0);
-		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
-		private final Keyword cThenKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
-		private final Assignment cHistoryAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
-		private final Keyword cHistoryContinueKeyword_2_1_0 = (Keyword)cHistoryAssignment_2_1.eContents().get(0);
-		private final Assignment cNextStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final CrossReference cNextStateAStateCrossReference_3_0 = (CrossReference)cNextStateAssignment_3.eContents().get(0);
-		private final RuleCall cNextStateAStateIDTerminalRuleCall_3_0_1 = (RuleCall)cNextStateAStateCrossReference_3_0.eContents().get(1);
-		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Action cATransitionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Keyword cUntilKeyword_1_0 = (Keyword)cAlternatives_1.eContents().get(0);
+		private final Assignment cStrongAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
+		private final Keyword cStrongUnlessKeyword_1_1_0 = (Keyword)cStrongAssignment_1_1.eContents().get(0);
+		private final Assignment cActionsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cActionsAnActionParserRuleCall_2_0 = (RuleCall)cActionsAssignment_2.eContents().get(0);
 		
 		//ATransition:
-		//	('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState] ';';
+		//	{ATransition} ('until' | strong?='unless') actions+=AnAction*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState] ';'
+		//{ATransition} ('until' | strong?='unless') actions+=AnAction*
 		public Group getGroup() { return cGroup; }
 		
+		//{ATransition}
+		public Action getATransitionAction_0() { return cATransitionAction_0; }
+		
 		//'until' | strong?='unless'
-		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//'until'
-		public Keyword getUntilKeyword_0_0() { return cUntilKeyword_0_0; }
+		public Keyword getUntilKeyword_1_0() { return cUntilKeyword_1_0; }
 		
 		//strong?='unless'
-		public Assignment getStrongAssignment_0_1() { return cStrongAssignment_0_1; }
+		public Assignment getStrongAssignment_1_1() { return cStrongAssignment_1_1; }
 		
 		//'unless'
-		public Keyword getStrongUnlessKeyword_0_1_0() { return cStrongUnlessKeyword_0_1_0; }
+		public Keyword getStrongUnlessKeyword_1_1_0() { return cStrongUnlessKeyword_1_1_0; }
 		
-		//condition=Expression
-		public Assignment getConditionAssignment_1() { return cConditionAssignment_1; }
+		//actions+=AnAction*
+		public Assignment getActionsAssignment_2() { return cActionsAssignment_2; }
 		
-		//Expression
-		public RuleCall getConditionExpressionParserRuleCall_1_0() { return cConditionExpressionParserRuleCall_1_0; }
+		//AnAction
+		public RuleCall getActionsAnActionParserRuleCall_2_0() { return cActionsAnActionParserRuleCall_2_0; }
+	}
+	public class AnActionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.AnAction");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
+		private final Keyword cIfKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cConditionAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cConditionBoolExpressionParserRuleCall_0_1_0 = (RuleCall)cConditionAssignment_0_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cDoKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cEffectsAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cEffectsEquationParserRuleCall_1_1_0 = (RuleCall)cEffectsAssignment_1_1.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Keyword cRestartKeyword_2_0 = (Keyword)cAlternatives_2.eContents().get(0);
+		private final Assignment cHistoryAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cHistoryResumeKeyword_2_1_0 = (Keyword)cHistoryAssignment_2_1.eContents().get(0);
+		private final Assignment cNextStateAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final CrossReference cNextStateStateValuedObjectCrossReference_3_0 = (CrossReference)cNextStateAssignment_3.eContents().get(0);
+		private final RuleCall cNextStateStateValuedObjectIDTerminalRuleCall_3_0_1 = (RuleCall)cNextStateStateValuedObjectCrossReference_3_0.eContents().get(1);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//'then' | history?='continue'
+		//AnAction:
+		//	('if' condition=BoolExpression)? ('do' effects+=Equation*)? ('restart' | history?='resume')
+		//	nextState=[StateValuedObject] ';';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//('if' condition=BoolExpression)? ('do' effects+=Equation*)? ('restart' | history?='resume')
+		//nextState=[StateValuedObject] ';'
+		public Group getGroup() { return cGroup; }
+		
+		//('if' condition=BoolExpression)?
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//'if'
+		public Keyword getIfKeyword_0_0() { return cIfKeyword_0_0; }
+		
+		//condition=BoolExpression
+		public Assignment getConditionAssignment_0_1() { return cConditionAssignment_0_1; }
+		
+		//BoolExpression
+		public RuleCall getConditionBoolExpressionParserRuleCall_0_1_0() { return cConditionBoolExpressionParserRuleCall_0_1_0; }
+		
+		//('do' effects+=Equation*)?
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'do'
+		public Keyword getDoKeyword_1_0() { return cDoKeyword_1_0; }
+		
+		//effects+=Equation*
+		public Assignment getEffectsAssignment_1_1() { return cEffectsAssignment_1_1; }
+		
+		//Equation
+		public RuleCall getEffectsEquationParserRuleCall_1_1_0() { return cEffectsEquationParserRuleCall_1_1_0; }
+		
+		//'restart' | history?='resume'
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
-		//'then'
-		public Keyword getThenKeyword_2_0() { return cThenKeyword_2_0; }
+		//'restart'
+		public Keyword getRestartKeyword_2_0() { return cRestartKeyword_2_0; }
 		
-		//history?='continue'
+		//history?='resume'
 		public Assignment getHistoryAssignment_2_1() { return cHistoryAssignment_2_1; }
 		
-		//'continue'
-		public Keyword getHistoryContinueKeyword_2_1_0() { return cHistoryContinueKeyword_2_1_0; }
+		//'resume'
+		public Keyword getHistoryResumeKeyword_2_1_0() { return cHistoryResumeKeyword_2_1_0; }
 		
-		//nextState=[AState]
+		//nextState=[StateValuedObject]
 		public Assignment getNextStateAssignment_3() { return cNextStateAssignment_3; }
 		
-		//[AState]
-		public CrossReference getNextStateAStateCrossReference_3_0() { return cNextStateAStateCrossReference_3_0; }
+		//[StateValuedObject]
+		public CrossReference getNextStateStateValuedObjectCrossReference_3_0() { return cNextStateStateValuedObjectCrossReference_3_0; }
 		
 		//ID
-		public RuleCall getNextStateAStateIDTerminalRuleCall_3_0_1() { return cNextStateAStateIDTerminalRuleCall_3_0_1; }
+		public RuleCall getNextStateStateValuedObjectIDTerminalRuleCall_3_0_1() { return cNextStateStateValuedObjectIDTerminalRuleCall_3_0_1; }
 		
 		//';'
 		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
@@ -1759,8 +1952,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
 		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator
 		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//subExpressions+=IntDivExpression)*)*
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression
+		//('mod' subExpressions+=IntDivExpression)*)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//{kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
@@ -3706,7 +3899,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	private final AssertionElements pAssertion;
 	private final AutomatonElements pAutomaton;
 	private final AStateElements pAState;
+	private final StateValuedObjectElements pStateValuedObject;
 	private final ATransitionElements pATransition;
+	private final AnActionElements pAnAction;
 	private final ProductExpressionElements pProductExpression;
 	private final IntDivExpressionElements pIntDivExpression;
 	private final NegExpressionElements pNegExpression;
@@ -3795,7 +3990,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		this.pAssertion = new AssertionElements();
 		this.pAutomaton = new AutomatonElements();
 		this.pAState = new AStateElements();
+		this.pStateValuedObject = new StateValuedObjectElements();
 		this.pATransition = new ATransitionElements();
+		this.pAnAction = new AnActionElements();
 		this.pProductExpression = new ProductExpressionElements();
 		this.pIntDivExpression = new IntDivExpressionElements();
 		this.pNegExpression = new NegExpressionElements();
@@ -4041,8 +4238,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	{NodeDeclaration} isUnsafe?='unsafe'? ('function' | hasState?='node') valuedObjects+=NodeValuedObject ('<<'
 	//	staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')? (input=Params 'returns' output=Params ('='
 	//	effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')? | ';'? ('const'
-	//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration
-	//	(';' variables+=ClockedVariableDeclaration)* ';')*
+	//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var'
+	//	variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')*
 	//	// Body 
 	//	'let' (equations+=Equation
 	//	| assertions+=Assertion
@@ -4070,8 +4267,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// Node Declaration - Body Part 1: Equations
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public EquationElements getEquationAccess() {
@@ -4096,7 +4293,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// Node Declaration - Body Part 3: Automatons
 	//Automaton:
-	//	'automaton' states+=AState ('|' states+=AState)* 'end' ';';
+	//	'automaton' name=ID states+=AState states+=AState* 'returns' '..' ';';
 	public AutomatonElements getAutomatonAccess() {
 		return pAutomaton;
 	}
@@ -4106,8 +4303,12 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//AState:
-	//	name=ID '->' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)*
-	//	transitions+=ATransition*;
+	//	initial?='initial'? 'state' valuedObject=StateValuedObject ('const' constants+=VariableDeclaration ';'
+	//	(constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration (';'
+	//	variables+=ClockedVariableDeclaration)* ';')* ('let' (equations+=Equation
+	//	| assertions+=Assertion
+	//	| automatons+=Automaton)*
+	//	'tel')? ('.' | ';'?) transitions+=ATransition*;
 	public AStateElements getAStateAccess() {
 		return pAState;
 	}
@@ -4116,14 +4317,35 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getAStateAccess().getRule();
 	}
 	
+	//StateValuedObject kexpressions::ValuedObject:
+	//	{StateValuedObject} name=ID;
+	public StateValuedObjectElements getStateValuedObjectAccess() {
+		return pStateValuedObject;
+	}
+	
+	public ParserRule getStateValuedObjectRule() {
+		return getStateValuedObjectAccess().getRule();
+	}
+	
 	//ATransition:
-	//	('until' | strong?='unless') condition=Expression ('then' | history?='continue') nextState=[AState] ';';
+	//	{ATransition} ('until' | strong?='unless') actions+=AnAction*;
 	public ATransitionElements getATransitionAccess() {
 		return pATransition;
 	}
 	
 	public ParserRule getATransitionRule() {
 		return getATransitionAccess().getRule();
+	}
+	
+	//AnAction:
+	//	('if' condition=BoolExpression)? ('do' effects+=Equation*)? ('restart' | history?='resume')
+	//	nextState=[StateValuedObject] ';';
+	public AnActionElements getAnActionAccess() {
+		return pAnAction;
+	}
+	
+	public ParserRule getAnActionRule() {
+		return getAnActionAccess().getRule();
 	}
 	
 	//@Override
@@ -5136,7 +5358,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
