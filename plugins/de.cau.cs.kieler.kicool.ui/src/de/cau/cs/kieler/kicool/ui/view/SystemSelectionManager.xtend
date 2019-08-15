@@ -86,28 +86,33 @@ class SystemSelectionManager implements SelectionListener {
         updateSystemList(true, false)
     }
     
-    private def processProjectFiles(IResource[] files) {
+    private def void processProjectFiles(IResource[] files) {
+        val injector = KiCoolStandaloneSetup.doSetup
         for(file : files) {
             if (file instanceof IContainer) {
                 (file as IContainer).members.processProjectFiles
             }
             else if (file.getName().endsWith(".kico")) {
-                val injector = KiCoolStandaloneSetup.doSetup
-                val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
-                val resource = rs.getResource(URI.createFileURI(file.fullPath.toString), true)
-                val newSystem = resource.getContents().head
-                if (newSystem instanceof System) {
-                    val system = newSystem as System
-                    system.id = system.id + "." + new Date().time
-                    KiCoolRegistration.registerTemporarySystem(system)
-                    projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
-                    val id = system.id
-                    var name = system.label
-                    if (name.nullOrEmpty) name = id
-                    name = PROJECT_SYSTEM_PREFIX + name
-                    combo.add(name)
-                    index.add(system.id)              
+                try {
+                    val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
+                    val resource = rs.getResource(URI.createFileURI(file.location.toOSString), true)
+                    val newSystem = resource.getContents().head
+                    if (newSystem instanceof System) {
+                        val system = newSystem as System
+                        system.id = system.id + "." + new Date().time
+                        KiCoolRegistration.registerTemporarySystem(system)
+                        projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
+                        val id = system.id
+                        var name = system.label
+                        if (name.nullOrEmpty) name = id
+                        name = PROJECT_SYSTEM_PREFIX + name
+                        combo.add(name)
+                        index.add(system.id)
+                    }
+                } catch (Exception e) {
+                    (new Exception("Could not load project related system: " + file, e)).printStackTrace
                 }
+                
             }
         }
     }
