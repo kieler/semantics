@@ -70,9 +70,18 @@ class InriaEsterelCompiler extends AbstractExternalCompiler {
         return ID
     }
     
-    override setup(ProjectInfrastructure pinf, PrintStream logger) {
-        super.setup(pinf, logger)
-        checkExecutableFlags("bin")
+    def setup(ProjectInfrastructure pinf, PrintStream logger) {
+        var success = super.setup(pinf, logger, "bin", "lib/xes")
+        if (!success) environment.warnings.add("Failed to set up esterel compiler")
+        if (System.getenv().containsKey('ESTEREL')) {
+            val path = URI.createFileURI(System.getenv().get('ESTEREL'))
+            if (!path.equals(root)) {
+                logger.println("Fallback to system compiler!")
+                root = path
+                success = super.setup(pinf, logger, "bin", "lib/xes")
+                if (!success) environment.warnings.add("Failed to set up esterel compiler")
+            }
+        }
     }
     
     override configureEnvironment(Map<String, String> map) {
