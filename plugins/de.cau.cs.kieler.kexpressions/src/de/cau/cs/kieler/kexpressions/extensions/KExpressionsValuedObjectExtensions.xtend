@@ -91,6 +91,13 @@ class KExpressionsValuedObjectExtensions {
         ]
     }
     
+    def ScheduleObjectReference createScheduleReference(ValuedObject valuedObject, int priority) {
+        KExpressionsFactory::eINSTANCE.createScheduleObjectReference() => [
+            setValuedObject(valuedObject)
+            setPriority(priority)
+        ]
+    }
+    
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
     }    
