@@ -87,7 +87,7 @@ class ArrayInitialisation extends SCChartsProcessor implements Traceable {
     // y[0][1][0] = 2
     // y[0][1][1] = 3
     def State transform(State rootState) {
-        // Traverse all states
+        // Traverse all transitions
         rootState.allContainedTransitions.forEach [ targetTransition |
             targetTransition.transformTransitionTrigger;
         ]
@@ -111,6 +111,7 @@ class ArrayInitialisation extends SCChartsProcessor implements Traceable {
                     {
                         again = again || v instanceof VectorValue
                         val newAss = transition.createAssignment( assignment.reference.valuedObject, v )
+                        newAss.operator = assignment.operator
                         newAss.reference.indices.clear
                         for( i : assignment.reference.indices )
                             newAss.reference.indices.add( i.copy )
@@ -123,7 +124,6 @@ class ArrayInitialisation extends SCChartsProcessor implements Traceable {
     }
 
     def SCCharts transform(SCCharts sccharts) {
-        println( "test" )
         sccharts => [ rootStates.forEach[ transform ] ]
     }
 }
