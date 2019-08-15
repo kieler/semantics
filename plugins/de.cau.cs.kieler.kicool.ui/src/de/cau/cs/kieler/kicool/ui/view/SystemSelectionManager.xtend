@@ -12,11 +12,24 @@
  */
 package de.cau.cs.kieler.kicool.ui.view
 
+import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.System
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.kicool.ui.DefaultSystemAssociation
+import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
 import java.util.ArrayList
+import java.util.Date
+import java.util.Map
+import org.eclipse.core.resources.IContainer
+import org.eclipse.core.resources.IProject
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Status
+import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.jface.action.ControlContribution
+import org.eclipse.jface.dialogs.MessageDialog
 import org.eclipse.swt.SWT
 import org.eclipse.swt.events.SelectionEvent
 import org.eclipse.swt.events.SelectionListener
@@ -25,18 +38,6 @@ import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
-import org.eclipse.jface.dialogs.MessageDialog
-import de.cau.cs.kieler.kicool.ui.klighd.ModelReaderUtil
-import org.eclipse.core.resources.IProject
-import org.eclipse.core.resources.IResource
-import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
-import org.eclipse.emf.ecore.resource.ResourceSet
-import de.cau.cs.kieler.kicool.impl.KiCoolFactoryImpl
-import java.util.Date
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.common.util.URI
-import java.util.Map
-import org.eclipse.core.resources.IContainer
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -72,6 +73,16 @@ class SystemSelectionManager implements SelectionListener {
         }
 
     }
+    var IProject currentProject
+    val projectSystemFinder = new Job("KiCo: Looking for compilation systems in projects") {
+        
+        override protected run(IProgressMonitor monitor) {
+            if (currentProject !== null) {
+                currentProject.members.processProjectFiles(monitor)
+            }
+            return Status.OK_STATUS
+        }
+    }
     
     new(CompilerView view) {
         this.view = view
@@ -86,13 +97,22 @@ class SystemSelectionManager implements SelectionListener {
         updateSystemList(true, false)
     }
     
-    private def void processProjectFiles(IResource[] files) {
+    /**
+     * als: This function significantly slows down boot if large projects are open (models repository).
+     * Thus should only be used in job!
+     */
+    private def void processProjectFiles(IResource[] files, IProgressMonitor monitor) {
         val injector = KiCoolStandaloneSetup.doSetup
+        monitor?.beginTask("Checking project: ", IProgressMonitor.UNKNOWN)
         for(file : files) {
-            if (file instanceof IContainer) {
-                (file as IContainer).members.processProjectFiles
+            if (monitor?.canceled) {
+                return
             }
-            else if (file.getName().endsWith(".kico")) {
+            if (file instanceof IContainer) {
+                monitor?.subTask(file.fullPath.toString)
+                (file as IContainer).members.processProjectFiles(monitor)
+            } else if (file.getName().endsWith(".kico")) {
+                monitor?.subTask("Loading system from " + file.fullPath)
                 try {
                     val ResourceSet rs = injector.getInstance(typeof(ResourceSet))
                     val resource = rs.getResource(URI.createFileURI(file.location.toOSString), true)
@@ -158,7 +178,10 @@ class SystemSelectionManager implements SelectionListener {
                 }
             }
             if(project !== null) {
-                project.members.processProjectFiles
+                currentProject = project
+                if (projectSystemFinder.state !== Job.RUNNING) {
+                    projectSystemFinder.schedule(10)
+                }
             }
         }
         
