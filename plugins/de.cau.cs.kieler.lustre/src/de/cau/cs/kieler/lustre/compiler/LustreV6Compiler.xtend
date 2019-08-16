@@ -70,8 +70,11 @@ class LustreV6Compiler extends AbstractExternalCompiler {
     }
     
     def setup(ProjectInfrastructure pinf, PrintStream logger) {
-        val success = super.setup(pinf, logger, "bin")
-        if (!success) environment.warnings.add("Failed to set up lustre compiler")
+        if (super.setup(pinf, logger, "bin")) {
+            logger.println("Compiler setup successful.")
+        } else {
+            environment.warnings.add("Failed to set up lustre compiler.")
+        }
     }
     
     override configureEnvironment(Map<String, String> map) {

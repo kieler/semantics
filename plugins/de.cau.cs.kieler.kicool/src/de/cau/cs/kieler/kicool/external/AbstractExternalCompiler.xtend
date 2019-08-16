@@ -93,12 +93,16 @@ abstract class AbstractExternalCompiler {
                     } else {
                         logger.println("External compiler copied already exists in: " + target)
                     }
-                    rootDir = target
-                    return rootDir.checkExecutableFlags(logger, executables)
+                    if (target.checkExecutableFlags(logger, executables)) {
+                        rootDir = target
+                        return true
+                    }
                 }
             }
+        } else {
+            logger.println("No compiler available")
         }
-        logger.println("No compiler available")
+        logger.println("Could not set up compiler")
         return false
     }
     
@@ -111,27 +115,26 @@ abstract class AbstractExternalCompiler {
     }
     
     protected def boolean checkExecutableFlags(File source, PrintStream logger, String... files) {
-        var succeeded = true
+        logger.println("Checking permissions")
         for (fileName : files) {
             val file = new File(source, fileName)
             if (file.directory) {
-                for (exe : file.listFiles) {
-                    val success = exe.checkExecutableFlag(logger)
-                    succeeded = succeeded && success
+                for (exe : file.listFiles.filter[isFile]) {
+                    if (!exe.checkExecutableFlag(logger)) return false
                 }
             } else {
-                val success = file.checkExecutableFlag(logger)
-                succeeded = succeeded && success
+                if (!file.checkExecutableFlag(logger)) return false
             }
         }
-        return succeeded
+        return true
     }
     
     private def checkExecutableFlag(File file, PrintStream logger) {
         if (!file.name.contains(".") || file.name.endsWith(".exe")) {
             if (!file.canExecute) {
+                logger.println("Setting executable flag for " + file)
                 val success = file.executable = true
-                if (!success) logger.println("Unable to set executable flag for " + file)
+                if (!success) logger.println("Unable to set executable flag.")
                 return success
             }
         }
