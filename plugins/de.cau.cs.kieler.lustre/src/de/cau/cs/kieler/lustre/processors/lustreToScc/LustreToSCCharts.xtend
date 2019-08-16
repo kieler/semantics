@@ -13,8 +13,6 @@
 package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.sccharts.DataflowRegion
@@ -27,8 +25,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
  */
 class LustreToSCCharts extends CoreLustreToSCC {
 
-    @Inject extension KEffectsExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     
     override getId() {
@@ -36,7 +32,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
     }
 
     override getName() {
-        return "Lustre to SC DF"
+        return "Lustre to SCCharts"
     }
 
     override ProcessorType getType() {
@@ -57,7 +53,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
 
         // If there is no dataflow region, create one
         if (dataFlowRegionsList.length == 0) {
-            createDataflowRegion(state, de.cau.cs.kieler.lustre.processors.lustreToScc.CoreLustreToSCC.DATAFLOW_REGION_NAME)
+            createDataflowRegion(state, CoreLustreToSCC.DATAFLOW_REGION_NAME)
         }
         
         return dataFlowRegionsList.head as DataflowRegion

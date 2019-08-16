@@ -74,7 +74,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     }
 
     override getName() {
-        return "Lustre to SCC (control-flow approach)"
+        return "Lustre to SCCharts (ONLY control-flow)"
     }
 
     override ProcessorType getType() {
