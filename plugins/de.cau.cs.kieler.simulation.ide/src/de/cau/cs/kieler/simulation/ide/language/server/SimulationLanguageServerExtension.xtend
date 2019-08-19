@@ -124,7 +124,14 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      * Sends {@code SimulationStartedMessage} to the client.
      */
     def startedSimulation(SimulationStartedMessage message) {
-        client.startedSimulation(message)
+        try {
+            client.startedSimulation(message)
+        } catch (Exception exp) {
+            exp.printStackTrace
+            // An error occurred stop simulation
+            stopSimulation()
+            client.sendExternalStopSimulation(exp.toString())
+        }
     }
 
     /**
@@ -186,14 +193,18 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      * Answers with true if this was successful.
      */
     override stop() {
+        stopSimulation()
+        return this.requestManager.runRead [ cancelIndicator |
+            new SimulationStoppedMessage(true, "Stopped simulation")
+        ]
+    }
+    
+    def stopSimulation() {
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
         SimulationServer.stop()
         stepNumber = -1
         currentlySimulatedModel = null
-        return this.requestManager.runRead [ cancelIndicator |
-            new SimulationStoppedMessage(true, "Stopped simulation")
-        ]
     }
 
     /**
@@ -224,13 +235,15 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             switch ((e as SimulationControlEvent).operation) {
                 case STEP: { // Send step data if a step occurred.
                     try {
-                        this.client.sendSimulationStepData(
+                        client.sendSimulationStepData(
                             new SimulationStepMessage(true, "", CentralSimulation.currentSimulation.dataPool.pool)
                         )
                     } catch (Exception exp) {
                         exp.printStackTrace
-                        // TODO send notification that LS has to be restarted
-                    } 
+                        // An error occurred stop simulation
+                        stopSimulation()
+                        client.sendExternalStopSimulation(exp.toString())
+                    }
                 }
                 case START: { // Start the simulation. Send corresponding message to client.
                     var datapool = this.nextDataPool

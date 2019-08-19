@@ -52,7 +52,7 @@ interface KeithLanguageClient extends LanguageClient {
      * TODO actually use this
      */
     @JsonNotification("simulation/externalStop")
-    def void sendExternalStopSimulation()
+    def void sendExternalStopSimulation(String message)
     
     /**
      * Send to client if a simulation was started. Argument should be {@code SimulationStartedMessage}.
