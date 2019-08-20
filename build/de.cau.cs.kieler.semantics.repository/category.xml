@@ -38,6 +38,5 @@
   <repository-reference location="http://download.eclipse.org/lsp4j/updates/releases/0.6.0/" enabled="true"/>
   <repository-reference location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_pragmatics_2018-06.U2/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/elk/updates/releases/0.4.0/" enabled="true"/>
-  <repository-reference location="http://www.lejos.org/tools/eclipse/plugin/nxj/" enabled="true"/>
   <repository-reference location="http://download.eclipse.org/egit/updates" enabled="true"/>
 </site>
