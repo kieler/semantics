@@ -489,6 +489,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_4(), "rule__ValuedObject__Group_4__0");
+			builder.put(grammarAccess.getValuedObjectAccess().getGroup_5(), "rule__ValuedObject__Group_5__0");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getGroup(), "rule__SimpleValuedObject__Group__0");
 			builder.put(grammarAccess.getPureEmissionAccess().getGroup(), "rule__PureEmission__Group__0");
 			builder.put(grammarAccess.getPureEmissionAccess().getGroup_2(), "rule__PureEmission__Group_2__0");
@@ -1161,6 +1162,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getCardinalitiesAssignment_2_1(), "rule__ValuedObject__CardinalitiesAssignment_2_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_3_1(), "rule__ValuedObject__InitialValueAssignment_3_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_4_1(), "rule__ValuedObject__CombineOperatorAssignment_4_1");
+			builder.put(grammarAccess.getValuedObjectAccess().getLabelAssignment_5_1(), "rule__ValuedObject__LabelAssignment_5_1");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getAnnotationsAssignment_0(), "rule__SimpleValuedObject__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getNameAssignment_1(), "rule__SimpleValuedObject__NameAssignment_1");
 			builder.put(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0(), "rule__PureEmission__AnnotationsAssignment_0");
