@@ -475,7 +475,10 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         host?='host'? 
-	 *         ((type=ClassType name=ID? declarations+=DeclarationOrMethodWOSemicolon*) | (type=StructType name=ID? declarations+=DeclarationWOSemicolon*)) 
+	 *         (
+	 *             (type=ClassType name=EString? declarations+=DeclarationOrMethodWOSemicolon*) | 
+	 *             (type=StructType name=EString? declarations+=DeclarationWOSemicolon*)
+	 *         ) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )
@@ -501,7 +504,7 @@ public abstract class AbstractKExtSemanticSequencer extends KEffectsSemanticSequ
 	 *         global?='global'? 
 	 *         static?='static'? 
 	 *         host?='host'? 
-	 *         ((type=ClassType name=ID? declarations+=DeclarationOrMethod*) | (type=StructType name=ID? declarations+=Declaration*)) 
+	 *         ((type=ClassType name=EString? declarations+=DeclarationOrMethod*) | (type=StructType name=EString? declarations+=Declaration*)) 
 	 *         (valuedObjects+=ValuedObject valuedObjects+=ValuedObject*)? 
 	 *         annotations+=CommentAnnotatonSL?
 	 *     )

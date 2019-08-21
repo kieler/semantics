@@ -32,6 +32,7 @@ import java.util.List
 import static de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 /**
  * SCCharts Initialization Transformation.
@@ -88,31 +89,36 @@ class Initialization extends SCChartsProcessor implements Traceable {
         // Find VO that need to be initialized
         for (decl : scope.declarations) {
             if (decl instanceof ClassDeclaration) {
-                for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
-                    // Calculate paths to all initialized members
-                    var paths = newArrayList(newArrayList(nestedVO))
-                    var ClassDeclaration parent = nestedVO.declaration.eContainer as ClassDeclaration
-                    while(parent !== null) {
-                        val oldPaths = paths
-                        paths = newArrayList
-                        for (parentVO : parent.valuedObjects) {
-                            if (parentVO.cardinalities.nullOrEmpty) {
-                                for (oldPath : oldPaths) {
-                                    val newPath = newArrayList(parentVO)
-                                    newPath.addAll(oldPath)
-                                    paths += newPath
+                if (decl.host) {
+                    val vos = decl.valuedObjects.filter[initialValue instanceof TextExpression]
+                    if (!vos.empty) initVOs += vos.map[newArrayList(it)]
+                } else {
+                    for (nestedVO : decl.allNestedValuedObjects.filter[initialValue !== null]) {
+                        // Calculate paths to all initialized members
+                        var paths = newArrayList(newArrayList(nestedVO))
+                        var ClassDeclaration parent = nestedVO.declaration.eContainer as ClassDeclaration
+                        while(parent !== null) {
+                            val oldPaths = paths
+                            paths = newArrayList
+                            for (parentVO : parent.valuedObjects) {
+                                if (parentVO.cardinalities.nullOrEmpty) {
+                                    for (oldPath : oldPaths) {
+                                        val newPath = newArrayList(parentVO)
+                                        newPath.addAll(oldPath)
+                                        paths += newPath
+                                    }
+                                } else {
+                                    environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
                                 }
+                            }
+                            if (parent == decl) {
+                                parent = null
                             } else {
-                                environment.errors.add("Cannot initialize members of class/sturct types. Feature is currently not supported, please initialize manually.")
+                                parent = parent.eContainer as ClassDeclaration
                             }
                         }
-                        if (parent == decl) {
-                            parent = null
-                        } else {
-                            parent = parent.eContainer as ClassDeclaration
-                        }
+                        initVOs += paths
                     }
-                    initVOs += paths
                 }
             } else {
                 initVOs += decl.valuedObjects.filter[initialValue !== null].map[newArrayList(it)]

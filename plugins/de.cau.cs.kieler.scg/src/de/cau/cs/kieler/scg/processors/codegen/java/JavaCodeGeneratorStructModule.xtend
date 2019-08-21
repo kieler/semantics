@@ -25,6 +25,7 @@ import java.util.List
 import de.cau.cs.kieler.kexpressions.Declaration
 import java.lang.instrument.ClassDefinition
 import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 /**
  * Java Code Generator Struct Module
@@ -104,7 +105,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     protected def void generateClassDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
-        for (declaration : declarations.filter(ClassDeclaration)) {
+        for (declaration : declarations.filter(ClassDeclaration).filter[!host]) {
             hasClasses = true
             (0..depth).forEach[indent]
             code.append("public class ")
@@ -139,7 +140,11 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
                     valuedObject.createArrayForCardinalityIndex(0, serializer)
                 } else if (isClass) {
                     indent(2)
-                    code.append(valuedObject.name + " = new " + (declaration as ClassDeclaration).name + "();\n")
+                    if (valuedObject.initialValue instanceof TextExpression) {
+                        code.append(valuedObject.name + " = " + (valuedObject.initialValue as TextExpression).text + ";\n")
+                    } else {
+                        code.append(valuedObject.name + " = new " + (declaration as ClassDeclaration).name + "();\n")
+                    }
                 }
             }
         }

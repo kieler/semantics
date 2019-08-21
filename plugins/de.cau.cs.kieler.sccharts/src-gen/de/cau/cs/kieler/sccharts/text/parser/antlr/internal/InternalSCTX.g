@@ -4020,19 +4020,20 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 				)
 				(
 					(
-						lv_name_10_0=RULE_ID
 						{
-							newLeafNode(lv_name_10_0, grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_0_1_0());
+							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_0_1_0());
 						}
+						lv_name_10_0=ruleEString
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
+								$current = createModelElementForParent(grammarAccess.getClassDeclarationWOSemicolonRule());
 							}
-							setWithLastConsumed(
+							set(
 								$current,
 								"name",
 								lv_name_10_0,
-								"de.cau.cs.kieler.annotations.Annotations.ID");
+								"de.cau.cs.kieler.annotations.Annotations.EString");
+							afterParserOrEnumRuleCall();
 						}
 					)
 				)?
@@ -4106,19 +4107,20 @@ ruleClassDeclarationWOSemicolon returns [EObject current=null]
 				)
 				(
 					(
-						lv_name_16_0=RULE_ID
 						{
-							newLeafNode(lv_name_16_0, grammarAccess.getClassDeclarationWOSemicolonAccess().getNameIDTerminalRuleCall_9_1_1_0());
+							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getNameEStringParserRuleCall_9_1_1_0());
 						}
+						lv_name_16_0=ruleEString
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getClassDeclarationWOSemicolonRule());
+								$current = createModelElementForParent(grammarAccess.getClassDeclarationWOSemicolonRule());
 							}
-							setWithLastConsumed(
+							set(
 								$current,
 								"name",
 								lv_name_16_0,
-								"de.cau.cs.kieler.annotations.Annotations.ID");
+								"de.cau.cs.kieler.annotations.Annotations.EString");
+							afterParserOrEnumRuleCall();
 						}
 					)
 				)?
@@ -8439,19 +8441,20 @@ ruleClassDeclaration returns [EObject current=null]
 				)
 				(
 					(
-						lv_name_10_0=RULE_ID
 						{
-							newLeafNode(lv_name_10_0, grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_0_1_0());
+							newCompositeNode(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_0_1_0());
 						}
+						lv_name_10_0=ruleEString
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getClassDeclarationRule());
+								$current = createModelElementForParent(grammarAccess.getClassDeclarationRule());
 							}
-							setWithLastConsumed(
+							set(
 								$current,
 								"name",
 								lv_name_10_0,
-								"de.cau.cs.kieler.annotations.Annotations.ID");
+								"de.cau.cs.kieler.annotations.Annotations.EString");
+							afterParserOrEnumRuleCall();
 						}
 					)
 				)?
@@ -8506,19 +8509,20 @@ ruleClassDeclaration returns [EObject current=null]
 				)
 				(
 					(
-						lv_name_15_0=RULE_ID
 						{
-							newLeafNode(lv_name_15_0, grammarAccess.getClassDeclarationAccess().getNameIDTerminalRuleCall_9_1_1_0());
+							newCompositeNode(grammarAccess.getClassDeclarationAccess().getNameEStringParserRuleCall_9_1_1_0());
 						}
+						lv_name_15_0=ruleEString
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getClassDeclarationRule());
+								$current = createModelElementForParent(grammarAccess.getClassDeclarationRule());
 							}
-							setWithLastConsumed(
+							set(
 								$current,
 								"name",
 								lv_name_15_0,
-								"de.cau.cs.kieler.annotations.Annotations.ID");
+								"de.cau.cs.kieler.annotations.Annotations.EString");
+							afterParserOrEnumRuleCall();
 						}
 					)
 				)?

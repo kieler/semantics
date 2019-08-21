@@ -122,13 +122,13 @@ ClassDeclaration returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationOrMethod*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=Declaration*
         '}'
@@ -154,13 +154,13 @@ ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
     host?='host'?
     ((
         type = ClassType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationOrMethodWOSemicolon*
         '}'
     )|(
         type = StructType
-        (name = ID)?
+        (name = EString)?
         '{'
             declarations+=DeclarationWOSemicolon*
         '}'

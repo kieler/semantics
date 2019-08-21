@@ -54,7 +54,7 @@ class SCLValidator extends AbstractSCLValidator {
             warning(CLASS_NO_VO, decl, null, -1)
         } else {
             for (vo : decl.valuedObjects) {
-                if (vo.initialValue !== null) {
+                if (vo.initialValue !== null && !(vo.initialValue instanceof TextExpression)) {
                     error(CLASS_INIT, vo.initialValue, null, -1)
                 }
             }

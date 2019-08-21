@@ -754,12 +754,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethod*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=Declaration*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
@@ -792,12 +792,12 @@ public class KTraceGrammarAccess extends AbstractGrammarElementFinder {
 	//	global?='global'?
 	//	static?='static'?
 	//	host?='host'? (type=ClassType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationOrMethodWOSemicolon*
 	//	'}'
 	//	| type=StructType
-	//	name=ID?
+	//	name=EString?
 	//	'{'
 	//	declarations+=DeclarationWOSemicolon*
 	//	'}') (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
