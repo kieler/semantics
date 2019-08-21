@@ -15,8 +15,11 @@ package de.cau.cs.kieler.kexpressions.keffects.converter
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.KExpressionsFactory
 import de.cau.cs.kieler.kexpressions.KExpressionsPackage
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.KEffectsFactory
 import javax.inject.Inject
@@ -29,7 +32,6 @@ import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.scoping.IScopeProvider
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.replace
-import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /**
  * @author als
@@ -44,12 +46,14 @@ class KEffectsEmissionReferenceCallConverter {
 
     @Inject
     extension LinkingHelper
-
+    
     @Inject
     extension IQualifiedNameConverter
     
     @Inject
     extension AnnotationsExtensions
+    @Inject
+    extension KExpressionsValuedObjectExtensions
 
     static val expPackage = KExpressionsPackage.eINSTANCE
     static val effFactory = KEffectsFactory.eINSTANCE
@@ -60,7 +64,7 @@ class KEffectsEmissionReferenceCallConverter {
      */
     def void fixEmissionReferenceCallEffectDuality(IParseResult parseResult) {
         var root = parseResult.getRootNode
-        val toConvert = <Emission, ValuedObject>newHashMap
+        val toConvert = <Emission>newHashSet
         for (node : root.getAsTreeIterable) {
             if (node instanceof CompositeNodeWithSemanticElement) {
                 val emission = node.semanticElement
@@ -71,36 +75,66 @@ class KEffectsEmissionReferenceCallConverter {
                             voNameNode = voNameNode.nextSibling
                         }
                         if (voNameNode !== null) {
-                            val candidates = getScope(emission.reference, expPackage.valuedObjectReference_ValuedObject)
-                            if (candidates !== null) {
-                                val name = voNameNode.getCrossRefNodeAsString(true)
-                                val qualifiedName = name.toQualifiedName
-                                val candidate = candidates.getSingleElement(qualifiedName)
-                                if (candidate !== null) {
-                                    val vo = candidate.EObjectOrProxy
-                                    if (vo instanceof ValuedObject) {
-                                        if (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration) {
-                                            toConvert.put(emission, vo)
-                                        }
-                                    }
-                                }
+                            emission.reference.link((voNameNode.getCrossRefNodeAsString(true)?:"").split("\\."))
+//                            var voRef = emission.reference.lowermostReference
+//                            val candidates = getScope(voRef, expPackage.valuedObjectReference_ValuedObject)
+//                            if (candidates !== null) {
+//                                var name = voNameNode.getCrossRefNodeAsString(true)
+////                                val nameParts = name.split(".")
+//                                if (emission.reference.subReference !== null && name.contains(".")) { // only name of last reference
+//                                    name = name.substring(name.lastIndexOf(".") + 1)
+//                                }
+//                                val qualifiedName = name.toQualifiedName
+//                                val candidate = candidates.getSingleElement(qualifiedName)
+//                                if (candidate !== null) {
+//                                    val vo = candidate.EObjectOrProxy
+//                                    if (vo instanceof ValuedObject) {
+//                                        if (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration) {
+//                                            toConvert.put(emission, vo)
+//                                        }
+//                                    }
+//                                }
+//                            }
+                            val vo = emission.reference.lowermostReference.valuedObject
+                            if (vo !== null && (vo.eContainer instanceof ReferenceDeclaration || vo.eContainer instanceof MethodDeclaration)) {
+                                toConvert += emission
                             }
                         }
                     }
                 }
             }
         }
-        for (entry : toConvert.entrySet) {
-            val emission = entry.key
-            val vo = entry.value
+        for (emission : toConvert) {
             val refCall = effFactory.createReferenceCallEffect
             refCall.annotations.addAll(emission.annotations)
-            refCall.valuedObject = vo
+            refCall.valuedObject = emission.reference.valuedObject
+            refCall.indices += emission.reference.indices
+            refCall.subReference = emission.reference.subReference
+            
             refCall.parameters.add(expFactory.createParameter => [
                 expression = emission.newValue
             ])
             emission.replace(refCall)
             emission.addTagAnnotation(ANNOTATION)
+        }
+    }
+    
+    private def void link(ValuedObjectReference ref, Iterable<String> names) {
+        val candidates = getScope(ref, expPackage.valuedObjectReference_ValuedObject)
+        if (candidates !== null) {
+            var name = names.head
+            if (!name.nullOrEmpty) {
+                val candidate = candidates.getSingleElement(name.toQualifiedName)
+                if (candidate !== null) {
+                    val vo = candidate.EObjectOrProxy
+                    if (vo instanceof ValuedObject) {
+                        ref.valuedObject = vo
+                    }
+                }
+            }
+        }
+        if (ref.subReference !== null) {
+            ref.subReference.link(names.drop(1))
         }
     }
 }
