@@ -1,0 +1,23 @@
+system de.cau.cs.kieler.sccharts.netlist.dataflow
+    label "SCChart to Dataflow Circuit"
+    start config {
+       "de.cau.cs.kieler.scg.opt.copyPropagation": true,
+       "de.cau.cs.kieler.scg.opt.conditionalMerger": true,
+       "de.cau.cs.kieler.scg.opt.haltStateRemover": true,
+       "de.cau.cs.kieler.scg.opt.smartRegisterAllocation": false,
+       "de.cau.cs.kieler.scg.opt.persistentStateOptimizer": true,
+       "de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation": true
+    }
+    
+system de.cau.cs.kieler.sccharts.extended.core
+de.cau.cs.kieler.sccharts.scg.processors.SCG
+post process de.cau.cs.kieler.scg.processors.methods
+post process de.cau.cs.kieler.scg.processors.threadAnalyzer
+system de.cau.cs.kieler.scg.netlist
+pre process de.cau.cs.kieler.scg.processors.basicBlocks
+de.cau.cs.kieler.scg.processors.ssa.sequential config {
+   "de.cau.cs.kieler.scg.processors.ssa.dessa.sequential.inline": true
+}
+post process de.cau.cs.kieler.scg.processors.ssa.dessa.sequential
+post process de.cau.cs.kieler.scg.processors.vhdl.ssa.prepare
+de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflow

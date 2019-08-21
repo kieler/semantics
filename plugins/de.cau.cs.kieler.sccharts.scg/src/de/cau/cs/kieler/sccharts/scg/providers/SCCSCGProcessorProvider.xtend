@@ -24,7 +24,8 @@ class SCCSCGProcessorProvider implements IProcessorProvider {
     override getProcessors() {
         #[
             de.cau.cs.kieler.sccharts.scg.processors.SCGTransformation,
-            de.cau.cs.kieler.sccharts.scg.processors.SCG2SCCProcessor
+            de.cau.cs.kieler.sccharts.scg.processors.SCG2SCCProcessor,
+            de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflowProcessor
         ]
     }
     
