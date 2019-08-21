@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright ${year} by
@@ -17,8 +17,6 @@ import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
-import de.cau.cs.kieler.sccharts.SCChartsFactory
-import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import javax.inject.Inject
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
@@ -26,53 +24,122 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.scg.processors.ssa.SSACoreExtensions
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import java.util.HashMap
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author kolja
- *
+ * 
  */
-class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implements Traceable{
-    
-    @Inject extension PragmaExtensions
+class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implements Traceable {
+
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
     @Inject extension KExpressionsDeclarationExtensions
+    @Inject extension SSACoreExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    
+    @Inject extension KEffectsExtensions
+    @Inject extension KExpressionsCreateExtensions
+
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflow"
     }
-    
+
     override getName() {
         "CircuitDataflow"
     }
-    
+
     override getType() {
         ProcessorType.EXOGENOUS_TRANSFORMATOR
     }
-    
+
     override process() {
         val sccharts = createSCChart() => [
-            for( scg : model.scgs ){
-                it.rootStates.add( createState( scg.name ) => [
-                    for( v : scg.variableDeclarations ){
-                        it.declarations.add( v.copy )
-                    }
-                    it.createDataflowRegion(scg.name) => [
-                        for( n : scg.nodes ){
-                            if( n instanceof Assignment ){
-                                it.equations.add( n.copy )
-                            }
+            for (scg : model.scgs) {
+                it.rootStates.add(createState(scg.name) => [
+                    val map = <ValuedObject, ValuedObject>newHashMap
+                    val nr = it.createDataflowRegion(scg.name)
+                    for (v : scg.variableDeclarations.filter[isSSA]) {
+                        val nv = v.copy
+                        for (var i = 0; i < nv.valuedObjects.length; i++)
+                            map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
+                        nv.valuedObjects.last.name = nv.ssaOrigVO.name
+                        if (nv.input || nv.output)
+                            it.declarations.add(nv)
+                        else
+                            nr.declarations.add(nv)
+                        if (nv.valuedObjects.length > 1) {
+                            val na = nv.valuedObjects.get(0).createAssignment
+                            na.expression = OperatorType.PRE.createOperatorExpression => [
+                                it.subExpressions.add(nv.valuedObjects.last.reference)
+                            ]
+                            nr.equations.add(na)
                         }
-                    ]                    
+                    }
+                    for (n : scg.nodes) {
+                        if (n instanceof Assignment) {
+                            nr.equations.add(n.copy.transformAssignment(map))
+                        }
+                    }
                 ])
             }
         ]
         sccharts.rootStates
         setModel(sccharts)
+        for (rs : sccharts.rootStates) {
+            val dataflowRegion = rs.regions.get(0) as DataflowRegion
+            for (dec : rs.declarations) {
+                if (dec.valuedObjects.length > 1) {
+                    // split this declaration
+                    val localDec = dec.copy()
+                    if (localDec instanceof VariableDeclaration) {
+                        (localDec as VariableDeclaration).output = false
+                        (localDec as VariableDeclaration).input = false
+                    }
+                    localDec.valuedObjects.clear
+                    while (dec.valuedObjects.length > 1)
+                        localDec.valuedObjects.add(dec.valuedObjects.get(0))
+                    val globalDec = dec.copy();
+                    globalDec.valuedObjects.clear
+                    globalDec.valuedObjects.add(dec.valuedObjects.get(0))
+                    dec.replace(globalDec)
+                    dataflowRegion.declarations.add(localDec)
+                }
+            }
+        }
+        setModel(sccharts)
     }
-    
+
+    def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
+        for (ref : e.allReferences) {
+            if (variableReplacement.containsKey(ref.valuedObject))
+                ref.valuedObject = variableReplacement.get(ref.valuedObject)
+        }
+    }
+
+    def transformAssignment(Assignment a, HashMap<ValuedObject, ValuedObject> variableReplacement) {
+        if (variableReplacement.containsKey(a.reference.valuedObject)) {
+            a.reference.valuedObject = variableReplacement.get(a.reference.valuedObject)
+        }
+        a.expression.transformExpression(variableReplacement)
+        for (pre : a.eAllContents.toIterable.filter(OperatorExpression).filter[operator == OperatorType.PRE].toList) {
+            pre.subExpressions.head.replace(
+                (pre.subExpressions.head as ValuedObjectReference).valuedObject.declaration.valuedObjects.last.
+                    reference)
+        }
+        a
+    }
+
 }
