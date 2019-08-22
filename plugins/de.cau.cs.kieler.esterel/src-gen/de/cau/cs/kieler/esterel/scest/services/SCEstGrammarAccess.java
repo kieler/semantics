@@ -3048,7 +3048,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=super::STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}

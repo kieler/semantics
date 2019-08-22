@@ -4249,6 +4249,30 @@ ruleValuedObject returns [EObject current=null]
 				)
 			)
 		)?
+		(
+			otherlv_9='label'
+			{
+				newLeafNode(otherlv_9, grammarAccess.getValuedObjectAccess().getLabelKeyword_5_0());
+			}
+			(
+				(
+					lv_label_10_0=RULE_STRING
+					{
+						newLeafNode(lv_label_10_0, grammarAccess.getValuedObjectAccess().getLabelSTRINGTerminalRuleCall_5_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getValuedObjectRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"label",
+							lv_label_10_0,
+							"de.cau.cs.kieler.annotations.Annotations.STRING");
+					}
+				)
+			)
+		)?
 	)
 ;
 

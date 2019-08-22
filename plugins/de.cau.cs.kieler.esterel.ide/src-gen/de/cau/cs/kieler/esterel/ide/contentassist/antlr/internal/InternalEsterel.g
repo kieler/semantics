@@ -38441,6 +38441,7 @@ rule__ValuedObject__Group__4
 	}
 :
 	rule__ValuedObject__Group__4__Impl
+	rule__ValuedObject__Group__5
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -38455,6 +38456,32 @@ rule__ValuedObject__Group__4__Impl
 	{ before(grammarAccess.getValuedObjectAccess().getGroup_4()); }
 	(rule__ValuedObject__Group_4__0)?
 	{ after(grammarAccess.getValuedObjectAccess().getGroup_4()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group__5
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ValuedObject__Group__5__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group__5__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getValuedObjectAccess().getGroup_5()); }
+	(rule__ValuedObject__Group_5__0)?
+	{ after(grammarAccess.getValuedObjectAccess().getGroup_5()); }
 )
 ;
 finally {
@@ -38644,6 +38671,60 @@ rule__ValuedObject__Group_4__1__Impl
 	{ before(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_4_1()); }
 	(rule__ValuedObject__CombineOperatorAssignment_4_1)
 	{ after(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_4_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+
+rule__ValuedObject__Group_5__0
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ValuedObject__Group_5__0__Impl
+	rule__ValuedObject__Group_5__1
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group_5__0__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getValuedObjectAccess().getLabelKeyword_5_0()); }
+	'label'
+	{ after(grammarAccess.getValuedObjectAccess().getLabelKeyword_5_0()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group_5__1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__ValuedObject__Group_5__1__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__Group_5__1__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getValuedObjectAccess().getLabelAssignment_5_1()); }
+	(rule__ValuedObject__LabelAssignment_5_1)
+	{ after(grammarAccess.getValuedObjectAccess().getLabelAssignment_5_1()); }
 )
 ;
 finally {
@@ -55309,6 +55390,21 @@ rule__ValuedObject__CombineOperatorAssignment_4_1
 		{ before(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_0()); }
 		ruleCombineOperator
 		{ after(grammarAccess.getValuedObjectAccess().getCombineOperatorCombineOperatorEnumRuleCall_4_1_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ValuedObject__LabelAssignment_5_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getValuedObjectAccess().getLabelSTRINGTerminalRuleCall_5_1_0()); }
+		RULE_STRING
+		{ after(grammarAccess.getValuedObjectAccess().getLabelSTRINGTerminalRuleCall_5_1_0()); }
 	)
 ;
 finally {
