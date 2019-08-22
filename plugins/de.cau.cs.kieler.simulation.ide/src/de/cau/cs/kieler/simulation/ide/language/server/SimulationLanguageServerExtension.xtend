@@ -95,11 +95,6 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         this.languageServerAccess = access
     }
 
-    new() {
-        // Register the class itself as simulation listener on creation.
-        addListener(this)
-    }
-
     /**
      * Uri of model which is currently being simulated.
      */
@@ -112,6 +107,10 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
      * @param simulationType should be one of Manual, Periodic, and Dynamic
      */
     override start(String uri, String simulationType) {
+        while (listeners.contains(this)) {
+            removeListener(this)
+        }
+        addListener(this)
         val message = startSimulation(uri, simulationType)
         // If message is not empty an error occurred. Answer the via the corresponding notification.
         // Otherwise the corresponding simulation event is caught and the client is notified about the correct start.
@@ -145,6 +144,9 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         val sim = resultArray.last()
         var DataPool datapool
         if (sim instanceof SimulationContext) {
+            // This simulation might have already registered this as a listener
+            // All listeners have to be deleted
+            sim.deleteObservers()
             prepareSimulation(sim as SimulationContext)
             SimulationServer.start
             // Add user value processor
@@ -156,8 +158,11 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
             // Set simulation mode, default mode is manual mode
             setSimulationType(simulationType)
             // Start a new start which starts the simulation to be able to wait for the updates
-            // TODO add try catch block
-            currentSimulation.start(true)
+            try {
+                currentSimulation.start(true)
+            } catch (Exception e) {
+                e.printStackTrace()
+            }
             return ""
         } else {
             return "No simulation context could be found for this uri"
@@ -188,6 +193,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
     override stop() {
         // Stop the running simulation and remove listeners
         stopAndRemoveSimulation
+        removeListener(this)
         SimulationServer.stop()
         stepNumber = -1
         currentlySimulatedModel = null
@@ -237,7 +243,9 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
 
                     val finalPool = datapool
                     // Get properties categories additional to input and output (e.g. guard, ...)
-                    var properties = datapool.entries.entrySet.map[value.combinedProperties].flatten.toSet
+                    var entries = datapool.entries
+                    val entrySet = entries.entrySet
+                    var properties = entrySet.map[value.combinedProperties].flatten.toSet
                     val propertyFilter = <String, Boolean>newHashMap
                     for (property : properties) {
                         val key = property.toLowerCase
