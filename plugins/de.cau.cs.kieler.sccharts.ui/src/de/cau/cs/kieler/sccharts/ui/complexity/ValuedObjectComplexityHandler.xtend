@@ -24,4 +24,8 @@ class ValuedObjectComplexityHandler extends SCTXComplexityCalculationHandler {
         return "de.cau.cs.kieler.sccharts.netlist.complexity.valuedObject"
     }
     
+    override getIdentifier() {
+        return "ValuedObjectsCount"
+    }
+    
 }

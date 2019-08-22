@@ -48,6 +48,7 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
     static val sctxInjector = SCTXStandaloneSetup.doSetup
     
     abstract def String getCompilationSystemID()
+    abstract def String getIdentifier() 
     
     override execute(ExecutionEvent event) throws ExecutionException {
         val selection = HandlerUtil.getActiveWorkbenchWindow(event).getActivePage().getSelection();
@@ -87,10 +88,11 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
                         val maxFileNameLengthFinal = maxFileNameLength
                         val stringBuilder = new StringBuilder
                         complexityMap.forEach[filepath, complexity| stringBuilder.append(formatFileLine(filepath, complexity, maxFileNameLengthFinal, false))]
+                        monitor.worked(1)
 
                         // Write result File
                         var stamp = (new Date()).toString.replace(" ", "_").replace(":", "-")
-                        var resultsFileName = "complexity_" + stamp + ".csv"
+                        var resultsFileName = identifier + "_" + stamp + ".csv"
                         var projectPath = files.head?.project.location.toString
                         var newFile = new File(projectPath + File.separator + resultsFileName)
                         if (newFile.createNewFile) {
@@ -98,6 +100,10 @@ abstract class SCTXComplexityCalculationHandler extends AbstractHandler {
                             writer.write(stringBuilder.toString);
                             writer.close();
                         }
+                        monitor.worked(1)
+                        
+                        // Refresh
+                        files.head?.project.refreshLocal(IResource.DEPTH_INFINITE, monitor)
 
                         return Status.OK_STATUS
                     }

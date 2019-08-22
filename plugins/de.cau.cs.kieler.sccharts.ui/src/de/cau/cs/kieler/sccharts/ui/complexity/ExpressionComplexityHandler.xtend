@@ -23,4 +23,9 @@ class ExpressionComplexityHandler extends SCTXComplexityCalculationHandler {
     override getCompilationSystemID() {
         return "de.cau.cs.kieler.sccharts.netlist.complexity.expression"
     }
+    
+    override getIdentifier() {
+        return "ExpressionCount"
+    }
+    
 }
