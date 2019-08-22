@@ -28,6 +28,7 @@ import java.net.URLDecoder
 import java.util.HashMap
 import java.util.List
 import java.util.Map
+import java.util.Observer
 import java.util.concurrent.CompletableFuture
 import org.apache.log4j.Logger
 import org.eclipse.emf.common.util.URI
@@ -40,7 +41,6 @@ import org.eclipse.xtext.ide.server.ILanguageServerExtension
 import org.eclipse.xtext.ide.server.concurrent.RequestManager
 import org.eclipse.xtext.resource.XtextResourceSet
 import org.eclipse.xtext.util.CancelIndicator
-import java.util.Observer
 
 /**
  * Implements methods to extend the LSP to allow compilation. Moreoever, getting compilation systems and showing
@@ -376,16 +376,20 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param clientId identifier used by the client to identify the diagram widget that should be updated. Only relevant if showSnapshot is true.
      * @param command Compilation system. Only relevant of showSnapshot is true.
      * @param inplace Whether the command was invoked with inplace compilation. Only relevant if showSnapshot is true.
-     * @param showSnapshot indicates whether diagram should be updated on client side.
+     * @param finished whether the compilation finished after this snapshot (can also happen because it was stopped).
+     * @param showResultingModel whether the last model should be shown.
+     * @param currentIndex processor index of current snapshot
+     * @param maxIndex maximum number of processors
+     * 
      */
     def update(String uri, CompilationContext context, String clientId, String command, boolean inplace,
-        boolean showSnapshot, boolean finished, boolean showResultingModel
+        boolean finished, boolean showResultingModel, int currentIndex, int maxIndex
     ) {
         val sameCompilation = command.equals(lastCommand) && uri.equals(lastUri) && inplace === lastInplace
         var future = new CompletableFuture()
         future.complete(void)
         future.thenAccept([
-            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished)
+            client.compile(new CompilationResults(this.snapshotMap.get(uri)), uri, finished, currentIndex, maxIndex)
         ])
         if (finished && compilationThread.terminated) {
             future.thenAccept([

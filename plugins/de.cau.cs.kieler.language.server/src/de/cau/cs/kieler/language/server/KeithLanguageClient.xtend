@@ -28,7 +28,7 @@ import org.eclipse.lsp4j.services.LanguageClient
 interface KeithLanguageClient extends LanguageClient {
     
     @JsonNotification("kicool/compile")
-    def void compile(Object results, String uri, boolean finished);
+    def void compile(Object results, String uri, boolean finished, int currentIndex, int maxIndex);
     
     @JsonNotification("kicool/cancel-compilation")
     def void cancelCompilation(boolean success);
