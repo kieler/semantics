@@ -427,7 +427,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * 
      * @param o observer to be removed
      */
-    def removeObserOnCompilation(Observer o) {
+    def removeObserverOnCompilation(Observer o) {
         this.compilationObservers.remove(o)
         if (compilationThread !== null) {
             this.compilationThread.context.deleteObserver(o)

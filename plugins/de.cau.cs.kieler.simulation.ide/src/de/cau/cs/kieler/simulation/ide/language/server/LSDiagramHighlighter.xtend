@@ -24,6 +24,7 @@ import de.cau.cs.kieler.simulation.events.SimulationControlEvent.SimulationOpera
 import de.cau.cs.kieler.simulation.events.SimulationEvent
 import de.cau.cs.kieler.simulation.ide.visualization.IdeDiagramHighlighter
 import java.net.URLDecoder
+import static de.cau.cs.kieler.simulation.ide.language.server.SimulationLanguageServerExtension.*
 
 /**
  * Works similar to the DiagramHighlighter. After each stop, start, or step action the diagram layout is updated.

@@ -57,6 +57,14 @@ abstract class IdeDiagramHighlighter implements ISimulationListener {
     new() {
         addListener(this)
     }
+    
+    protected def addListener() {
+        addListener(this)
+    }
+    
+    protected def removeListener() {
+        removeListener(this)
+    }
 
     /**
      * Prepares for diagram highlighting.

@@ -219,7 +219,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                         }
                         currentUri = ""
                         currentSimulationType = ""
-                        removeObserOnCompilation(this)
+                        removeObserverOnCompilation(this)
                     }
                 }
             }

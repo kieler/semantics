@@ -17,4 +17,8 @@ package de.cau.cs.kieler.language.server
  *
  */
 interface ILSDiagramHighlighter {
+    
+    def void registerObserver()
+    
+    def void unregisterObserver()
 }

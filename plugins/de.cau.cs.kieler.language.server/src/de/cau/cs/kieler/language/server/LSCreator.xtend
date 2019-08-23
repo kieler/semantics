@@ -34,6 +34,7 @@ import org.eclipse.xtext.ide.server.LanguageServerImpl
 import org.eclipse.xtext.ide.server.ServerLauncher
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.util.Modules2
+import java.util.List
 
 /** 
  * Provides methods to create a LS.
@@ -109,12 +110,12 @@ class LSCreator {
                 ext.languageClient = client
             }
         }
+        var List<ILSDiagramHighlighter> diagramHighlighters = newArrayList
         for (iLSdhc : KielerServiceLoader.load(ILSDiagramHighlighterContribution)) {
-            iLSdhc.getHighlighter(injector)
+            diagramHighlighters.add(iLSdhc.getHighlighter(injector))
         }
         val future = launcher.startListening
         if (socket) {
-            // nothing special to handle
         } else { // case stdio
             // Redirect Log4J output to a file
             Logger.rootLogger => [
@@ -123,9 +124,12 @@ class LSCreator {
                     addAppender(new LanguageClientAppender(client))
                 ])
             ]
-            while (!future.done) {
-                Thread.sleep(10_000l)
-            }
         }
+        while (!future.done) {
+            Thread.sleep(10_000l)
+        }
+        // On reload remove all diagram highlighters
+        // The diagram highlighters are as everything else created again on reload.
+        diagramHighlighters.forEach[it.unregisterObserver()]
     }
 }

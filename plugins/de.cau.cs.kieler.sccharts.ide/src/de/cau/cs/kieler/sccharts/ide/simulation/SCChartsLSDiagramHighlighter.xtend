@@ -12,10 +12,12 @@
  */
 package de.cau.cs.kieler.sccharts.ide.simulation
 
+import com.google.inject.Injector
 import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
+import de.cau.cs.kieler.language.server.ILSDiagramHighlighter
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
@@ -30,9 +32,6 @@ import de.cau.cs.kieler.simulation.ide.language.server.LSDiagramHighlighter
 import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
 import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.language.server.ILSDiagramHighlighter
-import com.google.inject.Inject
-import com.google.inject.Injector
 
 /**
  * Highlighter for SCCharts diagrams for the language server.
@@ -106,10 +105,11 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
         instance
     }
     
+    /**
+     * Creates a new instance using the new injector created on reload of client/LS
+     */
     static def create(Injector injector) {
-        if (instance === null) {
-            instance = injector.getInstance(SCChartsLSDiagramHighlighter)
-        }
+        instance = injector.getInstance(SCChartsLSDiagramHighlighter)
         return instance
     }
     
@@ -391,6 +391,14 @@ class SCChartsLSDiagramHighlighter extends LSDiagramHighlighter implements ILSDi
             }
         }
         return result
+    }
+    
+    override registerObserver() {
+        addListener()
+    }
+    
+    override unregisterObserver() {
+        removeListener()
     }
     
 }
