@@ -29,7 +29,10 @@ class CSCChartsSystemProvider implements ISystemProvider {
         #[
             "system/de.cau.cs.kieler.c.sccharts.kico",
             "system/de.cau.cs.kieler.c.statemachine.kico",
-            "system/de.cau.cs.kieler.c.dataflow.kico"
+            "system/de.cau.cs.kieler.c.dataflow.kico",
+            "system/de.cau.cs.kieler.c.dataflowSSA.kico",
+            "system/de.cau.cs.kieler.c.statemachine.cpp.kico",
+            "system/de.cau.cs.kieler.c.ast.kico"
         ]
     }
     

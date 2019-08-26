@@ -48,19 +48,19 @@ class CDTConvertExtensions {
             //case 19: opType = "/="
             //case 20: opType = "%="
             //case 21: opType = "+="
-            //case 23: opType = "-="
-            //case 24: opType = "<<="
-            //case 25: opType = ">>="
-            //case 26: opType = "&="
-            //case 27: opType = "^="
+            //case 22: opType = "-="
+            //case 23: opType = "<<="
+            //case 24: opType = ">>="
+            //case 25: opType = "&="
+            //case 26: opType = "^="
+            //case 27: opType = "|="
             case 28: opType = OperatorType::EQ
             case 29: opType = OperatorType::NE
-//            case 30: opType = OperatorType::NE
-            //case 31: opType = "pointer to member field dereference"
-            //case 32: opType = "pointer to member pointer dereference"
-            //case 33: opType = "op_max >?"
-            //case 34: opType = "op_min <?"
-            //case 35: opType = "op_ellipses ..."
+            //case 30: opType = "pointer to member field dereference"
+            //case 31: opType = "pointer to member pointer dereference"
+            //case 32: opType = "op_max >?"
+            //case 33: opType = "op_min <?"
+            //case 34: opType = "op_ellipses ..."
             default: opType = OperatorType::ADD //TODO DARF NICH ADD BLEIBEN!!!!!!!
         }
         
@@ -79,9 +79,82 @@ class CDTConvertExtensions {
             case 5: opType = OperatorType::BITWISE_AND  //&exp
             case 6: opType = OperatorType::BITWISE_NOT  //~exp
             case 7: opType = OperatorType::NOT  //!exp
-            case 8: opType = null  //sizeof exp
+            case 8: {opType = null;println("unary Type conversion found sizeofOperator")}  //sizeof exp
             case 9: opType = OperatorType::POSTFIX_ADD  //exp++
             case 10: opType = OperatorType::POSTFIX_SUB  //exp--
+            case 11: opType = null  //( exp )
+            case 12: opType = null  //throw exp
+            case 13: opType = null  //typeid( exp )
+            case 14: opType = null  //typeof exp //should not be used
+            case 15: opType = null  //alignOf exp //will not be illustrated
+            case 16: opType = null  //sizeof parameterPack //C++ only
+            case 17: opType = null  //noexcept ( exp ) //C++ only
+            case 18: opType = null  //label Reference
+            default: opType = null
+        }
+        
+        opType
+    }
+    
+    def String CDTBinaryOpTypeToString(int n) {
+        var String opType
+        
+        switch(n) {
+            case 1: opType = "*"
+            case 2: opType = "/"
+            case 3: opType = "%"
+            case 4: opType = "+"
+            case 5: opType = "-"
+            case 6: opType = "<<"
+            case 7: opType = ">>"
+            case 8: opType = "<"
+            case 9: opType = ">"
+            case 10: opType = "<="
+            case 11: opType = ">="
+            case 12: opType = "&"
+            case 13: opType = "^"
+            case 14: opType = "|"
+            case 15: opType = "&&"
+            case 16: opType = "||"
+            case 17: opType = "="
+            case 18: opType = "*="
+            case 19: opType = "/="
+            case 20: opType = "%="
+            case 21: opType = "+="
+            case 22: opType = "-="
+            case 23: opType = "<<="
+            case 24: opType = ">>="
+            case 25: opType = "&="
+            case 26: opType = "^="
+            case 27: opType = "|="
+            case 28: opType = "=="
+            case 29: opType = "!="
+            //case 30: opType = "pointer to member field dereference"
+            //case 31: opType = "pointer to member pointer dereference"
+            //case 32: opType = "op_max >?"
+            //case 33: opType = "op_min <?"
+            //case 34: opType = "op_ellipses ..."
+            default: opType = ""
+        }
+        
+        return opType
+    }
+    
+    def String CDTUnaryOpTypeToString(int n) {
+        var String opType
+        
+        switch(n) {
+            case 0: opType = "++exp"
+            case 1: opType = "--exp"
+            case 2: opType = "+exp"
+            case 3: opType = "-exp"
+            case 4: opType = "*exp"
+            case 5: opType = "&exp"
+            case 6: opType = "~"
+            case 7: opType = "!"
+            case 8: {opType = null;println("unary Type conversion found sizeofOperator")}  //sizeof exp
+            case 9: opType = "++"
+            case 10: opType = "--"
             case 11: opType = null  //( exp )
             case 12: opType = null  //throw exp
             case 13: opType = null  //typeid( exp )

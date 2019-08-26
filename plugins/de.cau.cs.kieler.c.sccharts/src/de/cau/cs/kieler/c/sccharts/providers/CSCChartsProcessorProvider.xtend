@@ -25,9 +25,13 @@ class CSCChartsProcessorProvider implements IProcessorProvider {
         #[
             de.cau.cs.kieler.c.sccharts.processors.CDTProcessor,
             de.cau.cs.kieler.c.sccharts.processors.CParserProcessor,
+            de.cau.cs.kieler.c.sccharts.processors.CppParserProcessor,
             de.cau.cs.kieler.c.sccharts.processors.DataflowExtractor,
             de.cau.cs.kieler.c.sccharts.processors.StatemachineExtractor,
-            de.cau.cs.kieler.c.sccharts.processors.DataflowExtractorV2
+            de.cau.cs.kieler.c.sccharts.processors.DataflowExtractorV2,
+            de.cau.cs.kieler.c.sccharts.processors.DataflowExtractorV25,
+            de.cau.cs.kieler.c.sccharts.processors.StatemachineCppExtractor,
+            de.cau.cs.kieler.c.sccharts.processors.SCChartASTExtractor
         ]
     }
     
