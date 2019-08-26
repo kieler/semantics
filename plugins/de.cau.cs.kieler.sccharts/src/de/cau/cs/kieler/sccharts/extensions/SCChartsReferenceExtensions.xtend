@@ -25,6 +25,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
 import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
 import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 /**
  * @author ssm
@@ -150,8 +151,14 @@ class SCChartsReferenceExtensions extends KExtReferenceExtensions {
                     ]
                     
                     if (voNameMap.containsKey(vo.name)) {
-                        val sourceVO = voNameMap.get(vo.name)
-                        binding.sourceExpression = sourceVO.reference
+                        binding.sourceExpression = voNameMap.get(vo.name).reference
+                    } else if (vo.declaration.access !== AccessModifier.PUBLIC) {
+                        val privateName = "_" + (vo.declaration.eContainer as Scope).name + "_" + vo.name // FIXME this should be solved via an annotation on the renamed variable
+                        if (voNameMap.containsKey(privateName)) {
+                            binding.sourceExpression = voNameMap.get(privateName).reference
+                        } else {
+                            binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
+                        }
                     } else {
                         binding.addErrorMessage("Valued object in the referenced scope was not bound properly: " + vo.name)
                     }
