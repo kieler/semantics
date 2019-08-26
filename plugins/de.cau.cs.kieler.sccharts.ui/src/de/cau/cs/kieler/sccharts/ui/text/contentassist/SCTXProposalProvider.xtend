@@ -3,10 +3,32 @@
  */
 package de.cau.cs.kieler.sccharts.ui.text.contentassist
 
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.Assignment
+import org.eclipse.xtext.RuleCall
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.extensions.SCChartsInheritanceExtensions
+import com.google.inject.Inject
 
 /**
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#content-assist
  * on how to customize the content assistant.
  */
 class SCTXProposalProvider extends AbstractSCTXProposalProvider {
+    
+    @Inject extension SCChartsInheritanceExtensions
+    
+    override completeControlflowRegion_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+        if (model instanceof Region) {
+            if (model.override) {
+                for (region : model.nextSuperStateWithBaseStates.allVisibleInheritedRegions) {
+                    acceptor.accept(createCompletionProposal(region.name, context))
+                }
+            }
+        }
+        super.completeControlflowRegion_Name(model, assignment, context, acceptor)
+    }
 }
