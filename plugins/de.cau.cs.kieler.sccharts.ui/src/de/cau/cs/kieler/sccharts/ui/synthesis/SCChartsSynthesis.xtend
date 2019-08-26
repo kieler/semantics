@@ -18,6 +18,7 @@ import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.ui.klighd.KiCoDiagramViewProperties
+import de.cau.cs.kieler.klighd.LightDiagramServices
 import de.cau.cs.kieler.klighd.ViewContext
 import de.cau.cs.kieler.klighd.internal.util.SourceModelTrackingAdapter
 import de.cau.cs.kieler.klighd.kgraph.KNode
@@ -30,16 +31,18 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KPolylineExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.syntheses.AbstractDiagramSynthesis
 import de.cau.cs.kieler.klighd.util.KlighdProperties
+import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHooks
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.TransitionStyles
 import java.util.HashMap
 import java.util.LinkedHashSet
 import org.eclipse.elk.alg.force.options.StressOptions
+import org.eclipse.elk.alg.layered.options.LayeredOptions
 import org.eclipse.elk.core.options.CoreOptions
+import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.graph.properties.IProperty
 import org.eclipse.elk.graph.properties.Property
 
@@ -84,6 +87,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
     static val PRAGMA_SYMBOLS_MATH_DOUBLESTRUCK = "math doublestruck"
     static val PRAGMA_FONT = "font"        
     static val PRAGMA_SKINPATH = "skinpath"
+    
+    static val PRAGMA_VISUALIZE_IMPORTED_SCCHARTS = "VisualizeImportedSCCharts"
           
     val ID = "de.cau.cs.kieler.sccharts.ui.synthesis.SCChartsSynthesis"
     
@@ -173,9 +178,30 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 
         if (SHOW_ALL_SCCHARTS.booleanValue) {
             val rootStateNodes = <State, KNode> newHashMap
-            for(rootState : scc.rootStates) {
+            val rootStates = newLinkedHashSet
+            rootStates += scc.rootStates
+            if (sccharts.hasPragma(PRAGMA_VISUALIZE_IMPORTED_SCCHARTS)) {
+                val rs = sccharts.eResource?.resourceSet
+                if (rs !== null) {
+                    for (res : rs.resources.filterNull) {
+                        for (impored : res.contents.filter(SCCharts)) {
+                            rootStates += impored.rootStates
+                        }
+                    }
+                }
+            }
+            for(rootState : rootStates) {
                 hooks.invokeStart(rootState, rootNode)
-                rootStateNodes.put(rootState, stateSynthesis.transform(rootState).head)
+                val synthesizedState = if (SHOW_INHERITANCE.booleanValue && rootStates.size > 1) {
+                    // This is necessary to allow multiple visualizations of the same region in extending states
+                    val properties = new KlighdSynthesisProperties()
+                    properties.copyProperties(usedContext)
+                    properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS, ScopeSynthesis.ID);
+                    LightDiagramServices.translateModel2(rootState, usedContext, properties).viewModel?.children.head
+                } else {
+                    stateSynthesis.transform(rootState).head
+                }
+                rootStateNodes.put(rootState, synthesizedState)
                 rootNode.children += rootStateNodes.get(rootState)
                 
                 // Add tracking adapter to allow access to source model associations
@@ -191,8 +217,10 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
 //                rootNode.configureInterChartCommunication(scc, rootStateNodes)
             }
             if (SHOW_INHERITANCE_EDGES.booleanValue) {
+                rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
                 rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-                for(state : scc.rootStates) {
+                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 25.0)
+                for(state : rootStates) {
                     for (base : state.baseStates) {
                         val edge = createEdge
                         edge.source = rootStateNodes.get(state)
