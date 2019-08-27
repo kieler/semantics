@@ -90,7 +90,7 @@ class AnnotationsExtensions {
     }
 	
 	def boolean hasAnnotation(Annotatable annotatable, String name) {
-	    annotatable.annotations?.exists[it.name !== null && it.name.equalsIgnoreCase(name)]
+	    annotatable?.annotations?.exists[it.name !== null && it.name.equalsIgnoreCase(name)]
 	}
     
     def boolean hasAnnotationCS(Annotatable annotatable, String name) {
