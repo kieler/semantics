@@ -35,4 +35,5 @@ de.cau.cs.kieler.sccharts.processors.history
 	de.cau.cs.kieler.sccharts.processors.entryAction
 	de.cau.cs.kieler.sccharts.processors.connector
 ]
+de.cau.cs.kieler.sccharts.processors.arrayInitialisation
 de.cau.cs.kieler.sccharts.processors.userSchedule
