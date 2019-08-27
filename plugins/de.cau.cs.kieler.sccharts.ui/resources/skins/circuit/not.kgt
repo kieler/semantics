@@ -1,0 +1,25 @@
+knode not {
+	properties: de.cau.cs.kieler.portConstraints = FIXED_ORDER
+	size: width = 20 height = 25
+	krectangle{
+		styles: invisible= true
+		
+		kpolyline{
+			styles: lineWidth = 0.5
+			points: right 2%,top 50%;left,top 2%;left,bottom 2%  ;  right 2%,bottom 50%	
+		}
+	}
+  kport in0 {
+    size: width = 4 height = 2
+    properties: de.cau.cs.kieler.portSide = WEST
+  }
+ 
+  kport out {
+    size: width = 3 height = 3
+    pos:  x = 31
+    properties: org.eclipse.elk.port.borderOffset = -0.5
+    kellipse{
+    	styles: lineWidth = 0.5
+    }
+  }
+}

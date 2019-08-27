@@ -37,6 +37,7 @@ import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 /**
  * @author kolja
@@ -52,6 +53,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension SCChartsSerializeHRExtensions
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflow"
@@ -72,20 +74,22 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     val map = <ValuedObject, ValuedObject>newHashMap
                     val nr = it.createDataflowRegion(scg.name)
                     for (v : scg.variableDeclarations.filter[isSSA]) {
-                        val nv = v.copy
-                        for (var i = 0; i < nv.valuedObjects.length; i++)
-                            map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
-                        nv.valuedObjects.last.name = nv.ssaOrigVO.name
-                        if (nv.input || nv.output)
-                            it.declarations.add(nv)
-                        else
-                            nr.declarations.add(nv)
-                        if (nv.valuedObjects.length > 1) {
-                            val na = nv.valuedObjects.get(0).createAssignment
-                            na.expression = OperatorType.PRE.createOperatorExpression => [
-                                it.subExpressions.add(nv.valuedObjects.last.reference)
-                            ]
-                            nr.equations.add(na)
+                        if (v.valuedObjects.length > 0) {
+                            val nv = v.copy
+                            for (var i = 0; i < nv.valuedObjects.length; i++)
+                                map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
+                            nv.valuedObjects.last.name = nv.ssaOrigVO.name
+                            if (nv.input || nv.output)
+                                it.declarations.add(nv)
+                            else
+                                nr.declarations.add(nv)
+                            if (nv.valuedObjects.length > 1) {
+                                val na = nv.valuedObjects.get(0).createAssignment
+                                na.expression = OperatorType.PRE.createOperatorExpression => [
+                                    it.subExpressions.add(nv.valuedObjects.last.reference)
+                                ]
+                                nr.equations.add(na)
+                            }
                         }
                     }
                     for (n : scg.nodes) {
@@ -96,8 +100,6 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                 ])
             }
         ]
-        sccharts.rootStates
-        setModel(sccharts)
         for (rs : sccharts.rootStates) {
             val dataflowRegion = rs.regions.get(0) as DataflowRegion
             for (dec : rs.declarations) {
@@ -120,19 +122,24 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
             }
         }
         setModel(sccharts)
+
+        println(sccharts.rootStates.get(0).serializeHR)
     }
 
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         for (ref : e.allReferences) {
             if (variableReplacement.containsKey(ref.valuedObject))
                 ref.valuedObject = variableReplacement.get(ref.valuedObject)
+            else
+                print("error")
         }
     }
 
     def transformAssignment(Assignment a, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         if (variableReplacement.containsKey(a.reference.valuedObject)) {
             a.reference.valuedObject = variableReplacement.get(a.reference.valuedObject)
-        }
+        } else
+            print("error")
         a.expression.transformExpression(variableReplacement)
         for (pre : a.eAllContents.toIterable.filter(OperatorExpression).filter[operator == OperatorType.PRE].toList) {
             pre.subExpressions.head.replace(

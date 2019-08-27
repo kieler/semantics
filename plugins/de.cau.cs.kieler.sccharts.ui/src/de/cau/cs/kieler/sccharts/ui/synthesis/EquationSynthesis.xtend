@@ -93,6 +93,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         setCategory(GeneralSynthesisOptions::DATAFLOW)
     public static val SynthesisOption REFERENCED_PORT_LABELS_OUTSIDE = SynthesisOption.createCheckOption("Outside Referenced Port Labels", false).
         setCategory(GeneralSynthesisOptions::DATAFLOW)
+    public static val SynthesisOption CIRCUIT_SKIN = SynthesisOption.createCheckOption("Circuit skin", false).
+        setCategory(GeneralSynthesisOptions::DATAFLOW)
 
     public static final IProperty<Boolean> INLINED_REFERENCE = new Property<Boolean>(
         "de.cau.cs.kieler.sccharts.ui.synthesis.dataflow.inlinedReference", false);        
@@ -159,14 +161,18 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         'InputOutput' -> 'InputOutput.kgt',
         'Local' -> 'Local.kgt',
         EXTERNAL_FUNCTION_KEY -> "OperatorExpressionUnary.kgt",
-        UPDATE_FIGURE_KEY -> "OperatorExpressionUPDATE.kgt"
+        UPDATE_FIGURE_KEY -> "OperatorExpressionUPDATE.kgt",
+        'CircuitAnd' -> "../circuit/and.kgt",
+        'CircuitNot' -> "../circuit/not.kgt",
+        'CircuitOr' -> "../circuit/or.kgt",
+        'CircuitPre' -> "../circuit/pre.kgt"
     }
     
     protected val referenceNodes = <KNode> newHashSet
     
     override getDisplayedSynthesisOptions() {
         val options = newArrayList(AUTOMATIC_INLINE, ALIGN_INPUTS_OUTPUTS, ALIGN_CONSTANTS, SHOW_WIRE_LABELS, 
-            SHOW_EXPRESSION_PORT_LABELS, SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE
+            SHOW_EXPRESSION_PORT_LABELS, SHOW_REFERENCED_PORT_LABELS, REFERENCED_PORT_LABELS_OUTSIDE, CIRCUIT_SKIN
         )
         
         return options
@@ -571,11 +577,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (figureObject instanceof OperatorExpression) {
             switch(figureObject.operator) {
-            case PRE: figureId = if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY 
+            case PRE: figureId = if( CIRCUIT_SKIN.booleanValue ) 'CircuitPre' else if (figureObject.subExpressions.size == 1) UNARY_FIGURE_KEY 
                 else DEFAULT_FIGURE_KEY + figureObject.operator.getName.toString
             case VAL,
             case NE,
-            case NOT: figureId = UNARY_FIGURE_KEY 
+            case NOT: if( CIRCUIT_SKIN.booleanValue ) figureId = 'CircuitNot' else figureId = UNARY_FIGURE_KEY 
             
             case CONDITIONAL: {
                 if (figureObject.subExpressions.size == 2) {
@@ -611,7 +617,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 portLabels.put(0, figureObject.operator.serializeHR.toString)
                 portLabels.put(1, figureObject.operator.serializeHR.toString)
             }
-            
+            case LOGICAL_AND:
+                if( CIRCUIT_SKIN.booleanValue ) figureId = 'CircuitAnd'
+            case LOGICAL_OR:
+                if( CIRCUIT_SKIN.booleanValue ) figureId = 'CircuitOr'
             
             default: {}  
             }
