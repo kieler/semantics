@@ -285,25 +285,6 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
         notify()
     }
 
-    /**
-     * Called on client notification to simulate a snapshot.
-     * Such a snapshot has to be compiled first. Starting of the simulation is done by the registered listener.
-     * TODO uri and command might be obsolete, since this should be saved in the diagramLSExt
-     * @param uri rui of model
-     * @param clientId id of diagram server
-     * @param command compilation system id
-     * @param simulationType should be one of Manual, Periodic, and Dynamic
-     */
-    override simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType) {
-        // Registers itself as compilation listener to continue after compilation is finished.
-        registerObserverOnCompilation(this)
-        // Save data to be used by simulation.
-        this.currentSimulationType = simulationType
-        this.currentUri = uri
-        // Start compilation process.
-        compile(uri, clientId, command, true, false)
-    }
-
     override getName() {
         return this.class.simpleName
     }

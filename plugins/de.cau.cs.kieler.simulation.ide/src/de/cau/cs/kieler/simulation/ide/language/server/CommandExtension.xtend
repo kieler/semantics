@@ -45,7 +45,4 @@ interface CommandExtension {
      */
     @JsonRequest('stop')
     def CompletableFuture<SimulationStoppedMessage> stop()
-    
-    @JsonNotification('simulateCurrentlyOpenedModel')
-    def void simulateCurrentlyOpenedModel(String uri, String clientId, String command, String simulationType)
 }
