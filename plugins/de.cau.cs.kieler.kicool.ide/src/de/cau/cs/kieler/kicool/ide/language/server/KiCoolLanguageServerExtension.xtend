@@ -20,6 +20,7 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.kicool.ide.view.IdeCompilerView
+import de.cau.cs.kieler.klighd.lsp.KGraphDiagramState
 import de.cau.cs.kieler.klighd.lsp.KGraphLanguageServerExtension
 import de.cau.cs.kieler.language.server.ILanguageClientProvider
 import de.cau.cs.kieler.language.server.KeithLanguageClient
@@ -61,6 +62,8 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
 
     @Inject
     extension KGraphLanguageServerExtension
+    
+    @Inject KGraphDiagramState diagramState
 
     extension IdeCompilerView compilerView = new IdeCompilerView
     protected extension ILanguageServerAccess languageServerAccess
@@ -137,9 +140,19 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
     /**
      * Called by the client to compile a model
      */
-    override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel) {
-        val eobject = getEObjectFromUri(uri)
+    override compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot) {
+        var Object eobject
+        if (snapshot) {
+            if (diagramState === null || diagramState.getKGraphContext(uri) === null) {
+                client.compile(null, uri, true, 0, 1000)
+                return
+            }
+            eobject = diagramState.getKGraphContext(uri).inputModel
+        } else {
+            eobject = getEObjectFromUri(uri)
+        }
         if (eobject === null) {
+            client.compile(null, uri, true, 0, 1000)
             return
         }
         val context = createContextAndStartCompilationThread(eobject, command, inplace)
@@ -166,6 +179,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
             showSnapshot(uri, clientId, this.objectMap.get(uri).get(newIndex), cancelIndicator, false)
             currentIndex = newIndex
         }
+        getSystems(uri)
         return
     }
 
@@ -177,7 +191,7 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param inplace whether inplace compilation should be enabled or disabled
      * @return compilation context that was used to create the newly started compilation thread.
      */
-    private def CompilationContext createContextAndStartCompilationThread(EObject eobject, String systemId, boolean inplace) {
+    private def CompilationContext createContextAndStartCompilationThread(Object eobject, String systemId, boolean inplace) {
         val context = Compile.createCompilationContext(systemId, eobject)
         context.startEnvironment.setProperty(Environment.INPLACE, inplace)
         compilationObservers.forEach[observer | context.addObserver(observer)]
@@ -217,11 +231,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param filter Currently unused, CS are filtered on the client.
      * @return completable future of all compilation system descriptions {@code List<SystemDescription}
      */
-    override getSystems(String uri, boolean filter) {
-        val systemDescriptions = getCompilationSystems(uri, -1, false)
-        return requestManager.runRead[ cancelIndicator |
-            systemDescriptions
-        ]
+    override getSystems(String uri) {
+        val systemDescriptions = getCompilationSystems(uri, -1, false, false)
+        val snapshotSystemDescriptions = getCompilationSystems(uri, -1, false, true)
+        client.sendCompilationSystems(systemDescriptions, snapshotSystemDescriptions)
     }
     
     /**
@@ -232,15 +245,17 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param filterForSimulation true if only simulation cs should be returned
      * @return CS specified by the above parameters.
      */
-    def getCompilationSystems(String uri, int index, boolean filterForSimulation) {
+    def getCompilationSystems(String uri, int index, boolean filterForSimulation, boolean snapshotModel) {
         var Object model
-        if (index != -1) {
+        if (snapshotModel && diagramState !== null && diagramState.getKGraphContext(uri) !== null) {
+           model = diagramState.getKGraphContext(uri).inputModel
+        } else if (index != -1) {
             model = this.objectMap.get(uri).get(index)
         } else {
             // get eObject of model specified by uri   
             model = getEObjectFromUri(uri)
         }
-        return getCompilationSystems(model, filterForSimulation)
+        return getCompilationSystems(model, filterForSimulation, snapshotModel)
     }
     
     /**
@@ -250,13 +265,13 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param filterForSimulation true if only simulation cs should be returned
      * @return CS specified by the above parameters.
      */
-    def getCompilationSystems(Object model, boolean filterForSimulation) {
+    def getCompilationSystems(Object model, boolean filterForSimulation, boolean snapshotModel) {
         this.getSystemsThread = new GetSystemsThread([
             if (model !== null && model.class !== modelClassFilter) {
                 modelClassFilter = model.class
             }
             var systems = getSystemModels(true, modelClassFilter)
-            var systemDescriptions = getSystemDescription(systems)
+            var systemDescriptions = getSystemDescription(systems, snapshotModel)
             if (filterForSimulation) {
                 getSystemsThread.systemDescriptions = systemDescriptions.filter[system | system.simulation].toList
             } else {
@@ -266,20 +281,6 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
         this.getSystemsThread.start
         this.getSystemsThread.join()
         return this.getSystemsThread.systemDescriptions
-    }
-    
-    /**
-     * Request to get all simulation systems for a model given by uri and index.
-     * 
-     * @param uri uri of model
-     * @param index index of snapshot to get systems for
-     * @return completable future of all simulation compilation systems for specified model
-     */
-    override getSimulationSystemsForModel(String uri, int index) {
-        val systemDescriptions = getCompilationSystems(uri, index, true)
-        return requestManager.runRead[ cancelIndicator |
-            systemDescriptions
-        ]
     }
 
     /**
@@ -318,10 +319,10 @@ class KiCoolLanguageServerExtension implements ILanguageServerExtension, Command
      * @param systems list of compilation systems
      * @return list of system description usable by Theia client
      */
-    def List<SystemDescription> getSystemDescription(List<System> systems) {
+    def List<SystemDescription> getSystemDescription(List<System> systems, boolean snapshotModel) {
         var systemDescription = newLinkedList
         for (system : systems) {
-            systemDescription.add(new SystemDescription(system.label, system.id, system.public, system.simulation))
+            systemDescription.add(new SystemDescription(system.label, system.id, system.public, system.simulation, snapshotModel))
         }
         return systemDescription
     }

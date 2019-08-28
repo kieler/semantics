@@ -16,6 +16,7 @@ import com.google.gson.JsonObject
 import org.eclipse.lsp4j.jsonrpc.services.JsonNotification
 import org.eclipse.lsp4j.jsonrpc.services.JsonSegment
 import org.eclipse.lsp4j.services.LanguageClient
+import java.util.List
 
 /**
  * LanguageClient that implements additional methods necessary for server client communication in KEITH.
@@ -26,12 +27,20 @@ import org.eclipse.lsp4j.services.LanguageClient
  */
  @JsonSegment("keith")
 interface KeithLanguageClient extends LanguageClient {
-    
+    /**
+     * The result object should have the type de.cau.cs.kieler.kicool.ide.language.server.CompilationResults
+     */
     @JsonNotification("kicool/compile")
     def void compile(Object results, String uri, boolean finished, int currentIndex, int maxIndex);
     
     @JsonNotification("kicool/cancel-compilation")
     def void cancelCompilation(boolean success);
+    
+    /**
+     * Both objects should be List<de.cau.cs.kieler.kicool.ide.language.server.SystemDescription>
+     */
+    @JsonNotification("kicool/compilation-systems")
+    def void sendCompilationSystems(Object systems, Object snapshotSystems)
     
     /**
      * Send to client if not the client itself invoked the simulation step.
