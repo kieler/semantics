@@ -219,7 +219,8 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             if (SHOW_INHERITANCE_EDGES.booleanValue) {
                 rootNode.setLayoutOption(CoreOptions::DIRECTION, Direction.UP)
                 rootNode.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 20.0)
-                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 25.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_EDGE_NODE_BETWEEN_LAYERS, 28.0)
+                rootNode.setLayoutOption(LayeredOptions::SPACING_NODE_NODE_BETWEEN_LAYERS, 28.0)
                 for(state : rootStates) {
                     for (base : state.baseStates) {
                         val edge = createEdge
