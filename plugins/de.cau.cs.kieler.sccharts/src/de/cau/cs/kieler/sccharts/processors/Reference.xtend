@@ -338,7 +338,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                 state.replaceValuedObjectReferences(replacements)
             }
         } else if (region instanceof DataflowRegion) {
-            for (equation: region.equations.immutableCopy) {
+            for (equation: region.effects.immutableCopy) {
                 equation.replaceReferences(replacements)   
             }
         }

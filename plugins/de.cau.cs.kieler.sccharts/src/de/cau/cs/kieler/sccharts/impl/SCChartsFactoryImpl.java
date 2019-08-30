@@ -282,6 +282,7 @@ public class SCChartsFactoryImpl extends EFactoryImpl implements SCChartsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public CodeEffect createCodeEffect() {
         CodeEffectImpl codeEffect = new CodeEffectImpl();
         return codeEffect;

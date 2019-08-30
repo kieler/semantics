@@ -13,26 +13,27 @@
 package de.cau.cs.kieler.sccharts.ui.simulation
 
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
-import de.cau.cs.kieler.klighd.kgraph.KEdge
-import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.klighd.krendering.KText
-import de.cau.cs.kieler.klighd.krendering.KRectangle
-import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
-import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
+import de.cau.cs.kieler.klighd.kgraph.KEdge
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.ZoomStyle
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.klighd.krendering.KRectangle
+import de.cau.cs.kieler.klighd.krendering.KText
+import de.cau.cs.kieler.sccharts.DataflowRegion
+import de.cau.cs.kieler.sccharts.SCCharts
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.text.SCTXStandaloneSetup
+import de.cau.cs.kieler.sccharts.ui.synthesis.Wiring
 import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 
 /**
  * FIXME This class is instantiated via bundle start!
@@ -124,7 +125,7 @@ class SCChartsDiagramLiveValues extends DiagramHighlighter {
             
             if (scope instanceof DataflowRegion) {
                 val wiring = SCTXInjector.getInstance(Wiring)
-                wiring.createWires(scope.equations)
+                wiring.createWires(scope.effects.filter(Assignment).toList)
                 for (wire : wiring.wires) {    
                     if (wire.source instanceof ValuedObjectReference) {
                         val elements = diagramViewContext.getTargetElements(wire.source).filter(KNode)

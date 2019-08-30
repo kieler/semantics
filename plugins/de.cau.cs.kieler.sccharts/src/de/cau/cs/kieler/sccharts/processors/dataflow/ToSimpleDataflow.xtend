@@ -86,7 +86,7 @@ class ToSimpleDataflow extends SCChartsProcessor {
         val t = state.outgoingTransitions.head
         val a = t.effects.head as Assignment
         
-        dfr.equations += a 
+        dfr.effects += a 
     }
     
     protected def processConditional(State state, DataflowRegion dfr) {
@@ -98,7 +98,7 @@ class ToSimpleDataflow extends SCChartsProcessor {
         val asgn = aThen.valuedObject
         // TODO: check if asgn is the same for both tansitions
         
-        dfr.equations += createAssignment => [
+        dfr.effects += createAssignment => [
             reference = asgn.reference
             expression = createConditionalExpression(tThen.trigger, aThen.expression, aElse.expression)
         ]  

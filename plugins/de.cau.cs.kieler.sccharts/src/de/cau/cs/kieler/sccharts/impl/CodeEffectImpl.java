@@ -147,6 +147,7 @@ public class CodeEffectImpl extends AnnotatableImpl implements CodeEffect {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ScheduleObjectReference> getSchedule() {
         if (schedule == null) {
             schedule = new EObjectContainmentEList<ScheduleObjectReference>(ScheduleObjectReference.class, this, SCChartsPackage.CODE_EFFECT__SCHEDULE);
@@ -159,6 +160,7 @@ public class CodeEffectImpl extends AnnotatableImpl implements CodeEffect {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getOutgoingLinks() {
         if (outgoingLinks == null) {
             outgoingLinks = new EObjectContainmentEList<Link>(Link.class, this, SCChartsPackage.CODE_EFFECT__OUTGOING_LINKS);
@@ -171,6 +173,7 @@ public class CodeEffectImpl extends AnnotatableImpl implements CodeEffect {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Link> getIncomingLinks() {
         if (incomingLinks == null) {
             incomingLinks = new EObjectWithInverseResolvingEList<Link>(Link.class, this, SCChartsPackage.CODE_EFFECT__INCOMING_LINKS, KEffectsPackage.LINK__TARGET);
@@ -183,6 +186,7 @@ public class CodeEffectImpl extends AnnotatableImpl implements CodeEffect {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Declaration> getDeclarations() {
         if (declarations == null) {
             declarations = new EObjectContainmentEList<Declaration>(Declaration.class, this, SCChartsPackage.CODE_EFFECT__DECLARATIONS);
@@ -195,6 +199,7 @@ public class CodeEffectImpl extends AnnotatableImpl implements CodeEffect {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, SCChartsPackage.CODE_EFFECT__STATEMENTS);

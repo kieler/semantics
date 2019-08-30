@@ -44,7 +44,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
         
         var assignment = getAssignmentForEquation(equation, state)
         if (assignment !== null) {
-            dataflowRegion.equations += assignment
+            dataflowRegion.effects += assignment
         }
     }   
     

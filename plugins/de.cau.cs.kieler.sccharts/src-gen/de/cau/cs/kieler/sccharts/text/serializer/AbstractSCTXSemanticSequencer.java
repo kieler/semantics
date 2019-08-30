@@ -183,7 +183,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_Assignment(context, (Assignment) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()
+				else if (rule == grammarAccess.getDataflowRegionEffectsRule()
+						|| rule == grammarAccess.getEffectRule()
 						|| rule == grammarAccess.getKEffectsEffectRule()) {
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
@@ -202,7 +203,8 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 					sequence_PureEmission(context, (Emission) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getEffectRule()
+				else if (rule == grammarAccess.getDataflowRegionEffectsRule()
+						|| rule == grammarAccess.getEffectRule()
 						|| rule == grammarAccess.getKEffectsEffectRule()
 						|| rule == grammarAccess.getPureOrValuedEmissionRule()) {
 					sequence_PureEmission_ValuedEmission(context, (Emission) semanticObject); 
@@ -1675,7 +1677,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *         (counterVariable=CounterVariable forStart=IntOrReference forEnd=IntOrReference?)? 
 	 *         schedule+=ScheduleObjectReference* 
 	 *         once?='once'? 
-	 *         ((declarations+=DeclarationWOSemicolon* equations+=Assignment*) | (declarations+=DeclarationWOSemicolon* equations+=Assignment*))
+	 *         (
+	 *             (declarations+=DeclarationWOSemicolon* effects+=DataflowRegionEffects*) | 
+	 *             (declarations+=DeclarationWOSemicolon* effects+=DataflowRegionEffects*)
+	 *         )
 	 *     )
 	 */
 	protected void sequence_DataflowRegion(ISerializationContext context, DataflowRegion semanticObject) {

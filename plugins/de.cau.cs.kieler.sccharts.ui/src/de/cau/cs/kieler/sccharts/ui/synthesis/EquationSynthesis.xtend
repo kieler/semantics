@@ -13,60 +13,61 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
+import com.google.inject.Injector
+import de.cau.cs.kieler.annotations.Annotatable
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
+import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
+import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
+import de.cau.cs.kieler.klighd.KlighdConstants
+import de.cau.cs.kieler.klighd.SynthesisOption
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KLabel
+import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.klighd.kgraph.KPort
+import de.cau.cs.kieler.klighd.krendering.KPolygon
+import de.cau.cs.kieler.klighd.krendering.KRendering
+import de.cau.cs.kieler.klighd.krendering.KText
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
 import de.cau.cs.kieler.klighd.krendering.extensions.KEdgeExtensions
 import de.cau.cs.kieler.klighd.krendering.extensions.KLabelExtensions
+import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
+import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.Scope
+import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.EquationStyles
+import java.util.EnumSet
 import java.util.List
-import java.util.Set
+import org.eclipse.elk.alg.layered.options.LayerConstraint
 import org.eclipse.elk.alg.layered.options.LayeredOptions
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
+import org.eclipse.elk.core.math.ElkPadding
+import org.eclipse.elk.core.options.Alignment
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.PortConstraints
 import org.eclipse.elk.core.options.PortLabelPlacement
 import org.eclipse.elk.core.options.PortSide
+import org.eclipse.elk.core.options.SizeConstraint
+import org.eclipse.elk.graph.properties.IProperty
+import org.eclipse.elk.graph.properties.Property
+import org.eclipse.emf.common.util.URI
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.resource.XtextResource
+import org.eclipse.xtext.resource.XtextResourceSet
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.klighd.kgraph.KPort
-import org.eclipse.elk.core.math.ElkPadding
-import de.cau.cs.kieler.klighd.SynthesisOption
-import de.cau.cs.kieler.klighd.KlighdConstants
-import org.eclipse.xtext.xbase.lib.Functions.Function1
-import com.google.inject.Injector
-import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
-import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
-import de.cau.cs.kieler.klighd.util.KlighdProperties
-import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
-import de.cau.cs.kieler.annotations.Annotatable
-import de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis
-import org.eclipse.xtext.resource.XtextResource
-import org.eclipse.xtext.resource.XtextResourceSet
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import org.eclipse.emf.ecore.EObject
-import java.util.EnumSet
-import org.eclipse.elk.core.options.SizeConstraint
-import de.cau.cs.kieler.klighd.kgraph.KLabel
-import de.cau.cs.kieler.klighd.kgraph.KLabeledGraphElement
-import de.cau.cs.kieler.kexpressions.OperatorType
-import org.eclipse.elk.alg.layered.options.LayerConstraint
-import de.cau.cs.kieler.kexpressions.Value
-import org.eclipse.elk.core.options.Alignment
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
-import de.cau.cs.kieler.sccharts.State
-import org.eclipse.elk.graph.properties.IProperty
-import org.eclipse.elk.graph.properties.Property
-import de.cau.cs.kieler.klighd.krendering.KPolygon
-import de.cau.cs.kieler.klighd.krendering.KText
 
 /**
  * @author ssm
@@ -522,7 +523,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val kgt = path + if (!path.endsWith("/")) "/" + annotationObject.getStringAnnotationValue(ANNOTATION_FIGURE) 
         val sl = eObject.eResource.URI.segmentsList
         val nsl = sl.take(sl.length - 1).drop(1)
-        val newURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
+        val newURI = URI.createPlatformResourceURI(nsl.join("/") + "/" + kgt, false)
 
         val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
         newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
@@ -723,7 +724,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //                child.setLayoutOption(CoreOptions::SPACING_NODE_NODE, 10d); //10.5 // 8f
 //                child.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d))
 //                child.addLayoutParam(LayeredOptions::SPACING_PORT_PORT, 20d)
-                child.data.filter(de.cau.cs.kieler.klighd.krendering.KRendering).forEach[
+                child.data.filter(KRendering).forEach[
                     placementData = null
                 ]
                 

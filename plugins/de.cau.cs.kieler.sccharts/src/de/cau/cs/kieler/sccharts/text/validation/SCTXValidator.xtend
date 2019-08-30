@@ -896,11 +896,11 @@ class SCTXValidator extends AbstractSCTXValidator {
     
     @Check(CheckType.NORMAL)
     def void checkDataflowVectorAssignment(DataflowRegion dataflowRegion) {
-        for(equation : dataflowRegion.equations) {
-            val reference = equation.reference
+        for(equation : dataflowRegion.effects.filter[it instanceof Assignment]) {
+            val reference = (equation as Assignment).reference
             if (reference instanceof ValuedObjectReference) {
                 if (reference.valuedObject.declaration instanceof ReferenceDeclaration) {
-                    if (reference.subReference === null && !(equation.expression instanceof VectorValue)) {
+                    if (reference.subReference === null && !((equation as Assignment).expression instanceof VectorValue)) {
                         error("You are assigning a scalar value to a reference. You should specify the input variable of the reference or use a vector value instead of a scalar.",
                             equation, null)
                     }

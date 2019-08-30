@@ -580,7 +580,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * @generated
      */
     @Override
-    public EReference getDataflowRegion_Equations() {
+    public EReference getDataflowRegion_Effects() {
         return (EReference)dataflowRegionEClass.getEStructuralFeatures().get(0);
     }
 
@@ -859,6 +859,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getCodeEffect() {
         return codeEffectEClass;
     }
@@ -999,7 +1000,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         createEAttribute(controlflowRegionEClass, CONTROLFLOW_REGION__FINAL);
 
         dataflowRegionEClass = createEClass(DATAFLOW_REGION);
-        createEReference(dataflowRegionEClass, DATAFLOW_REGION__EQUATIONS);
+        createEReference(dataflowRegionEClass, DATAFLOW_REGION__EFFECTS);
         createEAttribute(dataflowRegionEClass, DATAFLOW_REGION__ONCE);
 
         transitionEClass = createEClass(TRANSITION);
@@ -1149,7 +1150,7 @@ public class SCChartsPackageImpl extends EPackageImpl implements SCChartsPackage
         initEAttribute(getControlflowRegion_Final(), ecorePackage.getEBoolean(), "final", null, 0, 1, ControlflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(dataflowRegionEClass, DataflowRegion.class, "DataflowRegion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-        initEReference(getDataflowRegion_Equations(), theKEffectsPackage.getAssignment(), null, "equations", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getDataflowRegion_Effects(), theKEffectsPackage.getEffect(), null, "effects", null, 0, -1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
         initEAttribute(getDataflowRegion_Once(), ecorePackage.getEBoolean(), "once", null, 1, 1, DataflowRegion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

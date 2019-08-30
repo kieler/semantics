@@ -157,13 +157,25 @@ DataflowRegion returns sccharts::DataflowRegion:
     ((
         '{'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        effects+=DataflowRegionEffects*
         '}'
     )|(
         ':'
         declarations+=DeclarationWOSemicolon*
-        equations+=Assignment*
+        effects+=DataflowRegionEffects*
     ));
+    
+DataflowRegionEffects returns keffects::Effect:
+    Assignment | 
+    PostfixEffect | 
+    'emit' ValuedEmission |
+//    HostcodeEffect | 
+//    ReferenceCallEffect |
+//    FunctionCallEffect |
+//    PrintCallEffect |
+//    RandomizeCallEffect |
+    'emit' PureEmission
+;
     
 IntOrReference returns kexpressions::Expression:
     IntValue | ValuedObjectReference;

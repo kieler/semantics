@@ -1125,13 +1125,13 @@ public interface SCChartsPackage extends EPackage {
     int DATAFLOW_REGION__OVERRIDE = REGION__OVERRIDE;
 
     /**
-     * The feature id for the '<em><b>Equations</b></em>' containment reference list.
+     * The feature id for the '<em><b>Effects</b></em>' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DATAFLOW_REGION__EQUATIONS = REGION_FEATURE_COUNT + 0;
+    int DATAFLOW_REGION__EFFECTS = REGION_FEATURE_COUNT + 0;
 
     /**
      * The feature id for the '<em><b>Once</b></em>' attribute.
@@ -2946,15 +2946,15 @@ public interface SCChartsPackage extends EPackage {
     EClass getDataflowRegion();
 
     /**
-     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getEquations <em>Equations</em>}'.
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.sccharts.DataflowRegion#getEffects <em>Effects</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the containment reference list '<em>Equations</em>'.
-     * @see de.cau.cs.kieler.sccharts.DataflowRegion#getEquations()
+     * @return the meta object for the containment reference list '<em>Effects</em>'.
+     * @see de.cau.cs.kieler.sccharts.DataflowRegion#getEffects()
      * @see #getDataflowRegion()
      * @generated
      */
-    EReference getDataflowRegion_Equations();
+    EReference getDataflowRegion_Effects();
 
     /**
      * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sccharts.DataflowRegion#isOnce <em>Once</em>}'.
@@ -3548,12 +3548,12 @@ public interface SCChartsPackage extends EPackage {
         EClass DATAFLOW_REGION = eINSTANCE.getDataflowRegion();
 
         /**
-         * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
+         * The meta object literal for the '<em><b>Effects</b></em>' containment reference list feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EReference DATAFLOW_REGION__EQUATIONS = eINSTANCE.getDataflowRegion_Equations();
+        EReference DATAFLOW_REGION__EFFECTS = eINSTANCE.getDataflowRegion_Effects();
 
         /**
          * The meta object literal for the '<em><b>Once</b></em>' attribute feature.

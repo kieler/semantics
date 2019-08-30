@@ -242,7 +242,7 @@ class SCTXFormatter extends KExtFormatter {
             lastObject = idxAction.value
         }
         
-        for (asm : dataflowregion.equations) {
+        for (asm : dataflowregion.effects) {
             asm.prepend[ setNewLines(2) highPriority ]
             format(asm, document);
         }        

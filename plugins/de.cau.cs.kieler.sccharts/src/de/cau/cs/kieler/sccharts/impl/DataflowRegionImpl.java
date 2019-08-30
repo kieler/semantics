@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.sccharts.impl;
 
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.sccharts.DataflowRegion;
 import de.cau.cs.kieler.sccharts.SCChartsPackage;
 
@@ -39,7 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#getEffects <em>Effects</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sccharts.impl.DataflowRegionImpl#isOnce <em>Once</em>}</li>
  * </ul>
  *
@@ -54,16 +54,16 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
 	public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\r\n\r\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\r\n\r\nCopyright 2013 by\r\n+ Kiel University\r\n  + Department of Computer Science\r\n    + Real-Time and Embedded Systems Group\r\n\r\nThis code is provided under the terms of the Eclipse Public License (EPL).\r\nSee the file epl-v10.html for the license text.";
 
 				/**
-     * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
+     * The cached value of the '{@link #getEffects() <em>Effects</em>}' containment reference list.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getEquations()
+     * @see #getEffects()
      * @generated
      * @ordered
      */
-    protected EList<Assignment> equations;
+    protected EList<Effect> effects;
 
-				/**
+                /**
      * The default value of the '{@link #isOnce() <em>Once</em>}' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -108,11 +108,11 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
      * @generated
      */
     @Override
-    public EList<Assignment> getEquations() {
-        if (equations == null) {
-            equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, SCChartsPackage.DATAFLOW_REGION__EQUATIONS);
+    public EList<Effect> getEffects() {
+        if (effects == null) {
+            effects = new EObjectContainmentEList<Effect>(Effect.class, this, SCChartsPackage.DATAFLOW_REGION__EFFECTS);
         }
-        return equations;
+        return effects;
     }
 
     /**
@@ -146,8 +146,8 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
-                return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
+            case SCChartsPackage.DATAFLOW_REGION__EFFECTS:
+                return ((InternalEList<?>)getEffects()).basicRemove(otherEnd, msgs);
         }
         return super.eInverseRemove(otherEnd, featureID, msgs);
     }
@@ -160,8 +160,8 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
-                return getEquations();
+            case SCChartsPackage.DATAFLOW_REGION__EFFECTS:
+                return getEffects();
             case SCChartsPackage.DATAFLOW_REGION__ONCE:
                 return isOnce();
         }
@@ -177,9 +177,9 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     public void eSet(int featureID, Object newValue) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
-                getEquations().clear();
-                getEquations().addAll((Collection<? extends Assignment>)newValue);
+            case SCChartsPackage.DATAFLOW_REGION__EFFECTS:
+                getEffects().clear();
+                getEffects().addAll((Collection<? extends Effect>)newValue);
                 return;
             case SCChartsPackage.DATAFLOW_REGION__ONCE:
                 setOnce((Boolean)newValue);
@@ -196,8 +196,8 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     public void eUnset(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
-                getEquations().clear();
+            case SCChartsPackage.DATAFLOW_REGION__EFFECTS:
+                getEffects().clear();
                 return;
             case SCChartsPackage.DATAFLOW_REGION__ONCE:
                 setOnce(ONCE_EDEFAULT);
@@ -214,8 +214,8 @@ public class DataflowRegionImpl extends RegionImpl implements DataflowRegion {
     @Override
     public boolean eIsSet(int featureID) {
         switch (featureID) {
-            case SCChartsPackage.DATAFLOW_REGION__EQUATIONS:
-                return equations != null && !equations.isEmpty();
+            case SCChartsPackage.DATAFLOW_REGION__EFFECTS:
+                return effects != null && !effects.isEmpty();
             case SCChartsPackage.DATAFLOW_REGION__ONCE:
                 return once != ONCE_EDEFAULT;
         }
