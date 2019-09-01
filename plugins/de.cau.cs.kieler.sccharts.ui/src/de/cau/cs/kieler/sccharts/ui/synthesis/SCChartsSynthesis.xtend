@@ -111,6 +111,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_INHERITANCE,
             SHOW_INHERITANCE_EDGES,
             SHOW_BINDINGS,
+            SHOW_METHOD_BODY,
             SHOW_COMMENTS,
             SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW
