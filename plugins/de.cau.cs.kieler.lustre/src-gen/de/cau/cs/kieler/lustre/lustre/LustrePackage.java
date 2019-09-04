@@ -1444,6 +1444,15 @@ public interface LustrePackage extends EPackage
   int STATE_VALUED_OBJECT__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
 
   /**
+   * The feature id for the '<em><b>Label</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATE_VALUED_OBJECT__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+  /**
    * The number of structural features of the '<em>State Valued Object</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

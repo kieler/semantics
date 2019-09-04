@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-'!'=127
-=======
-'!'=123
->>>>>>> master
+'!'=128
 '#'=31
 '&'=37
 '('=91
@@ -30,21 +26,12 @@
 '>='=63
 '>>'=44
 '>>>'=45
-<<<<<<< HEAD
-'@'=119
+'@'=120
 '['=111
-'\''=116
+'\''=117
 ']'=112
 '^'=35
-'_'=117
-=======
-'@'=116
-'['=107
-'\''=113
-']'=108
-'^'=35
-'_'=114
->>>>>>> master
+'_'=118
 'and'=20
 'assert'=99
 'automaton'=100
@@ -55,10 +42,6 @@
 'commuting'=66
 'conflicting'=65
 'const'=85
-<<<<<<< HEAD
-=======
-'continue'=118
->>>>>>> master
 'current'=24
 'div'=29
 'do'=103
@@ -74,14 +57,10 @@
 'host'=46
 'if'=30
 'include'=78
-<<<<<<< HEAD
-'initial'=120
-'input'=123
-=======
-'input'=119
->>>>>>> master
+'initial'=121
+'input'=124
 'int'=58
-'label'=110
+'label'=114
 'let'=96
 'max'=70
 'min'=71
@@ -92,57 +71,33 @@
 'none'=69
 'nor'=32
 'not'=21
-<<<<<<< HEAD
-'null'=118
+'null'=119
 'or'=19
-'output'=124
+'output'=125
 'package'=90
 'pre'=33
-'print'=114
-=======
-'null'=115
-'or'=19
-'output'=120
-'package'=90
-'pre'=33
-'print'=111
->>>>>>> master
+'print'=115
 'private'=74
 'protected'=73
 'provides'=84
 'public'=72
-<<<<<<< HEAD
-'randomize'=115
-=======
-'randomize'=112
->>>>>>> master
+'randomize'=116
 'real'=59
 'ref'=109
 'restart'=55
-'resume'=122
+'resume'=123
 'returns'=89
-<<<<<<< HEAD
 'schedule'=108
 'scope'=106
-'signal'=126
+'signal'=127
 'state'=102
-'static'=125
-=======
-'schedule'=104
-'scope'=102
-'signal'=122
-'static'=121
->>>>>>> master
+'static'=126
 'string'=77
 'struct'=47
 'tel'=97
 'then'=104
 'type'=87
-<<<<<<< HEAD
-'unless'=121
-=======
-'unless'=117
->>>>>>> master
+'unless'=122
 'unsafe'=88
 'until'=54
 'uses'=83
@@ -192,13 +147,11 @@ T__120=120
 T__121=121
 T__122=122
 T__123=123
-<<<<<<< HEAD
 T__124=124
 T__125=125
 T__126=126
 T__127=127
-=======
->>>>>>> master
+T__128=128
 T__17=17
 T__18=18
 T__19=19
