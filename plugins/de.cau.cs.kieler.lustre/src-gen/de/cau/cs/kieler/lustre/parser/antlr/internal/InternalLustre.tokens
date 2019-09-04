@@ -1,9 +1,16 @@
+<<<<<<< HEAD
 '!'=91
 '#'=94
 '&'=86
+=======
+'!'=88
+'#'=91
+'&'=83
+>>>>>>> master
 '('=37
 '()'=68
 ')'=38
+<<<<<<< HEAD
 '*'=57
 '+'=88
 '++'=111
@@ -11,11 +18,21 @@
 '-'=89
 '--'=112
 '->'=107
+=======
+'*'=54
+'+'=85
+'++'=108
+','=20
+'-'=86
+'--'=109
+'->'=49
+>>>>>>> master
 '.'=45
 '..'=48
 '/'=58
 ':'=27
 ';'=21
+<<<<<<< HEAD
 '<'=100
 '<<'=33
 '<='=101
@@ -93,6 +110,82 @@
 'static'=76
 'string'=127
 'struct'=117
+=======
+'<'=97
+'<<'=33
+'<='=98
+'<>'=101
+'='=28
+'=>'=60
+'>'=99
+'>='=100
+'>>'=34
+'>>>'=84
+'@'=92
+'['=77
+'\''=87
+']'=78
+'^'=65
+'_'=89
+'and'=63
+'assert'=46
+'automaton'=47
+'body'=24
+'bool'=93
+'class'=114
+'combine'=79
+'commuting'=107
+'conflicting'=106
+'const'=26
+'continue'=53
+'current'=103
+'div'=57
+'else'=59
+'end'=25
+'enum'=96
+'expression'=68
+'extern'=41
+'fby'=58
+'float'=122
+'function'=32
+'global'=71
+'host'=74
+'if'=104
+'include'=17
+'input'=69
+'int'=94
+'label'=80
+'let'=43
+'max'=116
+'min'=117
+'mod'=56
+'model'=18
+'needs'=22
+'node'=31
+'none'=115
+'nor'=105
+'not'=102
+'null'=90
+'or'=62
+'output'=70
+'package'=36
+'pre'=110
+'print'=81
+'private'=120
+'protected'=119
+'provides'=23
+'public'=118
+'randomize'=82
+'real'=95
+'ref'=76
+'returns'=35
+'schedule'=75
+'scope'=67
+'signal'=73
+'static'=72
+'string'=123
+'struct'=113
+>>>>>>> master
 'tel'=44
 'then'=62
 'type'=29
@@ -100,15 +193,27 @@
 'unsafe'=30
 'until'=51
 'uses'=19
+<<<<<<< HEAD
 'val'=116
 'var'=42
 'void'=125
 'when'=70
 'xor'=65
+=======
+'val'=112
+'var'=42
+'void'=121
+'when'=66
+'xor'=61
+>>>>>>> master
 '{'=39
 '|'=115
 '}'=40
+<<<<<<< HEAD
 '~'=114
+=======
+'~'=111
+>>>>>>> master
 RULE_ANY_OTHER=16
 RULE_BOOLEAN=9
 RULE_COMMENT_ANNOTATION=10
@@ -146,10 +251,13 @@ T__120=120
 T__121=121
 T__122=122
 T__123=123
+<<<<<<< HEAD
 T__124=124
 T__125=125
 T__126=126
 T__127=127
+=======
+>>>>>>> master
 T__17=17
 T__18=18
 T__19=19

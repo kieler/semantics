@@ -1932,6 +1932,10 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCombineKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cCombineOperatorAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_4_1_0 = (RuleCall)cCombineOperatorAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLabelKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//// Valued Object Rule
 		//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
@@ -1940,11 +1944,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObject kexpressions::ValuedObject:
 		//	annotations+=QuotedStringAnnotation*
 		//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-		//	combineOperator=CombineOperator)?;
+		//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=QuotedStringAnnotation* name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)?
-		//('combine' combineOperator=CombineOperator)?
+		//('combine' combineOperator=CombineOperator)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=QuotedStringAnnotation*
@@ -1997,6 +2001,18 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CombineOperator
 		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_4_1_0() { return cCombineOperatorCombineOperatorEnumRuleCall_4_1_0; }
+		
+		//('label' label=STRING)?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'label'
+		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
+		
+		//label=STRING
+		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
+		
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class SimpleValuedObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.SimpleValuedObject");
@@ -2505,7 +2521,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return pValuedObject;
 	}

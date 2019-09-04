@@ -30,7 +30,8 @@ class DynamicTicks {
     public static val TAG = "dynamic-ticks"
     public static val SLEEP_T = "sleepT"
     public static val DELTA_T = "deltaT"
-    public static val TYPE = "float"
+    public static val FLOAT_TYPE = "float"
+    public static val INT_TYPE = "int"
     
     // Current time format: seconds in float
     
