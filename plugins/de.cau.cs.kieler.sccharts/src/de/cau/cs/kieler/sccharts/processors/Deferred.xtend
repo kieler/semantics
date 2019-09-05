@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -14,40 +14,30 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import java.util.List
-import org.eclipse.emf.ecore.EObject
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.sccharts.Region
+import de.cau.cs.kieler.sccharts.ControlflowRegion
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 
 /**
- * SCCharts Deferred Transformation.
+ * @author kolja
  * 
- * @author cmot
- * @kieler.design 2013-09-05 proposed 
- * @kieler.rating 2013-09-05 proposed yellow
  */
-class Deferred extends SCChartsProcessor implements Traceable {
-
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+class DeferredNewState extends SCChartsProcessor implements Traceable {
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
-        "de.cau.cs.kieler.sccharts.processors.deferred"
+        "de.cau.cs.kieler.sccharts.processors.deferredNewState"
     }
-    
+
     override getName() {
         "Deferred"
     }
@@ -56,105 +46,91 @@ class Deferred extends SCChartsProcessor implements Traceable {
         setModel(model.transform)
     }
 
-
-    //-------------------------------------------------------------------------
-    @Inject extension KExpressionsCreateExtensions
-    @Inject extension KExpressionsComplexCreateExtensions
-    @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KEffectsExtensions
-    @Inject extension KExtDeclarationExtensions
+    // -------------------------------------------------------------------------
     @Inject extension SCChartsScopeExtensions
     @Inject extension SCChartsActionExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
-    static public final String GENERATED_PREFIX = "_"
-    
-    //-------------------------------------------------------------------------
-    //--             D E F E R R E D     T R A N S I T I O N                 --
-    //-------------------------------------------------------------------------
-    // Add a new deferVariable to the outer state, set it initially to false and
-    // add a during action in the state to reset it to FALSE.
-    // For all incoming deferred transitions, reset the defer flag and add an assignment
-    // setting the deferVariable to true when entering the state. 
-    // Prevent any immediate internal behavior of the state and any immediate outgoing
-    // transition in case deferVariable is set to TRUE, i.e., the state was entered
-    // by a deferred transition.
+    static public final String GENERATED_PREFIX = "_deferred_"
+
+    // ---------------------------------------------------------------------------------------------
+    // --             D E F E R R E D    N E W    S T A T E   T R A N S I T I O N                 --
+    // ---------------------------------------------------------------------------------------------
+    // For all deferred transitions T from S1 to S2, create a new State _S2
+    // copy behavior of S2 to _S2 and copy all outgoing transitions from S2 to _S2 
+    // and make all outgoing transitions of _S2 delayed
     def State transform(State rootState) {
         // Traverse all states
-        rootState.allStates.forEach [ targetTransition |
-            targetTransition.transformDeferredState;
-        ]
+        rootState.allContainedTransitions.forEach[transition|transition.transformDeferred]
         rootState
     }
 
-    def void transformDeferredState(State state) {
-        val incomingDeferredTransitions = state.incomingTransitions.filter[deferred].toList;
-        val incomingNonDeferredTransitions = state.incomingTransitions.filter[!deferred].toList;
+    def SCCharts transform(SCCharts sccharts) {
+        sccharts => [rootStates.forEach[transform]]
+    }
 
-        // If there are any such transitions 
-        if (!incomingDeferredTransitions.nullOrEmpty) {
-            if(isTracingActive){
-                val List<EObject> sources = newLinkedList()
-                sources.addAll(state.incomingTransitions.filter[deferred])
-                sources.add(state)
-                sources.setDefaultTrace
-            }
-            // Add a new deferVariable to the outer state, set it initially to FALSE and
-            // add a during action in the state to reset it to FALSE
-            val deferVariable = state.parentRegion.parentState.createValuedObject(GENERATED_PREFIX + "deferred", createBoolDeclaration).uniqueName
-            voStore.update(deferVariable, SCCHARTS_GENERATED)
-            deferVariable.setInitialValue(FALSE)
-            val resetDeferSignalAction = state.createDuringAction
-            resetDeferSignalAction.addEffect(deferVariable.createAssignment(FALSE))
+    def void transformDeferred(Transition transition) {
+        if (transition.deferred) {
 
-            // For all incoming deferred transitions, reset the defer flag and add an assignment
-            // setting the deferVariable to true when entering the state 
-            for (transition : incomingDeferredTransitions) {
-                transition.setDeferred(false)
-                transition.addEffect(deferVariable.createAssignment(TRUE)).trace(state, transition)
-            }
-            // Set all others to false explicitly (just to make sure in case the superstate was strongly immediate aborted)
-            for (transition : incomingNonDeferredTransitions) {
-                transition.addEffect(deferVariable.createAssignment(FALSE)).trace(state, transition)
-            }
-
-            // Only do this for outgoing immediate transitions!
-            for (transition : state.outgoingTransitions) {
-                if (transition.immediate) {
-                    if (transition.trigger === null) {
-                        val deferTest = not(deferVariable.reference)
-                        transition.setTrigger(deferTest)
-                    } else {
-                        val deferTest = not(deferVariable.reference)
-                        transition.setTrigger(deferTest.and(transition.trigger.copy))
+            var State _S = null
+            if (transition.targetState.parentRegion.allStates.filter [
+                it.name == GENERATED_PREFIX + transition.targetState.name
+            ].size > 0) { // get deferred copy
+                _S = transition.targetState.parentRegion.allStates.filter [
+                    it.name == GENERATED_PREFIX + transition.targetState.name
+                ].toList.get(0)
+            } else // Create a new state _S
+            {
+                transition.targetState.makeVariablesPublic(transition.targetState.parentRegion)
+                _S = transition.targetState.copy
+                _S.incomingTransitions.clear
+                _S.outgoingTransitions.clear
+                _S.name = GENERATED_PREFIX + transition.targetState.name
+                transition.targetState.parentRegion.states.add(_S)
+                // copy outgoing transitions
+                for (outTransition : transition.targetState.outgoingTransitions) {
+                    var nT = outTransition.copy
+                    nT.sourceState = _S
+                    nT.targetState = outTransition.targetState
+                    nT.delay = DelayType.DELAYED
+                    _S.outgoingTransitions.add(nT)
+                }
+                while( _S.entryActions.size > 0 )
+                    _S.entryActions.get( 0 ).remove
+                for( during : _S.duringActions )
+                    during.delay = DelayType.DELAYED
+                for( subRegion : _S.allContainedControlflowRegions.toList ){
+                    if( subRegion.states.size > 0 ){
+                        for( state : subRegion.states.filter[ it.initial ].toList ){
+                            for( trans : state.outgoingTransitions ){
+                                trans.delay = DelayType.DELAYED
+                            }
+                        }
                     }
                 }
             }
+
+            // Re-target transition T
+            transition.targetState = _S
+            // Remove deferred flag
+            transition.deferred = false
         }
     }
 
-    def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
+    def void makeVariablesPublic(State s, ControlflowRegion parent) {
+        while (s.declarations.size > 0)
+            parent.declarations.add(s.declarations.get(0))
+        for( subState : s.allContainedStates.toList )
+            subState.makeVariablesPublic( parent )
+        for( region : s.allContainedDataflowRegions.toList )
+        {
+            while( region.declarations.size > 0 )
+                parent.declarations.add(s.declarations.get(0))
+        }
+        for( region : s.allContainedControlflowRegions.toList )
+        {
+            while( region.declarations.size > 0 )
+                parent.declarations.add(s.declarations.get(0))
+        }
     }
-
-//       
-// -- FORMER IMPLEMENTATION --
-// 
-// For all deferred transitions T from S1 to S2, create a new State _S
-// create a new transition _T from _S to S2 and change T's target to _S.
-// Remove the deferred flag from T.
-//
-//     def void transformDeferred(Transition transition) {
-//         if (transition.deferred) {
-//             // Create a new state _S
-//             val _S = transition.targetState.parentRegion.createState(transition.id("_S"))
-//             // Create a new transition _T
-//             _S.createTransitionTo(transition.targetState)
-//             // Re-target transition T
-//             transition.setTargetState(_S)
-//             // Remove deferred flag
-//             transition.setDeferred(false)
-//         }
-//     }
 }
