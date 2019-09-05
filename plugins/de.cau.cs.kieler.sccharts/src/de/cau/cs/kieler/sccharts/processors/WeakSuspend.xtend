@@ -32,6 +32,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.DelayType
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -133,6 +134,29 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 
 
                 for (subState : subStates) {
+                    // transform each entry action to immediate during actions 
+                    if( subState.entryActions.size > 0 ){
+                        val entryGuard = subState.parentRegion.createValuedObject(GENERATED_PREFIX + subState.name + "_entry_guard", createBoolDeclaration).uniqueName
+                        voStore.update(entryGuard, SCCHARTS_GENERATED)
+                        entryGuard.setInitialValue(TRUE)
+                        while (subState.entryActions.size > 0) {
+                            val entryAction = subState.entryActions.get(0)
+                            val duringAction = subState.createDuringAction
+                            duringAction.delay = DelayType.IMMEDIATE
+                            while (entryAction.effects.size > 0)
+                                duringAction.addEffect(entryAction.effects.get(0))
+                            if (entryAction.getTrigger() === null)
+                                duringAction.setTrigger(entryGuard.reference)
+                            else
+                                duringAction.setTrigger(
+                                    entryGuard.reference.and(entryAction.getTrigger()))
+                            entryAction.remove
+                        }
+                        val update = entryGuard.createAssignment(FALSE)
+                        subState.createDuringAction().addEffect(update)
+                        for( t : subState.incomingTransitions )
+                            t.addEffect(entryGuard.createAssignment(TRUE))
+                    }
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(true)

@@ -21,7 +21,7 @@ de.cau.cs.kieler.sccharts.processors.history
 
 [ label "Scade / Quartz / Esterel V7"
 	de.cau.cs.kieler.sccharts.processors.weakSuspend
-	de.cau.cs.kieler.sccharts.processors.deferredNewState
+	de.cau.cs.kieler.sccharts.processors.deferred
 	de.cau.cs.kieler.sccharts.processors.^static
 ]
 	
