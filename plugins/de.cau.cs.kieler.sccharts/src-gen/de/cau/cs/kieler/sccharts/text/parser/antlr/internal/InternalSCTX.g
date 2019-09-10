@@ -1321,15 +1321,20 @@ ruleTransition returns [EObject current=null]
 		)
 		(
 			(
-				lv_deferred_16_0='deferred'
 				{
-					newLeafNode(lv_deferred_16_0, grammarAccess.getTransitionAccess().getDeferredDeferredKeyword_7_0());
+					newCompositeNode(grammarAccess.getTransitionAccess().getDeferredDeferredTypeEnumRuleCall_7_0());
 				}
+				lv_deferred_16_0=ruleDeferredType
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getTransitionRule());
+						$current = createModelElementForParent(grammarAccess.getTransitionRule());
 					}
-					setWithLastConsumed($current, "deferred", true, "deferred");
+					set(
+						$current,
+						"deferred",
+						lv_deferred_16_0,
+						"de.cau.cs.kieler.sccharts.text.SCTX.DeferredType");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
@@ -16601,6 +16606,41 @@ ruleHistoryType returns [Enumerator current=null]
 			{
 				$current = grammarAccess.getHistoryTypeAccess().getDEEPEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
 				newLeafNode(enumLiteral_2, grammarAccess.getHistoryTypeAccess().getDEEPEnumLiteralDeclaration_2());
+			}
+		)
+	)
+;
+
+// Rule DeferredType
+ruleDeferredType returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			enumLiteral_0='deferred'
+			{
+				$current = grammarAccess.getDeferredTypeAccess().getSHALLOWEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getDeferredTypeAccess().getSHALLOWEnumLiteralDeclaration_0());
+			}
+		)
+		    |
+		(
+			enumLiteral_1='deep deferred'
+			{
+				$current = grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1());
+			}
+		)
+		    |
+		(
+			enumLiteral_2='NONE'
+			{
+				$current = grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2());
 			}
 		)
 	)

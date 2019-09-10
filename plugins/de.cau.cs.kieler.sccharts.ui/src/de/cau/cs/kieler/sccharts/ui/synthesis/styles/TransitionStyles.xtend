@@ -184,7 +184,7 @@ class TransitionStyles {
      * Adds a deferred head arrow decorator.<br>
      * If used in combination with other head decorators set isAdditionalArrowHead to true.
      */
-    def addDeferredDecorator(KEdge edge, boolean isAdditionalArrowHead) {
+    def addShallowDeferredDecorator(KEdge edge, boolean isAdditionalArrowHead) {
         if (isAdditionalArrowHead) {
             (edge.line.children.head.placementData as KDecoratorPlacementData).absolute = 26;
         } else {
@@ -200,6 +200,33 @@ class TransitionStyles {
             } else {
                 setDecoratorPlacementData(10, 10, -4, 1, false);
             }
+        ];
+    }
+
+    /**
+     * Adds a deferred head arrow decorator.<br>
+     * If used in combination with other head decorators set isAdditionalArrowHead to true.
+     */
+    def addDeepDeferredDecorator(KEdge edge, boolean isAdditionalArrowHead) {
+        if (isAdditionalArrowHead) {
+            (edge.line.children.head.placementData as KDecoratorPlacementData).absolute = 26;
+        } else {
+            edge.line.addHeadArrowDecorator() => [
+                (placementData as KDecoratorPlacementData).absolute = -11.0f;
+            ]
+        }
+        edge.line.addEllipse() => [
+            lineWidth = 1;
+            background = TRANSITION_DEFERRED_DECORATOR.color;
+            if (isAdditionalArrowHead) {
+                setDecoratorPlacementData(10, 10, -19, 1, false);
+            } else {
+                setDecoratorPlacementData(10, 10, -4, 1, false);
+            }
+            addText("*") => [
+                setPointPlacementData(createKPosition(LEFT, 10, 0, TOP, 0, 0), H_LEFT, V_TOP, 6, 0, 0, 0);
+                foreground = TRANSITION_DEFERRED_DECORATOR.color;
+            ]
         ];
     }
         

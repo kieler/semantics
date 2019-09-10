@@ -19,6 +19,7 @@ import de.cau.cs.kieler.scl.MethodImplementationDeclaration
 import org.eclipse.xtext.serializer.ISerializationContext
 
 import static de.cau.cs.kieler.kexpressions.OperatorType.*
+import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * @author als
@@ -79,8 +80,8 @@ class SCTXSemanticSequencer extends AbstractSCTXSemanticSequencer {
         // <state>
         feeder.accept(tg.targetStateStateIDTerminalRuleCall_6_0_1 , transition.targetState) 
         // deferred?
-        if (transition.deferred) {
-            feeder.accept(tg.deferredDeferredKeyword_7_0)
+        if (transition.deferred != DeferredType::NONE) {
+            feeder.accept(tg.deferredDeferredTypeEnumRuleCall_7_0, transition.deferred)
         }
         // history?
         if (transition.history != HistoryType.RESET) {

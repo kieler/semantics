@@ -112,6 +112,7 @@ public class SCTXParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPreemptionTypeAccess().getAlternatives(), "rule__PreemptionType__Alternatives");
 			builder.put(grammarAccess.getDelayTypeAccess().getAlternatives(), "rule__DelayType__Alternatives");
 			builder.put(grammarAccess.getHistoryTypeAccess().getAlternatives(), "rule__HistoryType__Alternatives");
+			builder.put(grammarAccess.getDeferredTypeAccess().getAlternatives(), "rule__DeferredType__Alternatives");
 			builder.put(grammarAccess.getValueTypeAccess().getAlternatives(), "rule__ValueType__Alternatives");
 			builder.put(grammarAccess.getPriorityProtocolAccess().getAlternatives(), "rule__PriorityProtocol__Alternatives");
 			builder.put(grammarAccess.getAssignOperatorAccess().getAlternatives(), "rule__AssignOperator__Alternatives");

@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.DelayType
+import de.cau.cs.kieler.sccharts.DeferredType
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -134,6 +135,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 
 
                 for (subState : subStates) {
+                    // TODO add guards to entry and exit actions and to immediate during actions
                     // transform each entry action to immediate during actions 
                     if( subState.entryActions.size > 0 ){
                         val entryGuard = subState.parentRegion.createValuedObject(GENERATED_PREFIX + subState.name + "_entry_guard", createBoolDeclaration).uniqueName
@@ -159,7 +161,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                     }
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
-                    reEnterTransition.setDeferred(true)
+                    reEnterTransition.setDeferred(DeferredType::SHALLOW)
                     
                     val entryAction = subState.createEntryAction
                     entryAction.addEffect(stateBookmark.createAssignment(counter.createIntValue))
