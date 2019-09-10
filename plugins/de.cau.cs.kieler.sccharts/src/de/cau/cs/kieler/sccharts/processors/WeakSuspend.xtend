@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2014 by
@@ -34,6 +34,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.DeferredType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.sccharts.HistoryType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 
 /**
  * SCCharts WeakSuspend Transformation.
@@ -44,24 +48,22 @@ import de.cau.cs.kieler.sccharts.DeferredType
  */
 class WeakSuspend extends SCChartsProcessor implements Traceable {
 
-    //-------------------------------------------------------------------------
-    //--                 K I C O      C O N F I G U R A T I O N              --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                 K I C O      C O N F I G U R A T I O N              --
+    // -------------------------------------------------------------------------
     override getId() {
         "de.cau.cs.kieler.sccharts.processors.weakSuspend"
     }
-    
+
     override getName() {
         "Weak Suspend"
     }
- 
+
     override process() {
         setModel(model.transform)
     }
 
-
-    //-------------------------------------------------------------------------
-
+    // -------------------------------------------------------------------------
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsComplexCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
@@ -73,13 +75,15 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsStateExtensions
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
-    
+    @Inject extension SCChartsCoreExtensions
+    @Inject extension SCChartsSerializeHRExtensions
+
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
 
-    //-------------------------------------------------------------------------
-    //--                     W E A K   S U S P E N D                         --
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // --                     W E A K   S U S P E N D                         --
+    // -------------------------------------------------------------------------
     // ...
     def State transform(State rootState) {
         // Traverse all transitions
@@ -89,16 +93,16 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
         rootState
     }
 
-
     def void transformWeakSuspend(State state, State targetRootState) {
         val weakSuspends = state.suspendActions.filter[weak].toList
         weakSuspends.setDefaultTrace
-        
+
         if (!weakSuspends.nullOrEmpty) {
-            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).uniqueName
+            val weakSuspendFlag = state.createValuedObject(GENERATED_PREFIX + "wsFlag", createBoolDeclaration).
+                uniqueName
             weakSuspendFlag.setInitialValue(FALSE)
             voStore.update(weakSuspendFlag, SCCHARTS_GENERATED)
- 
+
             for (weakSuspend : weakSuspends.immutableCopy) {
                 weakSuspend.setDefaultTrace
                 val duringAction = state.createDuringAction
@@ -111,63 +115,96 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
             for (region : state.allContainedControlflowRegions.toList) {
                 val subStates = region.states.immutableCopy
                 val wsState = region.createState(GENERATED_PREFIX + "WS").uniqueName
-                val stateBookmark = state.createValuedObject(GENERATED_PREFIX  + region.parentState.name, createIntDeclaration).uniqueName
+                val stateBookmark = state.createValuedObject(GENERATED_PREFIX + region.parentState.name,
+                    createIntDeclaration).uniqueName
                 // Set the initial value to the (original) initial state
                 stateBookmark.setInitialValue(createIntValue(0))
                 voStore.update(stateBookmark, SCCHARTS_GENERATED)
-                
-                var counter = 0
-                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).uniqueName
 
+                var counter = 0
+                val lastWishDone = state.createValuedObject(GENERATED_PREFIX + "lastWishDone", createBoolDeclaration).
+                    uniqueName
+                voStore.update(lastWishDone, SCCHARTS_GENERATED)
                 // In each tick reset the lastWish to FALSE
                 val resetLastWishDoneduringAction = state.createDuringAction
                 resetLastWishDoneduringAction.setImmediate(true)
                 resetLastWishDoneduringAction.addAssignment(lastWishDone.createAssignment(FALSE))
-                
+
                 // wsState sets lastWishDone to true
                 val wsStateEntryAction = wsState.createEntryAction
                 wsStateEntryAction.addAssignment(lastWishDone.createRelativeAssignmentWithOr(TRUE))
-                
+
                 // Auxiliary initial state for re-entry
                 val initState = region.createState(GENERATED_PREFIX + "Init").uniqueName
                 initState.setInitial(true)
                 val initWSTransition = initState.createTransitionTo(wsState).setImmediate
-                initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference)) 
+                initWSTransition.setTrigger(weakSuspendFlag.reference.and(lastWishDone.reference))
 
                 for (subState : subStates) {
-                    // TODO add guards to entry and exit actions and to immediate during actions
-                    // transform each entry action to immediate during actions 
-                    if( subState.entryActions.size > 0 ){
-                        val entryGuard = subState.parentRegion.createValuedObject(GENERATED_PREFIX + subState.name + "_entry_guard", createBoolDeclaration).uniqueName
+                    var immediateDurings = subState.duringActions.filter[delay == DelayType.IMMEDIATE];
+                    var ValuedObject entryGuard = null
+                    if (subState.entryActions.size > 0 || immediateDurings.size > 0) {
+                        // add a entry guard to each entry action.
+                        entryGuard = subState.parentRegion.createValuedObject(GENERATED_PREFIX + subState.name +
+                            "_entry_guard", createBoolDeclaration).uniqueName
                         voStore.update(entryGuard, SCCHARTS_GENERATED)
                         entryGuard.setInitialValue(TRUE)
-                        while (subState.entryActions.size > 0) {
-                            val entryAction = subState.entryActions.get(0)
-                            val duringAction = subState.createDuringAction
-                            duringAction.delay = DelayType.IMMEDIATE
-                            while (entryAction.effects.size > 0)
-                                duringAction.addEffect(entryAction.effects.get(0))
-                            if (entryAction.getTrigger() === null)
-                                duringAction.setTrigger(entryGuard.reference)
-                            else
-                                duringAction.setTrigger(
-                                    entryGuard.reference.and(entryAction.getTrigger()))
-                            entryAction.remove
+                        for (entryAction : subState.entryActions) {
+                            entryAction.trigger = entryAction.trigger.and(entryGuard.reference)
                         }
                         val update = entryGuard.createAssignment(FALSE)
                         subState.createDuringAction().addEffect(update)
-                        for( t : subState.incomingTransitions )
+                        for (t : subState.incomingTransitions)
                             t.addEffect(entryGuard.createAssignment(TRUE))
+                    }
+                    if (immediateDurings.size > 0) {
+                        // add a first tick guard and the entry guard to immediate during actions
+                        val firstTick = subState.createValuedObject(GENERATED_PREFIX + "_first_tick",
+                            createBoolDeclaration).uniqueName
+                        voStore.update(firstTick, SCCHARTS_GENERATED)
+                        firstTick.setInitialValue(TRUE)
+                        subState.createEntryAction().addEffect(firstTick.createAssignment(TRUE))
+                        subState.createDuringAction().addEffect(firstTick.createAssignment(FALSE))
+                        for (duringAction : immediateDurings) {
+                            duringAction.trigger = duringAction.trigger.and(
+                                not(firstTick.reference).or(entryGuard.reference))
+                        }
+                    }
+                    while (subState.exitActions.size > 0) {
+                        // transform exit actions into immediate outgoing transitions
+                        val e = subState.exitActions.get(0)
+                        // TODO: make variables used in exit actions globally visible
+                        
+                        for (t : subState.outgoingTransitions) {
+                            val exitState = subState.parentRegion.createState(GENERATED_PREFIX + "_exit").uniqueName
+                            val endExitState = subState.parentRegion.createState(GENERATED_PREFIX + "_end_exit").
+                                uniqueName
+                            t.targetState = exitState
+                            val exitTransition = exitState.createTerminationTo(endExitState)
+                            exitTransition.delay = DelayType::IMMEDIATE
+                            exitTransition.trigger = e.trigger.copy
+                            for (effect : e.effects)
+                                exitTransition.addEffect(effect.copy)
+                            val effectTransition = endExitState.createTerminationTo(t.targetState)
+                            effectTransition.history = t.history
+                            effectTransition.deferred = t.deferred
+                            effectTransition.delay = DelayType::IMMEDIATE
+                            while (t.effects.size > 0)
+                                effectTransition.addEffect(t.effects.get(0))
+                            t.history = HistoryType::RESET
+                            t.deferred = DeferredType::NONE
+                        }
+                        e.remove
                     }
                     val reEnterTransition = wsState.createImmediateTransitionTo(subState)
                     reEnterTransition.setTrigger(stateBookmark.reference.eq(counter.createIntValue))
                     reEnterTransition.setDeferred(DeferredType::SHALLOW)
-                    
+
                     val entryAction = subState.createEntryAction
                     entryAction.addEffect(stateBookmark.createAssignment(counter.createIntValue))
                     entryAction.setTrigger(not(weakSuspendFlag.reference))
                     counter = counter + 1
-        
+
                     // Only if not a final state OR a  final state on top-level-scope of WeakSuspend
                     // NEW: || subState.parentRegion.parentState == state            
                     if (!subState.final || subState.parentRegion.parentState == state) {
@@ -175,7 +212,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                         weakSuspendTransition.setTrigger(weakSuspendFlag.reference)
                         weakSuspendTransition.setLowestPriority
                     }
-                    
+
                     // Modify the original initial state
                     if (subState.initial) {
                         subState.setInitial(false)
@@ -183,14 +220,14 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                     }
                 }
             }
-            
+
             // NEW:            
             // WS Termination region (IF state can be left by termination!)
             // should only terminate if no WS trigger holds
-
             // If the state has outgoing terminations, we need to finalize the during
             // actions in case we end the states over these transitions
-            val needAuxTermRegion = ((state.outgoingTransitions.filter[ isTermination ].length > 0 || state.isRootState) && state.regionsMayTerminate)
+            val needAuxTermRegion = ((state.outgoingTransitions.filter[isTermination].length > 0 ||
+                state.isRootState) && state.regionsMayTerminate)
             if (needAuxTermRegion) {
                 val auxTermRegion = state.createControlflowRegion(GENERATED_PREFIX + "wsAuxTermination");
                 val noTermS = auxTermRegion.createInitialState(GENERATED_PREFIX + "wsNoTerm");
@@ -200,12 +237,13 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                 t1.trigger = not(weakSuspendFlag.reference)
                 t2.trigger = weakSuspendFlag.reference
             }
-            
+
         }
     }
 
     def SCCharts transform(SCCharts sccharts) {
-        sccharts => [ rootStates.forEach[ transform ] ]
+        println("transform weak suspend...")
+        sccharts => [rootStates.forEach[transform]]
     }
 
 }
