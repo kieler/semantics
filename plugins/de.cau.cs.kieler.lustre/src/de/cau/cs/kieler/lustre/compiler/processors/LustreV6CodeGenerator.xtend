@@ -68,8 +68,8 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         logger.println("== Setting up Lustre source file ==")
         
         var resource = sourceModel.eResource
-        val modelName = sourceModel.packBody.nodes.head.valuedObjects.head.name
-        environment.setProperty(HAS_STATE, (sourceModel.packBody.nodes.head as NodeDeclaration).hasState)
+        val modelName = sourceModel.nodes.head.valuedObjects.head.name
+        environment.setProperty(HAS_STATE, (sourceModel.nodes.head as NodeDeclaration).hasState)
         
         var File sourceFile
         

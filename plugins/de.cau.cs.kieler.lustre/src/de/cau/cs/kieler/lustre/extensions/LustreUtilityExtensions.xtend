@@ -13,7 +13,10 @@
 package de.cau.cs.kieler.lustre.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ValuedObject
@@ -21,14 +24,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.lustre.lustre.Automaton
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
 import java.util.HashSet
 import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.kexpressions.IntValue
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
 
 /**
  * @author lgr
@@ -48,6 +49,35 @@ class LustreUtilityExtensions {
         } else {
             return (exprClock !== null) && (clock == exprClock)
         }
+    }
+    
+    def isClockedVariableDeclaration (VariableDeclaration varDecl) {
+        if (varDecl instanceof LustreVariableDeclaration) {
+            var clock = varDecl.clockExpr
+            if (clock !== null) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    def ValuedObjectReference getClock (VariableDeclaration varDecl) {
+        if (varDecl.isClockedVariableDeclaration) {
+            var lustreVarDecl = varDecl.asLustreVariableDeclaration
+            var clock = lustreVarDecl.clockExpr
+            if (clock instanceof ValuedObjectReference) {
+                return clock
+            }
+        }
+        
+        return null
+    }
+    
+    def asLustreVariableDeclaration(VariableDeclaration varDecl) {
+        if (varDecl.isClockedVariableDeclaration) {
+            return varDecl as LustreVariableDeclaration
+        }
+        return null
     }
 
     def getClockOfExpression(Expression expression) {
@@ -71,10 +101,13 @@ class LustreUtilityExtensions {
     }
     
     def getClockOfValuedObjectReference(ValuedObjectReference valuedObjectReference) {
-        var varDecl = valuedObjectReference.valuedObject.declaration.eContainer
-        if (varDecl instanceof ClockedVariableDeclaration) {
-            if (varDecl.clockExpr instanceof ValuedObjectReference) {
-                return (varDecl.clockExpr as ValuedObjectReference).valuedObject
+        var varDecl = valuedObjectReference.valuedObject.declaration
+        if (varDecl instanceof LustreVariableDeclaration) {
+            var clockExpr = varDecl.clockExpr
+            if (clockExpr !== null) {
+                if (clockExpr instanceof ValuedObjectReference) {
+                    return clockExpr.valuedObject
+                }
             }
         }
         
@@ -121,17 +154,25 @@ class LustreUtilityExtensions {
         
         var currentExpression = expression.subExpressions.size > 0? expression.subExpressions.get(0) : null
         if (currentExpression instanceof ValuedObjectReference) {
-            var varDecl = currentExpression.valuedObject.declaration.eContainer
-            if (varDecl instanceof ClockedVariableDeclaration) {
-                if (varDecl.clockExpr instanceof ValuedObjectReference) {
-                    return getClockOfValuedObjectReference(varDecl.clockExpr as ValuedObjectReference)
+            var varDecl = currentExpression.valuedObject.declaration
+            if (varDecl instanceof LustreVariableDeclaration) {
+                var clockExpr = varDecl.clockExpr
+                if (clockExpr !== null) {
+                    if (clockExpr instanceof ValuedObjectReference) {
+                        return getClockOfValuedObjectReference(clockExpr)
+                    }
                 }
             }
         } else if (currentExpression instanceof OperatorExpression) {
             var exprClock = currentExpression.clockOfSubExpression
-            var exprClockDecl = exprClock.declaration.eContainer
-            if (exprClockDecl instanceof ClockedVariableDeclaration) {
-                return (exprClockDecl.clockExpr as ValuedObjectReference).valuedObject
+            var exprClockDecl = exprClock.declaration
+            if (exprClockDecl instanceof LustreVariableDeclaration) {
+                var clockExpr = exprClockDecl.clockExpr
+                if (clockExpr !== null) {
+                    if (clockExpr instanceof ValuedObjectReference) {
+                        return clockExpr.valuedObject
+                    }
+                }
             }                    
         }
     }

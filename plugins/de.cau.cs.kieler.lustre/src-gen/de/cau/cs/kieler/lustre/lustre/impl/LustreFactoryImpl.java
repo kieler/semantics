@@ -66,30 +66,19 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
     switch (eClass.getClassifierID())
     {
       case LustrePackage.LUSTRE_PROGRAM: return createLustreProgram();
-      case LustrePackage.PACK_LIST: return createPackList();
-      case LustrePackage.MODEL_DECLARATION: return createModelDeclaration();
-      case LustrePackage.PROVIDE: return createProvide();
-      case LustrePackage.PACKAGE_DECLARATION: return createPackageDeclaration();
-      case LustrePackage.PACKAGE_EQUATION: return createPackageEquation();
-      case LustrePackage.PACK_BODY: return createPackBody();
       case LustrePackage.TYPE_DECLARATION: return createTypeDeclaration();
-      case LustrePackage.EXTERNAL_NODE_DECLARATION: return createExternalNodeDeclaration();
       case LustrePackage.AUTOMATON: return createAutomaton();
       case LustrePackage.ASTATE: return createAState();
       case LustrePackage.ATRANSITION: return createATransition();
       case LustrePackage.AN_ACTION: return createAnAction();
-      case LustrePackage.PARAMS: return createParams();
-      case LustrePackage.STATIC_PARAM: return createStaticParam();
-      case LustrePackage.STATIC_ARG: return createStaticArg();
-      case LustrePackage.BY_NAME_STATIC_ARG: return createByNameStaticArg();
-      case LustrePackage.CLOCKED_VARIABLE_DECLARATION: return createClockedVariableDeclaration();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION: return createExternalNodeDeclaration();
+      case LustrePackage.LUSTRE_VARIABLE_DECLARATION: return createLustreVariableDeclaration();
+      case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
       case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
       case LustrePackage.NODE_VALUED_OBJECT: return createNodeValuedObject();
       case LustrePackage.EQUATION: return createEquation();
       case LustrePackage.ASSERTION: return createAssertion();
       case LustrePackage.STATE_VALUED_OBJECT: return createStateValuedObject();
-      case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
-      case LustrePackage.NODE_REFERENCE: return createNodeReference();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -113,94 +102,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * @generated
    */
   @Override
-  public PackList createPackList()
-  {
-    PackListImpl packList = new PackListImpl();
-    return packList;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ModelDeclaration createModelDeclaration()
-  {
-    ModelDeclarationImpl modelDeclaration = new ModelDeclarationImpl();
-    return modelDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Provide createProvide()
-  {
-    ProvideImpl provide = new ProvideImpl();
-    return provide;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PackageDeclaration createPackageDeclaration()
-  {
-    PackageDeclarationImpl packageDeclaration = new PackageDeclarationImpl();
-    return packageDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PackageEquation createPackageEquation()
-  {
-    PackageEquationImpl packageEquation = new PackageEquationImpl();
-    return packageEquation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public PackBody createPackBody()
-  {
-    PackBodyImpl packBody = new PackBodyImpl();
-    return packBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public TypeDeclaration createTypeDeclaration()
   {
     TypeDeclarationImpl typeDeclaration = new TypeDeclarationImpl();
     return typeDeclaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ExternalNodeDeclaration createExternalNodeDeclaration()
-  {
-    ExternalNodeDeclarationImpl externalNodeDeclaration = new ExternalNodeDeclarationImpl();
-    return externalNodeDeclaration;
   }
 
   /**
@@ -257,10 +162,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * @generated
    */
   @Override
-  public Params createParams()
+  public ExternalNodeDeclaration createExternalNodeDeclaration()
   {
-    ParamsImpl params = new ParamsImpl();
-    return params;
+    ExternalNodeDeclarationImpl externalNodeDeclaration = new ExternalNodeDeclarationImpl();
+    return externalNodeDeclaration;
   }
 
   /**
@@ -269,10 +174,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * @generated
    */
   @Override
-  public StaticParam createStaticParam()
+  public LustreVariableDeclaration createLustreVariableDeclaration()
   {
-    StaticParamImpl staticParam = new StaticParamImpl();
-    return staticParam;
+    LustreVariableDeclarationImpl lustreVariableDeclaration = new LustreVariableDeclarationImpl();
+    return lustreVariableDeclaration;
   }
 
   /**
@@ -281,34 +186,10 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * @generated
    */
   @Override
-  public StaticArg createStaticArg()
+  public LustreValuedObject createLustreValuedObject()
   {
-    StaticArgImpl staticArg = new StaticArgImpl();
-    return staticArg;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ByNameStaticArg createByNameStaticArg()
-  {
-    ByNameStaticArgImpl byNameStaticArg = new ByNameStaticArgImpl();
-    return byNameStaticArg;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ClockedVariableDeclaration createClockedVariableDeclaration()
-  {
-    ClockedVariableDeclarationImpl clockedVariableDeclaration = new ClockedVariableDeclarationImpl();
-    return clockedVariableDeclaration;
+    LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
+    return lustreValuedObject;
   }
 
   /**
@@ -369,30 +250,6 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
   {
     StateValuedObjectImpl stateValuedObject = new StateValuedObjectImpl();
     return stateValuedObject;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public LustreValuedObject createLustreValuedObject()
-  {
-    LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
-    return lustreValuedObject;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NodeReference createNodeReference()
-  {
-    NodeReferenceImpl nodeReference = new NodeReferenceImpl();
-    return nodeReference;
   }
 
   /**

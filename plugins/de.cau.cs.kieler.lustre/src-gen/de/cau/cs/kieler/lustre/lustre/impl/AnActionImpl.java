@@ -5,7 +5,7 @@ package de.cau.cs.kieler.lustre.lustre.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
 import de.cau.cs.kieler.lustre.lustre.AnAction;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
@@ -63,7 +63,7 @@ public class AnActionImpl extends MinimalEObjectImpl.Container implements AnActi
    * @generated
    * @ordered
    */
-  protected EList<Assignment> effects;
+  protected EList<Effect> effects;
 
   /**
    * The default value of the '{@link #isHistory() <em>History</em>}' attribute.
@@ -172,11 +172,11 @@ public class AnActionImpl extends MinimalEObjectImpl.Container implements AnActi
    * @generated
    */
   @Override
-  public EList<Assignment> getEffects()
+  public EList<Effect> getEffects()
   {
     if (effects == null)
     {
-      effects = new EObjectContainmentEList<Assignment>(Assignment.class, this, LustrePackage.AN_ACTION__EFFECTS);
+      effects = new EObjectContainmentEList<Effect>(Effect.class, this, LustrePackage.AN_ACTION__EFFECTS);
     }
     return effects;
   }
@@ -308,7 +308,7 @@ public class AnActionImpl extends MinimalEObjectImpl.Container implements AnActi
         return;
       case LustrePackage.AN_ACTION__EFFECTS:
         getEffects().clear();
-        getEffects().addAll((Collection<? extends Assignment>)newValue);
+        getEffects().addAll((Collection<? extends Effect>)newValue);
         return;
       case LustrePackage.AN_ACTION__HISTORY:
         setHistory((Boolean)newValue);

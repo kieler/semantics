@@ -81,343 +81,13 @@ public interface LustrePackage extends EPackage
   int LUSTRE_PROGRAM__INCLUDES = 0;
 
   /**
-   * The feature id for the '<em><b>Pack Body</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_PROGRAM__PACK_BODY = 1;
-
-  /**
-   * The feature id for the '<em><b>Pack List</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_PROGRAM__PACK_LIST = 2;
-
-  /**
-   * The number of structural features of the '<em>Program</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_PROGRAM_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackListImpl <em>Pack List</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.PackListImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackList()
-   * @generated
-   */
-  int PACK_LIST = 1;
-
-  /**
-   * The feature id for the '<em><b>Model Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACK_LIST__MODEL_DECLARATIONS = 0;
-
-  /**
-   * The feature id for the '<em><b>Package Declarations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACK_LIST__PACKAGE_DECLARATIONS = 1;
-
-  /**
-   * The feature id for the '<em><b>Package Equations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACK_LIST__PACKAGE_EQUATIONS = 2;
-
-  /**
-   * The number of structural features of the '<em>Pack List</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACK_LIST_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ModelDeclarationImpl <em>Model Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ModelDeclarationImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getModelDeclaration()
-   * @generated
-   */
-  int MODEL_DECLARATION = 2;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Uses Ids</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION__USES_IDS = 1;
-
-  /**
-   * The feature id for the '<em><b>Needs Params</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION__NEEDS_PARAMS = 2;
-
-  /**
-   * The feature id for the '<em><b>Provisions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION__PROVISIONS = 3;
-
-  /**
-   * The feature id for the '<em><b>Body</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION__BODY = 4;
-
-  /**
-   * The number of structural features of the '<em>Model Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_DECLARATION_FEATURE_COUNT = 5;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ProvideImpl <em>Provide</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ProvideImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getProvide()
-   * @generated
-   */
-  int PROVIDE = 3;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__TYPE = 1;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__VALUE = 2;
-
-  /**
-   * The feature id for the '<em><b>Types</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__TYPES = 3;
-
-  /**
-   * The feature id for the '<em><b>Static Params</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__STATIC_PARAMS = 4;
-
-  /**
-   * The feature id for the '<em><b>Input</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__INPUT = 5;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE__OUTPUT = 6;
-
-  /**
-   * The number of structural features of the '<em>Provide</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROVIDE_FEATURE_COUNT = 7;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackageDeclarationImpl <em>Package Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.PackageDeclarationImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackageDeclaration()
-   * @generated
-   */
-  int PACKAGE_DECLARATION = 4;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_DECLARATION__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Uses Ids</b></em>' attribute list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_DECLARATION__USES_IDS = 1;
-
-  /**
-   * The feature id for the '<em><b>Provisions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_DECLARATION__PROVISIONS = 2;
-
-  /**
-   * The feature id for the '<em><b>Body</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_DECLARATION__BODY = 3;
-
-  /**
-   * The number of structural features of the '<em>Package Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_DECLARATION_FEATURE_COUNT = 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackageEquationImpl <em>Package Equation</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.PackageEquationImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackageEquation()
-   * @generated
-   */
-  int PACKAGE_EQUATION = 5;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_EQUATION__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Eq Or Is</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_EQUATION__EQ_OR_IS = 1;
-
-  /**
-   * The feature id for the '<em><b>By Name Static Args</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_EQUATION__BY_NAME_STATIC_ARGS = 2;
-
-  /**
-   * The number of structural features of the '<em>Package Equation</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PACKAGE_EQUATION_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackBodyImpl <em>Pack Body</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.PackBodyImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackBody()
-   * @generated
-   */
-  int PACK_BODY = 6;
-
-  /**
    * The feature id for the '<em><b>Constants</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PACK_BODY__CONSTANTS = 0;
+  int LUSTRE_PROGRAM__CONSTANTS = 1;
 
   /**
    * The feature id for the '<em><b>Types</b></em>' containment reference list.
@@ -426,7 +96,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_BODY__TYPES = 1;
+  int LUSTRE_PROGRAM__TYPES = 2;
 
   /**
    * The feature id for the '<em><b>Externals</b></em>' containment reference list.
@@ -435,7 +105,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_BODY__EXTERNALS = 2;
+  int LUSTRE_PROGRAM__EXTERNALS = 3;
 
   /**
    * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
@@ -444,16 +114,16 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PACK_BODY__NODES = 3;
+  int LUSTRE_PROGRAM__NODES = 4;
 
   /**
-   * The number of structural features of the '<em>Pack Body</em>' class.
+   * The number of structural features of the '<em>Program</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PACK_BODY_FEATURE_COUNT = 4;
+  int LUSTRE_PROGRAM_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl <em>Type Declaration</em>}' class.
@@ -463,7 +133,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getTypeDeclaration()
    * @generated
    */
-  int TYPE_DECLARATION = 7;
+  int TYPE_DECLARATION = 1;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -493,7 +163,7 @@ public interface LustrePackage extends EPackage
   int TYPE_DECLARATION__ENUMS = 2;
 
   /**
-   * The feature id for the '<em><b>Variables</b></em>' containment reference.
+   * The feature id for the '<em><b>Variables</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -502,86 +172,13 @@ public interface LustrePackage extends EPackage
   int TYPE_DECLARATION__VARIABLES = 3;
 
   /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TYPE_DECLARATION__VALUES = 4;
-
-  /**
    * The number of structural features of the '<em>Type Declaration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE_DECLARATION_FEATURE_COUNT = 5;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl <em>External Node Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getExternalNodeDeclaration()
-   * @generated
-   */
-  int EXTERNAL_NODE_DECLARATION = 8;
-
-  /**
-   * The feature id for the '<em><b>Is Unsafe</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION__IS_UNSAFE = 0;
-
-  /**
-   * The feature id for the '<em><b>Has State</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION__HAS_STATE = 1;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION__NAME = 2;
-
-  /**
-   * The feature id for the '<em><b>Input</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION__INPUT = 3;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION__OUTPUT = 4;
-
-  /**
-   * The number of structural features of the '<em>External Node Declaration</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_NODE_DECLARATION_FEATURE_COUNT = 5;
+  int TYPE_DECLARATION_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AutomatonImpl <em>Automaton</em>}' class.
@@ -591,7 +188,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAutomaton()
    * @generated
    */
-  int AUTOMATON = 9;
+  int AUTOMATON = 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -628,7 +225,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAState()
    * @generated
    */
-  int ASTATE = 10;
+  int ASTATE = 3;
 
   /**
    * The feature id for the '<em><b>Initial</b></em>' attribute.
@@ -676,13 +273,22 @@ public interface LustrePackage extends EPackage
   int ASTATE__EQUATIONS = 4;
 
   /**
+   * The feature id for the '<em><b>Emissions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASTATE__EMISSIONS = 5;
+
+  /**
    * The feature id for the '<em><b>Assertions</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ASTATE__ASSERTIONS = 5;
+  int ASTATE__ASSERTIONS = 6;
 
   /**
    * The feature id for the '<em><b>Automatons</b></em>' containment reference list.
@@ -691,7 +297,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__AUTOMATONS = 6;
+  int ASTATE__AUTOMATONS = 7;
 
   /**
    * The feature id for the '<em><b>Transitions</b></em>' containment reference list.
@@ -700,7 +306,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE__TRANSITIONS = 7;
+  int ASTATE__TRANSITIONS = 8;
 
   /**
    * The number of structural features of the '<em>AState</em>' class.
@@ -709,7 +315,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ASTATE_FEATURE_COUNT = 8;
+  int ASTATE_FEATURE_COUNT = 9;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ATransitionImpl <em>ATransition</em>}' class.
@@ -719,7 +325,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getATransition()
    * @generated
    */
-  int ATRANSITION = 11;
+  int ATRANSITION = 4;
 
   /**
    * The feature id for the '<em><b>Strong</b></em>' attribute.
@@ -756,7 +362,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAnAction()
    * @generated
    */
-  int AN_ACTION = 12;
+  int AN_ACTION = 5;
 
   /**
    * The feature id for the '<em><b>Condition</b></em>' containment reference.
@@ -804,51 +410,123 @@ public interface LustrePackage extends EPackage
   int AN_ACTION_FEATURE_COUNT = 4;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl <em>Params</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl <em>External Node Declaration</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getParams()
+   * @see de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getExternalNodeDeclaration()
    * @generated
    */
-  int PARAMS = 13;
+  int EXTERNAL_NODE_DECLARATION = 6;
 
   /**
-   * The feature id for the '<em><b>Parameter</b></em>' containment reference list.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARAMS__PARAMETER = 0;
+  int EXTERNAL_NODE_DECLARATION__ANNOTATIONS = KExpressionsPackage.DECLARATION__ANNOTATIONS;
 
   /**
-   * The number of structural features of the '<em>Params</em>' class.
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PARAMS_FEATURE_COUNT = 1;
+  int EXTERNAL_NODE_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.DECLARATION__VALUED_OBJECTS;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StaticParamImpl <em>Static Param</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.StaticParamImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticParam()
-   * @generated
-   */
-  int STATIC_PARAM = 14;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Access</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_PARAM__NAME = 0;
+  int EXTERNAL_NODE_DECLARATION__ACCESS = KExpressionsPackage.DECLARATION__ACCESS;
+
+  /**
+   * The feature id for the '<em><b>Is Unsafe</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_NODE_DECLARATION__IS_UNSAFE = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Has State</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_NODE_DECLARATION__HAS_STATE = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_NODE_DECLARATION__INPUTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_NODE_DECLARATION__OUTPUTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 3;
+
+  /**
+   * The number of structural features of the '<em>External Node Declaration</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_NODE_DECLARATION_FEATURE_COUNT = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 4;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreVariableDeclarationImpl <em>Variable Declaration</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustreVariableDeclarationImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreVariableDeclaration()
+   * @generated
+   */
+  int LUSTRE_VARIABLE_DECLARATION = 7;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VARIABLE_DECLARATION__ANNOTATIONS = KExpressionsPackage.VARIABLE_DECLARATION__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VARIABLE_DECLARATION__VALUED_OBJECTS = KExpressionsPackage.VARIABLE_DECLARATION__VALUED_OBJECTS;
+
+  /**
+   * The feature id for the '<em><b>Access</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VARIABLE_DECLARATION__ACCESS = KExpressionsPackage.VARIABLE_DECLARATION__ACCESS;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -857,154 +535,88 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATIC_PARAM__TYPE = 1;
+  int LUSTRE_VARIABLE_DECLARATION__TYPE = KExpressionsPackage.VARIABLE_DECLARATION__TYPE;
 
   /**
-   * The feature id for the '<em><b>Node Input</b></em>' containment reference.
+   * The feature id for the '<em><b>Input</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_PARAM__NODE_INPUT = 2;
+  int LUSTRE_VARIABLE_DECLARATION__INPUT = KExpressionsPackage.VARIABLE_DECLARATION__INPUT;
 
   /**
-   * The feature id for the '<em><b>Node Output</b></em>' containment reference.
+   * The feature id for the '<em><b>Output</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_PARAM__NODE_OUTPUT = 3;
+  int LUSTRE_VARIABLE_DECLARATION__OUTPUT = KExpressionsPackage.VARIABLE_DECLARATION__OUTPUT;
 
   /**
-   * The number of structural features of the '<em>Static Param</em>' class.
+   * The feature id for the '<em><b>Static</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_PARAM_FEATURE_COUNT = 4;
+  int LUSTRE_VARIABLE_DECLARATION__STATIC = KExpressionsPackage.VARIABLE_DECLARATION__STATIC;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StaticArgImpl <em>Static Arg</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.StaticArgImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticArg()
-   * @generated
-   */
-  int STATIC_ARG = 15;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * The feature id for the '<em><b>Signal</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_ARG__TYPE = 0;
+  int LUSTRE_VARIABLE_DECLARATION__SIGNAL = KExpressionsPackage.VARIABLE_DECLARATION__SIGNAL;
 
   /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Const</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_ARG__EXPR = 1;
+  int LUSTRE_VARIABLE_DECLARATION__CONST = KExpressionsPackage.VARIABLE_DECLARATION__CONST;
 
   /**
-   * The feature id for the '<em><b>Name</b></em>' containment reference.
+   * The feature id for the '<em><b>Extern</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_ARG__NAME = 2;
+  int LUSTRE_VARIABLE_DECLARATION__EXTERN = KExpressionsPackage.VARIABLE_DECLARATION__EXTERN;
 
   /**
-   * The feature id for the '<em><b>Static Args</b></em>' containment reference list.
+   * The feature id for the '<em><b>Volatile</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_ARG__STATIC_ARGS = 3;
+  int LUSTRE_VARIABLE_DECLARATION__VOLATILE = KExpressionsPackage.VARIABLE_DECLARATION__VOLATILE;
 
   /**
-   * The number of structural features of the '<em>Static Arg</em>' class.
+   * The feature id for the '<em><b>Global</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATIC_ARG_FEATURE_COUNT = 4;
+  int LUSTRE_VARIABLE_DECLARATION__GLOBAL = KExpressionsPackage.VARIABLE_DECLARATION__GLOBAL;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl <em>By Name Static Arg</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getByNameStaticArg()
-   * @generated
-   */
-  int BY_NAME_STATIC_ARG = 16;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * The feature id for the '<em><b>Host Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BY_NAME_STATIC_ARG__NAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BY_NAME_STATIC_ARG__TYPE = 1;
-
-  /**
-   * The feature id for the '<em><b>Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BY_NAME_STATIC_ARG__EXPR = 2;
-
-  /**
-   * The number of structural features of the '<em>By Name Static Arg</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BY_NAME_STATIC_ARG_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ClockedVariableDeclarationImpl <em>Clocked Variable Declaration</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.ClockedVariableDeclarationImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getClockedVariableDeclaration()
-   * @generated
-   */
-  int CLOCKED_VARIABLE_DECLARATION = 17;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CLOCKED_VARIABLE_DECLARATION__VARDECL = 0;
+  int LUSTRE_VARIABLE_DECLARATION__HOST_TYPE = KExpressionsPackage.VARIABLE_DECLARATION__HOST_TYPE;
 
   /**
    * The feature id for the '<em><b>Clock Expr</b></em>' containment reference.
@@ -1013,16 +625,98 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CLOCKED_VARIABLE_DECLARATION__CLOCK_EXPR = 1;
+  int LUSTRE_VARIABLE_DECLARATION__CLOCK_EXPR = KExpressionsPackage.VARIABLE_DECLARATION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Clocked Variable Declaration</em>' class.
+   * The number of structural features of the '<em>Variable Declaration</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CLOCKED_VARIABLE_DECLARATION_FEATURE_COUNT = 2;
+  int LUSTRE_VARIABLE_DECLARATION_FEATURE_COUNT = KExpressionsPackage.VARIABLE_DECLARATION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl
+   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
+   * @generated
+   */
+  int LUSTRE_VALUED_OBJECT = 8;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__COMBINE_OPERATOR = KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR;
+
+  /**
+   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__INITIAL_VALUE = KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE;
+
+  /**
+   * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
+
+  /**
+   * The feature id for the '<em><b>Label</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT__TYPE = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Valued Object</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LUSTRE_VALUED_OBJECT_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl <em>Node Declaration</em>}' class.
@@ -1032,7 +726,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeDeclaration()
    * @generated
    */
-  int NODE_DECLARATION = 18;
+  int NODE_DECLARATION = 9;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1080,49 +774,22 @@ public interface LustrePackage extends EPackage
   int NODE_DECLARATION__HAS_STATE = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Static Params</b></em>' containment reference list.
+   * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__STATIC_PARAMS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 2;
+  int NODE_DECLARATION__INPUTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Input</b></em>' containment reference.
+   * The feature id for the '<em><b>Outputs</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__INPUT = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Output</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_DECLARATION__OUTPUT = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 4;
-
-  /**
-   * The feature id for the '<em><b>Effective Node</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_DECLARATION__EFFECTIVE_NODE = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 5;
-
-  /**
-   * The feature id for the '<em><b>Static Args</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_DECLARATION__STATIC_ARGS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 6;
+  int NODE_DECLARATION__OUTPUTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Constants</b></em>' containment reference list.
@@ -1131,7 +798,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__CONSTANTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 7;
+  int NODE_DECLARATION__CONSTANTS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Variables</b></em>' containment reference list.
@@ -1140,7 +807,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__VARIABLES = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 8;
+  int NODE_DECLARATION__VARIABLES = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Equations</b></em>' containment reference list.
@@ -1149,7 +816,16 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__EQUATIONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 9;
+  int NODE_DECLARATION__EQUATIONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 6;
+
+  /**
+   * The feature id for the '<em><b>Emissions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NODE_DECLARATION__EMISSIONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Assertions</b></em>' containment reference list.
@@ -1158,7 +834,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__ASSERTIONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 10;
+  int NODE_DECLARATION__ASSERTIONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Automatons</b></em>' containment reference list.
@@ -1167,7 +843,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION__AUTOMATONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 11;
+  int NODE_DECLARATION__AUTOMATONS = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 9;
 
   /**
    * The number of structural features of the '<em>Node Declaration</em>' class.
@@ -1176,7 +852,7 @@ public interface LustrePackage extends EPackage
    * @generated
    * @ordered
    */
-  int NODE_DECLARATION_FEATURE_COUNT = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 12;
+  int NODE_DECLARATION_FEATURE_COUNT = KExpressionsPackage.DECLARATION_FEATURE_COUNT + 10;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.NodeValuedObjectImpl <em>Node Valued Object</em>}' class.
@@ -1186,7 +862,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeValuedObject()
    * @generated
    */
-  int NODE_VALUED_OBJECT = 19;
+  int NODE_VALUED_OBJECT = 10;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1259,7 +935,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getEquation()
    * @generated
    */
-  int EQUATION = 20;
+  int EQUATION = 11;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1359,7 +1035,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getAssertion()
    * @generated
    */
-  int ASSERTION = 21;
+  int ASSERTION = 12;
 
   /**
    * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1396,7 +1072,7 @@ public interface LustrePackage extends EPackage
    * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStateValuedObject()
    * @generated
    */
-  int STATE_VALUED_OBJECT = 22;
+  int STATE_VALUED_OBJECT = 13;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1461,143 +1137,6 @@ public interface LustrePackage extends EPackage
    */
   int STATE_VALUED_OBJECT_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
 
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
-   * @generated
-   */
-  int LUSTRE_VALUED_OBJECT = 23;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__NAME = KExpressionsPackage.VALUED_OBJECT__NAME;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__ANNOTATIONS = KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS;
-
-  /**
-   * The feature id for the '<em><b>Combine Operator</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__COMBINE_OPERATOR = KExpressionsPackage.VALUED_OBJECT__COMBINE_OPERATOR;
-
-  /**
-   * The feature id for the '<em><b>Initial Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__INITIAL_VALUE = KExpressionsPackage.VALUED_OBJECT__INITIAL_VALUE;
-
-  /**
-   * The feature id for the '<em><b>Cardinalities</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__CARDINALITIES = KExpressionsPackage.VALUED_OBJECT__CARDINALITIES;
-
-  /**
-   * The feature id for the '<em><b>Label</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__LABEL = KExpressionsPackage.VALUED_OBJECT__LABEL;
-
-  /**
-   * The feature id for the '<em><b>Type</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT__TYPE = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Valued Object</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LUSTRE_VALUED_OBJECT_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.lustre.lustre.impl.NodeReferenceImpl <em>Node Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.lustre.lustre.impl.NodeReferenceImpl
-   * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeReference()
-   * @generated
-   */
-  int NODE_REFERENCE = 24;
-
-  /**
-   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_REFERENCE__SCHEDULE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SCHEDULE;
-
-  /**
-   * The feature id for the '<em><b>Valued Object</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_REFERENCE__VALUED_OBJECT = KExpressionsPackage.VALUED_OBJECT_REFERENCE__VALUED_OBJECT;
-
-  /**
-   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_REFERENCE__INDICES = KExpressionsPackage.VALUED_OBJECT_REFERENCE__INDICES;
-
-  /**
-   * The feature id for the '<em><b>Sub Reference</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_REFERENCE__SUB_REFERENCE = KExpressionsPackage.VALUED_OBJECT_REFERENCE__SUB_REFERENCE;
-
-  /**
-   * The number of structural features of the '<em>Node Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NODE_REFERENCE_FEATURE_COUNT = KExpressionsPackage.VALUED_OBJECT_REFERENCE_FEATURE_COUNT + 0;
-
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram <em>Program</em>}'.
@@ -1621,372 +1160,48 @@ public interface LustrePackage extends EPackage
   EAttribute getLustreProgram_Includes();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackBody <em>Pack Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Pack Body</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackBody()
-   * @see #getLustreProgram()
-   * @generated
-   */
-  EReference getLustreProgram_PackBody();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackList <em>Pack List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Pack List</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getPackList()
-   * @see #getLustreProgram()
-   * @generated
-   */
-  EReference getLustreProgram_PackList();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.PackList <em>Pack List</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Pack List</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackList
-   * @generated
-   */
-  EClass getPackList();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackList#getModelDeclarations <em>Model Declarations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Model Declarations</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackList#getModelDeclarations()
-   * @see #getPackList()
-   * @generated
-   */
-  EReference getPackList_ModelDeclarations();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackList#getPackageDeclarations <em>Package Declarations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Package Declarations</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackList#getPackageDeclarations()
-   * @see #getPackList()
-   * @generated
-   */
-  EReference getPackList_PackageDeclarations();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackList#getPackageEquations <em>Package Equations</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Package Equations</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackList#getPackageEquations()
-   * @see #getPackList()
-   * @generated
-   */
-  EReference getPackList_PackageEquations();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration <em>Model Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Model Declaration</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration
-   * @generated
-   */
-  EClass getModelDeclaration();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getName()
-   * @see #getModelDeclaration()
-   * @generated
-   */
-  EAttribute getModelDeclaration_Name();
-
-  /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getUsesIds <em>Uses Ids</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Uses Ids</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getUsesIds()
-   * @see #getModelDeclaration()
-   * @generated
-   */
-  EAttribute getModelDeclaration_UsesIds();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getNeedsParams <em>Needs Params</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Needs Params</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getNeedsParams()
-   * @see #getModelDeclaration()
-   * @generated
-   */
-  EReference getModelDeclaration_NeedsParams();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getProvisions <em>Provisions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Provisions</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getProvisions()
-   * @see #getModelDeclaration()
-   * @generated
-   */
-  EReference getModelDeclaration_Provisions();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getBody <em>Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Body</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ModelDeclaration#getBody()
-   * @see #getModelDeclaration()
-   * @generated
-   */
-  EReference getModelDeclaration_Body();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.Provide <em>Provide</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Provide</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide
-   * @generated
-   */
-  EClass getProvide();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.Provide#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getName()
-   * @see #getProvide()
-   * @generated
-   */
-  EAttribute getProvide_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.Provide#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getType()
-   * @see #getProvide()
-   * @generated
-   */
-  EAttribute getProvide_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.Provide#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getValue()
-   * @see #getProvide()
-   * @generated
-   */
-  EReference getProvide_Value();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.Provide#getTypes <em>Types</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Types</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getTypes()
-   * @see #getProvide()
-   * @generated
-   */
-  EReference getProvide_Types();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.Provide#getStaticParams <em>Static Params</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Static Params</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getStaticParams()
-   * @see #getProvide()
-   * @generated
-   */
-  EReference getProvide_StaticParams();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.Provide#getInput <em>Input</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Input</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getInput()
-   * @see #getProvide()
-   * @generated
-   */
-  EReference getProvide_Input();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.Provide#getOutput <em>Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Output</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Provide#getOutput()
-   * @see #getProvide()
-   * @generated
-   */
-  EReference getProvide_Output();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration <em>Package Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Package Declaration</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration
-   * @generated
-   */
-  EClass getPackageDeclaration();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getName()
-   * @see #getPackageDeclaration()
-   * @generated
-   */
-  EAttribute getPackageDeclaration_Name();
-
-  /**
-   * Returns the meta object for the attribute list '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getUsesIds <em>Uses Ids</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute list '<em>Uses Ids</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getUsesIds()
-   * @see #getPackageDeclaration()
-   * @generated
-   */
-  EAttribute getPackageDeclaration_UsesIds();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getProvisions <em>Provisions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Provisions</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getProvisions()
-   * @see #getPackageDeclaration()
-   * @generated
-   */
-  EReference getPackageDeclaration_Provisions();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getBody <em>Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Body</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageDeclaration#getBody()
-   * @see #getPackageDeclaration()
-   * @generated
-   */
-  EReference getPackageDeclaration_Body();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.PackageEquation <em>Package Equation</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Package Equation</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageEquation
-   * @generated
-   */
-  EClass getPackageEquation();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.PackageEquation#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageEquation#getName()
-   * @see #getPackageEquation()
-   * @generated
-   */
-  EAttribute getPackageEquation_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.PackageEquation#getEqOrIs <em>Eq Or Is</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Eq Or Is</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageEquation#getEqOrIs()
-   * @see #getPackageEquation()
-   * @generated
-   */
-  EAttribute getPackageEquation_EqOrIs();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackageEquation#getByNameStaticArgs <em>By Name Static Args</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>By Name Static Args</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackageEquation#getByNameStaticArgs()
-   * @see #getPackageEquation()
-   * @generated
-   */
-  EReference getPackageEquation_ByNameStaticArgs();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.PackBody <em>Pack Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Pack Body</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackBody
-   * @generated
-   */
-  EClass getPackBody();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackBody#getConstants <em>Constants</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getConstants <em>Constants</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Constants</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackBody#getConstants()
-   * @see #getPackBody()
+   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getConstants()
+   * @see #getLustreProgram()
    * @generated
    */
-  EReference getPackBody_Constants();
+  EReference getLustreProgram_Constants();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackBody#getTypes <em>Types</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getTypes <em>Types</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Types</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackBody#getTypes()
-   * @see #getPackBody()
+   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getTypes()
+   * @see #getLustreProgram()
    * @generated
    */
-  EReference getPackBody_Types();
+  EReference getLustreProgram_Types();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackBody#getExternals <em>Externals</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getExternals <em>Externals</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Externals</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackBody#getExternals()
-   * @see #getPackBody()
+   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getExternals()
+   * @see #getLustreProgram()
    * @generated
    */
-  EReference getPackBody_Externals();
+  EReference getLustreProgram_Externals();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.PackBody#getNodes <em>Nodes</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.LustreProgram#getNodes <em>Nodes</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Nodes</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.PackBody#getNodes()
-   * @see #getPackBody()
+   * @see de.cau.cs.kieler.lustre.lustre.LustreProgram#getNodes()
+   * @see #getLustreProgram()
    * @generated
    */
-  EReference getPackBody_Nodes();
+  EReference getLustreProgram_Nodes();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.TypeDeclaration <em>Type Declaration</em>}'.
@@ -2032,91 +1247,15 @@ public interface LustrePackage extends EPackage
   EAttribute getTypeDeclaration_Enums();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.TypeDeclaration#getVariables <em>Variables</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.TypeDeclaration#getVariables <em>Variables</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Variables</em>'.
+   * @return the meta object for the containment reference list '<em>Variables</em>'.
    * @see de.cau.cs.kieler.lustre.lustre.TypeDeclaration#getVariables()
    * @see #getTypeDeclaration()
    * @generated
    */
   EReference getTypeDeclaration_Variables();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.TypeDeclaration#getValues <em>Values</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Values</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.TypeDeclaration#getValues()
-   * @see #getTypeDeclaration()
-   * @generated
-   */
-  EReference getTypeDeclaration_Values();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration <em>External Node Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>External Node Declaration</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
-   * @generated
-   */
-  EClass getExternalNodeDeclaration();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isIsUnsafe <em>Is Unsafe</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Is Unsafe</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isIsUnsafe()
-   * @see #getExternalNodeDeclaration()
-   * @generated
-   */
-  EAttribute getExternalNodeDeclaration_IsUnsafe();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isHasState <em>Has State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Has State</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isHasState()
-   * @see #getExternalNodeDeclaration()
-   * @generated
-   */
-  EAttribute getExternalNodeDeclaration_HasState();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getName()
-   * @see #getExternalNodeDeclaration()
-   * @generated
-   */
-  EAttribute getExternalNodeDeclaration_Name();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInput <em>Input</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Input</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInput()
-   * @see #getExternalNodeDeclaration()
-   * @generated
-   */
-  EReference getExternalNodeDeclaration_Input();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutput <em>Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Output</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutput()
-   * @see #getExternalNodeDeclaration()
-   * @generated
-   */
-  EReference getExternalNodeDeclaration_Output();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.Automaton <em>Automaton</em>}'.
@@ -2214,6 +1353,17 @@ public interface LustrePackage extends EPackage
    * @generated
    */
   EReference getAState_Equations();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AState#getEmissions <em>Emissions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Emissions</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.AState#getEmissions()
+   * @see #getAState()
+   * @generated
+   */
+  EReference getAState_Emissions();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.AState#getAssertions <em>Assertions</em>}'.
@@ -2335,208 +1485,100 @@ public interface LustrePackage extends EPackage
   EReference getAnAction_NextState();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.Params <em>Params</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration <em>External Node Declaration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Params</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Params
+   * @return the meta object for class '<em>External Node Declaration</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
    * @generated
    */
-  EClass getParams();
+  EClass getExternalNodeDeclaration();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.Params#getParameter <em>Parameter</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isIsUnsafe <em>Is Unsafe</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Parameter</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.Params#getParameter()
-   * @see #getParams()
+   * @return the meta object for the attribute '<em>Is Unsafe</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isIsUnsafe()
+   * @see #getExternalNodeDeclaration()
    * @generated
    */
-  EReference getParams_Parameter();
+  EAttribute getExternalNodeDeclaration_IsUnsafe();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.StaticParam <em>Static Param</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isHasState <em>Has State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Static Param</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticParam
+   * @return the meta object for the attribute '<em>Has State</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#isHasState()
+   * @see #getExternalNodeDeclaration()
    * @generated
    */
-  EClass getStaticParam();
+  EAttribute getExternalNodeDeclaration_HasState();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.StaticParam#getName <em>Name</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInputs <em>Inputs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticParam#getName()
-   * @see #getStaticParam()
+   * @return the meta object for the containment reference list '<em>Inputs</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getInputs()
+   * @see #getExternalNodeDeclaration()
    * @generated
    */
-  EAttribute getStaticParam_Name();
+  EReference getExternalNodeDeclaration_Inputs();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.StaticParam#getType <em>Type</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutputs <em>Outputs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticParam#getType()
-   * @see #getStaticParam()
+   * @return the meta object for the containment reference list '<em>Outputs</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration#getOutputs()
+   * @see #getExternalNodeDeclaration()
    * @generated
    */
-  EAttribute getStaticParam_Type();
+  EReference getExternalNodeDeclaration_Outputs();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.StaticParam#getNodeInput <em>Node Input</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration <em>Variable Declaration</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Node Input</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticParam#getNodeInput()
-   * @see #getStaticParam()
+   * @return the meta object for class '<em>Variable Declaration</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
    * @generated
    */
-  EReference getStaticParam_NodeInput();
+  EClass getLustreVariableDeclaration();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.StaticParam#getNodeOutput <em>Node Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Node Output</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticParam#getNodeOutput()
-   * @see #getStaticParam()
-   * @generated
-   */
-  EReference getStaticParam_NodeOutput();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.StaticArg <em>Static Arg</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Static Arg</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticArg
-   * @generated
-   */
-  EClass getStaticArg();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticArg#getType()
-   * @see #getStaticArg()
-   * @generated
-   */
-  EAttribute getStaticArg_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticArg#getExpr()
-   * @see #getStaticArg()
-   * @generated
-   */
-  EReference getStaticArg_Expr();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticArg#getName()
-   * @see #getStaticArg()
-   * @generated
-   */
-  EReference getStaticArg_Name();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.StaticArg#getStaticArgs <em>Static Args</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Static Args</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.StaticArg#getStaticArgs()
-   * @see #getStaticArg()
-   * @generated
-   */
-  EReference getStaticArg_StaticArgs();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg <em>By Name Static Arg</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>By Name Static Arg</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ByNameStaticArg
-   * @generated
-   */
-  EClass getByNameStaticArg();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getName()
-   * @see #getByNameStaticArg()
-   * @generated
-   */
-  EAttribute getByNameStaticArg_Name();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getType()
-   * @see #getByNameStaticArg()
-   * @generated
-   */
-  EAttribute getByNameStaticArg_Type();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getExpr <em>Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expr</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ByNameStaticArg#getExpr()
-   * @see #getByNameStaticArg()
-   * @generated
-   */
-  EReference getByNameStaticArg_Expr();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration <em>Clocked Variable Declaration</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Clocked Variable Declaration</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
-   * @generated
-   */
-  EClass getClockedVariableDeclaration();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration#getVardecl <em>Vardecl</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Vardecl</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration#getVardecl()
-   * @see #getClockedVariableDeclaration()
-   * @generated
-   */
-  EReference getClockedVariableDeclaration_Vardecl();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration#getClockExpr <em>Clock Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration#getClockExpr <em>Clock Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Clock Expr</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration#getClockExpr()
-   * @see #getClockedVariableDeclaration()
+   * @see de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration#getClockExpr()
+   * @see #getLustreVariableDeclaration()
    * @generated
    */
-  EReference getClockedVariableDeclaration_ClockExpr();
+  EReference getLustreVariableDeclaration_ClockExpr();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject <em>Valued Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Valued Object</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreValuedObject
+   * @generated
+   */
+  EClass getLustreValuedObject();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.LustreValuedObject#getType()
+   * @see #getLustreValuedObject()
+   * @generated
+   */
+  EAttribute getLustreValuedObject_Type();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration <em>Node Declaration</em>}'.
@@ -2571,59 +1613,26 @@ public interface LustrePackage extends EPackage
   EAttribute getNodeDeclaration_HasState();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticParams <em>Static Params</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInputs <em>Inputs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Static Params</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticParams()
+   * @return the meta object for the containment reference list '<em>Inputs</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInputs()
    * @see #getNodeDeclaration()
    * @generated
    */
-  EReference getNodeDeclaration_StaticParams();
+  EReference getNodeDeclaration_Inputs();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInput <em>Input</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutputs <em>Outputs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Input</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getInput()
+   * @return the meta object for the containment reference list '<em>Outputs</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutputs()
    * @see #getNodeDeclaration()
    * @generated
    */
-  EReference getNodeDeclaration_Input();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutput <em>Output</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Output</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getOutput()
-   * @see #getNodeDeclaration()
-   * @generated
-   */
-  EReference getNodeDeclaration_Output();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode <em>Effective Node</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Effective Node</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEffectiveNode()
-   * @see #getNodeDeclaration()
-   * @generated
-   */
-  EReference getNodeDeclaration_EffectiveNode();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticArgs <em>Static Args</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Static Args</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getStaticArgs()
-   * @see #getNodeDeclaration()
-   * @generated
-   */
-  EReference getNodeDeclaration_StaticArgs();
+  EReference getNodeDeclaration_Outputs();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getConstants <em>Constants</em>}'.
@@ -2657,6 +1666,17 @@ public interface LustrePackage extends EPackage
    * @generated
    */
   EReference getNodeDeclaration_Equations();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEmissions <em>Emissions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Emissions</em>'.
+   * @see de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getEmissions()
+   * @see #getNodeDeclaration()
+   * @generated
+   */
+  EReference getNodeDeclaration_Emissions();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.lustre.NodeDeclaration#getAssertions <em>Assertions</em>}'.
@@ -2743,37 +1763,6 @@ public interface LustrePackage extends EPackage
   EClass getStateValuedObject();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject <em>Valued Object</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Valued Object</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.LustreValuedObject
-   * @generated
-   */
-  EClass getLustreValuedObject();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.lustre.LustreValuedObject#getType <em>Type</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Type</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.LustreValuedObject#getType()
-   * @see #getLustreValuedObject()
-   * @generated
-   */
-  EAttribute getLustreValuedObject_Type();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.lustre.NodeReference <em>Node Reference</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Node Reference</em>'.
-   * @see de.cau.cs.kieler.lustre.lustre.NodeReference
-   * @generated
-   */
-  EClass getNodeReference();
-
-  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2815,264 +1804,12 @@ public interface LustrePackage extends EPackage
     EAttribute LUSTRE_PROGRAM__INCLUDES = eINSTANCE.getLustreProgram_Includes();
 
     /**
-     * The meta object literal for the '<em><b>Pack Body</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LUSTRE_PROGRAM__PACK_BODY = eINSTANCE.getLustreProgram_PackBody();
-
-    /**
-     * The meta object literal for the '<em><b>Pack List</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference LUSTRE_PROGRAM__PACK_LIST = eINSTANCE.getLustreProgram_PackList();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackListImpl <em>Pack List</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.PackListImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackList()
-     * @generated
-     */
-    EClass PACK_LIST = eINSTANCE.getPackList();
-
-    /**
-     * The meta object literal for the '<em><b>Model Declarations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACK_LIST__MODEL_DECLARATIONS = eINSTANCE.getPackList_ModelDeclarations();
-
-    /**
-     * The meta object literal for the '<em><b>Package Declarations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACK_LIST__PACKAGE_DECLARATIONS = eINSTANCE.getPackList_PackageDeclarations();
-
-    /**
-     * The meta object literal for the '<em><b>Package Equations</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACK_LIST__PACKAGE_EQUATIONS = eINSTANCE.getPackList_PackageEquations();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ModelDeclarationImpl <em>Model Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ModelDeclarationImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getModelDeclaration()
-     * @generated
-     */
-    EClass MODEL_DECLARATION = eINSTANCE.getModelDeclaration();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MODEL_DECLARATION__NAME = eINSTANCE.getModelDeclaration_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Uses Ids</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MODEL_DECLARATION__USES_IDS = eINSTANCE.getModelDeclaration_UsesIds();
-
-    /**
-     * The meta object literal for the '<em><b>Needs Params</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MODEL_DECLARATION__NEEDS_PARAMS = eINSTANCE.getModelDeclaration_NeedsParams();
-
-    /**
-     * The meta object literal for the '<em><b>Provisions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MODEL_DECLARATION__PROVISIONS = eINSTANCE.getModelDeclaration_Provisions();
-
-    /**
-     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MODEL_DECLARATION__BODY = eINSTANCE.getModelDeclaration_Body();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ProvideImpl <em>Provide</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ProvideImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getProvide()
-     * @generated
-     */
-    EClass PROVIDE = eINSTANCE.getProvide();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROVIDE__NAME = eINSTANCE.getProvide_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PROVIDE__TYPE = eINSTANCE.getProvide_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROVIDE__VALUE = eINSTANCE.getProvide_Value();
-
-    /**
-     * The meta object literal for the '<em><b>Types</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROVIDE__TYPES = eINSTANCE.getProvide_Types();
-
-    /**
-     * The meta object literal for the '<em><b>Static Params</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROVIDE__STATIC_PARAMS = eINSTANCE.getProvide_StaticParams();
-
-    /**
-     * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROVIDE__INPUT = eINSTANCE.getProvide_Input();
-
-    /**
-     * The meta object literal for the '<em><b>Output</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROVIDE__OUTPUT = eINSTANCE.getProvide_Output();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackageDeclarationImpl <em>Package Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.PackageDeclarationImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackageDeclaration()
-     * @generated
-     */
-    EClass PACKAGE_DECLARATION = eINSTANCE.getPackageDeclaration();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PACKAGE_DECLARATION__NAME = eINSTANCE.getPackageDeclaration_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Uses Ids</b></em>' attribute list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PACKAGE_DECLARATION__USES_IDS = eINSTANCE.getPackageDeclaration_UsesIds();
-
-    /**
-     * The meta object literal for the '<em><b>Provisions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACKAGE_DECLARATION__PROVISIONS = eINSTANCE.getPackageDeclaration_Provisions();
-
-    /**
-     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACKAGE_DECLARATION__BODY = eINSTANCE.getPackageDeclaration_Body();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackageEquationImpl <em>Package Equation</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.PackageEquationImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackageEquation()
-     * @generated
-     */
-    EClass PACKAGE_EQUATION = eINSTANCE.getPackageEquation();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PACKAGE_EQUATION__NAME = eINSTANCE.getPackageEquation_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Eq Or Is</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PACKAGE_EQUATION__EQ_OR_IS = eINSTANCE.getPackageEquation_EqOrIs();
-
-    /**
-     * The meta object literal for the '<em><b>By Name Static Args</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PACKAGE_EQUATION__BY_NAME_STATIC_ARGS = eINSTANCE.getPackageEquation_ByNameStaticArgs();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.PackBodyImpl <em>Pack Body</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.PackBodyImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getPackBody()
-     * @generated
-     */
-    EClass PACK_BODY = eINSTANCE.getPackBody();
-
-    /**
      * The meta object literal for the '<em><b>Constants</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PACK_BODY__CONSTANTS = eINSTANCE.getPackBody_Constants();
+    EReference LUSTRE_PROGRAM__CONSTANTS = eINSTANCE.getLustreProgram_Constants();
 
     /**
      * The meta object literal for the '<em><b>Types</b></em>' containment reference list feature.
@@ -3080,7 +1817,7 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PACK_BODY__TYPES = eINSTANCE.getPackBody_Types();
+    EReference LUSTRE_PROGRAM__TYPES = eINSTANCE.getLustreProgram_Types();
 
     /**
      * The meta object literal for the '<em><b>Externals</b></em>' containment reference list feature.
@@ -3088,7 +1825,7 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PACK_BODY__EXTERNALS = eINSTANCE.getPackBody_Externals();
+    EReference LUSTRE_PROGRAM__EXTERNALS = eINSTANCE.getLustreProgram_Externals();
 
     /**
      * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
@@ -3096,7 +1833,7 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PACK_BODY__NODES = eINSTANCE.getPackBody_Nodes();
+    EReference LUSTRE_PROGRAM__NODES = eINSTANCE.getLustreProgram_Nodes();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.TypeDeclarationImpl <em>Type Declaration</em>}' class.
@@ -3133,70 +1870,12 @@ public interface LustrePackage extends EPackage
     EAttribute TYPE_DECLARATION__ENUMS = eINSTANCE.getTypeDeclaration_Enums();
 
     /**
-     * The meta object literal for the '<em><b>Variables</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Variables</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference TYPE_DECLARATION__VARIABLES = eINSTANCE.getTypeDeclaration_Variables();
-
-    /**
-     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference TYPE_DECLARATION__VALUES = eINSTANCE.getTypeDeclaration_Values();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl <em>External Node Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getExternalNodeDeclaration()
-     * @generated
-     */
-    EClass EXTERNAL_NODE_DECLARATION = eINSTANCE.getExternalNodeDeclaration();
-
-    /**
-     * The meta object literal for the '<em><b>Is Unsafe</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXTERNAL_NODE_DECLARATION__IS_UNSAFE = eINSTANCE.getExternalNodeDeclaration_IsUnsafe();
-
-    /**
-     * The meta object literal for the '<em><b>Has State</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXTERNAL_NODE_DECLARATION__HAS_STATE = eINSTANCE.getExternalNodeDeclaration_HasState();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXTERNAL_NODE_DECLARATION__NAME = eINSTANCE.getExternalNodeDeclaration_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXTERNAL_NODE_DECLARATION__INPUT = eINSTANCE.getExternalNodeDeclaration_Input();
-
-    /**
-     * The meta object literal for the '<em><b>Output</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EXTERNAL_NODE_DECLARATION__OUTPUT = eINSTANCE.getExternalNodeDeclaration_Output();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.AutomatonImpl <em>Automaton</em>}' class.
@@ -3273,6 +1952,14 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EReference ASTATE__EQUATIONS = eINSTANCE.getAState_Equations();
+
+    /**
+     * The meta object literal for the '<em><b>Emissions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ASTATE__EMISSIONS = eINSTANCE.getAState_Emissions();
 
     /**
      * The meta object literal for the '<em><b>Assertions</b></em>' containment reference list feature.
@@ -3367,158 +2054,56 @@ public interface LustrePackage extends EPackage
     EReference AN_ACTION__NEXT_STATE = eINSTANCE.getAnAction_NextState();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl <em>Params</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl <em>External Node Declaration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ParamsImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getParams()
+     * @see de.cau.cs.kieler.lustre.lustre.impl.ExternalNodeDeclarationImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getExternalNodeDeclaration()
      * @generated
      */
-    EClass PARAMS = eINSTANCE.getParams();
+    EClass EXTERNAL_NODE_DECLARATION = eINSTANCE.getExternalNodeDeclaration();
 
     /**
-     * The meta object literal for the '<em><b>Parameter</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Is Unsafe</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PARAMS__PARAMETER = eINSTANCE.getParams_Parameter();
+    EAttribute EXTERNAL_NODE_DECLARATION__IS_UNSAFE = eINSTANCE.getExternalNodeDeclaration_IsUnsafe();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StaticParamImpl <em>Static Param</em>}' class.
+     * The meta object literal for the '<em><b>Has State</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.StaticParamImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticParam()
      * @generated
      */
-    EClass STATIC_PARAM = eINSTANCE.getStaticParam();
+    EAttribute EXTERNAL_NODE_DECLARATION__HAS_STATE = eINSTANCE.getExternalNodeDeclaration_HasState();
 
     /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Inputs</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATIC_PARAM__NAME = eINSTANCE.getStaticParam_Name();
+    EReference EXTERNAL_NODE_DECLARATION__INPUTS = eINSTANCE.getExternalNodeDeclaration_Inputs();
 
     /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Outputs</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATIC_PARAM__TYPE = eINSTANCE.getStaticParam_Type();
+    EReference EXTERNAL_NODE_DECLARATION__OUTPUTS = eINSTANCE.getExternalNodeDeclaration_Outputs();
 
     /**
-     * The meta object literal for the '<em><b>Node Input</b></em>' containment reference feature.
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreVariableDeclarationImpl <em>Variable Declaration</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustreVariableDeclarationImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreVariableDeclaration()
      * @generated
      */
-    EReference STATIC_PARAM__NODE_INPUT = eINSTANCE.getStaticParam_NodeInput();
-
-    /**
-     * The meta object literal for the '<em><b>Node Output</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATIC_PARAM__NODE_OUTPUT = eINSTANCE.getStaticParam_NodeOutput();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.StaticArgImpl <em>Static Arg</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.StaticArgImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getStaticArg()
-     * @generated
-     */
-    EClass STATIC_ARG = eINSTANCE.getStaticArg();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute STATIC_ARG__TYPE = eINSTANCE.getStaticArg_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATIC_ARG__EXPR = eINSTANCE.getStaticArg_Expr();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATIC_ARG__NAME = eINSTANCE.getStaticArg_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Static Args</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATIC_ARG__STATIC_ARGS = eINSTANCE.getStaticArg_StaticArgs();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl <em>By Name Static Arg</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ByNameStaticArgImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getByNameStaticArg()
-     * @generated
-     */
-    EClass BY_NAME_STATIC_ARG = eINSTANCE.getByNameStaticArg();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BY_NAME_STATIC_ARG__NAME = eINSTANCE.getByNameStaticArg_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BY_NAME_STATIC_ARG__TYPE = eINSTANCE.getByNameStaticArg_Type();
-
-    /**
-     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference BY_NAME_STATIC_ARG__EXPR = eINSTANCE.getByNameStaticArg_Expr();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.ClockedVariableDeclarationImpl <em>Clocked Variable Declaration</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.ClockedVariableDeclarationImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getClockedVariableDeclaration()
-     * @generated
-     */
-    EClass CLOCKED_VARIABLE_DECLARATION = eINSTANCE.getClockedVariableDeclaration();
-
-    /**
-     * The meta object literal for the '<em><b>Vardecl</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CLOCKED_VARIABLE_DECLARATION__VARDECL = eINSTANCE.getClockedVariableDeclaration_Vardecl();
+    EClass LUSTRE_VARIABLE_DECLARATION = eINSTANCE.getLustreVariableDeclaration();
 
     /**
      * The meta object literal for the '<em><b>Clock Expr</b></em>' containment reference feature.
@@ -3526,7 +2111,25 @@ public interface LustrePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CLOCKED_VARIABLE_DECLARATION__CLOCK_EXPR = eINSTANCE.getClockedVariableDeclaration_ClockExpr();
+    EReference LUSTRE_VARIABLE_DECLARATION__CLOCK_EXPR = eINSTANCE.getLustreVariableDeclaration_ClockExpr();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl
+     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
+     * @generated
+     */
+    EClass LUSTRE_VALUED_OBJECT = eINSTANCE.getLustreValuedObject();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LUSTRE_VALUED_OBJECT__TYPE = eINSTANCE.getLustreValuedObject_Type();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.NodeDeclarationImpl <em>Node Declaration</em>}' class.
@@ -3555,44 +2158,20 @@ public interface LustrePackage extends EPackage
     EAttribute NODE_DECLARATION__HAS_STATE = eINSTANCE.getNodeDeclaration_HasState();
 
     /**
-     * The meta object literal for the '<em><b>Static Params</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Inputs</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference NODE_DECLARATION__STATIC_PARAMS = eINSTANCE.getNodeDeclaration_StaticParams();
+    EReference NODE_DECLARATION__INPUTS = eINSTANCE.getNodeDeclaration_Inputs();
 
     /**
-     * The meta object literal for the '<em><b>Input</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Outputs</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference NODE_DECLARATION__INPUT = eINSTANCE.getNodeDeclaration_Input();
-
-    /**
-     * The meta object literal for the '<em><b>Output</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference NODE_DECLARATION__OUTPUT = eINSTANCE.getNodeDeclaration_Output();
-
-    /**
-     * The meta object literal for the '<em><b>Effective Node</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference NODE_DECLARATION__EFFECTIVE_NODE = eINSTANCE.getNodeDeclaration_EffectiveNode();
-
-    /**
-     * The meta object literal for the '<em><b>Static Args</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference NODE_DECLARATION__STATIC_ARGS = eINSTANCE.getNodeDeclaration_StaticArgs();
+    EReference NODE_DECLARATION__OUTPUTS = eINSTANCE.getNodeDeclaration_Outputs();
 
     /**
      * The meta object literal for the '<em><b>Constants</b></em>' containment reference list feature.
@@ -3617,6 +2196,14 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EReference NODE_DECLARATION__EQUATIONS = eINSTANCE.getNodeDeclaration_Equations();
+
+    /**
+     * The meta object literal for the '<em><b>Emissions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NODE_DECLARATION__EMISSIONS = eINSTANCE.getNodeDeclaration_Emissions();
 
     /**
      * The meta object literal for the '<em><b>Assertions</b></em>' containment reference list feature.
@@ -3689,34 +2276,6 @@ public interface LustrePackage extends EPackage
      * @generated
      */
     EClass STATE_VALUED_OBJECT = eINSTANCE.getStateValuedObject();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl <em>Valued Object</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustreValuedObjectImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getLustreValuedObject()
-     * @generated
-     */
-    EClass LUSTRE_VALUED_OBJECT = eINSTANCE.getLustreValuedObject();
-
-    /**
-     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LUSTRE_VALUED_OBJECT__TYPE = eINSTANCE.getLustreValuedObject_Type();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.lustre.impl.NodeReferenceImpl <em>Node Reference</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.lustre.lustre.impl.NodeReferenceImpl
-     * @see de.cau.cs.kieler.lustre.lustre.impl.LustrePackageImpl#getNodeReference()
-     * @generated
-     */
-    EClass NODE_REFERENCE = eINSTANCE.getNodeReference();
 
   }
 

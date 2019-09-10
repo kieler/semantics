@@ -8,6 +8,7 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getConstants <em>Constants</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getAutomatons <em>Automatons</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.AState#getTransitions <em>Transitions</em>}</li>
@@ -96,7 +98,7 @@ public interface AState extends EObject
 
   /**
    * Returns the value of the '<em><b>Variables</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.VariableDeclaration}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variables</em>' containment reference list.
@@ -104,7 +106,7 @@ public interface AState extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<ClockedVariableDeclaration> getVariables();
+  EList<VariableDeclaration> getVariables();
 
   /**
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
@@ -117,6 +119,18 @@ public interface AState extends EObject
    * @generated
    */
   EList<Assignment> getEquations();
+
+  /**
+   * Returns the value of the '<em><b>Emissions</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Emission}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Emissions</em>' containment reference list.
+   * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getAState_Emissions()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Emission> getEmissions();
 
   /**
    * Returns the value of the '<em><b>Assertions</b></em>' containment reference list.

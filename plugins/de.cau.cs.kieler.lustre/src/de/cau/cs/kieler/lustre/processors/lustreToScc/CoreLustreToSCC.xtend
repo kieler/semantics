@@ -32,19 +32,20 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtension
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.kexpressions.keffects.Effect
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 import de.cau.cs.kieler.lustre.lustre.AState
 import de.cau.cs.kieler.lustre.lustre.ATransition
+import de.cau.cs.kieler.lustre.lustre.AnAction
 import de.cau.cs.kieler.lustre.lustre.Assertion
 import de.cau.cs.kieler.lustre.lustre.Automaton
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.LustreValuedObject
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
-import de.cau.cs.kieler.lustre.lustre.PackBody
+import de.cau.cs.kieler.lustre.lustre.StateValuedObject
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
@@ -62,8 +63,6 @@ import java.util.HashMap
 import java.util.Stack
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.lustre.lustre.AnAction
-import de.cau.cs.kieler.lustre.lustre.StateValuedObject
 
 /**
  * Basic class for Lustre to ScCharts transformations.
@@ -120,30 +119,14 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     def SCCharts transform(LustreProgram p) {
         var scchartsProgram = createSCChart
 
-        // Note: p.includes and p.packList are not handled
-        p.packBody?.processPackBody(scchartsProgram)
-
-        scchartsProgram
-    }
-
-    protected def reset() {
-        lustreToScchartsValuedObjectMap.clear
-        scchartsToLustreValuedObjectMap.clear
-        nodeToStateMap.clear
-        lustreStateToScchartsStateMap.clear
-    }
-
-    /* --------------------------------------------------------------------------------------------
-     * Structural methods for managing elements of higher order (packages, models, nodes and its interface).
-     * ----------------------------------------------------------------------------------------- */
-    protected def processPackBody(PackBody packBody, SCCharts scchartsProgram) {
+        // Note: Handle includes
         val constantsState = createState => [
             name = "constants"
         ]
 
         // ----- Constants
         var constantsExist = false;
-        for (constant : packBody.constants) {
+        for (constant : p.constants) {
             constantsExist = true;
             constant.processConstantDeclaration(constantsState)
         }
@@ -152,7 +135,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // ----- Nodes
         // In order for References to work, we need to transform the interface of all nodes first
-        for (node : packBody.nodes) {
+        for (node : p.nodes) {
             if (node instanceof NodeDeclaration) {
                 var nodeState = createState => [
                     name = node.valuedObjects.head.name
@@ -166,7 +149,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
 
         // Secondly, the remaining node is transformed into the state created above
-        for (node : packBody.nodes) {
+        for (node : p.nodes) {
             if (node instanceof NodeDeclaration) {
                 lustreToScchartsValuedObjectMap = new HashMap(constantsLustreToScchartsMap)
                 scchartsToLustreValuedObjectMap = new HashMap(constantsScchartsToLustreMap)
@@ -177,6 +160,14 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
 
     // Note: TypeDeclarations and ExternalNodeDeclarations are not handled
+        scchartsProgram
+    }
+
+    protected def reset() {
+        lustreToScchartsValuedObjectMap.clear
+        scchartsToLustreValuedObjectMap.clear
+        nodeToStateMap.clear
+        lustreStateToScchartsStateMap.clear
     }
 
     protected def processConstantDeclaration(VariableDeclaration variableDeclaration, State rootState) {
@@ -186,12 +177,12 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
     protected def processNodeDeclarations(NodeDeclaration node, State rootState) {
         // Process inputs
-        for (inputDecl : node.input.parameter) {
+        for (inputDecl : node.inputs) {
             rootState.declarations += inputDecl.createInputDeclaration(rootState)
         }
 
         // Process outputs
-        for (outputDecl : node.output.parameter) {
+        for (outputDecl : node.outputs) {
             rootState.declarations += outputDecl.createOutputDeclaration(rootState)
         }
 
@@ -202,7 +193,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // Process variables
         for (variable : node.variables) {
-            rootState.declarations += variable.createVariableDeclarationFromLustreClockedVariableDeclaration(rootState)
+            rootState.declarations += variable.createVariableDeclarationFromLustre(rootState)
         }
 
     }
@@ -277,7 +268,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
 
         for (variable : lusState.variables) {
-            state.declarations += variable.createVariableDeclarationFromLustreClockedVariableDeclaration(state)
+            state.declarations += variable.createVariableDeclarationFromLustre(state)
         }
 
         for (Assignment equation : lusState.equations) {
@@ -311,7 +302,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 newTransition.trigger = trigger
             }
 
-            for (Assignment effect : action.effects) {
+            for (Effect effect : action.effects) {
                 if (effect instanceof Equation) {
                     var assignment = getAssignmentForEquation(effect, source.root as State)
                     if (assignment !== null) {
@@ -634,13 +625,10 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             var valObj = kExpression.valuedObject
             preExpression.subExpressions += valObj.reference
 
-            val clockedVarDecl = scchartsToLustreValuedObjectMap.get(valObj).variableDeclaration.eContainer
-            if (clockedVarDecl instanceof ClockedVariableDeclaration) {
-                if (clockedVarDecl.clockExpr !== null) {
-                    preExpression.subExpressions +=
-                        createClockConjunction(
-                            clockedVarDecl.clockExpr.transformExpression(state) as ValuedObjectReference, state)
-                }
+            val varDecl = scchartsToLustreValuedObjectMap.get(valObj).variableDeclaration
+            if (varDecl.isClockedVariableDeclaration) {
+                var clockReference = varDecl.asLustreVariableDeclaration.clockExpr.transformExpression(state) as ValuedObjectReference
+                preExpression.subExpressions += createClockConjunction(clockReference, state)
             }
             return preExpression
         } else {
@@ -801,7 +789,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
             val lustreValuedObject = lustreVariableDeclaration.valuedObjects.head as LustreValuedObject
             val objType = lustreValuedObject.type
             kExpressionsVariableDeclaration.type = objType
-
+            
             val kExpressionsValuedObject = lustreValuedObject.createValuedObject(state)
             kExpressionsVariableDeclaration.valuedObjects += kExpressionsValuedObject
 
@@ -842,9 +830,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         return kExpressionsValuedObject
     }
 
-    protected def createVariableDeclarationFromLustreClockedVariableDeclaration(
-        ClockedVariableDeclaration lustreClockedVariableDeclaration, State state) {
-        var varDeclaration = lustreClockedVariableDeclaration.vardecl.createVariableDeclaration(state)
+    protected def createVariableDeclarationFromLustre(VariableDeclaration lustreClockedVariableDeclaration, State state) {
+        var varDeclaration = lustreClockedVariableDeclaration.createVariableDeclaration(state)
 
         return varDeclaration
     }
@@ -855,21 +842,17 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         var ok = true
         while (ok) {
-            var clockVarDeclContainer = clockVar.variableDeclaration.eContainer
-            if (clockVarDeclContainer instanceof ClockedVariableDeclaration) {
-                var superClockReference = clockVarDeclContainer.clockExpr as ValuedObjectReference
-                if (superClockReference !== null) {
-                    if (lustreToScchartsValuedObjectMap.containsKey(superClockReference.valuedObject)) {
-                        clockList.add(lustreToScchartsValuedObjectMap.get(superClockReference.valuedObject).reference)
-                    } else {
-                        var superClockVarDecl = createVariableDeclaration(
-                            superClockReference.valuedObject.variableDeclaration, state)
-                        clockList.add(superClockVarDecl.valuedObjects.get(0).reference)
-                    }
-                    clockVar = superClockReference.valuedObject
+            var clockVarDecl = clockVar.variableDeclaration
+            var clockReference = clockVarDecl.clock
+            if (clockReference !== null) {
+                if (lustreToScchartsValuedObjectMap.containsKey(clockReference.valuedObject)) {
+                    var sccClockValObj = lustreToScchartsValuedObjectMap.get(clockReference.valuedObject)
+                    clockList.add(sccClockValObj.reference)
                 } else {
-                    ok = false
+                    var superClockVarDecl = createVariableDeclaration(clockReference.valuedObject.variableDeclaration, state)
+                    clockList.add(superClockVarDecl.valuedObjects.get(0).reference)
                 }
+                clockVar = clockReference.valuedObject
             } else {
                 ok = false
             }

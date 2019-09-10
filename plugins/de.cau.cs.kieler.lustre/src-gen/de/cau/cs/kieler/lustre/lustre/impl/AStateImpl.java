@@ -8,11 +8,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObject;
 import de.cau.cs.kieler.kexpressions.VariableDeclaration;
 
 import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Emission;
 
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
 import de.cau.cs.kieler.lustre.lustre.Automaton;
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import java.util.Collection;
@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getConstants <em>Constants</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getVariables <em>Variables</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getEquations <em>Equations</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getEmissions <em>Emissions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getAutomatons <em>Automatons</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.lustre.impl.AStateImpl#getTransitions <em>Transitions</em>}</li>
@@ -101,7 +102,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @generated
    * @ordered
    */
-  protected EList<ClockedVariableDeclaration> variables;
+  protected EList<VariableDeclaration> variables;
 
   /**
    * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
@@ -112,6 +113,16 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @ordered
    */
   protected EList<Assignment> equations;
+
+  /**
+   * The cached value of the '{@link #getEmissions() <em>Emissions</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEmissions()
+   * @generated
+   * @ordered
+   */
+  protected EList<Emission> emissions;
 
   /**
    * The cached value of the '{@link #getAssertions() <em>Assertions</em>}' containment reference list.
@@ -260,11 +271,11 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * @generated
    */
   @Override
-  public EList<ClockedVariableDeclaration> getVariables()
+  public EList<VariableDeclaration> getVariables()
   {
     if (variables == null)
     {
-      variables = new EObjectContainmentEList<ClockedVariableDeclaration>(ClockedVariableDeclaration.class, this, LustrePackage.ASTATE__VARIABLES);
+      variables = new EObjectContainmentEList<VariableDeclaration>(VariableDeclaration.class, this, LustrePackage.ASTATE__VARIABLES);
     }
     return variables;
   }
@@ -282,6 +293,21 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
       equations = new EObjectContainmentEList<Assignment>(Assignment.class, this, LustrePackage.ASTATE__EQUATIONS);
     }
     return equations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Emission> getEmissions()
+  {
+    if (emissions == null)
+    {
+      emissions = new EObjectContainmentEList<Emission>(Emission.class, this, LustrePackage.ASTATE__EMISSIONS);
+    }
+    return emissions;
   }
 
   /**
@@ -347,6 +373,8 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
         return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__EQUATIONS:
         return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
+      case LustrePackage.ASTATE__EMISSIONS:
+        return ((InternalEList<?>)getEmissions()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__ASSERTIONS:
         return ((InternalEList<?>)getAssertions()).basicRemove(otherEnd, msgs);
       case LustrePackage.ASTATE__AUTOMATONS:
@@ -377,6 +405,8 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
         return getVariables();
       case LustrePackage.ASTATE__EQUATIONS:
         return getEquations();
+      case LustrePackage.ASTATE__EMISSIONS:
+        return getEmissions();
       case LustrePackage.ASTATE__ASSERTIONS:
         return getAssertions();
       case LustrePackage.ASTATE__AUTOMATONS:
@@ -410,11 +440,15 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
         return;
       case LustrePackage.ASTATE__VARIABLES:
         getVariables().clear();
-        getVariables().addAll((Collection<? extends ClockedVariableDeclaration>)newValue);
+        getVariables().addAll((Collection<? extends VariableDeclaration>)newValue);
         return;
       case LustrePackage.ASTATE__EQUATIONS:
         getEquations().clear();
         getEquations().addAll((Collection<? extends Assignment>)newValue);
+        return;
+      case LustrePackage.ASTATE__EMISSIONS:
+        getEmissions().clear();
+        getEmissions().addAll((Collection<? extends Emission>)newValue);
         return;
       case LustrePackage.ASTATE__ASSERTIONS:
         getAssertions().clear();
@@ -457,6 +491,9 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
       case LustrePackage.ASTATE__EQUATIONS:
         getEquations().clear();
         return;
+      case LustrePackage.ASTATE__EMISSIONS:
+        getEmissions().clear();
+        return;
       case LustrePackage.ASTATE__ASSERTIONS:
         getAssertions().clear();
         return;
@@ -490,6 +527,8 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
         return variables != null && !variables.isEmpty();
       case LustrePackage.ASTATE__EQUATIONS:
         return equations != null && !equations.isEmpty();
+      case LustrePackage.ASTATE__EMISSIONS:
+        return emissions != null && !emissions.isEmpty();
       case LustrePackage.ASTATE__ASSERTIONS:
         return assertions != null && !assertions.isEmpty();
       case LustrePackage.ASTATE__AUTOMATONS:

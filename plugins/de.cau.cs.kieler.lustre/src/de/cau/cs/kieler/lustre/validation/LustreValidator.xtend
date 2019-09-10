@@ -4,22 +4,16 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 import de.cau.cs.kieler.lustre.lustre.AState
-import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
-import de.cau.cs.kieler.lustre.lustre.ModelDeclaration
+import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
-import de.cau.cs.kieler.lustre.lustre.NodeReference
 import de.cau.cs.kieler.lustre.lustre.NodeValuedObject
-import de.cau.cs.kieler.lustre.lustre.PackBody
-import de.cau.cs.kieler.lustre.lustre.PackageDeclaration
-import de.cau.cs.kieler.lustre.lustre.PackageEquation
-import de.cau.cs.kieler.lustre.lustre.StaticParam
 import de.cau.cs.kieler.lustre.lustre.TypeDeclaration
 import java.util.HashSet
 import java.util.LinkedList
@@ -27,7 +21,6 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 
 /**
  * This class contains custom validation rules. 
@@ -53,21 +46,6 @@ class LustreValidator extends AbstractLustreValidator {
      * Checks for not supported language features.
      */
     @Check
-    def checkModelDeclaration(ModelDeclaration modelDeclaration) {
-        featureNotSupported(modelDeclaration);
-    }
-
-    @Check
-    def checkPackageDeclaration(PackageDeclaration packageDeclaration) {
-        featureNotSupported(packageDeclaration);
-    }
-
-    @Check
-    def checkPackageEquation(PackageEquation packageEquation) {
-        featureNotSupported(packageEquation);
-    }
-
-    @Check
     def checkExternalNodeDeclaration(ExternalNodeDeclaration externalNodeDeclaration) {
         featureNotSupported(externalNodeDeclaration);
     }
@@ -75,16 +53,6 @@ class LustreValidator extends AbstractLustreValidator {
     @Check
     def checkTypeDeclaration(TypeDeclaration typeNodeDeclaration) {
         featureNotSupported(typeNodeDeclaration);
-    }
-
-    @Check
-    def checkStaticParam(StaticParam staticParam) {
-        featureNotSupported(staticParam);
-    }
-
-    @Check
-    def checkNodeReference(NodeReference nodeReference) {
-        featureNotSupported(nodeReference);
     }
 
     /*
@@ -103,19 +71,19 @@ class LustreValidator extends AbstractLustreValidator {
         var superContainer = nodeDeclaration.eContainer
 
         // Check the constants
-        if (superContainer instanceof PackBody) {
+        if (superContainer instanceof LustreProgram) {
             for (constantVariableDeclaration : superContainer.constants) {
                 warnVariableExistsOrAddVariableToSet(variableNames, constantVariableDeclaration.valuedObjects)
             }
         }
 
         // Check the input parameter
-        for (parameter : nodeDeclaration.input.parameter) {
+        for (parameter : nodeDeclaration.inputs) {
             warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
         }
 
         // Check the output parameter
-        for (parameter : nodeDeclaration.output.parameter) {
+        for (parameter : nodeDeclaration.outputs) {
             warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
         }
 
@@ -125,8 +93,8 @@ class LustreValidator extends AbstractLustreValidator {
         }
 
         // Check the node variables        
-        for (clockedVariableDeclaration : nodeDeclaration.variables) {
-            warnVariableExistsOrAddVariableToSet(variableNames, clockedVariableDeclaration.vardecl.valuedObjects)
+        for (variableDeclaration : nodeDeclaration.variables) {
+            warnVariableExistsOrAddVariableToSet(variableNames, variableDeclaration.valuedObjects)
         }
     }
     
@@ -140,8 +108,8 @@ class LustreValidator extends AbstractLustreValidator {
                 variableNamesDefined.add(constValObj)
             }
         }
-        for (clockedVariableDeclaration : nodeDeclaration.variables) {
-            for (ValuedObject valObj : clockedVariableDeclaration.vardecl.valuedObjects) {
+        for (variableDeclaration : nodeDeclaration.variables) {
+            for (ValuedObject valObj : variableDeclaration.valuedObjects) {
                 variableNamesDefined.add(valObj)
             }
         }
@@ -159,10 +127,10 @@ class LustreValidator extends AbstractLustreValidator {
     }
 
     @Check
-    def checkDuplicateNodeName(PackBody packBody) {
+    def checkDuplicateNodeName(LustreProgram p) {
         val Set<String> variableNames = newHashSet()
 
-        for (node : packBody.nodes) {
+        for (node : p.nodes) {
             warnVariableExistsOrAddVariableToSet(variableNames, node.valuedObjects)
         }
 
@@ -175,13 +143,8 @@ class LustreValidator extends AbstractLustreValidator {
             if (expressionContainer.reference !== expression) {
                 
                 if (expressionContainer.reference !== null) {
-                    val referenceDeclaration = expressionContainer.reference.valuedObject.declaration.eContainer
-                    var clockExpr = null as ValuedObject;
-                    if (referenceDeclaration instanceof ClockedVariableDeclaration) {
-                        if (referenceDeclaration.clockExpr instanceof ValuedObjectReference) {
-                            clockExpr = (referenceDeclaration.clockExpr as ValuedObjectReference).valuedObject
-                        }
-                    }
+                    val referenceDeclaration = expressionContainer.reference.valuedObject.declaration as VariableDeclaration
+                    var clockExpr = referenceDeclaration.clock?.valuedObject
     
                     try {
                         if (!areClocksEqual(clockExpr, expression)) {
@@ -209,7 +172,7 @@ class LustreValidator extends AbstractLustreValidator {
                 if (calledNode instanceof NodeDeclaration) {
 
                     var numReturnValues = 0
-                    for (VariableDeclaration varDecl : calledNode.output.parameter) {
+                    for (VariableDeclaration varDecl : calledNode.outputs) {
                         numReturnValues += varDecl.valuedObjects.size
                     }
 
@@ -263,7 +226,7 @@ class LustreValidator extends AbstractLustreValidator {
             currAutomatons.remove(automaton)
         }
 
-        for (VariableDeclaration varDecl : node.output.parameter) {
+        for (VariableDeclaration varDecl : node.outputs) {
             for (ValuedObject valObj : varDecl.valuedObjects) {
                 if (!valuedObjectSet.contains(valObj)) {
                     warning(OUTPUT_NOT_DEFINED, valObj, null)

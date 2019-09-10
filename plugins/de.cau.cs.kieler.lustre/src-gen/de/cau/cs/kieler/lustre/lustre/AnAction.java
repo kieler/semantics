@@ -5,7 +5,7 @@ package de.cau.cs.kieler.lustre.lustre;
 
 import de.cau.cs.kieler.kexpressions.Expression;
 
-import de.cau.cs.kieler.kexpressions.keffects.Assignment;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -56,7 +56,7 @@ public interface AnAction extends EObject
 
   /**
    * Returns the value of the '<em><b>Effects</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Assignment}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.keffects.Effect}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Effects</em>' containment reference list.
@@ -64,7 +64,7 @@ public interface AnAction extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Assignment> getEffects();
+  EList<Effect> getEffects();
 
   /**
    * Returns the value of the '<em><b>History</b></em>' attribute.

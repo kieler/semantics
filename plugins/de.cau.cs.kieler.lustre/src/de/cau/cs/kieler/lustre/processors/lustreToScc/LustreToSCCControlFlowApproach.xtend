@@ -26,10 +26,11 @@ import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.lustre.extensions.LustreTypeExtensions
+import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.sccharts.ControlflowRegion
@@ -41,7 +42,6 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
-import de.cau.cs.kieler.lustre.extensions.LustreUtilityExtensions
 
 /**
  * @author cpa, lgr
@@ -58,7 +58,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
 
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsValuedObjectExtensions
-    @Inject extension KExpressionsTypeExtensions
+    @Inject extension LustreTypeExtensions
     @Inject extension KEffectsExtensions
     @Inject extension LustreUtilityExtensions
     @Inject extension SCChartsActionExtensions
@@ -403,8 +403,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
     }
     
     private def Expression transformConditional(ValuedObject valObj, OperatorExpression expression, State state, State varState, ControlflowRegion controlflowRegion) {
-        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++,
-                inferType(expression), varState)
+        val newValObj = if(valObj !== null) valObj else createVariableDeclaration("v" + varNameIdx++, inferType(expression), varState)
 
         val cfRegion = if(controlflowRegion === null) createControlflowRegion(state, "") else controlflowRegion
         val initalState = cfRegion.createInitialState("")

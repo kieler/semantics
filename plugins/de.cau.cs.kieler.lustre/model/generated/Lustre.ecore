@@ -4,67 +4,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="LustreProgram">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="includes" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="packBody" eType="#//PackBody"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="packList" eType="#//PackList"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PackList">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="modelDeclarations" upperBound="-1"
-        eType="#//ModelDeclaration" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="packageDeclarations" upperBound="-1"
-        eType="#//PackageDeclaration" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="packageEquations" upperBound="-1"
-        eType="#//PackageEquation" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ModelDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesIds" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="needsParams" upperBound="-1"
-        eType="#//StaticParam" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="provisions" upperBound="-1"
-        eType="#//Provide" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//PackBody"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Provide">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="types" eType="#//TypeDeclaration"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticParams" upperBound="-1"
-        eType="#//StaticParam" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Params"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Params"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PackageDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesIds" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="provisions" upperBound="-1"
-        eType="#//Provide" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//PackBody"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PackageEquation">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eqOrIs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="byNameStaticArgs" upperBound="-1"
-        eType="#//ByNameStaticArg" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PackBody">
     <eStructuralFeatures xsi:type="ecore:EReference" name="constants" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//TypeDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="externals" upperBound="-1"
-        eType="#//ExternalNodeDeclaration" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration"
         containment="true"/>
@@ -74,19 +21,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="enums" unique="false" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExternalNodeDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnsafe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Params"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Params"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Automaton">
@@ -102,9 +38,13 @@
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="#//ClockedVariableDeclaration" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emissions" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Emission"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assertions" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
@@ -123,65 +63,48 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="effects" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Effect"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="history" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nextState" eType="#//StateValuedObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Params">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" upperBound="-1"
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalNodeDeclaration" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnsafe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StaticParam">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nodeInput" eType="#//Params"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nodeOutput" eType="#//Params"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StaticArg">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticArgs" upperBound="-1"
-        eType="#//StaticArg" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ByNameStaticArg">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ClockedVariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vardecl" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
-        containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LustreVariableDeclaration" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration">
     <eStructuralFeatures xsi:type="ecore:EReference" name="clockExpr" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LustreValuedObject" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NodeDeclaration" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Declaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isUnsafe" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hasState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticParams" upperBound="-1"
-        eType="#//StaticParam" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="input" eType="#//Params"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="output" eType="#//Params"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outputs" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="effectiveNode" eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="staticArgs" upperBound="-1"
-        eType="#//StaticArg" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constants" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="variables" upperBound="-1"
-        eType="#//ClockedVariableDeclaration" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//VariableDeclaration"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="equations" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Assignment"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="emissions" upperBound="-1"
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/keffects.ecore#//Emission"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="assertions" upperBound="-1"
         eType="ecore:EClass platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//Expression"
@@ -200,8 +123,4 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StateValuedObject" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LustreValuedObject" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObject">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValueType"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NodeReference" eSuperTypes="platform:/resource/de.cau.cs.kieler.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
 </ecore:EPackage>

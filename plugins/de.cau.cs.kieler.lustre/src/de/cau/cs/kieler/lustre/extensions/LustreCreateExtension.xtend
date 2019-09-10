@@ -13,12 +13,12 @@
 package de.cau.cs.kieler.lustre.extensions
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.lustre.lustre.LustreFactory
-import de.cau.cs.kieler.lustre.lustre.LustreProgram
-import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.lustre.lustre.LustreValuedObject
 
 /**
@@ -43,6 +43,53 @@ class LustreCreateExtension {
             return (valuedObject.eContainer as VariableDeclaration).type
         }
     }
+    
+    def createLustreProgram() {
+        lustre.createLustreProgram
+    }
+    
+    def createEquation(){
+        lustre.createEquation
+    }
+    
+    def createLustreValuedObject(){
+        lustre.createLustreValuedObject
+    }
+    
+    def createLustreVariableDeclaration(){
+        lustre.createLustreVariableDeclaration
+    }
+    
+    def createLustreVariableDeclaration(Expression clockExpr){
+        var varDecl = lustre.createLustreVariableDeclaration
+        varDecl.clockExpr = clockExpr
+        
+        return varDecl
+    }
+    
+    def createNodeDeclaration(String nodeName) {
+        var node = lustre.createNodeDeclaration
+        node.valuedObjects += lustre.createNodeValuedObject => [
+            name = nodeName
+        ]
+        return node
+    }
+    
+    def createVariableDeclaration(ValuedObject valObj) {
+        var varDecl = lustre.createLustreVariableDeclaration
+        varDecl.valuedObjects += valObj
+        
+        return varDecl
+    }
+    
+    def createVariableDeclaration(ValuedObject valObj, Expression clockExpr) {
+        var varDecl = lustre.createLustreVariableDeclaration
+        varDecl.valuedObjects += valObj
+        varDecl.clockExpr = clockExpr
+        
+        return varDecl
+    }
+    
     
     /*
      * -----------------------------------------------------------------
@@ -83,10 +130,7 @@ class LustreCreateExtension {
     }
 
     def createLustreClockedVariableDeclaration(VariableDeclaration kExpressionsVariableDeclaration) {
-        val lustreVariableDeclaration = kExpressionsVariableDeclaration.createLustreVariableDeclaration
+        kExpressionsVariableDeclaration.createLustreVariableDeclaration
         
-        createClockedVariableDeclaration => [
-            vardecl = lustreVariableDeclaration
-        ]
     }
 }
