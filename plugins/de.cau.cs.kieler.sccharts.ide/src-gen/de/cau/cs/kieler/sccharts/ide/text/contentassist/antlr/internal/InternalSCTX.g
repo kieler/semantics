@@ -6336,12 +6336,6 @@ rule__DeferredType__Alternatives
 		('deep deferred')
 		{ after(grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1()); }
 	)
-	|
-	(
-		{ before(grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2()); }
-		('NONE')
-		{ after(grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2()); }
-	)
 ;
 finally {
 	restoreStackSize(stackSize);

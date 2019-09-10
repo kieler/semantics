@@ -3133,14 +3133,12 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSHALLOWDeferredKeyword_0_0 = (Keyword)cSHALLOWEnumLiteralDeclaration_0.eContents().get(0);
 		private final EnumLiteralDeclaration cDEEPEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
 		private final Keyword cDEEPDeepDeferredKeyword_1_0 = (Keyword)cDEEPEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cNONEEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cNONENONEKeyword_2_0 = (Keyword)cNONEEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum DeferredType returns sccharts::DeferredType:
-		//	SHALLOW='deferred' | DEEP='deep deferred' | NONE;
+		//	SHALLOW='deferred' | DEEP='deep deferred';
 		public EnumRule getRule() { return rule; }
 		
-		//SHALLOW='deferred' | DEEP='deep deferred' | NONE
+		//SHALLOW='deferred' | DEEP='deep deferred'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//SHALLOW='deferred'
@@ -3154,12 +3152,6 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//'deep deferred'
 		public Keyword getDEEPDeepDeferredKeyword_1_0() { return cDEEPDeepDeferredKeyword_1_0; }
-		
-		//NONE
-		public EnumLiteralDeclaration getNONEEnumLiteralDeclaration_2() { return cNONEEnumLiteralDeclaration_2; }
-		
-		//"NONE"
-		public Keyword getNONENONEKeyword_2_0() { return cNONENONEKeyword_2_0; }
 	}
 	public class ValueTypeElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.sccharts.text.SCTX.ValueType");
@@ -3866,7 +3858,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum DeferredType returns sccharts::DeferredType:
-	//	SHALLOW='deferred' | DEEP='deep deferred' | NONE;
+	//	SHALLOW='deferred' | DEEP='deep deferred';
 	public DeferredTypeElements getDeferredTypeAccess() {
 		return eDeferredType;
 	}

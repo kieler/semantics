@@ -76,7 +76,6 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
     @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsTransitionExtensions
     @Inject extension SCChartsCoreExtensions
-    @Inject extension SCChartsSerializeHRExtensions
 
     // This prefix is used for naming of all generated signals, states and regions
     static public final String GENERATED_PREFIX = "_"
@@ -173,13 +172,10 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                     while (subState.exitActions.size > 0) {
                         // transform exit actions into immediate outgoing transitions
                         val e = subState.exitActions.get(0)
-                        // TODO: make variables used in exit actions globally visible
-                        
                         for (t : subState.outgoingTransitions) {
                             val exitState = subState.parentRegion.createState(GENERATED_PREFIX + "_exit").uniqueName
                             val endExitState = subState.parentRegion.createState(GENERATED_PREFIX + "_end_exit").
                                 uniqueName
-                            t.targetState = exitState
                             val exitTransition = exitState.createTerminationTo(endExitState)
                             exitTransition.delay = DelayType::IMMEDIATE
                             exitTransition.trigger = e.trigger.copy
@@ -193,6 +189,7 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
                                 effectTransition.addEffect(t.effects.get(0))
                             t.history = HistoryType::RESET
                             t.deferred = DeferredType::NONE
+                            t.targetState = exitState
                         }
                         e.remove
                     }
@@ -242,7 +239,6 @@ class WeakSuspend extends SCChartsProcessor implements Traceable {
     }
 
     def SCCharts transform(SCCharts sccharts) {
-        println("transform weak suspend...")
         sccharts => [rootStates.forEach[transform]]
     }
 

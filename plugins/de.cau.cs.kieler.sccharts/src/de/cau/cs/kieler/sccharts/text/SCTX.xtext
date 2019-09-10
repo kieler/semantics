@@ -335,7 +335,7 @@ enum HistoryType returns sccharts::HistoryType:
     RESET = 'reset' | SHALLOW = 'shallow history' | DEEP = 'history';
     
 enum DeferredType returns sccharts::DeferredType:
-    SHALLOW = 'deferred' | DEEP = 'deep deferred' | NONE;
+    SHALLOW = 'deferred' | DEEP = 'deep deferred';
 
 @Override  
 enum ValueType returns kexpressions::ValueType:

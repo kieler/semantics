@@ -16635,14 +16635,6 @@ ruleDeferredType returns [Enumerator current=null]
 				newLeafNode(enumLiteral_1, grammarAccess.getDeferredTypeAccess().getDEEPEnumLiteralDeclaration_1());
 			}
 		)
-		    |
-		(
-			enumLiteral_2='NONE'
-			{
-				$current = grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getDeferredTypeAccess().getNONEEnumLiteralDeclaration_2());
-			}
-		)
 	)
 ;
 
