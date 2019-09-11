@@ -1,0 +1,52 @@
+grammar de.cau.cs.kieler.lustre.scade.ScadeEquations with de.cau.cs.kieler.lustre.Lustre
+
+generate scade "http://www.cau.de/cs/kieler/lustre/scade/ScadeEquations"
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://kieler.cs.cau.de/annotations" as annotations
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
+import "http://kieler.cs.cau.de/keffects/0.1.0" as keffects
+import "http://kieler.cs.cau.de/kext/0.1.0" as kext
+import "http://www.cau.de/cs/kieler/lustre/Lustre" as lustre
+
+/**
+ * This grammar represents the Lustre equations that can be extracted in SCADE Suite.
+ */
+
+ScadeProgram hidden (WS, SL_COMMENT, ML_COMMENT):
+    ('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')? 
+    (
+        equations+=ScadeEquation 
+//        | emissions+=ScadeEmission
+        | assertions+=Assertion 
+        | automatons+=Automaton
+    )*
+;
+
+ScadeEquation:
+    (
+        // Left side: (x, y, ...) or x, y, ... or x 
+        ('(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')')
+        | (references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)*)
+        | references+=ScadeValuedObject
+    )
+    operator=AssignOperator 
+    expression=Expression   
+    ';' 
+;
+
+ScadeValuedObject returns kexpressions::ValuedObject:
+    name=PrimeID
+;
+
+/*
+ * -------------------- Lexical tokens
+ */
+@Override 
+terminal ML_COMMENT: 
+    '(*' -> '*)'
+;
+ 
+@Override 
+terminal SL_COMMENT: 
+    '--' !('\n'|'\r')* ('\r'? '\n')?
+;

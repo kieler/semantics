@@ -72,6 +72,7 @@ class LustreCreateExtension {
         node.valuedObjects += lustre.createNodeValuedObject => [
             name = nodeName
         ]
+        node.setHasState(true)
         return node
     }
     

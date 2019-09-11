@@ -251,4 +251,16 @@ class KExpressionsTypeExtensions {
         valuedObject.type == type
     }
     
+    def getValueType(Value value) {
+        if (value.isBool) {
+            return ValueType.BOOL
+        } else if (value.isInt) {
+            return ValueType.INT
+        } else if (value.isFloat) {
+            return ValueType.FLOAT
+        } else {
+            return ValueType.UNKNOWN
+        }
+    }
+    
 }
