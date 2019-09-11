@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 
 /**
  * @author kolja
@@ -54,6 +55,8 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
+
+    public static val SCCHARTS_GENERATED = "sccharts-generated"
 
     override getId() {
         "de.cau.cs.kieler.sccharts.scg.processors.SCGCircuitDataflow"
@@ -79,6 +82,8 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                             for (var i = 0; i < nv.valuedObjects.length; i++)
                                 map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
                             nv.valuedObjects.last.name = nv.ssaOrigVO.name
+                            for (vo : nv.valuedObjects)
+                                VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                             if (nv.input || nv.output)
                                 it.declarations.add(nv)
                             else
@@ -94,7 +99,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     }
                     for (n : scg.nodes) {
                         if (n instanceof Assignment) {
-                            nr.equations.add(n.copy.transformAssignment(map))
+                            nr.equations.add(n.reference.valuedObject.createAssignment(n.expression).transformAssignment(map))
                         }
                     }
                 ])
@@ -113,11 +118,16 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     localDec.valuedObjects.clear
                     while (dec.valuedObjects.length > 1)
                         localDec.valuedObjects.add(dec.valuedObjects.get(0))
+
                     val globalDec = dec.copy();
                     globalDec.valuedObjects.clear
                     globalDec.valuedObjects.add(dec.valuedObjects.get(0))
                     dec.replace(globalDec)
+                    for (vo : globalDec.valuedObjects)
+                        VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                     dataflowRegion.declarations.add(localDec)
+                    for (vo : localDec.valuedObjects)
+                        VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                 }
             }
         }
@@ -129,7 +139,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         for (ref : e.allReferences) {
             if (variableReplacement.containsKey(ref.valuedObject))
-                ref.valuedObject = variableReplacement.get(ref.valuedObject)
+                ref.replace(variableReplacement.get(ref.valuedObject).reference)
             else
                 print("error")
         }
@@ -137,7 +147,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
 
     def transformAssignment(Assignment a, HashMap<ValuedObject, ValuedObject> variableReplacement) {
         if (variableReplacement.containsKey(a.reference.valuedObject)) {
-            a.reference.valuedObject = variableReplacement.get(a.reference.valuedObject)
+            a.reference.replace(variableReplacement.get(a.reference.valuedObject).reference)
         } else
             print("error")
         a.expression.transformExpression(variableReplacement)
