@@ -39,6 +39,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.KExtDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 
 /**
  * @author kolja
@@ -55,6 +56,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
+    @Inject extension PragmaExtensions
 
     public static val SCCHARTS_GENERATED = "sccharts-generated"
 
@@ -72,6 +74,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
 
     override process() {
         val sccharts = createSCChart() => [
+            it.pragmas.add(createStringPragma("skinpath", "circuit"))
             for (scg : model.scgs) {
                 it.rootStates.add(createState(scg.name) => [
                     val map = <ValuedObject, ValuedObject>newHashMap
@@ -99,7 +102,8 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     }
                     for (n : scg.nodes) {
                         if (n instanceof Assignment) {
-                            nr.equations.add(n.reference.valuedObject.createAssignment(n.expression).transformAssignment(map))
+                            nr.equations.add(
+                                n.reference.valuedObject.createAssignment(n.expression).transformAssignment(map))
                         }
                     }
                 ])
@@ -132,8 +136,6 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
             }
         }
         setModel(sccharts)
-
-        println(sccharts.rootStates.get(0).serializeHR)
     }
 
     def transformExpression(Expression e, HashMap<ValuedObject, ValuedObject> variableReplacement) {
