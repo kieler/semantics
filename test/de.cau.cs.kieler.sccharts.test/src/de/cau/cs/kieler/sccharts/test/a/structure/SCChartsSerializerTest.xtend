@@ -37,7 +37,9 @@ import static org.junit.Assert.*
 import static org.junit.Assume.*
 
 import static extension java.lang.String.*
+import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import java.util.function.Predicate
 
 /**
  * Tests if all SCCharts can be serializer and parsed and yield the same model.
@@ -118,12 +120,16 @@ class SCChartsSerializerTest extends AbstractXTextModelRepositoryTest<SCCharts> 
             val comparator = builder.build
 
             val scope = new FilterComparisonScope(scc, parsed, null)
-            scope.EObjectContentFilter = [ EObject o |
-                if (o instanceof CommentAnnotation) {
-                    return false
-                }
-                return true
-            ]
+            // Does not work due to upper bound of 22 on guava dependency in emf compare
+            // Thus filter by hand
+            scc.eAllContents.filter(CommentAnnotation).toList.deleteAll(true)
+            parsed.eAllContents.filter(CommentAnnotation).toList.deleteAll(true)
+//            scope.EObjectContentFilter = [ EObject o |
+//                if (o instanceof CommentAnnotation) {
+//                    return false
+//                }
+//                return true
+//            ]
             val comparison = comparator.compare(scope)
             
             assertTrue("Serialized and ReParsed model differs from original model:\n" + comparison.differences, comparison.differences.empty)
