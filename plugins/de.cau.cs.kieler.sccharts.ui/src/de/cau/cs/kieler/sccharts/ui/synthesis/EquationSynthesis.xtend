@@ -595,16 +595,20 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     protected def KNode createKGTNode(
-        Object createExtensionObject,
+        EObject createExtensionObject,
         Object createExtensionObject2,
         Object createExtensionObject3,
         String figureId
     ) {
         // check if a figure file in the skin folder exists
-        val path = getSkinPath(usedContext)
-        for (figure : defaultFigures.get(figureId)) {
-            val kgt = path + if(!path.endsWith("/")) "/" + figure
-            if (new File(kgt).exists) {
+        if (createExtensionObject.eResource !== null &&
+            createExtensionObject.eResource.URI !== null
+        ) {
+            val sl = createExtensionObject.eResource.URI.segmentsList
+            val nsl = sl.take(sl.length - 1).drop(1)
+            val path = nsl.join("/") + "/" + getSkinPath(usedContext)
+            for (figure : defaultFigures.get(figureId)) {
+                val kgt = path + if(!path.endsWith("/")) "/" + figure
                 val newURI = org.eclipse.emf.common.util.URI.createPlatformResourceURI(kgt, false)
                 val newResourceSet = KiCoolSynthesis.KGTInjector.getInstance(XtextResourceSet)
                 newResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.FALSE)
@@ -643,7 +647,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     }
 
     protected def KNode createKGTNodeFromObject(
-        Object createExtensionObject,
+        EObject createExtensionObject,
         Object createExtensionObject2,
         Object createExtensionObject3,
         Object figureObject,
