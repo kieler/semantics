@@ -12,11 +12,6 @@ knode not {
     size: width = 4 height = 2
     properties: de.cau.cs.kieler.portSide = WEST
   }
-  
-  kport in1 {
-    size: width = 2 height = 4
-    properties: de.cau.cs.kieler.portSide = SOUTH
-  }
  
   kport out {
     size: width = 4 height = 2
