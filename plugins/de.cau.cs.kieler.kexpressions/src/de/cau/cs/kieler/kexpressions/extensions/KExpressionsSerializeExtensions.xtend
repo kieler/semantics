@@ -271,6 +271,8 @@ class KExpressionsSerializeExtensions {
 
     // -------------------------------------------------------------------------
     def dispatch CharSequence serialize(ValuedObject valuedObject) {
+        if( valuedObject.label !== null )
+            return valuedObject.label
         var vo = valuedObject.name
         for (index : valuedObject.cardinalities) {
             vo = vo + "[" + index.serialize + "]"
@@ -283,6 +285,8 @@ class KExpressionsSerializeExtensions {
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
+        if( valuedObjectReference.valuedObject.label !== null )
+            vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serialize
         }        

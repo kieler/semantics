@@ -86,6 +86,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/combineOperator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/initialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/cardinalities"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/label"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ValuedObjectReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObjectReference/valuedObject"/>

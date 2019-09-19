@@ -338,7 +338,7 @@ class DataPoolEntry {
                 JsonArray: switch (output) {
                     case KEX: return createVectorValue => [
                         for (elem : valueElem.asJsonArray.iterator.toIterable) {
-                            values.add(sim.getTypedValue(elem, output) as Value)
+                            values.add(sim.getTypedValue(elem, output) as Expression)
                         }
                     ]
                     case JSON: return new JsonArray => [
