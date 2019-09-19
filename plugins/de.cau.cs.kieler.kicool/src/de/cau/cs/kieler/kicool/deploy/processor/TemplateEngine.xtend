@@ -14,7 +14,10 @@ package de.cau.cs.kieler.kicool.deploy.processor
 
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.kicool.deploy.CommonTemplateVariables
+import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import freemarker.cache.FileTemplateLoader
 import freemarker.template.Configuration
@@ -26,15 +29,15 @@ import java.io.FileWriter
 import java.util.Locale
 import java.util.Map
 
-import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 import static extension de.cau.cs.kieler.kicool.deploy.InfrastructureMacroNames.*
+import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class TemplateEngine extends AbstractDeploymentProcessor<Object> {
+class TemplateEngine extends InplaceProcessor<CodeContainer> {
     
     public static val IProperty<Map<String, String>> TEMPLATES = 
         new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.templates", null)
@@ -44,6 +47,8 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
 
     public static val IProperty<Map<String, Map<String, Object>>> SPECIFIC_ENVIRONMENT = 
         new Property<Map<String, Map<String, Object>>>("de.cau.cs.kieler.kicool.deploy.template.environments", null)
+    
+    val logger = new Logger
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.templates"
@@ -120,11 +125,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
                 
                 var Map<String, Object> additionalTemplateEnvironment = newHashMap
                 if (additionalTemplateEnvironments.containsKey(entry.value)) {
-                    if (additionalTemplateEnvironment instanceof Map<?, ?>) {
-                        additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
-                    } else if (additionalTemplateEnvironment !== null) {
-                        logger.println("WARNING: Additional template environment is specified but not of type Map<String, String> but " + additionalTemplateEnvironment.class.name)
-                    }
+                    additionalTemplateEnvironment = additionalTemplateEnvironments.get(entry.value)
                 }
                 
                 additionalTemplateEnvironment.put(CommonTemplateVariables.TARGET, target.toString) 
@@ -157,7 +158,7 @@ class TemplateEngine extends AbstractDeploymentProcessor<Object> {
         infra.refresh
         
         // report
-        saveLog("template-report.log")
+        logger.saveLog(environment, "template-engine.log")
     }
     
     /**

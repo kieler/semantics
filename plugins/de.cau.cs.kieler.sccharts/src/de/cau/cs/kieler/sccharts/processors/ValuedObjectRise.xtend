@@ -23,6 +23,8 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.Declaration
 
 /**
  * SCCharts ValuedObject Transformation transforming local variables into global ones.
@@ -79,6 +81,9 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
         var hierarchicalScopeName = targetScope.getHierarchicalName("local")
         for(declaration : scope.declarations.immutableCopy) {
             targetScope.declarations.add(declaration)
+            if (declaration instanceof ClassDeclaration) {
+                declaration.uniqueName // Before renaming the VOs!
+            }
             for(valuedObject : declaration.valuedObjects) {
                 val oldName = valuedObject.name
                 valuedObject.name = "_" + hierarchicalScopeName + "_" + valuedObject.name
@@ -89,6 +94,12 @@ class ValuedObjectRise extends SCChartsProcessor implements Traceable {
                     } else {
                         voStore.update(valuedObject)
                     }
+                }
+            }
+            if (declaration instanceof ClassDeclaration) {
+                // After renaming the parent VOs!
+                for (vo : declaration.eAllContents.filter(Declaration).map[valuedObjects.iterator].flatten.toIterable) {
+                    voStore.update(vo)
                 }
             }
         }

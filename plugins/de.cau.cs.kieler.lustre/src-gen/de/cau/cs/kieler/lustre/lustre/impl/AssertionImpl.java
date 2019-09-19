@@ -87,6 +87,7 @@ public class AssertionImpl extends MinimalEObjectImpl.Container implements Asser
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ScheduleObjectReference> getSchedule()
   {
     if (schedule == null)
@@ -101,6 +102,7 @@ public class AssertionImpl extends MinimalEObjectImpl.Container implements Asser
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getExpr()
   {
     return expr;
@@ -128,6 +130,7 @@ public class AssertionImpl extends MinimalEObjectImpl.Container implements Asser
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setExpr(Expression newExpr)
   {
     if (newExpr != expr)

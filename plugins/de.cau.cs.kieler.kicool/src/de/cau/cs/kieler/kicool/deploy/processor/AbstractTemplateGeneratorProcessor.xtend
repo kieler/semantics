@@ -12,9 +12,10 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.io.FileWriter
@@ -25,9 +26,14 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentProcessor<I> {
-
+abstract class AbstractTemplateGeneratorProcessor<I> extends Processor<I, CodeContainer> {
+    
+    protected val logger = new Logger
     @Accessors var String genFolder = "templates-gen"
+
+    override getType() {
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+    }
     
     override process() {
         // Generate template code
@@ -37,7 +43,6 @@ abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentP
         } else {
             logger.println("== Template Generation ==")
             val cc = generateTemplate()
-            cc.snapshot
             
             logger.println
             logger.println("== Save Generated Templates ==")
@@ -61,9 +66,11 @@ abstract class AbstractTemplateGeneratorProcessor<I> extends AbstractDeploymentP
                     e.printStackTrace(logger)
                 }
             }
+            
+            model = cc
         }
         
-        saveLog("template-generation.log")
+        logger.saveLog(environment, "template-generation.log")
     }
     
     def CodeContainer generateTemplate()

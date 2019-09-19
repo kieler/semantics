@@ -133,14 +133,5 @@ class KExtValidator extends AbstractKExtValidator {
                 declaration, null, -1)
         }
     }
-    
-    @Check
-    def void checkReferenceAssignment(Assignment asm) {
-        val decl = asm.reference?.valuedObject?.eContainer
-        if (decl instanceof ClassDeclaration) {
-            if (asm.reference.subReference === null && !(asm.expression instanceof TextExpression)) {
-                error("Assignments to class/struct types are not supported.", asm.reference, null, -1)
-            }
-        }
-    }
+
 }

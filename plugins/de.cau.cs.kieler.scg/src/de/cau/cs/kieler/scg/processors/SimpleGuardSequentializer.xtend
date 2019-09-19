@@ -41,6 +41,8 @@ import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import java.util.Map
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /** 
  * @author ssm
@@ -54,6 +56,7 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension SCGCoreExtensions
     @Inject extension SCGDeclarationExtensions
     @Inject extension SCGControlFlowExtensions	
+    @Inject extension SCGMethodExtensions  
     @Inject extension AnnotationsExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGDependencyExtensions
@@ -61,6 +64,8 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension PragmaExtensions
 
     static val String ANNOTATION_HOSTCODE = "hostcode"
+    
+    val globalVOMap = <ValuedObject, ValuedObject>newHashMap
      
     override getId() {
         "de.cau.cs.kieler.scg.processors.sequentializer"
@@ -82,9 +87,11 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
         }
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             SCGGraphs.scgs += scg.transform(SCGMap.get(scg), SCGMap)                           
-        }    
+        }
+        // retain method SCGs
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))    
             
         setModel(SCGGraphs)
     }
@@ -114,11 +121,12 @@ class SimpleGuardSequentializer extends Processor<SCGraphs, SCGraphs> implements
             newSCG.createStringAnnotation(ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
         val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
+        valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
                 
         // Fix VO association in VariableStore
         val voStore = VariableStore.get(environment)
         valuedObjectMap.entrySet.forEach[ entry |
-            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            val info = voStore.getInfo(entry.key)
             if (info !== null) info.valuedObject = entry.value.head
         ]
         

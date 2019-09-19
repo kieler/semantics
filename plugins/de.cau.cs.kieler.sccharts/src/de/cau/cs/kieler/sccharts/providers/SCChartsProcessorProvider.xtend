@@ -23,6 +23,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
     
     override getProcessors() {
         #[
+            de.cau.cs.kieler.sccharts.processors.ArrayInitialisation,
             de.cau.cs.kieler.sccharts.processors.SurfaceDepth,
             de.cau.cs.kieler.sccharts.processors.TriggerEffect,
             de.cau.cs.kieler.sccharts.processors.Abort,
@@ -76,7 +77,8 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.ArduinoTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.NXJTemplateGenerator,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
-            de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer
+            de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer,
+            de.cau.cs.kieler.sccharts.processors.SclCodeEffect
         ]
     }
     

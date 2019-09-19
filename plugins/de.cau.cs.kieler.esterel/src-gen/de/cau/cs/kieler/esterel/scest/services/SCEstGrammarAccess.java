@@ -2613,6 +2613,66 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeStatementAccess().getRule();
 	}
 	
+	//ForLoop Loop:
+	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
+	//	';'
+	//	condition=BoolExpression
+	//	';'
+	//	afterthought=EffectOrAssignment?
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.ForLoopElements getForLoopAccess() {
+		return gaSCL.getForLoopAccess();
+	}
+	
+	public ParserRule getForLoopRule() {
+		return getForLoopAccess().getRule();
+	}
+	
+	//LoopDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=super::Annotation* (type=ValueType | type=HostType hostType=super::STRING) valuedObjects+=ValuedObject;
+	public SCLGrammarAccess.LoopDeclarationElements getLoopDeclarationAccess() {
+		return gaSCL.getLoopDeclarationAccess();
+	}
+	
+	public ParserRule getLoopDeclarationRule() {
+		return getLoopDeclarationAccess().getRule();
+	}
+	
+	//EffectOrAssignment keffects::Assignment:
+	//	annotations+=super::Annotation* (reference=ValuedObjectReference
+	//	operator=PostfixOperator
+	//	| reference=ValuedObjectReference
+	//	operator=AssignOperator
+	//	expression=super::Expression
+	//	| expression=super::Expression);
+	public SCLGrammarAccess.EffectOrAssignmentElements getEffectOrAssignmentAccess() {
+		return gaSCL.getEffectOrAssignmentAccess();
+	}
+	
+	public ParserRule getEffectOrAssignmentRule() {
+		return getEffectOrAssignmentAccess().getRule();
+	}
+	
+	//WhileLoop Loop:
+	//	'while' '('
+	//	condition=BoolExpression
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=super::Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.WhileLoopElements getWhileLoopAccess() {
+		return gaSCL.getWhileLoopAccess();
+	}
+	
+	public ParserRule getWhileLoopRule() {
+		return getWhileLoopAccess().getRule();
+	}
+	
 	//ModuleCall:
 	//	annotations+=super::Annotation*
 	//	'run'
@@ -2669,7 +2729,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=DeclarationWOSemicolon*
+	//	declarations+=Declaration*
 	//	statements+=super::Statement*
 	//	'}')?;
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
@@ -2988,7 +3048,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=super::STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -3134,8 +3194,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=super::Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -3162,7 +3223,8 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -3394,9 +3456,10 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}

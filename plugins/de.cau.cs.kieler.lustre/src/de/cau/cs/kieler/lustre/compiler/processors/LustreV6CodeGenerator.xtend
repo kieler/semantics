@@ -191,12 +191,11 @@ class LustreV6CodeGenerator extends AbstractSystemCompilerProcessor<LustreProgra
         }
 
         // report
-        var cclogger = logger.closeLog("lustre-compiler-report.log")
-        if (cclogger.head.code.contains("is declared as a node, but it uses no memory (i.e., it is a function)")) {
+        var log = logger.saveLog(environment, "lustre-compiler.log")
+        if (log.code.contains("is declared as a node, but it uses no memory (i.e., it is a function)")) {
             environment.setProperty(HAS_STATE, false)
         }
         
-        cclogger.snapshot
         infra.refresh
     }
     

@@ -235,6 +235,9 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     )
                     node.associateWith(wire.semanticSource)
                 } else {
+                    if (wire.sourceIsEquationTarget) {
+                        println("Equation Target: " + wire)
+                    }                    
                     node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter,
                         wire.sourceIsEquationTarget,  
                         //if (wire.wireIsLocal) LOCAL_ID else 
@@ -254,11 +257,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
                     }
                         
-                    println("Source Port> KPort@" + node.ports.head.hashCode)
+//                    println("Source Port> KPort@" + node.ports.head.hashCode)
                 }
             }            
             
-            println("Source> KNode@" + node.hashCode + ": " + wire)
+//            println("Source> KNode@" + node.hashCode + ": " + wire)
             
             nodes += node
         } 
@@ -308,11 +311,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.RIGHT)
                 }
                 
-                println("Target Port> KPort@" + node.ports.head.hashCode)
+//                println("Target Port> KPort@" + node.ports.head.hashCode)
                 
             }
             
-            println("Target> KNode@" + node.hashCode +  ": " + wire)            
+//            println("Target> KNode@" + node.hashCode +  ": " + wire)            
             
             nodes += node
         }
@@ -333,7 +336,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         
         if (sourceNode === null || targetNode === null) return;
         
-        println("Wire> KNode@" + sourceNode.hashCode + " - " + "Node@" + targetNode.hashCode +  ": " + wire)
+//        println("Wire> KNode@" + sourceNode.hashCode + " - " + "Node@" + targetNode.hashCode +  ": " + wire)
          
         var targetPort = null as KPort
         if (wire.semanticSinkReferenceDeclaration !== null) {
@@ -345,7 +348,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         if (wire.semanticSourceReferenceDeclaration !== null) {
             if (wire.semanticSource.asValuedObjectReference.subReference !== null) {
                 val p = sourceNode.getPort(wire.semanticSourceSubReference.valuedObject)
-                println("Wire> Source Port@" + p.hashCode + " for " + wire.semanticSourceSubReference.valuedObject) 
+//                println("Wire> Source Port@" + p.hashCode + " for " + wire.semanticSourceSubReference.valuedObject) 
                 sourcePort = p
             }
         }
@@ -356,10 +359,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 ].head
 //            sourcePort = wire.semanticSource.getPort(OUT_PORT, p)
             sourcePort = p
-            if (sourcePort == null) {
-                println("Port> NULL!")            
+            if (sourcePort === null) {
+//                println("Port> NULL!")            
             } else {
-                println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
+//                println("Port> " + wire.semanticSource + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
             }    
         }
         
@@ -379,7 +382,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             targetPort = targetNode.ports.filter[
                     it.getId.startsWith(PORT_IN_PREFIX)
                 ].head
-            println("Port> " + targetPort + "@" + targetPort.hashCode)
+//            println("Port> " + targetPort + "@" + targetPort.hashCode)
         }
         if (targetPort === null) {
             targetPort = targetNode.getPort(wire) => [
@@ -397,11 +400,11 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         }
         
         if (sourcePort !== null) {
-            println("Wire> KNode@" + sourceNode.hashCode + " " + 
-                "KPort@" + sourcePort.hashCode +
-                " - " + "KNode@" + targetNode.hashCode + " " +
-                "KPort@" + targetPort.hashCode +  
-                 ": " + wire)
+//            println("Wire> KNode@" + sourceNode.hashCode + " " + 
+//                "KPort@" + sourcePort.hashCode +
+//                " - " + "KNode@" + targetNode.hashCode + " " +
+//                "KPort@" + targetPort.hashCode +  
+//                 ": " + wire)
          }
         wire.source.createWireEdge(sourceNode, sourcePort, targetNode, targetPort, label)
     }
@@ -539,10 +542,10 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 
                 p.associateWith(v)          
                 node.addPort(v, p)  
-                println("Figure Port> KPort@" + p.hashCode + " for " + v)
+//                println("Figure Port> KPort@" + p.hashCode + " for " + v)
             }
             
-            println("Figure Node> KNode@" + node.hashCode)
+//            println("Figure Node> KNode@" + node.hashCode)
 
             return node
         } catch (Exception e) {
@@ -659,7 +662,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 } 
                 else if (id.startsWith(PORT_OUT_PREFIX)) {
                     createExtensionObject.addPort(PORT_OUT_PREFIX, p)
-                    println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
+//                    println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
                 }                   
             }
         }

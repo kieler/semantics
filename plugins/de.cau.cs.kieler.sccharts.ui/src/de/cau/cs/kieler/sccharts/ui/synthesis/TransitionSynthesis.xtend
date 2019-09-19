@@ -48,9 +48,6 @@ import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
  */
 @ViewSynthesisShared
 class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
-
-    public static val SynthesisOption SHOW_USER_LABELS =
-            SynthesisOption.createCheckOption("User Labels", true).setCategory(APPEARANCE)
             
     /**
      * Immediate transition will be more likely drwn from left to right as long as there are no more than this threshold
@@ -66,10 +63,6 @@ class TransitionSynthesis extends SubSynthesis<Transition, KEdge> {
     @Inject extension TransitionStyles
     @Inject extension ColorStore
     @Inject extension AdaptiveZoom
-    
-    override getDisplayedSynthesisOptions() {
-        return newLinkedList(SHOW_USER_LABELS)
-    }
 
     override performTranformation(Transition transition) {
         val edge = transition.createEdge().associateWith(transition);

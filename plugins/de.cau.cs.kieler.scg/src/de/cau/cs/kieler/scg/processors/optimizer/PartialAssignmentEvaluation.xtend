@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -44,6 +45,7 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
 
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
 
     public static val IProperty<Boolean> PARTIAL_ASSIGNMENT_EVALUATION_ENABLED = 
         new Property<Boolean>("de.cau.cs.kieler.scg.opt.partialAssignmentEvaluation", false)
@@ -68,14 +70,14 @@ class PartialAssignmentEvaluation extends InplaceProcessor<SCGraphs> implements 
     override process() {
         if (!environment.getProperty(PARTIAL_ASSIGNMENT_EVALUATION_ENABLED)) return;
         
-        model.scgs.forEach[ transform ]
+        model.scgs.ignoreMethods.forEach[ transform ]
         model = model
     }
 
     def SCGraph transform(SCGraph scg) {
         val PartialExpressionEvaluator parEval = new PartialExpressionEvaluator(<ValuedObject, Value> newHashMap) => [ 
             compute = true
-            inplace = true
+            inplace = false
         ]
             
         val nextNodes = <Node> newLinkedList(scg.nodes.head)

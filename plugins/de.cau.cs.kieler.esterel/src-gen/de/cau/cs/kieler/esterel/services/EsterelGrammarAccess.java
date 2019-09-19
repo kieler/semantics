@@ -1258,8 +1258,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//name=ID ((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType |
 		//idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":="
-		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
-		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
+		//initialValue=Expression ":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Group getGroup() { return cGroup; }
 		
 		//name=ID
@@ -1269,9 +1269,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
 		
 		//((":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
-		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression ":")?
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)) ")")?
+		//"with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | "(" (":=" initialValue=Expression
+		//":")? (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)) ")")?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//(":=" initialValue=Expression)? ":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID)
@@ -1763,8 +1763,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		// * ###               7.5 Statements                ###
 		// * ###################################################
 		// */ InstructionStatement scl::Statement:
-		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-		//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+		//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+		//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 		//	Block | LegacyDo;
 		@Override public ParserRule getRule() { return rule; }
 		
@@ -2302,8 +2302,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=Annotation* "call" procedure=[Procedure] ("(" (referenceArguments+=[Variable] (","
-		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)? ")"
-		//| '()')
+		//referenceArguments+=[Variable])*)? ")" | '()') ("(" (valueArguments+=Expression ("," valueArguments+=Expression)*)?
+		//")" | '()')
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=Annotation*
@@ -3420,9 +3420,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		@Override public ParserRule getRule() { return rule; }
 		
 		//{TrapSignal} name=ID (":=" initialValue=Expression ":" (type=EsterelValueType | idType=ID | "combine"
-		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) | ":"
-		//(type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] |
-		//combineOperator=EsterelCombineOperator)))?
+		//(type=EsterelValueType | idType=ID) "with" (combineFunction=[Function] | combineOperator=EsterelCombineOperator)) |
+		//":" (type=EsterelValueType | idType=ID | "combine" (type=EsterelValueType | idType=ID) "with"
+		//(combineFunction=[Function] | combineOperator=EsterelCombineOperator)))?
 		public Group getGroup() { return cGroup; }
 		
 		//{TrapSignal}
@@ -4575,8 +4575,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
 		//"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* | "procedure"
-		//renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
+		//renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
+		//"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
 		//renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
@@ -7664,8 +7664,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	// * ###               7.5 Statements                ###
 	// * ###################################################
 	// */ InstructionStatement scl::Statement:
-	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain |
-	//	Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
+	//	Nothing | EsterelPause | Halt | Emit | Exit | Present | Await | EsterelAssignment | Abort | Loop | EveryDo | Sustain
+	//	| Trap | Suspend | LocalSignalDeclaration | LocalVariableDeclaration | IfTest | Exec | Run | ProcedureCall | Repeat |
 	//	Block | LegacyDo;
 	public InstructionStatementElements getInstructionStatementAccess() {
 		return pInstructionStatement;
@@ -8877,8 +8877,19 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Statement:
-	//	SclAssignment | SclPostfixAssignment | Label | Conditional | LegacyConditional | Goto | Parallel | Pause | ModuleCall
-	//	| ScopeStatement | Return;
+	//	SclAssignment
+	//	| SclPostfixAssignment
+	//	| Label
+	//	| Conditional
+	//	| LegacyConditional
+	//	| Goto
+	//	| Parallel
+	//	| Pause
+	//	| ModuleCall
+	//	| ScopeStatement
+	//	| Return
+	//	| ForLoop
+	//	| WhileLoop;
 	public SCLGrammarAccess.StatementElements getStatementAccess() {
 		return gaSCL.getStatementAccess();
 	}
@@ -9060,6 +9071,66 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getScopeStatementAccess().getRule();
 	}
 	
+	//ForLoop Loop:
+	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
+	//	';'
+	//	condition=BoolExpression
+	//	';'
+	//	afterthought=EffectOrAssignment?
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.ForLoopElements getForLoopAccess() {
+		return gaSCL.getForLoopAccess();
+	}
+	
+	public ParserRule getForLoopRule() {
+		return getForLoopAccess().getRule();
+	}
+	
+	//LoopDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=super::Annotation* (type=ValueType | type=HostType hostType=super::STRING) valuedObjects+=ValuedObject;
+	public SCLGrammarAccess.LoopDeclarationElements getLoopDeclarationAccess() {
+		return gaSCL.getLoopDeclarationAccess();
+	}
+	
+	public ParserRule getLoopDeclarationRule() {
+		return getLoopDeclarationAccess().getRule();
+	}
+	
+	//EffectOrAssignment keffects::Assignment:
+	//	annotations+=super::Annotation* (reference=ValuedObjectReference
+	//	operator=PostfixOperator
+	//	| reference=ValuedObjectReference
+	//	operator=AssignOperator
+	//	expression=super::Expression
+	//	| expression=super::Expression);
+	public SCLGrammarAccess.EffectOrAssignmentElements getEffectOrAssignmentAccess() {
+		return gaSCL.getEffectOrAssignmentAccess();
+	}
+	
+	public ParserRule getEffectOrAssignmentRule() {
+		return getEffectOrAssignmentAccess().getRule();
+	}
+	
+	//WhileLoop Loop:
+	//	'while' '('
+	//	condition=BoolExpression
+	//	')' '{'
+	//	declarations+=Declaration*
+	//	statements+=Statement*
+	//	'}'
+	//	semicolon?=';'?;
+	public SCLGrammarAccess.WhileLoopElements getWhileLoopAccess() {
+		return gaSCL.getWhileLoopAccess();
+	}
+	
+	public ParserRule getWhileLoopRule() {
+		return getWhileLoopAccess().getRule();
+	}
+	
 	//ModuleCall:
 	//	annotations+=super::Annotation*
 	//	'run'
@@ -9116,7 +9187,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//	parameterDeclarations+=VariableDeclarationWOSemicolon)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?
 	//	('{'
 	//	annotations+=CommentAnnotatonSL?
-	//	declarations+=DeclarationWOSemicolon*
+	//	declarations+=Declaration*
 	//	statements+=Statement*
 	//	'}')?;
 	public SCLGrammarAccess.MethodDeclarationWOSemicolonElements getMethodDeclarationWOSemicolonAccess() {
@@ -9435,7 +9506,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=super::Expression ']')* ('=' initialValue=super::Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=super::STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -9581,8 +9652,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=super::Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=super::Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -9609,7 +9681,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -9841,9 +9914,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}

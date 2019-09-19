@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://rtsys.informatik.uni-kiel.de/kieler
  * 
  * Copyright 2016 by
@@ -49,6 +49,7 @@ import org.eclipse.swt.SWT
 import org.eclipse.swt.layout.FormLayout
 import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.layout.FillLayout
+import de.cau.cs.kieler.kicool.ui.InstallSystemsHandler
 
 /**
  * The Kieler Compiler View, formerly knownas IMB Compiler View
@@ -58,17 +59,17 @@ import org.eclipse.swt.layout.FillLayout
  * @kieler.rating 2016-11-04 proposed yellow 
  */
 class CompilerView extends DiagramViewPart {
-    
+
     public static val ID = "de.cau.cs.kieler.kicool.ui.view.compiler"
-    
+
     @Accessors private static val List<CompilerView> VIEWS = newLinkedList
-    
+
     @Accessors private CompilerViewPartListener partListener
     @Accessors private IMemento memento
     @Accessors private EditPartSystemManager editPartSystemManager = null
-    
+
     private var addButtonsDelay = true
-    
+
     // Must be initialized in the view contributions. Hence, maybe null!
     @Accessors private var SystemSelectionManager systemSelectionManager = null
     @Accessors private var DeveloperToggle developerToggle = null
@@ -81,36 +82,39 @@ class CompilerView extends DiagramViewPart {
     @Accessors private var CompileTracingToggle compileTracingToggle = null
     @Accessors private var DebugEnvironmentModelsToggle debugEnvironmentModelsToggle = null
     @Accessors private var ShowPrivateSystemsToggle showPrivateSystemsToggle = null
-    
+
     @Accessors private var CompilationAction compilationAction = null
-    
+
+    new() {
+        InstallSystemsHandler.view = this
+    }
+
     /**
      * {@inheritDoc}
      */
     override createPartControl(Composite parent) {
         editPartSystemManager = new EditPartSystemManager(this)
         systemSelectionManager = new SystemSelectionManager(this)
-        
+
         super.createPartControl(parent)
 
         val toolBarManager = getViewSite.getActionBars.getToolBarManager
         val menuManager = getViewSite.getActionBars.getMenuManager
-        
+
         addContributions(toolBarManager, menuManager)
         addButtons()
 
         partListener = new CompilerViewPartListener(this, parent)
         VIEWS.add(this)
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    override dispose() {    
+    override dispose() {
         VIEWS.remove(this)
     }
-    
-    
+
     /* Workaround for the creation order of the DiagramViewPart */
     protected override addButtons() {
         if (addButtonsDelay) {
@@ -119,22 +123,22 @@ class CompilerView extends DiagramViewPart {
             super.addButtons();
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
     protected def void addContributions(IToolBarManager toolBar, IMenuManager menu) {
-        
+
         // Compile
-        compilationAction = new CompilationAction(this) 
-        toolBar.add(compilationAction.action)        
+        compilationAction = new CompilationAction(this)
+        toolBar.add(compilationAction.action)
         toolBar.add(systemSelectionManager.contribution)
-        
+
         forwardResultToggle = new ForwardResultToggle(this)
         autoCompileToggle = new AutoCompileToggle(this)
         compileInplaceToggle = new CompileInplaceToggle(this)
         compileTracingToggle = new CompileTracingToggle(this)
-        
+
         developerToggle = new DeveloperToggle(this)
         flattenSystemViewToggle = new FlattenSystemViewToggle(this)
         // flattenSystemViewToggle will be added inside developerToggle to have correct visibility
@@ -142,27 +146,26 @@ class CompilerView extends DiagramViewPart {
         debugEnvironmentModelsToggle = new DebugEnvironmentModelsToggle(this)
         showPrivateSystemsToggle = new ShowPrivateSystemsToggle(this)
         visualLayoutFeedbackToggle = new VisualLayoutFeedbackToggle(this)
-        
+
         toolBar.add(new Separator)
         // The standard klighd view part menu entries will be inserted after this separator.    
-
         menu.add(forwardResultToggle.action)
         menu.add(autoCompileToggle.action)
         menu.add(compileInplaceToggle.action)
         menu.add(compileTracingToggle.action)
         menu.add(new Separator)
         menu.add(visualLayoutFeedbackToggle.action)
-        
+
         menu.add(new Separator)
-        
+
         val MenuManager skinMenu = new MenuManager("Synthesis Skins")
         skinSelectionActions = new SkinSelectionActions(this)
-        skinSelectionActions.actions.forEach[ skinMenu.add(it.action) ]
+        skinSelectionActions.actions.forEach[skinMenu.add(it.action)]
         menu.add(skinMenu)
         menu.add(developerToggle.action)
         menu.add(debugEnvironmentModelsToggle.action)
         menu.add(showPrivateSystemsToggle.action)
-        
+
         if (memento !== null) {
             memento.loadCheckedValue(forwardResultToggle)
             memento.loadCheckedValue(autoCompileToggle)
@@ -175,16 +178,16 @@ class CompilerView extends DiagramViewPart {
             memento.loadCheckedValue(debugEnvironmentModelsToggle)
             memento.loadCheckedValue(showPrivateSystemsToggle)
         }
-        
+
         menu.add(new Separator)
-        // The standard klighd view part menu entries will be inserted after this separator.    
-    }   
-    
+    // The standard klighd view part menu entries will be inserted after this separator.    
+    }
+
     override init(IViewSite site, IMemento memento) {
         super.init(site, memento)
         this.memento = memento
     }
-    
+
     override saveState(IMemento memento) {
         super.saveState(memento)
         memento.saveCheckedValue(forwardResultToggle)
@@ -198,22 +201,22 @@ class CompilerView extends DiagramViewPart {
         memento.saveCheckedValue(debugEnvironmentModelsToggle)
         memento.saveCheckedValue(showPrivateSystemsToggle)
     }
-    
+
     def void updateView() {
-        if (editPartSystemManager.activeSystemId === null) return
-        
+        if(editPartSystemManager.activeSystemId === null) return
+
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
             "de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
-                ZoomConfigButtonsHandling.HIDE)
+            ZoomConfigButtonsHandling.HIDE)
         properties.setProperty(KlighdSynthesisProperties.SYNTHESIS_OPTION_CONFIG, #{
             KiCoolSynthesis.FLATTEN_SYSTEM -> ((developerToggle.checked && flattenSystemViewToggle.checked) as Object)
         })
-                                
+
         updateDiagram(editPartSystemManager.activeSystem, properties)
     }
-    
+
     def void updateToolbar() {
         viewSite.actionBars.updateActionBars
     }
@@ -226,21 +229,20 @@ class CompilerView extends DiagramViewPart {
                 @SuppressWarnings("deprecation")
                 public override IStatus runInUIThread(IProgressMonitor monitor) {
                     DiagramViewManager.initializeView(instance, model, null, properties);
-                    
+
                     val canvas = viewer.getControl() as Composite
-                    
-                    val container = new Composite(canvas, SWT.BORDER) 
-                    => [
+
+                    val container = new Composite(canvas, SWT.BORDER) => [
                         setSize(400, 100)
                     ]
-                    container.setLayout(new FillLayout())                    
+                    container.setLayout(new FillLayout())
                     container.visible = false
-                    
+
                     val text = new Text(container, SWT.WRAP)
                     text.setText("This is a longer text.")
 //                    container.pack
                     canvas.layout(true, true)
-                    
+
                     return Status.OK_STATUS;
                 }
             }.schedule
@@ -250,49 +252,48 @@ class CompilerView extends DiagramViewPart {
             viewContext.configure(properties)
             DiagramViewManager.updateView(viewContext, model)
         }
-    }    
-    
+    }
+
     def void reinitializeDiagram(Object model) {
         val properties = new KlighdSynthesisProperties
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_DIAGRAM_SYNTHESIS,
             "de.cau.cs.kieler.kicool.ui.synthesis.KiCoolSynthesis")
         properties.setProperty(KlighdSynthesisProperties.REQUESTED_ZOOM_CONFIG_BUTTONS_HANDLING,
-                ZoomConfigButtonsHandling.HIDE)
-                                
+            ZoomConfigButtonsHandling.HIDE)
+
 //        updateDiagram(model, properties)
         // Run in the actual thread.
         DiagramViewManager.initializeView(this, model, null, properties);
-    }    
-    
+    }
+
     def void doLayout(boolean zoomToFit) {
         val layoutConfig = new LightDiagramLayoutConfig(viewContext)
-        layoutConfig.zoomStyle(if (zoomToFit) ZoomStyle.ZOOM_TO_FIT else ZoomStyle.NONE)
-        layoutConfig.performLayout           
+        layoutConfig.zoomStyle(if(zoomToFit) ZoomStyle.ZOOM_TO_FIT else ZoomStyle.NONE)
+        layoutConfig.performLayout
     }
-    
 
     private def void loadCheckedValue(IMemento memento, AbstractAction action) {
         val setting = memento.getString(action.action.id)
         if (setting !== null) {
             action.action.checked = Boolean.parseBoolean(setting)
             action.invoke
-        } 
+        }
     }
-    
+
     private def void loadCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
         for (action : actions) {
-            if (action !== null) memento?.loadCheckedValue(action)
+            if(action !== null) memento?.loadCheckedValue(action)
         }
     }
-    
+
     private def void saveCheckedValue(IMemento memento, AbstractAction action) {
-        if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
+        if(action !== null) memento?.putString(action.action.id, action.action.checked.toString)
     }
-    
+
     private def void saveCheckedValues(IMemento memento, List<? extends AbstractAction> actions) {
         for (action : actions) {
-            if (action !== null) memento?.putString(action.action.id, action.action.checked.toString)
+            if(action !== null) memento?.putString(action.action.id, action.action.checked.toString)
         }
-    }    
+    }
 
 }

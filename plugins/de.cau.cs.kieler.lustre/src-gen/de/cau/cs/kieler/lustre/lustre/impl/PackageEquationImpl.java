@@ -116,6 +116,7 @@ public class PackageEquationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -126,6 +127,7 @@ public class PackageEquationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -139,6 +141,7 @@ public class PackageEquationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getEqOrIs()
   {
     return eqOrIs;
@@ -149,6 +152,7 @@ public class PackageEquationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setEqOrIs(String newEqOrIs)
   {
     String oldEqOrIs = eqOrIs;
@@ -162,6 +166,7 @@ public class PackageEquationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ByNameStaticArg> getByNameStaticArgs()
   {
     if (byNameStaticArgs == null)

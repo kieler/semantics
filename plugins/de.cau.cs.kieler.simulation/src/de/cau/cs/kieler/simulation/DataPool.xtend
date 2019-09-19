@@ -110,17 +110,16 @@ class DataPool implements IKiCoolCloneable {
         if (pool === null || pool.size == 0) {
             pool = otherPool.pool
         } else {
-            pool.mergeObjects(otherPool.pool, null)
+            pool.mergeObjects(otherPool.pool)
         }
     }
 
-    private def void mergeObjects(JsonObject left, JsonObject rigth, String prefix) {
+    private def void mergeObjects(JsonObject left, JsonObject rigth) {
         for (entry : rigth.entrySet) {
             if (left.has(entry.key) && left.get(entry.key).jsonObject && entry.value.jsonObject) {
-                left.get(entry.key).asJsonObject.mergeObjects(entry.value.asJsonObject, (if (prefix.nullOrEmpty) "" else prefix) + entry.key + ".")
+                left.get(entry.key).asJsonObject.mergeObjects(entry.value.asJsonObject)
             } else {
-                val key = (if (prefix.nullOrEmpty) "" else prefix) + entry.key
-                left.add(key, entry.value)
+                left.add(entry.key, entry.value)
             }
         }
     }
@@ -315,7 +314,7 @@ class DataPoolEntry {
                 JsonArray: switch (output) {
                     case KEX: return createVectorValue => [
                         for (elem : valueElem.asJsonArray.iterator.toIterable) {
-                            values.add(sim.getTypedValue(elem, output) as Value)
+                            values.add(sim.getTypedValue(elem, output) as Expression)
                         }
                     ]
                     case JSON: return new JsonArray => [

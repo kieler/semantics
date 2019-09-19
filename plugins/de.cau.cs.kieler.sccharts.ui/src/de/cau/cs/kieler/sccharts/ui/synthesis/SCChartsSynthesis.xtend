@@ -97,7 +97,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
         val options = new LinkedHashSet()
         
         // Add categories options
-        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, DEBUGGING, LAYOUT)
+        options.addAll(APPEARANCE, NAVIGATION, DATAFLOW, OO, DEBUGGING, LAYOUT)
         
         // General options
         options.addAll(
@@ -107,6 +107,7 @@ class SCChartsSynthesis extends AbstractDiagramSynthesis<SCCharts> {
             SHOW_INHERITANCE_EDGES,
             SHOW_BINDINGS,
             SHOW_COMMENTS,
+            SHOW_USER_LABELS,
             SHOW_CAUSAL_DATAFLOW
         )
 

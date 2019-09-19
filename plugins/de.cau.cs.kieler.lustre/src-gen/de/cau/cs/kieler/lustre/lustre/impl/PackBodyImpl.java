@@ -109,6 +109,7 @@ public class PackBodyImpl extends MinimalEObjectImpl.Container implements PackBo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<VariableDeclaration> getConstants()
   {
     if (constants == null)
@@ -123,6 +124,7 @@ public class PackBodyImpl extends MinimalEObjectImpl.Container implements PackBo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<TypeDeclaration> getTypes()
   {
     if (types == null)
@@ -137,6 +139,7 @@ public class PackBodyImpl extends MinimalEObjectImpl.Container implements PackBo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ExternalNodeDeclaration> getExternals()
   {
     if (externals == null)
@@ -151,6 +154,7 @@ public class PackBodyImpl extends MinimalEObjectImpl.Container implements PackBo
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Declaration> getNodes()
   {
     if (nodes == null)

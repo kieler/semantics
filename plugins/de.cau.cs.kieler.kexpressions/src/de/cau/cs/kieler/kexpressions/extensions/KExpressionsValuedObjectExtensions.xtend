@@ -91,6 +91,13 @@ class KExpressionsValuedObjectExtensions {
         ]
     }
     
+    def ScheduleObjectReference createScheduleReference(ValuedObject valuedObject, int priority) {
+        KExpressionsFactory::eINSTANCE.createScheduleObjectReference() => [
+            setValuedObject(valuedObject)
+            setPriority(priority)
+        ]
+    }
+    
     def boolean isVariableReference(ValuedObject valuedObject) {
         valuedObject.declaration instanceof VariableDeclaration
     }    
@@ -371,6 +378,11 @@ class KExpressionsValuedObjectExtensions {
 
     def asOperatorExpression(Expression expression) {
         expression as OperatorExpression
+    }
+    
+    def Iterable<Expression> getIndicesAndSubIndices(ValuedObjectReference vor) {
+        if (vor === null) return emptyList
+        return (vor.indices?:emptyList) + vor.subReference.indicesAndSubIndices
     }
     
 }

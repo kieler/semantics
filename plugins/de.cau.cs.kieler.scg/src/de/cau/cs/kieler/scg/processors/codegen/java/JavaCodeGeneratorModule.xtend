@@ -47,6 +47,8 @@ class JavaCodeGeneratorModule extends CCodeGeneratorModule {
     public static val JAVA_EXTENSION = ".java"
     
     override configure() {
+        modifications.clear
+        
         struct = injector.getInstance(JavaCodeGeneratorStructModule)
         reset = injector.getInstance(JavaCodeGeneratorResetModule)
         tick = injector.getInstance(JavaCodeGeneratorTickModule)

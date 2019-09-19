@@ -15,20 +15,28 @@ package de.cau.cs.kieler.sccharts.processors
 
 import com.google.common.collect.HashMultimap
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.Annotation
+import de.cau.cs.kieler.annotations.StringAnnotation
 import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.core.definitions.DynamicTicks
+import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.FloatValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.PriorityProtocol
 import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCompareExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
@@ -36,11 +44,6 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
-import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
-import de.cau.cs.kieler.core.definitions.DynamicTicks
-import de.cau.cs.kieler.annotations.Annotation
-import de.cau.cs.kieler.kicool.compilation.VariableStore
-import de.cau.cs.kieler.annotations.StringAnnotation
 
 /**
  * SCCharts Timed Automata Transformation.
@@ -95,8 +98,11 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
     public static val DEVIATION_OUTPUT_DEFAULT = false
     public static val TIME_FORMAT_NAME = "TimePrintFormat"
     public static val TIME_FORMAT_DEFAULT = "%.4f"
-//    public static val CATCH_UP_NAME = "CatchUp"
-//    public static val CATCH_UP_DEFAULT = false
+    public static val INT_CLOCK_NAME = "IntegralClockType"
+    public static val INT_CLOCK_NAME_2 = "IntegerClockType"
+    public static val USE_SD_NAME = "ClocksUseSD"
+    
+    var isIntClockType = false
 
     def SCCharts transform(SCCharts sccharts) {
         sccharts => [rootStates.forEach[transform]]
@@ -104,21 +110,24 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
 
     def void transform(State rootState) {
         val allAnnotations = rootState.eAllContents.filter(Annotation).toList
-        val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equals(name)]
-        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equals(name)]) Double.parseDouble(allAnnotations.findFirst[MAX_SLEEP_NAME.equals(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
-        val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equals(name)]) true else SIMULATE_TIME_DEFAULT
-        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equals(name)]) true else DEVIATION_OUTPUT_DEFAULT
-        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equals(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equals(name)].values.head else TIME_FORMAT_DEFAULT
+        val noSleep = allAnnotations.exists[NO_SLEEP_NAME.equalsIgnoreCase(name)]
+        val maxSleep = if (allAnnotations.exists[MAX_SLEEP_NAME.equalsIgnoreCase(name)]) Double.parseDouble(allAnnotations.findFirst[MAX_SLEEP_NAME.equalsIgnoreCase(name)].asStringAnnotation.values.head) else MAX_SLEEP_DEFAULT
+        val simulateTime = if (allAnnotations.exists[SIMULATE_TIME_NAME.equalsIgnoreCase(name)]) true else SIMULATE_TIME_DEFAULT
+        val deviationOutput = if (allAnnotations.exists[DEVIATION_OUTPUT_NAME.equalsIgnoreCase(name)]) true else DEVIATION_OUTPUT_DEFAULT
+        val timePrintFormat = if (allAnnotations.filter(StringAnnotation).exists[TIME_FORMAT_NAME.equalsIgnoreCase(name)]) allAnnotations.filter(StringAnnotation).findFirst[TIME_FORMAT_NAME.equalsIgnoreCase(name)].values.head else TIME_FORMAT_DEFAULT
+        isIntClockType = allAnnotations.exists[INT_CLOCK_NAME.equalsIgnoreCase(name) || INT_CLOCK_NAME_2.equalsIgnoreCase(name) ]
+        val clockType = ValueType.get(isIntClockType ? DynamicTicks.INT_TYPE : DynamicTicks.FLOAT_TYPE)
+        val useSD = allAnnotations.exists[USE_SD_NAME.equalsIgnoreCase(name)]
         
         if (rootState.allStates.exists[variableDeclarations.exists[type == ValueType.CLOCK]]) {
             // Create time vars
-            val deltaT = if (rootState.valuedObjectsList.exists[DELTA_T_NAME.equals(name)]) {
-                val vo = rootState.valuedObjectsList.findFirst[DELTA_T_NAME.equals(name)]
+            val deltaT = if (rootState.valuedObjectsList.exists[DELTA_T_NAME.equalsIgnoreCase(name)]) {
+                val vo = rootState.valuedObjectsList.findFirst[DELTA_T_NAME.equalsIgnoreCase(name)]
                 if (vo.initialValue === null) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || !vo.type.toString.equals(DynamicTicks.TYPE)) {
-                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                if (!vo.input || vo.type !== clockType) {
+                    environment.errors.add("A variable with name " + DELTA_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
                 } else {
                     environment.warnings.add("A variable with name " + DELTA_T_NAME + " already exists and is used.", rootState, true)
                 }
@@ -129,9 +138,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 vo
             } else {
                 val vo = createValuedObject(DELTA_T_NAME)
-                vo.initialValue = createFloatValue(0)
+                vo.initialValue = createClockValue(0)
                 rootState.declarations += createDeclaration => [
-                    type = ValueType.get(DynamicTicks.TYPE)
+                    type = clockType
                     input = true
                     valuedObjects += vo
                 ]
@@ -140,13 +149,13 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
                 vo
             }
             
-            val sleepT = if (rootState.valuedObjectsList.exists[SLEEP_T_NAME.equals(name)]) {
-                val vo = rootState.valuedObjectsList.findFirst[SLEEP_T_NAME.equals(name)]
+            val sleepT = if (rootState.valuedObjectsList.exists[SLEEP_T_NAME.equalsIgnoreCase(name)]) {
+                val vo = rootState.valuedObjectsList.findFirst[SLEEP_T_NAME.equalsIgnoreCase(name)]
                 if (vo.initialValue === null) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                 }
-                if (!vo.input || vo.type.toString.equals(DynamicTicks.TYPE)) {
-                    environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + DynamicTicks.TYPE)
+                if (!vo.input || vo.type !== clockType) {
+                    environment.errors.add("A variable with name " + SLEEP_T_NAME + " already exists and is is not and input variable of type " + clockType.literal)
                 } else {
                     environment.warnings.add("A variable with name " + SLEEP_T_NAME + " already exists and is used.", rootState, true)
                 }
@@ -158,9 +167,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             } else {
                 val vo = createValuedObject(SLEEP_T_NAME)
                 if (!noSleep) {
-                    vo.initialValue = createFloatValue(0)
+                    vo.initialValue = createClockValue(0)
                     rootState.declarations += createDeclaration => [
-                        type = ValueType.get(DynamicTicks.TYPE)
+                        type = clockType
                         output = true
                         valuedObjects += vo
                     ]
@@ -173,9 +182,9 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             // DeviationOutput
             if(deviationOutput && !noSleep) {
                 val vo = createValuedObject(DEVIATION_NAME).uniqueName
-                vo.initialValue = createFloatValue(0)
+                vo.initialValue = createClockValue(0)
                 rootState.declarations += createDeclaration => [
-                    type = ValueType.get(DynamicTicks.TYPE)
+                    type = clockType
                     output = true
                     valuedObjects += vo
                 ]
@@ -192,7 +201,7 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             if (!noSleep) {
                 rootState.createImmediateDuringAction => [
                     // start sleep time collection
-                    effects += createAssignment(sleepT, createFloatValue(maxSleep))
+                    effects += createAssignment(sleepT, createClockValue(maxSleep))
                 ]
             
                 if (simulateTime) {
@@ -207,146 +216,191 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
 
             // Handle clock
             for (state : rootState.allStates.filter[variableDeclarations.exists[type == ValueType.CLOCK]].toList) {
+                var sdDecls = <Declaration, Declaration>newHashMap
                 for (clock : state.variableDeclarations.filter[type == ValueType.CLOCK].map[valuedObjects].flatten.toList) {
-                    clock.declaration.asVariableDeclaration.type = ValueType.get(DynamicTicks.TYPE)
+                    clock.declaration.asVariableDeclaration.type = clockType
                     if (!clock.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION) && !clock.declaration.hasAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION)) {
                         clock.addStringAnnotation(VariableStore.PRINT_FORMAT_ANNOTAION, timePrintFormat)
                     }
                     voStore.update(clock, SCCHARTS_GENERATED)
-                    if (clock.initialValue === null) clock.initialValue = createFloatValue(0)
+                    if (clock.initialValue === null) clock.initialValue = createClockValue(0)
                     
-                    var region = state.controlflowRegions.head
-                    if (state.controlflowRegions.size > 1) {
-                        val regionsUsingClock = newLinkedList
-                        for (r : state.controlflowRegions) {
-                            var testRegion = r
-                            while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
-                                testRegion = testRegion.states.head.controlflowRegions.head
+                    if (useSD) {
+                        // Increment clock globally -> SD for UIUR protocoll
+                        if (!sdDecls.containsKey(clock.declaration)) {
+                            val sdDecl = createScheduleDeclaration => [
+                                name = "ClockIUR"
+                                priorities += newArrayList(
+                                    PriorityProtocol.CONFLICT,  // Clock increment
+                                    PriorityProtocol.CONFLICT,  // Init (clock reset)
+                                    PriorityProtocol.CONFLUENT  // Update
+//                                    PriorityProtocol.CONFLUENT  // Read
+                                )
+                            ]
+                            state.declarations.add(state.declarations.indexOf(clock.declaration) + 1, sdDecl)
+                            sdDecls.put(clock.declaration, sdDecl)
+                        }
+                        val sd = createValuedObject(sdDecls.get(clock.declaration), clock.name + "SD")
+                        
+                        for (scope : state.allScopes.toIterable) {
+                            for (access : scope.allContainedActions.map[eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock]].flatten.toIterable) {
+                                if (access.eContainer instanceof Assignment) {
+                                    val asm = access.eContainer as Assignment
+                                    if (asm.reference == access) {// write
+                                        if ((access.eContainer as Assignment).operator == AssignOperator.ASSIGN) { // absolute
+                                            asm.schedule += createScheduleReference(sd, 1)
+                                        } else { // relative
+                                            asm.schedule += createScheduleReference(sd, 2)
+                                        }
+                                    }
+                                }
                             }
-                            if (testRegion.states.exists[
-                                outgoingTransitions.filter[trigger !== null].exists[
-                                    eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
-                                ]
-                            ]) {regionsUsingClock += testRegion}
-                        }
-                        region = regionsUsingClock.head
-                        if (regionsUsingClock.size > 1) {
-                            environment.errors.add("Cannot concurrent timed automata using the same clock.", state)
-                        }
-                    }
-                    
-                    for (subState : region.states.toList) {
-                        // error case
-                        if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
-                            if (subState.actions.exists[trigger.eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]] ||
-                                subState.controlflowRegions.exists[eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]]) {
-                                    environment.errors.add("Cannot handle hierarchical timed automata.", subState)
+                            if (scope instanceof State) {
+                                // sleep time
+                                if (!noSleep) {
+                                    scope.handleSleep(clock, sleepT)
+                                }
                             }
                         }
                         
-                        // time progress
-                        subState.createDuringAction => [
-                            it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                        // increment                      
+                        state.createDuringAction => [
+                            it.createAssignment(clock, deltaT.reference) => [
+                                operator = AssignOperator.ASSIGNADD
+                                schedule += createScheduleReference(sd, 0)
+                            ]
                         ]
+                    } else {
+                        // Increment clocks in each state -> no support of hierachy or concurrency
+                        var region = state.controlflowRegions.head
+                        if (state.controlflowRegions.size > 1) {
+                            val regionsUsingClock = newLinkedList
+                            for (r : state.controlflowRegions) {
+                                var testRegion = r
+                                while (testRegion.states.size == 1 && testRegion.states.head.outgoingTransitions.empty && testRegion.states.head.controlflowRegions.size == 1) {
+                                    testRegion = testRegion.states.head.controlflowRegions.head
+                                }
+                                if (testRegion.states.exists[
+                                    outgoingTransitions.filter[trigger !== null].exists[
+                                        eAllContents.filter(ValuedObjectReference).exists[valuedObject == clock]
+                                    ]
+                                ]) {regionsUsingClock += testRegion}
+                            }
+                            region = regionsUsingClock.head
+                            if (regionsUsingClock.size > 1) {
+                                environment.errors.add("Cannot handle concurrent timed automata using the same clock. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", state)
+                            }
+                        }
                         
-                        // sleep time
-                        if (!noSleep) {
-                            val constraints = HashMultimap.<Transition, OperatorExpression>create
-                            for (trans : subState.outgoingTransitions.filter[trigger !== null]) {
-                                for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
-                                    val exp = vor.eContainer
-                                    if (exp instanceof OperatorExpression) {
-                                        if (exp.subExpressions.size == 2 && 
-                                            exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
-                                            exp.subExpressions.filter(Value).size == 1) {
-                                            constraints.put(trans, exp)
-                                        } else {
-                                            environment.errors.add("Malformed timing constraint.", vor)
-                                        }
-                                    } else {
-                                        environment.errors.add("Malformed timing constraint.", vor)
-                                    }
+                        for (subState : region.states.toList) {
+                            // error case
+                            if (subState.containsInnerActions || !subState.regions.nullOrEmpty) {
+                                if (subState.actions.exists[trigger?.eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]] ||
+                                    subState.controlflowRegions.exists[eAllContents?.filter(ValuedObjectReference)?.exists[valuedObject == clock]]) {
+                                        environment.errors.add("Cannot handle hierarchical timed automata. Add @" + USE_SD_NAME + " annotation for experimental support based on SDs.", subState)
                                 }
                             }
                             
-                            // easy case
-                            var thresholds = <Double>newLinkedList
-                            if (constraints.keys.size == 1 && constraints.values.size == 1) {
-                                var double lower = 0
-                                val op = constraints.values.head.operator
-                                if (op == OperatorType.GEQ || op == OperatorType.GT) {
-                                    val value = constraints.values.head.subExpressions.filter(Value).head
-                                    switch(value) {
-                                        IntValue: lower = value.value
-                                        FloatValue: lower = value.value
-                                        default: environment.errors.add("Unsupported value type.", value)
-                                    }
-                                }
-                                if (op == OperatorType.GT) {
-                                    lower++
-                                }
-                                thresholds += lower
-                            } else {
-                                if (!constraints.isInsignificant) {
-                                    for (trans : constraints.keySet) {
-                                        val constrs = constraints.get(trans)
-                                        val bounds = <Double>newLinkedList
-
-                                        for (constraint : constrs) {
-                                            val op = constraint.operator
-                                            val value = constraint.subExpressions.filter(Value).head
-                                            val double fvalue = switch(value) {
-                                                IntValue: value.value
-                                                FloatValue: value.value
-                                                default: {environment.errors.add("Unsupported value type.", value); 0.0f}
-                                            }
-                                            
-                                            switch(op) {
-                                                case GEQ: {
-                                                    bounds += fvalue
-                                                }
-                                                case LEQ, 
-                                                case LT: {
-                                                    //skip
-                                                }
-                                                default: environment.errors.add("Malformed timing constraint. Operator "+op+" not supported.", constraint)
-                                            }
-                                        }
-                                        
-                                        // check soft bound pattern
-                                        val parent = constrs.head.eContainer
-                                        if (constrs.size == 2 &&
-                                            parent instanceof OperatorExpression &&
-                                            (parent as OperatorExpression).operator == OperatorType.LOGICAL_OR &&
-                                            constrs.forall[it.eContainer == parent]
-                                        ) {
-                                            thresholds += bounds.max
-                                        } else {
-                                            thresholds += bounds
-                                        }
-                                    }
-                                }
-                            }
+                            // time progress
+                            subState.createDuringAction => [
+                                it.createAssignment(clock, deltaT.reference) => [operator = AssignOperator.ASSIGNADD]
+                            ]
                             
-                            if (!thresholds.empty) {
-                                thresholds.sortInplace
-                                for (threshold : thresholds.indexed) {
-                                    val during = subState.createImmediateDuringAction
-                                    during.trigger = createLEExpression(clock.reference, createFloatValue(threshold.value))
-                                    during.createAssignment(sleepT, createSubExpression(createFloatValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
-                                }
+                            // sleep time
+                            if (!noSleep) {
+                                subState.handleSleep(clock, sleepT)
                             }
                         }
                     }
-                    
-//                    // Catch up
-//                    if (state.hasAnnotation(CATCH_UP_NAME) || CATCH_UP_DEFAULT) {
-//                        for (asm : state.eAllContents.filter(Assignment).filter[valuedObject == clock].toIterable) {
-//                            if (asm.expression instanceof Value) {
-//                            }
-//                        }
-//                    }
                 }
+            }
+        }
+    }
+    
+    def void handleSleep(State state, ValuedObject clock, ValuedObject sleepT) {
+        val constraints = HashMultimap.<Transition, OperatorExpression>create
+        for (trans : state.outgoingTransitions.filter[trigger !== null]) {
+            for (vor : trans.trigger.eAllContents.filter(ValuedObjectReference).filter[valuedObject == clock].toIterable) {
+                val exp = vor.eContainer
+                if (exp instanceof OperatorExpression) {
+                    if (exp.subExpressions.size == 2 && 
+                        exp.subExpressions.filter(ValuedObjectReference).size == 1 &&
+                        exp.subExpressions.filter(Value).size == 1) {
+                        constraints.put(trans, exp)
+                    } else {
+                        environment.errors.add("Malformed timing constraint.", vor)
+                    }
+                } else {
+                    environment.errors.add("Malformed timing constraint.", vor)
+                }
+            }
+        }
+        
+        // easy case
+        var thresholds = <Double>newLinkedList
+        if (constraints.keys.size == 1 && constraints.values.size == 1) {
+            var double lower = 0
+            val op = constraints.values.head.operator
+            if (op == OperatorType.GEQ || op == OperatorType.GT) {
+                val value = constraints.values.head.subExpressions.filter(Value).head
+                switch(value) {
+                    IntValue: lower = value.value
+                    FloatValue: lower = value.value
+                    default: environment.errors.add("Unsupported value type.", value)
+                }
+            }
+            if (op == OperatorType.GT) {
+                lower++
+            }
+            thresholds += lower
+        } else {
+            if (!constraints.isInsignificant) {
+                for (trans : constraints.keySet) {
+                    val constrs = constraints.get(trans)
+                    val bounds = <Double>newLinkedList
+
+                    for (constraint : constrs) {
+                        val op = constraint.operator
+                        val value = constraint.subExpressions.filter(Value).head
+                        val double fvalue = switch(value) {
+                            IntValue: value.value
+                            FloatValue: value.value
+                            default: {environment.errors.add("Unsupported value type.", value); 0.0f}
+                        }
+                        
+                        switch(op) {
+                            case GEQ: {
+                                bounds += fvalue
+                            }
+                            case LEQ, 
+                            case LT: {
+                                //skip
+                            }
+                            default: environment.errors.add("Malformed timing constraint. Operator "+op+" not supported.", constraint)
+                        }
+                    }
+                    
+                    // check soft bound pattern
+                    val parent = constrs.head.eContainer
+                    if (constrs.size == 2 &&
+                        parent instanceof OperatorExpression &&
+                        (parent as OperatorExpression).operator == OperatorType.LOGICAL_OR &&
+                        constrs.forall[it.eContainer == parent]
+                    ) {
+                        thresholds += bounds.max
+                    } else {
+                        thresholds += bounds
+                    }
+                }
+            }
+        }
+        
+        if (!thresholds.empty) {
+            thresholds.sortInplace
+            for (threshold : thresholds.indexed) {
+                val during = state.createImmediateDuringAction
+                during.trigger = createLEExpression(clock.reference, createClockValue(threshold.value))
+                during.createAssignment(sleepT, createSubExpression(createClockValue(threshold.value), clock.reference)).operator = AssignOperator.ASSIGNMIN
             }
         }
     }
@@ -390,6 +444,15 @@ class TimedAutomata extends SCChartsProcessor implements Traceable {
             }
         }
         return false
+    }
+    
+    
+    def createClockValue(Number n) {
+        if (isIntClockType) {
+            createIntValue(n.intValue)
+        } else {
+            createFloatValue(n.doubleValue)
+        }
     }
 
 }

@@ -162,6 +162,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getVisualization()
   {
     return visualizationEClass;
@@ -172,6 +173,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getVisualization_Images()
   {
     return (EAttribute)visualizationEClass.getEStructuralFeatures().get(0);
@@ -182,6 +184,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getVisualization_Loads()
   {
     return (EAttribute)visualizationEClass.getEStructuralFeatures().get(1);
@@ -192,6 +195,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getVisualization_Init()
   {
     return (EAttribute)visualizationEClass.getEStructuralFeatures().get(2);
@@ -202,6 +206,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getVisualization_Content()
   {
     return (EReference)visualizationEClass.getEStructuralFeatures().get(3);
@@ -212,6 +217,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getContent()
   {
     return contentEClass;
@@ -222,6 +228,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getContent_Interface()
   {
     return (EReference)contentEClass.getEStructuralFeatures().get(0);
@@ -232,6 +239,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getContent_Script()
   {
     return (EAttribute)contentEClass.getEStructuralFeatures().get(1);
@@ -242,6 +250,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getBinding()
   {
     return bindingEClass;
@@ -252,6 +261,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBinding_Variable()
   {
     return (EAttribute)bindingEClass.getEStructuralFeatures().get(0);
@@ -262,6 +272,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getBinding_DomElement()
   {
     return (EAttribute)bindingEClass.getEStructuralFeatures().get(1);
@@ -272,6 +283,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getHandler()
   {
     return handlerEClass;
@@ -282,6 +294,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHandler_Variable()
   {
     return (EAttribute)handlerEClass.getEStructuralFeatures().get(0);
@@ -292,6 +305,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHandler_Multimatch()
   {
     return (EAttribute)handlerEClass.getEStructuralFeatures().get(1);
@@ -302,6 +316,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getHandler_DomElement()
   {
     return (EAttribute)handlerEClass.getEStructuralFeatures().get(2);
@@ -312,6 +327,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAction()
   {
     return actionEClass;
@@ -322,6 +338,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_DomEvent()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(0);
@@ -332,6 +349,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_Multimatch()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(1);
@@ -342,6 +360,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_DomElement()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(2);
@@ -352,6 +371,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAction_DeferredInterface()
   {
     return (EReference)actionEClass.getEStructuralFeatures().get(3);
@@ -362,6 +382,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_DeferredScript()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(4);
@@ -372,6 +393,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAction_Setter()
   {
     return (EReference)actionEClass.getEStructuralFeatures().get(5);
@@ -382,6 +404,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_Signal()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(6);
@@ -392,6 +415,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAction_Control()
   {
     return (EAttribute)actionEClass.getEStructuralFeatures().get(7);
@@ -402,6 +426,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getCode()
   {
     return codeEClass;
@@ -412,6 +437,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getSetter()
   {
     return setterEClass;
@@ -422,6 +448,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSetter_Variable()
   {
     return (EAttribute)setterEClass.getEStructuralFeatures().get(0);
@@ -432,6 +459,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getSetter_Interface()
   {
     return (EReference)setterEClass.getEStructuralFeatures().get(1);
@@ -442,6 +470,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getSetter_Script()
   {
     return (EAttribute)setterEClass.getEStructuralFeatures().get(2);
@@ -452,6 +481,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getInterface()
   {
     return interfaceEClass;
@@ -462,6 +492,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getInterface_Element()
   {
     return (EAttribute)interfaceEClass.getEStructuralFeatures().get(0);
@@ -472,6 +503,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getInterface_Variable()
   {
     return (EAttribute)interfaceEClass.getEStructuralFeatures().get(1);
@@ -482,6 +514,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getInterface_Pool()
   {
     return (EAttribute)interfaceEClass.getEStructuralFeatures().get(2);
@@ -492,6 +525,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EEnum getSimulationCorntrol()
   {
     return simulationCorntrolEEnum;
@@ -502,6 +536,7 @@ public class KivisPackageImpl extends EPackageImpl implements KivisPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public KivisFactory getKivisFactory()
   {
     return (KivisFactory)getEFactoryInstance();

@@ -460,6 +460,7 @@ public abstract class AbstractKEffectsSemanticSequencer extends KExpressionsSema
 	 *     (
 	 *         annotations+=Annotation* 
 	 *         valuedObject=[ValuedObject|PrimeID] 
+	 *         indices+=Expression* 
 	 *         subReference=ValuedObjectReference? 
 	 *         (parameters+=Parameter parameters+=Parameter*)? 
 	 *         schedule+=ScheduleObjectReference*

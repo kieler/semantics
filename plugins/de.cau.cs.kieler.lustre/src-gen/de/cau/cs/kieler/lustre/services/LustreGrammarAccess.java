@@ -1034,8 +1034,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//	{NodeDeclaration} isUnsafe?='unsafe'? ('function' | hasState?='node') valuedObjects+=NodeValuedObject ('<<'
 		//	staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')? (input=Params 'returns' output=Params ('='
 		//	effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')? | ';'? ('const'
-		//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration
-		//	(';' variables+=ClockedVariableDeclaration)* ';')*
+		//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var'
+		//	variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')*
 		//	// Body 
 		//	'let' (equations+=Equation
 		//	| assertions+=Assertion
@@ -1108,15 +1108,15 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getGreaterThanSignGreaterThanSignKeyword_4_3() { return cGreaterThanSignGreaterThanSignKeyword_4_3; }
 		
 		//input=Params 'returns' output=Params ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';'
-		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')*
-		//| 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
+		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration
+		//';')* | 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
 		//'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 'tel' ('.' | ';'?)) | // --- Effective Node (without interface)
 		//'=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')?
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//input=Params 'returns' output=Params ('=' effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';'
-		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')*
-		//| 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
+		//staticArgs+=StaticArg)* '>>')? | ';'? ('const' constants+=VariableDeclaration ';' (constants+=VariableDeclaration
+		//';')* | 'var' variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')* // Body 
 		//'let' (equations+=Equation | assertions+=Assertion | automatons+=Automaton)* 'tel' ('.' | ';'?))
 		public Group getGroup_5_0() { return cGroup_5_0; }
 		
@@ -1386,8 +1386,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//// Node Declaration - Body Part 1: Equations
 		//Equation keffects::Assignment:
 		//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-		//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+		//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+		//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
@@ -1406,6 +1406,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//reference=ValuedObjectReference
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
+		//// Left side: (x, y, ...) or x, y, ... or x 
 		//'(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (',' references+=ValuedObjectReference)* ')'
 		public Group getGroup_1_0() { return cGroup_1_0; }
 		
@@ -1759,8 +1760,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		//({kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
 		//subExpressions+=IntDivExpression)* | {kexpressions::OperatorExpression.subExpressions+=current} operator=DivOperator
 		//subExpressions+=IntDivExpression ('/' subExpressions+=IntDivExpression)* |
-		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression ('mod'
-		//subExpressions+=IntDivExpression)*)*
+		//{kexpressions::OperatorExpression.subExpressions+=current} operator=ModOperator subExpressions+=IntDivExpression
+		//('mod' subExpressions+=IntDivExpression)*)*
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//{kexpressions::OperatorExpression.subExpressions+=current} operator=MultOperator subExpressions+=IntDivExpression ('*'
@@ -4041,8 +4042,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//	{NodeDeclaration} isUnsafe?='unsafe'? ('function' | hasState?='node') valuedObjects+=NodeValuedObject ('<<'
 	//	staticParams+=StaticParam (';' staticParams+=StaticParam)* '>>')? (input=Params 'returns' output=Params ('='
 	//	effectiveNode=NodeReference ('<<' staticArgs+=StaticArg (';' staticArgs+=StaticArg)* '>>')? | ';'? ('const'
-	//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var' variables+=ClockedVariableDeclaration
-	//	(';' variables+=ClockedVariableDeclaration)* ';')*
+	//	constants+=VariableDeclaration ';' (constants+=VariableDeclaration ';')* | 'var'
+	//	variables+=ClockedVariableDeclaration (';' variables+=ClockedVariableDeclaration)* ';')*
 	//	// Body 
 	//	'let' (equations+=Equation
 	//	| assertions+=Assertion
@@ -4070,8 +4071,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// Node Declaration - Body Part 1: Equations
 	//Equation keffects::Assignment:
 	//	{Equation} ('(' references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference (','
-	//	references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
+	//	references+=ValuedObjectReference)* ')' | references+=ValuedObjectReference ',' references+=ValuedObjectReference
+	//	(',' references+=ValuedObjectReference)* | reference=ValuedObjectReference) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public EquationElements getEquationAccess() {
@@ -4961,7 +4962,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -5107,8 +5108,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -5135,7 +5137,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}

@@ -26,7 +26,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintStream
 import java.util.concurrent.ArrayBlockingQueue
-import java.util.concurrent.Callable
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
@@ -37,6 +37,8 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
  * @kieler.rating proposed yellow
  */
 class SimulationModelWrapper implements Simulatable {
+    
+    private static val POOL = Executors.newCachedThreadPool
 
     @Accessors(PUBLIC_GETTER)
     val ExecutableContainer executable
@@ -49,7 +51,7 @@ class SimulationModelWrapper implements Simulatable {
     protected var SimulationVariableStore variables
 
     // Internal Process
-    private val timeLimiter = new SimpleTimeLimiter
+    private val timeLimiter = SimpleTimeLimiter.create(POOL)
     private var timeout = SimulationContext.REACTION_TIMEOUT_IN_SECONDS.^default
     private var Process process
     private var AsynchronousRedirect out
@@ -142,7 +144,7 @@ class SimulationModelWrapper implements Simulatable {
             // Kill the process and wait until it has been destroyed,
             // but with a time limit in case the process cannot be killed or does not respond at all.
             try {
-                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2 * timeout, TimeUnit.SECONDS, true)
+                timeLimiter.callWithTimeout([process.destroyForcibly.waitFor], 2 * timeout, TimeUnit.SECONDS)
             } catch(UncheckedTimeoutException e) {
                 throw new IOException("Failed attempt to kill simulation process '" + executable.file.toString + "'", e)
             } finally {

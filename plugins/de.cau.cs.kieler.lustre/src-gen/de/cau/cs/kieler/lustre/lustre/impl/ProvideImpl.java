@@ -165,6 +165,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -175,6 +176,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -188,6 +190,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -198,6 +201,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -211,6 +215,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getValue()
   {
     return value;
@@ -238,6 +243,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setValue(Expression newValue)
   {
     if (newValue != value)
@@ -259,6 +265,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public TypeDeclaration getTypes()
   {
     return types;
@@ -286,6 +293,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setTypes(TypeDeclaration newTypes)
   {
     if (newTypes != types)
@@ -307,6 +315,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<StaticParam> getStaticParams()
   {
     if (staticParams == null)
@@ -321,6 +330,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getInput()
   {
     return input;
@@ -348,6 +358,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInput(Params newInput)
   {
     if (newInput != input)
@@ -369,6 +380,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Params getOutput()
   {
     return output;
@@ -396,6 +408,7 @@ public class ProvideImpl extends MinimalEObjectImpl.Container implements Provide
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setOutput(Params newOutput)
   {
     if (newOutput != output)

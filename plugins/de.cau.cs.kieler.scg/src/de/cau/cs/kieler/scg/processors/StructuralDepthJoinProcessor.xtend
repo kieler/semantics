@@ -40,6 +40,7 @@ import de.cau.cs.kieler.scg.Surface
 import java.util.Collection
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -54,6 +55,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGThreadExtensions    
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
     
     val curedForks = <Fork> newHashSet
     
@@ -86,7 +88,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 
         val warningProperty = environment.getProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP)
         environment.setProperty(LoopAnalyzerV2.WARNING_ON_INSTANTANEOUS_LOOP, false)
-        for (scg : getModel.scgs) {
+        for (scg : getModel.scgs.ignoreMethods) {
             while (scg.processModel(threadData, loopData)) {
                 executeCoProcessor(loopAnalyzer, false)
                 snapshot
@@ -126,7 +128,7 @@ class StructuralDepthJoinProcessor extends InplaceProcessor<SCGraphs> {
                 // cure this instance
                 
                 if (curedForks.contains(fork)) {
-                    throw new IllegalStateException("Structural Depth Join: A cured fork seems to be still shizophrenic. " +
+                    throw new IllegalStateException("Structural Depth Join: A cured fork still seems to be shizophrenic. " +
                         "This should not happen. Aborting compilation.")
                 }
                 

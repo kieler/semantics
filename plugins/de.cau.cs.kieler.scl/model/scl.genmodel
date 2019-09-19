@@ -42,5 +42,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Return/expression"/>
     </genClasses>
     <genClasses ecoreClass="scl.ecore#//MethodImplementationDeclaration"/>
+    <genClasses ecoreClass="scl.ecore#//Loop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/initialization"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/initializationDeclaration"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/condition"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference scl.ecore#//Loop/afterthought"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

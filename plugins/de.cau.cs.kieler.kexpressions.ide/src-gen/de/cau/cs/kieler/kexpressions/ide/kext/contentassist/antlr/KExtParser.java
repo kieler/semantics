@@ -46,7 +46,7 @@ public class KExtParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getReferenceDeclarationWOSemicolonAccess().getAlternatives_2(), "rule__ReferenceDeclarationWOSemicolon__Alternatives_2");
 			builder.put(grammarAccess.getEffectAccess().getAlternatives(), "rule__Effect__Alternatives");
 			builder.put(grammarAccess.getPureOrValuedEmissionAccess().getAlternatives(), "rule__PureOrValuedEmission__Alternatives");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_3(), "rule__ReferenceCallEffect__Alternatives_3");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getAlternatives_4(), "rule__ReferenceCallEffect__Alternatives_4");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAlternatives_1_2(), "rule__FunctionCallEffect__Alternatives_1_2");
 			builder.put(grammarAccess.getRandomizeCallEffectAccess().getAlternatives_3(), "rule__RandomizeCallEffect__Alternatives_3");
 			builder.put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
@@ -148,6 +148,7 @@ public class KExtParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_2(), "rule__ValuedObject__Group_2__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_3(), "rule__ValuedObject__Group_3__0");
 			builder.put(grammarAccess.getValuedObjectAccess().getGroup_4(), "rule__ValuedObject__Group_4__0");
+			builder.put(grammarAccess.getValuedObjectAccess().getGroup_5(), "rule__ValuedObject__Group_5__0");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getGroup(), "rule__SimpleValuedObject__Group__0");
 			builder.put(grammarAccess.getPureEmissionAccess().getGroup(), "rule__PureEmission__Group__0");
 			builder.put(grammarAccess.getPureEmissionAccess().getGroup_2(), "rule__PureEmission__Group_2__0");
@@ -160,9 +161,10 @@ public class KExtParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHostcodeEffectAccess().getGroup(), "rule__HostcodeEffect__Group__0");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup(), "rule__ReferenceCallEffect__Group__0");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_2(), "rule__ReferenceCallEffect__Group_2__0");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_3_0(), "rule__ReferenceCallEffect__Group_3_0__0");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_3_0_2(), "rule__ReferenceCallEffect__Group_3_0_2__0");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_4(), "rule__ReferenceCallEffect__Group_4__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_3(), "rule__ReferenceCallEffect__Group_3__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_4_0(), "rule__ReferenceCallEffect__Group_4_0__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_4_0_2(), "rule__ReferenceCallEffect__Group_4_0_2__0");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getGroup_5(), "rule__ReferenceCallEffect__Group_5__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup(), "rule__FunctionCallEffect__Group__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup_1(), "rule__FunctionCallEffect__Group_1__0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getGroup_1_2_0(), "rule__FunctionCallEffect__Group_1_2_0__0");
@@ -440,6 +442,7 @@ public class KExtParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getValuedObjectAccess().getCardinalitiesAssignment_2_1(), "rule__ValuedObject__CardinalitiesAssignment_2_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getInitialValueAssignment_3_1(), "rule__ValuedObject__InitialValueAssignment_3_1");
 			builder.put(grammarAccess.getValuedObjectAccess().getCombineOperatorAssignment_4_1(), "rule__ValuedObject__CombineOperatorAssignment_4_1");
+			builder.put(grammarAccess.getValuedObjectAccess().getLabelAssignment_5_1(), "rule__ValuedObject__LabelAssignment_5_1");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getAnnotationsAssignment_0(), "rule__SimpleValuedObject__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getSimpleValuedObjectAccess().getNameAssignment_1(), "rule__SimpleValuedObject__NameAssignment_1");
 			builder.put(grammarAccess.getPureEmissionAccess().getAnnotationsAssignment_0(), "rule__PureEmission__AnnotationsAssignment_0");
@@ -462,10 +465,11 @@ public class KExtParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getHostcodeEffectAccess().getTextAssignment_1(), "rule__HostcodeEffect__TextAssignment_1");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getAnnotationsAssignment_0(), "rule__ReferenceCallEffect__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getReferenceCallEffectAccess().getValuedObjectAssignment_1(), "rule__ReferenceCallEffect__ValuedObjectAssignment_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getSubReferenceAssignment_2_1(), "rule__ReferenceCallEffect__SubReferenceAssignment_2_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_3_0_1(), "rule__ReferenceCallEffect__ParametersAssignment_3_0_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_3_0_2_1(), "rule__ReferenceCallEffect__ParametersAssignment_3_0_2_1");
-			builder.put(grammarAccess.getReferenceCallEffectAccess().getScheduleAssignment_4_1(), "rule__ReferenceCallEffect__ScheduleAssignment_4_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getIndicesAssignment_2_1(), "rule__ReferenceCallEffect__IndicesAssignment_2_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getSubReferenceAssignment_3_1(), "rule__ReferenceCallEffect__SubReferenceAssignment_3_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_4_0_1(), "rule__ReferenceCallEffect__ParametersAssignment_4_0_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getParametersAssignment_4_0_2_1(), "rule__ReferenceCallEffect__ParametersAssignment_4_0_2_1");
+			builder.put(grammarAccess.getReferenceCallEffectAccess().getScheduleAssignment_5_1(), "rule__ReferenceCallEffect__ScheduleAssignment_5_1");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getAnnotationsAssignment_0(), "rule__FunctionCallEffect__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getFunctionNameAssignment_1_1(), "rule__FunctionCallEffect__FunctionNameAssignment_1_1");
 			builder.put(grammarAccess.getFunctionCallEffectAccess().getParametersAssignment_1_2_0_1(), "rule__FunctionCallEffect__ParametersAssignment_1_2_0_1");

@@ -451,6 +451,10 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 					sequence_Assignment_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
 				}
+				else if (rule == grammarAccess.getEffectOrAssignmentRule()) {
+					sequence_EffectOrAssignment(context, (Assignment) semanticObject); 
+					return; 
+				}
 				else if (rule == grammarAccess.getPostfixEffectRule()) {
 					sequence_PostfixEffect(context, (Assignment) semanticObject); 
 					return; 
@@ -734,7 +738,11 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 				sequence_ValuedObjectReference(context, (ValuedObjectReference) semanticObject); 
 				return; 
 			case KExpressionsPackage.VARIABLE_DECLARATION:
-				if (rule == grammarAccess.getDeclarationWOSemicolonRule()
+				if (rule == grammarAccess.getLoopDeclarationRule()) {
+					sequence_LoopDeclaration(context, (VariableDeclaration) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getVariableDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {
 					sequence_VariableDeclarationWOSemicolon(context, (VariableDeclaration) semanticObject); 
@@ -850,6 +858,16 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 			case SCLPackage.LABEL:
 				sequence_Label(context, (Label) semanticObject); 
 				return; 
+			case SCLPackage.LOOP:
+				if (rule == grammarAccess.getForLoopRule()) {
+					sequence_ForLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getWhileLoopRule()) {
+					sequence_WhileLoop(context, (de.cau.cs.kieler.scl.Loop) semanticObject); 
+					return; 
+				}
+				else break;
 			case SCLPackage.METHOD_IMPLEMENTATION_DECLARATION:
 				if (rule == grammarAccess.getMethodDeclarationWOSemicolonRule()
 						|| rule == grammarAccess.getDeclarationOrMethodWOSemicolonRule()) {

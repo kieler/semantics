@@ -34,4 +34,8 @@ abstract class AbstractSimulationTemplateGenerator extends AbstractTemplateGener
             return list
         }
     }
+    
+    protected def simpleName(String name) {
+        return if (name.contains(".")) name.substring(name.lastIndexOf(".") + 1) else name
+    }
 }

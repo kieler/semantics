@@ -278,7 +278,7 @@ class KiCoolRegistrySynthesis extends AbstractDiagramSynthesis<KiCoolRegistrySum
                     ]
                 ]
                 
-                processorConnections.put(p.id, processorConnections.get(p.id) + 1)
+//                processorConnections.put(p.id, processorConnections.get(p.id) + 1)
             }
         }
         

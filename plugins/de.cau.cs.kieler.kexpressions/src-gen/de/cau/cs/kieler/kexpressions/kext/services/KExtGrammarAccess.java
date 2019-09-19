@@ -1932,6 +1932,10 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCombineKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cCombineOperatorAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_4_1_0 = (RuleCall)cCombineOperatorAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLabelKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cLabelAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cLabelSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cLabelAssignment_5_1.eContents().get(0);
 		
 		//// Valued Object Rule
 		//// A valued object is identified by its name. Then, a part for its cardinalities and an initial 
@@ -1940,11 +1944,11 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//ValuedObject kexpressions::ValuedObject:
 		//	annotations+=QuotedStringAnnotation*
 		//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-		//	combineOperator=CombineOperator)?;
+		//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//annotations+=QuotedStringAnnotation* name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)?
-		//('combine' combineOperator=CombineOperator)?
+		//('combine' combineOperator=CombineOperator)? ('label' label=STRING)?
 		public Group getGroup() { return cGroup; }
 		
 		//annotations+=QuotedStringAnnotation*
@@ -1997,6 +2001,18 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//CombineOperator
 		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_4_1_0() { return cCombineOperatorCombineOperatorEnumRuleCall_4_1_0; }
+		
+		//('label' label=STRING)?
+		public Group getGroup_5() { return cGroup_5; }
+		
+		//'label'
+		public Keyword getLabelKeyword_5_0() { return cLabelKeyword_5_0; }
+		
+		//label=STRING
+		public Assignment getLabelAssignment_5_1() { return cLabelAssignment_5_1; }
+		
+		//STRING
+		public RuleCall getLabelSTRINGTerminalRuleCall_5_1_0() { return cLabelSTRINGTerminalRuleCall_5_1_0; }
 	}
 	public class SimpleValuedObjectElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.kext.KExt.SimpleValuedObject");
@@ -2505,7 +2521,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public ValuedObjectElements getValuedObjectAccess() {
 		return pValuedObject;
 	}
@@ -2651,8 +2667,9 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// preceded by a list of annotations.
 	//ReferenceCallEffect keffects::ReferenceCallEffect:
 	//	annotations+=Annotation*
-	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('.' subReference=ValuedObjectReference)? ('(' parameters+=Parameter
-	//	(',' parameters+=Parameter)* ')' | '()') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	valuedObject=[kexpressions::ValuedObject|PrimeID] ('[' indices+=Expression ']')* ('.'
+	//	subReference=ValuedObjectReference)? ('(' parameters+=Parameter (',' parameters+=Parameter)* ')' | '()') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.ReferenceCallEffectElements getReferenceCallEffectAccess() {
 		return gaKEffects.getReferenceCallEffectAccess();
 	}
@@ -2679,7 +2696,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -2977,9 +2995,10 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -3036,8 +3055,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}

@@ -1486,12 +1486,15 @@ public class InternalAnnotationsLexer extends Lexer {
         "\2\uffff\1\1\1\2";
     static final String DFA17_specialS =
         "\4\uffff}>";
-    static final String[] DFA17_transitionS = {
-            "\12\1",
-            "\1\2\1\uffff\12\1\54\uffff\1\3",
-            "",
-            ""
-    };
+    static final String[] DFA17_transitionS = DFA17_transitionS_.DFA17_transitionS;
+    private static final class DFA17_transitionS_ {
+        static final String[] DFA17_transitionS = {
+                "\12\1",
+                "\1\2\1\uffff\12\1\54\uffff\1\3",
+                "",
+                ""
+        };
+    }
 
     static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
     static final short[] DFA17_eof = DFA.unpackEncodedString(DFA17_eofS);

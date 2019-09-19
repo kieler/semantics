@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kicool.deploy.processor
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
+import de.cau.cs.kieler.kicool.deploy.Logger
 import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.io.FileWriter
@@ -30,7 +32,7 @@ import static extension de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure.*
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
+class ProjectSetup extends InplaceProcessor<CodeContainer> {
 
     public static val IProperty<List<String>> CLEAR = 
         new Property<List<String>>("de.cau.cs.kieler.kicool.deploy.setup.clear", null)
@@ -40,6 +42,8 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         
     public static val IProperty<Boolean> SAVE = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.setup.save.input", true)
+    
+    val logger = new Logger
     
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.setup"
@@ -69,7 +73,7 @@ class ProjectSetup extends AbstractDeploymentProcessor<CodeContainer> {
         infra.refresh
         
         // report
-        saveLog("setup-report.log")
+        logger.saveLog(environment, "setup-report.log")
     }
     
     // ---------------

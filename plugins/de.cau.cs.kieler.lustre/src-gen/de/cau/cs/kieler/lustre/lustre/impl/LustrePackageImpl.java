@@ -284,6 +284,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLustreProgram()
   {
     return lustreProgramEClass;
@@ -294,6 +295,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLustreProgram_Includes()
   {
     return (EAttribute)lustreProgramEClass.getEStructuralFeatures().get(0);
@@ -304,6 +306,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getLustreProgram_PackBody()
   {
     return (EReference)lustreProgramEClass.getEStructuralFeatures().get(1);
@@ -314,6 +317,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getLustreProgram_PackList()
   {
     return (EReference)lustreProgramEClass.getEStructuralFeatures().get(2);
@@ -324,6 +328,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackList()
   {
     return packListEClass;
@@ -334,6 +339,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackList_ModelDeclarations()
   {
     return (EReference)packListEClass.getEStructuralFeatures().get(0);
@@ -344,6 +350,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackList_PackageDeclarations()
   {
     return (EReference)packListEClass.getEStructuralFeatures().get(1);
@@ -354,6 +361,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackList_PackageEquations()
   {
     return (EReference)packListEClass.getEStructuralFeatures().get(2);
@@ -364,6 +372,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getModelDeclaration()
   {
     return modelDeclarationEClass;
@@ -374,6 +383,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getModelDeclaration_Name()
   {
     return (EAttribute)modelDeclarationEClass.getEStructuralFeatures().get(0);
@@ -384,6 +394,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getModelDeclaration_UsesIds()
   {
     return (EAttribute)modelDeclarationEClass.getEStructuralFeatures().get(1);
@@ -394,6 +405,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getModelDeclaration_NeedsParams()
   {
     return (EReference)modelDeclarationEClass.getEStructuralFeatures().get(2);
@@ -404,6 +416,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getModelDeclaration_Provisions()
   {
     return (EReference)modelDeclarationEClass.getEStructuralFeatures().get(3);
@@ -414,6 +427,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getModelDeclaration_Body()
   {
     return (EReference)modelDeclarationEClass.getEStructuralFeatures().get(4);
@@ -424,6 +438,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getProvide()
   {
     return provideEClass;
@@ -434,6 +449,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProvide_Name()
   {
     return (EAttribute)provideEClass.getEStructuralFeatures().get(0);
@@ -444,6 +460,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getProvide_Type()
   {
     return (EAttribute)provideEClass.getEStructuralFeatures().get(1);
@@ -454,6 +471,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProvide_Value()
   {
     return (EReference)provideEClass.getEStructuralFeatures().get(2);
@@ -464,6 +482,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProvide_Types()
   {
     return (EReference)provideEClass.getEStructuralFeatures().get(3);
@@ -474,6 +493,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProvide_StaticParams()
   {
     return (EReference)provideEClass.getEStructuralFeatures().get(4);
@@ -484,6 +504,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProvide_Input()
   {
     return (EReference)provideEClass.getEStructuralFeatures().get(5);
@@ -494,6 +515,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getProvide_Output()
   {
     return (EReference)provideEClass.getEStructuralFeatures().get(6);
@@ -504,6 +526,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackageDeclaration()
   {
     return packageDeclarationEClass;
@@ -514,6 +537,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPackageDeclaration_Name()
   {
     return (EAttribute)packageDeclarationEClass.getEStructuralFeatures().get(0);
@@ -524,6 +548,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPackageDeclaration_UsesIds()
   {
     return (EAttribute)packageDeclarationEClass.getEStructuralFeatures().get(1);
@@ -534,6 +559,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackageDeclaration_Provisions()
   {
     return (EReference)packageDeclarationEClass.getEStructuralFeatures().get(2);
@@ -544,6 +570,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackageDeclaration_Body()
   {
     return (EReference)packageDeclarationEClass.getEStructuralFeatures().get(3);
@@ -554,6 +581,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackageEquation()
   {
     return packageEquationEClass;
@@ -564,6 +592,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPackageEquation_Name()
   {
     return (EAttribute)packageEquationEClass.getEStructuralFeatures().get(0);
@@ -574,6 +603,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getPackageEquation_EqOrIs()
   {
     return (EAttribute)packageEquationEClass.getEStructuralFeatures().get(1);
@@ -584,6 +614,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackageEquation_ByNameStaticArgs()
   {
     return (EReference)packageEquationEClass.getEStructuralFeatures().get(2);
@@ -594,6 +625,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getPackBody()
   {
     return packBodyEClass;
@@ -604,6 +636,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackBody_Constants()
   {
     return (EReference)packBodyEClass.getEStructuralFeatures().get(0);
@@ -614,6 +647,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackBody_Types()
   {
     return (EReference)packBodyEClass.getEStructuralFeatures().get(1);
@@ -624,6 +658,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackBody_Externals()
   {
     return (EReference)packBodyEClass.getEStructuralFeatures().get(2);
@@ -634,6 +669,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getPackBody_Nodes()
   {
     return (EReference)packBodyEClass.getEStructuralFeatures().get(3);
@@ -644,6 +680,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getTypeDeclaration()
   {
     return typeDeclarationEClass;
@@ -654,6 +691,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTypeDeclaration_Name()
   {
     return (EAttribute)typeDeclarationEClass.getEStructuralFeatures().get(0);
@@ -664,6 +702,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTypeDeclaration_Type()
   {
     return (EAttribute)typeDeclarationEClass.getEStructuralFeatures().get(1);
@@ -674,6 +713,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getTypeDeclaration_Enums()
   {
     return (EAttribute)typeDeclarationEClass.getEStructuralFeatures().get(2);
@@ -684,6 +724,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTypeDeclaration_Variables()
   {
     return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(3);
@@ -694,6 +735,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getTypeDeclaration_Values()
   {
     return (EReference)typeDeclarationEClass.getEStructuralFeatures().get(4);
@@ -704,6 +746,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getExternalNodeDeclaration()
   {
     return externalNodeDeclarationEClass;
@@ -714,6 +757,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getExternalNodeDeclaration_IsUnsafe()
   {
     return (EAttribute)externalNodeDeclarationEClass.getEStructuralFeatures().get(0);
@@ -724,6 +768,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getExternalNodeDeclaration_HasState()
   {
     return (EAttribute)externalNodeDeclarationEClass.getEStructuralFeatures().get(1);
@@ -734,6 +779,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getExternalNodeDeclaration_Name()
   {
     return (EAttribute)externalNodeDeclarationEClass.getEStructuralFeatures().get(2);
@@ -744,6 +790,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getExternalNodeDeclaration_Input()
   {
     return (EReference)externalNodeDeclarationEClass.getEStructuralFeatures().get(3);
@@ -754,6 +801,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getExternalNodeDeclaration_Output()
   {
     return (EReference)externalNodeDeclarationEClass.getEStructuralFeatures().get(4);
@@ -764,6 +812,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAutomaton()
   {
     return automatonEClass;
@@ -774,6 +823,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAutomaton_States()
   {
     return (EReference)automatonEClass.getEStructuralFeatures().get(0);
@@ -784,6 +834,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAState()
   {
     return aStateEClass;
@@ -794,6 +845,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getAState_Name()
   {
     return (EAttribute)aStateEClass.getEStructuralFeatures().get(0);
@@ -804,6 +856,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAState_Equations()
   {
     return (EReference)aStateEClass.getEStructuralFeatures().get(1);
@@ -814,6 +867,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAState_Assertions()
   {
     return (EReference)aStateEClass.getEStructuralFeatures().get(2);
@@ -824,6 +878,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAState_Automatons()
   {
     return (EReference)aStateEClass.getEStructuralFeatures().get(3);
@@ -834,6 +889,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAState_Transitions()
   {
     return (EReference)aStateEClass.getEStructuralFeatures().get(4);
@@ -844,6 +900,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getATransition()
   {
     return aTransitionEClass;
@@ -854,6 +911,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getATransition_Strong()
   {
     return (EAttribute)aTransitionEClass.getEStructuralFeatures().get(0);
@@ -864,6 +922,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getATransition_Condition()
   {
     return (EReference)aTransitionEClass.getEStructuralFeatures().get(1);
@@ -874,6 +933,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getATransition_History()
   {
     return (EAttribute)aTransitionEClass.getEStructuralFeatures().get(2);
@@ -884,6 +944,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getATransition_NextState()
   {
     return (EReference)aTransitionEClass.getEStructuralFeatures().get(3);
@@ -894,6 +955,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getParams()
   {
     return paramsEClass;
@@ -904,6 +966,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getParams_Parameter()
   {
     return (EReference)paramsEClass.getEStructuralFeatures().get(0);
@@ -914,6 +977,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStaticParam()
   {
     return staticParamEClass;
@@ -924,6 +988,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStaticParam_Name()
   {
     return (EAttribute)staticParamEClass.getEStructuralFeatures().get(0);
@@ -934,6 +999,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStaticParam_Type()
   {
     return (EAttribute)staticParamEClass.getEStructuralFeatures().get(1);
@@ -944,6 +1010,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStaticParam_NodeInput()
   {
     return (EReference)staticParamEClass.getEStructuralFeatures().get(2);
@@ -954,6 +1021,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStaticParam_NodeOutput()
   {
     return (EReference)staticParamEClass.getEStructuralFeatures().get(3);
@@ -964,6 +1032,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getStaticArg()
   {
     return staticArgEClass;
@@ -974,6 +1043,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getStaticArg_Type()
   {
     return (EAttribute)staticArgEClass.getEStructuralFeatures().get(0);
@@ -984,6 +1054,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStaticArg_Expr()
   {
     return (EReference)staticArgEClass.getEStructuralFeatures().get(1);
@@ -994,6 +1065,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStaticArg_Name()
   {
     return (EReference)staticArgEClass.getEStructuralFeatures().get(2);
@@ -1004,6 +1076,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getStaticArg_StaticArgs()
   {
     return (EReference)staticArgEClass.getEStructuralFeatures().get(3);
@@ -1014,6 +1087,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getByNameStaticArg()
   {
     return byNameStaticArgEClass;
@@ -1024,6 +1098,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getByNameStaticArg_Name()
   {
     return (EAttribute)byNameStaticArgEClass.getEStructuralFeatures().get(0);
@@ -1034,6 +1109,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getByNameStaticArg_Type()
   {
     return (EAttribute)byNameStaticArgEClass.getEStructuralFeatures().get(1);
@@ -1044,6 +1120,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getByNameStaticArg_Expr()
   {
     return (EReference)byNameStaticArgEClass.getEStructuralFeatures().get(2);
@@ -1054,6 +1131,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getClockedVariableDeclaration()
   {
     return clockedVariableDeclarationEClass;
@@ -1064,6 +1142,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClockedVariableDeclaration_Vardecl()
   {
     return (EReference)clockedVariableDeclarationEClass.getEStructuralFeatures().get(0);
@@ -1074,6 +1153,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getClockedVariableDeclaration_ClockExpr()
   {
     return (EReference)clockedVariableDeclarationEClass.getEStructuralFeatures().get(1);
@@ -1084,6 +1164,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeDeclaration()
   {
     return nodeDeclarationEClass;
@@ -1094,6 +1175,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeDeclaration_IsUnsafe()
   {
     return (EAttribute)nodeDeclarationEClass.getEStructuralFeatures().get(0);
@@ -1104,6 +1186,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getNodeDeclaration_HasState()
   {
     return (EAttribute)nodeDeclarationEClass.getEStructuralFeatures().get(1);
@@ -1114,6 +1197,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_StaticParams()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(2);
@@ -1124,6 +1208,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Input()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(3);
@@ -1134,6 +1219,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Output()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(4);
@@ -1144,6 +1230,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_EffectiveNode()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(5);
@@ -1154,6 +1241,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_StaticArgs()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(6);
@@ -1164,6 +1252,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Constants()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(7);
@@ -1174,6 +1263,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Variables()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(8);
@@ -1184,6 +1274,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Equations()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(9);
@@ -1194,6 +1285,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Assertions()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(10);
@@ -1204,6 +1296,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getNodeDeclaration_Automatons()
   {
     return (EReference)nodeDeclarationEClass.getEStructuralFeatures().get(11);
@@ -1214,6 +1307,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeValuedObject()
   {
     return nodeValuedObjectEClass;
@@ -1224,6 +1318,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getEquation()
   {
     return equationEClass;
@@ -1234,6 +1329,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getEquation_References()
   {
     return (EReference)equationEClass.getEStructuralFeatures().get(0);
@@ -1244,6 +1340,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getAssertion()
   {
     return assertionEClass;
@@ -1254,6 +1351,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EReference getAssertion_Expr()
   {
     return (EReference)assertionEClass.getEStructuralFeatures().get(0);
@@ -1264,6 +1362,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getLustreValuedObject()
   {
     return lustreValuedObjectEClass;
@@ -1274,6 +1373,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EAttribute getLustreValuedObject_Type()
   {
     return (EAttribute)lustreValuedObjectEClass.getEStructuralFeatures().get(0);
@@ -1284,6 +1384,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EClass getNodeReference()
   {
     return nodeReferenceEClass;
@@ -1294,6 +1395,7 @@ public class LustrePackageImpl extends EPackageImpl implements LustrePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LustreFactory getLustreFactory()
   {
     return (LustreFactory)getEFactoryInstance();

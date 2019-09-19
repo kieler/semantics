@@ -56,6 +56,7 @@ import org.eclipse.xtext.validation.CheckType
 
 import static extension java.lang.String.*
 import org.eclipse.elk.core.data.LayoutMetaDataService
+import de.cau.cs.kieler.kexpressions.OperatorType
 
 //import org.eclipse.xtext.validation.Check
 
@@ -134,6 +135,8 @@ class SCTXValidator extends AbstractSCTXValidator {
     static val String INHERITANCE_VO_NAME_CLASH = "There is a name clash between declared valued object in inheritance hierarchy. Valued object with name %s is declared multiple times (%s)."
     static val String INHERITANCE_REGION_NAME_CLASH = "There is a name clash between regions IDs in inheritance hierarchy. Region with name %s is declared multiple times (%s)."  
 
+    static val String NO_ASSIGNMENTS_TO_REF = "Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region)."  
+
     static val String REGION_OVERRIDE_ANONYMOUS = "Cannot override anonymous region." 
     static val String REGION_OVERRIDE_SUPERFLOUSE = "The is no region to override."  
     static val String REGION_OVERRIDE_MISSING = "There is an inherited region with the same name, you may use the override keyword."
@@ -145,7 +148,7 @@ class SCTXValidator extends AbstractSCTXValidator {
         val decl = asm.reference?.valuedObject?.eContainer
         if (decl instanceof ReferenceDeclaration) {
             if (asm.reference.subReference === null && decl.reference instanceof de.cau.cs.kieler.sccharts.State && !(asm.eContainer instanceof DataflowRegion)) {
-                error("Assignments to referenced SCCharts are not supported. Except with dataflow semantics (i.e. in a dataflow region).", asm.reference, null, -1)
+                error(NO_ASSIGNMENTS_TO_REF, asm.reference, null, -1)
             }
         }
     }
@@ -269,7 +272,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     warning(REGION_OVERRIDE_SUPERFLOUSE, region, SCChartsPackage.eINSTANCE.region_Override)
                 }
             }
-        } else if (!region.parentState.baseStates.nullOrEmpty) {
+        } else if (!region.parentState.baseStates.nullOrEmpty && !region.name.nullOrEmpty) {
             val inheritedRegions = region.parentState.getAllVisibleInheritedRegions(true)
             if (inheritedRegions.exists[region.name.equals(name)]) {
                 warning(REGION_OVERRIDE_MISSING, region, AnnotationsPackage.eINSTANCE.namedObject_Name, -1)
@@ -831,7 +834,7 @@ class SCTXValidator extends AbstractSCTXValidator {
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
                     "The referencing binding is erroneous!\n" + errorMessage);
-            } else if (implicitMessage != "" && scopeCall.eContainer instanceof org.eclipse.xtext.validation.AbstractDeclarativeValidator.State) {
+            } else if (implicitMessage != "" && scopeCall.eContainer instanceof de.cau.cs.kieler.sccharts.State) {
                 warning("Valued Objects are bound implicitly!\n" + implicitMessage,
                     scopeCall, 
                     SCChartsPackage.eINSTANCE.scopeCall_Scope, 
@@ -909,7 +912,7 @@ class SCTXValidator extends AbstractSCTXValidator {
     @Check(CheckType.NORMAL)
     def void checkCorrectExternalReferenceObjects(ValuedObjectReference valuedObjectReference) {
         val valuedObject = valuedObjectReference.valuedObject
-        if (valuedObject.isExternalReference) {
+        if (valuedObject?.isExternalReference) {
             if (!(valuedObjectReference instanceof ReferenceCall)) {
                 warning("You are using an external reference without call syntax. If you want to generate a call, you must add parentheses.", 
                     valuedObjectReference, null)
@@ -942,6 +945,33 @@ class SCTXValidator extends AbstractSCTXValidator {
                     "If you want to create a relative write in new syntax, please use an infix assignment operator.", assignment, null
                 )
             }
+        }
+    }
+
+
+    @Check
+    def void checkCountDelayBeforeSubExpressionWarning(de.cau.cs.kieler.sccharts.Action action) {
+        if (action.triggerDelay > 1) {
+            if (action.trigger instanceof OperatorExpression) {
+                if ((action.trigger as OperatorExpression).hasLeftUnarySubExpression) {
+                    warning("A count delay was recognized in front of an unary operation.\n" + 
+                        "If this is not intended, use parentheses to surround your expression.",
+                        action, null)
+                }
+            }
+        }
+    } 
+    
+    private def boolean hasLeftUnarySubExpression(OperatorExpression operatorExpression) {
+        val firstExpression = operatorExpression.subExpressions.head
+        if (firstExpression instanceof OperatorExpression) {
+            if (firstExpression.operator == OperatorType.SUB && firstExpression.subExpressions.size == 1) {
+                return true
+            } else {
+                return firstExpression.hasLeftUnarySubExpression
+            }
+        } else {
+            return false
         }
     }
 

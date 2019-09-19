@@ -14,6 +14,16 @@
 package de.cau.cs.kieler.scg.processors
 
 import com.google.inject.Inject
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.keffects.Linkable
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccess
+import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
+import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
 import de.cau.cs.kieler.scg.Depth
@@ -25,15 +35,12 @@ import de.cau.cs.kieler.scg.Node
 import de.cau.cs.kieler.scg.SCGraph
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.Surface
+import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 import java.util.Deque
 import java.util.Set
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
-import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ValuedObjectAccessors
-import de.cau.cs.kieler.kexpressions.keffects.dependencies.ForkStack
 
 import static de.cau.cs.kieler.scg.extensions.SCGThreadExtensions.*
-import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysis
 
 /** 
  * This class is part of the SCG transformation chain. The chain is used to gather information 
@@ -57,7 +64,11 @@ import de.cau.cs.kieler.kicool.processors.dependencies.AbstractDependencyAnalysi
 class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SCGraph> {
     
     @Inject extension SCGControlFlowExtensions
+    @Inject extension SCGMethodExtensions
     @Inject extension AnnotationsExtensions
+    
+    val methodSCGs = <MethodDeclaration, SCGraph>newHashMap
+    val methodDependencyCache = <SCGraph, ValuedObjectAccessors>newHashMap
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.dependency"
@@ -67,8 +78,17 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
         "Dependency V2"
     }
     
+    override process() {
+        methodSCGs.clear
+        methodDependencyCache.clear
+        for (scg : model.scgs.filter[isMethod]) {
+            methodSCGs.put(scg.methodDeclaration, scg)
+        }
+        super.process()
+    } 
+    
     override getSubModels(SCGraphs rootModel) {
-        return rootModel.scgs
+        return rootModel.scgs.ignoreMethods
     }
     
     
@@ -79,7 +99,6 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
      * and are resolved first.
      */
     protected override searchDependencies(SCGraph scg, ValuedObjectAccessors valuedObjectAccessors) {
-        
         if (!(scg.nodes.head instanceof Entry)) 
             throw new UnsupportedOperationException("The first node of an SCG should be an entry node.")
         
@@ -156,6 +175,58 @@ class DependencyTransformationV2 extends AbstractDependencyAnalysis<SCGraphs, SC
     
     override protected getThreadEntryClass() {
         return typeof(Entry)
+    }
+    
+    override protected processExpressionReader(Linkable node, Expression expression, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
+        val readVOIs = super.processExpressionReader(node, expression, forkStack, valuedObjectAccessors)
+        // Analyze method bodies
+        val calledMethods = newHashSet
+        val refCalls = if (expression instanceof ReferenceCall) {
+            newArrayList(expression as ReferenceCall)
+        } else if (expression !== null) {
+            expression.eAllContents.filter(ReferenceCall).toList
+        } else {
+            emptyList
+        }
+        // Find methods
+        for (refcall : refCalls) {
+            var ValuedObjectReference vor = refcall
+            do {
+                val method = vor?.valuedObject?.eContainer
+                if (method instanceof MethodDeclaration) {
+                    calledMethods += method
+                }
+                vor = vor.subReference
+            } while (vor !== null)
+        }
+        // Analyze
+        for (method : calledMethods) {
+            if (methodSCGs.containsKey(method)) {
+                methodSCGs.get(method).processInnerAccesses(node, forkStack, valuedObjectAccessors)
+            }
+        }
+        
+        return readVOIs
+    }
+    
+    protected def processInnerAccesses(SCGraph scg, Linkable node, ForkStack forkStack, ValuedObjectAccessors valuedObjectAccessors) {
+        if (!methodDependencyCache.containsKey(scg)) {
+            val innerVOAs = new ValuedObjectAccessors
+            scg.searchDependencies(innerVOAs)
+            // Find all method local VOs and remove all accesses
+            for (vo : scg.declarations.map[valuedObjects].flatten) {
+                innerVOAs.removeAllAccesses(vo)
+            }
+            methodDependencyCache.put(scg, innerVOAs)
+        }
+        val innerVOAs = methodDependencyCache.get(scg)
+        for (entry : innerVOAs.map.entries) {
+            val adaptedAccess = new ValuedObjectAccess(entry.value)
+            adaptedAccess.node = node
+            adaptedAccess.associatedNode = node
+            adaptedAccess.forkStack = new ForkStack(forkStack)
+            valuedObjectAccessors.addAccess(entry.key, adaptedAccess)
+        }
     }
     
     private def addAndMark(Node node, Deque<Node> nodes, Set<Node> visited) {

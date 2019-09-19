@@ -133,6 +133,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -143,6 +144,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -156,6 +158,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Assignment> getEquations()
   {
     if (equations == null)
@@ -170,6 +173,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Expression> getAssertions()
   {
     if (assertions == null)
@@ -184,6 +188,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<Automaton> getAutomatons()
   {
     if (automatons == null)
@@ -198,6 +203,7 @@ public class AStateImpl extends MinimalEObjectImpl.Container implements AState
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<ATransition> getTransitions()
   {
     if (transitions == null)

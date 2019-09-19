@@ -37,10 +37,6 @@ public interface Provide extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -64,10 +60,6 @@ public interface Provide extends EObject
    * Returns the value of the '<em><b>Type</b></em>' attribute.
    * The literals are from the enumeration {@link de.cau.cs.kieler.kexpressions.ValueType}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Type</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Type</em>' attribute.
    * @see de.cau.cs.kieler.kexpressions.ValueType
@@ -92,10 +84,6 @@ public interface Provide extends EObject
   /**
    * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
    * @see #setValue(Expression)
@@ -118,10 +106,6 @@ public interface Provide extends EObject
   /**
    * Returns the value of the '<em><b>Types</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Types</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Types</em>' containment reference.
    * @see #setTypes(TypeDeclaration)
@@ -145,10 +129,6 @@ public interface Provide extends EObject
    * Returns the value of the '<em><b>Static Params</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.StaticParam}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Static Params</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Static Params</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getProvide_StaticParams()
@@ -160,10 +140,6 @@ public interface Provide extends EObject
   /**
    * Returns the value of the '<em><b>Input</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Input</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Input</em>' containment reference.
    * @see #setInput(Params)
@@ -186,10 +162,6 @@ public interface Provide extends EObject
   /**
    * Returns the value of the '<em><b>Output</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Output</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Output</em>' containment reference.
    * @see #setOutput(Params)

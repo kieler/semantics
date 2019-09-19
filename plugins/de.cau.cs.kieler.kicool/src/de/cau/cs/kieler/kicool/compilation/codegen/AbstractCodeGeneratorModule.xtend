@@ -29,7 +29,7 @@ abstract class AbstractCodeGeneratorModule {
     
     @Inject protected Injector injector
         
-    @Accessors val StringBuilder code = new StringBuilder
+    @Accessors(PUBLIC_GETTER) var StringBuilder code = new StringBuilder
     @Accessors var String baseName = ""
     @Accessors var String prefix = ""
     @Accessors var String suffix = ""
@@ -66,18 +66,33 @@ abstract class AbstractCodeGeneratorModule {
         }
     }
     
+    protected def appendInd(StringBuilder sb, String s) {
+        indent
+        sb.append(s)
+    }     
     
+    protected def appendInd(String s) {
+        indent
+        code.append(s)
+    }        
     
+    protected def incIndentation() {
+        indentation = indentation + "  "
+    } 
+    
+    protected def decIndentation() {
+        indentation = indentation.substring(2)
+    }
     
     // Convenient StringBuilder methods
-    private static val MAGIC_PREFIX = "§ulf§"
-    private static val NL_MAGIC = MAGIC_PREFIX + "NL"
-    private static val DEFAULT_CODE_LINE_LENGTH = 40
-    private static val AUTO_CODE_LINE_LENGTH_SPACING = 4
+    static val MAGIC_PREFIX = "§ulf§"
+    static val NL_MAGIC = MAGIC_PREFIX + "NL"
+    static val DEFAULT_CODE_LINE_LENGTH = 40
+    static val AUTO_CODE_LINE_LENGTH_SPACING = 4
     
-    @Accessors private var int actualLineLength = 0
-    @Accessors private var int codeLineLength = DEFAULT_CODE_LINE_LENGTH
-    private val lecStore = <String, String> newHashMap
+    @Accessors var int actualLineLength = 0
+    @Accessors var int codeLineLength = DEFAULT_CODE_LINE_LENGTH
+    val lecStore = <String, String> newHashMap
     
     protected def add(StringBuilder sb, Object ... args) {
         for (s : args) {
@@ -224,7 +239,7 @@ abstract class AbstractCodeGeneratorModule {
         var first = true
         for (s2 : args) {
             for (s : s2.toString.split(NL_MAGIC)) {
-                if (!(s instanceof String && (s as String).nullOrEmpty)) { 
+                if (!s.nullOrEmpty) { 
                     if (!first) {
                         sb.append(StaticWhitespace.getSpace(spaces))
                         sb.append(" * ")
@@ -240,4 +255,8 @@ abstract class AbstractCodeGeneratorModule {
         sb.append(" */\n")
         return sb.toString
     }    
+    
+    def void setNewCodeStringBuilder(StringBuilder sb) {
+        this.code = sb
+    }
 }

@@ -38,6 +38,7 @@ import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.kicool.registration.KiCoolRegistration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.ControlflowRegion
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.Region
@@ -49,7 +50,10 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsReferenceExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsScopeExtensions
 import de.cau.cs.kieler.sccharts.processors.dataflow.Dataflow
+import de.cau.cs.kieler.scl.Conditional
+import de.cau.cs.kieler.scl.Loop
 import de.cau.cs.kieler.scl.MethodImplementationDeclaration
+import de.cau.cs.kieler.scl.Return
 import java.util.Set
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
@@ -152,9 +156,9 @@ class Reference extends SCChartsProcessor implements Traceable {
             rootState.handleSCChartsDatatype
             
             if (environment.getProperty(EXPAND_REFERENCED_STATES)) {
-                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
+                val statesWithReferences2 = rootState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
                 val regionsWithReferences2 = rootState.allContainedRegions.filter[ reference !== null && reference.scope !== null ].toList
-                for (state : statesWithReferences2.toList) {
+                for (state : statesWithReferences2) {
                     state.expandReferencedScope(new Replacements)
                 }
                 for (region : regionsWithReferences2) {
@@ -252,8 +256,8 @@ class Reference extends SCChartsProcessor implements Traceable {
             val processState = if (newScope instanceof Region) newScope.eContainer as State else newScope as State
             // Optimize this.
             dataflowProcessor.processState(processState)
-            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ]
-            for (state : statesWithReferences.toList) {
+            val statesWithReferences = processState.getAllContainedStates.filter[ reference !== null && reference.scope !== null ].toList
+            for (state : statesWithReferences) {
                 state.expandReferencedScope(new Replacements)
             }
         }
@@ -281,6 +285,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given state. */
     protected def replaceValuedObjectReferencesInState(State state, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : state.declarations.immutableCopy) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : state.actions + state.outgoingTransitions) {
@@ -293,7 +302,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : state.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            state.expandReferencedScope(replacements)
+            state.expandReferencedScope(new Replacements(replacements))
         }
         
         // Delegate the region replacement.
@@ -304,6 +313,11 @@ class Reference extends SCChartsProcessor implements Traceable {
     
     /** Replaces valued object references inside the given region. */
     protected def replaceValuedObjectReferencesInRegion(Region region, Replacements replacements) {
+        // Handle refereces in declarations
+        for (decl : region.declarations.immutableCopy) {
+            decl.replaceValuedObjectReferencesInDeclaration(replacements)
+        }
+        
         // Delegate actions, trigger and effects. Remember: Transitions are also actions within another 
         // attribute of the class.
         for (action : region.actions) {
@@ -316,7 +330,7 @@ class Reference extends SCChartsProcessor implements Traceable {
             for (parameter : region.reference.parameters) {
                 parameter.replaceReferences(replacements)
             }
-            region.expandReferencedScope(replacements)
+            region.expandReferencedScope(new Replacements(replacements))
         }
         
         if (region instanceof ControlflowRegion) {
@@ -335,6 +349,69 @@ class Reference extends SCChartsProcessor implements Traceable {
         action.trigger?.replaceReferences(replacements)
         for (effect : action.effects) {
             effect.replaceReferences(replacements)
+        }
+    }
+    
+    /** Replaces valued object references inside declarations. */
+    protected def replaceValuedObjectReferencesInDeclaration(Declaration decl, Replacements replacements) {
+        if (decl instanceof MethodImplementationDeclaration) {
+            decl.replaceValuedObjectReferencesInSclScope(replacements)
+        }
+        for (vo : decl.valuedObjects) {
+            // Handle cardinalities
+            for (cardinal : vo.cardinalities.filterNull) {
+                cardinal.replaceReferences(replacements)
+            }
+            if (vo.initialValue !== null) {
+                vo.initialValue.replaceReferences(replacements)
+            }
+        }
+    }
+    
+    /** Replaces valued object references inside scope from scl (due to methods). */
+    protected def void replaceValuedObjectReferencesInSclScope(de.cau.cs.kieler.scl.Scope scope, Replacements replacements) {
+        val VOs = <ValuedObject>newArrayList
+        // Push this scopes variables onto the replacement stack.
+        if (scope instanceof Conditional) {
+            scope.expression.replaceReferences(replacements)
+        } else if (scope instanceof MethodImplementationDeclaration) {
+            VOs += scope.parameterDeclarations.map[valuedObjects].flatten.toList
+        } else if (scope instanceof Loop) {
+            if (scope.initializationDeclaration !== null) {
+                VOs += scope.initializationDeclaration.valuedObjects
+            }
+        }
+        VOs += scope.declarations.map[valuedObjects].flatten.toList
+        for (valuedObject : VOs) {
+            replacements.push(valuedObject, valuedObject.reference)
+        }
+        
+        if (scope instanceof Loop) {
+            scope.initialization?.replaceReferences(replacements)
+            scope.initializationDeclaration?.valuedObjects?.head?.initialValue?.replaceReferences(replacements)
+            scope.condition?.replaceReferences(replacements)
+            scope.afterthought?.replaceReferences(replacements)
+        }
+        
+        // Process statements
+        for (stm : scope.statements) {
+            if (stm instanceof de.cau.cs.kieler.scl.Scope) {
+                stm.replaceValuedObjectReferencesInSclScope(replacements)
+            } else if (stm instanceof de.cau.cs.kieler.scl.Assignment) {
+                stm.replaceReferences(replacements)
+            } else if (stm instanceof Return) {
+                stm.expression?.replaceReferences(replacements)
+            }
+        }
+        
+        // Pop this scopes variables from the replacement stack.
+        for (valuedObject : VOs) {
+            replacements.pop(valuedObject)
+        }
+        
+        // Process else scope in conditional
+        if (scope instanceof Conditional) {
+            scope.^else?.replaceValuedObjectReferencesInSclScope(replacements)
         }
     }
     
@@ -495,6 +572,11 @@ class Reference extends SCChartsProcessor implements Traceable {
         }        
     }
     
+    /** Handle Code Effect. */
+    protected dispatch def void replaceReferences(CodeEffect code, Replacements replacements) {
+        code.replaceValuedObjectReferencesInSclScope(replacements)       
+    }
+    
     
     protected def void resolveNameClashes(Scope scope, Scope oldScope, Replacements replacements) {
         if (!environment.getProperty(RENAME_SHADOWED_VARIABLES))
@@ -546,9 +628,9 @@ class Reference extends SCChartsProcessor implements Traceable {
                     container = container.eContainer
                 }
                 
-                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject.name + ") that is not contained in the model!", container, true)
+                environment.errors.add("The valued object reference points to a valued object (" + vor.valuedObject?.name + ") that is not contained in the model!", container, true)
                 System.err.println("The valued object reference points to a valued object that is not contained in the model! " + 
-                    vor.valuedObject.name + " " + vor + " " + (container as State).name)
+                    vor.valuedObject?.name + " " + vor + " " + (container as State).name)
                 success = false
             }
         }
@@ -577,7 +659,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                         for (vor : method.eAllContents.filter(ValuedObjectReference).toIterable) {
                             val oldDecl = vor.valuedObject.declaration
                             if (oldDecl.eContainer instanceof State) {
-                                vor.valuedObject = classDecl.declarations.map[valuedObjects].flatten.findFirst[vor.valuedObject.name.equals(name)]
+                                vor.valuedObject = classDecl.innerValuedObjects.findFirst[vor.valuedObject.name.equals(name)]
                             }
                         }
                     }
@@ -614,7 +696,7 @@ class Reference extends SCChartsProcessor implements Traceable {
                             val decl = parent.valuedObject.eContainer as Declaration
                             if (decl instanceof ClassDeclaration) {
                                 // Find by name
-                                sub.valuedObject = decl.declarations.map[valuedObjects].flatten.findFirst[vo.name.equals(name)]
+                                sub.valuedObject = decl.innerValuedObjects.findFirst[vo.name.equals(name)]
                             }
                             sub = sub.subReference
                         }

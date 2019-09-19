@@ -88,6 +88,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Interface getInterface()
   {
     return interface_;
@@ -115,6 +116,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setInterface(Interface newInterface)
   {
     if (newInterface != interface_)
@@ -136,6 +138,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getScript()
   {
     return script;
@@ -146,6 +149,7 @@ public class ContentImpl extends MinimalEObjectImpl.Container implements Content
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setScript(String newScript)
   {
     String oldScript = script;

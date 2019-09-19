@@ -134,7 +134,7 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
             logger.println("Compilation successful!")
         }
         
-        logger = logger.intermediateLog("nxj-compiler-report.log").snapshot.newLogger("== Linking (NXJ) ==")
+        logger = logger.saveIntermediateLog(environment, "nxj-compiler.log").newLogger("== Linking (NXJ) ==")
         
         if (success) {
             success = nxjlink.invoke(infra.generatedCodeFolder)?:-1 == 0
@@ -145,7 +145,7 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
                 logger.println("Linking successful!")
             }
             
-            logger = logger.intermediateLog("nxj-linking-report.log").snapshot.newLogger("== Uploading (NXJ) ==")
+            logger = logger.saveIntermediateLog(environment, "nxj-linking.log").newLogger("== Uploading (NXJ) ==")
             
             if (success) {
                 success = nxjupload.invoke(infra.generatedCodeFolder)?:-1 == 0
@@ -156,7 +156,7 @@ class NXJCompiler extends AbstractSystemCompilerProcessor<Object, GenericCompila
                     logger.println("Upload successful!")
                 }
                 
-                logger.intermediateLog("nxj-upload-report.log").snapshot
+                logger.saveIntermediateLog(environment, "nxj-upload.log")
             }
         }
         
