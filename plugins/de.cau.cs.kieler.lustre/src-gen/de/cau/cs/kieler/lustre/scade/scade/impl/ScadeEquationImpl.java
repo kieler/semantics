@@ -4,7 +4,6 @@
 package de.cau.cs.kieler.lustre.scade.scade.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 
@@ -52,7 +51,7 @@ public class ScadeEquationImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    * @ordered
    */
-  protected EList<ValuedObject> references;
+  protected EList<Expression> references;
 
   /**
    * The default value of the '{@link #getOperator() <em>Operator</em>}' attribute.
@@ -111,11 +110,11 @@ public class ScadeEquationImpl extends MinimalEObjectImpl.Container implements S
    * @generated
    */
   @Override
-  public EList<ValuedObject> getReferences()
+  public EList<Expression> getReferences()
   {
     if (references == null)
     {
-      references = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScadePackage.SCADE_EQUATION__REFERENCES);
+      references = new EObjectContainmentEList<Expression>(Expression.class, this, ScadePackage.SCADE_EQUATION__REFERENCES);
     }
     return references;
   }
@@ -246,7 +245,7 @@ public class ScadeEquationImpl extends MinimalEObjectImpl.Container implements S
     {
       case ScadePackage.SCADE_EQUATION__REFERENCES:
         getReferences().clear();
-        getReferences().addAll((Collection<? extends ValuedObject>)newValue);
+        getReferences().addAll((Collection<? extends Expression>)newValue);
         return;
       case ScadePackage.SCADE_EQUATION__OPERATOR:
         setOperator((AssignOperator)newValue);

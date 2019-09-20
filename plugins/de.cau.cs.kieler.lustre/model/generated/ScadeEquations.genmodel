@@ -7,7 +7,6 @@
   <genPackages prefix="Scade" basePackage="de.cau.cs.kieler.lustre.scade" disposableProviderFactory="true"
       fileExtensions="scade" ecorePackage="ScadeEquations.ecore#/">
     <genClasses ecoreClass="ScadeEquations.ecore#//ScadeProgram">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeProgram/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeProgram/equations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeProgram/assertions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeProgram/automatons"/>
@@ -16,6 +15,13 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeEquation/references"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ScadeEquations.ecore#//ScadeEquation/operator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//ScadeEquation/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="ScadeEquations.ecore#//ValuedObjectString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ScadeEquations.ecore#//ValuedObjectString/name"/>
+    </genClasses>
+    <genClasses ecoreClass="ScadeEquations.ecore#//OperatorExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ScadeEquations.ecore#//OperatorExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ScadeEquations.ecore#//OperatorExpression/subExpressions"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

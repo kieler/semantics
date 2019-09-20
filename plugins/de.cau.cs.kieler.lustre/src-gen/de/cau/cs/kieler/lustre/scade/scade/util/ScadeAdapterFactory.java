@@ -3,6 +3,9 @@
  */
 package de.cau.cs.kieler.lustre.scade.scade.util;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+import de.cau.cs.kieler.kexpressions.Schedulable;
+
 import de.cau.cs.kieler.lustre.scade.scade.*;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -86,6 +89,26 @@ public class ScadeAdapterFactory extends AdapterFactoryImpl
         return createScadeEquationAdapter();
       }
       @Override
+      public Adapter caseValuedObjectString(ValuedObjectString object)
+      {
+        return createValuedObjectStringAdapter();
+      }
+      @Override
+      public Adapter caseOperatorExpression(OperatorExpression object)
+      {
+        return createOperatorExpressionAdapter();
+      }
+      @Override
+      public Adapter caseSchedulable(Schedulable object)
+      {
+        return createSchedulableAdapter();
+      }
+      @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -133,6 +156,66 @@ public class ScadeAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createScadeEquationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString <em>Valued Object String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString
+   * @generated
+   */
+  public Adapter createValuedObjectStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.lustre.scade.scade.OperatorExpression <em>Operator Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.lustre.scade.scade.OperatorExpression
+   * @generated
+   */
+  public Adapter createOperatorExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Schedulable <em>Schedulable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Schedulable
+   * @generated
+   */
+  public Adapter createSchedulableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kexpressions.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kexpressions.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
   {
     return null;
   }

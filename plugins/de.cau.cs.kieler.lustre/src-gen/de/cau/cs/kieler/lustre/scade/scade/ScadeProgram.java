@@ -4,7 +4,6 @@
 package de.cau.cs.kieler.lustre.scade.scade;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.lustre.lustre.Automaton;
 
@@ -21,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getInputs <em>Inputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getEquations <em>Equations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getAutomatons <em>Automatons</em>}</li>
@@ -33,18 +31,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ScadeProgram extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Inputs</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObject}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Inputs</em>' containment reference list.
-   * @see de.cau.cs.kieler.lustre.scade.scade.ScadePackage#getScadeProgram_Inputs()
-   * @model containment="true"
-   * @generated
-   */
-  EList<ValuedObject> getInputs();
-
   /**
    * Returns the value of the '<em><b>Equations</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.scade.scade.ScadeEquation}.

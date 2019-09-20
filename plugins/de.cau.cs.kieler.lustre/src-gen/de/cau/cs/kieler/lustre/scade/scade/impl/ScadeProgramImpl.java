@@ -4,7 +4,6 @@
 package de.cau.cs.kieler.lustre.scade.scade.impl;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.lustre.lustre.Automaton;
 
@@ -34,7 +33,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.impl.ScadeProgramImpl#getInputs <em>Inputs</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.impl.ScadeProgramImpl#getEquations <em>Equations</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.impl.ScadeProgramImpl#getAssertions <em>Assertions</em>}</li>
  *   <li>{@link de.cau.cs.kieler.lustre.scade.scade.impl.ScadeProgramImpl#getAutomatons <em>Automatons</em>}</li>
@@ -44,16 +42,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements ScadeProgram
 {
-  /**
-   * The cached value of the '{@link #getInputs() <em>Inputs</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getInputs()
-   * @generated
-   * @ordered
-   */
-  protected EList<ValuedObject> inputs;
-
   /**
    * The cached value of the '{@link #getEquations() <em>Equations</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -111,21 +99,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
    * @generated
    */
   @Override
-  public EList<ValuedObject> getInputs()
-  {
-    if (inputs == null)
-    {
-      inputs = new EObjectContainmentEList<ValuedObject>(ValuedObject.class, this, ScadePackage.SCADE_PROGRAM__INPUTS);
-    }
-    return inputs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EList<ScadeEquation> getEquations()
   {
     if (equations == null)
@@ -175,8 +148,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
   {
     switch (featureID)
     {
-      case ScadePackage.SCADE_PROGRAM__INPUTS:
-        return ((InternalEList<?>)getInputs()).basicRemove(otherEnd, msgs);
       case ScadePackage.SCADE_PROGRAM__EQUATIONS:
         return ((InternalEList<?>)getEquations()).basicRemove(otherEnd, msgs);
       case ScadePackage.SCADE_PROGRAM__ASSERTIONS:
@@ -197,8 +168,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
   {
     switch (featureID)
     {
-      case ScadePackage.SCADE_PROGRAM__INPUTS:
-        return getInputs();
       case ScadePackage.SCADE_PROGRAM__EQUATIONS:
         return getEquations();
       case ScadePackage.SCADE_PROGRAM__ASSERTIONS:
@@ -220,10 +189,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
   {
     switch (featureID)
     {
-      case ScadePackage.SCADE_PROGRAM__INPUTS:
-        getInputs().clear();
-        getInputs().addAll((Collection<? extends ValuedObject>)newValue);
-        return;
       case ScadePackage.SCADE_PROGRAM__EQUATIONS:
         getEquations().clear();
         getEquations().addAll((Collection<? extends ScadeEquation>)newValue);
@@ -250,9 +215,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
   {
     switch (featureID)
     {
-      case ScadePackage.SCADE_PROGRAM__INPUTS:
-        getInputs().clear();
-        return;
       case ScadePackage.SCADE_PROGRAM__EQUATIONS:
         getEquations().clear();
         return;
@@ -276,8 +238,6 @@ public class ScadeProgramImpl extends MinimalEObjectImpl.Container implements Sc
   {
     switch (featureID)
     {
-      case ScadePackage.SCADE_PROGRAM__INPUTS:
-        return inputs != null && !inputs.isEmpty();
       case ScadePackage.SCADE_PROGRAM__EQUATIONS:
         return equations != null && !equations.isEmpty();
       case ScadePackage.SCADE_PROGRAM__ASSERTIONS:

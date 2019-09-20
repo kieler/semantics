@@ -1194,12 +1194,13 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final RuleCall cValuedEmissionParserRuleCall_1_0 = (RuleCall)cAlternatives_1.eContents().get(0);
 		private final RuleCall cPureEmissionParserRuleCall_1_1 = (RuleCall)cAlternatives_1.eContents().get(1);
+		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//Emission keffects::Emission:
-		//	'emit' (ValuedEmission | PureEmission);
+		//	'emit' (ValuedEmission | PureEmission) ';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'emit' (ValuedEmission | PureEmission)
+		//'emit' (ValuedEmission | PureEmission) ';'
 		public Group getGroup() { return cGroup; }
 		
 		//'emit'
@@ -1213,6 +1214,9 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//PureEmission
 		public RuleCall getPureEmissionParserRuleCall_1_1() { return cPureEmissionParserRuleCall_1_1; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
 	}
 	public class AssertionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.Assertion");
@@ -3328,7 +3332,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Emission keffects::Emission:
-	//	'emit' (ValuedEmission | PureEmission);
+	//	'emit' (ValuedEmission | PureEmission) ';';
 	public EmissionElements getEmissionAccess() {
 		return pEmission;
 	}

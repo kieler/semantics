@@ -31,8 +31,10 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, ScadeEquationsGrammarAccess grammarAccess) {
-			builder.put(grammarAccess.getScadeProgramAccess().getAlternatives_1(), "rule__ScadeProgram__Alternatives_1");
+			builder.put(grammarAccess.getScadeProgramAccess().getAlternatives(), "rule__ScadeProgram__Alternatives");
 			builder.put(grammarAccess.getScadeEquationAccess().getAlternatives_0(), "rule__ScadeEquation__Alternatives_0");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 			builder.put(grammarAccess.getLustreProgramAccess().getAlternatives_0_1(), "rule__LustreProgram__Alternatives_0_1");
 			builder.put(grammarAccess.getLustreProgramAccess().getAlternatives_1(), "rule__LustreProgram__Alternatives_1");
 			builder.put(grammarAccess.getTypeDeclarationAccess().getAlternatives_2_1(), "rule__TypeDeclaration__Alternatives_2_1");
@@ -91,8 +93,6 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getShiftExpressionsAccess().getAlternatives_1(), "rule__ShiftExpressions__Alternatives_1");
 			builder.put(grammarAccess.getSumExpressionAccess().getAlternatives_1(), "rule__SumExpression__Alternatives_1");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
 			builder.put(grammarAccess.getReferenceCallAccess().getAlternatives_3(), "rule__ReferenceCall__Alternatives_3");
 			builder.put(grammarAccess.getFunctionCallAccess().getAlternatives_2(), "rule__FunctionCall__Alternatives_2");
 			builder.put(grammarAccess.getVectorValueMemberAccess().getAlternatives(), "rule__VectorValueMember__Alternatives");
@@ -119,14 +119,14 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getCombineOperatorAccess().getAlternatives(), "rule__CombineOperator__Alternatives");
 			builder.put(grammarAccess.getAccessModifierAccess().getAlternatives(), "rule__AccessModifier__Alternatives");
 			builder.put(grammarAccess.getMethodReturnTypeAccess().getAlternatives(), "rule__MethodReturnType__Alternatives");
-			builder.put(grammarAccess.getScadeProgramAccess().getGroup(), "rule__ScadeProgram__Group__0");
-			builder.put(grammarAccess.getScadeProgramAccess().getGroup_0(), "rule__ScadeProgram__Group_0__0");
-			builder.put(grammarAccess.getScadeProgramAccess().getGroup_0_2(), "rule__ScadeProgram__Group_0_2__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup(), "rule__ScadeEquation__Group__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_0(), "rule__ScadeEquation__Group_0_0__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_0_4(), "rule__ScadeEquation__Group_0_0_4__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_1(), "rule__ScadeEquation__Group_0_1__0");
 			builder.put(grammarAccess.getScadeEquationAccess().getGroup_0_1_3(), "rule__ScadeEquation__Group_0_1_3__0");
+			builder.put(grammarAccess.getValuedObjectStringAccess().getGroup(), "rule__ValuedObjectString__Group__0");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
 			builder.put(grammarAccess.getLustreProgramAccess().getGroup(), "rule__LustreProgram__Group__0");
 			builder.put(grammarAccess.getLustreProgramAccess().getGroup_0(), "rule__LustreProgram__Group_0__0");
 			builder.put(grammarAccess.getLustreProgramAccess().getGroup_1_0(), "rule__LustreProgram__Group_1_0__0");
@@ -367,8 +367,6 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_1(), "rule__ModExpression__Group_1_1__0");
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
 			builder.put(grammarAccess.getPrimeIDAccess().getGroup(), "rule__PrimeID__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup(), "rule__ValuedObjectReference__Group__0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getGroup_1(), "rule__ValuedObjectReference__Group_1__0");
@@ -423,11 +421,9 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getQualifiedIDAccess().getGroup_1(), "rule__QualifiedID__Group_1__0");
 			builder.put(grammarAccess.getIntegerAccess().getGroup(), "rule__Integer__Group__0");
 			builder.put(grammarAccess.getFloategerAccess().getGroup(), "rule__Floateger__Group__0");
-			builder.put(grammarAccess.getScadeProgramAccess().getInputsAssignment_0_1(), "rule__ScadeProgram__InputsAssignment_0_1");
-			builder.put(grammarAccess.getScadeProgramAccess().getInputsAssignment_0_2_1(), "rule__ScadeProgram__InputsAssignment_0_2_1");
-			builder.put(grammarAccess.getScadeProgramAccess().getEquationsAssignment_1_0(), "rule__ScadeProgram__EquationsAssignment_1_0");
-			builder.put(grammarAccess.getScadeProgramAccess().getAssertionsAssignment_1_1(), "rule__ScadeProgram__AssertionsAssignment_1_1");
-			builder.put(grammarAccess.getScadeProgramAccess().getAutomatonsAssignment_1_2(), "rule__ScadeProgram__AutomatonsAssignment_1_2");
+			builder.put(grammarAccess.getScadeProgramAccess().getEquationsAssignment_0(), "rule__ScadeProgram__EquationsAssignment_0");
+			builder.put(grammarAccess.getScadeProgramAccess().getAssertionsAssignment_1(), "rule__ScadeProgram__AssertionsAssignment_1");
+			builder.put(grammarAccess.getScadeProgramAccess().getAutomatonsAssignment_2(), "rule__ScadeProgram__AutomatonsAssignment_2");
 			builder.put(grammarAccess.getScadeEquationAccess().getReferencesAssignment_0_0_1(), "rule__ScadeEquation__ReferencesAssignment_0_0_1");
 			builder.put(grammarAccess.getScadeEquationAccess().getReferencesAssignment_0_0_3(), "rule__ScadeEquation__ReferencesAssignment_0_0_3");
 			builder.put(grammarAccess.getScadeEquationAccess().getReferencesAssignment_0_0_4_1(), "rule__ScadeEquation__ReferencesAssignment_0_0_4_1");
@@ -437,7 +433,10 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getScadeEquationAccess().getReferencesAssignment_0_2(), "rule__ScadeEquation__ReferencesAssignment_0_2");
 			builder.put(grammarAccess.getScadeEquationAccess().getOperatorAssignment_1(), "rule__ScadeEquation__OperatorAssignment_1");
 			builder.put(grammarAccess.getScadeEquationAccess().getExpressionAssignment_2(), "rule__ScadeEquation__ExpressionAssignment_2");
-			builder.put(grammarAccess.getScadeValuedObjectAccess().getNameAssignment(), "rule__ScadeValuedObject__NameAssignment");
+			builder.put(grammarAccess.getValuedObjectStringAccess().getNameAssignment_1(), "rule__ValuedObjectString__NameAssignment_1");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
+			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");
 			builder.put(grammarAccess.getLustreProgramAccess().getIncludesAssignment_0_1_0(), "rule__LustreProgram__IncludesAssignment_0_1_0");
 			builder.put(grammarAccess.getLustreProgramAccess().getIncludesAssignment_0_1_1(), "rule__LustreProgram__IncludesAssignment_0_1_1");
 			builder.put(grammarAccess.getLustreProgramAccess().getConstantsAssignment_1_0_1(), "rule__LustreProgram__ConstantsAssignment_1_0_1");
@@ -792,9 +791,6 @@ public class ScadeEquationsParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getOperatorAssignment_1_1_0(), "rule__ModExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__ModExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__ModExpression__SubExpressionsAssignment_1_2_1");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectAssignment_0(), "rule__ValuedObjectReference__ValuedObjectAssignment_0");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getIndicesAssignment_1_1(), "rule__ValuedObjectReference__IndicesAssignment_1_1");
 			builder.put(grammarAccess.getValuedObjectReferenceAccess().getSubReferenceAssignment_2_1(), "rule__ValuedObjectReference__SubReferenceAssignment_2_1");

@@ -16,8 +16,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.Value
-import de.cau.cs.kieler.kexpressions.ValuedObject
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
@@ -27,12 +25,15 @@ import de.cau.cs.kieler.lustre.lustre.LustreProgram
 import de.cau.cs.kieler.lustre.lustre.LustreValuedObject
 import de.cau.cs.kieler.lustre.lustre.LustreVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
+import de.cau.cs.kieler.lustre.scade.extensions.ScadeTransformationExtensions
 import de.cau.cs.kieler.lustre.scade.scade.ScadeEquation
 import de.cau.cs.kieler.lustre.scade.scade.ScadeProgram
+import de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString
 import java.util.HashMap
+import java.util.HashSet
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
-import de.cau.cs.kieler.lustre.scade.extensions.ScadeTransformationExtensions
+import de.cau.cs.kieler.kexpressions.ValuedObject
 
 /**
  * @author lgr
@@ -45,7 +46,9 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
     @Inject extension LustreCreateExtension
     @Inject extension ScadeTransformationExtensions
     
-    HashMap<ValuedObject, ValuedObject> valuedObjectMap = new HashMap
+    var HashMap<String, ValuedObject> variableMap = newHashMap
+    var HashSet<String> writtenVariables = newHashSet
+    var HashSet<String> readVariables = newHashSet
     
     override getId() {
         return "de.cau.cs.kieler.lustre.scade.processors.scadeToLustre"
@@ -81,18 +84,64 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
         var node = createNodeDeclaration("scadeNode")
         lustreProgram.nodes.add(node)
         
-        for (input : scadeProgram.inputs) {
-            createInput(input, node)
-        }
-        
-        for (equation : scadeProgram.equations) {
-            equation.createDefinitionsForValuedObjects(node)
-        }
+        initializeValuedObjectStringMaps(scadeProgram)
+        determineInputOutputVariable(node)
         
         // Transform the actual equations
         for (equation : scadeProgram.equations) {
             equation.processEquation(node)
         }
+    }
+    
+    def initializeValuedObjectStringMaps(ScadeProgram scadeProgram) {
+        for (equation : scadeProgram.equations) {
+            for (reference : equation.references) {
+                if (reference instanceof ValuedObjectString) {
+                    if (!variableMap.containsKey(reference.name)) {
+                        variableMap.put(reference.name, createNewValuedObject(reference.name))
+                    }
+                    writtenVariables.add(reference.name)
+                }
+            }
+            equation.expression.extractExpressionReads
+        }
+    }
+    
+    dispatch def void extractExpressionReads(ValuedObjectString expression) {
+        if (!variableMap.containsKey(expression.name)) {
+            variableMap.put(expression.name, createNewValuedObject(expression.name))
+        }
+        readVariables.add(expression.name)
+    }
+    
+    dispatch def void extractExpressionReads(OperatorExpression expression) {
+        for (subExpression : expression.subExpressions) {
+            extractExpressionReads(subExpression)
+        }                
+    }
+    
+    dispatch def void extractExpressionReads(Expression expression) {
+        // Do nothing
+    }
+    
+    def determineInputOutputVariable(NodeDeclaration node) {
+        var keySet = variableMap.keySet.toArray
+        for (key : keySet) {
+            var varDecl = createLustreVariableDeclaration => [
+                valuedObjects += variableMap.get(key)
+            ]
+            if (readVariables.contains(key) && !writtenVariables.contains(key)) {
+                node.inputs += varDecl
+            } else if (!readVariables.contains(key) && writtenVariables.contains(key)) {
+                node.outputs += varDecl
+            } else {
+                node.variables += varDecl
+            }
+        }
+    }
+    
+    def ValuedObject createNewValuedObject(String string) {
+        createValuedObject(string)
     }
     
     /**
@@ -101,19 +150,21 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
     private def processEquation(ScadeEquation equation, NodeDeclaration node) {
         if (equation.references !== null) {
             var lustreEquation = createEquation
-            for (valObj : equation.references) {
-                var lustreValObj = valuedObjectMap.get(valObj)
-                if (equation.references.size == 1) {
-                    lustreEquation.reference = lustreValObj.reference
-                } else {
-                    lustreEquation.references += lustreValObj.reference
-                }
-                lustreEquation.expression = convertExpression(equation.expression, node)
-                var type = determineType(lustreEquation.expression, newHashSet)
-                if (lustreValObj instanceof LustreValuedObject) {
-                    lustreValObj.type = type
-                } else {
-                    (lustreValObj.eContainer as LustreVariableDeclaration).type = type
+            for (valObjString : equation.references) {
+                if (valObjString instanceof ValuedObjectString) {
+                    var lustreValObj = variableMap.get(valObjString.name)
+                    if (equation.references.size == 1) {
+                        lustreEquation.reference = lustreValObj.reference
+                    } else {
+                        lustreEquation.references += lustreValObj.reference
+                    }
+                    lustreEquation.expression = convertExpression(equation.expression, node)
+                    var type = determineType(lustreEquation.expression, newHashSet)
+                    if (lustreValObj instanceof LustreValuedObject) {
+                        lustreValObj.type = type
+                    } else {
+                        (lustreValObj.eContainer as LustreVariableDeclaration).type = type
+                    }
                 }
             }
             lustreEquation.operator = equation.operator
@@ -122,70 +173,25 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
     }
     
     /**
-     * For each variable defined through an equation, a new variable in Lustre 
-     * is created. 
-     */
-    private def createDefinitionsForValuedObjects(ScadeEquation equation, NodeDeclaration node) {
-        if (equation.references !== null) {
-            for (valObj : equation.references) {
-                createVariable(valObj, node)
-            }
-        }
-    }
-    
-    private def createVariable(ValuedObject valObj, NodeDeclaration node) {
-        var lustreValObj = createLustreValuedObject
-        lustreValObj.name = valObj.name
-        valuedObjectMap.put(valObj, lustreValObj)
-        
-        var varDecl = createLustreVariableDeclaration
-        varDecl.valuedObjects += lustreValObj
-        
-        node.variables += varDecl
-    }
-    
-    private def createInput(ValuedObject valObj, NodeDeclaration node) {
-        var lustreValObj = createValuedObject
-        lustreValObj.name = valObj.name
-        valuedObjectMap.put(valObj, lustreValObj)
-        
-        var varDecl = createLustreVariableDeclaration
-        varDecl.valuedObjects += lustreValObj
-        
-        node.inputs += varDecl
-    }
-    
-    /**
      * Converts a Scade Expression to a Lustre expression and handles correct 
      * assignment for ValuedObjectReferences. If an ValuedObjectReference does not exist, 
      * it is newly created.
      */
-    private def Expression convertExpression(Expression expression, NodeDeclaration node) {
-        switch (expression) {
-            Value: {
-                return expression.copy
-            }
-            ValuedObjectReference: {
-                var valObj = valuedObjectMap.get(expression.valuedObject)
-                var ref = valObj.reference
-                if (ref === null) {
-                    var newValObj = createValuedObject
-                    newValObj.name = expression.valuedObject.name
-                    var varDecl = createLustreVariableDeclaration
-                    varDecl.valuedObjects += newValObj
-                    node.inputs += varDecl
-                    return newValObj.reference
-                }
-                return ref
-            }
-            OperatorExpression: {
-                var opExpression = createOperatorExpression
-                opExpression.operator = expression.operator
-                for (subExpression : expression.subExpressions) {
-                    opExpression.subExpressions += convertExpression(subExpression, node)
-                }                
-                return opExpression
-            }
+    private dispatch def Expression convertExpression(Expression expression, NodeDeclaration node) {
+        return expression.copy
+    }
+    
+    private dispatch def Expression convertExpression(ValuedObjectString expression, NodeDeclaration node) {
+        var valObj = variableMap.get(expression.name)
+        return valObj.reference
+    }
+    
+    private dispatch def Expression convertExpression(OperatorExpression expression, NodeDeclaration node) {
+        var opExpression = createOperatorExpression
+        opExpression.operator = expression.operator
+        for (subExpression : expression.subExpressions) {
+            opExpression.subExpressions += convertExpression(subExpression, node)
         }
+        return opExpression
     }
 }

@@ -11,6 +11,7 @@ import de.cau.cs.kieler.kexpressions.kext.services.KExtGrammarAccess;
 import de.cau.cs.kieler.kexpressions.services.KExpressionsGrammarAccess;
 import de.cau.cs.kieler.lustre.services.LustreGrammarAccess;
 import java.util.List;
+import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.EnumRule;
@@ -30,85 +31,44 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class ScadeProgramElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ScadeProgram");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
-		private final Keyword cInKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
-		private final Assignment cInputsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cInputsScadeValuedObjectParserRuleCall_0_1_0 = (RuleCall)cInputsAssignment_0_1.eContents().get(0);
-		private final Group cGroup_0_2 = (Group)cGroup_0.eContents().get(2);
-		private final Keyword cCommaKeyword_0_2_0 = (Keyword)cGroup_0_2.eContents().get(0);
-		private final Assignment cInputsAssignment_0_2_1 = (Assignment)cGroup_0_2.eContents().get(1);
-		private final RuleCall cInputsScadeValuedObjectParserRuleCall_0_2_1_0 = (RuleCall)cInputsAssignment_0_2_1.eContents().get(0);
-		private final Keyword cSemicolonKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
-		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
-		private final Assignment cEquationsAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
-		private final RuleCall cEquationsScadeEquationParserRuleCall_1_0_0 = (RuleCall)cEquationsAssignment_1_0.eContents().get(0);
-		private final Assignment cAssertionsAssignment_1_1 = (Assignment)cAlternatives_1.eContents().get(1);
-		private final RuleCall cAssertionsAssertionParserRuleCall_1_1_0 = (RuleCall)cAssertionsAssignment_1_1.eContents().get(0);
-		private final Assignment cAutomatonsAssignment_1_2 = (Assignment)cAlternatives_1.eContents().get(2);
-		private final RuleCall cAutomatonsAutomatonParserRuleCall_1_2_0 = (RuleCall)cAutomatonsAssignment_1_2.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Assignment cEquationsAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final RuleCall cEquationsScadeEquationParserRuleCall_0_0 = (RuleCall)cEquationsAssignment_0.eContents().get(0);
+		private final Assignment cAssertionsAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cAssertionsAssertionParserRuleCall_1_0 = (RuleCall)cAssertionsAssignment_1.eContents().get(0);
+		private final Assignment cAutomatonsAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cAutomatonsAutomatonParserRuleCall_2_0 = (RuleCall)cAutomatonsAssignment_2.eContents().get(0);
 		
 		///**
 		// * This grammar represents the Lustre equations that can be extracted in SCADE Suite.
 		// */ ScadeProgram hidden(WS, SL_COMMENT, ML_COMMENT):
-		//	('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')? (equations+=ScadeEquation
+		//	(equations+=ScadeEquation
 		//	//        | emissions+=ScadeEmission
 		//	| assertions+=Assertion
 		//	| automatons+=Automaton)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')? (equations+=ScadeEquation //        | emissions+=ScadeEmission
-		//| assertions+=Assertion | automatons+=Automaton)*
-		public Group getGroup() { return cGroup; }
-		
-		//('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')?
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//'in:'
-		public Keyword getInKeyword_0_0() { return cInKeyword_0_0; }
-		
-		//inputs+=ScadeValuedObject
-		public Assignment getInputsAssignment_0_1() { return cInputsAssignment_0_1; }
-		
-		//ScadeValuedObject
-		public RuleCall getInputsScadeValuedObjectParserRuleCall_0_1_0() { return cInputsScadeValuedObjectParserRuleCall_0_1_0; }
-		
-		//(',' inputs+=ScadeValuedObject)*
-		public Group getGroup_0_2() { return cGroup_0_2; }
-		
-		//','
-		public Keyword getCommaKeyword_0_2_0() { return cCommaKeyword_0_2_0; }
-		
-		//inputs+=ScadeValuedObject
-		public Assignment getInputsAssignment_0_2_1() { return cInputsAssignment_0_2_1; }
-		
-		//ScadeValuedObject
-		public RuleCall getInputsScadeValuedObjectParserRuleCall_0_2_1_0() { return cInputsScadeValuedObjectParserRuleCall_0_2_1_0; }
-		
-		//';'
-		public Keyword getSemicolonKeyword_0_3() { return cSemicolonKeyword_0_3; }
-		
 		//(equations+=ScadeEquation //        | emissions+=ScadeEmission
 		//| assertions+=Assertion | automatons+=Automaton)*
-		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//equations+=ScadeEquation
-		public Assignment getEquationsAssignment_1_0() { return cEquationsAssignment_1_0; }
+		public Assignment getEquationsAssignment_0() { return cEquationsAssignment_0; }
 		
 		//ScadeEquation
-		public RuleCall getEquationsScadeEquationParserRuleCall_1_0_0() { return cEquationsScadeEquationParserRuleCall_1_0_0; }
+		public RuleCall getEquationsScadeEquationParserRuleCall_0_0() { return cEquationsScadeEquationParserRuleCall_0_0; }
 		
 		//assertions+=Assertion
-		public Assignment getAssertionsAssignment_1_1() { return cAssertionsAssignment_1_1; }
+		public Assignment getAssertionsAssignment_1() { return cAssertionsAssignment_1; }
 		
 		//Assertion
-		public RuleCall getAssertionsAssertionParserRuleCall_1_1_0() { return cAssertionsAssertionParserRuleCall_1_1_0; }
+		public RuleCall getAssertionsAssertionParserRuleCall_1_0() { return cAssertionsAssertionParserRuleCall_1_0; }
 		
 		//automatons+=Automaton
-		public Assignment getAutomatonsAssignment_1_2() { return cAutomatonsAssignment_1_2; }
+		public Assignment getAutomatonsAssignment_2() { return cAutomatonsAssignment_2; }
 		
 		//Automaton
-		public RuleCall getAutomatonsAutomatonParserRuleCall_1_2_0() { return cAutomatonsAutomatonParserRuleCall_1_2_0; }
+		public RuleCall getAutomatonsAutomatonParserRuleCall_2_0() { return cAutomatonsAutomatonParserRuleCall_2_0; }
 	}
 	public class ScadeEquationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ScadeEquation");
@@ -117,27 +77,27 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_0_0 = (Group)cAlternatives_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_0_0_0 = (Keyword)cGroup_0_0.eContents().get(0);
 		private final Assignment cReferencesAssignment_0_0_1 = (Assignment)cGroup_0_0.eContents().get(1);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_0_1_0 = (RuleCall)cReferencesAssignment_0_0_1.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_0_1_0 = (RuleCall)cReferencesAssignment_0_0_1.eContents().get(0);
 		private final Keyword cCommaKeyword_0_0_2 = (Keyword)cGroup_0_0.eContents().get(2);
 		private final Assignment cReferencesAssignment_0_0_3 = (Assignment)cGroup_0_0.eContents().get(3);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_0_3_0 = (RuleCall)cReferencesAssignment_0_0_3.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_0_3_0 = (RuleCall)cReferencesAssignment_0_0_3.eContents().get(0);
 		private final Group cGroup_0_0_4 = (Group)cGroup_0_0.eContents().get(4);
 		private final Keyword cCommaKeyword_0_0_4_0 = (Keyword)cGroup_0_0_4.eContents().get(0);
 		private final Assignment cReferencesAssignment_0_0_4_1 = (Assignment)cGroup_0_0_4.eContents().get(1);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_0_4_1_0 = (RuleCall)cReferencesAssignment_0_0_4_1.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_0_4_1_0 = (RuleCall)cReferencesAssignment_0_0_4_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_0_0_5 = (Keyword)cGroup_0_0.eContents().get(5);
 		private final Group cGroup_0_1 = (Group)cAlternatives_0.eContents().get(1);
 		private final Assignment cReferencesAssignment_0_1_0 = (Assignment)cGroup_0_1.eContents().get(0);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_1_0_0 = (RuleCall)cReferencesAssignment_0_1_0.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_1_0_0 = (RuleCall)cReferencesAssignment_0_1_0.eContents().get(0);
 		private final Keyword cCommaKeyword_0_1_1 = (Keyword)cGroup_0_1.eContents().get(1);
 		private final Assignment cReferencesAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_1_2_0 = (RuleCall)cReferencesAssignment_0_1_2.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_1_2_0 = (RuleCall)cReferencesAssignment_0_1_2.eContents().get(0);
 		private final Group cGroup_0_1_3 = (Group)cGroup_0_1.eContents().get(3);
 		private final Keyword cCommaKeyword_0_1_3_0 = (Keyword)cGroup_0_1_3.eContents().get(0);
 		private final Assignment cReferencesAssignment_0_1_3_1 = (Assignment)cGroup_0_1_3.eContents().get(1);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_1_3_1_0 = (RuleCall)cReferencesAssignment_0_1_3_1.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_1_3_1_0 = (RuleCall)cReferencesAssignment_0_1_3_1.eContents().get(0);
 		private final Assignment cReferencesAssignment_0_2 = (Assignment)cAlternatives_0.eContents().get(2);
-		private final RuleCall cReferencesScadeValuedObjectParserRuleCall_0_2_0 = (RuleCall)cReferencesAssignment_0_2.eContents().get(0);
+		private final RuleCall cReferencesValuedObjectStringParserRuleCall_0_2_0 = (RuleCall)cReferencesAssignment_0_2.eContents().get(0);
 		private final Assignment cOperatorAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cOperatorAssignOperatorEnumRuleCall_1_0 = (RuleCall)cOperatorAssignment_1.eContents().get(0);
 		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -145,95 +105,95 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//ScadeEquation:
-		//	('(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')' |
-		//	references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* |
-		//	references+=ScadeValuedObject) operator=AssignOperator
+		//	('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
+		//	references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
+		//	references+=ValuedObjectString) operator=AssignOperator
 		//	expression=Expression
 		//	';';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')' |
-		//references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* |
-		//references+=ScadeValuedObject) operator=AssignOperator expression=Expression ';'
+		//('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
+		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
+		//references+=ValuedObjectString) operator=AssignOperator expression=Expression ';'
 		public Group getGroup() { return cGroup; }
 		
-		//'(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')' |
-		//references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* |
-		//references+=ScadeValuedObject
+		//'(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
+		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
+		//references+=ValuedObjectString
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//// Left side: (x, y, ...) or x, y, ... or x 
-		//'(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')'
+		//'(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')'
 		public Group getGroup_0_0() { return cGroup_0_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_0_0_0() { return cLeftParenthesisKeyword_0_0_0; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_0_1() { return cReferencesAssignment_0_0_1; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_0_1_0() { return cReferencesScadeValuedObjectParserRuleCall_0_0_1_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_0_1_0() { return cReferencesValuedObjectStringParserRuleCall_0_0_1_0; }
 		
 		//','
 		public Keyword getCommaKeyword_0_0_2() { return cCommaKeyword_0_0_2; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_0_3() { return cReferencesAssignment_0_0_3; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_0_3_0() { return cReferencesScadeValuedObjectParserRuleCall_0_0_3_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_0_3_0() { return cReferencesValuedObjectStringParserRuleCall_0_0_3_0; }
 		
-		//(',' references+=ScadeValuedObject)*
+		//(',' references+=ValuedObjectString)*
 		public Group getGroup_0_0_4() { return cGroup_0_0_4; }
 		
 		//','
 		public Keyword getCommaKeyword_0_0_4_0() { return cCommaKeyword_0_0_4_0; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_0_4_1() { return cReferencesAssignment_0_0_4_1; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_0_4_1_0() { return cReferencesScadeValuedObjectParserRuleCall_0_0_4_1_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_0_4_1_0() { return cReferencesValuedObjectStringParserRuleCall_0_0_4_1_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_0_0_5() { return cRightParenthesisKeyword_0_0_5; }
 		
-		//references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)*
+		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*
 		public Group getGroup_0_1() { return cGroup_0_1; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_1_0() { return cReferencesAssignment_0_1_0; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_1_0_0() { return cReferencesScadeValuedObjectParserRuleCall_0_1_0_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_1_0_0() { return cReferencesValuedObjectStringParserRuleCall_0_1_0_0; }
 		
 		//','
 		public Keyword getCommaKeyword_0_1_1() { return cCommaKeyword_0_1_1; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_1_2() { return cReferencesAssignment_0_1_2; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_1_2_0() { return cReferencesScadeValuedObjectParserRuleCall_0_1_2_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_1_2_0() { return cReferencesValuedObjectStringParserRuleCall_0_1_2_0; }
 		
-		//(',' references+=ScadeValuedObject)*
+		//(',' references+=ValuedObjectString)*
 		public Group getGroup_0_1_3() { return cGroup_0_1_3; }
 		
 		//','
 		public Keyword getCommaKeyword_0_1_3_0() { return cCommaKeyword_0_1_3_0; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_1_3_1() { return cReferencesAssignment_0_1_3_1; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_1_3_1_0() { return cReferencesScadeValuedObjectParserRuleCall_0_1_3_1_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_1_3_1_0() { return cReferencesValuedObjectStringParserRuleCall_0_1_3_1_0; }
 		
-		//references+=ScadeValuedObject
+		//references+=ValuedObjectString
 		public Assignment getReferencesAssignment_0_2() { return cReferencesAssignment_0_2; }
 		
-		//ScadeValuedObject
-		public RuleCall getReferencesScadeValuedObjectParserRuleCall_0_2_0() { return cReferencesScadeValuedObjectParserRuleCall_0_2_0; }
+		//ValuedObjectString
+		public RuleCall getReferencesValuedObjectStringParserRuleCall_0_2_0() { return cReferencesValuedObjectStringParserRuleCall_0_2_0; }
 		
 		//operator=AssignOperator
 		public Assignment getOperatorAssignment_1() { return cOperatorAssignment_1; }
@@ -250,26 +210,111 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		//';'
 		public Keyword getSemicolonKeyword_3() { return cSemicolonKeyword_3; }
 	}
-	public class ScadeValuedObjectElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ScadeValuedObject");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNamePrimeIDParserRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+	public class ValuedObjectStringElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ValuedObjectString");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cValuedObjectStringAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNamePrimeIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		
-		//ScadeValuedObject kexpressions::ValuedObject:
-		//	name=PrimeID;
+		//ValuedObjectString kexpressions::Expression:
+		//	{ValuedObjectString} name=PrimeID;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//{ValuedObjectString} name=PrimeID
+		public Group getGroup() { return cGroup; }
+		
+		//{ValuedObjectString}
+		public Action getValuedObjectStringAction_0() { return cValuedObjectStringAction_0; }
+		
 		//name=PrimeID
-		public Assignment getNameAssignment() { return cNameAssignment; }
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//PrimeID
-		public RuleCall getNamePrimeIDParserRuleCall_0() { return cNamePrimeIDParserRuleCall_0; }
+		public RuleCall getNamePrimeIDParserRuleCall_1_0() { return cNamePrimeIDParserRuleCall_1_0; }
+	}
+	public class ValuedObjectTestExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ValuedObjectTestExpression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cOperatorAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final Alternatives cOperatorAlternatives_0_1_0 = (Alternatives)cOperatorAssignment_0_1.eContents().get(0);
+		private final RuleCall cOperatorPreOperatorEnumRuleCall_0_1_0_0 = (RuleCall)cOperatorAlternatives_0_1_0.eContents().get(0);
+		private final RuleCall cOperatorValOperatorEnumRuleCall_0_1_0_1 = (RuleCall)cOperatorAlternatives_0_1_0.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
+		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
+		private final Keyword cCommaKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
+		private final Assignment cSubExpressionsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0 = (RuleCall)cSubExpressionsAssignment_0_4_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
+		private final RuleCall cValuedObjectStringParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//@Override
+		//ValuedObjectTestExpression kexpressions::Expression:
+		//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//	subExpressions+=ValuedObjectReference)? ')'
+		//	| ValuedObjectString;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//subExpressions+=ValuedObjectReference)? ')' | ValuedObjectString
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+		//subExpressions+=ValuedObjectReference)? ')'
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{OperatorExpression}
+		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
+		
+		//operator=(PreOperator | ValOperator)
+		public Assignment getOperatorAssignment_0_1() { return cOperatorAssignment_0_1; }
+		
+		//(PreOperator | ValOperator)
+		public Alternatives getOperatorAlternatives_0_1_0() { return cOperatorAlternatives_0_1_0; }
+		
+		//PreOperator
+		public RuleCall getOperatorPreOperatorEnumRuleCall_0_1_0_0() { return cOperatorPreOperatorEnumRuleCall_0_1_0_0; }
+		
+		//ValOperator
+		public RuleCall getOperatorValOperatorEnumRuleCall_0_1_0_1() { return cOperatorValOperatorEnumRuleCall_0_1_0_1; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
+		
+		//subExpressions+=ValuedObjectTestExpression
+		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
+		
+		//ValuedObjectTestExpression
+		public RuleCall getSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0() { return cSubExpressionsValuedObjectTestExpressionParserRuleCall_0_3_0; }
+		
+		//(',' subExpressions+=ValuedObjectReference)?
+		public Group getGroup_0_4() { return cGroup_0_4; }
+		
+		//','
+		public Keyword getCommaKeyword_0_4_0() { return cCommaKeyword_0_4_0; }
+		
+		//subExpressions+=ValuedObjectReference
+		public Assignment getSubExpressionsAssignment_0_4_1() { return cSubExpressionsAssignment_0_4_1; }
+		
+		//ValuedObjectReference
+		public RuleCall getSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0() { return cSubExpressionsValuedObjectReferenceParserRuleCall_0_4_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_0_5() { return cRightParenthesisKeyword_0_5; }
+		
+		//ValuedObjectString
+		public RuleCall getValuedObjectStringParserRuleCall_1() { return cValuedObjectStringParserRuleCall_1; }
 	}
 	
 	
 	private final ScadeProgramElements pScadeProgram;
 	private final ScadeEquationElements pScadeEquation;
-	private final ScadeValuedObjectElements pScadeValuedObject;
+	private final ValuedObjectStringElements pValuedObjectString;
+	private final ValuedObjectTestExpressionElements pValuedObjectTestExpression;
 	private final TerminalRule tML_COMMENT;
 	private final TerminalRule tSL_COMMENT;
 	
@@ -304,7 +349,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pScadeProgram = new ScadeProgramElements();
 		this.pScadeEquation = new ScadeEquationElements();
-		this.pScadeValuedObject = new ScadeValuedObjectElements();
+		this.pValuedObjectString = new ValuedObjectStringElements();
+		this.pValuedObjectTestExpression = new ValuedObjectTestExpressionElements();
 		this.tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.ML_COMMENT");
 		this.tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.scade.ScadeEquations.SL_COMMENT");
 	}
@@ -359,7 +405,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	///**
 	// * This grammar represents the Lustre equations that can be extracted in SCADE Suite.
 	// */ ScadeProgram hidden(WS, SL_COMMENT, ML_COMMENT):
-	//	('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')? (equations+=ScadeEquation
+	//	(equations+=ScadeEquation
 	//	//        | emissions+=ScadeEmission
 	//	| assertions+=Assertion
 	//	| automatons+=Automaton)*;
@@ -372,9 +418,9 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ScadeEquation:
-	//	('(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')' |
-	//	references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* |
-	//	references+=ScadeValuedObject) operator=AssignOperator
+	//	('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
+	//	references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
+	//	references+=ValuedObjectString) operator=AssignOperator
 	//	expression=Expression
 	//	';';
 	public ScadeEquationElements getScadeEquationAccess() {
@@ -385,14 +431,27 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getScadeEquationAccess().getRule();
 	}
 	
-	//ScadeValuedObject kexpressions::ValuedObject:
-	//	name=PrimeID;
-	public ScadeValuedObjectElements getScadeValuedObjectAccess() {
-		return pScadeValuedObject;
+	//ValuedObjectString kexpressions::Expression:
+	//	{ValuedObjectString} name=PrimeID;
+	public ValuedObjectStringElements getValuedObjectStringAccess() {
+		return pValuedObjectString;
 	}
 	
-	public ParserRule getScadeValuedObjectRule() {
-		return getScadeValuedObjectAccess().getRule();
+	public ParserRule getValuedObjectStringRule() {
+		return getValuedObjectStringAccess().getRule();
+	}
+	
+	//@Override
+	//ValuedObjectTestExpression kexpressions::Expression:
+	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
+	//	subExpressions+=ValuedObjectReference)? ')'
+	//	| ValuedObjectString;
+	public ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
+		return pValuedObjectTestExpression;
+	}
+	
+	public ParserRule getValuedObjectTestExpressionRule() {
+		return getValuedObjectTestExpressionAccess().getRule();
 	}
 	
 	//@Override
@@ -409,7 +468,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return tSL_COMMENT;
 	}
 	
-	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[4]->TerminalRule'SL_COMMENT'
+	//java.lang.RuntimeException: No EObjectDescription could be found in Scope ParserRule.hiddenTokens for Grammar'de.cau.cs.kieler.lustre.scade.ScadeEquations'.rules[5]->TerminalRule'SL_COMMENT'
 	//Semantic Object: Grammar'de.cau.cs.kieler.lustre.Lustre'.rules[0]->ParserRule'LustreProgram'
 	//URI: file:/C:/Users/Lena/Eclipses/kieler-semantics-wip/git/semantics/plugins/de.cau.cs.kieler.lustre/bin/de/cau/cs/kieler/lustre/Lustre.xtext
 	//EStructuralFeature: xtext::ParserRule.hiddenTokens
@@ -564,7 +623,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Emission keffects::Emission:
-	//	'emit' (ValuedEmission | PureEmission);
+	//	'emit' (ValuedEmission | PureEmission) ';';
 	public LustreGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaLustre.getEmissionAccess();
 	}
@@ -825,7 +884,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	//	BoolValue
 	//	| '(' BoolExpression ')'
 	//	| ReferenceCall
-	//	| ValuedObjectTestExpression // Last to allow detection of calls
+	//	| super::ValuedObjectTestExpression // Last to allow detection of calls
 	//	| NorAtMostOneExpression;
 	public LustreGrammarAccess.AtomicExpressionElements getAtomicExpressionAccess() {
 		return gaLustre.getAtomicExpressionAccess();
@@ -1861,22 +1920,6 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAtomicValuedExpressionRule() {
 		return getAtomicValuedExpressionAccess().getRule();
-	}
-	
-	//// Valued Object Test Expression Rule
-	//// This rules creates an operator expression for pre or val tests. Alternatively, it directs to a
-	//// valued object reference.
-	//// Example: pre(pre(val(A))), pre(val(pre(A))), val(A)
-	//ValuedObjectTestExpression Expression:
-	//	{OperatorExpression} operator=(PreOperator | ValOperator) '(' subExpressions+=ValuedObjectTestExpression (','
-	//	subExpressions+=ValuedObjectReference)? ')'
-	//	| ValuedObjectReference;
-	public KExpressionsGrammarAccess.ValuedObjectTestExpressionElements getValuedObjectTestExpressionAccess() {
-		return gaKExpressions.getValuedObjectTestExpressionAccess();
-	}
-	
-	public ParserRule getValuedObjectTestExpressionRule() {
-		return getValuedObjectTestExpressionAccess().getRule();
 	}
 	
 	//// ID with primes

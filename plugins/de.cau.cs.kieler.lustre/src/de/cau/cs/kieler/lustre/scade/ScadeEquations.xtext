@@ -13,7 +13,6 @@ import "http://www.cau.de/cs/kieler/lustre/Lustre" as lustre
  */
 
 ScadeProgram hidden (WS, SL_COMMENT, ML_COMMENT):
-    ('in:' inputs+=ScadeValuedObject (',' inputs+=ScadeValuedObject)* ';')? 
     (
         equations+=ScadeEquation 
 //        | emissions+=ScadeEmission
@@ -25,18 +24,25 @@ ScadeProgram hidden (WS, SL_COMMENT, ML_COMMENT):
 ScadeEquation:
     (
         // Left side: (x, y, ...) or x, y, ... or x 
-        ('(' references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)* ')')
-        | (references+=ScadeValuedObject ',' references+=ScadeValuedObject (',' references+=ScadeValuedObject)*)
-        | references+=ScadeValuedObject
+        ('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')')
+        | (references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)*)
+        | references+=ValuedObjectString
     )
-    operator=AssignOperator 
-    expression=Expression   
+    operator=AssignOperator
+    expression=Expression
     ';' 
 ;
 
-ScadeValuedObject returns kexpressions::ValuedObject:
+ValuedObjectString returns kexpressions::Expression:
+    {ValuedObjectString}
     name=PrimeID
 ;
+
+// ValuedObjectReferences are not supported, instead just plain strings are used
+@Override 
+ValuedObjectTestExpression returns kexpressions::Expression:
+    {OperatorExpression} operator=(PreOperator|ValOperator)  '('subExpressions+=ValuedObjectTestExpression (',' subExpressions+=ValuedObjectReference)? ')'
+    | ValuedObjectString;
 
 /*
  * -------------------- Lexical tokens

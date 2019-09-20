@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.scade.scade;
 
+import de.cau.cs.kieler.kexpressions.KExpressionsPackage;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -68,22 +70,13 @@ public interface ScadePackage extends EPackage
   int SCADE_PROGRAM = 0;
 
   /**
-   * The feature id for the '<em><b>Inputs</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SCADE_PROGRAM__INPUTS = 0;
-
-  /**
    * The feature id for the '<em><b>Equations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SCADE_PROGRAM__EQUATIONS = 1;
+  int SCADE_PROGRAM__EQUATIONS = 0;
 
   /**
    * The feature id for the '<em><b>Assertions</b></em>' containment reference list.
@@ -92,7 +85,7 @@ public interface ScadePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCADE_PROGRAM__ASSERTIONS = 2;
+  int SCADE_PROGRAM__ASSERTIONS = 1;
 
   /**
    * The feature id for the '<em><b>Automatons</b></em>' containment reference list.
@@ -101,7 +94,7 @@ public interface ScadePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCADE_PROGRAM__AUTOMATONS = 3;
+  int SCADE_PROGRAM__AUTOMATONS = 2;
 
   /**
    * The number of structural features of the '<em>Program</em>' class.
@@ -110,7 +103,7 @@ public interface ScadePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SCADE_PROGRAM_FEATURE_COUNT = 4;
+  int SCADE_PROGRAM_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.lustre.scade.scade.impl.ScadeEquationImpl <em>Equation</em>}' class.
@@ -158,6 +151,89 @@ public interface ScadePackage extends EPackage
    */
   int SCADE_EQUATION_FEATURE_COUNT = 3;
 
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.scade.scade.impl.ValuedObjectStringImpl <em>Valued Object String</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.scade.scade.impl.ValuedObjectStringImpl
+   * @see de.cau.cs.kieler.lustre.scade.scade.impl.ScadePackageImpl#getValuedObjectString()
+   * @generated
+   */
+  int VALUED_OBJECT_STRING = 2;
+
+  /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUED_OBJECT_STRING__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUED_OBJECT_STRING__NAME = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Valued Object String</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VALUED_OBJECT_STRING_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.lustre.scade.scade.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.lustre.scade.scade.impl.OperatorExpressionImpl
+   * @see de.cau.cs.kieler.lustre.scade.scade.impl.ScadePackageImpl#getOperatorExpression()
+   * @generated
+   */
+  int OPERATOR_EXPRESSION = 3;
+
+  /**
+   * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__SCHEDULE = KExpressionsPackage.EXPRESSION__SCHEDULE;
+
+  /**
+   * The feature id for the '<em><b>Operator</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__OPERATOR = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION__SUB_EXPRESSIONS = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Operator Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OPERATOR_EXPRESSION_FEATURE_COUNT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 2;
+
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram <em>Program</em>}'.
@@ -168,17 +244,6 @@ public interface ScadePackage extends EPackage
    * @generated
    */
   EClass getScadeProgram();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getInputs <em>Inputs</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Inputs</em>'.
-   * @see de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getInputs()
-   * @see #getScadeProgram()
-   * @generated
-   */
-  EReference getScadeProgram_Inputs();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.scade.scade.ScadeProgram#getEquations <em>Equations</em>}'.
@@ -257,6 +322,59 @@ public interface ScadePackage extends EPackage
   EReference getScadeEquation_Expression();
 
   /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString <em>Valued Object String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Valued Object String</em>'.
+   * @see de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString
+   * @generated
+   */
+  EClass getValuedObjectString();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString#getName()
+   * @see #getValuedObjectString()
+   * @generated
+   */
+  EAttribute getValuedObjectString_Name();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.lustre.scade.scade.OperatorExpression <em>Operator Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Operator Expression</em>'.
+   * @see de.cau.cs.kieler.lustre.scade.scade.OperatorExpression
+   * @generated
+   */
+  EClass getOperatorExpression();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.lustre.scade.scade.OperatorExpression#getOperator <em>Operator</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Operator</em>'.
+   * @see de.cau.cs.kieler.lustre.scade.scade.OperatorExpression#getOperator()
+   * @see #getOperatorExpression()
+   * @generated
+   */
+  EAttribute getOperatorExpression_Operator();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.lustre.scade.scade.OperatorExpression#getSubExpressions <em>Sub Expressions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Sub Expressions</em>'.
+   * @see de.cau.cs.kieler.lustre.scade.scade.OperatorExpression#getSubExpressions()
+   * @see #getOperatorExpression()
+   * @generated
+   */
+  EReference getOperatorExpression_SubExpressions();
+
+  /**
    * Returns the factory that creates the instances of the model.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -288,14 +406,6 @@ public interface ScadePackage extends EPackage
      * @generated
      */
     EClass SCADE_PROGRAM = eINSTANCE.getScadeProgram();
-
-    /**
-     * The meta object literal for the '<em><b>Inputs</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SCADE_PROGRAM__INPUTS = eINSTANCE.getScadeProgram_Inputs();
 
     /**
      * The meta object literal for the '<em><b>Equations</b></em>' containment reference list feature.
@@ -354,6 +464,50 @@ public interface ScadePackage extends EPackage
      * @generated
      */
     EReference SCADE_EQUATION__EXPRESSION = eINSTANCE.getScadeEquation_Expression();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.scade.scade.impl.ValuedObjectStringImpl <em>Valued Object String</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.scade.scade.impl.ValuedObjectStringImpl
+     * @see de.cau.cs.kieler.lustre.scade.scade.impl.ScadePackageImpl#getValuedObjectString()
+     * @generated
+     */
+    EClass VALUED_OBJECT_STRING = eINSTANCE.getValuedObjectString();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VALUED_OBJECT_STRING__NAME = eINSTANCE.getValuedObjectString_Name();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.lustre.scade.scade.impl.OperatorExpressionImpl <em>Operator Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.lustre.scade.scade.impl.OperatorExpressionImpl
+     * @see de.cau.cs.kieler.lustre.scade.scade.impl.ScadePackageImpl#getOperatorExpression()
+     * @generated
+     */
+    EClass OPERATOR_EXPRESSION = eINSTANCE.getOperatorExpression();
+
+    /**
+     * The meta object literal for the '<em><b>Operator</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OPERATOR_EXPRESSION__OPERATOR = eINSTANCE.getOperatorExpression_Operator();
+
+    /**
+     * The meta object literal for the '<em><b>Sub Expressions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OPERATOR_EXPRESSION__SUB_EXPRESSIONS = eINSTANCE.getOperatorExpression_SubExpressions();
 
   }
 

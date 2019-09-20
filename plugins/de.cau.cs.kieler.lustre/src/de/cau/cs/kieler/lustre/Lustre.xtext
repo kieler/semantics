@@ -147,7 +147,7 @@ Equation returns keffects::Assignment:
 ;
 
 Emission returns keffects::Emission:
-    'emit' (ValuedEmission | PureEmission)
+    'emit' (ValuedEmission | PureEmission) ';'
 ;
 
 Assertion returns kexpressions::Expression:

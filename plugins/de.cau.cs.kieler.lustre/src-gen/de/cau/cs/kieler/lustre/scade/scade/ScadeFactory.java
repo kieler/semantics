@@ -42,6 +42,24 @@ public interface ScadeFactory extends EFactory
   ScadeEquation createScadeEquation();
 
   /**
+   * Returns a new object of class '<em>Valued Object String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Valued Object String</em>'.
+   * @generated
+   */
+  ValuedObjectString createValuedObjectString();
+
+  /**
+   * Returns a new object of class '<em>Operator Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Operator Expression</em>'.
+   * @generated
+   */
+  OperatorExpression createOperatorExpression();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

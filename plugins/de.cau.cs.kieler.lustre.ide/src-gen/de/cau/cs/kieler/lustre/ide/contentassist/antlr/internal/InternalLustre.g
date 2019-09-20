@@ -9616,6 +9616,7 @@ rule__Emission__Group__1
 	}
 :
 	rule__Emission__Group__1__Impl
+	rule__Emission__Group__2
 ;
 finally {
 	restoreStackSize(stackSize);
@@ -9630,6 +9631,32 @@ rule__Emission__Group__1__Impl
 	{ before(grammarAccess.getEmissionAccess().getAlternatives_1()); }
 	(rule__Emission__Alternatives_1)
 	{ after(grammarAccess.getEmissionAccess().getAlternatives_1()); }
+)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Emission__Group__2
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	rule__Emission__Group__2__Impl
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__Emission__Group__2__Impl
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+(
+	{ before(grammarAccess.getEmissionAccess().getSemicolonKeyword_2()); }
+	';'
+	{ after(grammarAccess.getEmissionAccess().getSemicolonKeyword_2()); }
 )
 ;
 finally {

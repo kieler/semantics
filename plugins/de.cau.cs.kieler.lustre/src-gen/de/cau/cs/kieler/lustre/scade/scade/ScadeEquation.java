@@ -4,7 +4,6 @@
 package de.cau.cs.kieler.lustre.scade.scade;
 
 import de.cau.cs.kieler.kexpressions.Expression;
-import de.cau.cs.kieler.kexpressions.ValuedObject;
 
 import de.cau.cs.kieler.kexpressions.keffects.AssignOperator;
 
@@ -34,7 +33,7 @@ public interface ScadeEquation extends EObject
 {
   /**
    * Returns the value of the '<em><b>References</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.ValuedObject}.
+   * The list contents are of type {@link de.cau.cs.kieler.kexpressions.Expression}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>References</em>' containment reference list.
@@ -42,7 +41,7 @@ public interface ScadeEquation extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<ValuedObject> getReferences();
+  EList<Expression> getReferences();
 
   /**
    * Returns the value of the '<em><b>Operator</b></em>' attribute.

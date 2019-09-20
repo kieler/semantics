@@ -67,6 +67,8 @@ public class ScadeFactoryImpl extends EFactoryImpl implements ScadeFactory
     {
       case ScadePackage.SCADE_PROGRAM: return createScadeProgram();
       case ScadePackage.SCADE_EQUATION: return createScadeEquation();
+      case ScadePackage.VALUED_OBJECT_STRING: return createValuedObjectString();
+      case ScadePackage.OPERATOR_EXPRESSION: return createOperatorExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -94,6 +96,30 @@ public class ScadeFactoryImpl extends EFactoryImpl implements ScadeFactory
   {
     ScadeEquationImpl scadeEquation = new ScadeEquationImpl();
     return scadeEquation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ValuedObjectString createValuedObjectString()
+  {
+    ValuedObjectStringImpl valuedObjectString = new ValuedObjectStringImpl();
+    return valuedObjectString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public OperatorExpression createOperatorExpression()
+  {
+    OperatorExpressionImpl operatorExpression = new OperatorExpressionImpl();
+    return operatorExpression;
   }
 
   /**

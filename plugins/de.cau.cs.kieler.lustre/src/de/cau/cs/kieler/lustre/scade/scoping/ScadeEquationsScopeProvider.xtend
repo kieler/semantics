@@ -17,27 +17,5 @@ import org.eclipse.xtext.scoping.Scopes
  * on how and when to use it.
  */
 class ScadeEquationsScopeProvider extends AbstractScadeEquationsScopeProvider {
-    
-    override IScope getScopeHierarchical(EObject context, EReference reference) {
-        val candidates = <ValuedObject> newArrayList
-        var superContext = context
-        do {
-            switch(superContext) {
-                ScadeProgram: {
-                    for (input :superContext.inputs) {
-                        candidates.add(input)
-                    }
-                    for (equation : superContext.equations) {
-                        if (equation.references !== null && !equation.references.empty) {
-                            for (valObj : equation.references) {
-                                candidates.add(valObj)
-                            }
-                        }
-                    }
-                }
-            }
-            superContext = superContext.eContainer
-        } while (superContext !== null)
-        return Scopes.scopeFor(candidates)
-    }
+
 }

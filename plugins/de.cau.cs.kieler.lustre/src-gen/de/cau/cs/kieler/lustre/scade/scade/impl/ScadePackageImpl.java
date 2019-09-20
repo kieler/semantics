@@ -11,10 +11,12 @@ import de.cau.cs.kieler.kexpressions.keffects.KEffectsPackage;
 
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
+import de.cau.cs.kieler.lustre.scade.scade.OperatorExpression;
 import de.cau.cs.kieler.lustre.scade.scade.ScadeEquation;
 import de.cau.cs.kieler.lustre.scade.scade.ScadeFactory;
 import de.cau.cs.kieler.lustre.scade.scade.ScadePackage;
 import de.cau.cs.kieler.lustre.scade.scade.ScadeProgram;
+import de.cau.cs.kieler.lustre.scade.scade.ValuedObjectString;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +46,20 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
    * @generated
    */
   private EClass scadeEquationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass valuedObjectStringEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass operatorExpressionEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -131,7 +147,7 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
    * @generated
    */
   @Override
-  public EReference getScadeProgram_Inputs()
+  public EReference getScadeProgram_Equations()
   {
     return (EReference)scadeProgramEClass.getEStructuralFeatures().get(0);
   }
@@ -142,7 +158,7 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
    * @generated
    */
   @Override
-  public EReference getScadeProgram_Equations()
+  public EReference getScadeProgram_Assertions()
   {
     return (EReference)scadeProgramEClass.getEStructuralFeatures().get(1);
   }
@@ -153,20 +169,9 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
    * @generated
    */
   @Override
-  public EReference getScadeProgram_Assertions()
-  {
-    return (EReference)scadeProgramEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getScadeProgram_Automatons()
   {
-    return (EReference)scadeProgramEClass.getEStructuralFeatures().get(3);
+    return (EReference)scadeProgramEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -219,6 +224,61 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
    * @generated
    */
   @Override
+  public EClass getValuedObjectString()
+  {
+    return valuedObjectStringEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getValuedObjectString_Name()
+  {
+    return (EAttribute)valuedObjectStringEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getOperatorExpression()
+  {
+    return operatorExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getOperatorExpression_Operator()
+  {
+    return (EAttribute)operatorExpressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getOperatorExpression_SubExpressions()
+  {
+    return (EReference)operatorExpressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public ScadeFactory getScadeFactory()
   {
     return (ScadeFactory)getEFactoryInstance();
@@ -245,7 +305,6 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
 
     // Create classes and their features
     scadeProgramEClass = createEClass(SCADE_PROGRAM);
-    createEReference(scadeProgramEClass, SCADE_PROGRAM__INPUTS);
     createEReference(scadeProgramEClass, SCADE_PROGRAM__EQUATIONS);
     createEReference(scadeProgramEClass, SCADE_PROGRAM__ASSERTIONS);
     createEReference(scadeProgramEClass, SCADE_PROGRAM__AUTOMATONS);
@@ -254,6 +313,13 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
     createEReference(scadeEquationEClass, SCADE_EQUATION__REFERENCES);
     createEAttribute(scadeEquationEClass, SCADE_EQUATION__OPERATOR);
     createEReference(scadeEquationEClass, SCADE_EQUATION__EXPRESSION);
+
+    valuedObjectStringEClass = createEClass(VALUED_OBJECT_STRING);
+    createEAttribute(valuedObjectStringEClass, VALUED_OBJECT_STRING__NAME);
+
+    operatorExpressionEClass = createEClass(OPERATOR_EXPRESSION);
+    createEAttribute(operatorExpressionEClass, OPERATOR_EXPRESSION__OPERATOR);
+    createEReference(operatorExpressionEClass, OPERATOR_EXPRESSION__SUB_EXPRESSIONS);
   }
 
   /**
@@ -290,18 +356,26 @@ public class ScadePackageImpl extends EPackageImpl implements ScadePackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    valuedObjectStringEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
+    operatorExpressionEClass.getESuperTypes().add(theKExpressionsPackage.getExpression());
 
     // Initialize classes and features; add operations and parameters
     initEClass(scadeProgramEClass, ScadeProgram.class, "ScadeProgram", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getScadeProgram_Inputs(), theKExpressionsPackage.getValuedObject(), null, "inputs", null, 0, -1, ScadeProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScadeProgram_Equations(), this.getScadeEquation(), null, "equations", null, 0, -1, ScadeProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScadeProgram_Assertions(), theKExpressionsPackage.getExpression(), null, "assertions", null, 0, -1, ScadeProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScadeProgram_Automatons(), theLustrePackage.getAutomaton(), null, "automatons", null, 0, -1, ScadeProgram.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(scadeEquationEClass, ScadeEquation.class, "ScadeEquation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getScadeEquation_References(), theKExpressionsPackage.getValuedObject(), null, "references", null, 0, -1, ScadeEquation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getScadeEquation_References(), theKExpressionsPackage.getExpression(), null, "references", null, 0, -1, ScadeEquation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getScadeEquation_Operator(), theKEffectsPackage.getAssignOperator(), "operator", null, 0, 1, ScadeEquation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getScadeEquation_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, ScadeEquation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(valuedObjectStringEClass, ValuedObjectString.class, "ValuedObjectString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getValuedObjectString_Name(), ecorePackage.getEString(), "name", null, 0, 1, ValuedObjectString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(operatorExpressionEClass, OperatorExpression.class, "OperatorExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOperatorExpression_Operator(), theKExpressionsPackage.getOperatorType(), "operator", null, 0, 1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOperatorExpression_SubExpressions(), theKExpressionsPackage.getExpression(), null, "subExpressions", null, 0, -1, OperatorExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
