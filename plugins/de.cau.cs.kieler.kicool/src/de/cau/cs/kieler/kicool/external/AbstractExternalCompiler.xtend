@@ -53,59 +53,57 @@ abstract class AbstractExternalCompiler {
     
     abstract def List<File> getExpectedResults(List<File> files)
     
-    def void setup(ProjectInfrastructure pinf, PrintStream logger) {
+    protected def boolean setup(ProjectInfrastructure pinf, PrintStream logger, String... executables) {
         if (root !== null) {
             if (root.isFile) {
-                rootDir = new File(root.toFileString)
-                logger.println("Dectected external compiler on system path: " + rootDir)
+                val file = new File(root.toFileString)
+                logger.println("Dectected external compiler on system path: " + file)
+                if (file.checkExecutableFlags(logger, executables)) {
+                    rootDir = file
+                    return true
+                }
             } else if (root.isPlatformPlugin) {
                 try {
-                    if (!Platform.OS.equals("macosx")) {
-                        val bundle = Platform.getBundle(root.segment(1))
-                        val bundleFile = bundle.getBundleFile
-                        if (bundleFile.directory) {
-                            val file = new File(bundle.find(new Path(root.segments.drop(2).join("/"))).toFileURL.toURI.normalize)
-                            if (file.directory) {
+                    val bundle = Platform.getBundle(root.segment(1))
+                    val bundleFile = bundle.getBundleFile
+                    if (bundleFile.directory) {
+                        val file = new File(bundle.find(new Path(root.segments.drop(2).join("/"))).toFileURL.toURI.normalize)
+                        if (file.directory) {
+                            logger.println("Dectected external compiler on plugin path: " + file)
+                            if (file.checkExecutableFlags(logger, executables)) {
                                 rootDir = file
-                                logger.println("Dectected external compiler on unzipped plugin path: " + rootDir)
+                                return true
                             }
                         }
-                    } else {
-                        logger.println("External compiler is located in .app on MAC OS.")
-                        val target = if (pinf.hasProject) {
-                            new File(pinf.project.workspace.root.rawLocation.toString + pinf.project.fullPath.toString, name)
-                        } else {
-                            new File(pinf.generatedCodeFolder, name)
-                        }
-                        if (!target.exists) {
-                            target.mkdirs
-                            rootDir.copyFolder(target, logger, true)
-                        }
-                        rootDir = target
-                        logger.println("External compiler copied into: " + rootDir)
                     }
                 } catch(Exception e) {
                     // ignore
                 }
                 if (rootDir === null) {
-                    logger.println("External compiler is located in zipped plugin.")
+                    logger.println("External compiler must be copied to an accessable location.")
                     val target = if (pinf.hasProject) {
-                        val x = pinf.project.workspace.root.rawLocation.toString + pinf.project.fullPath.toString
-                        new File(x, name)
+                        new File(pinf.project.workspace.root.rawLocation.toString + pinf.project.fullPath.toString, name)
                     } else {
                         new File(pinf.generatedCodeFolder, name)
                     }
                     if (!target.exists) {
                         target.mkdirs
                         root.copyFolder(target, logger, true)
+                        logger.println("External compiler copied to: " + target)
+                    } else {
+                        logger.println("External compiler copied already exists in: " + target)
                     }
-                    rootDir = target
-                    logger.println("External compiler copied into: " + rootDir)
+                    if (target.checkExecutableFlags(logger, executables)) {
+                        rootDir = target
+                        return true
+                    }
                 }
             }
         } else {
             logger.println("No compiler available")
         }
+        logger.println("Could not set up compiler")
+        return false
     }
     
     def isAvailable() {
@@ -116,44 +114,31 @@ abstract class AbstractExternalCompiler {
         return root !== null && rootDir !== null && rootDir.directory
     }
     
-    def checkExecutableFlags(String binariesFolder) {
-        var succeeded = true
-        if (isProperlySetUp && binariesFolder !== null) {
-            val bin = new File(rootDir, binariesFolder)
-            
-            // For all OSs except for MAC OS
-            if (bin.directory) {
-                for (exe : bin.listFiles) {
-                    if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
-                        exe.executable = false
-                        if (!exe.canExecute) {
-                            val success = exe.executable = true
-                            succeeded = succeeded && success
-                        }
-                    }
+    protected def boolean checkExecutableFlags(File source, PrintStream logger, String... files) {
+        logger.println("Checking permissions")
+        for (fileName : files) {
+            val file = new File(source, fileName)
+            if (file.directory) {
+                for (exe : file.listFiles.filter[isFile]) {
+                    if (!exe.checkExecutableFlag(logger)) return false
                 }
-            }
-            
-            // For MAC OS
-            if (Platform.OS.equals("macosx") && !succeeded) {
-                succeeded = true
-                if (bin.directory) {
-                    for (exe : bin.listFiles) {
-                        if (!exe.name.contains(".") || exe.name.endsWith(".exe")) {
-                            exe.executable = false
-                            if (!exe.canExecute) {
-                                val p = Runtime.runtime.exec("chmod +x " +  exe.absolutePath)
-                                p.waitFor
-                            }
-                            succeeded = succeeded && exe.canExecute
-                         }
-                    }
-                }
-            }
-            if (!succeeded) {
-                environment.warnings.add("Failed to set executable flag of the esterel compiler")
+            } else {
+                if (!file.checkExecutableFlag(logger)) return false
             }
         }
+        return true
+    }
+    
+    private def checkExecutableFlag(File file, PrintStream logger) {
+        if (!file.name.contains(".") || file.name.endsWith(".exe")) {
+            if (!file.canExecute) {
+                logger.println("Setting executable flag for " + file)
+                val success = file.executable = true
+                if (!success) logger.println("Unable to set executable flag.")
+                return success
+            }
+        }
+        return true
     }
     
 }
