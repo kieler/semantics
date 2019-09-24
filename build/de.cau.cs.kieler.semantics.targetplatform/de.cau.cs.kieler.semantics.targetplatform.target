@@ -9,14 +9,14 @@
       <unit id="org.eclipse.epp.mpc.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xpand.feature.group" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/releases/2019-06"/>
+      <repository location="http://download.eclipse.org/releases/2019-09"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="javax.xml.bind" version="0.0.0"/>
       <unit id="com.google.gson" version="0.0.0"/>
       <unit id="org.freemarker" version="0.0.0"/>
       <unit id="org.eclipse.orbit.mongodb" version="0.0.0"/>
-      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
+      <repository location="http://download.eclipse.org/tools/orbit/downloads/drops/R20190827152740/repository/"/>
     </location>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="false" type="InstallableUnit">
       <unit id="org.eclipse.xtext.runtime.feature.group" version="0.0.0"/>
