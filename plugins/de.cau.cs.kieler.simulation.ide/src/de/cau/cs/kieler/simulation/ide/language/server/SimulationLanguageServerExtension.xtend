@@ -162,6 +162,7 @@ class SimulationLanguageServerExtension implements ILanguageServerExtension, Com
                 currentSimulation.start(true)
             } catch (Exception e) {
                 e.printStackTrace()
+                return e.toString()
             }
             return ""
         } else {
