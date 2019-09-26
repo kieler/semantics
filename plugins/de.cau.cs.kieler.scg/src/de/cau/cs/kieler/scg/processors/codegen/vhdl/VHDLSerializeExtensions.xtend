@@ -54,6 +54,7 @@ class VHDLSerializeExtensions extends CCodeSerializeHRExtensions {
     override dispatch CharSequence serialize(OperatorExpression oExp) {
         val serialized = switch(oExp.operator) {
             case CONDITIONAL: oExp.subExpressions.get(1).serialize + " WHEN " + oExp.subExpressions.get(0).serialize + " ELSE " + oExp.subExpressions.get(2).serialize
+            case NOT: "(" +oExp.operator.serialize + " ("+ oExp.subExpressions.map[serialize].join("todo: remove this")+ "))"
             default: oExp.subExpressions.map[serialize].join(" " + oExp.operator.serialize + " ")
         }
         if (oExp.eContainer instanceof OperatorExpression) {
