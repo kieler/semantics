@@ -161,8 +161,10 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         ENTITY «scg.name» IS
         PORT(
             -- control
+            clk : IN std_logic;
             tick: IN std_logic;
             reset: IN boolean;
+            tickDone : Out std_logic;
             -- input/output
             «FOR decl : scg.variableDeclarations.filter[(input || output) && !isSSA]SEPARATOR ';'»
                 «decl.serialize»
@@ -173,25 +175,24 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
         ARCHITECTURE behavior OF «scg.name» IS
             -- control
             signal pre_reset: boolean;
+            signal Tick_output_delay: STD_LOGIC_VECTOR (3 downto 0);
             -- local variables
             «FOR decl : scg.variableDeclarations.filter[isSSA && !it.valuedObjects.empty]»
-                signal «decl.serialize»;
+                signal «decl.serialize» ;
             «ENDFOR»
             begin
                 -- logic
                 «FOR asm : scg.allAssignments»
                     «asm.serialize»;
                 «ENDFOR»
-                -- write outputs
-                «FOR kv : writeOutput.entrySet»
-                    «kv.key.name» <= «kv.value.name»;
-                «ENDFOR»
+
                 
             -- ---------------------
             -- Registers
             registers: process
             begin
-            wait until rising_edge(tick);
+            wait until rising_edge(clk);
+              if (reset or (tick = '1')) then
                 if((reset or pre_reset) = true) then
                     «FOR vo : preGuards.keySet»
                         «vo.name» <= false;
@@ -207,12 +208,14 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
                         «kv.key.name» <= «kv.value.name»;
                     «ENDFOR»
                 end if;
+              end if;
             end process;
             
             -- Input Buffering
             inputRegister: process
             begin
-            wait until rising_edge(tick);
+            wait until rising_edge(clk);
+              if (reset or tick = '1') then
                 if(reset = true) then
                     «FOR vo : bufferInput.keySet»
                         «vo.name» <= «vo.resetValue»;
@@ -222,18 +225,46 @@ class VHDLCodeGenerator extends Processor<SCGraphs, CodeContainer> {
                         «kv.key.name» <= «kv.value.name»;
                     «ENDFOR»
                 end if;
+              end if;
             end process;
+            -- delay buffer
+            tickDone <= Tick_output_delay(1);
+            tick_delay: process
+            begin
+            wait until rising_edge(clk);
+                if(reset = true) then
+                    Tick_output_delay <= "0000";
+                else
+                    Tick_output_delay(0) <= tick;
+                     Tick_output_delay(3 downto 1) <= Tick_output_delay(2 downto 0);
+                end if;
+            end process; 
             
+            
+            -- output Buffering
+                        outputRegister: process
+                        begin
+                        wait until rising_edge(clk);
+                          if (Tick_output_delay(0) = '1') then
+                            -- write outputs
+                            «FOR kv : writeOutput.entrySet»
+                                «kv.key.name» <= «kv.value.name»;
+                            «ENDFOR»
+                          end if;
+                        end process;
+                       
             -- GO Register
             GORegister: process
             begin
-            wait until rising_edge(tick);
+            wait until rising_edge(clk);
+              if (reset or (tick = '1')) then
                 pre_reset <= reset; -- has no reset input
                 if(reset = true) then
                     local_GO <= false;
                 else
                     local_GO <= pre_reset;
                 end if;
+              end if;
             end process;
         end behavior;
         '''
