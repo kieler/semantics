@@ -122,12 +122,23 @@ class SSATransformationExtensions {
                 case ASSIGNXOR: OperatorType.BITWISE_XOR
                 case POSTFIXADD: OperatorType.ADD
                 case POSTFIXSUB: OperatorType.SUB
+                case ASSIGNMIN: OperatorType.LT
+                case ASSIGNMAX: OperatorType.GT
                 default: throw new UnsupportedOperationException("Cannot handle assign operator: " + asm.operator)
             }
             if (asm.operator == AssignOperator.POSTFIXADD || asm.operator == AssignOperator.POSTFIXSUB) {
                 asm.expression = createOperatorExpression(op) => [
                     subExpressions += asm.reference.copy
                     subExpressions += createIntValue(1)           
+                ]
+            } else if (asm.operator == AssignOperator.ASSIGNMIN || asm.operator == AssignOperator.ASSIGNMAX) {
+                asm.expression = createOperatorExpression(OperatorType.CONDITIONAL) => [
+                    subExpressions += createOperatorExpression(op) => [
+                        subExpressions += asm.expression.copy 
+                        subExpressions += asm.reference.copy          
+                    ]
+                    subExpressions += asm.expression
+                    subExpressions += asm.reference.copy        
                 ]
             } else {
                 asm.expression = createOperatorExpression(op) => [
