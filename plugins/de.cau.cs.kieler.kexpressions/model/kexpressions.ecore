@@ -152,10 +152,9 @@
     <eLiterals name="WHEN" value="27" literal="when"/>
     <eLiterals name="INIT" value="28" literal="->"/>
     <eLiterals name="INTDIV" value="29" literal="div"/>
-    <eLiterals name="LOGICAL_XOR" value="30" literal="xor"/>
+    <eLiterals name="NOR" value="30" literal="nor"/>
     <eLiterals name="IMPLIES" value="31" literal="=>"/>
     <eLiterals name="ATMOSTONEOF" value="32" literal="#"/>
-    <eLiterals name="NOR" value="33" literal="nor"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ValuedObject" eSuperTypes="../../de.cau.cs.kieler.annotations/model/annotations.ecore#//NamedObject ../../de.cau.cs.kieler.annotations/model/annotations.ecore#//Annotatable #//Referenceable">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

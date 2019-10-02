@@ -275,12 +275,30 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
+    subExpressions += InitExpression operator=ConditionalOperator subExpressions += InitExpression (':' subExpressions += InitExpression)?
     | InitExpression;
     
 InitExpression returns Expression:
-    {OperatorExpression} subExpressions += AtomicValuedExpression operator=InitOperator subExpressions += AtomicValuedExpression
-    | AtomicValuedExpression;    
+    {OperatorExpression} subExpressions += FbyExpression operator=InitOperator subExpressions += FbyExpression
+    | FbyExpression;
+    
+FbyExpression returns Expression:
+    {OperatorExpression} subExpressions += ImpliesExpression operator=FbyOperator subExpressions += ImpliesExpression
+    | ImpliesExpression;
+    
+ImpliesExpression returns Expression:
+    {OperatorExpression} subExpressions += AtMostOneOfExpression operator= ImpliesOperator subExpressions += AtMostOneOfExpression
+    | AtMostOneOfExpression;
+    
+AtMostOneOfExpression returns Expression:
+    {OperatorExpression} 
+    operator=AtMostOneOfOperator '(' subExpressions += NoneOfExpression  (',' subExpressions += NoneOfExpression )*')'
+    | NoneOfExpression;
+    
+NoneOfExpression returns Expression:
+    {OperatorExpression} 
+    operator=NoneOfOperator '(' subExpressions += AtomicValuedExpression  (',' subExpressions += AtomicValuedExpression )*')'
+    | AtomicValuedExpression;
     
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression
@@ -478,10 +496,22 @@ enum PostfixSub returns OperatorType:
     POSTFIX_SUB="--";
     
 enum ConditionalOperator returns OperatorType:
-    CONDITIONAL = "?";        
+    CONDITIONAL = "?";
     
 enum InitOperator returns OperatorType:
     INIT = "->";
+    
+enum FbyOperator returns OperatorType:
+    FBY = "fby";
+    
+enum ImpliesOperator returns OperatorType:
+    IMPLIES = "=>";
+    
+enum AtMostOneOfOperator returns OperatorType:
+    ATMOSTONEOF = "#";
+    
+enum NoneOfOperator returns OperatorType:
+    NOR = "nor";
 
 enum ValueType returns ValueType:
 	PURE="pure" | BOOL="bool" | 

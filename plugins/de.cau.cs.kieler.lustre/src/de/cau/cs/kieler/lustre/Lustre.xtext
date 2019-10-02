@@ -226,7 +226,7 @@ AnAction:
  *      + ProductExpression
  *                  + IntDivExpression
  *                    + NegExpression *
- *                      + FBYExpression
+ *                      + FbyExpression
  *                        + WhenExpression
  *                          + CurrentExpression
  *                            + PreExpression
@@ -263,15 +263,16 @@ IntDivExpression returns kexpressions::Expression:
 NegExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
     operator=SubOperator subExpressions+=(NegExpression)
-    | FBYExpression
+    | FbyExpression
 ;
 
-// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
-FBYExpression returns kexpressions::Expression:
+// Force WhenExpression, CurrentExpression and PreExpression inbetween FbyExpression and AtomicValuedExpression
+@Override 
+FbyExpression returns kexpressions::Expression:
     WhenExpression
     (
         {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=FBYOperator subExpressions+=AtomicValuedExpression)
+        (operator=FbyOperator subExpressions+=AtomicValuedExpression)
         ('fby' subExpressions+=AtomicValuedExpression)*
     )?
 ;
@@ -315,6 +316,7 @@ TernaryOperation returns kexpressions::Expression:
     | ImpliesExpression
 ;
 
+@Override 
 ImpliesExpression returns kexpressions::Expression:
     LogicalXorExpression
     (
@@ -323,7 +325,7 @@ ImpliesExpression returns kexpressions::Expression:
         ('=>' subExpressions+=LogicalXorExpression)*
     )?
 ;
-    
+
 LogicalXorExpression returns kexpressions::Expression:
     LogicalOrExpression
     (
@@ -415,7 +417,8 @@ enum NotOperator returns kexpressions::OperatorType:
     NOT="not"
 ;
 
-enum FBYOperator returns kexpressions::OperatorType:  
+@Override 
+enum FbyOperator returns kexpressions::OperatorType:  
     FBY="fby"
 ;
 
@@ -439,9 +442,10 @@ enum InitOperator returns kexpressions::OperatorType:
 ;
 
 enum LogicalXorOperator returns kexpressions::OperatorType:  
-    LOGICAL_XOR="xor"
+    BITWISE_XOR="xor"
 ;
 
+@Override 
 enum ImpliesOperator returns kexpressions::OperatorType:  
     IMPLIES="=>"
 ;

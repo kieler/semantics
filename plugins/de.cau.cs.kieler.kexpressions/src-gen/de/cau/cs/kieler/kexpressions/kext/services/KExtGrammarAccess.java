@@ -398,7 +398,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_6_0() { return cStaticStaticKeyword_6_0; }
 		
-		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
+		//(signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//signal?='signal'? type=ValueType
@@ -562,7 +562,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'static'
 		public Keyword getStaticStaticKeyword_6_0() { return cStaticStaticKeyword_6_0; }
 		
-		//signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING
+		//(signal?='signal'? type=ValueType | signal?='signal' | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//signal?='signal'? type=ValueType
@@ -754,8 +754,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'host'
 		public Keyword getHostHostKeyword_8_0() { return cHostHostKeyword_8_0; }
 		
-		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}' | type=StructType name=ID? '{'
-		//declarations+=Declaration* '}'
+		//(type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}' | type=StructType name=ID? '{'
+		//declarations+=Declaration* '}')
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
 		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethod* '}'
@@ -988,8 +988,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//'host'
 		public Keyword getHostHostKeyword_8_0() { return cHostHostKeyword_8_0; }
 		
-		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType name=ID? '{'
-		//declarations+=DeclarationWOSemicolon* '}'
+		//(type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}' | type=StructType name=ID? '{'
+		//declarations+=DeclarationWOSemicolon* '}')
 		public Alternatives getAlternatives_9() { return cAlternatives_9; }
 		
 		//type=ClassType name=ID? '{' declarations+=DeclarationOrMethodWOSemicolon* '}'
@@ -1166,8 +1166,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1294,8 +1294,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1430,7 +1430,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
 		
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
@@ -1554,7 +1554,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 		//AccessModifier
 		public RuleCall getAccessAccessModifierEnumRuleCall_1_0() { return cAccessAccessModifierEnumRuleCall_1_0; }
 		
-		//'ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*
+		//('ref' reference=[annotations::NamedObject|NamespaceID] | 'extern' extern+=ExternString (',' extern+=ExternString)*)
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//'ref' reference=[annotations::NamedObject|NamespaceID]
@@ -2818,7 +2818,7 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Logical Or Expression Rule
-	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+	//// Directs to the 'logical xor' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
@@ -3109,8 +3109,8 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TernaryOperation Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
+	//	{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
+	//	subExpressions+=InitExpression)?
 	//	| InitExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
@@ -3121,15 +3121,61 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//InitExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
-	//	subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	{OperatorExpression} subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression
+	//	| FbyExpression;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
 	
 	public ParserRule getInitExpressionRule() {
 		return getInitExpressionAccess().getRule();
+	}
+	
+	//FbyExpression Expression:
+	//	{OperatorExpression} subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression
+	//	| ImpliesExpression;
+	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
+		return gaKExpressions.getFbyExpressionAccess();
+	}
+	
+	public ParserRule getFbyExpressionRule() {
+		return getFbyExpressionAccess().getRule();
+	}
+	
+	//ImpliesExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtMostOneOfExpression operator=ImpliesOperator
+	//	subExpressions+=AtMostOneOfExpression
+	//	| AtMostOneOfExpression;
+	public KExpressionsGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
+		return gaKExpressions.getImpliesExpressionAccess();
+	}
+	
+	public ParserRule getImpliesExpressionRule() {
+		return getImpliesExpressionAccess().getRule();
+	}
+	
+	//AtMostOneOfExpression Expression:
+	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
+	//	subExpressions+=NoneOfExpression)* ')'
+	//	| NoneOfExpression;
+	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
+		return gaKExpressions.getAtMostOneOfExpressionAccess();
+	}
+	
+	public ParserRule getAtMostOneOfExpressionRule() {
+		return getAtMostOneOfExpressionAccess().getRule();
+	}
+	
+	//NoneOfExpression Expression:
+	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=AtomicValuedExpression (','
+	//	subExpressions+=AtomicValuedExpression)* ')'
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
+		return gaKExpressions.getNoneOfExpressionAccess();
+	}
+	
+	public ParserRule getNoneOfExpressionRule() {
+		return getNoneOfExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -3615,6 +3661,46 @@ public class KExtGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getInitOperatorRule() {
 		return getInitOperatorAccess().getRule();
+	}
+	
+	//enum FbyOperator returns OperatorType:
+	//	FBY="fby";
+	public KExpressionsGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
+		return gaKExpressions.getFbyOperatorAccess();
+	}
+	
+	public EnumRule getFbyOperatorRule() {
+		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum ImpliesOperator returns OperatorType:
+	//	IMPLIES="=>";
+	public KExpressionsGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
+		return gaKExpressions.getImpliesOperatorAccess();
+	}
+	
+	public EnumRule getImpliesOperatorRule() {
+		return getImpliesOperatorAccess().getRule();
+	}
+	
+	//enum AtMostOneOfOperator returns OperatorType:
+	//	ATMOSTONEOF="#";
+	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
+		return gaKExpressions.getAtMostOneOfOperatorAccess();
+	}
+	
+	public EnumRule getAtMostOneOfOperatorRule() {
+		return getAtMostOneOfOperatorAccess().getRule();
+	}
+	
+	//enum NoneOfOperator returns OperatorType:
+	//	NOR="nor";
+	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
+		return gaKExpressions.getNoneOfOperatorAccess();
+	}
+	
+	public EnumRule getNoneOfOperatorRule() {
+		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

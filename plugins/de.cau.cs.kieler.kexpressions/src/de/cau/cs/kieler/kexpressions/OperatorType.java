@@ -376,14 +376,14 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     INTDIV(29, "INTDIV", "div"), /**
-     * The '<em><b>LOGICAL XOR</b></em>' literal object.
+     * The '<em><b>NOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #LOGICAL_XOR_VALUE
+     * @see #NOR_VALUE
      * @generated
      * @ordered
      */
-    LOGICAL_XOR(30, "LOGICAL_XOR", "xor"), /**
+    NOR(30, "NOR", "nor"), /**
      * The '<em><b>IMPLIES</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -399,15 +399,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    ATMOSTONEOF(32, "ATMOSTONEOF", "#"), /**
-     * The '<em><b>NOR</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #NOR_VALUE
-     * @generated
-     * @ordered
-     */
-    NOR(33, "NOR", "nor");
+    ATMOSTONEOF(32, "ATMOSTONEOF", "#");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -861,19 +853,19 @@ public enum OperatorType implements Enumerator {
     public static final int INTDIV_VALUE = 29;
 
     /**
-     * The '<em><b>LOGICAL XOR</b></em>' literal value.
+     * The '<em><b>NOR</b></em>' literal value.
      * <!-- begin-user-doc -->
      * <p>
-     * If the meaning of '<em><b>LOGICAL XOR</b></em>' literal object isn't clear,
+     * If the meaning of '<em><b>NOR</b></em>' literal object isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @see #LOGICAL_XOR
-     * @model literal="xor"
+     * @see #NOR
+     * @model literal="nor"
      * @generated
      * @ordered
      */
-    public static final int LOGICAL_XOR_VALUE = 30;
+    public static final int NOR_VALUE = 30;
 
     /**
      * The '<em><b>IMPLIES</b></em>' literal value.
@@ -900,21 +892,6 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     public static final int ATMOSTONEOF_VALUE = 32;
-
-    /**
-     * The '<em><b>NOR</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>NOR</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
-     * <!-- end-user-doc -->
-     * @see #NOR
-     * @model literal="nor"
-     * @generated
-     * @ordered
-     */
-    public static final int NOR_VALUE = 33;
 
     /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
@@ -955,10 +932,9 @@ public enum OperatorType implements Enumerator {
             WHEN,
             INIT,
             INTDIV,
-            LOGICAL_XOR,
+            NOR,
             IMPLIES,
             ATMOSTONEOF,
-            NOR,
         };
 
     /**
@@ -1045,10 +1021,9 @@ public enum OperatorType implements Enumerator {
             case WHEN_VALUE: return WHEN;
             case INIT_VALUE: return INIT;
             case INTDIV_VALUE: return INTDIV;
-            case LOGICAL_XOR_VALUE: return LOGICAL_XOR;
+            case NOR_VALUE: return NOR;
             case IMPLIES_VALUE: return IMPLIES;
             case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
-            case NOR_VALUE: return NOR;
         }
         return null;
     }

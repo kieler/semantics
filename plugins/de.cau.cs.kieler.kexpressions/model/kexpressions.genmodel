@@ -48,7 +48,6 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/WHEN"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INIT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INTDIV"/>
-      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LOGICAL_XOR"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/IMPLIES"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/ATMOSTONEOF"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOR"/>

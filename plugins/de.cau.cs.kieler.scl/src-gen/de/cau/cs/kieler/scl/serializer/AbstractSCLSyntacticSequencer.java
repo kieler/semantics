@@ -125,8 +125,13 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
+	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
+	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) subExpressions+=AtMostOneOfExpression
+	 *     (rule start) (ambiguity) subExpressions+=FbyExpression
+	 *     (rule start) (ambiguity) subExpressions+=ImpliesExpression
+	 *     (rule start) (ambiguity) subExpressions+=InitExpression
 	 *     (rule start) (ambiguity) value=FLOAT
 	 *     (rule start) (ambiguity) value=INT
 	 *     (rule start) (ambiguity) value=STRING
@@ -158,10 +163,15 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) annotations+=Annotation
+	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
+	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) subExpressions+=AtMostOneOfExpression
+	 *     (rule start) (ambiguity) subExpressions+=FbyExpression
+	 *     (rule start) (ambiguity) subExpressions+=ImpliesExpression
+	 *     (rule start) (ambiguity) subExpressions+=InitExpression
 	 *     (rule start) (ambiguity) text=HOSTCODE
 	 *     (rule start) (ambiguity) value=BOOLEAN
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -179,8 +189,13 @@ public abstract class AbstractSCLSyntacticSequencer extends AbstractSyntacticSeq
 	 *     ('(' | '(')+
 	 *
 	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
+	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
-	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
+	 *     (rule start) (ambiguity) subExpressions+=AtMostOneOfExpression
+	 *     (rule start) (ambiguity) subExpressions+=FbyExpression
+	 *     (rule start) (ambiguity) subExpressions+=ImpliesExpression
+	 *     (rule start) (ambiguity) subExpressions+=InitExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_1_0_or_LeftParenthesisKeyword_4_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {

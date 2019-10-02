@@ -752,7 +752,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//{Thread}
 		public Action getThreadAction_0() { return cThreadAction_0; }
 		
-		//annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*
+		//(annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}' | statements+=Statement*)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//annotations+=Annotation* '{' declarations+=Declaration* statements+=Statement* '}'
@@ -816,7 +816,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'fork'
 		public Keyword getForkKeyword_0() { return cForkKeyword_0; }
 		
-		//threads+=Thread ('par' threads+=Thread)*
+		//(threads+=Thread ('par' threads+=Thread)*)
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//threads+=Thread
@@ -1035,7 +1035,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//type=ValueType | type=HostType hostType=STRING
+		//(type=ValueType | type=HostType hostType=STRING)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//type=ValueType
@@ -1105,8 +1105,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//Annotation
 		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 		
-		//reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference operator=AssignOperator
-		//expression=Expression | expression=Expression
+		//(reference=ValuedObjectReference operator=PostfixOperator | reference=ValuedObjectReference operator=AssignOperator
+		//expression=Expression | expression=Expression)
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
 		
 		//reference=ValuedObjectReference operator=PostfixOperator
@@ -1484,8 +1484,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -1531,7 +1531,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//ScheduleObjectReference
 		public RuleCall getScheduleScheduleObjectReferenceParserRuleCall_6_1_0() { return cScheduleScheduleObjectReferenceParserRuleCall_6_1_0; }
 		
-		//';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}'
+		//(';' | '{' annotations+=CommentAnnotatonSL? declarations+=Declaration* statements+=Statement* '}')
 		public Alternatives getAlternatives_7() { return cAlternatives_7; }
 		
 		//';'
@@ -1654,8 +1654,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//SimpleValuedObject
 		public RuleCall getValuedObjectsSimpleValuedObjectParserRuleCall_4_0() { return cValuedObjectsSimpleValuedObjectParserRuleCall_4_0; }
 		
-		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
-		//')' | '()'
+		//('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
+		//')' | '()')
 		public Alternatives getAlternatives_5() { return cAlternatives_5; }
 		
 		//'(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)*
@@ -2800,7 +2800,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Logical Or Expression Rule
-	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
+	//// Directs to the 'logical xor' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
@@ -3091,8 +3091,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TernaryOperation Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
-	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
+	//	{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
+	//	subExpressions+=InitExpression)?
 	//	| InitExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
@@ -3103,15 +3103,61 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//InitExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=InitOperator
-	//	subExpressions+=AtomicValuedExpression
-	//	| AtomicValuedExpression;
+	//	{OperatorExpression} subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression
+	//	| FbyExpression;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
 	
 	public ParserRule getInitExpressionRule() {
 		return getInitExpressionAccess().getRule();
+	}
+	
+	//FbyExpression Expression:
+	//	{OperatorExpression} subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression
+	//	| ImpliesExpression;
+	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
+		return gaKExpressions.getFbyExpressionAccess();
+	}
+	
+	public ParserRule getFbyExpressionRule() {
+		return getFbyExpressionAccess().getRule();
+	}
+	
+	//ImpliesExpression Expression:
+	//	{OperatorExpression} subExpressions+=AtMostOneOfExpression operator=ImpliesOperator
+	//	subExpressions+=AtMostOneOfExpression
+	//	| AtMostOneOfExpression;
+	public KExpressionsGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
+		return gaKExpressions.getImpliesExpressionAccess();
+	}
+	
+	public ParserRule getImpliesExpressionRule() {
+		return getImpliesExpressionAccess().getRule();
+	}
+	
+	//AtMostOneOfExpression Expression:
+	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
+	//	subExpressions+=NoneOfExpression)* ')'
+	//	| NoneOfExpression;
+	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
+		return gaKExpressions.getAtMostOneOfExpressionAccess();
+	}
+	
+	public ParserRule getAtMostOneOfExpressionRule() {
+		return getAtMostOneOfExpressionAccess().getRule();
+	}
+	
+	//NoneOfExpression Expression:
+	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=AtomicValuedExpression (','
+	//	subExpressions+=AtomicValuedExpression)* ')'
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
+		return gaKExpressions.getNoneOfExpressionAccess();
+	}
+	
+	public ParserRule getNoneOfExpressionRule() {
+		return getNoneOfExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule
@@ -3597,6 +3643,46 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getInitOperatorRule() {
 		return getInitOperatorAccess().getRule();
+	}
+	
+	//enum FbyOperator returns OperatorType:
+	//	FBY="fby";
+	public KExpressionsGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
+		return gaKExpressions.getFbyOperatorAccess();
+	}
+	
+	public EnumRule getFbyOperatorRule() {
+		return getFbyOperatorAccess().getRule();
+	}
+	
+	//enum ImpliesOperator returns OperatorType:
+	//	IMPLIES="=>";
+	public KExpressionsGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
+		return gaKExpressions.getImpliesOperatorAccess();
+	}
+	
+	public EnumRule getImpliesOperatorRule() {
+		return getImpliesOperatorAccess().getRule();
+	}
+	
+	//enum AtMostOneOfOperator returns OperatorType:
+	//	ATMOSTONEOF="#";
+	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
+		return gaKExpressions.getAtMostOneOfOperatorAccess();
+	}
+	
+	public EnumRule getAtMostOneOfOperatorRule() {
+		return getAtMostOneOfOperatorAccess().getRule();
+	}
+	
+	//enum NoneOfOperator returns OperatorType:
+	//	NOR="nor";
+	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
+		return gaKExpressions.getNoneOfOperatorAccess();
+	}
+	
+	public EnumRule getNoneOfOperatorRule() {
+		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum ValueType:

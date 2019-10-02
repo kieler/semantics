@@ -189,7 +189,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
                 }
                 case IMPLIES,
                 case INTDIV,
-                case LOGICAL_XOR,
+                case BITWISE_XOR,
                 case ATMOSTONEOF, 
                 case NOR: {
                     return transformPlainExpression(valObj, expression, state, varState, controlflowRegion)

@@ -30,6 +30,7 @@
 '<='=138
 '='=81
 '=='=136
+'=>'=148
 '>'=139
 '>='=140
 '>>'=91
@@ -49,7 +50,7 @@
 'abort to'=104
 'auto'=109
 'bool'=114
-'class'=148
+'class'=151
 'clock'=118
 'combine'=82
 'commuting'=120
@@ -68,6 +69,7 @@
 'expression'=77
 'extends'=19
 'extern'=80
+'fby'=147
 'final'=24
 'float'=116
 'for'=47
@@ -85,14 +87,15 @@
 'is'=28
 'join to'=105
 'label'=44
-'max'=150
+'max'=153
 'max='=133
 'method'=69
-'min'=151
+'min'=154
 'min='=132
 'module'=71
 'nondeterministic'=40
-'none'=149
+'none'=152
+'nor'=149
 'null'=101
 'once'=50
 'output'=63
@@ -102,9 +105,9 @@
 'pre'=142
 'preceding'=58
 'print'=84
-'private'=154
-'protected'=153
-'public'=152
+'private'=157
+'protected'=156
+'public'=155
 'pure'=113
 'random'=99
 'randomize'=85
@@ -120,7 +123,7 @@
 'state'=27
 'static'=65
 'string'=117
-'struct'=147
+'struct'=150
 'succeeding'=59
 'super.'=30
 'suspend'=57
@@ -128,7 +131,7 @@
 'undefined'=106
 'val'=144
 'violation'=25
-'void'=155
+'void'=158
 'weak'=56
 'while'=75
 '{'=21
@@ -206,6 +209,9 @@ T__152=152
 T__153=153
 T__154=154
 T__155=155
+T__156=156
+T__157=157
+T__158=158
 T__17=17
 T__18=18
 T__19=19

@@ -117,9 +117,9 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		//references+=ValuedObjectString) operator=AssignOperator expression=Expression ';'
 		public Group getGroup() { return cGroup; }
 		
-		//'(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
+		//('(' references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* ')' |
 		//references+=ValuedObjectString ',' references+=ValuedObjectString (',' references+=ValuedObjectString)* |
-		//references+=ValuedObjectString
+		//references+=ValuedObjectString)
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 		
 		//// Left side: (x, y, ...) or x, y, ... or x 
@@ -730,7 +730,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//NegExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} operator=SubOperator subExpressions+=NegExpression | FBYExpression;
+	//	{kexpressions::OperatorExpression} operator=SubOperator subExpressions+=NegExpression | FbyExpression;
 	public LustreGrammarAccess.NegExpressionElements getNegExpressionAccess() {
 		return gaLustre.getNegExpressionAccess();
 	}
@@ -739,16 +739,16 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNegExpressionAccess().getRule();
 	}
 	
-	//// Force WhenExpression, CurrentExpression and PreExpression inbetween FBYExpression and AtomicValuedExpression
-	//FBYExpression kexpressions::Expression:
-	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FBYOperator
+	//@Override
+	//FbyExpression kexpressions::Expression:
+	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FbyOperator
 	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
-	public LustreGrammarAccess.FBYExpressionElements getFBYExpressionAccess() {
-		return gaLustre.getFBYExpressionAccess();
+	public LustreGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
+		return gaLustre.getFbyExpressionAccess();
 	}
 	
-	public ParserRule getFBYExpressionRule() {
-		return getFBYExpressionAccess().getRule();
+	public ParserRule getFbyExpressionRule() {
+		return getFbyExpressionAccess().getRule();
 	}
 	
 	//WhenExpression kexpressions::Expression:
@@ -822,6 +822,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
+	//@Override
 	//ImpliesExpression kexpressions::Expression:
 	//	LogicalXorExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
 	//	subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?;
@@ -971,14 +972,15 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getNotOperatorAccess().getRule();
 	}
 	
-	//enum FBYOperator returns kexpressions::OperatorType:
+	//@Override
+	//enum FbyOperator returns kexpressions::OperatorType:
 	//	FBY="fby";
-	public LustreGrammarAccess.FBYOperatorElements getFBYOperatorAccess() {
-		return gaLustre.getFBYOperatorAccess();
+	public LustreGrammarAccess.FbyOperatorElements getFbyOperatorAccess() {
+		return gaLustre.getFbyOperatorAccess();
 	}
 	
-	public EnumRule getFBYOperatorRule() {
-		return getFBYOperatorAccess().getRule();
+	public EnumRule getFbyOperatorRule() {
+		return getFbyOperatorAccess().getRule();
 	}
 	
 	//@Override
@@ -1024,7 +1026,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum LogicalXorOperator returns kexpressions::OperatorType:
-	//	LOGICAL_XOR="xor";
+	//	BITWISE_XOR="xor";
 	public LustreGrammarAccess.LogicalXorOperatorElements getLogicalXorOperatorAccess() {
 		return gaLustre.getLogicalXorOperatorAccess();
 	}
@@ -1033,6 +1035,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getLogicalXorOperatorAccess().getRule();
 	}
 	
+	//@Override
 	//enum ImpliesOperator returns kexpressions::OperatorType:
 	//	IMPLIES="=>";
 	public LustreGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
@@ -1903,6 +1906,30 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getModExpressionAccess().getRule();
 	}
 	
+	//AtMostOneOfExpression Expression:
+	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
+	//	subExpressions+=NoneOfExpression)* ')'
+	//	| NoneOfExpression;
+	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
+		return gaKExpressions.getAtMostOneOfExpressionAccess();
+	}
+	
+	public ParserRule getAtMostOneOfExpressionRule() {
+		return getAtMostOneOfExpressionAccess().getRule();
+	}
+	
+	//NoneOfExpression Expression:
+	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=AtomicValuedExpression (','
+	//	subExpressions+=AtomicValuedExpression)* ')'
+	//	| AtomicValuedExpression;
+	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
+		return gaKExpressions.getNoneOfExpressionAccess();
+	}
+	
+	public ParserRule getNoneOfExpressionRule() {
+		return getNoneOfExpressionAccess().getRule();
+	}
+	
 	//// Atomic Valued Expression Rule
 	//// An atomic valued expression is either a simple int float or string literal, another valued expression
 	//// encapsulated in braces, or a atomic expression.
@@ -2279,6 +2306,26 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public EnumRule getPostfixSubRule() {
 		return getPostfixSubAccess().getRule();
+	}
+	
+	//enum AtMostOneOfOperator returns OperatorType:
+	//	ATMOSTONEOF="#";
+	public KExpressionsGrammarAccess.AtMostOneOfOperatorElements getAtMostOneOfOperatorAccess() {
+		return gaKExpressions.getAtMostOneOfOperatorAccess();
+	}
+	
+	public EnumRule getAtMostOneOfOperatorRule() {
+		return getAtMostOneOfOperatorAccess().getRule();
+	}
+	
+	//enum NoneOfOperator returns OperatorType:
+	//	NOR="nor";
+	public KExpressionsGrammarAccess.NoneOfOperatorElements getNoneOfOperatorAccess() {
+		return gaKExpressions.getNoneOfOperatorAccess();
+	}
+	
+	public EnumRule getNoneOfOperatorRule() {
+		return getNoneOfOperatorAccess().getRule();
 	}
 	
 	//enum HostType returns ValueType:

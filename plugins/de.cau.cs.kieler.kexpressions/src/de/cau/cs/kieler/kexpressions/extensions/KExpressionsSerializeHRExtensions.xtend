@@ -241,10 +241,26 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
     
     protected def CharSequence serializeHROperatorExpressionPRE(OperatorExpression expression) {
     	"pre(" + expression.subExpressions.head.serializeHR + ")"
-    }   
+    }
 
     protected def CharSequence serializeHROperatorExpressionINIT(OperatorExpression expression) {
         combineOperatorsHR(expression.subExpressions.iterator, " -> ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionFby(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " fby ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionImplies(OperatorExpression expression) {
+        combineOperatorsHR(expression.subExpressions.iterator, " => ")
+    }
+
+    protected def CharSequence serializeHROperatorExpressionAtMostOneOf(OperatorExpression expression) {
+        "#(" + combineOperatorsHR(expression.subExpressions.iterator, ", ") + ")"
+    }
+
+    protected def CharSequence serializeHROperatorExpressionNoneOf(OperatorExpression expression) {
+        "nor(" + combineOperatorsHR(expression.subExpressions.iterator, ", ") + ")"
     }
     
     protected def CharSequence serializeHROperatorExpressionNot(OperatorExpression expression) {
@@ -348,6 +364,14 @@ class KExpressionsSerializeHRExtensions extends KExpressionsSerializeExtensions 
             return expression.serializeHROperatorExpressionPRE
         } else if (expression.operator == OperatorType::INIT) {
             return expression.serializeHROperatorExpressionINIT
+        } else if (expression.operator == OperatorType::FBY) {
+            return expression.serializeHROperatorExpressionFby
+        } else if (expression.operator == OperatorType::IMPLIES) {
+            return expression.serializeHROperatorExpressionImplies
+        } else if (expression.operator == OperatorType::ATMOSTONEOF) {
+            return expression.serializeHROperatorExpressionAtMostOneOf
+        } else if (expression.operator == OperatorType::NOR) {
+            return expression.serializeHROperatorExpressionNoneOf
         } else if (expression.operator == OperatorType::NE) {
             result = expression.serializeHROperatorExpressionNE
         } else if (expression.operator == OperatorType::LOGICAL_AND) {
