@@ -1046,8 +1046,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getImpliesOperatorAccess().getRule();
 	}
 	
-	//enum IntDivOperator returns kexpressions::OperatorType:
-	//	INTDIV="div";
+	//enum IntDivOperator returns kexpressions::OperatorType: //    INTDIV="div"
+	//	DIV="div";
 	public LustreGrammarAccess.IntDivOperatorElements getIntDivOperatorAccess() {
 		return gaLustre.getIntDivOperatorAccess();
 	}

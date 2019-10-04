@@ -4843,7 +4843,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Logical Or Expression Rule
-	//// Directs to the 'logical xor' rule and may create an operator expression for 'logical or' operations
+	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
@@ -5134,8 +5134,8 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TernaryOperation Expression:
-	//	{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
-	//	subExpressions+=InitExpression)?
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 	//	| InitExpression;
 	public KExpressionsGrammarAccess.TernaryOperationElements getTernaryOperationAccess() {
 		return gaKExpressions.getTernaryOperationAccess();
@@ -5699,7 +5699,7 @@ public class SCTXGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ImpliesOperator returns OperatorType:
-	//	IMPLIES="=>";
+	//	IMPLIES="implies";
 	public KExpressionsGrammarAccess.ImpliesOperatorElements getImpliesOperatorAccess() {
 		return gaKExpressions.getImpliesOperatorAccess();
 	}

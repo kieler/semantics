@@ -132,7 +132,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsLogicalAndExpressionParserRuleCall_1_2_1_0 = (RuleCall)cSubExpressionsAssignment_1_2_1.eContents().get(0);
 		
 		//// Logical Or Expression Rule
-		//// Directs to the 'logical xor' rule and may create an operator expression for 'logical or' operations
+		//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 		//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 		//LogicalOrExpression Expression:
 		//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
@@ -1529,39 +1529,39 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cOperatorExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final RuleCall cSubExpressionsInitExpressionParserRuleCall_0_1_0 = (RuleCall)cSubExpressionsAssignment_0_1.eContents().get(0);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0 = (RuleCall)cSubExpressionsAssignment_0_1.eContents().get(0);
 		private final Assignment cOperatorAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cOperatorConditionalOperatorEnumRuleCall_0_2_0 = (RuleCall)cOperatorAssignment_0_2.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cSubExpressionsInitExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0 = (RuleCall)cSubExpressionsAssignment_0_3.eContents().get(0);
 		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
 		private final Keyword cColonKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
 		private final Assignment cSubExpressionsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
-		private final RuleCall cSubExpressionsInitExpressionParserRuleCall_0_4_1_0 = (RuleCall)cSubExpressionsAssignment_0_4_1.eContents().get(0);
+		private final RuleCall cSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0 = (RuleCall)cSubExpressionsAssignment_0_4_1.eContents().get(0);
 		private final RuleCall cInitExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//TernaryOperation Expression:
-		//	{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
-		//	subExpressions+=InitExpression)?
+		//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 		//	| InitExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
-		//subExpressions+=InitExpression)? | InitExpression
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)? | InitExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
-		//subExpressions+=InitExpression)?
+		//{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+		//subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{OperatorExpression}
 		public Action getOperatorExpressionAction_0_0() { return cOperatorExpressionAction_0_0; }
 		
-		//subExpressions+=InitExpression
+		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_0_1() { return cSubExpressionsAssignment_0_1; }
 		
-		//InitExpression
-		public RuleCall getSubExpressionsInitExpressionParserRuleCall_0_1_0() { return cSubExpressionsInitExpressionParserRuleCall_0_1_0; }
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0; }
 		
 		//operator=ConditionalOperator
 		public Assignment getOperatorAssignment_0_2() { return cOperatorAssignment_0_2; }
@@ -1569,23 +1569,23 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//ConditionalOperator
 		public RuleCall getOperatorConditionalOperatorEnumRuleCall_0_2_0() { return cOperatorConditionalOperatorEnumRuleCall_0_2_0; }
 		
-		//subExpressions+=InitExpression
+		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_0_3() { return cSubExpressionsAssignment_0_3; }
 		
-		//InitExpression
-		public RuleCall getSubExpressionsInitExpressionParserRuleCall_0_3_0() { return cSubExpressionsInitExpressionParserRuleCall_0_3_0; }
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0; }
 		
-		//(':' subExpressions+=InitExpression)?
+		//(':' subExpressions+=AtomicValuedExpression)?
 		public Group getGroup_0_4() { return cGroup_0_4; }
 		
 		//':'
 		public Keyword getColonKeyword_0_4_0() { return cColonKeyword_0_4_0; }
 		
-		//subExpressions+=InitExpression
+		//subExpressions+=AtomicValuedExpression
 		public Assignment getSubExpressionsAssignment_0_4_1() { return cSubExpressionsAssignment_0_4_1; }
 		
-		//InitExpression
-		public RuleCall getSubExpressionsInitExpressionParserRuleCall_0_4_1_0() { return cSubExpressionsInitExpressionParserRuleCall_0_4_1_0; }
+		//AtomicValuedExpression
+		public RuleCall getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0() { return cSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0; }
 		
 		//InitExpression
 		public RuleCall getInitExpressionParserRuleCall_1() { return cInitExpressionParserRuleCall_1; }
@@ -3422,17 +3422,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class ImpliesOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.ImpliesOperator");
 		private final EnumLiteralDeclaration cIMPLIESEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cIMPLIESEqualsSignGreaterThanSignKeyword_0 = (Keyword)cIMPLIESEnumLiteralDeclaration.eContents().get(0);
+		private final Keyword cIMPLIESImpliesKeyword_0 = (Keyword)cIMPLIESEnumLiteralDeclaration.eContents().get(0);
 		
 		//enum ImpliesOperator returns OperatorType:
-		//	IMPLIES="=>";
+		//	IMPLIES="implies";
 		public EnumRule getRule() { return rule; }
 		
-		//IMPLIES="=>"
+		//IMPLIES="implies"
 		public EnumLiteralDeclaration getIMPLIESEnumLiteralDeclaration() { return cIMPLIESEnumLiteralDeclaration; }
 		
-		//"=>"
-		public Keyword getIMPLIESEqualsSignGreaterThanSignKeyword_0() { return cIMPLIESEqualsSignGreaterThanSignKeyword_0; }
+		//"implies"
+		public Keyword getIMPLIESImpliesKeyword_0() { return cIMPLIESImpliesKeyword_0; }
 	}
 	public class AtMostOneOfOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfOperator");
@@ -4045,7 +4045,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//// Logical Or Expression Rule
-	//// Directs to the 'logical xor' rule and may create an operator expression for 'logical or' operations
+	//// Directs to the 'logical and' rule and may create an operator expression for 'logical or' operations
 	//// if necessary. The warning can be ignored since the operator will only override itself in this loop.
 	//LogicalOrExpression Expression:
 	//	LogicalAndExpression ({OperatorExpression.subExpressions+=current} (operator=LogicalOrOperator
@@ -4336,8 +4336,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//TernaryOperation Expression:
-	//	{OperatorExpression} subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression (':'
-	//	subExpressions+=InitExpression)?
+	//	{OperatorExpression} subExpressions+=AtomicValuedExpression operator=ConditionalOperator
+	//	subExpressions+=AtomicValuedExpression (':' subExpressions+=AtomicValuedExpression)?
 	//	| InitExpression;
 	public TernaryOperationElements getTernaryOperationAccess() {
 		return pTernaryOperation;
@@ -4901,7 +4901,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//enum ImpliesOperator returns OperatorType:
-	//	IMPLIES="=>";
+	//	IMPLIES="implies";
 	public ImpliesOperatorElements getImpliesOperatorAccess() {
 		return eImpliesOperator;
 	}

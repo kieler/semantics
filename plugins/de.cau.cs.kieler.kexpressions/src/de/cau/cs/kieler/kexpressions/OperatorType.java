@@ -391,7 +391,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    IMPLIES(31, "IMPLIES", "=>"), /**
+    IMPLIES(31, "IMPLIES", "implies"), /**
      * The '<em><b>ATMOSTONEOF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -876,7 +876,7 @@ public enum OperatorType implements Enumerator {
      * </p>
      * <!-- end-user-doc -->
      * @see #IMPLIES
-     * @model literal="=&gt;"
+     * @model literal="implies"
      * @generated
      * @ordered
      */

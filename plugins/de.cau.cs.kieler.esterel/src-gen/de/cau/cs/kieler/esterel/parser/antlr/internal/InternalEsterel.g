@@ -22926,7 +22926,7 @@ ruleImpliesOperator returns [Enumerator current=null]
 	leaveRule();
 }:
 	(
-		enumLiteral_0='=>'
+		enumLiteral_0='implies'
 		{
 			$current = grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration());

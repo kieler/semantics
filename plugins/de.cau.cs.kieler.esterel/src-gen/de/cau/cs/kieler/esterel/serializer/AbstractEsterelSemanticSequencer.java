@@ -971,7 +971,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression subExpressions+=InitExpression?) | 
+	 *         (
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             operator=ConditionalOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression?
+	 *         ) | 
 	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
 	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
 	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 

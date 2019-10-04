@@ -49,8 +49,15 @@ class Implies extends SCChartsProcessor implements Traceable {
         val allImplies = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.IMPLIES ].toList
         
         for (imply : allImplies) {
+            var transformedOpExpr = createLogicalOrExpression
             
-            var transformedOpExpr = createLogicalOrExpression(createNotExpression(imply.subExpressions.head), imply.subExpressions.head)
+            var immutableCopy = imply.subExpressions.immutableCopy
+            for (var i = 0; i < immutableCopy.length - 1; i++) {
+                var notFirst = createNotExpression(immutableCopy.get(i))
+                transformedOpExpr.subExpressions += notFirst
+            }
+            transformedOpExpr.subExpressions += immutableCopy.last
+            
             imply.replace(transformedOpExpr)
         }
     }

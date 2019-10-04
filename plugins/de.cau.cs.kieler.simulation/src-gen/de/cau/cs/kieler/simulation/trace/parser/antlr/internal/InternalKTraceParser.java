@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalKTraceParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'!'", "'reset'", "';'", "'%'", "'Output:'", "'Output'", "':'", "'%%'", "'='", "'=>'", "'pause'", "'goto'", "'scope'", "'{'", "'}'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "','", "'host'", "'('", "')'", "'()'", "'schedule'", "'ref'", "'extern'", "'['", "']'", "'combine'", "'label'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'&'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'conflicting'", "'commuting'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'fby'", "'nor'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_HOSTCODE", "RULE_INT", "RULE_FLOAT", "RULE_BOOLEAN", "RULE_COMMENT_ANNOTATION", "RULE_SL_COMMENT_ANNOTATION", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_NUMBER", "RULE_WS", "RULE_ANY_OTHER", "'!'", "'reset'", "';'", "'%'", "'Output:'", "'Output'", "':'", "'%%'", "'='", "'=>'", "'pause'", "'goto'", "'scope'", "'{'", "'}'", "'expression'", "'const'", "'input'", "'output'", "'global'", "'static'", "'signal'", "','", "'host'", "'('", "')'", "'()'", "'schedule'", "'ref'", "'extern'", "'['", "']'", "'combine'", "'label'", "'.'", "'print'", "'randomize'", "'||'", "'&&'", "'|'", "'^'", "'&'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'\\''", "'random'", "'_'", "'null'", "'#'", "'@'", "'conflicting'", "'commuting'", "'+='", "'-='", "'*='", "'/='", "'%='", "'&='", "'|='", "'^='", "'<<='", "'>>='", "'>>>='", "'min='", "'max='", "'++'", "'--'", "'=='", "'<'", "'<='", "'>'", "'>='", "'!='", "'pre'", "'~'", "'val'", "'?'", "'->'", "'fby'", "'implies'", "'nor'", "'pure'", "'bool'", "'int'", "'float'", "'string'", "'struct'", "'class'", "'none'", "'max'", "'min'", "'public'", "'protected'", "'private'", "'void'"
     };
     public static final int T__50=50;
     public static final int T__59=59;
@@ -114,6 +114,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     public static final int T__114=114;
     public static final int T__75=75;
     public static final int T__76=76;
+    public static final int T__116=116;
     public static final int T__80=80;
     public static final int T__111=111;
     public static final int T__81=81;
@@ -3739,7 +3740,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt36=2;
             int LA36_0 = input.LA(1);
 
-            if ( ((LA36_0>=112 && LA36_0<=114)) ) {
+            if ( ((LA36_0>=113 && LA36_0<=115)) ) {
                 alt36=1;
             }
             switch (alt36) {
@@ -3976,7 +3977,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 if ( (LA43_1==RULE_ID||LA43_1==RULE_COMMENT_ANNOTATION||LA43_1==71) ) {
                     alt43=2;
                 }
-                else if ( ((LA43_1>=102 && LA43_1<=106)) ) {
+                else if ( ((LA43_1>=103 && LA43_1<=107)) ) {
                     alt43=1;
                 }
                 else {
@@ -3988,11 +3989,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case 102:
             case 103:
             case 104:
             case 105:
             case 106:
+            case 107:
                 {
                 alt43=1;
                 }
@@ -4519,7 +4520,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt47=2;
             int LA47_0 = input.LA(1);
 
-            if ( ((LA47_0>=112 && LA47_0<=114)) ) {
+            if ( ((LA47_0>=113 && LA47_0<=115)) ) {
                 alt47=1;
             }
             switch (alt47) {
@@ -4753,7 +4754,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 {
                 int LA54_1 = input.LA(2);
 
-                if ( ((LA54_1>=102 && LA54_1<=106)) ) {
+                if ( ((LA54_1>=103 && LA54_1<=107)) ) {
                     alt54=1;
                 }
                 else if ( (LA54_1==RULE_ID||LA54_1==RULE_COMMENT_ANNOTATION||LA54_1==71) ) {
@@ -4768,11 +4769,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 }
                 }
                 break;
-            case 102:
             case 103:
             case 104:
             case 105:
             case 106:
+            case 107:
                 {
                 alt54=1;
                 }
@@ -5314,7 +5315,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt58=2;
             int LA58_0 = input.LA(1);
 
-            if ( ((LA58_0>=112 && LA58_0<=114)) ) {
+            if ( ((LA58_0>=113 && LA58_0<=115)) ) {
                 alt58=1;
             }
             switch (alt58) {
@@ -5582,10 +5583,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt69=2;
             int LA69_0 = input.LA(1);
 
-            if ( (LA69_0==108) ) {
+            if ( (LA69_0==109) ) {
                 alt69=1;
             }
-            else if ( (LA69_0==107) ) {
+            else if ( (LA69_0==108) ) {
                 alt69=2;
             }
             else {
@@ -5690,7 +5691,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         int alt66=2;
                         int LA66_0 = input.LA(1);
 
-                        if ( (LA66_0==RULE_ID||LA66_0==RULE_COMMENT_ANNOTATION||(LA66_0>=33 && LA66_0<=38)||LA66_0==40||(LA66_0>=44 && LA66_0<=46)||LA66_0==71||(LA66_0>=102 && LA66_0<=108)||(LA66_0>=112 && LA66_0<=115)) ) {
+                        if ( (LA66_0==RULE_ID||LA66_0==RULE_COMMENT_ANNOTATION||(LA66_0>=33 && LA66_0<=38)||LA66_0==40||(LA66_0>=44 && LA66_0<=46)||LA66_0==71||(LA66_0>=103 && LA66_0<=109)||(LA66_0>=113 && LA66_0<=116)) ) {
                             alt66=1;
                         }
 
@@ -5843,7 +5844,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         int alt68=2;
                         int LA68_0 = input.LA(1);
 
-                        if ( (LA68_0==RULE_COMMENT_ANNOTATION||(LA68_0>=33 && LA68_0<=38)||LA68_0==40||(LA68_0>=44 && LA68_0<=46)||LA68_0==71||(LA68_0>=102 && LA68_0<=108)||(LA68_0>=112 && LA68_0<=114)) ) {
+                        if ( (LA68_0==RULE_COMMENT_ANNOTATION||(LA68_0>=33 && LA68_0<=38)||LA68_0==40||(LA68_0>=44 && LA68_0<=46)||LA68_0==71||(LA68_0>=103 && LA68_0<=109)||(LA68_0>=113 && LA68_0<=115)) ) {
                             alt68=1;
                         }
 
@@ -6399,7 +6400,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt75=2;
             int LA75_0 = input.LA(1);
 
-            if ( ((LA75_0>=112 && LA75_0<=114)) ) {
+            if ( ((LA75_0>=113 && LA75_0<=115)) ) {
                 alt75=1;
             }
             switch (alt75) {
@@ -6667,10 +6668,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt86=2;
             int LA86_0 = input.LA(1);
 
-            if ( (LA86_0==108) ) {
+            if ( (LA86_0==109) ) {
                 alt86=1;
             }
-            else if ( (LA86_0==107) ) {
+            else if ( (LA86_0==108) ) {
                 alt86=2;
             }
             else {
@@ -6775,7 +6776,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         int alt83=2;
                         int LA83_0 = input.LA(1);
 
-                        if ( (LA83_0==RULE_ID||LA83_0==RULE_COMMENT_ANNOTATION||(LA83_0>=33 && LA83_0<=38)||LA83_0==40||(LA83_0>=44 && LA83_0<=46)||LA83_0==71||(LA83_0>=102 && LA83_0<=108)||(LA83_0>=112 && LA83_0<=115)) ) {
+                        if ( (LA83_0==RULE_ID||LA83_0==RULE_COMMENT_ANNOTATION||(LA83_0>=33 && LA83_0<=38)||LA83_0==40||(LA83_0>=44 && LA83_0<=46)||LA83_0==71||(LA83_0>=103 && LA83_0<=109)||(LA83_0>=113 && LA83_0<=116)) ) {
                             alt83=1;
                         }
 
@@ -6928,7 +6929,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         int alt85=2;
                         int LA85_0 = input.LA(1);
 
-                        if ( (LA85_0==RULE_COMMENT_ANNOTATION||(LA85_0>=33 && LA85_0<=38)||LA85_0==40||(LA85_0>=44 && LA85_0<=46)||LA85_0==71||(LA85_0>=102 && LA85_0<=108)||(LA85_0>=112 && LA85_0<=114)) ) {
+                        if ( (LA85_0==RULE_COMMENT_ANNOTATION||(LA85_0>=33 && LA85_0<=38)||LA85_0==40||(LA85_0>=44 && LA85_0<=46)||LA85_0==71||(LA85_0>=103 && LA85_0<=109)||(LA85_0>=113 && LA85_0<=115)) ) {
                             alt85=1;
                         }
 
@@ -7486,7 +7487,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt92=2;
             int LA92_0 = input.LA(1);
 
-            if ( ((LA92_0>=112 && LA92_0<=114)) ) {
+            if ( ((LA92_0>=113 && LA92_0<=115)) ) {
                 alt92=1;
             }
             switch (alt92) {
@@ -7532,7 +7533,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt93=2;
             int LA93_0 = input.LA(1);
 
-            if ( ((LA93_0>=103 && LA93_0<=106)||LA93_0==115) ) {
+            if ( ((LA93_0>=104 && LA93_0<=107)||LA93_0==116) ) {
                 alt93=1;
             }
             switch (alt93) {
@@ -8097,7 +8098,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt100=2;
             int LA100_0 = input.LA(1);
 
-            if ( ((LA100_0>=112 && LA100_0<=114)) ) {
+            if ( ((LA100_0>=113 && LA100_0<=115)) ) {
                 alt100=1;
             }
             switch (alt100) {
@@ -8143,7 +8144,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt101=2;
             int LA101_0 = input.LA(1);
 
-            if ( ((LA101_0>=103 && LA101_0<=106)||LA101_0==115) ) {
+            if ( ((LA101_0>=104 && LA101_0<=107)||LA101_0==116) ) {
                 alt101=1;
             }
             switch (alt101) {
@@ -8807,7 +8808,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt109=2;
             int LA109_0 = input.LA(1);
 
-            if ( ((LA109_0>=112 && LA109_0<=114)) ) {
+            if ( ((LA109_0>=113 && LA109_0<=115)) ) {
                 alt109=1;
             }
             switch (alt109) {
@@ -9352,7 +9353,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt115=2;
             int LA115_0 = input.LA(1);
 
-            if ( ((LA115_0>=112 && LA115_0<=114)) ) {
+            if ( ((LA115_0>=113 && LA115_0<=115)) ) {
                 alt115=1;
             }
             switch (alt115) {
@@ -10063,7 +10064,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt122=2;
             int LA122_0 = input.LA(1);
 
-            if ( ((LA122_0>=112 && LA122_0<=114)) ) {
+            if ( ((LA122_0>=113 && LA122_0<=115)) ) {
                 alt122=1;
             }
             switch (alt122) {
@@ -10651,7 +10652,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt130=2;
             int LA130_0 = input.LA(1);
 
-            if ( ((LA130_0>=112 && LA130_0<=114)) ) {
+            if ( ((LA130_0>=113 && LA130_0<=115)) ) {
                 alt130=1;
             }
             switch (alt130) {
@@ -20066,7 +20067,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             if ( (LA205_0==63) ) {
                 alt205=1;
             }
-            else if ( ((LA205_0>=RULE_ID && LA205_0<=RULE_COMMENT_ANNOTATION)||LA205_0==30||LA205_0==41||LA205_0==46||LA205_0==53||LA205_0==67||(LA205_0>=70 && LA205_0<=71)||LA205_0==95||LA205_0==97||LA205_0==101) ) {
+            else if ( ((LA205_0>=RULE_ID && LA205_0<=RULE_COMMENT_ANNOTATION)||LA205_0==30||LA205_0==41||LA205_0==46||LA205_0==53||LA205_0==67||(LA205_0>=70 && LA205_0<=71)||LA205_0==95||LA205_0==97||LA205_0==102) ) {
                 alt205=2;
             }
             else {
@@ -20269,7 +20270,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTernaryOperation"
-    // InternalKTrace.g:7228:1: ruleTernaryOperation returns [EObject current=null] : ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression ) ;
+    // InternalKTrace.g:7228:1: ruleTernaryOperation returns [EObject current=null] : ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression ) ;
     public final EObject ruleTernaryOperation() throws RecognitionException {
         EObject current = null;
 
@@ -20289,18 +20290,18 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKTrace.g:7234:2: ( ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression ) )
-            // InternalKTrace.g:7235:2: ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )
+            // InternalKTrace.g:7234:2: ( ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression ) )
+            // InternalKTrace.g:7235:2: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )
             {
-            // InternalKTrace.g:7235:2: ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )
+            // InternalKTrace.g:7235:2: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )
             int alt207=2;
             alt207 = dfa207.predict(input);
             switch (alt207) {
                 case 1 :
-                    // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? )
+                    // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? )
                     {
-                    // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? )
-                    // InternalKTrace.g:7237:4: () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )?
+                    // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? )
+                    // InternalKTrace.g:7237:4: () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
                     {
                     // InternalKTrace.g:7237:4: ()
                     // InternalKTrace.g:7238:5: 
@@ -20320,19 +20321,19 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalKTrace.g:7247:4: ( (lv_subExpressions_1_0= ruleInitExpression ) )
-                    // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleInitExpression )
+                    // InternalKTrace.g:7247:4: ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) )
+                    // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleAtomicValuedExpression )
                     {
-                    // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleInitExpression )
-                    // InternalKTrace.g:7249:6: lv_subExpressions_1_0= ruleInitExpression
+                    // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleAtomicValuedExpression )
+                    // InternalKTrace.g:7249:6: lv_subExpressions_1_0= ruleAtomicValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
-                      						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_1_0());
+                      						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0());
                       					
                     }
                     pushFollow(FollowSets000.FOLLOW_90);
-                    lv_subExpressions_1_0=ruleInitExpression();
+                    lv_subExpressions_1_0=ruleAtomicValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -20345,7 +20346,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       							current,
                       							"subExpressions",
                       							lv_subExpressions_1_0,
-                      							"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+                      							"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
                       						afterParserOrEnumRuleCall();
                       					
                     }
@@ -20390,19 +20391,19 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalKTrace.g:7285:4: ( (lv_subExpressions_3_0= ruleInitExpression ) )
-                    // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleInitExpression )
+                    // InternalKTrace.g:7285:4: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
+                    // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
                     {
-                    // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleInitExpression )
-                    // InternalKTrace.g:7287:6: lv_subExpressions_3_0= ruleInitExpression
+                    // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
+                    // InternalKTrace.g:7287:6: lv_subExpressions_3_0= ruleAtomicValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
-                      						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_3_0());
+                      						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
                       					
                     }
                     pushFollow(FollowSets000.FOLLOW_49);
-                    lv_subExpressions_3_0=ruleInitExpression();
+                    lv_subExpressions_3_0=ruleAtomicValuedExpression();
 
                     state._fsp--;
                     if (state.failed) return current;
@@ -20415,7 +20416,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       							current,
                       							"subExpressions",
                       							lv_subExpressions_3_0,
-                      							"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+                      							"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
                       						afterParserOrEnumRuleCall();
                       					
                     }
@@ -20425,7 +20426,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalKTrace.g:7304:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )?
+                    // InternalKTrace.g:7304:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
                     int alt206=2;
                     int LA206_0 = input.LA(1);
 
@@ -20434,7 +20435,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     }
                     switch (alt206) {
                         case 1 :
-                            // InternalKTrace.g:7305:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) )
+                            // InternalKTrace.g:7305:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
                             {
                             otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_91); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -20442,19 +20443,19 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                               					newLeafNode(otherlv_4, grammarAccess.getTernaryOperationAccess().getColonKeyword_0_4_0());
                               				
                             }
-                            // InternalKTrace.g:7309:5: ( (lv_subExpressions_5_0= ruleInitExpression ) )
-                            // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleInitExpression )
+                            // InternalKTrace.g:7309:5: ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
+                            // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
                             {
-                            // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleInitExpression )
-                            // InternalKTrace.g:7311:7: lv_subExpressions_5_0= ruleInitExpression
+                            // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
+                            // InternalKTrace.g:7311:7: lv_subExpressions_5_0= ruleAtomicValuedExpression
                             {
                             if ( state.backtracking==0 ) {
 
-                              							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_4_1_0());
+                              							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0());
                               						
                             }
                             pushFollow(FollowSets000.FOLLOW_2);
-                            lv_subExpressions_5_0=ruleInitExpression();
+                            lv_subExpressions_5_0=ruleAtomicValuedExpression();
 
                             state._fsp--;
                             if (state.failed) return current;
@@ -20467,7 +20468,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                               								current,
                               								"subExpressions",
                               								lv_subExpressions_5_0,
-                              								"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+                              								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
                               							afterParserOrEnumRuleCall();
                               						
                             }
@@ -20675,7 +20676,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_91);
+                    pushFollow(FollowSets000.FOLLOW_93);
                     lv_operator_2_0=ruleInitOperator();
 
                     state._fsp--;
@@ -20891,7 +20892,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_0_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_93);
+                    pushFollow(FollowSets000.FOLLOW_94);
                     lv_subExpressions_1_0=ruleImpliesExpression();
 
                     state._fsp--;
@@ -20926,7 +20927,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getFbyExpressionAccess().getOperatorFbyOperatorEnumRuleCall_0_2_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_91);
+                    pushFollow(FollowSets000.FOLLOW_93);
                     lv_operator_2_0=ruleFbyOperator();
 
                     state._fsp--;
@@ -21142,7 +21143,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_0_1_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_94);
+                    pushFollow(FollowSets000.FOLLOW_95);
                     lv_subExpressions_1_0=ruleAtMostOneOfExpression();
 
                     state._fsp--;
@@ -21177,7 +21178,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorImpliesOperatorEnumRuleCall_0_2_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_91);
+                    pushFollow(FollowSets000.FOLLOW_93);
                     lv_operator_2_0=ruleImpliesOperator();
 
                     state._fsp--;
@@ -21364,7 +21365,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             if ( (LA212_0==70) ) {
                 alt212=1;
             }
-            else if ( ((LA212_0>=RULE_ID && LA212_0<=RULE_COMMENT_ANNOTATION)||LA212_0==30||LA212_0==41||LA212_0==46||LA212_0==53||LA212_0==67||LA212_0==71||LA212_0==95||LA212_0==97||LA212_0==101) ) {
+            else if ( ((LA212_0>=RULE_ID && LA212_0<=RULE_COMMENT_ANNOTATION)||LA212_0==30||LA212_0==41||LA212_0==46||LA212_0==53||LA212_0==67||LA212_0==71||LA212_0==95||LA212_0==97||LA212_0==102) ) {
                 alt212=2;
             }
             else {
@@ -21434,7 +21435,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,41,FollowSets000.FOLLOW_91); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,41,FollowSets000.FOLLOW_93); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getAtMostOneOfExpressionAccess().getLeftParenthesisKeyword_0_2());
@@ -21490,7 +21491,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalKTrace.g:7715:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleNoneOfExpression ) )
                     	    {
-                    	    otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_91); if (state.failed) return current;
+                    	    otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_93); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_4, grammarAccess.getAtMostOneOfExpressionAccess().getCommaKeyword_0_4_0());
@@ -21671,7 +21672,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             int alt214=2;
             int LA214_0 = input.LA(1);
 
-            if ( (LA214_0==101) ) {
+            if ( (LA214_0==102) ) {
                 alt214=1;
             }
             else if ( ((LA214_0>=RULE_ID && LA214_0<=RULE_COMMENT_ANNOTATION)||LA214_0==30||LA214_0==41||LA214_0==46||LA214_0==53||LA214_0==67||LA214_0==71||LA214_0==95||LA214_0==97) ) {
@@ -22720,7 +22721,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_2=(Token)match(input,41,FollowSets000.FOLLOW_95); if (state.failed) return current;
+                    otherlv_2=(Token)match(input,41,FollowSets000.FOLLOW_96); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				newLeafNode(otherlv_2, grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2());
@@ -22940,7 +22941,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:8244:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
             // InternalKTrace.g:8245:3: this_ID_0= RULE_ID (kw= '\\'' )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_96); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_97); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -22966,7 +22967,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKTrace.g:8253:4: kw= '\\''
             	    {
-            	    kw=(Token)match(input,66,FollowSets000.FOLLOW_96); if (state.failed) return current;
+            	    kw=(Token)match(input,66,FollowSets000.FOLLOW_97); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(kw);
@@ -23092,7 +23093,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getValuedObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_97);
+            pushFollow(FollowSets000.FOLLOW_98);
             rulePrimeID();
 
             state._fsp--;
@@ -23164,7 +23165,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_3=(Token)match(input,48,FollowSets000.FOLLOW_97); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,48,FollowSets000.FOLLOW_98); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getValuedObjectReferenceAccess().getRightSquareBracketKeyword_1_2());
@@ -23341,7 +23342,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getScheduleObjectReferenceAccess().getValuedObjectValuedObjectCrossReference_0_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_98);
+            pushFollow(FollowSets000.FOLLOW_99);
             rulePrimeID();
 
             state._fsp--;
@@ -23907,7 +23908,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,67,FollowSets000.FOLLOW_99); if (state.failed) return current;
+            otherlv_1=(Token)match(input,67,FollowSets000.FOLLOW_100); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getRandomCallAccess().getRandomKeyword_1());
@@ -24036,7 +24037,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,53,FollowSets000.FOLLOW_99); if (state.failed) return current;
+            otherlv_1=(Token)match(input,53,FollowSets000.FOLLOW_100); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getRandomizeCallAccess().getRandomizeKeyword_1());
@@ -24464,7 +24465,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                             // InternalKTrace.g:8761:5: (lv_pureOutput_0_0= '!' )
                             // InternalKTrace.g:8762:6: lv_pureOutput_0_0= '!'
                             {
-                            lv_pureOutput_0_0=(Token)match(input,17,FollowSets000.FOLLOW_100); if (state.failed) return current;
+                            lv_pureOutput_0_0=(Token)match(input,17,FollowSets000.FOLLOW_101); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
 
                               						newLeafNode(lv_pureOutput_0_0, grammarAccess.getParameterAccess().getPureOutputExclamationMarkKeyword_0_0_0());
@@ -25227,7 +25228,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:9022:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             // InternalKTrace.g:9023:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
-            otherlv_0=(Token)match(input,30,FollowSets000.FOLLOW_101); if (state.failed) return current;
+            otherlv_0=(Token)match(input,30,FollowSets000.FOLLOW_102); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
@@ -25283,7 +25284,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKTrace.g:9047:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
-            	    otherlv_2=(Token)match(input,39,FollowSets000.FOLLOW_101); if (state.failed) return current;
+            	    otherlv_2=(Token)match(input,39,FollowSets000.FOLLOW_102); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
@@ -25942,7 +25943,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_102); if (state.failed) return current;
+            otherlv_1=(Token)match(input,30,FollowSets000.FOLLOW_103); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1());
@@ -26185,7 +26186,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,23,FollowSets000.FOLLOW_103); if (state.failed) return current;
+            otherlv_1=(Token)match(input,23,FollowSets000.FOLLOW_104); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1());
@@ -26331,7 +26332,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_1=(Token)match(input,47,FollowSets000.FOLLOW_104); if (state.failed) return current;
+            otherlv_1=(Token)match(input,47,FollowSets000.FOLLOW_105); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_1, grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1());
@@ -26359,7 +26360,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                       						newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_0_0());
                       					
                     }
-                    pushFollow(FollowSets000.FOLLOW_105);
+                    pushFollow(FollowSets000.FOLLOW_106);
                     lv_elements_2_0=ruleJsonValue();
 
                     state._fsp--;
@@ -26398,7 +26399,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     	case 1 :
                     	    // InternalKTrace.g:9425:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
-                    	    otherlv_3=(Token)match(input,39,FollowSets000.FOLLOW_103); if (state.failed) return current;
+                    	    otherlv_3=(Token)match(input,39,FollowSets000.FOLLOW_104); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
 
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0());
@@ -26415,7 +26416,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     	      							newCompositeNode(grammarAccess.getJsonArrayValueAccess().getElementsJsonValueParserRuleCall_2_1_1_0());
                     	      						
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_105);
+                    	    pushFollow(FollowSets000.FOLLOW_106);
                     	    lv_elements_4_0=ruleJsonValue();
 
                     	    state._fsp--;
@@ -28831,7 +28832,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_106);
+            pushFollow(FollowSets000.FOLLOW_107);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -28887,7 +28888,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -29025,7 +29026,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_107);
+            pushFollow(FollowSets000.FOLLOW_108);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -29060,7 +29061,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_106);
+            pushFollow(FollowSets000.FOLLOW_107);
             lv_values_2_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -29099,7 +29100,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKTrace.g:10331:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,39,FollowSets000.FOLLOW_107); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,39,FollowSets000.FOLLOW_108); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
@@ -29116,7 +29117,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    lv_values_4_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -29289,7 +29290,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_106);
+            pushFollow(FollowSets000.FOLLOW_107);
             lv_values_2_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -29345,7 +29346,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    lv_values_4_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -29487,7 +29488,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_108);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -29569,7 +29570,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_106);
+            pushFollow(FollowSets000.FOLLOW_107);
             lv_values_5_0=ruleEStringAllTypes();
 
             state._fsp--;
@@ -29625,7 +29626,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    lv_values_7_0=ruleEStringAllTypes();
 
             	    state._fsp--;
@@ -29767,7 +29768,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_108);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -29832,7 +29833,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,48,FollowSets000.FOLLOW_107); if (state.failed) return current;
+            otherlv_4=(Token)match(input,48,FollowSets000.FOLLOW_108); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
@@ -29849,7 +29850,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_106);
+            pushFollow(FollowSets000.FOLLOW_107);
             lv_values_5_0=ruleEStringBoolean();
 
             state._fsp--;
@@ -29888,7 +29889,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	case 1 :
             	    // InternalKTrace.g:10643:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_6=(Token)match(input,39,FollowSets000.FOLLOW_107); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,39,FollowSets000.FOLLOW_108); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
@@ -29905,7 +29906,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	      						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_106);
+            	    pushFollow(FollowSets000.FOLLOW_107);
             	    lv_values_7_0=ruleEStringBoolean();
 
             	    state._fsp--;
@@ -30071,7 +30072,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10710:4: (lv_values_2_0= RULE_STRING )
             // InternalKTrace.g:10711:5: lv_values_2_0= RULE_STRING
             {
-            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_106); if (state.failed) return current;
+            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_107); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
@@ -30122,7 +30123,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    // InternalKTrace.g:10733:5: (lv_values_4_0= RULE_STRING )
             	    // InternalKTrace.g:10734:6: lv_values_4_0= RULE_STRING
             	    {
-            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_106); if (state.failed) return current;
+            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_107); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
@@ -30262,7 +30263,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
               					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_108);
+            pushFollow(FollowSets000.FOLLOW_109);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -30339,7 +30340,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10821:4: (lv_values_5_0= RULE_STRING )
             // InternalKTrace.g:10822:5: lv_values_5_0= RULE_STRING
             {
-            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_106); if (state.failed) return current;
+            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_107); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
@@ -30390,7 +30391,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             	    // InternalKTrace.g:10844:5: (lv_values_7_0= RULE_STRING )
             	    // InternalKTrace.g:10845:6: lv_values_7_0= RULE_STRING
             	    {
-            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_106); if (state.failed) return current;
+            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_107); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
@@ -30928,7 +30929,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:10992:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             // InternalKTrace.g:10993:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_109); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_110); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current.merge(this_ID_0);
@@ -31010,7 +31011,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_109); if (state.failed) return current;
+            	    this_ID_3=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_110); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      				current.merge(this_ID_3);
@@ -31045,7 +31046,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalKTrace.g:11023:4: kw= '#' this_INT_5= RULE_INT
                     {
-                    kw=(Token)match(input,70,FollowSets000.FOLLOW_98); if (state.failed) return current;
+                    kw=(Token)match(input,70,FollowSets000.FOLLOW_99); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -31162,7 +31163,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalKTrace.g:11056:4: kw= '-'
                     {
-                    kw=(Token)match(input,63,FollowSets000.FOLLOW_98); if (state.failed) return current;
+                    kw=(Token)match(input,63,FollowSets000.FOLLOW_99); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -31279,7 +31280,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 case 1 :
                     // InternalKTrace.g:11089:4: kw= '-'
                     {
-                    kw=(Token)match(input,63,FollowSets000.FOLLOW_110); if (state.failed) return current;
+                    kw=(Token)match(input,63,FollowSets000.FOLLOW_111); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current.merge(kw);
@@ -33076,7 +33077,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleImpliesOperator"
-    // InternalKTrace.g:11682:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= '=>' ) ;
+    // InternalKTrace.g:11682:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= 'implies' ) ;
     public final Enumerator ruleImpliesOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -33086,13 +33087,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalKTrace.g:11688:2: ( (enumLiteral_0= '=>' ) )
-            // InternalKTrace.g:11689:2: (enumLiteral_0= '=>' )
+            // InternalKTrace.g:11688:2: ( (enumLiteral_0= 'implies' ) )
+            // InternalKTrace.g:11689:2: (enumLiteral_0= 'implies' )
             {
-            // InternalKTrace.g:11689:2: (enumLiteral_0= '=>' )
-            // InternalKTrace.g:11690:3: enumLiteral_0= '=>'
+            // InternalKTrace.g:11689:2: (enumLiteral_0= 'implies' )
+            // InternalKTrace.g:11690:3: enumLiteral_0= 'implies'
             {
-            enumLiteral_0=(Token)match(input,26,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,101,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -33188,7 +33189,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11723:2: (enumLiteral_0= 'nor' )
             // InternalKTrace.g:11724:3: enumLiteral_0= 'nor'
             {
-            enumLiteral_0=(Token)match(input,101,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,102,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getNoneOfOperatorAccess().getNOREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -33240,27 +33241,27 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11740:2: ( (enumLiteral_0= 'pure' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             int alt267=5;
             switch ( input.LA(1) ) {
-            case 102:
+            case 103:
                 {
                 alt267=1;
                 }
                 break;
-            case 103:
+            case 104:
                 {
                 alt267=2;
                 }
                 break;
-            case 104:
+            case 105:
                 {
                 alt267=3;
                 }
                 break;
-            case 105:
+            case 106:
                 {
                 alt267=4;
                 }
                 break;
-            case 106:
+            case 107:
                 {
                 alt267=5;
                 }
@@ -33280,7 +33281,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11741:3: (enumLiteral_0= 'pure' )
                     // InternalKTrace.g:11742:4: enumLiteral_0= 'pure'
                     {
-                    enumLiteral_0=(Token)match(input,102,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,103,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -33299,7 +33300,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11749:3: (enumLiteral_1= 'bool' )
                     // InternalKTrace.g:11750:4: enumLiteral_1= 'bool'
                     {
-                    enumLiteral_1=(Token)match(input,103,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -33318,7 +33319,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11757:3: (enumLiteral_2= 'int' )
                     // InternalKTrace.g:11758:4: enumLiteral_2= 'int'
                     {
-                    enumLiteral_2=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -33337,7 +33338,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11765:3: (enumLiteral_3= 'float' )
                     // InternalKTrace.g:11766:4: enumLiteral_3= 'float'
                     {
-                    enumLiteral_3=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -33356,7 +33357,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11773:3: (enumLiteral_4= 'string' )
                     // InternalKTrace.g:11774:4: enumLiteral_4= 'string'
                     {
-                    enumLiteral_4=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,107,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -33458,7 +33459,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11808:2: (enumLiteral_0= 'struct' )
             // InternalKTrace.g:11809:3: enumLiteral_0= 'struct'
             {
-            enumLiteral_0=(Token)match(input,107,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,108,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getStructTypeAccess().getSTRUCTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -33506,7 +33507,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11825:2: (enumLiteral_0= 'class' )
             // InternalKTrace.g:11826:3: enumLiteral_0= 'class'
             {
-            enumLiteral_0=(Token)match(input,108,FollowSets000.FOLLOW_2); if (state.failed) return current;
+            enumLiteral_0=(Token)match(input,109,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			current = grammarAccess.getClassTypeAccess().getCLASSEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -33561,7 +33562,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11842:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             int alt268=8;
             switch ( input.LA(1) ) {
-            case 109:
+            case 110:
                 {
                 alt268=1;
                 }
@@ -33576,12 +33577,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                 alt268=3;
                 }
                 break;
-            case 110:
+            case 111:
                 {
                 alt268=4;
                 }
                 break;
-            case 111:
+            case 112:
                 {
                 alt268=5;
                 }
@@ -33616,7 +33617,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11843:3: (enumLiteral_0= 'none' )
                     // InternalKTrace.g:11844:4: enumLiteral_0= 'none'
                     {
-                    enumLiteral_0=(Token)match(input,109,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,110,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -33673,7 +33674,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11867:3: (enumLiteral_3= 'max' )
                     // InternalKTrace.g:11868:4: enumLiteral_3= 'max'
                     {
-                    enumLiteral_3=(Token)match(input,110,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,111,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -33692,7 +33693,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11875:3: (enumLiteral_4= 'min' )
                     // InternalKTrace.g:11876:4: enumLiteral_4= 'min'
                     {
-                    enumLiteral_4=(Token)match(input,111,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,112,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -33805,17 +33806,17 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11917:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             int alt269=3;
             switch ( input.LA(1) ) {
-            case 112:
+            case 113:
                 {
                 alt269=1;
                 }
                 break;
-            case 113:
+            case 114:
                 {
                 alt269=2;
                 }
                 break;
-            case 114:
+            case 115:
                 {
                 alt269=3;
                 }
@@ -33835,7 +33836,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11918:3: (enumLiteral_0= 'public' )
                     // InternalKTrace.g:11919:4: enumLiteral_0= 'public'
                     {
-                    enumLiteral_0=(Token)match(input,112,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPUBLICEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -33854,7 +33855,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11926:3: (enumLiteral_1= 'protected' )
                     // InternalKTrace.g:11927:4: enumLiteral_1= 'protected'
                     {
-                    enumLiteral_1=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPROTECTEDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -33873,7 +33874,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11934:3: (enumLiteral_2= 'private' )
                     // InternalKTrace.g:11935:4: enumLiteral_2= 'private'
                     {
-                    enumLiteral_2=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getAccessModifierAccess().getPRIVATEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -33931,27 +33932,27 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             // InternalKTrace.g:11952:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             int alt270=5;
             switch ( input.LA(1) ) {
-            case 115:
+            case 116:
                 {
                 alt270=1;
                 }
                 break;
-            case 103:
+            case 104:
                 {
                 alt270=2;
                 }
                 break;
-            case 104:
+            case 105:
                 {
                 alt270=3;
                 }
                 break;
-            case 105:
+            case 106:
                 {
                 alt270=4;
                 }
                 break;
-            case 106:
+            case 107:
                 {
                 alt270=5;
                 }
@@ -33971,7 +33972,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11953:3: (enumLiteral_0= 'void' )
                     // InternalKTrace.g:11954:4: enumLiteral_0= 'void'
                     {
-                    enumLiteral_0=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getVOIDEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -33990,7 +33991,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11961:3: (enumLiteral_1= 'bool' )
                     // InternalKTrace.g:11962:4: enumLiteral_1= 'bool'
                     {
-                    enumLiteral_1=(Token)match(input,103,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -34009,7 +34010,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11969:3: (enumLiteral_2= 'int' )
                     // InternalKTrace.g:11970:4: enumLiteral_2= 'int'
                     {
-                    enumLiteral_2=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getINTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -34028,7 +34029,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11977:3: (enumLiteral_3= 'float' )
                     // InternalKTrace.g:11978:4: enumLiteral_3= 'float'
                     {
-                    enumLiteral_3=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getFLOATEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -34047,7 +34048,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                     // InternalKTrace.g:11985:3: (enumLiteral_4= 'string' )
                     // InternalKTrace.g:11986:4: enumLiteral_4= 'string'
                     {
-                    enumLiteral_4=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,107,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                       				current = grammarAccess.getMethodReturnTypeAccess().getSTRINGEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -34425,7 +34426,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_0_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_106);
+        pushFollow(FollowSets000.FOLLOW_107);
         lv_valuedObjects_19_0=ruleValuedObject();
 
         state._fsp--;
@@ -34463,7 +34464,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	      							newCompositeNode(grammarAccess.getClassDeclarationWOSemicolonAccess().getValuedObjectsValuedObjectParserRuleCall_10_1_1_0());
         	      						
         	    }
-        	    pushFollow(FollowSets000.FOLLOW_106);
+        	    pushFollow(FollowSets000.FOLLOW_107);
         	    lv_valuedObjects_21_0=ruleValuedObject();
 
         	    state._fsp--;
@@ -35130,11 +35131,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         EObject lv_subExpressions_5_0 = null;
 
 
-        // InternalKTrace.g:7236:3: ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) )
-        // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? )
+        // InternalKTrace.g:7236:3: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) )
+        // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? )
         {
-        // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? )
-        // InternalKTrace.g:7237:4: () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )?
+        // InternalKTrace.g:7236:3: ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? )
+        // InternalKTrace.g:7237:4: () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
         {
         // InternalKTrace.g:7237:4: ()
         // InternalKTrace.g:7238:5: 
@@ -35147,19 +35148,19 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
 
-        // InternalKTrace.g:7247:4: ( (lv_subExpressions_1_0= ruleInitExpression ) )
-        // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleInitExpression )
+        // InternalKTrace.g:7247:4: ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) )
+        // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleAtomicValuedExpression )
         {
-        // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleInitExpression )
-        // InternalKTrace.g:7249:6: lv_subExpressions_1_0= ruleInitExpression
+        // InternalKTrace.g:7248:5: (lv_subExpressions_1_0= ruleAtomicValuedExpression )
+        // InternalKTrace.g:7249:6: lv_subExpressions_1_0= ruleAtomicValuedExpression
         {
         if ( state.backtracking==0 ) {
 
-          						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_1_0());
+          						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0());
           					
         }
         pushFollow(FollowSets000.FOLLOW_90);
-        lv_subExpressions_1_0=ruleInitExpression();
+        lv_subExpressions_1_0=ruleAtomicValuedExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -35191,19 +35192,19 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
 
-        // InternalKTrace.g:7285:4: ( (lv_subExpressions_3_0= ruleInitExpression ) )
-        // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleInitExpression )
+        // InternalKTrace.g:7285:4: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
+        // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
         {
-        // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleInitExpression )
-        // InternalKTrace.g:7287:6: lv_subExpressions_3_0= ruleInitExpression
+        // InternalKTrace.g:7286:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
+        // InternalKTrace.g:7287:6: lv_subExpressions_3_0= ruleAtomicValuedExpression
         {
         if ( state.backtracking==0 ) {
 
-          						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_3_0());
+          						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
           					
         }
         pushFollow(FollowSets000.FOLLOW_49);
-        lv_subExpressions_3_0=ruleInitExpression();
+        lv_subExpressions_3_0=ruleAtomicValuedExpression();
 
         state._fsp--;
         if (state.failed) return ;
@@ -35213,7 +35214,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
 
         }
 
-        // InternalKTrace.g:7304:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )?
+        // InternalKTrace.g:7304:4: (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )?
         int alt314=2;
         int LA314_0 = input.LA(1);
 
@@ -35222,22 +35223,22 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
         switch (alt314) {
             case 1 :
-                // InternalKTrace.g:7305:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) )
+                // InternalKTrace.g:7305:5: otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
                 {
                 otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_91); if (state.failed) return ;
-                // InternalKTrace.g:7309:5: ( (lv_subExpressions_5_0= ruleInitExpression ) )
-                // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleInitExpression )
+                // InternalKTrace.g:7309:5: ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
+                // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
                 {
-                // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleInitExpression )
-                // InternalKTrace.g:7311:7: lv_subExpressions_5_0= ruleInitExpression
+                // InternalKTrace.g:7310:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
+                // InternalKTrace.g:7311:7: lv_subExpressions_5_0= ruleAtomicValuedExpression
                 {
                 if ( state.backtracking==0 ) {
 
-                  							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_4_1_0());
+                  							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0());
                   						
                 }
                 pushFollow(FollowSets000.FOLLOW_2);
-                lv_subExpressions_5_0=ruleInitExpression();
+                lv_subExpressions_5_0=ruleAtomicValuedExpression();
 
                 state._fsp--;
                 if (state.failed) return ;
@@ -35320,7 +35321,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_91);
+        pushFollow(FollowSets000.FOLLOW_93);
         lv_operator_2_0=ruleInitOperator();
 
         state._fsp--;
@@ -35398,7 +35399,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_0_1_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_93);
+        pushFollow(FollowSets000.FOLLOW_94);
         lv_subExpressions_1_0=ruleImpliesExpression();
 
         state._fsp--;
@@ -35420,7 +35421,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getFbyExpressionAccess().getOperatorFbyOperatorEnumRuleCall_0_2_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_91);
+        pushFollow(FollowSets000.FOLLOW_93);
         lv_operator_2_0=ruleFbyOperator();
 
         state._fsp--;
@@ -35498,7 +35499,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_0_1_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_94);
+        pushFollow(FollowSets000.FOLLOW_95);
         lv_subExpressions_1_0=ruleAtMostOneOfExpression();
 
         state._fsp--;
@@ -35520,7 +35521,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
           						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorImpliesOperatorEnumRuleCall_0_2_0());
           					
         }
-        pushFollow(FollowSets000.FOLLOW_91);
+        pushFollow(FollowSets000.FOLLOW_93);
         lv_operator_2_0=ruleImpliesOperator();
 
         state._fsp--;
@@ -36419,11 +36420,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_1s = "\36\uffff";
     static final String dfa_2s = "\1\3\35\uffff";
     static final String dfa_3s = "\1\4\2\0\3\uffff\1\0\27\uffff";
-    static final String dfa_4s = "\1\162\2\0\3\uffff\1\0\27\uffff";
+    static final String dfa_4s = "\1\163\2\0\3\uffff\1\0\27\uffff";
     static final String dfa_5s = "\3\uffff\1\2\7\uffff\1\1\22\uffff";
     static final String dfa_6s = "\1\uffff\1\0\1\1\3\uffff\1\2\27\uffff}>";
     static final String[] dfa_7s = {
-            "\1\3\1\uffff\1\3\3\uffff\1\1\22\uffff\1\3\2\uffff\1\3\6\13\1\uffff\1\13\3\uffff\2\13\1\6\5\uffff\2\3\21\uffff\1\2\36\uffff\7\13\3\uffff\3\13",
+            "\1\3\1\uffff\1\3\3\uffff\1\1\22\uffff\1\3\2\uffff\1\3\6\13\1\uffff\1\13\3\uffff\2\13\1\6\5\uffff\2\3\21\uffff\1\2\37\uffff\7\13\3\uffff\3\13",
             "\1\uffff",
             "\1\uffff",
             "",
@@ -36537,7 +36538,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String[] dfa_8s = {
-            "\1\3\1\uffff\1\3\3\uffff\1\1\22\uffff\1\3\1\uffff\2\3\6\13\1\uffff\1\13\3\uffff\2\13\1\6\5\uffff\2\3\21\uffff\1\2\36\uffff\7\13\3\uffff\3\13",
+            "\1\3\1\uffff\1\3\3\uffff\1\1\22\uffff\1\3\1\uffff\2\3\6\13\1\uffff\1\13\3\uffff\2\13\1\6\5\uffff\2\3\21\uffff\1\2\37\uffff\7\13\3\uffff\3\13",
             "\1\uffff",
             "\1\uffff",
             "",
@@ -36645,11 +36646,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_9s = "\27\uffff";
     static final String dfa_10s = "\1\12\12\0\6\uffff\1\0\5\uffff";
-    static final String dfa_11s = "\1\162\12\0\6\uffff\1\0\5\uffff";
+    static final String dfa_11s = "\1\163\12\0\6\uffff\1\0\5\uffff";
     static final String dfa_12s = "\13\uffff\1\1\6\uffff\1\2\1\uffff\1\3\1\4\1\uffff";
     static final String dfa_13s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\6\uffff\1\12\5\uffff}>";
     static final String[] dfa_14s = {
-            "\1\1\26\uffff\1\6\1\7\1\10\1\11\1\12\1\13\1\uffff\1\21\3\uffff\1\24\2\22\30\uffff\1\2\36\uffff\5\13\2\25\3\uffff\1\3\1\4\1\5",
+            "\1\1\26\uffff\1\6\1\7\1\10\1\11\1\12\1\13\1\uffff\1\21\3\uffff\1\24\2\22\30\uffff\1\2\37\uffff\5\13\2\25\3\uffff\1\3\1\4\1\5",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -37111,11 +37112,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_15s = "\37\uffff";
     static final String dfa_16s = "\1\1\36\uffff";
     static final String dfa_17s = "\1\4\33\uffff\1\0\2\uffff";
-    static final String dfa_18s = "\1\163\33\uffff\1\0\2\uffff";
+    static final String dfa_18s = "\1\164\33\uffff\1\0\2\uffff";
     static final String dfa_19s = "\1\uffff\1\2\34\uffff\1\1";
     static final String dfa_20s = "\34\uffff\1\0\2\uffff}>";
     static final String[] dfa_21s = {
-            "\1\1\5\uffff\2\1\23\uffff\1\1\1\uffff\6\1\1\34\1\1\1\uffff\1\1\1\uffff\3\1\30\uffff\1\1\36\uffff\7\1\3\uffff\4\1",
+            "\1\1\5\uffff\2\1\23\uffff\1\1\1\uffff\6\1\1\34\1\1\1\uffff\1\1\1\uffff\3\1\30\uffff\1\1\37\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -37201,11 +37202,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_22s = "\31\uffff";
     static final String dfa_23s = "\1\4\5\0\7\uffff\4\0\10\uffff";
-    static final String dfa_24s = "\1\163\5\0\7\uffff\4\0\10\uffff";
+    static final String dfa_24s = "\1\164\5\0\7\uffff\4\0\10\uffff";
     static final String dfa_25s = "\6\uffff\1\1\20\uffff\1\2\1\uffff";
     static final String dfa_26s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\7\uffff\1\5\1\6\1\7\1\10\10\uffff}>";
     static final String[] dfa_27s = {
-            "\1\27\5\uffff\1\1\26\uffff\6\6\1\uffff\1\6\3\uffff\3\6\30\uffff\1\2\36\uffff\1\6\1\15\1\16\1\17\1\20\2\6\3\uffff\1\3\1\4\1\5\1\27",
+            "\1\27\5\uffff\1\1\26\uffff\6\6\1\uffff\1\6\3\uffff\3\6\30\uffff\1\2\37\uffff\1\6\1\15\1\16\1\17\1\20\2\6\3\uffff\1\3\1\4\1\5\1\27",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -37405,11 +37406,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_28s = "\35\uffff";
     static final String dfa_29s = "\1\4\34\uffff";
     static final String dfa_30s = "\1\4\3\0\31\uffff";
-    static final String dfa_31s = "\1\163\3\0\31\uffff";
+    static final String dfa_31s = "\1\164\3\0\31\uffff";
     static final String dfa_32s = "\4\uffff\1\2\27\uffff\1\1";
     static final String dfa_33s = "\1\uffff\1\0\1\1\1\2\31\uffff}>";
     static final String[] dfa_34s = {
-            "\1\3\5\uffff\1\1\1\4\23\uffff\1\4\1\uffff\6\4\1\uffff\1\4\3\uffff\3\4\30\uffff\1\2\36\uffff\7\4\3\uffff\4\4",
+            "\1\3\5\uffff\1\1\1\4\23\uffff\1\4\1\uffff\6\4\1\uffff\1\4\3\uffff\3\4\30\uffff\1\2\37\uffff\7\4\3\uffff\4\4",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -37688,15 +37689,15 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_35s = "\6\uffff";
     static final String dfa_36s = "\1\2\5\uffff";
     static final String dfa_37s = "\2\4\1\uffff\2\4\1\uffff";
-    static final String dfa_38s = "\1\163\1\107\1\uffff\2\163\1\uffff";
+    static final String dfa_38s = "\1\164\1\107\1\uffff\2\164\1\uffff";
     static final String dfa_39s = "\2\uffff\1\2\2\uffff\1\1";
     static final String dfa_40s = "\6\uffff}>";
     static final String[] dfa_41s = {
-            "\1\2\5\uffff\2\2\23\uffff\1\2\1\uffff\6\2\1\uffff\1\2\3\uffff\1\1\2\2\30\uffff\1\2\36\uffff\7\2\3\uffff\4\2",
+            "\1\2\5\uffff\2\2\23\uffff\1\2\1\uffff\6\2\1\uffff\1\2\3\uffff\1\1\2\2\30\uffff\1\2\37\uffff\7\2\3\uffff\4\2",
             "\1\3\1\2\4\uffff\1\2\23\uffff\1\2\5\uffff\1\2\42\uffff\1\2",
             "",
-            "\1\2\2\uffff\1\5\2\uffff\2\2\15\uffff\1\2\5\uffff\1\2\1\uffff\10\2\3\uffff\4\2\1\uffff\2\2\17\uffff\1\4\4\uffff\1\2\36\uffff\7\2\3\uffff\4\2",
-            "\1\2\2\uffff\1\5\2\uffff\2\2\15\uffff\1\2\5\uffff\1\2\1\uffff\10\2\3\uffff\4\2\1\uffff\2\2\17\uffff\1\4\4\uffff\1\2\36\uffff\7\2\3\uffff\4\2",
+            "\1\2\2\uffff\1\5\2\uffff\2\2\15\uffff\1\2\5\uffff\1\2\1\uffff\10\2\3\uffff\4\2\1\uffff\2\2\17\uffff\1\4\4\uffff\1\2\37\uffff\7\2\3\uffff\4\2",
+            "\1\2\2\uffff\1\5\2\uffff\2\2\15\uffff\1\2\5\uffff\1\2\1\uffff\10\2\3\uffff\4\2\1\uffff\2\2\17\uffff\1\4\4\uffff\1\2\37\uffff\7\2\3\uffff\4\2",
             ""
     };
 
@@ -37728,11 +37729,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_42s = "\5\uffff";
     static final String dfa_43s = "\1\1\4\uffff";
     static final String dfa_44s = "\1\4\1\uffff\2\7\1\uffff";
-    static final String dfa_45s = "\1\163\1\uffff\2\102\1\uffff";
+    static final String dfa_45s = "\1\164\1\uffff\2\102\1\uffff";
     static final String dfa_46s = "\1\uffff\1\2\2\uffff\1\1";
     static final String dfa_47s = "\5\uffff}>";
     static final String[] dfa_48s = {
-            "\1\2\5\uffff\2\1\23\uffff\1\1\1\uffff\6\1\1\uffff\1\1\3\uffff\3\1\30\uffff\1\1\36\uffff\7\1\3\uffff\4\1",
+            "\1\2\5\uffff\2\1\23\uffff\1\1\1\uffff\6\1\1\uffff\1\1\3\uffff\3\1\30\uffff\1\1\37\uffff\7\1\3\uffff\4\1",
             "",
             "\1\4\41\uffff\1\1\1\uffff\1\1\26\uffff\1\3",
             "\1\4\41\uffff\1\1\1\uffff\1\1\26\uffff\1\3",
@@ -38039,11 +38040,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     }
     static final String dfa_61s = "\26\uffff";
     static final String dfa_62s = "\1\4\22\0\3\uffff";
-    static final String dfa_63s = "\1\145\22\0\3\uffff";
+    static final String dfa_63s = "\1\146\22\0\3\uffff";
     static final String dfa_64s = "\23\uffff\1\1\1\uffff\1\2";
     static final String dfa_65s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\3\uffff}>";
     static final String[] dfa_66s = {
-            "\1\12\1\6\1\22\1\4\1\5\1\11\1\20\6\uffff\1\23\14\uffff\1\7\12\uffff\1\10\4\uffff\1\13\6\uffff\1\15\11\uffff\1\1\3\uffff\1\14\2\uffff\1\2\1\21\27\uffff\1\16\1\23\1\17\3\uffff\1\3",
+            "\1\10\1\4\1\20\1\2\1\3\1\7\1\16\6\uffff\1\23\14\uffff\1\5\12\uffff\1\6\4\uffff\1\11\6\uffff\1\13\11\uffff\1\1\3\uffff\1\12\2\uffff\1\21\1\17\27\uffff\1\14\1\23\1\15\4\uffff\1\22",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -38373,30 +38374,30 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_67s = "\25\uffff";
-    static final String dfa_68s = "\1\4\7\uffff\13\0\2\uffff";
-    static final String dfa_69s = "\1\145\7\uffff\13\0\2\uffff";
+    static final String dfa_68s = "\1\4\5\uffff\13\0\4\uffff";
+    static final String dfa_69s = "\1\146\5\uffff\13\0\4\uffff";
     static final String dfa_70s = "\1\uffff\1\1\21\uffff\1\2\1\uffff";
-    static final String dfa_71s = "\10\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\2\uffff}>";
+    static final String dfa_71s = "\6\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\4\uffff}>";
     static final String[] dfa_72s = {
-            "\1\12\1\1\1\22\2\1\1\11\1\20\6\uffff\1\23\14\uffff\1\1\12\uffff\1\10\4\uffff\1\13\6\uffff\1\15\11\uffff\1\1\3\uffff\1\14\2\uffff\1\1\1\21\27\uffff\1\16\1\23\1\17\3\uffff\1\1",
+            "\1\10\1\1\1\20\2\1\1\7\1\16\6\uffff\1\23\14\uffff\1\1\12\uffff\1\6\4\uffff\1\11\6\uffff\1\13\11\uffff\1\1\3\uffff\1\12\2\uffff\1\1\1\17\27\uffff\1\14\1\23\1\15\4\uffff\1\1",
             "",
             "",
             "",
             "",
             "",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
             "",
             "",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
             "",
             ""
     };
@@ -38429,6 +38430,36 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
+                        int LA187_6 = input.LA(1);
+
+                         
+                        int index187_6 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred200_InternalKTrace()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 19;}
+
+                         
+                        input.seek(index187_6);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA187_7 = input.LA(1);
+
+                         
+                        int index187_7 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred200_InternalKTrace()) ) {s = 1;}
+
+                        else if ( (true) ) {s = 19;}
+
+                         
+                        input.seek(index187_7);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA187_8 = input.LA(1);
 
                          
@@ -38443,7 +38474,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 1 : 
+                    case 3 : 
                         int LA187_9 = input.LA(1);
 
                          
@@ -38458,7 +38489,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 2 : 
+                    case 4 : 
                         int LA187_10 = input.LA(1);
 
                          
@@ -38473,7 +38504,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_10);
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
+                    case 5 : 
                         int LA187_11 = input.LA(1);
 
                          
@@ -38488,7 +38519,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_11);
                         if ( s>=0 ) return s;
                         break;
-                    case 4 : 
+                    case 6 : 
                         int LA187_12 = input.LA(1);
 
                          
@@ -38503,7 +38534,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_12);
                         if ( s>=0 ) return s;
                         break;
-                    case 5 : 
+                    case 7 : 
                         int LA187_13 = input.LA(1);
 
                          
@@ -38518,7 +38549,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_13);
                         if ( s>=0 ) return s;
                         break;
-                    case 6 : 
+                    case 8 : 
                         int LA187_14 = input.LA(1);
 
                          
@@ -38533,7 +38564,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_14);
                         if ( s>=0 ) return s;
                         break;
-                    case 7 : 
+                    case 9 : 
                         int LA187_15 = input.LA(1);
 
                          
@@ -38548,7 +38579,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_15);
                         if ( s>=0 ) return s;
                         break;
-                    case 8 : 
+                    case 10 : 
                         int LA187_16 = input.LA(1);
 
                          
@@ -38563,36 +38594,6 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         input.seek(index187_16);
                         if ( s>=0 ) return s;
                         break;
-                    case 9 : 
-                        int LA187_17 = input.LA(1);
-
-                         
-                        int index187_17 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred200_InternalKTrace()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 19;}
-
-                         
-                        input.seek(index187_17);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 10 : 
-                        int LA187_18 = input.LA(1);
-
-                         
-                        int index187_18 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred200_InternalKTrace()) ) {s = 1;}
-
-                        else if ( (true) ) {s = 19;}
-
-                         
-                        input.seek(index187_18);
-                        if ( s>=0 ) return s;
-                        break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
@@ -38604,11 +38605,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_73s = "\71\uffff";
     static final String dfa_74s = "\1\1\70\uffff";
     static final String dfa_75s = "\1\4\64\uffff\1\0\3\uffff";
-    static final String dfa_76s = "\1\163\64\uffff\1\0\3\uffff";
+    static final String dfa_76s = "\1\164\64\uffff\1\0\3\uffff";
     static final String dfa_77s = "\1\uffff\1\2\66\uffff\1\1";
     static final String dfa_78s = "\65\uffff\1\0\3\uffff}>";
     static final String[] dfa_79s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\7\1\1\65\2\1\11\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\7\1\1\65\2\1\11\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -38719,10 +38720,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_80s = "\1\4\65\uffff\1\0\2\uffff";
-    static final String dfa_81s = "\1\163\65\uffff\1\0\2\uffff";
+    static final String dfa_81s = "\1\164\65\uffff\1\0\2\uffff";
     static final String dfa_82s = "\66\uffff\1\0\2\uffff}>";
     static final String[] dfa_83s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\10\1\1\66\1\1\11\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\10\1\1\66\1\1\11\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -38829,10 +38830,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_84s = "\1\4\66\uffff\1\0\1\uffff";
-    static final String dfa_85s = "\1\163\66\uffff\1\0\1\uffff";
+    static final String dfa_85s = "\1\164\66\uffff\1\0\1\uffff";
     static final String dfa_86s = "\67\uffff\1\0\1\uffff}>";
     static final String[] dfa_87s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\11\1\1\67\11\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\11\1\1\67\11\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -38941,11 +38942,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_88s = "\73\uffff";
     static final String dfa_89s = "\1\1\72\uffff";
     static final String dfa_90s = "\1\4\67\uffff\1\0\2\uffff";
-    static final String dfa_91s = "\1\163\67\uffff\1\0\2\uffff";
+    static final String dfa_91s = "\1\164\67\uffff\1\0\2\uffff";
     static final String dfa_92s = "\1\uffff\1\2\70\uffff\1\1";
     static final String dfa_93s = "\70\uffff\1\0\2\uffff}>";
     static final String[] dfa_94s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\12\1\1\70\1\1\7\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\12\1\1\70\1\1\7\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -39058,10 +39059,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_95s = "\1\4\70\uffff\1\0\1\uffff";
-    static final String dfa_96s = "\1\163\70\uffff\1\0\1\uffff";
+    static final String dfa_96s = "\1\164\70\uffff\1\0\1\uffff";
     static final String dfa_97s = "\71\uffff\1\0\1\uffff}>";
     static final String[] dfa_98s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\13\1\1\71\7\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\6\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\13\1\1\71\7\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -39172,11 +39173,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
     static final String dfa_99s = "\76\uffff";
     static final String dfa_100s = "\1\1\75\uffff";
     static final String dfa_101s = "\1\4\71\uffff\1\0\3\uffff";
-    static final String dfa_102s = "\1\163\71\uffff\1\0\3\uffff";
+    static final String dfa_102s = "\1\164\71\uffff\1\0\3\uffff";
     static final String dfa_103s = "\1\uffff\1\2\73\uffff\1\1";
     static final String dfa_104s = "\72\uffff\1\0\3\uffff}>";
     static final String[] dfa_105s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\2\1\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\14\1\1\72\1\1\5\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\2\1\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\14\1\1\72\1\1\5\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -39292,10 +39293,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_106s = "\1\4\72\uffff\1\0\2\uffff";
-    static final String dfa_107s = "\1\163\72\uffff\1\0\2\uffff";
+    static final String dfa_107s = "\1\164\72\uffff\1\0\2\uffff";
     static final String dfa_108s = "\73\uffff\1\0\2\uffff}>";
     static final String[] dfa_109s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\2\1\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\15\1\1\73\5\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\2\1\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\15\1\1\73\5\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -39407,10 +39408,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         }
     }
     static final String dfa_110s = "\1\4\73\uffff\1\0\1\uffff";
-    static final String dfa_111s = "\1\163\73\uffff\1\0\1\uffff";
+    static final String dfa_111s = "\1\164\73\uffff\1\0\1\uffff";
     static final String dfa_112s = "\74\uffff\1\0\1\uffff}>";
     static final String[] dfa_113s = {
-            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\1\74\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\16\1\5\uffff\1\1\21\uffff\6\1\7\uffff\7\1\3\uffff\4\1",
+            "\1\1\1\uffff\1\1\3\uffff\2\1\7\uffff\1\1\1\74\5\uffff\4\1\1\uffff\12\1\1\uffff\1\1\1\uffff\3\1\1\uffff\3\1\1\uffff\16\1\5\uffff\1\1\21\uffff\6\1\10\uffff\7\1\3\uffff\4\1",
             "",
             "",
             "",
@@ -39521,13 +39522,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_114s = "\24\uffff";
-    static final String dfa_115s = "\1\4\21\0\2\uffff";
-    static final String dfa_116s = "\1\145\21\0\2\uffff";
-    static final String dfa_117s = "\22\uffff\1\1\1\2";
-    static final String dfa_118s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\2\uffff}>";
+    static final String dfa_114s = "\23\uffff";
+    static final String dfa_115s = "\1\4\17\0\3\uffff";
+    static final String dfa_116s = "\1\146\17\0\3\uffff";
+    static final String dfa_117s = "\20\uffff\1\2\1\uffff\1\1";
+    static final String dfa_118s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\3\uffff}>";
     static final String[] dfa_119s = {
-            "\1\11\1\5\1\21\1\3\1\4\1\10\1\17\23\uffff\1\6\12\uffff\1\7\4\uffff\1\12\6\uffff\1\14\15\uffff\1\13\2\uffff\1\1\1\20\27\uffff\1\15\1\uffff\1\16\3\uffff\1\2",
+            "\1\7\1\3\1\17\1\1\1\2\1\6\1\15\23\uffff\1\4\12\uffff\1\5\4\uffff\1\10\6\uffff\1\12\15\uffff\1\11\2\uffff\1\20\1\16\27\uffff\1\13\1\uffff\1\14\4\uffff\1\20",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -39543,8 +39544,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
-            "\1\uffff",
-            "\1\uffff",
+            "",
             "",
             ""
     };
@@ -39570,7 +39570,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             this.transition = dfa_119;
         }
         public String getDescription() {
-            return "7235:2: ( ( () ( (lv_subExpressions_1_0= ruleInitExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleInitExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleInitExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )";
+            return "7235:2: ( ( () ( (lv_subExpressions_1_0= ruleAtomicValuedExpression ) ) ( (lv_operator_2_0= ruleConditionalOperator ) ) ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ':' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )? ) | this_InitExpression_6= ruleInitExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
@@ -39585,7 +39585,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_1);
@@ -39600,7 +39600,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_2);
@@ -39615,7 +39615,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_3);
@@ -39630,7 +39630,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_4);
@@ -39645,7 +39645,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_5);
@@ -39660,7 +39660,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_6);
@@ -39675,7 +39675,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_7);
@@ -39690,7 +39690,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_8);
@@ -39705,7 +39705,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_9);
@@ -39720,7 +39720,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_10);
@@ -39735,7 +39735,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_11);
@@ -39750,7 +39750,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_12);
@@ -39765,7 +39765,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_13);
@@ -39780,7 +39780,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_14);
@@ -39795,40 +39795,10 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
                         s = -1;
                         if ( (synpred225_InternalKTrace()) ) {s = 18;}
 
-                        else if ( (true) ) {s = 19;}
+                        else if ( (true) ) {s = 16;}
 
                          
                         input.seek(index207_15);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 15 : 
-                        int LA207_16 = input.LA(1);
-
-                         
-                        int index207_16 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred225_InternalKTrace()) ) {s = 18;}
-
-                        else if ( (true) ) {s = 19;}
-
-                         
-                        input.seek(index207_16);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 16 : 
-                        int LA207_17 = input.LA(1);
-
-                         
-                        int index207_17 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred225_InternalKTrace()) ) {s = 18;}
-
-                        else if ( (true) ) {s = 19;}
-
-                         
-                        input.seek(index207_17);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -39839,19 +39809,53 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
+    static final String dfa_120s = "\24\uffff";
+    static final String dfa_121s = "\1\4\21\0\2\uffff";
+    static final String dfa_122s = "\1\146\21\0\2\uffff";
+    static final String dfa_123s = "\22\uffff\1\1\1\2";
+    static final String dfa_124s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\2\uffff}>";
+    static final String[] dfa_125s = {
+            "\1\11\1\5\1\21\1\3\1\4\1\10\1\17\23\uffff\1\6\12\uffff\1\7\4\uffff\1\12\6\uffff\1\14\15\uffff\1\13\2\uffff\1\1\1\20\27\uffff\1\15\1\uffff\1\16\4\uffff\1\2",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "\1\uffff",
+            "",
+            ""
+    };
+
+    static final short[] dfa_120 = DFA.unpackEncodedString(dfa_120s);
+    static final char[] dfa_121 = DFA.unpackEncodedStringToUnsignedChars(dfa_121s);
+    static final char[] dfa_122 = DFA.unpackEncodedStringToUnsignedChars(dfa_122s);
+    static final short[] dfa_123 = DFA.unpackEncodedString(dfa_123s);
+    static final short[] dfa_124 = DFA.unpackEncodedString(dfa_124s);
+    static final short[][] dfa_125 = unpackEncodedStringArray(dfa_125s);
 
     class DFA208 extends DFA {
 
         public DFA208(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 208;
-            this.eot = dfa_114;
-            this.eof = dfa_114;
-            this.min = dfa_115;
-            this.max = dfa_116;
-            this.accept = dfa_117;
-            this.special = dfa_118;
-            this.transition = dfa_119;
+            this.eot = dfa_120;
+            this.eof = dfa_120;
+            this.min = dfa_121;
+            this.max = dfa_122;
+            this.accept = dfa_123;
+            this.special = dfa_124;
+            this.transition = dfa_125;
         }
         public String getDescription() {
             return "7360:2: ( ( () ( (lv_subExpressions_1_0= ruleFbyExpression ) ) ( (lv_operator_2_0= ruleInitOperator ) ) ( (lv_subExpressions_3_0= ruleFbyExpression ) ) ) | this_FbyExpression_4= ruleFbyExpression )";
@@ -40129,13 +40133,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public DFA209(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 209;
-            this.eot = dfa_114;
-            this.eof = dfa_114;
-            this.min = dfa_115;
-            this.max = dfa_116;
-            this.accept = dfa_117;
-            this.special = dfa_118;
-            this.transition = dfa_119;
+            this.eot = dfa_120;
+            this.eof = dfa_120;
+            this.min = dfa_121;
+            this.max = dfa_122;
+            this.accept = dfa_123;
+            this.special = dfa_124;
+            this.transition = dfa_125;
         }
         public String getDescription() {
             return "7460:2: ( ( () ( (lv_subExpressions_1_0= ruleImpliesExpression ) ) ( (lv_operator_2_0= ruleFbyOperator ) ) ( (lv_subExpressions_3_0= ruleImpliesExpression ) ) ) | this_ImpliesExpression_4= ruleImpliesExpression )";
@@ -40413,13 +40417,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public DFA210(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 210;
-            this.eot = dfa_114;
-            this.eof = dfa_114;
-            this.min = dfa_115;
-            this.max = dfa_116;
-            this.accept = dfa_117;
-            this.special = dfa_118;
-            this.transition = dfa_119;
+            this.eot = dfa_120;
+            this.eof = dfa_120;
+            this.min = dfa_121;
+            this.max = dfa_122;
+            this.accept = dfa_123;
+            this.special = dfa_124;
+            this.transition = dfa_125;
         }
         public String getDescription() {
             return "7560:2: ( ( () ( (lv_subExpressions_1_0= ruleAtMostOneOfExpression ) ) ( (lv_operator_2_0= ruleImpliesOperator ) ) ( (lv_subExpressions_3_0= ruleAtMostOneOfExpression ) ) ) | this_AtMostOneOfExpression_4= ruleAtMostOneOfExpression )";
@@ -40691,11 +40695,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_120s = "\1\4\2\uffff\1\0\11\uffff";
-    static final String dfa_121s = "\1\141\2\uffff\1\0\11\uffff";
-    static final String dfa_122s = "\1\uffff\1\1\1\2\1\uffff\1\4\1\5\1\6\1\7\1\uffff\1\10\2\uffff\1\3";
-    static final String dfa_123s = "\3\uffff\1\0\11\uffff}>";
-    static final String[] dfa_124s = {
+    static final String dfa_126s = "\1\4\2\uffff\1\0\11\uffff";
+    static final String dfa_127s = "\1\141\2\uffff\1\0\11\uffff";
+    static final String dfa_128s = "\1\uffff\1\1\1\2\1\uffff\1\4\1\5\1\6\1\7\1\uffff\1\10\2\uffff\1\3";
+    static final String dfa_129s = "\3\uffff\1\0\11\uffff}>";
+    static final String[] dfa_130s = {
             "\1\3\1\uffff\1\11\2\uffff\1\1\1\11\36\uffff\1\2\4\uffff\1\4\6\uffff\1\6\15\uffff\1\5\3\uffff\1\11\27\uffff\1\7\1\uffff\1\7",
             "",
             "",
@@ -40710,11 +40714,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_120 = DFA.unpackEncodedStringToUnsignedChars(dfa_120s);
-    static final char[] dfa_121 = DFA.unpackEncodedStringToUnsignedChars(dfa_121s);
-    static final short[] dfa_122 = DFA.unpackEncodedString(dfa_122s);
-    static final short[] dfa_123 = DFA.unpackEncodedString(dfa_123s);
-    static final short[][] dfa_124 = unpackEncodedStringArray(dfa_124s);
+    static final char[] dfa_126 = DFA.unpackEncodedStringToUnsignedChars(dfa_126s);
+    static final char[] dfa_127 = DFA.unpackEncodedStringToUnsignedChars(dfa_127s);
+    static final short[] dfa_128 = DFA.unpackEncodedString(dfa_128s);
+    static final short[] dfa_129 = DFA.unpackEncodedString(dfa_129s);
+    static final short[][] dfa_130 = unpackEncodedStringArray(dfa_130s);
 
     class DFA215 extends DFA {
 
@@ -40723,11 +40727,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 215;
             this.eot = dfa_49;
             this.eof = dfa_49;
-            this.min = dfa_120;
-            this.max = dfa_121;
-            this.accept = dfa_122;
-            this.special = dfa_123;
-            this.transition = dfa_124;
+            this.min = dfa_126;
+            this.max = dfa_127;
+            this.accept = dfa_128;
+            this.special = dfa_129;
+            this.transition = dfa_130;
         }
         public String getDescription() {
             return "7888:2: (this_BoolValue_0= ruleBoolValue | (otherlv_1= '(' this_BoolExpression_2= ruleBoolExpression otherlv_3= ')' ) | this_ReferenceCall_4= ruleReferenceCall | this_FunctionCall_5= ruleFunctionCall | this_RandomCall_6= ruleRandomCall | this_RandomizeCall_7= ruleRandomizeCall | this_ValuedObjectTestExpression_8= ruleValuedObjectTestExpression | this_TextExpression_9= ruleTextExpression )";
@@ -40759,12 +40763,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_125s = "\21\uffff";
-    static final String dfa_126s = "\1\4\4\uffff\1\0\13\uffff";
-    static final String dfa_127s = "\1\141\4\uffff\1\0\13\uffff";
-    static final String dfa_128s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\11\uffff\1\5";
-    static final String dfa_129s = "\5\uffff\1\0\13\uffff}>";
-    static final String[] dfa_130s = {
+    static final String dfa_131s = "\21\uffff";
+    static final String dfa_132s = "\1\4\4\uffff\1\0\13\uffff";
+    static final String dfa_133s = "\1\141\4\uffff\1\0\13\uffff";
+    static final String dfa_134s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\11\uffff\1\5";
+    static final String dfa_135s = "\5\uffff\1\0\13\uffff}>";
+    static final String[] dfa_136s = {
             "\1\6\1\3\1\6\1\1\1\2\2\6\23\uffff\1\4\12\uffff\1\5\4\uffff\1\6\6\uffff\1\6\15\uffff\1\6\3\uffff\1\6\27\uffff\1\6\1\uffff\1\6",
             "",
             "",
@@ -40784,25 +40788,25 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_125 = DFA.unpackEncodedString(dfa_125s);
-    static final char[] dfa_126 = DFA.unpackEncodedStringToUnsignedChars(dfa_126s);
-    static final char[] dfa_127 = DFA.unpackEncodedStringToUnsignedChars(dfa_127s);
-    static final short[] dfa_128 = DFA.unpackEncodedString(dfa_128s);
-    static final short[] dfa_129 = DFA.unpackEncodedString(dfa_129s);
-    static final short[][] dfa_130 = unpackEncodedStringArray(dfa_130s);
+    static final short[] dfa_131 = DFA.unpackEncodedString(dfa_131s);
+    static final char[] dfa_132 = DFA.unpackEncodedStringToUnsignedChars(dfa_132s);
+    static final char[] dfa_133 = DFA.unpackEncodedStringToUnsignedChars(dfa_133s);
+    static final short[] dfa_134 = DFA.unpackEncodedString(dfa_134s);
+    static final short[] dfa_135 = DFA.unpackEncodedString(dfa_135s);
+    static final short[][] dfa_136 = unpackEncodedStringArray(dfa_136s);
 
     class DFA216 extends DFA {
 
         public DFA216(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 216;
-            this.eot = dfa_125;
-            this.eof = dfa_125;
-            this.min = dfa_126;
-            this.max = dfa_127;
-            this.accept = dfa_128;
-            this.special = dfa_129;
-            this.transition = dfa_130;
+            this.eot = dfa_131;
+            this.eof = dfa_131;
+            this.min = dfa_132;
+            this.max = dfa_133;
+            this.accept = dfa_134;
+            this.special = dfa_135;
+            this.transition = dfa_136;
         }
         public String getDescription() {
             return "8012:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
@@ -40834,12 +40838,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_131s = "\1\4\22\0\4\uffff";
-    static final String dfa_132s = "\1\145\22\0\4\uffff";
-    static final String dfa_133s = "\23\uffff\1\1\1\uffff\1\3\1\2";
-    static final String dfa_134s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\4\uffff}>";
-    static final String[] dfa_135s = {
-            "\1\12\1\6\1\22\1\4\1\5\1\11\1\20\6\uffff\1\23\14\uffff\1\7\12\uffff\1\10\4\uffff\1\13\6\uffff\1\15\11\uffff\1\1\3\uffff\1\14\1\25\1\uffff\1\2\1\21\27\uffff\1\16\1\23\1\17\3\uffff\1\3",
+    static final String dfa_137s = "\1\4\22\0\4\uffff";
+    static final String dfa_138s = "\1\146\22\0\4\uffff";
+    static final String dfa_139s = "\23\uffff\1\1\1\uffff\1\3\1\2";
+    static final String dfa_140s = "\1\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15\1\16\1\17\1\20\1\21\4\uffff}>";
+    static final String[] dfa_141s = {
+            "\1\10\1\4\1\20\1\2\1\3\1\7\1\16\6\uffff\1\23\14\uffff\1\5\12\uffff\1\6\4\uffff\1\11\6\uffff\1\13\11\uffff\1\1\3\uffff\1\12\1\25\1\uffff\1\21\1\17\27\uffff\1\14\1\23\1\15\4\uffff\1\22",
             "\1\uffff",
             "\1\uffff",
             "\1\uffff",
@@ -40863,11 +40867,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
-    static final char[] dfa_131 = DFA.unpackEncodedStringToUnsignedChars(dfa_131s);
-    static final char[] dfa_132 = DFA.unpackEncodedStringToUnsignedChars(dfa_132s);
-    static final short[] dfa_133 = DFA.unpackEncodedString(dfa_133s);
-    static final short[] dfa_134 = DFA.unpackEncodedString(dfa_134s);
-    static final short[][] dfa_135 = unpackEncodedStringArray(dfa_135s);
+    static final char[] dfa_137 = DFA.unpackEncodedStringToUnsignedChars(dfa_137s);
+    static final char[] dfa_138 = DFA.unpackEncodedStringToUnsignedChars(dfa_138s);
+    static final short[] dfa_139 = DFA.unpackEncodedString(dfa_139s);
+    static final short[] dfa_140 = DFA.unpackEncodedString(dfa_140s);
+    static final short[][] dfa_141 = unpackEncodedStringArray(dfa_141s);
 
     class DFA235 extends DFA {
 
@@ -40876,11 +40880,11 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             this.decisionNumber = 235;
             this.eot = dfa_9;
             this.eof = dfa_9;
-            this.min = dfa_131;
-            this.max = dfa_132;
-            this.accept = dfa_133;
-            this.special = dfa_134;
-            this.transition = dfa_135;
+            this.min = dfa_137;
+            this.max = dfa_138;
+            this.accept = dfa_139;
+            this.special = dfa_140;
+            this.transition = dfa_141;
         }
         public String getDescription() {
             return "9093:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
@@ -41167,13 +41171,13 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_136s = "\12\uffff";
-    static final String dfa_137s = "\2\uffff\1\7\5\uffff\2\7";
-    static final String dfa_138s = "\1\106\5\4\2\uffff\2\4";
-    static final String dfa_139s = "\1\106\1\4\1\107\1\4\1\10\1\7\2\uffff\2\107";
-    static final String dfa_140s = "\6\uffff\1\2\1\1\2\uffff";
-    static final String dfa_141s = "\12\uffff}>";
-    static final String[] dfa_142s = {
+    static final String dfa_142s = "\12\uffff";
+    static final String dfa_143s = "\2\uffff\1\7\5\uffff\2\7";
+    static final String dfa_144s = "\1\106\5\4\2\uffff\2\4";
+    static final String dfa_145s = "\1\106\1\4\1\107\1\4\1\10\1\7\2\uffff\2\107";
+    static final String dfa_146s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String dfa_147s = "\12\uffff}>";
+    static final String[] dfa_148s = {
             "\1\1",
             "\1\2",
             "\2\7\1\uffff\4\7\7\uffff\2\7\6\uffff\3\7\1\uffff\1\6\24\uffff\1\3\13\uffff\1\4\6\uffff\1\5\1\7",
@@ -41186,72 +41190,72 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\2\7\1\uffff\4\7\7\uffff\2\7\6\uffff\3\7\1\uffff\1\6\40\uffff\1\7\6\uffff\2\7"
     };
 
-    static final short[] dfa_136 = DFA.unpackEncodedString(dfa_136s);
-    static final short[] dfa_137 = DFA.unpackEncodedString(dfa_137s);
-    static final char[] dfa_138 = DFA.unpackEncodedStringToUnsignedChars(dfa_138s);
-    static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
-    static final short[] dfa_140 = DFA.unpackEncodedString(dfa_140s);
-    static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
-    static final short[][] dfa_142 = unpackEncodedStringArray(dfa_142s);
+    static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
+    static final short[] dfa_143 = DFA.unpackEncodedString(dfa_143s);
+    static final char[] dfa_144 = DFA.unpackEncodedStringToUnsignedChars(dfa_144s);
+    static final char[] dfa_145 = DFA.unpackEncodedStringToUnsignedChars(dfa_145s);
+    static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
+    static final short[] dfa_147 = DFA.unpackEncodedString(dfa_147s);
+    static final short[][] dfa_148 = unpackEncodedStringArray(dfa_148s);
 
     class DFA242 extends DFA {
 
         public DFA242(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 242;
-            this.eot = dfa_136;
-            this.eof = dfa_137;
-            this.min = dfa_138;
-            this.max = dfa_139;
-            this.accept = dfa_140;
-            this.special = dfa_141;
-            this.transition = dfa_142;
+            this.eot = dfa_142;
+            this.eof = dfa_143;
+            this.min = dfa_144;
+            this.max = dfa_145;
+            this.accept = dfa_146;
+            this.special = dfa_147;
+            this.transition = dfa_148;
         }
         public String getDescription() {
             return "9693:2: (this_Pragma_0= superPragma | this_JsonPragma_1= ruleJsonPragma )";
         }
     }
-    static final String dfa_143s = "\3\uffff\1\1\4\uffff\2\1";
-    static final String dfa_144s = "\1\12\1\uffff\4\4\1\7\1\uffff\2\4";
-    static final String dfa_145s = "\1\107\1\uffff\1\4\1\163\1\4\1\10\1\7\1\uffff\2\163";
-    static final String dfa_146s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
-    static final String[] dfa_147s = {
+    static final String dfa_149s = "\3\uffff\1\1\4\uffff\2\1";
+    static final String dfa_150s = "\1\12\1\uffff\4\4\1\7\1\uffff\2\4";
+    static final String dfa_151s = "\1\107\1\uffff\1\4\1\164\1\4\1\10\1\7\1\uffff\2\164";
+    static final String dfa_152s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
+    static final String[] dfa_153s = {
             "\1\1\74\uffff\1\2",
             "",
             "\1\3",
-            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\3\uffff\1\4\2\1\11\uffff\1\5\6\uffff\1\6\1\1\36\uffff\7\1\3\uffff\4\1",
+            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\3\uffff\1\4\2\1\11\uffff\1\5\6\uffff\1\6\1\1\37\uffff\7\1\3\uffff\4\1",
             "\1\10",
             "\1\10\2\uffff\2\1",
             "\1\11",
             "",
-            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\3\uffff\1\4\2\1\11\uffff\1\5\6\uffff\1\6\1\1\36\uffff\7\1\3\uffff\4\1",
-            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\4\uffff\2\1\11\uffff\1\1\7\uffff\1\1\36\uffff\7\1\3\uffff\4\1"
+            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\3\uffff\1\4\2\1\11\uffff\1\5\6\uffff\1\6\1\1\37\uffff\7\1\3\uffff\4\1",
+            "\7\1\23\uffff\1\7\1\uffff\7\1\1\uffff\1\1\3\uffff\4\1\4\uffff\2\1\11\uffff\1\1\7\uffff\1\1\37\uffff\7\1\3\uffff\4\1"
     };
-    static final short[] dfa_143 = DFA.unpackEncodedString(dfa_143s);
-    static final char[] dfa_144 = DFA.unpackEncodedStringToUnsignedChars(dfa_144s);
-    static final char[] dfa_145 = DFA.unpackEncodedStringToUnsignedChars(dfa_145s);
-    static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
-    static final short[][] dfa_147 = unpackEncodedStringArray(dfa_147s);
+    static final short[] dfa_149 = DFA.unpackEncodedString(dfa_149s);
+    static final char[] dfa_150 = DFA.unpackEncodedStringToUnsignedChars(dfa_150s);
+    static final char[] dfa_151 = DFA.unpackEncodedStringToUnsignedChars(dfa_151s);
+    static final short[] dfa_152 = DFA.unpackEncodedString(dfa_152s);
+    static final short[][] dfa_153 = unpackEncodedStringArray(dfa_153s);
 
     class DFA243 extends DFA {
 
         public DFA243(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 243;
-            this.eot = dfa_136;
-            this.eof = dfa_143;
-            this.min = dfa_144;
-            this.max = dfa_145;
-            this.accept = dfa_146;
-            this.special = dfa_141;
-            this.transition = dfa_147;
+            this.eot = dfa_142;
+            this.eof = dfa_149;
+            this.min = dfa_150;
+            this.max = dfa_151;
+            this.accept = dfa_152;
+            this.special = dfa_147;
+            this.transition = dfa_153;
         }
         public String getDescription() {
             return "9735:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_148s = "\1\107\1\uffff\1\4\1\107\2\4\1\7\1\uffff\2\107";
-    static final String[] dfa_149s = {
+    static final String dfa_154s = "\1\107\1\uffff\1\4\1\107\2\4\1\7\1\uffff\2\107";
+    static final String[] dfa_155s = {
             "\1\1\74\uffff\1\2",
             "",
             "\1\3",
@@ -41263,61 +41267,61 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\2\1\4\uffff\1\1\23\uffff\1\7\20\uffff\1\1\3\uffff\1\4\13\uffff\1\5\6\uffff\1\6\1\1",
             "\2\1\4\uffff\1\1\23\uffff\1\7\20\uffff\1\1\27\uffff\1\1"
     };
-    static final char[] dfa_148 = DFA.unpackEncodedStringToUnsignedChars(dfa_148s);
-    static final short[][] dfa_149 = unpackEncodedStringArray(dfa_149s);
+    static final char[] dfa_154 = DFA.unpackEncodedStringToUnsignedChars(dfa_154s);
+    static final short[][] dfa_155 = unpackEncodedStringArray(dfa_155s);
 
     class DFA244 extends DFA {
 
         public DFA244(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 244;
-            this.eot = dfa_136;
-            this.eof = dfa_143;
-            this.min = dfa_144;
-            this.max = dfa_148;
-            this.accept = dfa_146;
-            this.special = dfa_141;
-            this.transition = dfa_149;
+            this.eot = dfa_142;
+            this.eof = dfa_149;
+            this.min = dfa_150;
+            this.max = dfa_154;
+            this.accept = dfa_152;
+            this.special = dfa_147;
+            this.transition = dfa_155;
         }
         public String getDescription() {
             return "9777:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_150s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
-    static final String dfa_151s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
-    static final String dfa_152s = "\1\107\1\uffff\1\4\1\163\1\4\1\10\1\7\1\uffff\1\163\2\uffff\2\163\1\4\1\163\1\4\1\163\1\4\1\163\1\4\1\163\1\0";
-    static final String dfa_153s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
-    static final String dfa_154s = "\25\uffff\1\0}>";
-    static final String[] dfa_155s = {
+    static final String dfa_156s = "\3\uffff\1\11\4\uffff\1\7\2\uffff\2\11\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff\1\7\1\uffff";
+    static final String dfa_157s = "\1\12\1\uffff\4\4\1\7\1\uffff\1\4\2\uffff\12\4\1\0";
+    static final String dfa_158s = "\1\107\1\uffff\1\4\1\164\1\4\1\10\1\7\1\uffff\1\164\2\uffff\2\164\1\4\1\164\1\4\1\164\1\4\1\164\1\4\1\164\1\0";
+    static final String dfa_159s = "\1\uffff\1\1\5\uffff\1\2\1\uffff\1\4\1\3\13\uffff";
+    static final String dfa_160s = "\25\uffff\1\0}>";
+    static final String[] dfa_161s = {
             "\1\1\74\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\3\uffff\1\4\2\11\11\uffff\1\5\6\uffff\1\6\1\11\36\uffff\7\11\3\uffff\4\11",
+            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\3\uffff\1\4\2\11\11\uffff\1\5\6\uffff\1\6\1\11\37\uffff\7\11\3\uffff\4\11",
             "\1\13",
             "\1\13\2\uffff\2\7",
             "\1\14",
             "",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\15\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\15\uffff\7\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\15\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\16\uffff\7\7\3\uffff\4\7",
             "",
             "",
-            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\3\uffff\1\4\2\11\11\uffff\1\5\6\uffff\1\6\1\11\36\uffff\7\11\3\uffff\4\11",
-            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\4\uffff\2\11\11\uffff\1\7\7\uffff\1\11\36\uffff\7\11\3\uffff\4\11",
+            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\3\uffff\1\4\2\11\11\uffff\1\5\6\uffff\1\6\1\11\37\uffff\7\11\3\uffff\4\11",
+            "\1\10\1\7\1\11\3\7\1\11\25\uffff\7\11\1\uffff\1\11\3\uffff\3\11\1\12\4\uffff\2\11\11\uffff\1\7\7\uffff\1\11\37\uffff\7\11\3\uffff\4\11",
             "\1\16",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\17\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\15\uffff\7\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\17\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\16\uffff\7\7\3\uffff\4\7",
             "\1\20",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\21\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\15\uffff\7\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\21\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\16\uffff\7\7\3\uffff\4\7",
             "\1\22",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\23\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\15\uffff\7\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\23\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\16\uffff\7\7\3\uffff\4\7",
             "\1\24",
-            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\25\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\15\uffff\7\7\3\uffff\4\7",
+            "\1\7\1\uffff\1\7\3\uffff\1\7\16\uffff\1\11\6\uffff\11\7\1\11\1\uffff\1\11\3\7\1\11\3\uffff\1\25\2\7\11\uffff\1\7\2\uffff\1\11\3\uffff\2\7\2\uffff\17\11\16\uffff\7\7\3\uffff\4\7",
             "\1\uffff"
     };
-    static final short[] dfa_150 = DFA.unpackEncodedString(dfa_150s);
-    static final char[] dfa_151 = DFA.unpackEncodedStringToUnsignedChars(dfa_151s);
-    static final char[] dfa_152 = DFA.unpackEncodedStringToUnsignedChars(dfa_152s);
-    static final short[] dfa_153 = DFA.unpackEncodedString(dfa_153s);
-    static final short[] dfa_154 = DFA.unpackEncodedString(dfa_154s);
-    static final short[][] dfa_155 = unpackEncodedStringArray(dfa_155s);
+    static final short[] dfa_156 = DFA.unpackEncodedString(dfa_156s);
+    static final char[] dfa_157 = DFA.unpackEncodedStringToUnsignedChars(dfa_157s);
+    static final char[] dfa_158 = DFA.unpackEncodedStringToUnsignedChars(dfa_158s);
+    static final short[] dfa_159 = DFA.unpackEncodedString(dfa_159s);
+    static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
+    static final short[][] dfa_161 = unpackEncodedStringArray(dfa_161s);
 
     class DFA245 extends DFA {
 
@@ -41325,12 +41329,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             this.recognizer = recognizer;
             this.decisionNumber = 245;
             this.eot = dfa_61;
-            this.eof = dfa_150;
-            this.min = dfa_151;
-            this.max = dfa_152;
-            this.accept = dfa_153;
-            this.special = dfa_154;
-            this.transition = dfa_155;
+            this.eof = dfa_156;
+            this.min = dfa_157;
+            this.max = dfa_158;
+            this.accept = dfa_159;
+            this.special = dfa_160;
+            this.transition = dfa_161;
         }
         public String getDescription() {
             return "9819:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
@@ -41362,12 +41366,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_156s = "\2\uffff\1\10\4\uffff\1\6\1\uffff\2\10\1\uffff\1\6\1\uffff\1\6\1\uffff\1\6\1\uffff\1\6\1\uffff";
-    static final String dfa_157s = "\1\106\5\4\1\uffff\1\4\1\uffff\12\4\1\0";
-    static final String dfa_158s = "\1\106\1\4\1\107\1\4\1\10\1\7\1\uffff\1\126\1\uffff\2\107\1\4\1\126\1\4\1\126\1\4\1\126\1\4\1\126\1\0";
-    static final String dfa_159s = "\6\uffff\1\1\1\uffff\1\2\13\uffff";
-    static final String dfa_160s = "\23\uffff\1\0}>";
-    static final String[] dfa_161s = {
+    static final String dfa_162s = "\2\uffff\1\10\4\uffff\1\6\1\uffff\2\10\1\uffff\1\6\1\uffff\1\6\1\uffff\1\6\1\uffff\1\6\1\uffff";
+    static final String dfa_163s = "\1\106\5\4\1\uffff\1\4\1\uffff\12\4\1\0";
+    static final String dfa_164s = "\1\106\1\4\1\107\1\4\1\10\1\7\1\uffff\1\126\1\uffff\2\107\1\4\1\126\1\4\1\126\1\4\1\126\1\4\1\126\1\0";
+    static final String dfa_165s = "\6\uffff\1\1\1\uffff\1\2\13\uffff";
+    static final String dfa_166s = "\23\uffff\1\0}>";
+    static final String[] dfa_167s = {
             "\1\1",
             "\1\2",
             "\1\7\1\6\1\uffff\3\6\1\10\7\uffff\2\10\6\uffff\3\10\26\uffff\1\3\13\uffff\1\4\6\uffff\1\5\1\10",
@@ -41389,25 +41393,25 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\1\6\5\uffff\1\6\7\uffff\2\6\5\uffff\1\10\3\6\12\uffff\1\6\7\uffff\1\10\3\uffff\1\23\13\uffff\1\6\2\uffff\1\10\3\uffff\2\6\2\uffff\15\10",
             "\1\uffff"
     };
-    static final short[] dfa_156 = DFA.unpackEncodedString(dfa_156s);
-    static final char[] dfa_157 = DFA.unpackEncodedStringToUnsignedChars(dfa_157s);
-    static final char[] dfa_158 = DFA.unpackEncodedStringToUnsignedChars(dfa_158s);
-    static final short[] dfa_159 = DFA.unpackEncodedString(dfa_159s);
-    static final short[] dfa_160 = DFA.unpackEncodedString(dfa_160s);
-    static final short[][] dfa_161 = unpackEncodedStringArray(dfa_161s);
+    static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
+    static final char[] dfa_163 = DFA.unpackEncodedStringToUnsignedChars(dfa_163s);
+    static final char[] dfa_164 = DFA.unpackEncodedStringToUnsignedChars(dfa_164s);
+    static final short[] dfa_165 = DFA.unpackEncodedString(dfa_165s);
+    static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
+    static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
 
     class DFA246 extends DFA {
 
         public DFA246(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 246;
-            this.eot = dfa_114;
-            this.eof = dfa_156;
-            this.min = dfa_157;
-            this.max = dfa_158;
-            this.accept = dfa_159;
-            this.special = dfa_160;
-            this.transition = dfa_161;
+            this.eot = dfa_120;
+            this.eof = dfa_162;
+            this.min = dfa_163;
+            this.max = dfa_164;
+            this.accept = dfa_165;
+            this.special = dfa_166;
+            this.transition = dfa_167;
         }
         public String getDescription() {
             return "9885:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
@@ -41439,12 +41443,12 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String dfa_162s = "\13\uffff";
-    static final String dfa_163s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
-    static final String dfa_164s = "\1\107\1\uffff\1\4\1\106\1\4\1\10\1\7\2\uffff\1\106\1\77";
-    static final String dfa_165s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
-    static final String dfa_166s = "\13\uffff}>";
-    static final String[] dfa_167s = {
+    static final String dfa_168s = "\13\uffff";
+    static final String dfa_169s = "\1\12\1\uffff\4\4\1\7\2\uffff\2\4";
+    static final String dfa_170s = "\1\107\1\uffff\1\4\1\106\1\4\1\10\1\7\2\uffff\1\106\1\77";
+    static final String dfa_171s = "\1\uffff\1\1\5\uffff\1\3\1\2\2\uffff";
+    static final String dfa_172s = "\13\uffff}>";
+    static final String[] dfa_173s = {
             "\1\1\74\uffff\1\2",
             "",
             "\1\3",
@@ -41458,37 +41462,37 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\2\10\1\uffff\3\10\45\uffff\1\7\17\uffff\1\10"
     };
 
-    static final short[] dfa_162 = DFA.unpackEncodedString(dfa_162s);
-    static final char[] dfa_163 = DFA.unpackEncodedStringToUnsignedChars(dfa_163s);
-    static final char[] dfa_164 = DFA.unpackEncodedStringToUnsignedChars(dfa_164s);
-    static final short[] dfa_165 = DFA.unpackEncodedString(dfa_165s);
-    static final short[] dfa_166 = DFA.unpackEncodedString(dfa_166s);
-    static final short[][] dfa_167 = unpackEncodedStringArray(dfa_167s);
+    static final short[] dfa_168 = DFA.unpackEncodedString(dfa_168s);
+    static final char[] dfa_169 = DFA.unpackEncodedStringToUnsignedChars(dfa_169s);
+    static final char[] dfa_170 = DFA.unpackEncodedStringToUnsignedChars(dfa_170s);
+    static final short[] dfa_171 = DFA.unpackEncodedString(dfa_171s);
+    static final short[] dfa_172 = DFA.unpackEncodedString(dfa_172s);
+    static final short[][] dfa_173 = unpackEncodedStringArray(dfa_173s);
 
     class DFA247 extends DFA {
 
         public DFA247(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 247;
-            this.eot = dfa_162;
-            this.eof = dfa_162;
-            this.min = dfa_163;
-            this.max = dfa_164;
-            this.accept = dfa_165;
-            this.special = dfa_166;
-            this.transition = dfa_167;
+            this.eot = dfa_168;
+            this.eof = dfa_168;
+            this.min = dfa_169;
+            this.max = dfa_170;
+            this.accept = dfa_171;
+            this.special = dfa_172;
+            this.transition = dfa_173;
         }
         public String getDescription() {
             return "9927:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
         }
     }
-    static final String dfa_168s = "\14\uffff";
-    static final String dfa_169s = "\3\uffff\1\10\6\uffff\2\10";
-    static final String dfa_170s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
-    static final String dfa_171s = "\1\107\1\uffff\1\4\1\107\2\4\1\7\3\uffff\2\107";
-    static final String dfa_172s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
-    static final String dfa_173s = "\14\uffff}>";
-    static final String[] dfa_174s = {
+    static final String dfa_174s = "\14\uffff";
+    static final String dfa_175s = "\3\uffff\1\10\6\uffff\2\10";
+    static final String dfa_176s = "\1\12\1\uffff\4\4\1\7\3\uffff\2\4";
+    static final String dfa_177s = "\1\107\1\uffff\1\4\1\107\2\4\1\7\3\uffff\2\107";
+    static final String dfa_178s = "\1\uffff\1\1\5\uffff\1\2\1\4\1\3\2\uffff";
+    static final String dfa_179s = "\14\uffff}>";
+    static final String[] dfa_180s = {
             "\1\1\74\uffff\1\2",
             "",
             "\1\3",
@@ -41503,26 +41507,26 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
             "\1\10\1\7\4\uffff\1\10\44\uffff\1\11\27\uffff\1\10"
     };
 
-    static final short[] dfa_168 = DFA.unpackEncodedString(dfa_168s);
-    static final short[] dfa_169 = DFA.unpackEncodedString(dfa_169s);
-    static final char[] dfa_170 = DFA.unpackEncodedStringToUnsignedChars(dfa_170s);
-    static final char[] dfa_171 = DFA.unpackEncodedStringToUnsignedChars(dfa_171s);
-    static final short[] dfa_172 = DFA.unpackEncodedString(dfa_172s);
-    static final short[] dfa_173 = DFA.unpackEncodedString(dfa_173s);
-    static final short[][] dfa_174 = unpackEncodedStringArray(dfa_174s);
+    static final short[] dfa_174 = DFA.unpackEncodedString(dfa_174s);
+    static final short[] dfa_175 = DFA.unpackEncodedString(dfa_175s);
+    static final char[] dfa_176 = DFA.unpackEncodedStringToUnsignedChars(dfa_176s);
+    static final char[] dfa_177 = DFA.unpackEncodedStringToUnsignedChars(dfa_177s);
+    static final short[] dfa_178 = DFA.unpackEncodedString(dfa_178s);
+    static final short[] dfa_179 = DFA.unpackEncodedString(dfa_179s);
+    static final short[][] dfa_180 = unpackEncodedStringArray(dfa_180s);
 
     class DFA248 extends DFA {
 
         public DFA248(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
             this.decisionNumber = 248;
-            this.eot = dfa_168;
-            this.eof = dfa_169;
-            this.min = dfa_170;
-            this.max = dfa_171;
-            this.accept = dfa_172;
-            this.special = dfa_173;
-            this.transition = dfa_174;
+            this.eot = dfa_174;
+            this.eof = dfa_175;
+            this.min = dfa_176;
+            this.max = dfa_177;
+            this.accept = dfa_178;
+            this.special = dfa_179;
+            this.transition = dfa_180;
         }
         public String getDescription() {
             return "9981:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
@@ -41553,39 +41557,39 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_19 = new BitSet(new long[]{0x0000000000000410L,0x0000000000000080L});
         public static final BitSet FOLLOW_20 = new BitSet(new long[]{0x0000000018080410L,0x0000000000000080L});
         public static final BitSet FOLLOW_21 = new BitSet(new long[]{0x0000000010080000L});
-        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0030717F20000452L,0x00071FC000000080L});
+        public static final BitSet FOLLOW_22 = new BitSet(new long[]{0x0030717F20000452L,0x000E3F8000000080L});
         public static final BitSet FOLLOW_23 = new BitSet(new long[]{0x0030400120000452L,0x0000000000000080L});
         public static final BitSet FOLLOW_24 = new BitSet(new long[]{0x0000000040000010L});
         public static final BitSet FOLLOW_25 = new BitSet(new long[]{0x0000000020000002L});
         public static final BitSet FOLLOW_26 = new BitSet(new long[]{0x0000000040000000L});
-        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0030717FA0000450L,0x00071FC000000080L});
+        public static final BitSet FOLLOW_27 = new BitSet(new long[]{0x0030717FA0000450L,0x000E3F8000000080L});
         public static final BitSet FOLLOW_28 = new BitSet(new long[]{0x00304001A0000450L,0x0000000000000080L});
         public static final BitSet FOLLOW_29 = new BitSet(new long[]{0x00000000A0000000L});
         public static final BitSet FOLLOW_30 = new BitSet(new long[]{0x0000000100000400L,0x0000000000000080L});
-        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x80204200400207F0L,0x00000023800000C8L});
-        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000017E00000400L,0x000707C000000080L});
-        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000004000000000L,0x000007C000000000L});
+        public static final BitSet FOLLOW_31 = new BitSet(new long[]{0x80204200400207F0L,0x00000043800000C8L});
+        public static final BitSet FOLLOW_32 = new BitSet(new long[]{0x0000017E00000400L,0x000E0F8000000080L});
+        public static final BitSet FOLLOW_33 = new BitSet(new long[]{0x0000004000000000L,0x00000F8000000000L});
         public static final BitSet FOLLOW_34 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_35 = new BitSet(new long[]{0x0000008000080000L});
         public static final BitSet FOLLOW_36 = new BitSet(new long[]{0x0000000000000802L});
         public static final BitSet FOLLOW_37 = new BitSet(new long[]{0x0000008000000802L});
-        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0030717F60000450L,0x00071FC000000080L});
-        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0030717FA0000450L,0x000F1FC000000080L});
+        public static final BitSet FOLLOW_38 = new BitSet(new long[]{0x0030717F60000450L,0x000E3F8000000080L});
+        public static final BitSet FOLLOW_39 = new BitSet(new long[]{0x0030717FA0000450L,0x001E3F8000000080L});
         public static final BitSet FOLLOW_40 = new BitSet(new long[]{0x0000000000080410L,0x0000000000000080L});
-        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0030717FE0000450L,0x000F1FC000000080L});
+        public static final BitSet FOLLOW_41 = new BitSet(new long[]{0x0030717FE0000450L,0x001E3F8000000080L});
         public static final BitSet FOLLOW_42 = new BitSet(new long[]{0x0000000000000C12L,0x0000000000000080L});
-        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0030717FE0000450L,0x00071FC000000080L});
-        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0030717F20000450L,0x000F1FC000000080L});
+        public static final BitSet FOLLOW_43 = new BitSet(new long[]{0x0030717FE0000450L,0x000E3F8000000080L});
+        public static final BitSet FOLLOW_44 = new BitSet(new long[]{0x0030717F20000450L,0x001E3F8000000080L});
         public static final BitSet FOLLOW_45 = new BitSet(new long[]{0x00000A0000000000L});
         public static final BitSet FOLLOW_46 = new BitSet(new long[]{0x0000048000000000L});
         public static final BitSet FOLLOW_47 = new BitSet(new long[]{0x0000100000080000L});
         public static final BitSet FOLLOW_48 = new BitSet(new long[]{0x0000100000000802L});
         public static final BitSet FOLLOW_49 = new BitSet(new long[]{0x0000000000800002L});
-        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000600000000400L,0x0007000000000080L});
+        public static final BitSet FOLLOW_50 = new BitSet(new long[]{0x0000600000000400L,0x000E000000000080L});
         public static final BitSet FOLLOW_51 = new BitSet(new long[]{0x0000600000000000L});
         public static final BitSet FOLLOW_52 = new BitSet(new long[]{0x0000000000000420L,0x0000000000000080L});
         public static final BitSet FOLLOW_53 = new BitSet(new long[]{0x0000008000000410L,0x0000000000000080L});
-        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000100000000400L,0x0007000000000080L});
+        public static final BitSet FOLLOW_54 = new BitSet(new long[]{0x0000100000000400L,0x000E000000000080L});
         public static final BitSet FOLLOW_55 = new BitSet(new long[]{0x0000100000000000L});
         public static final BitSet FOLLOW_56 = new BitSet(new long[]{0x0000001040000430L,0x0000000000000080L});
         public static final BitSet FOLLOW_57 = new BitSet(new long[]{0x0000001040000410L,0x0000000000000080L});
@@ -41595,7 +41599,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_61 = new BitSet(new long[]{0x0006800002000002L});
         public static final BitSet FOLLOW_62 = new BitSet(new long[]{0x0001000000000000L});
         public static final BitSet FOLLOW_63 = new BitSet(new long[]{0x0006000000000002L});
-        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x4500010000000000L,0x0000E00000000001L});
+        public static final BitSet FOLLOW_64 = new BitSet(new long[]{0x4500010000000000L,0x0001C00000000001L});
         public static final BitSet FOLLOW_65 = new BitSet(new long[]{0x0004000000000002L});
         public static final BitSet FOLLOW_66 = new BitSet(new long[]{0x0000100000000002L});
         public static final BitSet FOLLOW_67 = new BitSet(new long[]{0x0000000000000412L,0x0000000000000080L});
@@ -41605,7 +41609,7 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_71 = new BitSet(new long[]{0x0000000000000000L,0x0000000001800000L});
         public static final BitSet FOLLOW_72 = new BitSet(new long[]{0x0000000000000440L,0x0000000000000080L});
         public static final BitSet FOLLOW_73 = new BitSet(new long[]{0x00088A0000000000L});
-        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x84204200400207F0L,0x00000023800000C8L});
+        public static final BitSet FOLLOW_74 = new BitSet(new long[]{0x84204200400207F0L,0x00000043800000C8L});
         public static final BitSet FOLLOW_75 = new BitSet(new long[]{0x0000400000000400L,0x0000000000000080L});
         public static final BitSet FOLLOW_76 = new BitSet(new long[]{0x0010000000000400L,0x0000000000000080L});
         public static final BitSet FOLLOW_77 = new BitSet(new long[]{0x0020000000000400L,0x0000000000000080L});
@@ -41616,32 +41620,33 @@ public class InternalKTraceParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_82 = new BitSet(new long[]{0x0400000000000002L});
         public static final BitSet FOLLOW_83 = new BitSet(new long[]{0x0000000000000002L,0x000000007E000000L});
         public static final BitSet FOLLOW_84 = new BitSet(new long[]{0x3800000000000002L});
-        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x80204200400007F0L,0x00000022800000C8L});
+        public static final BitSet FOLLOW_85 = new BitSet(new long[]{0x80204200400007F0L,0x00000042800000C8L});
         public static final BitSet FOLLOW_86 = new BitSet(new long[]{0x1000000000000002L});
         public static final BitSet FOLLOW_87 = new BitSet(new long[]{0x2000000000000002L});
         public static final BitSet FOLLOW_88 = new BitSet(new long[]{0xC000000000000002L});
         public static final BitSet FOLLOW_89 = new BitSet(new long[]{0x0000000000100002L,0x0000000000000003L});
         public static final BitSet FOLLOW_90 = new BitSet(new long[]{0x0000000000000000L,0x0000000400000000L});
-        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x00204200400007F0L,0x00000022800000C8L});
+        public static final BitSet FOLLOW_91 = new BitSet(new long[]{0x00204200400007F0L,0x0000000280000088L});
         public static final BitSet FOLLOW_92 = new BitSet(new long[]{0x0000000000000000L,0x0000000800000000L});
-        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
-        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000004000000L});
-        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000410L,0x0000000280000080L});
-        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
-        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0008800000000002L});
-        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000080000000002L});
-        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0400000000000000L});
-        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x80204200400207F0L,0x00000023800000D8L});
-        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x0000000080000020L});
-        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x00008000400003A0L,0x0000000000000020L});
-        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x00018000400003A0L,0x0000000000000020L});
-        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x0001008000000000L});
-        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0000008000000002L});
-        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000000000000230L});
-        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000800000000000L});
-        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x8008000000000002L,0x0000000000000040L});
-        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_93 = new BitSet(new long[]{0x00204200400007F0L,0x00000042800000C8L});
+        public static final BitSet FOLLOW_94 = new BitSet(new long[]{0x0000000000000000L,0x0000001000000000L});
+        public static final BitSet FOLLOW_95 = new BitSet(new long[]{0x0000000000000000L,0x0000002000000000L});
+        public static final BitSet FOLLOW_96 = new BitSet(new long[]{0x0000000000000410L,0x0000000280000080L});
+        public static final BitSet FOLLOW_97 = new BitSet(new long[]{0x0000000000000002L,0x0000000000000004L});
+        public static final BitSet FOLLOW_98 = new BitSet(new long[]{0x0008800000000002L});
+        public static final BitSet FOLLOW_99 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_100 = new BitSet(new long[]{0x0000080000000002L});
+        public static final BitSet FOLLOW_101 = new BitSet(new long[]{0x0400000000000000L});
+        public static final BitSet FOLLOW_102 = new BitSet(new long[]{0x80204200400207F0L,0x00000043800000D8L});
+        public static final BitSet FOLLOW_103 = new BitSet(new long[]{0x0000000080000020L});
+        public static final BitSet FOLLOW_104 = new BitSet(new long[]{0x00008000400003A0L,0x0000000000000020L});
+        public static final BitSet FOLLOW_105 = new BitSet(new long[]{0x00018000400003A0L,0x0000000000000020L});
+        public static final BitSet FOLLOW_106 = new BitSet(new long[]{0x0001008000000000L});
+        public static final BitSet FOLLOW_107 = new BitSet(new long[]{0x0000008000000002L});
+        public static final BitSet FOLLOW_108 = new BitSet(new long[]{0x0000000000000230L});
+        public static final BitSet FOLLOW_109 = new BitSet(new long[]{0x0000800000000000L});
+        public static final BitSet FOLLOW_110 = new BitSet(new long[]{0x8008000000000002L,0x0000000000000040L});
+        public static final BitSet FOLLOW_111 = new BitSet(new long[]{0x0000000000000100L});
     }
 
 

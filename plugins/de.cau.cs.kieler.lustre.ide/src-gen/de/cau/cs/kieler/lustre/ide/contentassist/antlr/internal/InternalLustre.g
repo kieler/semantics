@@ -3314,9 +3314,9 @@ ruleIntDivOperator
 	}
 :
 	(
-		{ before(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); }
+		{ before(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); }
 		('div')
-		{ after(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); }
+		{ after(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); }
 	)
 ;
 finally {

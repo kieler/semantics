@@ -6026,7 +6026,7 @@ ruleImpliesOperator
 :
 	(
 		{ before(grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration()); }
-		('=>')
+		('implies')
 		{ after(grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration()); }
 	)
 ;

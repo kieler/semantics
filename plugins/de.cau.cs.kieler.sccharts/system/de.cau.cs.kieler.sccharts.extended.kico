@@ -12,7 +12,7 @@ pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
 [ label "Equivalences"
     de.cau.cs.kieler.sccharts.processors.followedBy
-    de.cau.cs.kieler.sccharts.processors.implies
+    de.cau.cs.kieler.sccharts.processors.^implies
     de.cau.cs.kieler.sccharts.processors.atMostOne
     de.cau.cs.kieler.sccharts.processors.^nor
 ]

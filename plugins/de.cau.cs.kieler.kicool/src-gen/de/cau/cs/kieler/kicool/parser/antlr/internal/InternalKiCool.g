@@ -7420,9 +7420,9 @@ ruleTernaryOperation returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_1_0());
+						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0());
 					}
-					lv_subExpressions_1_0=ruleInitExpression
+					lv_subExpressions_1_0=ruleAtomicValuedExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getTernaryOperationRule());
@@ -7431,7 +7431,7 @@ ruleTernaryOperation returns [EObject current=null]
 							$current,
 							"subExpressions",
 							lv_subExpressions_1_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+							"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -7458,9 +7458,9 @@ ruleTernaryOperation returns [EObject current=null]
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_3_0());
+						newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
 					}
-					lv_subExpressions_3_0=ruleInitExpression
+					lv_subExpressions_3_0=ruleAtomicValuedExpression
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getTernaryOperationRule());
@@ -7469,7 +7469,7 @@ ruleTernaryOperation returns [EObject current=null]
 							$current,
 							"subExpressions",
 							lv_subExpressions_3_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+							"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -7482,9 +7482,9 @@ ruleTernaryOperation returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_4_1_0());
+							newCompositeNode(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0());
 						}
-						lv_subExpressions_5_0=ruleInitExpression
+						lv_subExpressions_5_0=ruleAtomicValuedExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getTernaryOperationRule());
@@ -7493,7 +7493,7 @@ ruleTernaryOperation returns [EObject current=null]
 								$current,
 								"subExpressions",
 								lv_subExpressions_5_0,
-								"de.cau.cs.kieler.kexpressions.KExpressions.InitExpression");
+								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -11937,7 +11937,7 @@ ruleImpliesOperator returns [Enumerator current=null]
 	leaveRule();
 }:
 	(
-		enumLiteral_0='=>'
+		enumLiteral_0='implies'
 		{
 			$current = grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration().getEnumLiteral().getInstance();
 			newLeafNode(enumLiteral_0, grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration());

@@ -275,7 +275,7 @@ NegExpression returns Expression:
 
 TernaryOperation returns Expression:
     {OperatorExpression} 
-    subExpressions += InitExpression operator=ConditionalOperator subExpressions += InitExpression (':' subExpressions += InitExpression)?
+    subExpressions += AtomicValuedExpression operator=ConditionalOperator subExpressions += AtomicValuedExpression (':' subExpressions += AtomicValuedExpression)?
     | InitExpression;
     
 InitExpression returns Expression:
@@ -505,7 +505,7 @@ enum FbyOperator returns OperatorType:
     FBY = "fby";
     
 enum ImpliesOperator returns OperatorType:
-    IMPLIES = "=>";
+    IMPLIES = "implies";
     
 enum AtMostOneOfOperator returns OperatorType:
     ATMOSTONEOF = "#";

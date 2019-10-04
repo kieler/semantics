@@ -1,4 +1,4 @@
-'!'=171
+'!'=172
 '#'=41
 '%'=31
 '%='=71
@@ -30,7 +30,7 @@
 '<='=52
 '<>'=49
 '='=48
-'=>'=40
+'=>'=169
 '>'=50
 '>='=53
 '>>'=36
@@ -57,7 +57,7 @@
 'combine'=91
 'commuting'=66
 'conflicting'=65
-'const'=172
+'const'=173
 'constant'=95
 'copymodule'=141
 'do'=120
@@ -83,7 +83,8 @@
 'handle'=135
 'host'=43
 'if'=121
-'immediate'=170
+'immediate'=171
+'implies'=40
 'in'=134
 'input'=101
 'inputoutput'=103
@@ -107,7 +108,7 @@
 'output'=102
 'par'=153
 'pause'=109
-'positive'=169
+'positive'=170
 'pre'=17
 'present'=116
 'print'=163
@@ -126,7 +127,7 @@
 'scope'=157
 'sensor'=106
 'signal'=138
-'static'=173
+'static'=174
 'string'=61
 'struct'=44
 'suspend'=132
@@ -242,6 +243,7 @@ T__170=170
 T__171=171
 T__172=172
 T__173=173
+T__174=174
 T__17=17
 T__18=18
 T__19=19

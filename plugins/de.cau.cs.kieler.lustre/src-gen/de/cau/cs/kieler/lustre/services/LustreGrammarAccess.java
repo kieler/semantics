@@ -2933,18 +2933,19 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class IntDivOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.IntDivOperator");
-		private final EnumLiteralDeclaration cINTDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
-		private final Keyword cINTDIVDivKeyword_0 = (Keyword)cINTDIVEnumLiteralDeclaration.eContents().get(0);
+		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cDIVDivKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum IntDivOperator returns kexpressions::OperatorType:
-		//	INTDIV="div";
+		//enum IntDivOperator returns kexpressions::OperatorType: //    INTDIV="div"
+		//	DIV="div";
 		public EnumRule getRule() { return rule; }
 		
-		//INTDIV="div"
-		public EnumLiteralDeclaration getINTDIVEnumLiteralDeclaration() { return cINTDIVEnumLiteralDeclaration; }
+		////    INTDIV="div"
+		//DIV="div"
+		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration() { return cDIVEnumLiteralDeclaration; }
 		
 		//"div"
-		public Keyword getINTDIVDivKeyword_0() { return cINTDIVDivKeyword_0; }
+		public Keyword getDIVDivKeyword_0() { return cDIVDivKeyword_0; }
 	}
 	public class ConditionalOperatorElements extends AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.lustre.Lustre.ConditionalOperator");
@@ -3758,8 +3759,8 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getImpliesOperatorAccess().getRule();
 	}
 	
-	//enum IntDivOperator returns kexpressions::OperatorType:
-	//	INTDIV="div";
+	//enum IntDivOperator returns kexpressions::OperatorType: //    INTDIV="div"
+	//	DIV="div";
 	public IntDivOperatorElements getIntDivOperatorAccess() {
 		return eIntDivOperator;
 	}

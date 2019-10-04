@@ -11328,7 +11328,7 @@ public class InternalScadeEquationsParser extends AbstractInternalContentAssistP
             // InternalScadeEquations.g:3367:3: ( 'div' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); 
+               before(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
             }
             // InternalScadeEquations.g:3368:3: ( 'div' )
             // InternalScadeEquations.g:3368:4: 'div'
@@ -11338,7 +11338,7 @@ public class InternalScadeEquationsParser extends AbstractInternalContentAssistP
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); 
+               after(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
             }
 
             }

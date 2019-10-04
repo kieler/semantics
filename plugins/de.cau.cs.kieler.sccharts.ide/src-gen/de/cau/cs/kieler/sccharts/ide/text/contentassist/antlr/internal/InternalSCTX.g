@@ -4406,7 +4406,7 @@ ruleImpliesOperator
 :
 	(
 		{ before(grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration()); }
-		('=>')
+		('implies')
 		{ after(grammarAccess.getImpliesOperatorAccess().getIMPLIESEnumLiteralDeclaration()); }
 	)
 ;
@@ -43901,9 +43901,9 @@ rule__TernaryOperation__SubExpressionsAssignment_0_1
 	}
 :
 	(
-		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_1_0()); }
-		ruleInitExpression
-		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_1_0()); }
+		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); }
+		ruleAtomicValuedExpression
+		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_1_0()); }
 	)
 ;
 finally {
@@ -43931,9 +43931,9 @@ rule__TernaryOperation__SubExpressionsAssignment_0_3
 	}
 :
 	(
-		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_3_0()); }
-		ruleInitExpression
-		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_3_0()); }
+		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); }
+		ruleAtomicValuedExpression
+		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0()); }
 	)
 ;
 finally {
@@ -43946,9 +43946,9 @@ rule__TernaryOperation__SubExpressionsAssignment_0_4_1
 	}
 :
 	(
-		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_4_1_0()); }
-		ruleInitExpression
-		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsInitExpressionParserRuleCall_0_4_1_0()); }
+		{ before(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0()); }
+		ruleAtomicValuedExpression
+		{ after(grammarAccess.getTernaryOperationAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0()); }
 	)
 ;
 finally {

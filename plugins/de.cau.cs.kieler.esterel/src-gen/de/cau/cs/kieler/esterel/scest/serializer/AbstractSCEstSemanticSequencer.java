@@ -964,7 +964,12 @@ public abstract class AbstractSCEstSemanticSequencer extends EsterelSemanticSequ
 	 *         (subExpressions+=DivExpression_OperatorExpression_1_0 operator=EsterelDivOperator subExpressions+=ModExpression) | 
 	 *         (subExpressions+=ModExpression_OperatorExpression_1_0 operator=EsterelModOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
-	 *         (subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression subExpressions+=InitExpression?) | 
+	 *         (
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             operator=ConditionalOperator 
+	 *             subExpressions+=AtomicValuedExpression 
+	 *             subExpressions+=AtomicValuedExpression?
+	 *         ) | 
 	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
 	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
 	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 

@@ -13266,8 +13266,8 @@ ruleIntDivOperator returns [Enumerator current=null]
 	(
 		enumLiteral_0='div'
 		{
-			$current = grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
-			newLeafNode(enumLiteral_0, grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration());
+			$current = grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration());
 		}
 	)
 ;

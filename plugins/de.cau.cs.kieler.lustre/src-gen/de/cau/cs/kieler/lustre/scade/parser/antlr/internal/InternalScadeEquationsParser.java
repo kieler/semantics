@@ -36948,8 +36948,8 @@ public class InternalScadeEquationsParser extends AbstractInternalAntlrParser {
             enumLiteral_0=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			current = grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
-              			newLeafNode(enumLiteral_0, grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration());
+              			current = grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
+              			newLeafNode(enumLiteral_0, grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration());
               		
             }
 

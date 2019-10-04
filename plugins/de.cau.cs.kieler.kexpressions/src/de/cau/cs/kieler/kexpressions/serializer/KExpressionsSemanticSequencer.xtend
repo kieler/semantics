@@ -220,19 +220,19 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
             }
             case CONDITIONAL: {
                 if (semanticObject.subExpressions.size == 2) {
-                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsInitExpressionParserRuleCall_0_1_0, semanticObject.subExpressions.head, 0)
+                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_1_0, semanticObject.subExpressions.head, 0)
                     feeder.accept(grammarAccess.ternaryOperationAccess.operatorConditionalOperatorEnumRuleCall_0_2_0, op)
-                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsInitExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.get(1), 1)
+                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.get(1), 1)
                 } else {
-                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsInitExpressionParserRuleCall_0_1_0,
+                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_1_0,
                         semanticObject.subExpressions.head, 0)
                     feeder.accept(grammarAccess.ternaryOperationAccess.operatorConditionalOperatorEnumRuleCall_0_2_0,
                         op)
-                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsInitExpressionParserRuleCall_0_3_0,
+                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_3_0,
                         semanticObject.subExpressions.get(1), 1)
 //                        feeder.accept(grammarAccess.ternaryOperationAccess.colonKeyword_0_4_0,
 //                            op)                            
-                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsInitExpressionParserRuleCall_0_4_1_0,
+                    feeder.accept(grammarAccess.ternaryOperationAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0,
                         semanticObject.subExpressions.get(2), 2)
                 }
             }

@@ -1463,7 +1463,12 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *             (subExpressions+=ProductExpression_OperatorExpression_1_1_0 operator=DivOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *             (subExpressions+=ProductExpression_OperatorExpression_1_2_0 operator=ModOperator subExpressions+=NegExpression subExpressions+=NegExpression*) | 
 	 *             (operator=SubOperator subExpressions+=NegExpression) | 
-	 *             (subExpressions+=InitExpression operator=ConditionalOperator subExpressions+=InitExpression subExpressions+=InitExpression?) | 
+	 *             (
+	 *                 subExpressions+=AtomicValuedExpression 
+	 *                 operator=ConditionalOperator 
+	 *                 subExpressions+=AtomicValuedExpression 
+	 *                 subExpressions+=AtomicValuedExpression?
+	 *             ) | 
 	 *             (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
 	 *             (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
 	 *             (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 

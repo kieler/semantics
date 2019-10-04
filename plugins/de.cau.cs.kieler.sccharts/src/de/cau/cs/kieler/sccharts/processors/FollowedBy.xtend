@@ -41,17 +41,26 @@ class FollowedBy extends SCChartsProcessor implements Traceable {
     
     override process() {
         for (rootState : getModel.rootStates) {
-            rootState.transformInitOperator
+            rootState.transformFbyOperator
         }
     }
     
-    def transformInitOperator(State rootState) {
+    def transformFbyOperator(State rootState) {
         val allFby = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.FBY ].toList
         
         for (fby : allFby) {
             var transformedOpExpr = createOperatorExpression(OperatorType.INIT)
             transformedOpExpr.subExpressions += fby.subExpressions.head
-            transformedOpExpr.subExpressions += createPreExpression(fby.subExpressions.head)
+            
+            var numOfPres = 1
+            for (subs : fby.subExpressions.immutableCopy) {
+                var expr = subs
+                for (var i = 0; i < numOfPres; i++) {
+                    expr = createPreExpression(expr)
+                }
+                numOfPres++
+                transformedOpExpr.subExpressions += expr
+            }
             
             fby.replace(transformedOpExpr)
         }

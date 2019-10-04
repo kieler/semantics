@@ -11142,7 +11142,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             // InternalLustre.g:3317:3: ( 'div' )
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); 
+               before(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
             }
             // InternalLustre.g:3318:3: ( 'div' )
             // InternalLustre.g:3318:4: 'div'
@@ -11152,7 +11152,7 @@ public class InternalLustreParser extends AbstractInternalContentAssistParser {
             }
 
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getIntDivOperatorAccess().getINTDIVEnumLiteralDeclaration()); 
+               after(grammarAccess.getIntDivOperatorAccess().getDIVEnumLiteralDeclaration()); 
             }
 
             }
