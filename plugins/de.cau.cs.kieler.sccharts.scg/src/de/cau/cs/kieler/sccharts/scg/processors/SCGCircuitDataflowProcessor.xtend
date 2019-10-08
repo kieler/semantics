@@ -40,6 +40,7 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
 import de.cau.cs.kieler.kicool.compilation.VariableStore
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 
 /**
  * @author kolja
@@ -57,6 +58,8 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
     @Inject extension KExpressionsCreateExtensions
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension PragmaExtensions
+    @Inject extension AnnotationsExtensions
+    @Inject extension KExtDeclarationExtensions
 
     public static val SCCHARTS_GENERATED = "sccharts-generated"
 
@@ -82,19 +85,38 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     for (v : scg.variableDeclarations.filter[isSSA]) {
                         if (v.valuedObjects.length > 0) {
                             val nv = v.copy
-                            for (var i = 0; i < nv.valuedObjects.length; i++)
+                            var ValuedObject goValue = null
+                            for (var i = 0; i < nv.valuedObjects.length; i++) {
                                 map.put(v.valuedObjects.get(i), nv.valuedObjects.get(i))
+                                if (nv.valuedObjects.get(i).name == "_GO0")
+                                    goValue = nv.valuedObjects.get(i)
+                            }
                             nv.valuedObjects.last.name = nv.ssaOrigVO.name
                             for (vo : nv.valuedObjects)
                                 VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                             if (nv.input || nv.output)
                                 it.declarations.add(nv)
-                            else
+                            else {
                                 nr.declarations.add(nv)
+                                nv.createStringAnnotation("hide", "")
+                            }
                             if (nv.valuedObjects.length > 1) {
                                 val na = nv.valuedObjects.get(0).createAssignment
                                 na.expression = OperatorType.PRE.createOperatorExpression => [
                                     it.subExpressions.add(nv.valuedObjects.last.reference)
+                                ]
+                                nr.equations.add(na)
+                            }
+                            if (goValue !== null) {
+                                val dec = createBoolDeclaration
+                                dec.createStringAnnotation("hide", "")
+                                val go2 = nr.createValuedObject("firstTick", dec)
+                                go2.initialValue = TRUE
+                                val na = goValue.createAssignment
+                                na.expression = OperatorType.NOT.createOperatorExpression => [
+                                    it.subExpressions.add(OperatorType.PRE.createOperatorExpression => [
+                                        it.subExpressions.add(go2.reference)
+                                    ])
                                 ]
                                 nr.equations.add(na)
                             }
@@ -130,6 +152,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     for (vo : globalDec.valuedObjects)
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                     dataflowRegion.declarations.add(localDec)
+                    localDec.createStringAnnotation("hide", "")
                     for (vo : localDec.valuedObjects)
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                 }

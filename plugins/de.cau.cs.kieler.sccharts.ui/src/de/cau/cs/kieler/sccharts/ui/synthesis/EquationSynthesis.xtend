@@ -275,7 +275,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         wire.externalSourceReferenceCounter,
                         wire.sourceIsEquationTarget,
                         // if (wire.wireIsLocal) LOCAL_ID else 
-                        "INPUT"
+                        "INPUT",
+                        ""
                     )
                     wire.semanticSource.addPort(OUT_PORT, node.ports.head)
                     node.addNodeLabelWithPadding(text, INPUT_OUTPUT_TEXT_SIZE, PADDING_INPUT_LEFT, PADDING_INPUT_RIGHT)
@@ -319,7 +320,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             if (wire.semanticSinkReferenceDeclaration !== null) {
                 if (wire.externalSourceReferenceCounter > 0) {
                     node = wire.semanticSource.createKGTNode(wire.externalSourceReferenceCounter, false,
-                        "EXTERNAL_FUNCTION")
+                        "EXTERNAL_FUNCTION", "")
                 } else {
                     node = node.createReferenceNode(
                         wire.semanticSink,
@@ -337,7 +338,8 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     wire.externalSinkReferenceCounter,
                     false,
 //                    if (wire.wireIsLocal) LOCAL_ID else 
-                    "OUTPUT"
+                    "OUTPUT",
+                    ""
                 )
 //                wire.sourceIsEquationTarget = false
                 wire.semanticSink.addPort(IN_PORT, node.ports.head)
@@ -598,12 +600,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         EObject createExtensionObject,
         Object createExtensionObject2,
         Object createExtensionObject3,
-        String figureId
+        String figureId,
+        String label
     ) {
+        var showLabel = false
         // check if a figure file in the skin folder exists
-        if (createExtensionObject.eResource !== null &&
-            createExtensionObject.eResource.URI !== null
-        ) {
+        if (createExtensionObject.eResource !== null && createExtensionObject.eResource.URI !== null) {
             val sl = createExtensionObject.eResource.URI.segmentsList
             val nsl = sl.take(sl.length - 1).drop(1)
             val path = nsl.join("/") + "/" + getSkinPath(usedContext)
@@ -617,8 +619,12 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                     res.load(newResourceSet.loadOptions)
                     val node = (res.getContents().get(0) as KNode).children.head
                     createExtensionObject.addNode(createExtensionObject2, createExtensionObject3, node)
+                    if (!label.nullOrEmpty && showLabel) {
+                        node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                    }
                     return node
                 } catch (Exception _) {
+                    showLabel = true
                 }
             }
         }
@@ -626,22 +632,34 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         val oldSkinPrefix = skinPrefix
         skinPrefix = getSkinPath(usedContext)
         skinPrefix += if(!skinPrefix.endsWith("/")) "/"
+        showLabel = false
         for (figure : defaultFigures.get(figureId)) {
             if (doesKGTExist(figure)) {
                 val node = getKGTFromBundle(figure)
                 createExtensionObject.addNode(createExtensionObject2, createExtensionObject3, node)
                 skinPrefix = oldSkinPrefix
+                if (!label.nullOrEmpty && showLabel) {
+                    node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                }
                 return node
             }
+            else
+                showLabel = true
         }
         skinPrefix = oldSkinPrefix
+        showLabel = false
         // fall back to default figures
         for (figure : defaultFigures.get(figureId)) {
             if (doesKGTExist(figure)) {
                 val node = getKGTFromBundle(figure)
                 createExtensionObject.addNode(createExtensionObject2, createExtensionObject3, node)
+                if (!label.nullOrEmpty && showLabel) {
+                    node.addNodeLabel(label, INPUT_OUTPUT_TEXT_SIZE)
+                }
                 return node
             }
+            else
+                showLabel = true
         }
         throw new IllegalArgumentException("Resource not found")
     }
@@ -697,7 +715,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
             figureId = figureObject
         }
 
-        val node = createExtensionObject.createKGTNode(createExtensionObject2, createExtensionObject3, figureId)
+        val node = createExtensionObject.createKGTNode(createExtensionObject2, createExtensionObject3, figureId, text)
 
         for (p : node.ports) {
             val id = p.getId
@@ -743,10 +761,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
 //                    println("Port> " + createExtensionObject + " " + PORT_OUT_PREFIX + " " + p + "@" + p.hashCode)
                 }
             }
-        }
-
-        if (!text.nullOrEmpty) {
-            node.addNodeLabel(text, INPUT_OUTPUT_TEXT_SIZE)
         }
 
         return node
