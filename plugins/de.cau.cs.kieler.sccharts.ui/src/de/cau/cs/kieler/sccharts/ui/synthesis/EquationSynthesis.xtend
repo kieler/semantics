@@ -113,7 +113,6 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
     @Inject extension SCChartsSerializeHRExtensions
     @Inject extension SCChartsSynthesis
     @Inject extension EquationStyles
-    @Inject extension StateSynthesis
     @Inject StateSynthesis stateSynthesis
     @Inject Injector injector
 
@@ -291,6 +290,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                         node.addLayoutParam(LayeredOptions::LAYERING_LAYER_CONSTRAINT, LayerConstraint::FIRST)
                         node.addLayoutParam(CoreOptions::ALIGNMENT, Alignment.LEFT)
                     }
+                    node.associateWith( wire.source )
 
 //                    println("Source Port> KPort@" + node.ports.head.hashCode)
                 }

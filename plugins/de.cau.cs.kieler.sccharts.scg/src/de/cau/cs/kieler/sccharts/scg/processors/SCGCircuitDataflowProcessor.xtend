@@ -110,7 +110,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                             if (goValue !== null) {
                                 val dec = createBoolDeclaration
                                 dec.createStringAnnotation("hide", "")
-                                val go2 = nr.createValuedObject("firstTick", dec)
+                                val go2 = nr.createValuedObject("preFirstTick", dec)
                                 go2.initialValue = TRUE
                                 val na = goValue.createAssignment
                                 na.expression = OperatorType.NOT.createOperatorExpression => [

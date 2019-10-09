@@ -30,6 +30,18 @@ import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import com.google.gson.JsonArray
+import de.cau.cs.kieler.klighd.kgraph.KNode
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import java.util.stream.Collectors
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -136,12 +148,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
         if (pool !== null && ctx.isSupported) {
             // Calculate the simulation controlflow to determine what must be highlighted
             calculateSimulationControlFlow(ctx)
-            // If there is no control flow then there is nothing to highlight
-            if(traversedTransitions.isNullOrEmpty && traversedStates.isNullOrEmpty && currentStates.isNullOrEmpty) {
-                return
-            }
             // Find the graph elements in the diagram for the EObjects that should be highlighted
-            val traversedGraphHighlighting = getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+            val traversedGraphHighlighting = if( !traversedTransitions.isNullOrEmpty && !!traversedStates.isNullOrEmpty )
+                                                 getHighlighting(traversedTransitions + traversedStates, TRAVERSED_ELEMENT_STYLE)
+                                             else
+                                                 newArrayList
             val currentGraphHighlighting = if(!currentStates.isNullOrEmpty)
                                                getHighlighting(#[] + currentStates, CURRENT_ELEMENT_STYLE)
                                            else
@@ -150,11 +161,151 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             val currentDataflowHighlighting = if (currentActiveDataflowRegions.nullOrEmpty) newArrayList
                                                 else getHighlighting(#[] + currentActiveDataflowRegions, CURRENT_ELEMENT_STYLE)
             val currentWireHighlighting = <Highlighting> newArrayList
-            if (!currentDataflowHighlighting.empty) {
-                for (highlight : currentDataflowHighlighting) {
-                    highlight.element.eAllContents.filter(KEdge).forEach[
-                        currentWireHighlighting.add(new Highlighting(it, CURRENT_ELEMENT_STYLE))
-                    ]
+            
+            var ProcessorReference key = null
+            for (k : ctx.processorMap.keySet) {
+                if (k.id == "de.cau.cs.kieler.simulation.internal.step")
+                    key = k
+            }
+            val proc = ctx.processorMap.get(key)
+            if (proc !== null) {
+                val sourcePool = proc.sourceEnvironment.getProperty(Environment.MODEL) as DataPool
+                if (!currentDataflowHighlighting.empty) {
+                    for (highlight : currentDataflowHighlighting) {
+                        if (highlight.element instanceof KNode) {
+                            val region = highlight.element as KNode
+                            var next = region.children.filter[it.incomingEdges.size == 0].toList
+                            next += region.children.filter [
+                                getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
+                                    (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
+                                        OperatorType.PRE
+                            ].toList
+                            val visited = newArrayList
+                            next = next.stream().distinct().collect(Collectors.toList());
+                            while (next.size != 0) {
+                                val first = next.get(0)
+                                next.remove(0)
+                                val original = getDiagramViewContext().getSourceElement(first)
+                                if (original instanceof BoolValue) {
+                                    for (e : first.outgoingEdges) {
+                                        if (!visited.contains(e)) {
+                                            visited.add(e)
+                                            if ((original as BoolValue).value)
+                                                currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                            if (!next.contains(e.target))
+                                                next.add(e.target)
+                                        }
+                                    }
+                                }
+                                if (original instanceof ValuedObjectReference) {
+                                    val object = (original as ValuedObjectReference).valuedObject
+                                    val entry = sourcePool.findValue(object.name)
+                                    for (e : first.outgoingEdges) {
+                                        if (!visited.contains(e)) {
+                                            visited.add(e)
+                                            if (entry.variableInformation.get(0).type == ValueType.BOOL &&
+                                                entry.rawValue.asBoolean)
+                                                currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                            if (!next.contains(e.target))
+                                                next.add(e.target)
+                                        }
+                                    }
+                                }
+                                if (original instanceof OperatorExpression) {
+                                    var t = false
+                                    var continue = false
+                                    if ((original as OperatorExpression).operator != OperatorType.PRE) {
+                                        for (e : first.incomingEdges) {
+                                            if (!visited.contains(e)) {
+                                                if (!next.contains(e.source))
+                                                    next.add(e.source)
+                                                next.add(first)
+                                                continue = true
+                                            }
+                                        }
+                                    }
+                                    if (!continue) {
+                                        switch ( (original as OperatorExpression).operator ) {
+                                            case LOGICAL_AND: {
+                                                t = true
+                                                for (e : first.incomingEdges) {
+                                                    t = t && currentWireHighlighting.filter[it.element == e].size > 0
+                                                }
+                                            }
+                                            case LOGICAL_OR: {
+                                                for (e : first.incomingEdges) {
+                                                    t = t || currentWireHighlighting.filter[it.element == e].size > 0
+                                                }
+                                            }
+                                            case NOT: {
+                                                for (e : first.incomingEdges) {
+                                                    t = currentWireHighlighting.filter[it.element == e].size == 0
+                                                }
+                                            }
+                                            case PRE: {
+                                                val expr = (original as OperatorExpression).subExpressions.get(0)
+                                                if (expr instanceof ValuedObjectReference) {
+                                                    val entry = ctx.findPreValue(
+                                                        (expr as ValuedObjectReference).valuedObject.name)
+                                                    t = entry != null &&
+                                                        entry.variableInformation.get(0).type == ValueType.BOOL &&
+                                                        entry.rawValue.asBoolean
+                                                }
+                                            }
+                                            case CONDITIONAL: {
+                                                var condition = false
+                                                var trueCase = false
+                                                var falseCase = false
+                                                for (e : first.incomingEdges) {
+                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in0")
+                                                        condition = currentWireHighlighting.filter[it.element == e].
+                                                            size > 0
+                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in1")
+                                                        trueCase = currentWireHighlighting.filter[it.element == e].
+                                                            size > 0
+                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in2")
+                                                        falseCase = currentWireHighlighting.filter[it.element == e].
+                                                            size > 0
+                                                }
+                                                t = condition ? trueCase : falseCase
+                                            }
+                                        }
+                                        for (e : first.outgoingEdges) {
+                                            if (!visited.contains(e)) {
+                                                visited.add(e)
+                                                if (t)
+                                                    currentWireHighlighting.add(
+                                                        new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                if (!next.contains(e.target))
+                                                    next.add(e.target)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            next += region.children.filter [
+                                getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
+                                    (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
+                                        OperatorType.PRE
+                            ]
+                            for (pre : next) {
+                                val original = getDiagramViewContext().getSourceElement(pre)
+                                val expr = (original as OperatorExpression).subExpressions.get(0)
+                                var t = false
+                                if (expr instanceof ValuedObjectReference) {
+                                    val entry = pool.findValue((expr as ValuedObjectReference).valuedObject.name)
+                                    t = entry != null && entry.variableInformation.get(0).type == ValueType.BOOL &&
+                                        entry.rawValue.asBoolean
+                                }
+                                if (t) {
+                                    for (e : pre.incomingEdges) {
+                                        if (currentWireHighlighting.filter[it.element == e].size == 0)
+                                            currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
                                                 
@@ -164,6 +315,39 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                 currentDataflowHighlighting + currentWireHighlighting
             highlightDiagram(highlighting)
         }
+    }
+    
+    def private findPreValue( SimulationContext ctx, String name ){
+        if( ctx.history.size <= 1 )
+            return null
+        var pool = ctx.history.get( 1 )
+        var String key = null
+        for( k : pool.entries.keySet )
+        {
+            if( k.endsWith( name ) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") && !k.startsWith("_reg_") )
+            {
+                if( key === null )
+                    key = k
+                else
+                    System.out.println( "WARNING: unable to determine the key of the pre Variable '" + name + "'. Is it '" + key + "' or is it '" + k + "'???" );
+            }
+        }
+        return pool.entries.get( key )
+    }
+    
+    def private findValue( DataPool pool, String name ){
+        var String key = null
+        for( k : pool.entries.keySet )
+        {
+            if( k.endsWith( name ) && (k.length == name.length || k.endsWith("_" + name)) && !k.startsWith("_pre_") && !k.startsWith("_reg_") )
+            {
+                if( key === null )
+                    key = k
+                else
+                    System.out.println( "WARNING: unable to determine the key of the Variable '" + name + "'. Is it '" + key + "' or is it '" + k + "'???" );
+            }
+        }
+        return pool.entries.get( key )
     }
 
 //    override loadFormerState(StepState state) {
@@ -211,10 +395,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             return
         }
         val transitionArrayVariable = pool.entries.get(TakenTransitionSignaling.transitionArrayName)
-        if(transitionArrayVariable === null || !transitionArrayVariable.rawValue.isJsonArray) {
-            return
-        }
-        val transitionArray = transitionArrayVariable.rawValue.asJsonArray
+        var JsonArray transitionArray = null
+        if (transitionArrayVariable === null || !transitionArrayVariable.rawValue.isJsonArray) {
+            transitionArray = new JsonArray
+        } else
+            transitionArray = transitionArrayVariable.rawValue.asJsonArray
         
         // Get the transitions in the SCChart in the same manner as the taken transition signaling
         var State rootState
