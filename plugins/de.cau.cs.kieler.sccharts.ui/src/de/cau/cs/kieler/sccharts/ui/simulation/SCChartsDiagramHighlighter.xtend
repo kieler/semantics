@@ -12,7 +12,17 @@
  */
 package de.cau.cs.kieler.sccharts.ui.simulation
 
-import de.cau.cs.kieler.klighd.kgraph.KEdge
+import com.google.gson.JsonArray
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kicool.ProcessorReference
+import de.cau.cs.kieler.kicool.environments.Environment
+import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
+import de.cau.cs.kieler.klighd.kgraph.KIdentifier
+import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.Colors
 import de.cau.cs.kieler.klighd.krendering.KForeground
 import de.cau.cs.kieler.klighd.krendering.KRenderingFactory
@@ -24,24 +34,14 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling
+import de.cau.cs.kieler.simulation.DataPool
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
+import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
+import de.cau.cs.kieler.simulation.ui.visualization.ValuedHighlighting
 import java.util.List
 import java.util.Set
-import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
-import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
-import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
-import com.google.gson.JsonArray
-import de.cau.cs.kieler.klighd.kgraph.KNode
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
 import java.util.stream.Collectors
-import de.cau.cs.kieler.kexpressions.BoolValue
-import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.ValueType
-import de.cau.cs.kieler.simulation.DataPool
-import de.cau.cs.kieler.klighd.kgraph.KIdentifier
-import de.cau.cs.kieler.kicool.ProcessorReference
-import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -182,6 +182,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                             ].toList
                             val visited = newArrayList
                             next = next.stream().distinct().collect(Collectors.toList());
+                            val cicle = newArrayList
                             while (next.size != 0) {
                                 val first = next.get(0)
                                 next.remove(0)
@@ -196,29 +197,33 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                 next.add(e.target)
                                         }
                                     }
-                                }
-                                else if (original instanceof ValuedObjectReference) {
+                                } else if (original instanceof ValuedObjectReference) {
                                     val object = (original as ValuedObjectReference).valuedObject
                                     val entry = sourcePool.findValue(object.name)
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
-                                            if (entry.variableInformation.get(0).type == ValueType.BOOL &&
-                                                entry.rawValue.asBoolean)
-                                                currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                            switch ( entry.variableInformation.get(0).type ) {
+                                                case ValueType.BOOL:
+                                                    if (entry.rawValue.asBoolean)
+                                                        currentWireHighlighting.add(
+                                                            new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                default: {
+                                                }
+                                            }
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
                                         }
                                     }
-                                }
-                                else if (original instanceof OperatorExpression) {
+                                } else if (original instanceof OperatorExpression) {
                                     var t = false
                                     var continue = false
-                                    if ((original as OperatorExpression).operator != OperatorType.PRE) {
+                                    if ((original as OperatorExpression).operator != OperatorType.PRE && !cicle.contains(first)) {
                                         for (e : first.incomingEdges) {
                                             if (!visited.contains(e)) {
                                                 if (!next.contains(e.source))
                                                     next.add(e.source)
+                                                cicle.add(first)
                                                 next.add(first)
                                                 continue = true
                                             }
@@ -247,9 +252,14 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                 if (expr instanceof ValuedObjectReference) {
                                                     val entry = ctx.findPreValue(
                                                         (expr as ValuedObjectReference).valuedObject.name)
-                                                    t = entry != null &&
-                                                        entry.variableInformation.get(0).type == ValueType.BOOL &&
-                                                        entry.rawValue.asBoolean
+                                                    if (entry !== null) {
+                                                        switch ( entry.variableInformation.get(0).type ) {
+                                                            case ValueType.BOOL:
+                                                                t = entry != null && entry.rawValue.asBoolean
+                                                            default: {
+                                                            }
+                                                        }
+                                                    }
                                                 }
                                             }
                                             case CONDITIONAL: {
@@ -260,61 +270,75 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in0")
                                                         condition = currentWireHighlighting.filter[it.element == e].
                                                             size > 0
-                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in1")
-                                                        trueCase = currentWireHighlighting.filter[it.element == e].
-                                                            size > 0
-                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in2")
-                                                        falseCase = currentWireHighlighting.filter[it.element == e].
-                                                            size > 0
+                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in1") {
+                                                        val h = currentWireHighlighting.filter[it.element == e]
+                                                        trueCase = h.size > 0
+                                                    }
+                                                    if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in2") {
+                                                        val h = currentWireHighlighting.filter[it.element == e]
+                                                        falseCase = h.size > 0
+                                                    }
                                                 }
                                                 t = condition ? trueCase : falseCase
+                                            }
+                                            case EQ: {
+                                                var Object last = null
+                                                t = true
+                                                for (e : first.incomingEdges) {
+                                                    var Object current = null
+                                                    val h = currentWireHighlighting.filter[it.element == e]
+                                                    if (h.size == 0)
+                                                        current = false
+                                                    else {
+                                                        if (h.get(0) instanceof ValuedHighlighting)
+                                                            current = (h.get(0) as ValuedHighlighting).value
+                                                        else
+                                                            current = true
+                                                    }
+                                                    if (last !== null) {
+                                                        t = t && last == current
+                                                    }
+                                                    last = current
+                                                }
+                                            }
+                                            case NE: {
+                                                var Object last = null
+                                                for (e : first.incomingEdges) {
+                                                    var Object current = null
+                                                    val h = currentWireHighlighting.filter[it.element == e]
+                                                    if (h.size == 0)
+                                                        current = false
+                                                    else {
+                                                        if (h.get(0) instanceof ValuedHighlighting)
+                                                            current = (h.get(0) as ValuedHighlighting).value
+                                                        else
+                                                            current = true
+                                                    }
+                                                    if (last !== null) {
+                                                        t = t || last != current
+                                                    }
+                                                    last = current
+                                                }
                                             }
                                         }
                                         for (e : first.outgoingEdges) {
                                             if (!visited.contains(e)) {
                                                 visited.add(e)
-                                                if (t)
+                                                if (t) {
                                                     currentWireHighlighting.add(
                                                         new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                }
                                                 if (!next.contains(e.target))
                                                     next.add(e.target)
                                             }
                                         }
                                     }
-                                }
-                                else {
+                                } else {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
-                                        }
-                                    }
-                                }
-                            }
-                            next += region.children.filter [
-                                getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
-                                    (getDiagramViewContext().getSourceElement(it) as OperatorExpression).operator ==
-                                        OperatorType.PRE
-                            ]
-                            for (pre : next) {
-                                val original = getDiagramViewContext().getSourceElement(pre)
-                                val expr = (original as OperatorExpression).subExpressions.get(0)
-                                var t = false
-                                if (expr instanceof ValuedObjectReference) {
-                                    val entry = pool.findValue((expr as ValuedObjectReference).valuedObject.name)
-                                    t = entry != null && entry.variableInformation.get(0).type == ValueType.BOOL &&
-                                        entry.rawValue.asBoolean
-                                }
-                                for (e : pre.incomingEdges) {
-                                    if (currentWireHighlighting.filter[it.element == e].size == 0) {
-                                        if (t)
-                                            currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
-                                    } else {
-                                        if (!t) {
-                                            currentWireHighlighting.remove(currentWireHighlighting.filter[
-                                                it.element == e
-                                            ].get(0))
                                         }
                                     }
                                 }
