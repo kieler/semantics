@@ -2936,11 +2936,10 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVDivKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum IntDivOperator returns kexpressions::OperatorType: //    INTDIV="div"
+		//enum IntDivOperator returns kexpressions::OperatorType:
 		//	DIV="div";
 		public EnumRule getRule() { return rule; }
 		
-		////    INTDIV="div"
 		//DIV="div"
 		public EnumLiteralDeclaration getDIVEnumLiteralDeclaration() { return cDIVEnumLiteralDeclaration; }
 		
@@ -3759,7 +3758,7 @@ public class LustreGrammarAccess extends AbstractGrammarElementFinder {
 		return getImpliesOperatorAccess().getRule();
 	}
 	
-	//enum IntDivOperator returns kexpressions::OperatorType: //    INTDIV="div"
+	//enum IntDivOperator returns kexpressions::OperatorType:
 	//	DIV="div";
 	public IntDivOperatorElements getIntDivOperatorAccess() {
 		return eIntDivOperator;

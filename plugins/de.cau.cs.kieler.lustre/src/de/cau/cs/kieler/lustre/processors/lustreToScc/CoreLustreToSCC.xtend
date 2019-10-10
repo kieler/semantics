@@ -14,8 +14,6 @@ package de.cau.cs.kieler.lustre.processors.lustreToScc
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.AnnotationsFactory
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kexpressions.Declaration
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
@@ -47,12 +45,10 @@ import de.cau.cs.kieler.lustre.lustre.LustreValuedObject
 import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
 import de.cau.cs.kieler.lustre.lustre.StateValuedObject
 import de.cau.cs.kieler.sccharts.DataflowRegion
-import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.HistoryType
 import de.cau.cs.kieler.sccharts.PreemptionType
 import de.cau.cs.kieler.sccharts.SCCharts
 import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsCoreExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsDataflowRegionExtensions
@@ -80,22 +76,11 @@ import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
  */
 abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
-    public static val IProperty<Boolean> USE_DURING_ACTIONS_FOR_WHEN = new Property<Boolean>(
-        "de.cau.cs.kieler.lustre.processors.lustreToSCC.useDuringActionsForWhen", false)
-
-    public static val IProperty<Boolean> NO_PRE_IN_WHEN_TRANSFORMATION = new Property<Boolean>(
-        "de.cau.cs.kieler.lustre.processors.lustreToSCC.noPreInWhenTransformation", false)
-
-    public static final String DATAFLOW_REGION_NAME = ""
-    public static final String CONTROLFLOW_REGION_NAME = ""
-    public static final String DUMMY = "dummy"
-
     @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension LustreUtilityExtensions
-    @Inject extension SCChartsActionExtensions
     @Inject extension SCChartsCoreExtensions
     @Inject extension SCChartsDataflowRegionExtensions
     @Inject extension SCChartsStateExtensions
@@ -108,9 +93,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     protected HashMap<NodeDeclaration, State> nodeToStateMap = new HashMap
     protected HashMap<StateValuedObject, State> lustreStateToScchartsStateMap = new HashMap
 
-    /* --------------------------------------------------------------------------------------------
-     * Structural methods
-     * ----------------------------------------------------------------------------------------- */
     override process() {
         reset()
         model = model.transform
@@ -120,6 +102,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         var scchartsProgram = createSCChart
 
         // Note: Handle includes
+        
         val constantsState = createState => [
             name = "constants"
         ]
@@ -216,8 +199,8 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         if (rootState.regions.isEmpty) {
             // If there is no region yet, create one otherwise the model is terminated
-            var cfRegion = rootState.createControlflowRegion(DUMMY)
-            cfRegion.createInitialState(DUMMY)
+            var cfRegion = rootState.createControlflowRegion("")
+            cfRegion.createInitialState("")
         }
     }
 
@@ -242,7 +225,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     }
 
     protected def void processAutomaton(Automaton automaton, State state) {
-        var controlflowRegion = state.createControlflowRegion(CONTROLFLOW_REGION_NAME)
+        var controlflowRegion = state.createControlflowRegion("")
 
         for (AState lusState : automaton.states) {
             var newState = createState => [
@@ -259,68 +242,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
     }
 
     /* --------------------------------------------------------------------------------------------
-     * Methods used in basic methods.
      * ----------------------------------------------------------------------------------------- */
-    // Automaton transformation: Transform a state
-    protected def processState(AState lusState, State state) {
-        for (constVariable : lusState.constants) {
-            state.declarations += constVariable.createConstantDeclaration(state)
-        }
-
-        for (variable : lusState.variables) {
-            state.declarations += variable.createVariableDeclarationFromLustre(state)
-        }
-
-        for (Assignment equation : lusState.equations) {
-            processEquation(equation as Equation, state)
-        }
-
-        for (Expression assertionExpr : lusState.assertions) {
-            processAssertion((assertionExpr as Assertion), state)
-        }
-
-        for (Automaton automaton : lusState.automatons) {
-            processAutomaton(automaton, state)
-        }
-
-        for (ATransition transition : lusState.transitions) {
-            processTransition(transition, state)
-        }
-    }
-
-    // Automaton transformation: Transform a transition
-    protected def processTransition(ATransition transition, State source) {
-
-        for (AnAction action : transition.actions) {
-            var newTransition = createTransition => [
-                sourceState = source
-                targetState = lustreStateToScchartsStateMap.get(action.nextState)
-            ]
-
-            var trigger = transformExpression(action.condition, source)
-            if (trigger !== null) {
-                newTransition.trigger = trigger
-            }
-
-            for (Effect effect : action.effects) {
-                if (effect instanceof Equation) {
-                    var assignment = getAssignmentForEquation(effect, source.root as State)
-                    if (assignment !== null) {
-                        newTransition.effects.add(assignment)
-                    }
-                }
-            }
-            
-            if (transition.strong) {
-                newTransition.preemption = PreemptionType.STRONGABORT
-            }
-            if (action.history) {
-                newTransition.history = HistoryType.DEEP
-            }
-        }
-    }
-
-    // Equation transformation: Transform an expression
     protected def Expression transformExpression(Expression kExpression, State state) {
         if (kExpression !== null) {
             if (kExpression instanceof OperatorExpression) {
@@ -339,29 +261,13 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case CURRENT: {
                         convertedExpression = processCurrentExpression(kExpression, subExpressionList, state)
                     }
-                    case FBY: {
-                        convertedExpression = processFollowedByExpression(subExpressionList, state)
-                    }
-                    case IMPLIES: {
-                        convertedExpression = processImpliesExpression(subExpressionList)
-                    }
-                    case INIT: {
-                        convertedExpression = processInitExpression(subExpressionList)
-                    }
-                    case INTDIV: {
-                        convertedExpression = processIntDivExpression(subExpressionList)
-                    }
-                    case LOGICAL_XOR: {
-                        convertedExpression = processXorExpression(subExpressionList)
-                    }
-                    case ATMOSTONEOF: {
-                        convertedExpression = processNoneOfExpression(subExpressionList)
-                    }
-                    case NOR: {
-                        convertedExpression = processNorExpression(subExpressionList)
-                    }
                     case PRE: {
                         convertedExpression = processPreExpression(subExpressionList.head, state)
+                    }
+                    case INTDIV: {
+                        convertedExpression = createOperatorExpression(OperatorType.INTDIV) => [
+                            subExpressions.addAll(subExpressionList)
+                        ]
                     }
                     default: {
                         convertedExpression = createOperatorExpression(kExpression.operator) => [
@@ -399,44 +305,18 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
         // Assignments containing a when expression use a during action for transformation
         if (containingElement instanceof Assignment) {
-            if (environment.getProperty(USE_DURING_ACTIONS_FOR_WHEN)) {
+            
+            // Create condition for when expression
+            val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(containingElement.reference.valuedObject)
+            var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
+            var clockConjugation = createClockConjunction(clock, state)
+            conditional.subExpressions.add(clockConjugation)
+            conditional.subExpressions.add(realExpression)
+            var preForLoopBack = createPreExpression(scchartsAssignmentValuedObject.reference)
+            conditional.subExpressions.add(preForLoopBack)
 
-                // Create during action for when expression
-                var duringAction = createDuringAction(state) => [
-                    delay = DelayType.IMMEDIATE
-                ]
-                val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(
-                    containingElement.reference.valuedObject)
-
-                // Create a simple assignment if signal usage is disabled
-                var duringActionAssignment = createAssignment => [
-                    reference = scchartsAssignmentValuedObject.reference
-                    operator = AssignOperator.ASSIGN
-                ]
-
-                // The trigger must be a conjunction with all previous clocks
-                var clockConjunction = createClockConjunction(clock, state)
-                duringAction.trigger = clockConjunction
-                duringActionAssignment.expression = realExpression
-                duringAction.effects += duringActionAssignment
-
-            } else {
-                // Create condition for when expression
-                val scchartsAssignmentValuedObject = lustreToScchartsValuedObjectMap.get(
-                    containingElement.reference.valuedObject)
-                var conditional = createOperatorExpression(OperatorType.CONDITIONAL)
-                var clockConjugation = createClockConjunction(clock, state)
-                conditional.subExpressions.add(clockConjugation)
-                conditional.subExpressions.add(realExpression)
-                if (environment.getProperty(NO_PRE_IN_WHEN_TRANSFORMATION)) {
-                    conditional.subExpressions.add(scchartsAssignmentValuedObject.reference)
-                } else {
-                    var preForLoopBack = createPreExpression(scchartsAssignmentValuedObject.reference)
-                    conditional.subExpressions.add(preForLoopBack)
-                }
-
-                return conditional
-            }
+            return conditional
+            
         } else if (containingElement instanceof Parameter) {
             return realExpression
         }
@@ -462,137 +342,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         } else if (realExpression instanceof OperatorExpression) {
             return realExpression
         }
-    }
-
-    // Equation transformation: Transform a followed by expression
-    protected def processFollowedByExpression(Stack<Expression> subExpressionList, State state) {
-        // x fby y <=> x -> pre(y)
-        var bExpression = subExpressionList.pop
-        while (!subExpressionList.isEmpty) {
-            bExpression = processPreExpression(bExpression, state)
-            var aExpression = createOperatorExpression(OperatorType.INIT)
-            aExpression.subExpressions += subExpressionList.pop
-            aExpression.subExpressions += bExpression
-            bExpression = aExpression
-        }
-
-        return bExpression as OperatorExpression
-    }
-
-    // Equation transformation: Transform an implies expression
-    protected def processImpliesExpression(Stack<Expression> subExpressionList) {
-        // A => B  <=>  !A or B
-        var rightExpression = subExpressionList.pop
-        var leftExpression = subExpressionList.pop
-
-        leftExpression = leftExpression.createNotExpression
-        var convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
-
-        while (subExpressionList.length > 0) {
-            rightExpression = convertedExpression
-            leftExpression = subExpressionList.pop.createNotExpression
-            convertedExpression = createLogicalOrExpression(leftExpression, rightExpression)
-        }
-
-        return convertedExpression
-    }
-
-    // Equation transformation: Transform an init expression
-    protected def processInitExpression(Stack<Expression> subExpressionList) {
-        // x -> y <=> x fby y (in sccharts)
-        var convertedExpression = createOperatorExpression(OperatorType.INIT)
-        convertedExpression.subExpressions += subExpressionList
-
-        return convertedExpression
-    }
-
-    // Equation transformation: Transform an integer division expression
-    protected def processIntDivExpression(Stack<Expression> subExpressionList) {
-        // Division depends on type in sccharts
-        var convertedExpression = createOperatorExpression(OperatorType.DIV)
-        convertedExpression.subExpressions += subExpressionList
-
-        return convertedExpression
-    }
-
-    // Equation transformation: Transform a xor expression
-    protected def processXorExpression(Stack<Expression> subExpressionList) {
-        // A xor B <=> A && !B || !A && B
-        var Expression bExpression
-        var Expression aExpression
-        var Expression notBExpression
-        var Expression notAExpression
-        var Expression leftOrExpression
-        var Expression rightOrExpression
-
-        var tempExpression = subExpressionList.pop
-
-        do {
-            bExpression = tempExpression
-            aExpression = subExpressionList.pop
-
-            notBExpression = createNotExpression(bExpression.copy)
-            notAExpression = createNotExpression(aExpression.copy)
-
-            leftOrExpression = createLogicalAndExpression(aExpression, notBExpression)
-            rightOrExpression = createLogicalAndExpression(notAExpression, bExpression)
-
-            tempExpression = createLogicalOrExpression(leftOrExpression, rightOrExpression)
-        } while (subExpressionList.length > 0);
-
-        var convertedExpression = tempExpression as OperatorExpression
-
-        return convertedExpression
-    }
-
-    // Equation transformation: Transform a noneOf expression
-    protected def processNoneOfExpression(Stack<Expression> subExpressionList) {
-        var listcopy = newArrayList
-        listcopy.addAll(subExpressionList)
-
-        // noneOf(A, B, C) <=> !or(A, B, C) || A & !or(B,C) || B & !or(A,C) || C & !or(A,B)
-        var aExpression = subExpressionList.pop
-        while (!subExpressionList.isEmpty) {
-            var bExpression = subExpressionList.pop
-            aExpression = createLogicalOrExpression(aExpression, bExpression)
-        }
-        var completeExpression = createNotExpression(aExpression)
-
-        for (var i = 0; i < listcopy.size; i++) {
-            var frontVariable = listcopy.get(i).copy
-            var Expression orExpression = null
-            for (var j = 0; j < listcopy.size; j++) {
-                if (j != i) {
-                    var subExpression = listcopy.get(j).copy
-                    if (orExpression !== null) {
-                        orExpression = createLogicalOrExpression(orExpression, subExpression)
-                    } else {
-                        orExpression = subExpression
-                    }
-                }
-            }
-            var andExpression = createLogicalAndExpression(frontVariable, createNotExpression(orExpression))
-            completeExpression = createLogicalOrExpression(completeExpression, andExpression)
-        }
-
-        return completeExpression
-
-    }
-
-    // Equation transformation: Transform a nor expression
-    protected def processNorExpression(Stack<Expression> subExpressionList) {
-        var listcopy = newArrayList
-        listcopy.addAll(subExpressionList)
-
-        // nor(A, B, C) <=> !or(A, B, C)
-        // !or(A,B,C)
-        var aExpression = subExpressionList.pop
-        while (!subExpressionList.isEmpty) {
-            var bExpression = subExpressionList.pop
-            aExpression = createLogicalOrExpression(aExpression, bExpression)
-        }
-
-        return createNotExpression(aExpression)
     }
 
     // Equation transformation: Transform a pre expression
@@ -636,9 +385,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         }
     }
 
-    /* --------------------------------------------------------------------------------------------
-     * Methods needed to process reference calls.
-     * ----------------------------------------------------------------------------------------- */
     protected def processReferenceCall(ReferenceCall kExpression, State state) {
         val calledState = nodeToStateMap.get(kExpression.valuedObject.eContainer) as State
         addReferenceDeclaration(kExpression, state)
@@ -686,7 +432,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
         ArrayList<ValuedObject> inputValuedObjects) {
 
         if (state.regions.filter[it instanceof DataflowRegion].isEmpty) {
-            createDataflowRegion(state, CoreLustreToSCC.DATAFLOW_REGION_NAME)
+            createDataflowRegion(state, "")
         }
         var dfRegion = state.regions.filter[it instanceof DataflowRegion].head as DataflowRegion
 
@@ -755,6 +501,63 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 ]
                 dfRegion.effects += dataflowAssignment
 
+            }
+        }
+    }
+
+    protected def processState(AState lusState, State state) {
+        for (constVariable : lusState.constants) {
+            state.declarations += constVariable.createConstantDeclaration(state)
+        }
+
+        for (variable : lusState.variables) {
+            state.declarations += variable.createVariableDeclarationFromLustre(state)
+        }
+
+        for (Assignment equation : lusState.equations) {
+            processEquation(equation as Equation, state)
+        }
+
+        for (Expression assertionExpr : lusState.assertions) {
+            processAssertion((assertionExpr as Assertion), state)
+        }
+
+        for (Automaton automaton : lusState.automatons) {
+            processAutomaton(automaton, state)
+        }
+
+        for (ATransition transition : lusState.transitions) {
+            processTransition(transition, state)
+        }
+    }
+
+    protected def processTransition(ATransition transition, State source) {
+
+        for (AnAction action : transition.actions) {
+            var newTransition = createTransition => [
+                sourceState = source
+                targetState = lustreStateToScchartsStateMap.get(action.nextState)
+            ]
+
+            var trigger = transformExpression(action.condition, source)
+            if (trigger !== null) {
+                newTransition.trigger = trigger
+            }
+
+            for (Effect effect : action.effects) {
+                if (effect instanceof Equation) {
+                    var assignment = getAssignmentForEquation(effect, source.root as State)
+                    if (assignment !== null) {
+                        newTransition.effects.add(assignment)
+                    }
+                }
+            }
+            
+            if (transition.strong) {
+                newTransition.preemption = PreemptionType.STRONGABORT
+            }
+            if (action.history) {
+                newTransition.history = HistoryType.DEEP
             }
         }
     }

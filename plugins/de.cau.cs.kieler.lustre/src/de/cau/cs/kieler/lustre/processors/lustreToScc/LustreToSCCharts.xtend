@@ -53,7 +53,7 @@ class LustreToSCCharts extends CoreLustreToSCC {
 
         // If there is no dataflow region, create one
         if (dataFlowRegionsList.length == 0) {
-            createDataflowRegion(state, CoreLustreToSCC.DATAFLOW_REGION_NAME)
+            createDataflowRegion(state, "")
         }
         
         return dataFlowRegionsList.head as DataflowRegion

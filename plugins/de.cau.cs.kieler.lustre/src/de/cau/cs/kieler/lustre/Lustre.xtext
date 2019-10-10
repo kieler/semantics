@@ -450,8 +450,8 @@ enum ImpliesOperator returns kexpressions::OperatorType:
     IMPLIES="=>"
 ;
 
-enum IntDivOperator returns kexpressions::OperatorType:  
-    INTDIV="div"
+enum IntDivOperator returns kexpressions::OperatorType:
+    DIV = "div"
 ;
 
 @Override 
