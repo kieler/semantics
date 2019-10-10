@@ -45,18 +45,21 @@ class Implies extends SCChartsProcessor implements Traceable {
         }
     }
     
+    /**
+     * Transforms implies in a right associative manner (just like in Lustre).
+     */
     def transformImpliesOperator(State rootState) {
         val allImplies = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.IMPLIES ].toList
         
         for (imply : allImplies) {
             var transformedOpExpr = createLogicalOrExpression
+            var lastExpr = imply.subExpressions.last
+            lastExpr.remove
             
-            var immutableCopy = imply.subExpressions.immutableCopy
-            for (var i = 0; i < immutableCopy.length - 1; i++) {
-                var notFirst = createNotExpression(immutableCopy.get(i))
-                transformedOpExpr.subExpressions += notFirst
+            for (subExpr : imply.subExpressions.immutableCopy) {
+                transformedOpExpr.subExpressions += createNotExpression(subExpr)
             }
-            transformedOpExpr.subExpressions += immutableCopy.last
+            transformedOpExpr.subExpressions += lastExpr
             
             imply.replace(transformedOpExpr)
         }

@@ -1579,9 +1579,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
+	//// Mehrstellig: 1. first, 2. last, no matter comma, if pre, reevaluate to fby
 	//InitExpression Expression:
-	//	{OperatorExpression} subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression
-	//	| FbyExpression;
+	//	FbyExpression ({OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=FbyExpression)
+	//	('->' subExpressions+=FbyExpression)*)?;
 	public KExpressionsGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaKExpressions.getInitExpressionAccess();
 	}
@@ -1590,9 +1591,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getInitExpressionAccess().getRule();
 	}
 	
+	//// Mehrstellig chain of values starting at first tick
 	//FbyExpression Expression:
-	//	{OperatorExpression} subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression
-	//	| ImpliesExpression;
+	//	ImpliesExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
+	//	subExpressions+=ImpliesExpression) ('fby' subExpressions+=ImpliesExpression)*)?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
@@ -1601,10 +1603,10 @@ public class KEffectsGrammarAccess extends AbstractGrammarElementFinder {
 		return getFbyExpressionAccess().getRule();
 	}
 	
+	//// LeftAssozicative
 	//ImpliesExpression Expression:
-	//	{OperatorExpression} subExpressions+=AtMostOneOfExpression operator=ImpliesOperator
-	//	subExpressions+=AtMostOneOfExpression
-	//	| AtMostOneOfExpression;
+	//	AtMostOneOfExpression ({OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
+	//	subExpressions+=AtMostOneOfExpression) ('implies' subExpressions+=AtMostOneOfExpression)*)?;
 	public KExpressionsGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
 		return gaKExpressions.getImpliesExpressionAccess();
 	}

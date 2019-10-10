@@ -237,22 +237,31 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                 }
             }
             case INIT: {
-                feeder.accept(grammarAccess.initExpressionAccess.subExpressionsFbyExpressionParserRuleCall_0_1_0,
-                    semanticObject.subExpressions.head, 0)
-                feeder.accept(grammarAccess.initExpressionAccess.operatorInitOperatorEnumRuleCall_0_2_0,
-                    op)
-                feeder.accept(grammarAccess.initExpressionAccess.subExpressionsFbyExpressionParserRuleCall_0_3_0,
-                    semanticObject.subExpressions.get(1), 1)
-            }            
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.initExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.initExpressionAccess.operatorInitOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.initExpressionAccess.subExpressionsFbyExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.initExpressionAccess.subExpressionsFbyExpressionParserRuleCall_1_2_1_0
+                )
+            }
             case FBY: {
-                feeder.accept(grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_0_1_0, semanticObject.subExpressions.head, 0)
-                feeder.accept(grammarAccess.fbyExpressionAccess.operatorFbyOperatorEnumRuleCall_0_2_0, op)
-                feeder.accept(grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.get(1), 1)
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.fbyExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.fbyExpressionAccess.operatorFbyOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_1_2_1_0
+                )
             }            
             case IMPLIES: {
-                feeder.accept(grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_0_1_0, semanticObject.subExpressions.head, 0)
-                feeder.accept(grammarAccess.impliesExpressionAccess.operatorImpliesOperatorEnumRuleCall_0_2_0, op)
-                feeder.accept(grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.get(1), 1)
+                feeder.multiOP(
+                    semanticObject,
+                    grammarAccess.impliesExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
+                    grammarAccess.impliesExpressionAccess.operatorImpliesOperatorEnumRuleCall_1_1_0_0,
+                    grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_1_2_1_0
+                )
             }
             case ATMOSTONEOF: {
                 feeder.accept(grammarAccess.atMostOneOfExpressionAccess.operatorAtMostOneOfOperatorEnumRuleCall_0_1_0, op)

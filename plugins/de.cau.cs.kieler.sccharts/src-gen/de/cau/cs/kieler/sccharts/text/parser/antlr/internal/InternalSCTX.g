@@ -13152,87 +13152,94 @@ ruleInitExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getInitExpressionAccess().getFbyExpressionParserRuleCall_0());
+		}
+		this_FbyExpression_0=ruleFbyExpression
+		{
+			$current = $this_FbyExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
 			(
 				{
 					/* */
 				}
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getInitExpressionAccess().getOperatorExpressionAction_0_0(),
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
 						$current);
 				}
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsFbyExpressionParserRuleCall_0_1_0());
-					}
-					lv_subExpressions_1_0=ruleFbyExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_1_1_0_0());
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_1_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.FbyExpression");
-						afterParserOrEnumRuleCall();
-					}
+						lv_operator_2_0=ruleInitOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.InitOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsFbyExpressionParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleFbyExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.FbyExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)
 			(
+				otherlv_4='->'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getInitExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0());
-					}
-					lv_operator_2_0=ruleInitOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsFbyExpressionParserRuleCall_1_2_1_0());
 						}
-						set(
-							$current,
-							"operator",
-							lv_operator_2_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.InitOperator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsFbyExpressionParserRuleCall_0_3_0());
-					}
-					lv_subExpressions_3_0=ruleFbyExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+						lv_subExpressions_5_0=ruleFbyExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.FbyExpression");
+							afterParserOrEnumRuleCall();
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_3_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.FbyExpression");
-						afterParserOrEnumRuleCall();
-					}
+					)
 				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getInitExpressionAccess().getFbyExpressionParserRuleCall_1());
-		}
-		this_FbyExpression_4=ruleFbyExpression
-		{
-			$current = $this_FbyExpression_4.current;
-			afterParserOrEnumRuleCall();
-		}
+			)*
+		)?
 	)
 ;
 
@@ -13252,87 +13259,94 @@ ruleFbyExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getFbyExpressionAccess().getImpliesExpressionParserRuleCall_0());
+		}
+		this_ImpliesExpression_0=ruleImpliesExpression
+		{
+			$current = $this_ImpliesExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
 			(
 				{
 					/* */
 				}
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getFbyExpressionAccess().getOperatorExpressionAction_0_0(),
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
 						$current);
 				}
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_0_1_0());
-					}
-					lv_subExpressions_1_0=ruleImpliesExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getOperatorFbyOperatorEnumRuleCall_1_1_0_0());
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_1_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesExpression");
-						afterParserOrEnumRuleCall();
-					}
+						lv_operator_2_0=ruleFbyOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.FbyOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleImpliesExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)
 			(
+				otherlv_4='fby'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getFbyExpressionAccess().getFbyKeyword_1_2_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getFbyExpressionAccess().getOperatorFbyOperatorEnumRuleCall_0_2_0());
-					}
-					lv_operator_2_0=ruleFbyOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_1_2_1_0());
 						}
-						set(
-							$current,
-							"operator",
-							lv_operator_2_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.FbyOperator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsImpliesExpressionParserRuleCall_0_3_0());
-					}
-					lv_subExpressions_3_0=ruleImpliesExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+						lv_subExpressions_5_0=ruleImpliesExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesExpression");
+							afterParserOrEnumRuleCall();
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_3_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesExpression");
-						afterParserOrEnumRuleCall();
-					}
+					)
 				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getFbyExpressionAccess().getImpliesExpressionParserRuleCall_1());
-		}
-		this_ImpliesExpression_4=ruleImpliesExpression
-		{
-			$current = $this_ImpliesExpression_4.current;
-			afterParserOrEnumRuleCall();
-		}
+			)*
+		)?
 	)
 ;
 
@@ -13352,87 +13366,94 @@ ruleImpliesExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getImpliesExpressionAccess().getAtMostOneOfExpressionParserRuleCall_0());
+		}
+		this_AtMostOneOfExpression_0=ruleAtMostOneOfExpression
+		{
+			$current = $this_AtMostOneOfExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
 			(
 				{
 					/* */
 				}
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getImpliesExpressionAccess().getOperatorExpressionAction_0_0(),
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
 						$current);
 				}
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_0_1_0());
-					}
-					lv_subExpressions_1_0=ruleAtMostOneOfExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorImpliesOperatorEnumRuleCall_1_1_0_0());
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_1_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfExpression");
-						afterParserOrEnumRuleCall();
-					}
+						lv_operator_2_0=ruleImpliesOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleAtMostOneOfExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfExpression");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)
 			(
+				otherlv_4='implies'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getImpliesExpressionAccess().getImpliesKeyword_1_2_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getOperatorImpliesOperatorEnumRuleCall_0_2_0());
-					}
-					lv_operator_2_0=ruleImpliesOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_1_2_1_0());
 						}
-						set(
-							$current,
-							"operator",
-							lv_operator_2_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.ImpliesOperator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getImpliesExpressionAccess().getSubExpressionsAtMostOneOfExpressionParserRuleCall_0_3_0());
-					}
-					lv_subExpressions_3_0=ruleAtMostOneOfExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+						lv_subExpressions_5_0=ruleAtMostOneOfExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getImpliesExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfExpression");
+							afterParserOrEnumRuleCall();
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_3_0,
-							"de.cau.cs.kieler.kexpressions.KExpressions.AtMostOneOfExpression");
-						afterParserOrEnumRuleCall();
-					}
+					)
 				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getImpliesExpressionAccess().getAtMostOneOfExpressionParserRuleCall_1());
-		}
-		this_AtMostOneOfExpression_4=ruleAtMostOneOfExpression
-		{
-			$current = $this_AtMostOneOfExpression_4.current;
-			afterParserOrEnumRuleCall();
-		}
+			)*
+		)?
 	)
 ;
 

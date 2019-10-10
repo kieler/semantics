@@ -279,16 +279,25 @@ TernaryOperation returns Expression:
     | InitExpression;
     
 InitExpression returns Expression:
-    {OperatorExpression} subExpressions += FbyExpression operator=InitOperator subExpressions += FbyExpression
-    | FbyExpression;
+    FbyExpression 
+    ({OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=FbyExpression) 
+        ('->' subExpressions+=FbyExpression)*
+    )?;
     
 FbyExpression returns Expression:
-    {OperatorExpression} subExpressions += ImpliesExpression operator=FbyOperator subExpressions += ImpliesExpression
-    | ImpliesExpression;
-    
+    ImpliesExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=ImpliesExpression)
+        ('fby' subExpressions+=ImpliesExpression)*
+    )?;
+
 ImpliesExpression returns Expression:
-    {OperatorExpression} subExpressions += AtMostOneOfExpression operator= ImpliesOperator subExpressions += AtMostOneOfExpression
-    | AtMostOneOfExpression;
+    AtMostOneOfExpression
+    ({OperatorExpression.subExpressions+=current}
+        (operator=ImpliesOperator subExpressions+=AtMostOneOfExpression)
+        ('implies' subExpressions+=AtMostOneOfExpression)*
+    )?;
     
 AtMostOneOfExpression returns Expression:
     {OperatorExpression} 

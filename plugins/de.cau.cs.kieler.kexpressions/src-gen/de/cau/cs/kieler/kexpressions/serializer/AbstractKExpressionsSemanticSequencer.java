@@ -236,8 +236,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 						|| rule == grammarAccess.getNegExpressionRule()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
+						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getImpliesExpressionRule()
+						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
 						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
@@ -364,9 +367,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -457,9 +465,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -550,9 +563,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -643,9 +661,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -741,9 +764,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -839,9 +867,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -937,9 +970,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -1031,9 +1069,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -1085,8 +1128,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     InitExpression returns OperatorExpression
+	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     FbyExpression returns OperatorExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AtMostOneOfExpression returns OperatorExpression
 	 *     NoneOfExpression returns OperatorExpression
 	 *     AtomicExpression returns OperatorExpression
@@ -1168,9 +1214,14 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *         ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
@@ -1232,8 +1283,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns BoolValue
 	 *     TernaryOperation returns BoolValue
 	 *     InitExpression returns BoolValue
+	 *     InitExpression.OperatorExpression_1_0 returns BoolValue
 	 *     FbyExpression returns BoolValue
+	 *     FbyExpression.OperatorExpression_1_0 returns BoolValue
 	 *     ImpliesExpression returns BoolValue
+	 *     ImpliesExpression.OperatorExpression_1_0 returns BoolValue
 	 *     AtMostOneOfExpression returns BoolValue
 	 *     NoneOfExpression returns BoolValue
 	 *     AtomicExpression returns BoolValue
@@ -1308,8 +1362,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns FloatValue
 	 *     TernaryOperation returns FloatValue
 	 *     InitExpression returns FloatValue
+	 *     InitExpression.OperatorExpression_1_0 returns FloatValue
 	 *     FbyExpression returns FloatValue
+	 *     FbyExpression.OperatorExpression_1_0 returns FloatValue
 	 *     ImpliesExpression returns FloatValue
+	 *     ImpliesExpression.OperatorExpression_1_0 returns FloatValue
 	 *     AtMostOneOfExpression returns FloatValue
 	 *     NoneOfExpression returns FloatValue
 	 *     AtomicExpression returns FloatValue
@@ -1384,8 +1441,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns FunctionCall
 	 *     TernaryOperation returns FunctionCall
 	 *     InitExpression returns FunctionCall
+	 *     InitExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     FbyExpression returns FunctionCall
+	 *     FbyExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     ImpliesExpression returns FunctionCall
+	 *     ImpliesExpression.OperatorExpression_1_0 returns FunctionCall
 	 *     AtMostOneOfExpression returns FunctionCall
 	 *     NoneOfExpression returns FunctionCall
 	 *     AtomicExpression returns FunctionCall
@@ -1465,8 +1525,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns IntValue
 	 *     TernaryOperation returns IntValue
 	 *     InitExpression returns IntValue
+	 *     InitExpression.OperatorExpression_1_0 returns IntValue
 	 *     FbyExpression returns IntValue
+	 *     FbyExpression.OperatorExpression_1_0 returns IntValue
 	 *     ImpliesExpression returns IntValue
+	 *     ImpliesExpression.OperatorExpression_1_0 returns IntValue
 	 *     AtMostOneOfExpression returns IntValue
 	 *     NoneOfExpression returns IntValue
 	 *     AtomicExpression returns IntValue
@@ -1659,8 +1722,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns RandomCall
 	 *     TernaryOperation returns RandomCall
 	 *     InitExpression returns RandomCall
+	 *     InitExpression.OperatorExpression_1_0 returns RandomCall
 	 *     FbyExpression returns RandomCall
+	 *     FbyExpression.OperatorExpression_1_0 returns RandomCall
 	 *     ImpliesExpression returns RandomCall
+	 *     ImpliesExpression.OperatorExpression_1_0 returns RandomCall
 	 *     AtMostOneOfExpression returns RandomCall
 	 *     NoneOfExpression returns RandomCall
 	 *     AtomicExpression returns RandomCall
@@ -1727,8 +1793,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns RandomizeCall
 	 *     TernaryOperation returns RandomizeCall
 	 *     InitExpression returns RandomizeCall
+	 *     InitExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     FbyExpression returns RandomizeCall
+	 *     FbyExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     ImpliesExpression returns RandomizeCall
+	 *     ImpliesExpression.OperatorExpression_1_0 returns RandomizeCall
 	 *     AtMostOneOfExpression returns RandomizeCall
 	 *     NoneOfExpression returns RandomizeCall
 	 *     AtomicExpression returns RandomizeCall
@@ -1795,8 +1864,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns ReferenceCall
 	 *     TernaryOperation returns ReferenceCall
 	 *     InitExpression returns ReferenceCall
+	 *     InitExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     FbyExpression returns ReferenceCall
+	 *     FbyExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     ImpliesExpression returns ReferenceCall
+	 *     ImpliesExpression.OperatorExpression_1_0 returns ReferenceCall
 	 *     AtMostOneOfExpression returns ReferenceCall
 	 *     NoneOfExpression returns ReferenceCall
 	 *     AtomicExpression returns ReferenceCall
@@ -1884,8 +1956,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns StringValue
 	 *     TernaryOperation returns StringValue
 	 *     InitExpression returns StringValue
+	 *     InitExpression.OperatorExpression_1_0 returns StringValue
 	 *     FbyExpression returns StringValue
+	 *     FbyExpression.OperatorExpression_1_0 returns StringValue
 	 *     ImpliesExpression returns StringValue
+	 *     ImpliesExpression.OperatorExpression_1_0 returns StringValue
 	 *     AtMostOneOfExpression returns StringValue
 	 *     NoneOfExpression returns StringValue
 	 *     AtomicExpression returns StringValue
@@ -1960,8 +2035,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns TextExpression
 	 *     TernaryOperation returns TextExpression
 	 *     InitExpression returns TextExpression
+	 *     InitExpression.OperatorExpression_1_0 returns TextExpression
 	 *     FbyExpression returns TextExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns TextExpression
 	 *     ImpliesExpression returns TextExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns TextExpression
 	 *     AtMostOneOfExpression returns TextExpression
 	 *     NoneOfExpression returns TextExpression
 	 *     AtomicExpression returns TextExpression
@@ -2028,8 +2106,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns ValuedObjectReference
 	 *     TernaryOperation returns ValuedObjectReference
 	 *     InitExpression returns ValuedObjectReference
+	 *     InitExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     FbyExpression returns ValuedObjectReference
+	 *     FbyExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     ImpliesExpression returns ValuedObjectReference
+	 *     ImpliesExpression.OperatorExpression_1_0 returns ValuedObjectReference
 	 *     AtMostOneOfExpression returns ValuedObjectReference
 	 *     NoneOfExpression returns ValuedObjectReference
 	 *     AtomicExpression returns ValuedObjectReference
@@ -2109,8 +2190,11 @@ public abstract class AbstractKExpressionsSemanticSequencer extends AnnotationsS
 	 *     NegExpression returns VectorValue
 	 *     TernaryOperation returns VectorValue
 	 *     InitExpression returns VectorValue
+	 *     InitExpression.OperatorExpression_1_0 returns VectorValue
 	 *     FbyExpression returns VectorValue
+	 *     FbyExpression.OperatorExpression_1_0 returns VectorValue
 	 *     ImpliesExpression returns VectorValue
+	 *     ImpliesExpression.OperatorExpression_1_0 returns VectorValue
 	 *     AtMostOneOfExpression returns VectorValue
 	 *     NoneOfExpression returns VectorValue
 	 *     AtomicExpression returns VectorValue

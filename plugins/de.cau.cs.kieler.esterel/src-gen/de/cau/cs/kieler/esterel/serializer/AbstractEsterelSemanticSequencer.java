@@ -533,15 +533,18 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 					sequence_AddExpression_AndExpression_AtMostOneOfExpression_CompareOperation_DivExpression_FbyExpression_ImpliesExpression_InitExpression_ModExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getFbyExpressionRule()) {
+				else if (action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getFbyExpressionRule()) {
 					sequence_AddExpression_AndExpression_AtMostOneOfExpression_CompareOperation_DivExpression_FbyExpression_ImpliesExpression_ModExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getImpliesExpressionRule()) {
+				else if (action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getImpliesExpressionRule()) {
 					sequence_AddExpression_AndExpression_AtMostOneOfExpression_CompareOperation_DivExpression_ImpliesExpression_ModExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getAtMostOneOfExpressionRule()) {
+				else if (action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
+						|| rule == grammarAccess.getAtMostOneOfExpressionRule()) {
 					sequence_AddExpression_AndExpression_AtMostOneOfExpression_CompareOperation_DivExpression_ModExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_OrExpression_SubExpression_ValuedObjectPreExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
@@ -977,9 +980,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *             subExpressions+=AtomicValuedExpression 
 	 *             subExpressions+=AtomicValuedExpression?
 	 *         ) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
 	 *     )
@@ -1007,9 +1015,14 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=FbyExpression operator=InitOperator subExpressions+=FbyExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
 	 *     )
@@ -1021,6 +1034,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     FbyExpression returns OperatorExpression
 	 *
 	 * Constraint:
@@ -1037,8 +1051,13 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=ImpliesExpression operator=FbyOperator subExpressions+=ImpliesExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
 	 *     )
@@ -1050,6 +1069,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     FbyExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
 	 *
 	 * Constraint:
@@ -1066,7 +1086,12 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *         (operator=EsterelSubOperator subExpressions+=NegExpression) | 
 	 *         (operator=EsterelPreOperator subExpressions+=ValuedObjectPreExpression) | 
 	 *         (operator=EsterelValueTestOperator subExpressions+=SignalReferenceExpression) | 
-	 *         (subExpressions+=AtMostOneOfExpression operator=ImpliesOperator subExpressions+=AtMostOneOfExpression) | 
+	 *         (
+	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
+	 *             operator=ImpliesOperator 
+	 *             subExpressions+=AtMostOneOfExpression 
+	 *             subExpressions+=AtMostOneOfExpression*
+	 *         ) | 
 	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
 	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
 	 *     )
@@ -1078,6 +1103,7 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	
 	/**
 	 * Contexts:
+	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     AtMostOneOfExpression returns OperatorExpression
 	 *
 	 * Constraint:
@@ -1819,8 +1845,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_2_0 returns ConstantExpression
 	 *     TernaryOperation returns ConstantExpression
 	 *     InitExpression returns ConstantExpression
+	 *     InitExpression.OperatorExpression_1_0 returns ConstantExpression
 	 *     FbyExpression returns ConstantExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns ConstantExpression
 	 *     ImpliesExpression returns ConstantExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns ConstantExpression
 	 *     AtMostOneOfExpression returns ConstantExpression
 	 *     NoneOfExpression returns ConstantExpression
 	 *     VectorValueMember returns ConstantExpression
@@ -1977,8 +2006,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_2_0 returns EsterelFunctionCall
 	 *     TernaryOperation returns EsterelFunctionCall
 	 *     InitExpression returns EsterelFunctionCall
+	 *     InitExpression.OperatorExpression_1_0 returns EsterelFunctionCall
 	 *     FbyExpression returns EsterelFunctionCall
+	 *     FbyExpression.OperatorExpression_1_0 returns EsterelFunctionCall
 	 *     ImpliesExpression returns EsterelFunctionCall
+	 *     ImpliesExpression.OperatorExpression_1_0 returns EsterelFunctionCall
 	 *     AtMostOneOfExpression returns EsterelFunctionCall
 	 *     NoneOfExpression returns EsterelFunctionCall
 	 *     VectorValueMember returns EsterelFunctionCall
@@ -2922,8 +2954,11 @@ public abstract class AbstractEsterelSemanticSequencer extends SCLSemanticSequen
 	 *     ProductExpression.OperatorExpression_1_2_0 returns TrapExpression
 	 *     TernaryOperation returns TrapExpression
 	 *     InitExpression returns TrapExpression
+	 *     InitExpression.OperatorExpression_1_0 returns TrapExpression
 	 *     FbyExpression returns TrapExpression
+	 *     FbyExpression.OperatorExpression_1_0 returns TrapExpression
 	 *     ImpliesExpression returns TrapExpression
+	 *     ImpliesExpression.OperatorExpression_1_0 returns TrapExpression
 	 *     AtMostOneOfExpression returns TrapExpression
 	 *     NoneOfExpression returns TrapExpression
 	 *     VectorValueMember returns TrapExpression
