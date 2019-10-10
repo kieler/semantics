@@ -132,7 +132,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//EsterelParallel
 		public RuleCall getStatementsEsterelParallelParserRuleCall_5_0() { return cStatementsEsterelParallelParserRuleCall_5_0; }
 		
-		//"end" "module" | "."
+		//("end" "module" | ".")
 		public Alternatives getAlternatives_6() { return cAlternatives_6; }
 		
 		//"end" "module"
@@ -269,7 +269,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//{EsterelThread.statements+=current}
 		public Action getEsterelThreadStatementsAction_0_1_0() { return cEsterelThreadStatementsAction_0_1_0; }
 		
-		//=> ";" statements+=EsterelThread
+		//(=> ";" statements+=EsterelThread)
 		public Group getGroup_0_1_1() { return cGroup_0_1_1; }
 		
 		//=> ";"
@@ -451,7 +451,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
 		
-		//"(" expression=Expression ")"
+		//("(" expression=Expression ")")
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//"("
@@ -2790,7 +2790,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// Test Entity Rule
 	//// A test entity is either an annotation expression or an effect.
 	//TestEntity kext::TestEntity:
-	//	expression=AnnotatedExpression | effect=Effect;
+	//	expression=(AnnotatedExpression | AnnotatedJsonExpression) | effect=Effect;
 	public KExtGrammarAccess.TestEntityElements getTestEntityAccess() {
 		return gaKExt.getTestEntityAccess();
 	}
@@ -2812,6 +2812,18 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotatedExpressionRule() {
 		return getAnnotatedExpressionAccess().getRule();
+	}
+	
+	//AnnotatedJsonExpression kext::AnnotatedExpression:
+	//	annotations+=super::Annotation*
+	//	'json'
+	//	expression=JsonObjectValue;
+	public KExtGrammarAccess.AnnotatedJsonExpressionElements getAnnotatedJsonExpressionAccess() {
+		return gaKExt.getAnnotatedJsonExpressionAccess();
+	}
+	
+	public ParserRule getAnnotatedJsonExpressionRule() {
+		return getAnnotatedJsonExpressionAccess().getRule();
 	}
 	
 	//// Declaration Rule
@@ -3223,8 +3235,7 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=super::Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
-	//	schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -3456,10 +3467,9 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
