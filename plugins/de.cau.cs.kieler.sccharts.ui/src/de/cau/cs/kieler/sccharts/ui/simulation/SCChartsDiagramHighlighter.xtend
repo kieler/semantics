@@ -197,7 +197,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         }
                                     }
                                 }
-                                if (original instanceof ValuedObjectReference) {
+                                else if (original instanceof ValuedObjectReference) {
                                     val object = (original as ValuedObjectReference).valuedObject
                                     val entry = sourcePool.findValue(object.name)
                                     for (e : first.outgoingEdges) {
@@ -211,7 +211,7 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         }
                                     }
                                 }
-                                if (original instanceof OperatorExpression) {
+                                else if (original instanceof OperatorExpression) {
                                     var t = false
                                     var continue = false
                                     if ((original as OperatorExpression).operator != OperatorType.PRE) {
@@ -282,6 +282,15 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         }
                                     }
                                 }
+                                else {
+                                    for (e : first.outgoingEdges) {
+                                        if (!visited.contains(e)) {
+                                            visited.add(e)
+                                            if (!next.contains(e.target))
+                                                next.add(e.target)
+                                        }
+                                    }
+                                }
                             }
                             next += region.children.filter [
                                 getDiagramViewContext().getSourceElement(it) instanceof OperatorExpression &&
@@ -297,10 +306,16 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     t = entry != null && entry.variableInformation.get(0).type == ValueType.BOOL &&
                                         entry.rawValue.asBoolean
                                 }
-                                if (t) {
-                                    for (e : pre.incomingEdges) {
-                                        if (currentWireHighlighting.filter[it.element == e].size == 0)
+                                for (e : pre.incomingEdges) {
+                                    if (currentWireHighlighting.filter[it.element == e].size == 0) {
+                                        if (t)
                                             currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                    } else {
+                                        if (!t) {
+                                            currentWireHighlighting.remove(currentWireHighlighting.filter[
+                                                it.element == e
+                                            ].get(0))
+                                        }
                                     }
                                 }
                             }

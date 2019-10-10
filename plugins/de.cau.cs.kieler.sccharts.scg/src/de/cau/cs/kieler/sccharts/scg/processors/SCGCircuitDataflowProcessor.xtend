@@ -98,7 +98,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                                 it.declarations.add(nv)
                             else {
                                 nr.declarations.add(nv)
-                                nv.createStringAnnotation("hide", "")
+                                nv.annotations += createTagAnnotation("hide")
                             }
                             if (nv.valuedObjects.length > 1) {
                                 val na = nv.valuedObjects.get(0).createAssignment
@@ -109,7 +109,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                             }
                             if (goValue !== null) {
                                 val dec = createBoolDeclaration
-                                dec.createStringAnnotation("hide", "")
+                                dec.annotations += createTagAnnotation("hide")
                                 val go2 = nr.createValuedObject("preFirstTick", dec)
                                 go2.initialValue = TRUE
                                 val na = goValue.createAssignment
@@ -152,7 +152,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     for (vo : globalDec.valuedObjects)
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                     dataflowRegion.declarations.add(localDec)
-                    localDec.createStringAnnotation("hide", "")
+                    localDec.annotations += createTagAnnotation("hide")
                     for (vo : localDec.valuedObjects)
                         VariableStore.getVariableStore(environment).update(vo, SCCHARTS_GENERATED)
                 }
