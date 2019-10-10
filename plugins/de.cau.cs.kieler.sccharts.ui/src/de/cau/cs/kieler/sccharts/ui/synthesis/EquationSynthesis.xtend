@@ -149,7 +149,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
         "ARITHMETICAL_SUB" ->
             #["OperatorExpressionArithmeticalSUB.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "VAL" -> #["OperatorExpressionVAL.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
-        "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionUnary.kgt", "OperatorExpression.kgt"],
+        "NE" -> #["OperatorExpressionNE.kgt", "OperatorExpressionArithmetical.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL_UPDATE" -> #["OperatorExpressionUPDATE.kgt", "OperatorExpression.kgt"],
         "CONDITIONAL" -> #["OperatorExpressionCONDITIONAL.kgt", "OperatorExpression.kgt"],
         "INIT" -> #["OperatorExpressionINIT.kgt", "OperatorExpression.kgt"],
@@ -691,7 +691,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 }
                 case SUB:
                     figureId = if(figureObject.subExpressions.size == 1) "UNARY_SUB" else "ARITHMETICAL_SUB"
-                case ADD,
+                /*case ADD,
                 case MULT,
                 case DIV,
                 case SHIFT_LEFT,
@@ -705,7 +705,7 @@ class EquationSynthesis extends SubSynthesis<Assignment, KNode> {
                 case LT: {
                     portLabels.put(0, figureObject.operator.serializeHR.toString)
                     portLabels.put(1, figureObject.operator.serializeHR.toString)
-                }
+                }*/
                 default: {
                 }
             }

@@ -42,6 +42,13 @@ import de.cau.cs.kieler.simulation.ui.visualization.ValuedHighlighting
 import java.util.List
 import java.util.Set
 import java.util.stream.Collectors
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.klighd.LightDiagramLayoutConfig
+import de.cau.cs.kieler.klighd.ZoomStyle
+import java.util.ArrayList
+import java.util.HashMap
 
 /**
  * Highlighter for SCCharts diagrams.
@@ -187,12 +194,16 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                 val first = next.get(0)
                                 next.remove(0)
                                 val original = getDiagramViewContext().getSourceElement(first)
-                                if (original instanceof BoolValue) {
+                                if (original instanceof Value) {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
-                                            if ((original as BoolValue).value)
+                                            if (original instanceof BoolValue && (original as BoolValue).value)
                                                 currentWireHighlighting.add(new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                            if (original instanceof IntValue)
+                                                currentWireHighlighting.add(new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, (original as IntValue).value, (original as IntValue).value != 0))
+                                            if (original instanceof FloatValue)
+                                                currentWireHighlighting.add(new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, new Float((original as FloatValue).value), (original as FloatValue).value != 0))
                                             if (!next.contains(e.target))
                                                 next.add(e.target)
                                         }
@@ -203,12 +214,20 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     for (e : first.outgoingEdges) {
                                         if (!visited.contains(e)) {
                                             visited.add(e)
-                                            switch ( entry.variableInformation.get(0).type ) {
-                                                case ValueType.BOOL:
-                                                    if (entry.rawValue.asBoolean)
+                                            if( entry !== null ){
+                                                switch ( entry.variableInformation.get(0).type ) {
+                                                    case ValueType.BOOL:
+                                                        if (entry.rawValue.asBoolean)
+                                                            currentWireHighlighting.add(
+                                                                new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                    case ValueType.INT:
                                                         currentWireHighlighting.add(
-                                                            new Highlighting(e, CURRENT_ELEMENT_STYLE))
-                                                default: {
+                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, entry.rawValue.asInt, entry.rawValue.asInt != 0))
+                                                    case ValueType.FLOAT:
+                                                        currentWireHighlighting.add(
+                                                            new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, new Float(entry.rawValue.asFloat), entry.rawValue.asFloat != 0))
+                                                    default: {
+                                                    }
                                                 }
                                             }
                                             if (!next.contains(e.target))
@@ -216,8 +235,8 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                         }
                                     }
                                 } else if (original instanceof OperatorExpression) {
-                                    var t = false
                                     var continue = false
+                                    var Object value = null
                                     if ((original as OperatorExpression).operator != OperatorType.PRE && !cicle.contains(first)) {
                                         for (e : first.incomingEdges) {
                                             if (!visited.contains(e)) {
@@ -232,19 +251,22 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                     if (!continue) {
                                         switch ( (original as OperatorExpression).operator ) {
                                             case LOGICAL_AND: {
-                                                t = true
+                                                var t = true
                                                 for (e : first.incomingEdges) {
                                                     t = t && currentWireHighlighting.filter[it.element == e].size > 0
                                                 }
+                                                value = t
                                             }
                                             case LOGICAL_OR: {
+                                                var t = false
                                                 for (e : first.incomingEdges) {
                                                     t = t || currentWireHighlighting.filter[it.element == e].size > 0
                                                 }
+                                                value = t
                                             }
                                             case NOT: {
                                                 for (e : first.incomingEdges) {
-                                                    t = currentWireHighlighting.filter[it.element == e].size == 0
+                                                    value = currentWireHighlighting.filter[it.element == e].size == 0
                                                 }
                                             }
                                             case PRE: {
@@ -255,7 +277,11 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     if (entry !== null) {
                                                         switch ( entry.variableInformation.get(0).type ) {
                                                             case ValueType.BOOL:
-                                                                t = entry != null && entry.rawValue.asBoolean
+                                                                value = entry.rawValue.asBoolean
+                                                            case ValueType.INT:
+                                                                value = entry.rawValue.asInt
+                                                            case ValueType.FLOAT:
+                                                                value = new Float( entry.rawValue.asFloat )
                                                             default: {
                                                             }
                                                         }
@@ -264,26 +290,30 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                             }
                                             case CONDITIONAL: {
                                                 var condition = false
-                                                var trueCase = false
-                                                var falseCase = false
+                                                var Object trueValue = null
+                                                var Object falseValue = null
                                                 for (e : first.incomingEdges) {
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in0")
                                                         condition = currentWireHighlighting.filter[it.element == e].
                                                             size > 0
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in1") {
                                                         val h = currentWireHighlighting.filter[it.element == e]
-                                                        trueCase = h.size > 0
+                                                        trueValue = h.size > 0
+                                                        if( h.size > 0 && h.get( 0 ) instanceof ValuedHighlighting)
+                                                            trueValue = (h.get( 0 ) as ValuedHighlighting).value
                                                     }
                                                     if (e.targetPort.data.filter(KIdentifier).map[id].get(0) == "in2") {
                                                         val h = currentWireHighlighting.filter[it.element == e]
-                                                        falseCase = h.size > 0
+                                                        falseValue = h.size > 0
+                                                        if( h.size > 0 && h.get( 0 ) instanceof ValuedHighlighting)
+                                                            falseValue = (h.get( 0 ) as ValuedHighlighting).value
                                                     }
                                                 }
-                                                t = condition ? trueCase : falseCase
+                                                value = condition ? trueValue : falseValue
                                             }
                                             case EQ: {
                                                 var Object last = null
-                                                t = true
+                                                var t = true
                                                 for (e : first.incomingEdges) {
                                                     var Object current = null
                                                     val h = currentWireHighlighting.filter[it.element == e]
@@ -300,8 +330,10 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     }
                                                     last = current
                                                 }
+                                                value = t
                                             }
                                             case NE: {
+                                                var t = false
                                                 var Object last = null
                                                 for (e : first.incomingEdges) {
                                                     var Object current = null
@@ -319,14 +351,25 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
                                                     }
                                                     last = current
                                                 }
+                                                value = t
+                                            }
+                                            default:{
+                                                value = (original as OperatorExpression).operator.eval(first.findParams(currentWireHighlighting))
                                             }
                                         }
                                         for (e : first.outgoingEdges) {
                                             if (!visited.contains(e)) {
                                                 visited.add(e)
-                                                if (t) {
+                                                if (value instanceof Boolean) {
+                                                    if( (value as Boolean) )
+                                                        currentWireHighlighting.add(
+                                                            new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                }
+                                                else if( value !== null ){
+                                                    if( value instanceof Double )
+                                                        value = new Float( (value as Double).doubleValue as float )
                                                     currentWireHighlighting.add(
-                                                        new Highlighting(e, CURRENT_ELEMENT_STYLE))
+                                                        new ValuedHighlighting(e, CURRENT_ELEMENT_STYLE, value, (value instanceof Integer ? (value as Integer) != 0 : (value as Float) != 0)))
                                                 }
                                                 if (!next.contains(e.target))
                                                     next.add(e.target)
@@ -353,7 +396,163 @@ class SCChartsDiagramHighlighter extends DiagramHighlighter {
             val highlighting = traversedGraphHighlighting + currentGraphHighlighting + 
                 currentDataflowHighlighting + currentWireHighlighting
             highlightDiagram(highlighting)
+            
+            val layoutConfig = new LightDiagramLayoutConfig(diagramViewContext)
+            layoutConfig.zoomStyle(ZoomStyle.NONE)
+            layoutConfig.performLayout
         }
+    }
+    
+    private def findParams(KNode node, ArrayList<Highlighting> highlighting) {
+        val params = newHashMap
+        for (e : node.incomingEdges) {
+            val h = highlighting.filter[it.element == e]
+            if (h.size > 0 && h.get(0) instanceof ValuedHighlighting)
+                params.put(e.targetPort.data.filter(KIdentifier).map[id].get(0), (h.get(0) as ValuedHighlighting).value)
+            else if (h.size > 0)
+                params.put(e.targetPort.data.filter(KIdentifier).map[id].get(0), true)
+            else
+                params.put(e.targetPort.data.filter(KIdentifier).map[id].get(0), null)
+        }
+        return params
+    }
+
+    private def eval(OperatorType o, HashMap<String, Object> params) {
+        var Object result = null
+        if (params.get("in0") !== null && params.get("in1") !== null) {
+            switch ( o ) {
+                case LT: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) < (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) < (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) < (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) < (params.get("in1") as Float)
+                }
+                case ADD: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) + (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) + (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) + (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) + (params.get("in1") as Float)
+                }
+                case BITWISE_AND: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer).bitwiseAnd(params.get("in1") as Integer)
+                }
+                case BITWISE_OR: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer).bitwiseOr(params.get("in1") as Integer)
+                }
+                case BITWISE_XOR: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer).bitwiseXor(params.get("in1") as Integer)
+                }
+                case DIV: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) / (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) / (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) / (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) / (params.get("in1") as Float)
+                }
+                case GEQ: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) >= (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) >= (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) >= (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) >= (params.get("in1") as Float)
+                }
+                case GT: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) > (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) > (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) > (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) > (params.get("in1") as Float)
+                }
+                case INTDIV: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) / (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = ((params.get("in0") as Integer) / (params.get("in1") as Float)) as int
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = ((params.get("in0") as Float) / (params.get("in1") as Integer)) as int
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = ((params.get("in0") as Float) / (params.get("in1") as Float)) as int
+                }
+                case LEQ: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) <= (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) <= (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) <= (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) <= (params.get("in1") as Float)
+                }
+                case MOD: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) % (params.get("in1") as Integer)
+                }
+                case MULT: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) * (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) * (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) * (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) * (params.get("in1") as Float)
+                }
+                case SHIFT_LEFT: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) << (params.get("in1") as Integer)
+                }
+                case SHIFT_RIGHT: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) >> (params.get("in1") as Integer)
+                }
+                case SHIFT_RIGHT_UNSIGNED: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) >>> (params.get("in1") as Integer)
+                }
+                case SUB: {
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Integer) - (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Integer && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Integer) - (params.get("in1") as Float)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Integer)
+                        result = (params.get("in0") as Float) - (params.get("in1") as Integer)
+                    if (params.get("in0") instanceof Float && params.get("in1") instanceof Float)
+                        result = (params.get("in0") as Float) - (params.get("in1") as Float)
+                }
+                default: {
+                }
+            }
+        } else if (params.get("in0") !== null) {
+            switch ( o ) {
+                case BITWISE_NOT: {
+                    if (params.get("in0") instanceof Integer)
+                        result = (params.get("in0") as Integer).bitwiseNot
+                }
+                default: {
+                }
+            }
+        }
+        return result
     }
     
     def private findPreValue( SimulationContext ctx, String name ){
