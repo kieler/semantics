@@ -649,7 +649,7 @@ class SCChartsVerificationBenchmark extends AbstractSCChartsVerificationTest {
         for(processor : currentVerificationContext.processorInstances) {
             if(!(processor instanceof RunModelCheckerProcessorBase)) {
                 val env = processor.environment
-                overallTimeNanons += env.getProperty(Environment.OVERALL_TIME)                
+                overallTimeNanons += env.getProperty(Environment.TRANSFORMATION_TIME)                
             }
         }
         codeGenTimeSecs = overallTimeNanons / 1000_000_000.0

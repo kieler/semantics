@@ -317,7 +317,7 @@ class KielerCompilerCLI implements Runnable, Observer {
     override update(Observable o, Object event) {
         switch (event) {
             CompilationFinished: {
-                if (verbose) println("Compilation finished in %dms".format(event.environment.getProperty(Environment.OVERALL_PTIME)))
+                if (verbose) println("Compilation finished in %.2fms".format(event.environment.getProperty(Environment.COMPILATION_TIME).doubleValue / 1000_000))
             }
             ProcessorStart: {
                 if (verbose) println("Executing processor: %s (%s)".format(event.processorInstance.name, event.processorInstance.id))
@@ -364,7 +364,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     }
                 }
                 if (verbose) {
-                    println("Processing time: %dms".format(env.getProperty(Environment.PTIME)))
+                    println("Processing time: %.2fms".format(env.getProperty(Environment.TRANSFORMATION_TIME).doubleValue / 1000_000))
                 }
                 if (intermediates) {
                     if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE))) {
