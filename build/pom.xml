@@ -39,24 +39,23 @@
       <modules>
         <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
-        <module>../test</module>
         <module>../features</module>
         <module>de.cau.cs.kieler.semantics.repository</module>
       </modules>
     </profile>
 
 
-    <!-- Extended test profile including cli tests. -->
+    <!-- Test profile including cli tests. -->
     <profile>
       <id>semantics.test</id>
 
       <modules>
         <module>../plugins</module>
         <module>de.cau.cs.kieler.semantics.targetplatform</module>
-        <module>de.cau.cs.kieler.sccharts.cli</module> <!-- Additional CLI build -->
-        <module>de.cau.cs.kieler.kicool.cli</module> <!-- Additional CLI build -->
         <module>../test</module>
-        <module>../test/de.cau.cs.kieler.cli.test</module> <!-- Additional CLI test -->
+        <module>de.cau.cs.kieler.sccharts.cli</module>
+        <module>de.cau.cs.kieler.kicool.cli</module>
+        <module>../test/de.cau.cs.kieler.cli.test</module>
       </modules>
     </profile>
   
