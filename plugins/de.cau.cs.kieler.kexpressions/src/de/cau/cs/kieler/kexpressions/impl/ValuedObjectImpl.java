@@ -44,6 +44,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getCardinalities <em>Cardinalities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectImpl#getLabel <em>Label</em>}</li>
  * </ul>
  *
  * @generated
@@ -100,6 +101,26 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
 	protected EList<Expression> cardinalities;
 
 				/**
+     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected static final String LABEL_EDEFAULT = null;
+
+    /**
+     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getLabel()
+     * @generated
+     * @ordered
+     */
+    protected String label = LABEL_EDEFAULT;
+
+                /**
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -195,6 +216,29 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
      * @generated
      */
     @Override
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void setLabel(String newLabel) {
+        String oldLabel = label;
+        label = newLabel;
+        if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, KExpressionsPackage.VALUED_OBJECT__LABEL, oldLabel, label));
+    }
+
+                /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
         switch (featureID) {
             case KExpressionsPackage.VALUED_OBJECT__ANNOTATIONS:
@@ -246,6 +290,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return getInitialValue();
             case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 return getCardinalities();
+            case KExpressionsPackage.VALUED_OBJECT__LABEL:
+                return getLabel();
         }
         return super.eGet(featureID, resolve, coreType);
     }
@@ -273,6 +319,9 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 getCardinalities().clear();
                 getCardinalities().addAll((Collection<? extends Expression>)newValue);
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__LABEL:
+                setLabel((String)newValue);
+                return;
         }
         super.eSet(featureID, newValue);
     }
@@ -297,6 +346,9 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
             case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 getCardinalities().clear();
                 return;
+            case KExpressionsPackage.VALUED_OBJECT__LABEL:
+                setLabel(LABEL_EDEFAULT);
+                return;
         }
         super.eUnset(featureID);
     }
@@ -317,6 +369,8 @@ public class ValuedObjectImpl extends NamedObjectImpl implements ValuedObject {
                 return initialValue != null;
             case KExpressionsPackage.VALUED_OBJECT__CARDINALITIES:
                 return cardinalities != null && !cardinalities.isEmpty();
+            case KExpressionsPackage.VALUED_OBJECT__LABEL:
+                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
         }
         return super.eIsSet(featureID);
     }
