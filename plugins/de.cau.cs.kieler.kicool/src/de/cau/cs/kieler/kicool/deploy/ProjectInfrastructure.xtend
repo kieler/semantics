@@ -66,6 +66,9 @@ class ProjectInfrastructure {
         
     public static val IProperty<Boolean> USE_GENERATED_FOLDER = 
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.use", true)
+        
+    public static val IProperty<String> GENERATED_FOLDER_ROOT = 
+        new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.root", null)
 
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
@@ -193,7 +196,12 @@ class ProjectInfrastructure {
                     }
                     generatedCodeFolder = gen.rawLocation.toFile
                 } else {
-                    generatedCodeFolder = new File(modelFolder, environment.getProperty(GENERATED_NAME))
+                    val folder = if (environment.getProperty(GENERATED_FOLDER_ROOT).nullOrEmpty) {
+                        modelFolder
+                    } else {
+                        new File(environment.getProperty(GENERATED_FOLDER_ROOT))
+                    }
+                    generatedCodeFolder = new File(folder, environment.getProperty(GENERATED_NAME))
                     if (!generatedCodeFolder.exists) {
                         generatedCodeFolder.mkdir
                     }
