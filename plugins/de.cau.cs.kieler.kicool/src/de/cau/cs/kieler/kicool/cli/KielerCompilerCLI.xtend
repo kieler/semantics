@@ -317,7 +317,7 @@ class KielerCompilerCLI implements Runnable, Observer {
     override update(Observable o, Object event) {
         switch (event) {
             CompilationFinished: {
-                if (verbose) println("Compilation finished")
+                if (verbose) println("Compilation finished in %dms".format(event.environment.getProperty(Environment.OVERALL_PTIME)))
             }
             ProcessorStart: {
                 if (verbose) println("Executing processor: %s (%s)".format(event.processorInstance.name, event.processorInstance.id))
@@ -358,13 +358,13 @@ class KielerCompilerCLI implements Runnable, Observer {
                             try {
                                 Files.write(new File(processorDir, log.fileName).toPath, log.code.getBytes())
                             } catch (Exception e) {
-                                println("Cannot save lag file %s to %s".format(log.fileName, processorDir))
+                                println("Cannot save log file %s to %s".format(log.fileName, processorDir))
                             }
                         }
                     }
                 }
                 if (verbose) {
-                    println("Processing time: %.1fms".format(env.getProperty(Environment.OVERALL_TIME).doubleValue / 1000))
+                    println("Processing time: %dms".format(env.getProperty(Environment.PTIME)))
                 }
                 if (intermediates) {
                     if (!env.model.saveModel(processorDir, env.getProperty(SOURCE_FILE))) {
@@ -411,10 +411,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
                 if (!dest.exists) {
                     if (model.files.size == 1) {
-                        if (dest.createNewFile) {
-                            println("Could not create target file: %s".format(dest))
-                            return false
-                        }
+                        dest.createNewFile
                     } else {
                         if (dest.mkdirs) {
                             println("Could not create output directory: %s".format(dest))
@@ -434,10 +431,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
             } else {
                 if (!dest.exists) {
-                    if (dest.createNewFile) {
-                        println("Could not create target file: %s".format(dest))
-                        return false
-                    }
+                    dest.createNewFile
                 }
                 if (model instanceof EObject) {
                     if (dest.isFile) {
