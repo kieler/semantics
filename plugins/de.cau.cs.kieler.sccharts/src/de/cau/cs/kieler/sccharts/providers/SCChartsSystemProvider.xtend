@@ -29,6 +29,7 @@ class SCChartsSystemProvider implements ISystemProvider {
         #[
             "system/de.cau.cs.kieler.sccharts.core.kico",
             "system/de.cau.cs.kieler.sccharts.extended.kico",
+            "system/de.cau.cs.kieler.sccharts.extended2.kico",
             "system/de.cau.cs.kieler.sccharts.extended.core.kico",
             "system/de.cau.cs.kieler.sccharts.core.core.kico",
             "system/de.cau.cs.kieler.sccharts.statebased.kico",

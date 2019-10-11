@@ -14,26 +14,29 @@
 package de.cau.cs.kieler.sccharts.processors
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
-import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
-import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
-import de.cau.cs.kieler.sccharts.State
-import de.cau.cs.kieler.sccharts.Transition
-import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
-import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.sccharts.processors.SCChartsProcessor
+import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
+import de.cau.cs.kieler.sccharts.State
+import de.cau.cs.kieler.kexpressions.OperatorExpression
+import de.cau.cs.kieler.kexpressions.OperatorType
+import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
+import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
+import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.Expression
 
 /**
- * SCCharts Init Operator Transformation.
+ * SCCharts Fby Transformation.
  * 
  * @author ssm
  * @kieler.design 2018-01-29 proposed 
@@ -69,57 +72,49 @@ class InitOperator extends SCChartsProcessor implements Traceable {
     }
     
     def transformInitOperator(State rootState) {
-        var allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.INIT ].toList
-        
-        for (init : allInits.indexed) {
-            var replaced = replaceInitPreByFby(init.value)
-            init.value.replace(replaced)
-        }
-        
-        allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.INIT ].toList
+        val allInits = rootState.eAllContents.filter(OperatorExpression).filter[ operator == OperatorType.INIT ].toList
+        val initInitParents = <OperatorExpression, ValuedObject> newHashMap 
         
         for (init : allInits.indexed) {
             val action = init.value.enclosingAction
-            val parent = if(action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
-
+            val parent = if (action instanceof Transition) action.enclosingState.enclosingState else action.enclosingState
+        
             if (parent !== null) {
+                val fbyTrigger = createValuedObject => [ name = GENERATED_PREFIX + init.key + "t" initialValue = FALSE ]
+                parent.declarations += createVariableDeclaration(ValueType.BOOL) => [ valuedObjects += fbyTrigger]
+                voStore.update(fbyTrigger, SCCHARTS_GENERATED)
                 
-                val localVariable = createValuedObject => [name = GENERATED_PREFIX + init.key]
-                parent.declarations += createVariableDeclaration(init.value.inferType) => [
-                    valuedObjects += localVariable
-                ]
+                val second = init.value.subExpressions.get(1)
+                val followingFby = if (second.isInitOperator) second else second.eAllContents.filter(OperatorExpression).filter[ isInitOperator ].head
+                if (followingFby !== null) {
+                    initInitParents.put(followingFby as OperatorExpression, fbyTrigger)
+                }
+                
+                val localVariable = createValuedObject => [ name = GENERATED_PREFIX + init.key ]
+                parent.declarations += createVariableDeclaration(init.value.inferType) => [ valuedObjects += localVariable ]
                 voStore.update(localVariable, SCCHARTS_GENERATED)
-
-                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + init.key) => [final = true]
                 
-                var initial = fbyRegion.createInitialState("__Init_")
-                var delay = fbyRegion.createState("__Delay_")
-                var loop = fbyRegion.createState("__Loop_")
+                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + init.key) => [ final = true ]
+                val initialState = fbyRegion.createInitialState("_Init")           
+                val delayState = fbyRegion.createState("_Delay")
+                val loopState = fbyRegion.createState("_Loop")     
                 
-                createImmediateTransitionTo(initial, delay) => [
-                    effects += createAssignment(localVariable, init.value.subExpressions.head)
-                ]
-                createTransitionTo(delay, loop) => [
-                    effects += createAssignment(localVariable, init.value.subExpressions.last)
-                ]
-                createImmediateTransitionTo(loop, delay)
+                val initialTransition = initialState.createImmediateTransitionTo(delayState)
+                val delayTransition = delayState.createTransitionTo(loopState)
+                loopState.createImmediateTransitionTo(delayState)
+                
+                initialTransition.effects += createAssignment(localVariable, init.value.subExpressions.head)
+                delayTransition.effects += createAssignment(fbyTrigger, TRUE)
+                delayTransition.effects += createAssignment(localVariable, init.value.subExpressions.head)
+                
+                val myTrigger = initInitParents.get(init.value)
+                if (myTrigger !== null) {
+                    initialTransition.trigger = myTrigger.reference
+                }
                 
                 init.value.replace(localVariable.reference)
-            }
+            } 
         }
-    }
-    
-    private def Expression replaceInitPreByFby(Expression expression) {
-        if (expression.isInitOperator
-            && expression.asOperatorExpression.subExpressions.last instanceof OperatorExpression 
-            && expression.asOperatorExpression.subExpressions.last.asOperatorExpression.operator == OperatorType.PRE) {
-                var fbyExpr = createOperatorExpression(OperatorType.FBY) 
-                fbyExpr.subExpressions += replaceInitPreByFby(expression.asOperatorExpression.subExpressions.head)
-                fbyExpr.subExpressions += replaceInitPreByFby(expression.asOperatorExpression.subExpressions.last.asOperatorExpression.subExpressions.head)
-                return fbyExpr
-        }
-        
-        return expression
     }
     
     private def boolean isInitOperator(Expression expression) {

@@ -1,0 +1,5 @@
+public system de.cau.cs.kieler.lustre.c.dataflow2
+	label "2 Lustre to SCCharts to C (Netlist-based Simulation)"
+
+de.cau.cs.kieler.lustre.processors.lustreToSCC.dataFlow
+system de.cau.cs.kieler.sccharts.^simulation.netlist.c

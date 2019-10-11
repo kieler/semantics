@@ -56,6 +56,7 @@ class SCChartsProcessorProvider implements IProcessorProvider {
             de.cau.cs.kieler.sccharts.processors.PrTransitions,
             de.cau.cs.kieler.sccharts.processors.UserSchedule,
             de.cau.cs.kieler.sccharts.processors.InitOperator,
+            de.cau.cs.kieler.sccharts.processors.InitOperator2,
             de.cau.cs.kieler.sccharts.processors.FinalRegion,
             de.cau.cs.kieler.sccharts.processors.ValuedObjectRise,
             de.cau.cs.kieler.sccharts.processors.Period,

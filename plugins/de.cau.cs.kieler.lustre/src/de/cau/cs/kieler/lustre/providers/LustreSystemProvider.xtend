@@ -30,6 +30,7 @@ class LustreSystemProvider implements ISystemProvider{
             "system/de.cau.cs.kieler.lustre.scc.controlflow.kico",
             "system/de.cau.cs.kieler.lustre.scc.kico",
             "system/de.cau.cs.kieler.lustre.c.controlflow.kico",
+            "system/de.cau.cs.kieler.lustre.c2.kico",
             "system/de.cau.cs.kieler.lustre.c.kico",
             "system/de.cau.cs.kieler.lustre.v6.simulation.kico",
             "system/de.cau.cs.kieler.lustre.scade.kico",
