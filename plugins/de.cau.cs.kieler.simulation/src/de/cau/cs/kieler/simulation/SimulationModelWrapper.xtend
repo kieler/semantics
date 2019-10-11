@@ -36,7 +36,7 @@ import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SimulationModelWrapper implements Simulatable {
+class SimulationModelWrapper extends ExecutableContainer implements Simulatable {
     
     private static val POOL = Executors.newCachedThreadPool
 
@@ -61,6 +61,7 @@ class SimulationModelWrapper implements Simulatable {
     package val jsonQueue = new ArrayBlockingQueue<JsonObject>(1)
     
     new (ExecutableContainer executable, Environment environment) {
+        super(executable.file)
         this.executable = executable
         this.environment = environment
         this.variables = new SimulationVariableStore(VariableStore.get(environment))
@@ -195,6 +196,11 @@ class SimulationModelWrapper implements Simulatable {
     override toString() {
         id
     }
+    
+    override getProcessBuilder() {
+        executable.getProcessBuilder()
+    }
+    
 }
 
 @FinalFieldsConstructor

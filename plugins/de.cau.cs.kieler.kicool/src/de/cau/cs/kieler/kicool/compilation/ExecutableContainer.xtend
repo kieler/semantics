@@ -35,11 +35,11 @@ class ExecutableContainer {
     
     def getProcessBuilder() {
         val pb = new ProcessBuilder(file.toString)
-        pb.environment.putAll(environment)
+        pb.environment.putAll(processEnvironment)
         return pb
     }
     
-    def getEnvironment() {
+    def getProcessEnvironment() {
         return <String, String>emptyMap
     }
     
@@ -56,7 +56,7 @@ class ExecutableJarContainer extends ExecutableContainer {
         var jarPath = file.toString
         if (jarPath.contains(" ")) jarPath = "\"" + jarPath + "\""
         val pb = new ProcessBuilder("java", "-jar", jarPath)
-        pb.environment.putAll(environment)
+        pb.environment.putAll(processEnvironment)
         return pb
     }  
 }
