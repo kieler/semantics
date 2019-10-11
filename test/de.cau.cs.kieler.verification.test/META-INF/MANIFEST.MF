@@ -1,15 +1,13 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SCCharts Transformation Tests
-Bundle-SymbolicName: de.cau.cs.kieler.sccharts.test
+Bundle-SymbolicName: de.cau.cs.kieler.verification.test
 Bundle-Version: 1.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sccharts.test.SCChartsTestActivator
 Bundle-Vendor: Kiel University
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
+Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources,
  org.junit;bundle-version="4.12.0",
- com.google.guava;bundle-version="[21.0.0,22.0.0)",
+ com.google.guava,
  com.google.inject;bundle-version="3.0.0",
  de.cau.cs.kieler.test.common,
  org.eclipse.xtend.lib.macro,
@@ -19,15 +17,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sccharts.scg,
  de.cau.cs.kieler.kicool,
  de.cau.cs.kieler.simulation,
- de.cau.cs.kieler.klighd,
- de.cau.cs.kieler.sccharts.ui,
  org.eclipse.xtend.lib;bundle-version="2.12.0",
- org.eclipse.emf.compare;bundle-version="3.5.2"
+ de.cau.cs.kieler.verification
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.sccharts.test,
- de.cau.cs.kieler.sccharts.test.a.structure,
- de.cau.cs.kieler.sccharts.test.b.compiler,
- de.cau.cs.kieler.sccharts.test.c.simulation,
- de.cau.cs.kieler.sccharts.test.d.synthesis
 

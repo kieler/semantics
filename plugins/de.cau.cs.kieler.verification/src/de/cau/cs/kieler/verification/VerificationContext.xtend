@@ -16,6 +16,8 @@ import de.cau.cs.kieler.kicool.compilation.CompilationContext
 import java.util.List
 import org.eclipse.core.resources.IFile
 import org.eclipse.xtend.lib.annotations.Accessors
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.verification.RangeAssumption
 
 /** 
  * @author aas
@@ -51,4 +53,24 @@ class VerificationContext extends CompilationContext {
     
     // Options for verification using SPIN
     @Accessors private List<String> customSpinCommands =null
+    
+    
+    // Utility methods to enables dependency inversion
+    
+    def void copyAssumptions(ValuedObject vo, ValuedObject source) {
+        for(assumption : this.verificationAssumptions.clone) {
+            switch(assumption) {
+                RangeAssumption : {
+                    if(assumption.valuedObject !== null && assumption.valuedObject.name == source.name) {
+                        val assumptionCopy = new RangeAssumption(vo, assumption.minValue, assumption.maxValue)
+                        this.verificationAssumptions.add(assumptionCopy)
+                    }
+                }
+            }
+        }
+    }
+    
+    def void addRangeAssumtion(ValuedObject vo, int start, int end) {
+        this.verificationAssumptions.add(new RangeAssumption(vo, start, end))
+    }
 }

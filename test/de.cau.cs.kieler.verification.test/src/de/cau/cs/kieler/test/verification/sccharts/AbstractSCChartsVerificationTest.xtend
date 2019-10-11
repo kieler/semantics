@@ -10,12 +10,12 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test.e.verification
+package de.cau.cs.kieler.test.verification.sccharts
 
 import de.cau.cs.kieler.sccharts.SCCharts
-import de.cau.cs.kieler.test.common.simulation.AbstractVerificationTest
 import com.google.inject.Injector
 import de.cau.cs.kieler.sccharts.processors.verification.SCChartsVerificationPropertyAnalyzer
+import de.cau.cs.kieler.test.verification.AbstractVerificationTest
 
 /**
  * @author aas

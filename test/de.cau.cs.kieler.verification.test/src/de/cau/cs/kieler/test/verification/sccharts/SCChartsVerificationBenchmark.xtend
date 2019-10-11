@@ -10,7 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.sccharts.test.e.verification
+package de.cau.cs.kieler.test.verification.sccharts
 
 import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.sccharts.SCCharts
