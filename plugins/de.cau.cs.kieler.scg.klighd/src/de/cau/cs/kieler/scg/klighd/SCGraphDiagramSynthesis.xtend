@@ -2062,7 +2062,7 @@ class SCGraphDiagramSynthesis extends AbstractDiagramSynthesis<SCGraph> {
 						sbName = sbName + "\n" + expText       
 					}
             	    
-            	    if (!SHOW_BASICBLOCKS.booleanValue) {
+            	    if (!SHOW_BASICBLOCKS.booleanValue || basicBlock.schedulingBlocks.size > 1) {
             	        sbName = sbName.replaceAll("_g", "g")
                 	    sbName.createLabel(sbContainer).associateWith(schedulingBlock).configureOutsideTopLeftNodeLabel(sbName, 9, KlighdConstants::DEFAULT_FONT_NAME).KRendering.foreground = SCHEDULINGBLOCKBORDER.copy
                	    }
