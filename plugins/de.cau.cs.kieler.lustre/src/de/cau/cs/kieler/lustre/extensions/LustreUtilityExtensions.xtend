@@ -90,7 +90,7 @@ class LustreUtilityExtensions {
         return null
     }
     
-    def getClockOfOperatorExpression(OperatorExpression expression) {
+    def ValuedObject getClockOfOperatorExpression(OperatorExpression expression) {
         if (expression.operator == OperatorType.WHEN) {
             return getClockOfWhenExpression(expression)        
         } else if (expression.operator == OperatorType.CURRENT) {
@@ -164,7 +164,7 @@ class LustreUtilityExtensions {
                 }
             }
         } else if (currentExpression instanceof OperatorExpression) {
-            var exprClock = currentExpression.clockOfSubExpression
+            var exprClock = currentExpression.clockOfOperatorExpression
             var exprClockDecl = exprClock.declaration
             if (exprClockDecl instanceof LustreVariableDeclaration) {
                 var clockExpr = exprClockDecl.clockExpr
@@ -173,7 +173,7 @@ class LustreUtilityExtensions {
                         return clockExpr.valuedObject
                     }
                 }
-            }                    
+            }
         }
     }
     
