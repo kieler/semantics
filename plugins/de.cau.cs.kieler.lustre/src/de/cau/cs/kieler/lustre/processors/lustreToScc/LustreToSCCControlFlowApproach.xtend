@@ -46,7 +46,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
 /**
  * @author cpa, lgr
  */
-class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
+class LustreToSCCControlFlowApproach extends LustreToSCCharts {
 
     /**
      * Determines whether during actions shall be used in the transformation. If true, all expressions including subs 
@@ -116,7 +116,7 @@ class LustreToSCCControlFlowApproach extends CoreLustreToSCC {
         return outputVariable.reference
     }
 
-    override protected processEquation(Equation equation, State state) {
+    override processEquation(Equation equation, State state) {
 
         var equationExpression = equation.expression
         var useDuringActions = true
