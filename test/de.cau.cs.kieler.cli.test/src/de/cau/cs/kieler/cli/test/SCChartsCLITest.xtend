@@ -25,7 +25,7 @@ import static org.junit.Assert.assertTrue
 class SCChartsCLITest extends AbstractCLITest {
     
     static val artifact = new File("../../build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-" + platformExe)
-    static val compiler = new File("./bin/scc")
+    static val compiler = new File("./bin/scc-" + platformExe) // this is needed because if the windows version is used, then the file has to end with .bat
     
     @BeforeClass
     static def void setUpOnce() throws Exception {

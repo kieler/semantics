@@ -26,11 +26,10 @@ import java.nio.file.Files
 class GeneralCLITest extends AbstractCLITest {
     
     static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-" + platformExe )
-    static val compiler = new File("./bin/kico.bat")
+    static val compiler = new File("./bin/kico-" + platformExe) // this is needed because if the windows version is used, then the file has to end with .bat
     
     @BeforeClass
     static def void setUpOnce() throws Exception {
-        
         setupCompiler(artifact, compiler)
     }
 
@@ -47,7 +46,7 @@ class GeneralCLITest extends AbstractCLITest {
         // check results
         assertExists(dest)
         val srcContent = new String(Files.readAllBytes(src.toPath))
-        val destContent = new String(Files.readAllBytes(src.toPath))
-        assertEquals(srcContent, destContent)
+        val destContent = new String(Files.readAllBytes(dest.toPath))
+        assertEquals(srcContent.replaceAll("\\s+",""), destContent.replaceAll("\\s+",""))
     }
 }
