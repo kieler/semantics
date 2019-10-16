@@ -9,6 +9,7 @@ import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
+import de.cau.cs.kieler.kexpressions.AccessModifier
 
 //import org.eclipse.xtext.validation.Check
 
@@ -25,7 +26,7 @@ class KExpressionsValidator extends AbstractKExpressionsValidator {
     
     @Check
     public def void checkConstInitialization(VariableDeclaration declaration) {
-        if (declaration.isConst) {
+        if (declaration.isConst && !declaration.isInput) {
             for(vo : declaration.valuedObjects) {
                 if (vo.initialValue === null) {
                     error(CONST_DECLARATION_EXPECTS_INITIALIZATION, vo, null, -1)
@@ -47,7 +48,7 @@ class KExpressionsValidator extends AbstractKExpressionsValidator {
     
     @Check
     def void checkPrivateDeclaration(VariableDeclaration declaration) {
-        if (declaration.private) {
+        if (declaration.access !== AccessModifier.PUBLIC) {
             if (declaration instanceof VariableDeclaration) {
                 if (declaration.input || declaration.output) {
                     error("A private declaration cannot be a public input output interface", declaration, null, -1)

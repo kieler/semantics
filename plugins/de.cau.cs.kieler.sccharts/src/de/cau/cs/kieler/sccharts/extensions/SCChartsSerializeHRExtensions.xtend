@@ -15,9 +15,12 @@ package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.common.base.Function
 import com.google.common.base.Joiner
+import com.google.inject.Inject
 import de.cau.cs.kieler.annotations.NamedObject
+import de.cau.cs.kieler.kexpressions.AccessModifier
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.Declaration
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 import de.cau.cs.kieler.kexpressions.ScheduleDeclaration
 import de.cau.cs.kieler.kexpressions.ValueType
@@ -27,20 +30,24 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import de.cau.cs.kieler.kexpressions.keffects.extensions.KEffectsSerializeHRExtensions
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.sccharts.Action
+import de.cau.cs.kieler.sccharts.CodeEffect
 import de.cau.cs.kieler.sccharts.DelayType
 import de.cau.cs.kieler.sccharts.DuringAction
 import de.cau.cs.kieler.sccharts.EntryAction
 import de.cau.cs.kieler.sccharts.ExitAction
 import de.cau.cs.kieler.sccharts.PeriodAction
+import de.cau.cs.kieler.sccharts.PolicyRegion
 import de.cau.cs.kieler.sccharts.PrecedingAction
 import de.cau.cs.kieler.sccharts.Region
 import de.cau.cs.kieler.sccharts.State
 import de.cau.cs.kieler.sccharts.SucceedingAction
 import de.cau.cs.kieler.sccharts.SuspendAction
 import de.cau.cs.kieler.sccharts.Transition
+import de.cau.cs.kieler.sccharts.processors.For
+import de.cau.cs.kieler.scl.extensions.SCLSerializeExtensions
 import java.util.List
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
 
 /**
  * @author ssm
@@ -49,6 +56,9 @@ import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
  * @kieler.rating 2014-09-04 proposed yellow
  */
 class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
+    
+    @Inject
+    var SCLSerializeExtensions sclSerializer
     
     def dispatch CharSequence serialize(Transition transition) {
         transition.serialize(false);
@@ -94,11 +104,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
 
     private def CharSequence serialize(Action action, boolean hr) {
         val joiner = Joiner.on(" ");
-        val parts = action.serializeHighlighted(hr)
+        val parts = action.serializeHighlighted(hr, false)
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr) {
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Action action, boolean hr, boolean userLabels) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         if (action.delay == DelayType.IMMEDIATE) {
@@ -117,21 +127,25 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             default: ""
         })
 
-        if (action.trigger !== null) {
-            components.addText(if (hr) {
-                action.trigger.serializeHR
-            } else {
-                action.trigger.serialize
-            })
-        }
-
-        if (!action.effects.empty) {
-            components.addText("/")
-            components.addText(if (hr) {
-                action.effects.serializeHR
-            } else {
-                action.effects.serialize
-            })
+        if (userLabels && !action.label.nullOrEmpty) {
+            components.addText(action.label)
+        } else {
+            if (action.trigger !== null) {
+                components.addText(if (hr) {
+                    action.trigger.serializeHR
+                } else {
+                    action.trigger.serialize
+                })
+            }
+    
+            if (!action.effects.empty) {
+                components.addText("/")
+                components.addText(if (hr) {
+                    action.effects.serializeHR
+                } else {
+                    action.effects.serialize
+                })
+            }
         }
 
         return components;
@@ -143,13 +157,16 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         return joiner.join(parts.map[key])
     }
 
-    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
+    def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Declaration declaration, boolean hr) {
         val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
 
         // Modifiers
         if (declaration instanceof VariableDeclaration) {
-            if (declaration.isPrivate) {
+            if (declaration.access == AccessModifier.PRIVATE) {
                 components.addKeyword("private")
+            }
+            if (declaration.access == AccessModifier.PROTECTED) {
+                components.addKeyword("protected")
             }
             if (declaration.isExtern) {
                 components.addKeyword("extern")
@@ -185,7 +202,11 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             } else if (type == ValueType.CLOCK) {
                 components.addKeyword("clock")
             }  else if (type == ValueType.STRUCT) {
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
                 components.addKeyword("struct")
+            }  else if (type == ValueType.CLASS) {
+                if ((declaration as ClassDeclaration).host) components.addKeyword("host")
+                components.addKeyword("class")
             } else {
                 components.addKeyword(if (hr) {
                     type.serializeHR
@@ -207,13 +228,26 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }          
         } else if (declaration instanceof ScheduleDeclaration) {
             components.addKeyword("schedule")
+            if (!declaration.priorities.nullOrEmpty) {
+                components.addText("{")
+                for (prioIdx : declaration.priorities.indexed) {
+                    switch (prioIdx.value) {
+                        case CONFLICT: components.addKeyword("conflicting")
+                        case CONFLUENT: components.addKeyword("commuting")
+                    }
+                    if (prioIdx.key < declaration.priorities.size - 1) {
+                        components.addText(", ")
+                    }
+                }
+                components.addText("}")
+            }
             if (!declaration.name.nullOrEmpty) {
                 components.addHighlight(declaration.name)
             }
         }
         
         
-        if (declaration instanceof StructDeclaration) {
+        if (declaration instanceof ClassDeclaration) {
             if (!declaration.name.nullOrEmpty) {
                 components.addText(declaration.name)
             }
@@ -249,6 +283,89 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
             }
             if (voIter.hasNext) {
                 components.addText(",");
+            }
+        }
+
+        return components;
+    }
+    
+    def dispatch List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(MethodDeclaration method, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (method.access != AccessModifier.PUBLIC) {
+            components.addKeyword(switch(method.access) {
+                case PRIVATE: "public"
+                case PROTECTED: "protected"
+                case PUBLIC: "private"
+            })
+        }
+        
+        if (method.returnType !== ValueType.PURE) {
+            components.addKeyword(method.returnType.serialize)
+        } else {
+            components.addKeyword("void")
+        }
+        
+        components.addText(method.valuedObjects.head.name)
+        
+        components.addText("(")
+        for (para : method.parameterDeclarations.indexed) {
+            components.addAll((para.value as VariableDeclaration).serializeHighlighted(hr))
+            if (para.key < method.parameterDeclarations.size - 1) {
+                components.addText(",")
+            }
+        }
+        components.addText(")")
+        
+        if (!method.schedule.nullOrEmpty) {
+            components.addKeyword("schedule")
+            for (schedule : method.schedule) {
+                components.addText(schedule.serialize)
+                components.addText(schedule.priority.toString)
+            }
+        }
+
+        return components;
+    }
+    
+    def List<Pair<? extends CharSequence, TextFormat>> serializeHighlighted(Region region, boolean hr) {
+        val components = <Pair<? extends CharSequence, TextFormat>> newArrayList
+        
+        if (region instanceof PolicyRegion) {
+            components.addKeyword("policy")
+        }
+        
+        if (region.override) {
+            components.addKeyword("override")
+        }
+        
+        if (!region.label.nullOrEmpty) {
+            components.addText(if (hr) region.label.serializeHR else region.label.serialize)
+        }
+        
+        if (region.counterVariable !== null) {
+            val range = For.getForRegionRange(region)
+            components.addKeyword("|")
+            components.addText(region.counterVariable.name)
+            components.addText("[")
+            components.addText(range.key.toString)
+            components.addText(",")
+            components.addText(range.value.toString)
+            components.addText("]")
+        }
+        
+        // User schedules
+        val userSchedule = region.schedule
+        if (userSchedule.size > 0) {
+            val exists = <Pair<ValuedObject, Integer>> newHashSet
+            components.addKeyword("schedule")
+            for (s : userSchedule.indexed) {
+                val existPair = new Pair<ValuedObject, Integer>(s.value.valuedObject, s.value.priority)
+                if (!exists.contains(existPair)) {
+                    if (s.key != 0) components.addText(",")
+                    components.addHighlight(s.value.valuedObject.name + " " + s.value.priority)
+                    exists.add(existPair)
+                }
             }
         }
 
@@ -355,10 +472,12 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }
 
     override dispatch CharSequence serialize(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serialize + "]"
         }
+        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
+            vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
@@ -366,10 +485,12 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }    
     
     override dispatch CharSequence serializeHR(ValuedObjectReference valuedObjectReference) {
-        var vo = valuedObjectReference.valuedObject.name.applySymbolTable
+        var vo = valuedObjectReference.valuedObject?.name?:"<BROKEN_REFERENCE>".applySymbolTable
         for (index : valuedObjectReference.indices) {
             vo = vo + "[" + index.serializeHR + "]"
         }
+        if( valuedObjectReference.valuedObject !== null && valuedObjectReference.valuedObject.label !== null )
+            vo = valuedObjectReference.valuedObject.label
         if (valuedObjectReference.subReference !== null && valuedObjectReference.subReference.valuedObject !== null) {
             vo = vo + "." + valuedObjectReference.subReference.serializeHR
         }        
@@ -377,16 +498,7 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
     }   
     
     override def CharSequence serializeAssignment(Assignment assignment, CharSequence expressionStr) {
-        var res = ""
-        if (assignment.reference !== null && assignment.reference.valuedObject !== null) {
-            res = assignment.reference.valuedObject.name.applySymbolTable
-            if (!assignment.reference.indices.nullOrEmpty) {
-                for(index : assignment.reference.indices) {
-                    res = res + "[" + index.serialize + "]"
-                }
-            }
-        }
-        
+        var res = assignment.reference.serializeVOR.toString.applySymbolTable
         res = res + assignment.operator.serializeAssignOperator
         if (expressionStr !== null) {
             res = res + expressionStr
@@ -406,7 +518,18 @@ class SCChartsSerializeHRExtensions extends KEffectsSerializeHRExtensions {
         } else {
             return emission.reference.valuedObject.name.applySymbolTable
         }
-    }    
+    } 
+    
+    def dispatch CharSequence serializeHR(CodeEffect code) {
+        code.serialize
+    }     
+    def dispatch CharSequence serialize(CodeEffect code) {
+        if (sclSerializer !== null) {
+            return sclSerializer.serialize(code) => [it.subSequence(1, it.length - 1)]
+        } else {
+            return "<code>"
+        }
+    }
      
     def void defineSubscriptSymbols(String separator) {
         nameSymbolSuffixProcessor.put(separator, 

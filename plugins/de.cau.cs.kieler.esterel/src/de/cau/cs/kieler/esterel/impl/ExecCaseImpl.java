@@ -109,6 +109,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Task getTask() {
         if (task != null && task.eIsProxy()) {
             InternalEObject oldTask = (InternalEObject)task;
@@ -135,6 +136,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setTask(Task newTask) {
         Task oldTask = task;
         task = newTask;
@@ -147,6 +149,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Variable> getReferenceParameters() {
         if (referenceParameters == null) {
             referenceParameters = new EObjectResolvingEList<Variable>(Variable.class, this, EsterelPackage.EXEC_CASE__REFERENCE_PARAMETERS);
@@ -159,6 +162,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Expression> getValueParameters() {
         if (valueParameters == null) {
             valueParameters = new EObjectContainmentEList<Expression>(Expression.class, this, EsterelPackage.EXEC_CASE__VALUE_PARAMETERS);
@@ -171,6 +175,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Signal getReturnSignal() {
         if (returnSignal != null && returnSignal.eIsProxy()) {
             InternalEObject oldReturnSignal = (InternalEObject)returnSignal;
@@ -197,6 +202,7 @@ public class ExecCaseImpl extends StatementContainerImpl implements ExecCase {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReturnSignal(Signal newReturnSignal) {
         Signal oldReturnSignal = returnSignal;
         returnSignal = newReturnSignal;

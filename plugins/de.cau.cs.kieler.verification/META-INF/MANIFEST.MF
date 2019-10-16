@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Verification
+Bundle-SymbolicName: de.cau.cs.kieler.verification;singleton:=true
+Bundle-Version: 0.14.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.verification.VerificationPlugin
+Bundle-Vendor: Kiel University
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-ActivationPolicy: lazy
+Require-Bundle: com.google.guava;bundle-version="21.0.0",
+ com.google.inject,
+ org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.xtext.util,
+ de.cau.cs.kieler.kexpressions,
+ de.cau.cs.kieler.kicool
+Export-Package: de.cau.cs.kieler.verification,
+ de.cau.cs.kieler.verification.codegen,
+ de.cau.cs.kieler.verification.extensions,
+ de.cau.cs.kieler.verification.processors,
+ de.cau.cs.kieler.verification.processors.nuxmv,
+ de.cau.cs.kieler.verification.processors.spin

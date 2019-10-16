@@ -18,11 +18,16 @@ import de.cau.cs.kieler.annotations.Nameable;
 import de.cau.cs.kieler.annotations.NamedObject;
 import de.cau.cs.kieler.annotations.Pragmatable;
 import de.cau.cs.kieler.kexpressions.Call;
+import de.cau.cs.kieler.kexpressions.Declaration;
 import de.cau.cs.kieler.kexpressions.Expression;
 import de.cau.cs.kieler.kexpressions.Schedulable;
+import de.cau.cs.kieler.kexpressions.VariableDeclaration;
+import de.cau.cs.kieler.kexpressions.keffects.Effect;
 import de.cau.cs.kieler.kexpressions.keffects.Linkable;
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration;
 import de.cau.cs.kieler.kexpressions.kext.DeclarationScope;
 import de.cau.cs.kieler.sccharts.*;
+import de.cau.cs.kieler.scl.StatementContainer;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -106,6 +111,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(scope);
                 if (result == null) result = caseNamedObject(scope);
                 if (result == null) result = caseSchedulable(scope);
+                if (result == null) result = caseLinkable(scope);
                 if (result == null) result = caseNameable(scope);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -144,6 +150,7 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseDeclarationScope(state);
                 if (result == null) result = caseNamedObject(state);
                 if (result == null) result = caseSchedulable(state);
+                if (result == null) result = caseLinkable(state);
                 if (result == null) result = caseNameable(state);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -152,11 +159,11 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 Region region = (Region)theEObject;
                 T result = caseRegion(region);
                 if (result == null) result = caseScope(region);
-                if (result == null) result = caseLinkable(region);
                 if (result == null) result = caseAnnotatable(region);
                 if (result == null) result = caseDeclarationScope(region);
                 if (result == null) result = caseNamedObject(region);
                 if (result == null) result = caseSchedulable(region);
+                if (result == null) result = caseLinkable(region);
                 if (result == null) result = caseNameable(region);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -166,11 +173,11 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseControlflowRegion(controlflowRegion);
                 if (result == null) result = caseRegion(controlflowRegion);
                 if (result == null) result = caseScope(controlflowRegion);
-                if (result == null) result = caseLinkable(controlflowRegion);
                 if (result == null) result = caseAnnotatable(controlflowRegion);
                 if (result == null) result = caseDeclarationScope(controlflowRegion);
                 if (result == null) result = caseNamedObject(controlflowRegion);
                 if (result == null) result = caseSchedulable(controlflowRegion);
+                if (result == null) result = caseLinkable(controlflowRegion);
                 if (result == null) result = caseNameable(controlflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -180,11 +187,11 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 T result = caseDataflowRegion(dataflowRegion);
                 if (result == null) result = caseRegion(dataflowRegion);
                 if (result == null) result = caseScope(dataflowRegion);
-                if (result == null) result = caseLinkable(dataflowRegion);
                 if (result == null) result = caseAnnotatable(dataflowRegion);
                 if (result == null) result = caseDeclarationScope(dataflowRegion);
                 if (result == null) result = caseNamedObject(dataflowRegion);
                 if (result == null) result = caseSchedulable(dataflowRegion);
+                if (result == null) result = caseLinkable(dataflowRegion);
                 if (result == null) result = caseNameable(dataflowRegion);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
@@ -265,6 +272,47 @@ public class SCChartsSwitch<T> extends Switch<T> {
                 if (result == null) result = caseAction(periodAction);
                 if (result == null) result = caseAnnotatable(periodAction);
                 if (result == null) result = caseLinkable(periodAction);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.POLICY_CLASS_DECLARATION: {
+                PolicyClassDeclaration policyClassDeclaration = (PolicyClassDeclaration)theEObject;
+                T result = casePolicyClassDeclaration(policyClassDeclaration);
+                if (result == null) result = caseClassDeclaration(policyClassDeclaration);
+                if (result == null) result = caseDeclarationScope(policyClassDeclaration);
+                if (result == null) result = caseVariableDeclaration(policyClassDeclaration);
+                if (result == null) result = caseNamedObject(policyClassDeclaration);
+                if (result == null) result = caseDeclaration(policyClassDeclaration);
+                if (result == null) result = caseNameable(policyClassDeclaration);
+                if (result == null) result = caseAnnotatable(policyClassDeclaration);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.POLICY_REGION: {
+                PolicyRegion policyRegion = (PolicyRegion)theEObject;
+                T result = casePolicyRegion(policyRegion);
+                if (result == null) result = caseControlflowRegion(policyRegion);
+                if (result == null) result = caseRegion(policyRegion);
+                if (result == null) result = caseScope(policyRegion);
+                if (result == null) result = caseAnnotatable(policyRegion);
+                if (result == null) result = caseDeclarationScope(policyRegion);
+                if (result == null) result = caseNamedObject(policyRegion);
+                if (result == null) result = caseSchedulable(policyRegion);
+                if (result == null) result = caseLinkable(policyRegion);
+                if (result == null) result = caseNameable(policyRegion);
+                if (result == null) result = defaultCase(theEObject);
+                return result;
+            }
+            case SCChartsPackage.CODE_EFFECT: {
+                CodeEffect codeEffect = (CodeEffect)theEObject;
+                T result = caseCodeEffect(codeEffect);
+                if (result == null) result = caseEffect(codeEffect);
+                if (result == null) result = caseSCL_Scope(codeEffect);
+                if (result == null) result = caseSchedulable(codeEffect);
+                if (result == null) result = caseLinkable(codeEffect);
+                if (result == null) result = caseDeclarationScope(codeEffect);
+                if (result == null) result = caseStatementContainer(codeEffect);
+                if (result == null) result = caseAnnotatable(codeEffect);
                 if (result == null) result = defaultCase(theEObject);
                 return result;
             }
@@ -513,6 +561,111 @@ public class SCChartsSwitch<T> extends Switch<T> {
     }
 
     /**
+     * Returns the result of interpreting the object as an instance of '<em>Policy Class Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Policy Class Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePolicyClassDeclaration(PolicyClassDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Class Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Class Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseClassDeclaration(ClassDeclaration object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseEffect(Effect object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Statement Container</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseStatementContainer(StatementContainer object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseSCL_Scope(de.cau.cs.kieler.scl.Scope object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Policy Region</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Policy Region</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T casePolicyRegion(PolicyRegion object) {
+        return null;
+    }
+
+    /**
+     * Returns the result of interpreting the object as an instance of '<em>Code Effect</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Code Effect</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseCodeEffect(CodeEffect object) {
+        return null;
+    }
+
+    /**
      * Returns the result of interpreting the object as an instance of '<em>Pragmatable</em>'.
      * <!-- begin-user-doc -->
      * This implementation returns null;
@@ -659,6 +812,36 @@ public class SCChartsSwitch<T> extends Switch<T> {
      * @generated
      */
     public T caseLinkable(Linkable object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseDeclaration(Declaration object) {
+        return null;
+    }
+
+                /**
+     * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * <!-- begin-user-doc -->
+     * This implementation returns null;
+     * returning a non-null result will terminate the switch.
+     * <!-- end-user-doc -->
+     * @param object the target of the switch.
+     * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+     * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+     * @generated
+     */
+    public T caseVariableDeclaration(VariableDeclaration object) {
         return null;
     }
 

@@ -5,7 +5,7 @@ package de.cau.cs.kieler.sccharts.text;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import de.cau.cs.kieler.kexpressions.kext.KExtStandaloneSetup;
+import de.cau.cs.kieler.scl.SCLStandaloneSetup;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.resource.IResourceFactory;
@@ -16,7 +16,7 @@ public class SCTXStandaloneSetupGenerated implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration() {
-		KExtStandaloneSetup.doSetup();
+		SCLStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

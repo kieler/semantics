@@ -13,7 +13,6 @@
 package de.cau.cs.kieler.sccharts.extensions
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
@@ -22,6 +21,10 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.sccharts.Scope
 import de.cau.cs.kieler.sccharts.State
 import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.extensions.KExtReferenceExtensions
+import de.cau.cs.kieler.kexpressions.kext.extensions.Replacements
+import de.cau.cs.kieler.kexpressions.kext.extensions.Binding
+import de.cau.cs.kieler.kexpressions.kext.extensions.BindingType
 
 /**
  * @author ssm
@@ -29,7 +32,7 @@ import java.util.List
  * @kieler.rating 2017-07-05 proposed yellow 
  *
  */
-class SCChartsReferenceExtensions {
+class SCChartsReferenceExtensions extends KExtReferenceExtensions {
     
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension KExpressionsValuedObjectExtensions
@@ -39,7 +42,7 @@ class SCChartsReferenceExtensions {
     
     /** Creates all bindings for a referenced scope. */
     def List<Binding> createBindings(Scope scope) {
-        scope.createBindings(new Replacements)    
+        scope.createBindings(new Replacements())    
     }
     
     /** Creates all bindings for a referenced scope. 
@@ -162,50 +165,4 @@ class SCChartsReferenceExtensions {
         bindings
     }
 
-    protected def checkTypeCompability(Binding binding) {
-        switch(binding.sourceExpression) {
-            ValuedObjectReference: binding.checkTypeCompabilityForReferences
-            Value: binding.checkTypeCompabilityForLiterals
-        }
-    }
-    
-    protected def checkTypeCompabilityForReferences(Binding binding) {
-        val sExp = binding.sourceExpression as ValuedObjectReference
-        if (sExp.isArrayReference) {
-            // An array ref is used
-            if (sExp.valuedObject.isArray) {
-                if (!binding.targetValuedObject.isArray) {
-                    // but the target is not an array
-//                        binding.addErrorMessage("It is not possible to bind an array reference of array " + sExp.valuedObject.name + 
-//                            " to scalar " + binding.targetValuedObject.name + "!")
-                }
-            } else {
-                // but the valued object is not an array
-                binding.addErrorMessage("It is not possible to bind an array reference of the scalar " +
-                    sExp.valuedObject.name)
-            }
-        } else {
-            // No array ref used
-            if (sExp.valuedObject.isArray) { //
-                // but is is an array
-                if (!binding.targetValuedObject.isArray) {
-                    // but the target is not an array
-                    binding.addErrorMessage("It is not possible to bind array " + sExp.valuedObject.name + 
-                        " to scalar " + binding.targetValuedObject.name + "!")
-                }
-            } 
-        }
-    }
-        
-    protected def checkTypeCompabilityForLiterals(Binding binding) { 
-        val sExp = binding.sourceExpression as Value
-        val targetContainer = binding.targetValuedObject.eContainer
-        if (targetContainer instanceof VariableDeclaration) {
-            if (targetContainer.output) {
-                binding.addErrorMessage("It is not possible to bind the literal " + sExp.serializeHR + " 
-                    to the output " + binding.targetValuedObject.name + " !")
-            }
-        }
-    }
-    
 }

@@ -39,6 +39,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 import de.cau.cs.kieler.scg.processors.SimpleGuardExpressions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Copy Propagation
@@ -58,7 +59,10 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
     @Inject extension SCGCoreExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGSerializeHRExtensions
+    @Inject extension SCGMethodExtensions
     
+    public static val IProperty<Boolean> COPY_PROPAGATION_ENABLED = 
+        new Property<Boolean>("de.cau.cs.kieler.scg.opt.copyPropagation", false)
     public static val IProperty<Boolean> COPY_PROPAGATION_REPLACE_ALL_EXPRESSIONS = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.copyPropagation.replaceAllExpressions", false)
     public static val IProperty<Boolean> COPY_PROPAGATION_PROPAGATE_EQUAL_EXPRESSIONS = 
@@ -77,9 +81,11 @@ class CopyPropagationV2 extends InplaceProcessor<SCGraphs> {
     }
     
     override process() {
+        if (!environment.getProperty(COPY_PROPAGATION_ENABLED)) return;
+        
         val model = getModel
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performCopyPropagation
         }
         

@@ -16,7 +16,6 @@ package de.cau.cs.kieler.scg.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.scg.GuardDependency
 import de.cau.cs.kieler.scg.Node
@@ -31,6 +30,8 @@ import de.cau.cs.kieler.kexpressions.keffects.Dependency
 import de.cau.cs.kieler.kexpressions.keffects.DataDependency
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGDependencyExtensions
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /** 
  * @author ssm
@@ -43,6 +44,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     @Inject extension SCGDependencyExtensions
     @Inject extension SCGControlFlowExtensions
     @Inject extension SCGCoreExtensions
+    @Inject extension SCGMethodExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.scheduler"
@@ -55,7 +57,7 @@ class SimpleGuardScheduler extends InplaceProcessor<SCGraphs> implements Traceab
     override process() {
         val model = getModel
         
-        for(scg : model.scgs) {
+        for(scg : model.scgs.ignoreMethods) {
             scg.schedule
         }
     }    

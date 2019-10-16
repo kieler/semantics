@@ -97,37 +97,17 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         
         // This node does not support comment boxes on the same layer, because regions are layouted by the box layouter.
         node.setProperty(MessageObjectReferencesManager.SUPPORTS_COMMENT_BOXES, false)
-        
-        // User schedules
-        val sLabel = new StringBuilder
-        val userSchedule = region.schedule
-        if (userSchedule.size > 0) {
-            val exists = <Pair<ValuedObject, Integer>> newHashSet
-            for (s : userSchedule) {
-                val existPair = new Pair<ValuedObject, Integer>(s.valuedObject, s.priority)
-                if (!exists.contains(existPair)) {
-                    sLabel.append(", ")
-                    sLabel.append(s.valuedObject.name + " " + s.priority)
-                    exists.add(existPair)
-                }
-            }
-        }        
 
         if (!region.states.empty) {
-            var forLabel = ""
-            if (region.counterVariable !== null) {
-                val range = For.getForRegionRange(region)
-                forLabel = " | " + region.counterVariable.name + "[" + range.key + ", " + range.value + "]"
-            }
-            
-            val label = (if(region.label.nullOrEmpty) "" else " " + region.serializeHR.toString) + 
-                forLabel + sLabel.toString
+            val label = region.serializeHighlighted(true)
 
             // Expanded
-            node.addRegionFigure(region.final) => [
+            node.addRegionFigure => [
                 setAsExpandedView
                 associateWith(region)
-                addDoubleClickAction(ReferenceExpandAction::ID)
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
                 if (region.declarations.empty && region.actions.empty) {
                     addStatesArea(!label.nullOrEmpty);
                 } else {
@@ -145,7 +125,7 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                     }
                     // Add actions
                     for (action : region.actions) {
-                        addActionLabel(action.serializeHighlighted(true)) => [
+                        addActionLabel(action.serializeHighlighted(true, SHOW_USER_LABELS.booleanValue)) => [
                             setProperty(TracingVisualizationProperties.TRACING_NODE, true);
                             associateWith(action);
                             eAllContentsOfType2(KRendering).forEach[
@@ -155,19 +135,27 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                         ]
                     }
                 }
-                if (sLabel.length > 0) it.setUserScheduleStyle
+                if (region.schedule.size > 0) it.setUserScheduleStyle
                 // Add Button after area to assure correct overlapping
-                addCollapseButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                addCollapseButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ]
                 if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
 
             // Collapsed
-            node.addRegionFigure(region.final) => [
+            node.addRegionFigure => [
                 setAsCollapsedView
                 associateWith(region)
-                if (sLabel.length > 0) it.setUserScheduleStyle
-                addDoubleClickAction(ReferenceExpandAction::ID)
-                addExpandButton(label).addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                if (region.schedule.size > 0) it.setUserScheduleStyle
+                addDoubleClickAction(MemorizingExpandCollapseAction::ID)
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
+                addExpandButton(label) => [
+                    addSingleClickAction(MemorizingExpandCollapseAction.ID)
+                    addDoubleClickAction(MemorizingExpandCollapseAction.ID)
+                ] 
                 if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
             ]
             
@@ -197,7 +185,10 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
                 ]
             ]
         } else {
-            node.addRegionFigure(region.final)
+            node.addRegionFigure => [
+                if (region.override) addOverrideRegionStyle
+                if (region.final) addFinalRegionStyle
+            ]
         }
 
         val returnNodes = <KNode> newArrayList(node)
@@ -237,21 +228,27 @@ class ControlflowRegionSynthesis extends SubSynthesis<ControlflowRegion, KNode> 
         node.setLayoutOption(KlighdProperties::EXPAND, false);
 
         // Expanded
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
             setAsExpandedView
             addStatesArea(label !== null)
             addDoubleClickAction(ReferenceExpandAction::ID)
             // Add Button after area to assure correct overlapping
             // Use special expand action to resolve references
-            addCollapseButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            addCollapseButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 
         // Collapsed
-        node.addRegionFigure(false) => [
+        node.addRegionFigure => [
             setAsCollapsedView
             addDoubleClickAction(ReferenceExpandAction::ID)
-            addExpandButton(label).addDoubleClickAction(ReferenceExpandAction::ID)
+            addExpandButton(label?:"") => [
+                addSingleClickAction(ReferenceExpandAction.ID)
+                addDoubleClickAction(ReferenceExpandAction.ID)
+            ]
             if (!label.nullOrEmpty) children.filter(KText).forEach[configureTextLOD(region)]
         ]
 

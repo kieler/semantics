@@ -3,9 +3,10 @@
  */
 package de.cau.cs.kieler.lustre.lustre.impl;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import de.cau.cs.kieler.lustre.lustre.AState;
 import de.cau.cs.kieler.lustre.lustre.ATransition;
-import de.cau.cs.kieler.lustre.lustre.Expression;
 import de.cau.cs.kieler.lustre.lustre.LustrePackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -121,6 +122,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isStrong()
   {
     return strong;
@@ -131,6 +133,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setStrong(boolean newStrong)
   {
     boolean oldStrong = strong;
@@ -144,6 +147,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getCondition()
   {
     return condition;
@@ -171,6 +175,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setCondition(Expression newCondition)
   {
     if (newCondition != condition)
@@ -192,6 +197,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public boolean isHistory()
   {
     return history;
@@ -202,6 +208,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setHistory(boolean newHistory)
   {
     boolean oldHistory = history;
@@ -215,6 +222,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public AState getNextState()
   {
     if (nextState != null && nextState.eIsProxy())
@@ -245,6 +253,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setNextState(AState newNextState)
   {
     AState oldNextState = nextState;
@@ -376,7 +385,7 @@ public class ATransitionImpl extends MinimalEObjectImpl.Container implements ATr
   {
     if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
+    StringBuilder result = new StringBuilder(super.toString());
     result.append(" (strong: ");
     result.append(strong);
     result.append(", history: ");

@@ -1,187 +1,289 @@
 package de.cau.cs.kieler.lustre.validation
 
+import com.google.inject.Inject
+import de.cau.cs.kieler.kexpressions.Expression
+import de.cau.cs.kieler.kexpressions.ReferenceCall
+import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.VariableDeclaration
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
+import de.cau.cs.kieler.kexpressions.keffects.Assignment
+import de.cau.cs.kieler.lustre.lustre.AState
+import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
+import de.cau.cs.kieler.lustre.lustre.Equation
+import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
+import de.cau.cs.kieler.lustre.lustre.ModelDeclaration
+import de.cau.cs.kieler.lustre.lustre.NodeDeclaration
+import de.cau.cs.kieler.lustre.lustre.NodeReference
+import de.cau.cs.kieler.lustre.lustre.NodeValuedObject
+import de.cau.cs.kieler.lustre.lustre.PackBody
+import de.cau.cs.kieler.lustre.lustre.PackageDeclaration
+import de.cau.cs.kieler.lustre.lustre.PackageEquation
+import de.cau.cs.kieler.lustre.lustre.StaticParam
+import de.cau.cs.kieler.lustre.lustre.TypeDeclaration
+import java.util.HashSet
+import java.util.LinkedList
+import java.util.Set
+import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.lustre.extensions.LustreElementOperationsExtensions
+
 /**
  * This class contains custom validation rules. 
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  * 
- * @author cpa
+ * @author lgr
  */
 class LustreValidator extends AbstractLustreValidator {
 
-//    public static val ALREADY_DEFINED = "alreadyDefined"
-//    public static val TYPE_MISMATCH = "TypeMismatch"
-//
-//    @Inject
-//    extension ExpressionTyper
-//
-//    def private checkExpectedBoolean(Expression expr, EReference reference) {
-//        checkExpectedType(expr, ExpressionTyper.BOOL_TYPE, reference)
-//    }
-//
-//    def private checkExpectedNum(Expression expr, EReference reference) {
-//        val actualType = getTypeAndCheckNotNull(expr, reference)
-//        if (actualType != ExpressionTyper.FLOAT_TYPE || actualType != ExpressionTyper.INT_TYPE)
-//            error("expected numeric type, but was " + actualType, reference, TYPE_MISMATCH)
-//    }
-//
-//    def private checkExpectedType(Expression exp, ExpressionType expectedType, EReference reference) {
-//        val actualType = getTypeAndCheckNotNull(exp, reference)
-//        if (actualType != expectedType)
-//            error("expected " + expectedType + " type, but was " + actualType, reference, TYPE_MISMATCH)
-//    }
-//
-//    def private ExpressionType getTypeAndCheckNotNull(Expression exp, EReference reference) {
-//        var type = exp.typeExpression
-//        if (type === null)
-//            error("null type", reference, TYPE_MISMATCH)
-//        return type;
-//    }
-//
-//    def private ExpressionType getTypeAndCheckNotNull(Variable_Declaration variable, EReference reference) {
-//        var type = variable.typeDeclaration
-//        if (type === null)
-//            error("null type", reference, TYPE_MISMATCH)
-//        return type;
-//    }
-//
-//    def private ExpressionType getTypeAndCheckNotNull(Constant_Declaration constant, EReference reference) {
-//        var type = constant.typeDeclaration
-//        if (type === null)
-//            error("null type", reference, TYPE_MISMATCH)
-//        return type;
-//    }
-//
-//    def private checkExpectedSame(ExpressionType left, ExpressionType right) {
-//        if (right !== null && left !== null && right != left) {
-//            error("expected the same type, but was " + left + ", " + right,
-//                LustrePackage.Literals.EQUALITY.getEIDAttribute(), TYPE_MISMATCH)
-//        }
-//    }
-//
-//    @Check
-//    def checkType(Not not) {
-//        checkExpectedBoolean(not.expression, LustrePackage.Literals.NOT__EXPRESSION)
-//    }
-//
-//    @Check
-//    def checkType(And and) {
-//        checkExpectedBoolean(and.left, LustrePackage.Literals.AND__LEFT)
-//        checkExpectedBoolean(and.right, LustrePackage.Literals.AND__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(Or or) {
-//        checkExpectedBoolean(or.left, LustrePackage.Literals.OR__LEFT)
-//        checkExpectedBoolean(or.left, LustrePackage.Literals.OR__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(UMinus minus) {
-//        checkExpectedNum(minus.expression, LustrePackage.Literals.UMINUS__EXPRESSION)
-//    }
-//
-//    @Check
-//    def checkType(Equality equality) {
-//        val leftType = getTypeAndCheckNotNull(equality.left, LustrePackage.Literals.EQUALITY__LEFT)
-//        val rightType = getTypeAndCheckNotNull(equality.right, LustrePackage.Literals.EQUALITY__RIGHT)
-//        checkExpectedSame(leftType, rightType)
-//    }
-//
-//    @Check
-//    def checkType(Comparison comparison) {
-//        checkExpectedNum(comparison.left, LustrePackage.Literals.COMPARISON__LEFT)
-//        checkExpectedNum(comparison.right, LustrePackage.Literals.COMPARISON__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(Plus plus) {
-//        checkExpectedNum(plus.left, LustrePackage.Literals.PLUS__LEFT)
-//        checkExpectedNum(plus.right, LustrePackage.Literals.PLUS__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(Minus minus) {
-//        checkExpectedNum(minus.left, LustrePackage.Literals.MINUS__LEFT)
-//        checkExpectedNum(minus.right, LustrePackage.Literals.MINUS__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(Mul mul) {
-//        checkExpectedNum(mul.left, LustrePackage.Literals.MUL__LEFT)
-//        checkExpectedNum(mul.right, LustrePackage.Literals.MUL__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(Div div) {
-//        checkExpectedNum(div.left, LustrePackage.Literals.DIV__LEFT)
-//        checkExpectedNum(div.right, LustrePackage.Literals.DIV__RIGHT)
-//    }
-//
-//    @Check
-//    def checkType(IfThenElse ifthenelse) {
-//        checkExpectedBoolean(ifthenelse.ifexpr, LustrePackage.Literals.IF_THEN_ELSE__IFEXPR)
-//        val thenType = getTypeAndCheckNotNull(ifthenelse.thenexpr, LustrePackage.Literals.IF_THEN_ELSE__THENEXPR)
-//        val elseType = getTypeAndCheckNotNull(ifthenelse.elseexpr, LustrePackage.Literals.IF_THEN_ELSE__ELSEEXPR)
-//        checkExpectedSame(thenType, elseType)
-//    }
-//
-//    @Check
-//    def checkType(Arrow arrow) {
-//        val leftType = getTypeAndCheckNotNull(arrow.left, LustrePackage.Literals.ARROW__LEFT)
-//        val rightType = getTypeAndCheckNotNull(arrow.right, LustrePackage.Literals.ARROW__RIGHT)
-//        checkExpectedSame(leftType, rightType)
-//    }
-//
-//    @Check
-//    def checkType(Fby fby) {
-//        val leftType = getTypeAndCheckNotNull(fby.left, LustrePackage.Literals.FBY__LEFT)
-//        val rightType = getTypeAndCheckNotNull(fby.right, LustrePackage.Literals.FBY__RIGHT)
-//        checkExpectedSame(leftType, rightType)
-//    }
-//
-//    @Check
-//    def checkType(Equation equation) {
-//        val leftType = getTypeAndCheckNotNull(equation.left, LustrePackage.Literals.EQUATION__LEFT)
-//        val rightType = getTypeAndCheckNotNull(equation.right, LustrePackage.Literals.EQUATION__RIGHT)
-//        checkExpectedSame(leftType, rightType)
-//    }
-//
-//    @Check
-//    def CheckType(Constant_Declaration constant) {
-//        if (constant.expr !== null) {
-//            val leftType = getTypeAndCheckNotNull(constant, LustrePackage.Literals.EQUATION__LEFT)
-//            val rightType = getTypeAndCheckNotNull(constant.expr, LustrePackage.Literals.CONSTANT_DECLARATION__EXPR)
-//            checkExpectedSame(leftType, rightType)
-//        }
-//
-//    }
-//
-//    @Check
-//    def checkDefinitions(Node_Declaration node) {
-//        val definedVariables = new HashSet<Variable_Declaration>
-//
-//        for (Variable_Declaration decl : node.parameters) {
-//            definedVariables.add(decl)
-//        }
-//
-//        for (Equation equation : node.equations) {
-//            if (definedVariables.contains(equation.left))
-//                error("Variable '" + equation.left.name + "' was already defined", equation,
-//                    LustrePackage.Literals.EQUATION__LEFT, ALREADY_DEFINED)
-//            else
-//                definedVariables.add(equation.left)
-//        }
-//
-//    }
-//    
-//    @Check
-//    def checkCycles(Node_Declaration node) {
-//        
-//    }
-//
-//    @Check
-//    def checkNodeHeaders(Package_Provided header) {
-//        // TODO
-//    }
+    static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this body."
+    static val String UNUSED_VARIABLE = "The variable is not defined through any equations."
+    static val String NOT_SUPPORTED_FEATURE = "The feature is not supported."
+    static val String EQUATION_LIST_PARAM_NUM_MISMATCH = "Left side of equation does not match number of return values of the ReferenceCall."
+    static val String CLOCK_EXPRESSION_MISMATCH = "The clocks in this expression are not compatible. "
+    static val String OUTPUT_NOT_DEFINED = "The output is not defined through equations."
+    static val String MULTIPLE_DEFINITIONS = "The variable is defined multiple times through equations."
+
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension LustreElementOperationsExtensions
+
+    /*
+     * Checks for not supported language features.
+     */
+    @Check
+    def checkModelDeclaration(ModelDeclaration modelDeclaration) {
+        featureNotSupported(modelDeclaration);
+    }
+
+    @Check
+    def checkPackageDeclaration(PackageDeclaration packageDeclaration) {
+        featureNotSupported(packageDeclaration);
+    }
+
+    @Check
+    def checkPackageEquation(PackageEquation packageEquation) {
+        featureNotSupported(packageEquation);
+    }
+
+    @Check
+    def checkExternalNodeDeclaration(ExternalNodeDeclaration externalNodeDeclaration) {
+        featureNotSupported(externalNodeDeclaration);
+    }
+
+    @Check
+    def checkTypeDeclaration(TypeDeclaration typeNodeDeclaration) {
+        featureNotSupported(typeNodeDeclaration);
+    }
+
+    @Check
+    def checkStaticParam(StaticParam staticParam) {
+        featureNotSupported(staticParam);
+    }
+
+    @Check
+    def checkNodeReference(NodeReference nodeReference) {
+        featureNotSupported(nodeReference);
+    }
+
+    /*
+     * Check actual language properties.
+     */
+    @Check
+    override void checkPureSignal(VariableDeclaration declaration) {
+        // LustreValuedObjects specify the type and their corresponding VariableDeclaration 
+        // has the type pure (which is default). This is not an error, so override this method to 
+        // ignore this check 
+    }
+
+    @Check
+    def void checkDuplicateVariable(NodeDeclaration nodeDeclaration) {
+        val Set<String> variableNames = newHashSet()
+        var superContainer = nodeDeclaration.eContainer
+
+        // Check the constants
+        if (superContainer instanceof PackBody) {
+            for (constantVariableDeclaration : superContainer.constants) {
+                warnVariableExistsOrAddVariableToSet(variableNames, constantVariableDeclaration.valuedObjects)
+            }
+        }
+
+        // Check the input parameter
+        for (parameter : nodeDeclaration.input.parameter) {
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
+        }
+
+        // Check the output parameter
+        for (parameter : nodeDeclaration.output.parameter) {
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
+        }
+
+        // Check the node constant variables        
+        for (constantDeclaration : nodeDeclaration.constants) {
+            warnVariableExistsOrAddVariableToSet(variableNames, constantDeclaration.valuedObjects)
+        }
+
+        // Check the node variables        
+        for (clockedVariableDeclaration : nodeDeclaration.variables) {
+            warnVariableExistsOrAddVariableToSet(variableNames, clockedVariableDeclaration.vardecl.valuedObjects)
+        }
+    }
+    
+    @Check
+    def void checkVariableUnused(NodeDeclaration nodeDeclaration) {
+        val Set<ValuedObject> variableNamesDefined = newHashSet()
+
+        // Add all constants and variables used in the node to a set
+        for (constantDeclaration : nodeDeclaration.constants) {
+            for (ValuedObject constValObj : constantDeclaration.valuedObjects) {
+                variableNamesDefined.add(constValObj)
+            }
+        }
+        for (clockedVariableDeclaration : nodeDeclaration.variables) {
+            for (ValuedObject valObj : clockedVariableDeclaration.vardecl.valuedObjects) {
+                variableNamesDefined.add(valObj)
+            }
+        }
+        
+        // Derive all variables defined through equations
+        val Set<ValuedObject> variableNamesUsed = getValuedObjectsFromEquations(nodeDeclaration.equations)
+        variableNamesUsed.addAll(getValuedObjectsFromAutomatons(nodeDeclaration.automatons))
+        
+        // For those that are not defined, show a warning
+        variableNamesDefined.removeAll(variableNamesUsed)
+        
+        for (valObj : variableNamesDefined) {
+            warning(UNUSED_VARIABLE, valObj, null)
+        }
+    }
+
+    @Check
+    def checkDuplicateNodeName(PackBody packBody) {
+        val Set<String> variableNames = newHashSet()
+
+        for (node : packBody.nodes) {
+            warnVariableExistsOrAddVariableToSet(variableNames, node.valuedObjects)
+        }
+
+    }
+
+    @Check
+    def checkClockConsistency(Expression expression) {
+        val expressionContainer = expression.eContainer
+        if (expressionContainer instanceof Equation) {
+            if (expressionContainer.reference !== expression) {
+                
+                if (expressionContainer.reference !== null) {
+                    val referenceDeclaration = expressionContainer.reference.valuedObject.declaration.eContainer
+                    var clockExpr = null as ValuedObject;
+                    if (referenceDeclaration instanceof ClockedVariableDeclaration) {
+                        if (referenceDeclaration.clockExpr instanceof ValuedObjectReference) {
+                            clockExpr = (referenceDeclaration.clockExpr as ValuedObjectReference).valuedObject
+                        }
+                    }
+    
+                    try {
+                        if (!areClocksEqual(clockExpr, expression)) {
+                            error(CLOCK_EXPRESSION_MISMATCH, expressionContainer, null)
+                        }
+                    } catch (IllegalStateException e) {
+                        error(CLOCK_EXPRESSION_MISMATCH + "\n" + e.message, expressionContainer, null)
+                    }
+    
+                }
+            }
+        }
+    }
+    
+    @Check
+    def checkCallReferenceReturnCardinalities(Equation equation) {
+
+        val rightExpression = equation.expression
+        if (rightExpression instanceof ReferenceCall) {
+
+            val referenceValuedObject = rightExpression.valuedObject
+            if (referenceValuedObject instanceof NodeValuedObject) {
+
+                val calledNode = referenceValuedObject.eContainer;
+                if (calledNode instanceof NodeDeclaration) {
+
+                    var numReturnValues = 0
+                    for (VariableDeclaration varDecl : calledNode.output.parameter) {
+                        numReturnValues += varDecl.valuedObjects.size
+                    }
+
+                    if (numReturnValues == 1) {
+                        if (equation.reference === null) {
+                            error(EQUATION_LIST_PARAM_NUM_MISMATCH, equation, null)
+                        }
+                    } else {
+                        if (numReturnValues != equation.references.length) {
+                            error(EQUATION_LIST_PARAM_NUM_MISMATCH, equation, null)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @Check
+    def checkOutputDefined(NodeDeclaration node) {
+        var HashSet<ValuedObject> valuedObjectSet = newHashSet
+        
+        // Save all variables from assignments
+        for (Assignment equation : node.equations) {
+            val valObj = equation.reference?.valuedObject
+            if (valuedObjectSet.contains(valObj)) {
+                warning(MULTIPLE_DEFINITIONS, valObj, null)
+            } else if (valObj !== null) {
+                valuedObjectSet.add(valObj)
+            }
+            if (equation instanceof Equation) {
+                for (vo : equation.references.filterNull.map[valuedObject].filterNull) {
+                    if (valuedObjectSet.contains(vo)) {
+                        warning(MULTIPLE_DEFINITIONS, vo, null)
+                    } else {
+                        valuedObjectSet.add(vo)
+                    }
+                }
+            }
+        }
+
+        var currAutomatons = new LinkedList(node.automatons)
+        while (!currAutomatons.isEmpty) {
+            var automaton = currAutomatons.head
+            for (AState state : automaton.states) {
+                for (Assignment equation : state.equations) {
+                    valuedObjectSet.add(equation.reference.valuedObject)
+                    currAutomatons.addAll(state.automatons)
+                }
+                currAutomatons.addAll(state.automatons)
+            }
+            currAutomatons.remove(automaton)
+        }
+
+        for (VariableDeclaration varDecl : node.output.parameter) {
+            for (ValuedObject valObj : varDecl.valuedObjects) {
+                if (!valuedObjectSet.contains(valObj)) {
+                    warning(OUTPUT_NOT_DEFINED, valObj, null)
+                }
+            }
+        }
+    }
+
+    private def warnVariableExistsOrAddVariableToSet(Set<String> set, EList<ValuedObject> valuedObjectList) {
+        for (valuedObject : valuedObjectList) {
+            val name = valuedObject.name
+            if (set.contains(name)) {
+                warning(DUPLICATE_VARIABLE, valuedObject, null)
+            } else {
+                set.add(name)
+            }
+        }
+    }
+
+    private def featureNotSupported(EObject object) {
+        error(NOT_SUPPORTED_FEATURE + object.class.toString, object, null);
+    }
 }

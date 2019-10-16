@@ -77,6 +77,7 @@ public class EmitImpl extends StatementImpl implements Emit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ValuedObject getSignal() {
         if (signal != null && signal.eIsProxy()) {
             InternalEObject oldSignal = (InternalEObject)signal;
@@ -103,6 +104,7 @@ public class EmitImpl extends StatementImpl implements Emit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setSignal(ValuedObject newSignal) {
         ValuedObject oldSignal = signal;
         signal = newSignal;
@@ -115,6 +117,7 @@ public class EmitImpl extends StatementImpl implements Emit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Expression getExpression() {
         return expression;
     }
@@ -139,6 +142,7 @@ public class EmitImpl extends StatementImpl implements Emit {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setExpression(Expression newExpression) {
         if (newExpression != expression) {
             NotificationChain msgs = null;

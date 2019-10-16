@@ -23,6 +23,7 @@ import de.cau.cs.kieler.kicool.environments.Environment
 import de.cau.cs.kieler.annotations.extensions.PragmaExtensions
 import static de.cau.cs.kieler.kicool.compilation.codegen.AbstractCodeGenerator.*
 import static de.cau.cs.kieler.kicool.compilation.codegen.CodeGeneratorNames.*
+import de.cau.cs.kieler.annotations.Nameable
 
 /**
  * Root C Code Generator Module
@@ -45,12 +46,14 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     public static val C_EXTENSION = ".c"
     public static val H_EXTENSION = ".h"
     
-    @Accessors var SCGCodeGeneratorModule struct
-    @Accessors var SCGCodeGeneratorModule reset 
-    @Accessors var SCGCodeGeneratorModule tick
-    @Accessors var SCGCodeGeneratorModule logic
+    @Accessors var SCGCodeGeneratorModule struct = null
+    @Accessors var SCGCodeGeneratorModule reset = null
+    @Accessors var SCGCodeGeneratorModule tick = null
+    @Accessors var SCGCodeGeneratorModule logic = null
     
     override configure() {
+        modifications.clear
+        
         struct = injector.getInstance(CCodeGeneratorStructModule)
         reset = injector.getInstance(CCodeGeneratorResetModule)
         tick = injector.getInstance(CCodeGeneratorTickModule)
@@ -67,25 +70,25 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
     }
     
     override generateInit() {
-        struct.generateInit
-        reset.generateInit
-        logic.generateInit
-        tick.generateInit
+        struct?.generateInit
+        reset?.generateInit
+        logic?.generateInit
+        tick?.generateInit
     }
     
     override generate() {
-        struct.generate
-        reset.generate
-        logic.generate
-        tick.generate
+        struct?.generate
+        reset?.generate
+        logic?.generate
+        tick?.generate
     }
     
     
     override generateDone() {
-        struct.generateDone
-        reset.generateDone
-        logic.generateDone
-        tick.generateDone
+        struct?.generateDone
+        reset?.generateDone
+        logic?.generateDone
+        tick?.generateDone
     }
     
     /**
@@ -98,23 +101,33 @@ class CCodeGeneratorModule extends SCGCodeGeneratorModule {
         val cFile = new StringBuilder
 
         hFile.addHeader
-        hFile.append(struct.code)
-        
         cFile.addHeader
         cFile.hostcodeAdditions
-        cFile.append("#include \"" + hFilename + "\"\n\n")        
-        cFile.append(reset.code).append("\n")
-        cFile.append(logic.code).append("\n")
-        cFile.append(tick.code)
+        cFile.append("#include \"" + hFilename + "\"\n\n")
+        
+        generateWriteCodeModules(hFile, cFile)        
 
         naming.put(TICK, tick.getName)
         naming.put(RESET, reset.getName)
         naming.put(LOGIC, logic.getName)
         naming.put(TICKDATA, struct.getName)
         
-        codeContainer.addCCode(cFilename, cFile.toString).naming.putAll(naming)        
-        codeContainer.addCHeader(hFilename, hFile.toString).naming.putAll(naming)
-    }    
+        codeContainer.addCCode(cFilename, cFile.toString) => [
+            it.naming.putAll(this.naming)
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"   
+        ]        
+        codeContainer.addCHeader(hFilename, hFile.toString) => [
+            it.naming.putAll(this.naming)   
+            modelName = if (moduleObject instanceof Nameable) moduleObject.name else "_default"
+        ]
+    } 
+    
+    protected def generateWriteCodeModules(StringBuilder hFile, StringBuilder cFile) {
+        hFile.append(struct.code)
+        cFile.append(reset.code).append("\n")
+        cFile.append(logic.code).append("\n")
+        cFile.append(tick.code)
+    }   
     
     /**
      * Adds the information header.

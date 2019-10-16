@@ -65,6 +65,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
             case KEffectsPackage.PRINT_CALL_EFFECT: return createPrintCallEffect();
             case KEffectsPackage.RANDOMIZE_CALL_EFFECT: return createRandomizeCallEffect();
             case KEffectsPackage.DATA_DEPENDENCY: return createDataDependency();
+            case KEffectsPackage.CONTROL_DEPENDENCY: return createControlDependency();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -109,6 +110,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Assignment createAssignment() {
         AssignmentImpl assignment = new AssignmentImpl();
         return assignment;
@@ -119,6 +121,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Emission createEmission() {
         EmissionImpl emission = new EmissionImpl();
         return emission;
@@ -129,6 +132,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public HostcodeEffect createHostcodeEffect() {
         HostcodeEffectImpl hostcodeEffect = new HostcodeEffectImpl();
         return hostcodeEffect;
@@ -139,6 +143,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ReferenceCallEffect createReferenceCallEffect() {
         ReferenceCallEffectImpl referenceCallEffect = new ReferenceCallEffectImpl();
         return referenceCallEffect;
@@ -149,6 +154,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public FunctionCallEffect createFunctionCallEffect() {
         FunctionCallEffectImpl functionCallEffect = new FunctionCallEffectImpl();
         return functionCallEffect;
@@ -159,6 +165,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public PrintCallEffect createPrintCallEffect() {
         PrintCallEffectImpl printCallEffect = new PrintCallEffectImpl();
         return printCallEffect;
@@ -169,6 +176,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public RandomizeCallEffect createRandomizeCallEffect() {
         RandomizeCallEffectImpl randomizeCallEffect = new RandomizeCallEffectImpl();
         return randomizeCallEffect;
@@ -179,9 +187,21 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DataDependency createDataDependency() {
         DataDependencyImpl dataDependency = new DataDependencyImpl();
         return dataDependency;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ControlDependency createControlDependency() {
+        ControlDependencyImpl controlDependency = new ControlDependencyImpl();
+        return controlDependency;
     }
 
     /**
@@ -229,6 +249,7 @@ public class KEffectsFactoryImpl extends EFactoryImpl implements KEffectsFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public KEffectsPackage getKEffectsPackage() {
         return (KEffectsPackage)getEPackage();
     }

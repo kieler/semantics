@@ -4,12 +4,13 @@ system de.cau.cs.kieler.sccharts.extended
 de.cau.cs.kieler.sccharts.processors.reference
 post process de.cau.cs.kieler.kicool.deploy.variable.store.init
 de.cau.cs.kieler.sccharts.processors.regionactions
+de.cau.cs.kieler.sccharts.processors.codeEffects
 de.cau.cs.kieler.sccharts.processors.for
 de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
-de.cau.cs.kieler.sccharts.processors.fby
+de.cau.cs.kieler.sccharts.processors.initOperator
 de.cau.cs.kieler.sccharts.processors.history
 [ label "SyncCharts"	
 	de.cau.cs.kieler.sccharts.processors.^signal
@@ -34,4 +35,5 @@ de.cau.cs.kieler.sccharts.processors.history
 	de.cau.cs.kieler.sccharts.processors.entryAction
 	de.cau.cs.kieler.sccharts.processors.connector
 ]
+de.cau.cs.kieler.sccharts.processors.arrayInitialisation
 de.cau.cs.kieler.sccharts.processors.userSchedule

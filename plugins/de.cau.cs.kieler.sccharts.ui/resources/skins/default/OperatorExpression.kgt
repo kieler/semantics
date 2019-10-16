@@ -16,7 +16,7 @@ knode operator {
         
     klabel "" { 
         ktext {
-            styles: fontSize = 4pt
+            styles: fontSize = 5pt
         }
     }
   }
@@ -27,7 +27,7 @@ knode operator {
     
     klabel "" { 
         ktext {
-            styles: fontSize = 4pt
+            styles: fontSize = 5pt
         }
     }
   }
@@ -39,7 +39,7 @@ knode operator {
     
     klabel "" { 
         ktext {
-            styles: fontSize = 4pt
+            styles: fontSize = 5pt
         }
     }
   }    

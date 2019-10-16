@@ -27,10 +27,6 @@ public interface Handler extends Content
   /**
    * Returns the value of the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variable</em>' attribute.
    * @see #setVariable(String)
@@ -53,10 +49,6 @@ public interface Handler extends Content
   /**
    * Returns the value of the '<em><b>Multimatch</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Multimatch</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Multimatch</em>' attribute.
    * @see #setMultimatch(boolean)
@@ -79,10 +71,6 @@ public interface Handler extends Content
   /**
    * Returns the value of the '<em><b>Dom Element</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Dom Element</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Dom Element</em>' attribute.
    * @see #setDomElement(String)

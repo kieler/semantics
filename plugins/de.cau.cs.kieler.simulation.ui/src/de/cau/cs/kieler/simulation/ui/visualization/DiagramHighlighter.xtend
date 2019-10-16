@@ -22,11 +22,12 @@ import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.util.List
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * Base class to highlight a model in the diagram view with a running simulation.
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.EObject
  * @author aas
  *
  */
-abstract class DiagramHighlighter implements SimulationListener {
+abstract class DiagramHighlighter implements ISimulationListener {
     
     /**
      * The elements that have been highlighted scince the last call of unhighlightDiagram.
@@ -59,7 +60,7 @@ abstract class DiagramHighlighter implements SimulationListener {
      * Registers the simulation listener for this instance.
      */
     new() {
-        SimulationUI.registerObserver(this)
+        CentralSimulation.addListener(this)
     }
 
     /**
@@ -187,7 +188,7 @@ abstract class DiagramHighlighter implements SimulationListener {
      * @param eObjects The objects
      * @return the graph elements that represent the given objects.
      */
-    protected def List<Highlighting> getHighlighting(Iterable<EObject> eObjects, KForeground style) {
+    protected def List<Highlighting> getHighlighting(Iterable<? extends EObject> eObjects, KForeground style) {
         val highlighting = <Highlighting> newArrayList
         for (eObject : eObjects) {
             val element = diagramViewContext.getTargetElement(eObject, typeof(KLabeledGraphElement));

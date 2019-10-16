@@ -28,10 +28,6 @@ public interface Setter extends EObject
   /**
    * Returns the value of the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Variable</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Variable</em>' attribute.
    * @see #setVariable(String)
@@ -54,10 +50,6 @@ public interface Setter extends EObject
   /**
    * Returns the value of the '<em><b>Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Interface</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Interface</em>' containment reference.
    * @see #setInterface(Interface)
@@ -80,10 +72,6 @@ public interface Setter extends EObject
   /**
    * Returns the value of the '<em><b>Script</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Script</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Script</em>' attribute.
    * @see #setScript(String)

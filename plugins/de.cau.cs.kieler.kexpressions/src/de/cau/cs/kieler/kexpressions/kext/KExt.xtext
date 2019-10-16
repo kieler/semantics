@@ -74,15 +74,15 @@ AnnotatedExpression  returns kext::AnnotatedExpression:
 // valued objects that follow.
 // Examples: const float pi = 3.14, input signal I, output bool z  
 Declaration returns kexpressions::Declaration:
-    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | StructDeclaration;
+    VariableDeclaration | ReferenceDeclaration | ScheduleDeclaration | ClassDeclaration;
 
 DeclarationWOSemicolon returns kexpressions::Declaration:
-    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | StructDeclarationWOSemicolon;
+    VariableDeclarationWOSemicolon | ReferenceDeclarationWOSemicolon | ScheduleDeclarationWOSemicolon | ClassDeclarationWOSemicolon;
 
 
 VariableDeclaration returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -97,7 +97,7 @@ VariableDeclaration returns kexpressions::VariableDeclaration:
     
 VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
 	const?='const'?
     input?='input'? 
     output?='output'?
@@ -109,48 +109,99 @@ VariableDeclarationWOSemicolon returns kexpressions::VariableDeclaration:
     ) 
     valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*
     annotations+=CommentAnnotatonSL?; 
-
-StructDeclaration returns kext::StructDeclaration:
-    {kext::StructDeclaration}
-    annotations+=Annotation*
-    private?='private'?
-    const?='const'?
-    input?='input'?
-    output?='output'?
-    global?='global'?
-    static?='static'?
-    type = StructType
-    (name = ID)?
-    '{'
-        declarations+=Declaration*
-    '}'
-    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-    ';'
-    annotations+=CommentAnnotatonSL?;
     
-StructDeclarationWOSemicolon returns kext::StructDeclaration:
-    {kext::StructDeclaration}
+ClassDeclaration returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     const?='const'?
     input?='input'? 
     output?='output'?
     global?='global'?
     static?='static'?
-    type = StructType
-    (name = ID)?
-    '{'
-        declarations+=DeclarationWOSemicolon*
-    '}'
+    host?='host'?
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationOrMethod*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=Declaration*
+        '}'
+    ))
     (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
-    annotations+=CommentAnnotatonSL?;  
-    
+    ';'
+    annotations+=CommentAnnotatonSL?
+;
+
+DeclarationOrMethod returns kexpressions::Declaration:
+    Declaration | MethodDeclaration
+;
+
+ClassDeclarationWOSemicolon returns kext::ClassDeclaration:
+    {kext::ClassDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    const?='const'?
+    input?='input'? 
+    output?='output'?
+    global?='global'?
+    static?='static'?
+    host?='host'?
+    ((
+        type = ClassType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationOrMethodWOSemicolon*
+        '}'
+    )|(
+        type = StructType
+        (name = ID)?
+        '{'
+            declarations+=DeclarationWOSemicolon*
+        '}'
+    ))
+    (valuedObjects+=ValuedObject (',' valuedObjects+=ValuedObject)*)?
+    annotations+=CommentAnnotatonSL?
+;
+
+DeclarationOrMethodWOSemicolon returns kexpressions::Declaration:
+    DeclarationWOSemicolon | MethodDeclarationWOSemicolon
+;
+
+MethodDeclaration returns kexpressions::MethodDeclaration:
+    {kexpressions::MethodDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    ';'
+    annotations+=CommentAnnotatonSL?
+;
+
+MethodDeclarationWOSemicolon returns kexpressions::MethodDeclaration:
+    {kexpressions::MethodDeclaration}
+    annotations+=Annotation*
+    access=AccessModifier?
+    returnType=MethodReturnType?
+    valuedObjects+=SimpleValuedObject
+    (('(' parameterDeclarations+=VariableDeclarationWOSemicolon (',' parameterDeclarations+=VariableDeclarationWOSemicolon)* ')') | '()')
+    ('schedule' schedule+=ScheduleObjectReference+)?
+    annotations+=CommentAnnotatonSL?
+;
+
 NamespaceID returns ecore::EString:
   ExtendedID (':' PrimeID)*;    
     
 ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -161,7 +212,7 @@ ReferenceDeclaration returns kexpressions::ReferenceDeclaration:
     
 ReferenceDeclarationWOSemicolon returns kexpressions::ReferenceDeclaration:
     annotations+=Annotation*
-    private?='private'?
+    access=AccessModifier?
     ((
         'ref' reference = [annotations::NamedObject|NamespaceID]
     ) | (
@@ -177,7 +228,7 @@ ExternString returns kexpressions::ExternString:
     
 ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    private?='private'?
+    access=AccessModifier?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
@@ -186,7 +237,7 @@ ScheduleDeclaration returns kexpressions::ScheduleDeclaration:
     
 ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations += Annotation*
-    private?='private'?
+    access=AccessModifier?
     'schedule' name=STRING?
     ('global' global = PriorityProtocol)?
     ('{' priorities += PriorityProtocol (',' priorities += PriorityProtocol)* '}')?
@@ -194,7 +245,7 @@ ScheduleDeclarationWOSemicolon returns kexpressions::ScheduleDeclaration:
     annotations+=CommentAnnotatonSL?;
     
 enum PriorityProtocol returns kexpressions::PriorityProtocol:
-    CONFLICT="conflict" | CONFLUENT="confluent";
+    CONFLICT="conflicting" | CONFLUENT="commuting";
     
 // Valued Object Rule
 // A valued object is identified by its name. Then, a part for its cardinalities and an initial 
@@ -207,6 +258,11 @@ ValuedObject returns kexpressions::ValuedObject:
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )?;
+    )?
+    ('label' label=STRING)?;
+    
+SimpleValuedObject returns kexpressions::ValuedObject:
+    annotations+=QuotedStringAnnotation*
+    name=PrimeID;
       
     

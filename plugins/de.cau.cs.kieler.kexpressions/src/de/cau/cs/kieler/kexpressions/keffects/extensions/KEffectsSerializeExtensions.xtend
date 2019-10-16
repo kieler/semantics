@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.PrintCall
 import de.cau.cs.kieler.kexpressions.keffects.ReferenceCallEffect
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.keffects.RandomizeCallEffect
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 
 /**
  * Serialization of KEffects.
@@ -90,12 +91,7 @@ class KEffectsSerializeExtensions extends KExpressionsSerializeHRExtensions {
     public def CharSequence serializeAssignmentRoot(Assignment assignment) {
         var String res = ""
         if (assignment.reference !== null) {
-            res = res + assignment.reference.valuedObject.name
-            if (!assignment.reference.indices.nullOrEmpty) {
-                for(index : assignment.reference.indices) {
-                    res = res + "[" + index.serialize + "]"
-                }
-            }
+            res = res + assignment.reference.serializeVOR
         }
         return res        
     }

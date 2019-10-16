@@ -43,7 +43,6 @@ import de.cau.cs.kieler.scg.ScgFactory
 import de.cau.cs.kieler.scg.Surface
 import de.cau.cs.kieler.scg.extensions.SCGControlFlowExtensions
 import de.cau.cs.kieler.scg.extensions.SCGCoreExtensions
-import de.cau.cs.kieler.scg.processors.ssa.DominatorTree
 import java.util.Collection
 import java.util.Deque
 import java.util.LinkedList
@@ -385,6 +384,28 @@ class SSATransformationExtensions {
         return placed
     }
     
+    def void placeInlineConditionals(SCGraph scg, Map<Parameter, BasicBlock> parameterMapping) {
+        for (node : scg.nodes.filter(Assignment).filter[isSSA(PHI)].toList) {
+            val bb = node.basicBlock
+            val parameter = node.expression.eContents.filter(Parameter).toList
+            if (parameter.size != 2) {
+                throw new IllegalArgumentException("Cannot handle SCGs with more then one level of nested conditionals")
+            }
+            val incomingBBs = bb.firstNode.incomingLinks.groupBy[(it.eContainer as Node).basicBlock]
+            incomingBBs.entrySet.removeIf[!parameterMapping.containsValue(key)] // Remove those not represented in phi function
+            if (parameter.size !== incomingBBs.size) {
+                throw new IllegalArgumentException("Parameter mapping is incomplete")
+            }
+            // Assumtion: Second parameter is always the one from the branch
+            // Find conditional
+            val thenBB = parameterMapping.get(parameter.last)
+            val cond = thenBB.predecessors.head.conditional // there should be only one predecessor
+            // Replace PHI
+            node.expression = createConditionalExpression(cond.condition.copy, parameter.last.expression, parameter.head.expression)
+            node.unmarkSSA
+            
+        }
+    }
     
     // -----------------
     // Helper

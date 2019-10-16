@@ -72,6 +72,7 @@ public class LabelImpl extends StatementImpl implements Label {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -81,6 +82,7 @@ public class LabelImpl extends StatementImpl implements Label {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setName(String newName) {
         String oldName = name;
         name = newName;

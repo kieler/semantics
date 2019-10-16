@@ -85,6 +85,7 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public DelayType getReset() {
         return reset;
     }
@@ -94,6 +95,7 @@ public class DuringActionImpl extends LocalActionImpl implements DuringAction {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setReset(DelayType newReset) {
         DelayType oldReset = reset;
         reset = newReset == null ? RESET_EDEFAULT : newReset;

@@ -75,13 +75,19 @@ class ProjectInfrastructure {
     public static val IProperty<String> GENERATED_NAME = 
         new Property<String>("de.cau.cs.kieler.kicool.deploy.project.generated.name", "kieler-gen")
     
-    
+    public static val IProperty<Boolean> USE_SHORT_DIRECTORY_NAMES = 
+        new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.generated.useShortNames", 
+            de.cau.cs.kieler.core.Platform.isWindows)
+
+
     public static val IProperty<Map<String, String>> PATH_VARIABLES =
         new Property<Map<String, String>>("de.cau.cs.kieler.kicool.deploy.project.path.variables", null)
     
     public static val IProperty<Boolean> OWN_MODEL_FOLDER =
         new Property<Boolean>("de.cau.cs.kieler.kicool.deploy.project.model.ownfolder", false)
-    
+        
+        
+
     public static val Set<IProject> createdTemporaryProjects = newHashSet
 
     @Accessors(AccessorType.PUBLIC_GETTER)
@@ -108,7 +114,6 @@ class ProjectInfrastructure {
         }
         return projectInfrastructure
     }
-    
     /**
      * Returns the temporary project.
      * If the project does not exist yet, it is created beforehand.
@@ -158,8 +163,8 @@ class ProjectInfrastructure {
                     modelFile = resource.findResourceLocation
                 }
             } else if (inputModel instanceof CodeContainer) {
-                if (inputModel.files.size === 1 && inputModel.files.get(0).proxy) {
-                    modelFile = inputModel.files.get(0).file
+                if (!inputModel.files.empty) {
+                    modelFile = inputModel.files.head.underlyingFile
                 }
             }
         }
@@ -215,6 +220,10 @@ class ProjectInfrastructure {
                 name = resource.URI.toPlatformString(true)
             } else if (resource !== null && resource.URI !== null && resource.URI.file) {
                 name = resource.URI.toFileString
+                if (environment.getProperty(USE_SHORT_DIRECTORY_NAMES)) {
+                    val nameSplits = name.split("\\\\")
+                    name = nameSplits.get(nameSplits.length - 1)
+                }
             } else if (modelFile !== null) {
                 name = modelFile.toString
             } else if (inputModel instanceof Nameable) {
@@ -434,26 +443,26 @@ class ProjectInfrastructure {
 
         val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).join("/")
-
-        // Copy files from bundle which are in the directory.
-        val entries = bundle.findEntries(path, "*.*", true)
-        if (entries !== null) {
-            for (var e = entries; e.hasMoreElements;) {
-                val fileUrl = e.nextElement
+        val entries = bundle.findEntries(path, "*", true)
+        if (entries.hasMoreElements) {
+            while (entries.hasMoreElements) {
+                val fileUrl = entries.nextElement
                 val fileUrlPath = fileUrl.toString
-                val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
-                val destFile = new File(dest, relativePath)
-
-                logger?.println("Copying file: " + fileUrlPath)
-                
-                destFile.parentFile.mkdirs
-                if (destFile.isDirectory) {
-                    logger?.println("Destination already exists and is directory (" + destFile + ")")
-                    return false
-                } else if (!destFile.exists || overrideFile) {
-                    fileUrl.copyUrlToFile(destFile)
-                } else {
-                    logger?.println("Skip - destination already exists")
+                if (!fileUrlPath.endsWith("/")) { // is file
+                    val relativePath = fileUrlPath.substring(fileUrlPath.indexOf(path) + path.length + 1)
+                    val destFile = new File(dest, relativePath)
+    
+                    logger?.println("Copying file: " + fileUrlPath)
+                    
+                    destFile.parentFile.mkdirs
+                    if (destFile.isDirectory) {
+                        logger?.println("Destination already exists and is directory (" + destFile + ")")
+                        return false
+                    } else if (!destFile.exists || overrideFile) {
+                        fileUrl.copyUrlToFile(destFile)
+                    } else {
+                        logger?.println("Skip - destination already exists")
+                    }
                 }
             }
             return true
@@ -495,13 +504,10 @@ class ProjectInfrastructure {
 
         val bundle = Platform.getBundle(src.segment(1))
         val path = src.segments.drop(2).take(src.segmentCount - 3).join("/")
-
-        // Copy files from bundle which are in the directory.
         val entries = bundle.findEntries(path, src.lastSegment, true)
-        if (entries !== null) {
-            val fileUrl = entries.nextElement
+        val fileUrl = entries?.nextElement
+        if (fileUrl !== null) {
             val fileUrlPath = fileUrl.toString
-
             logger?.println("Copying file: " + fileUrlPath)
             
             dest.parentFile.mkdirs
@@ -537,7 +543,6 @@ class ProjectInfrastructure {
             input.close();
             output?.close();
         }
-                
     }
     
     /**
@@ -571,5 +576,4 @@ class ProjectInfrastructure {
             return false
         }
     }
-    
 }

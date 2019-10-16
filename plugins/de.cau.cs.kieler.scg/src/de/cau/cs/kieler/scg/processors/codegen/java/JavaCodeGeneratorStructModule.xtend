@@ -20,6 +20,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.scg.processors.codegen.c.CCodeSerializeHRExtensions
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import java.util.List
+import de.cau.cs.kieler.kexpressions.Declaration
+import java.lang.instrument.ClassDefinition
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * Java Code Generator Struct Module
@@ -34,11 +39,13 @@ import de.cau.cs.kieler.kexpressions.ValueType
 class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     
     @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension SCGMethodExtensions
     @Accessors @Inject JavaCodeSerializeHRExtensions javaSerializer
     
     @Accessors String className
     
     var hasArrays = false
+    var hasClasses = false
     
     override configure() {
         className = codeFilename.substring(0, codeFilename.length - 5)
@@ -61,15 +68,27 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
     }
     
     override generate(extension CCodeSerializeHRExtensions serializer) {
+        // Add classes
+        scg.declarations.generateClassDeclarations(0, serializer)
         
         // Add the declarations of the model.
-        for (declaration : scg.declarations.filter(VariableDeclaration)) {
+        scg.declarations.generateDeclarations(0, serializer)
+        
+        code.globalObjectAdditions(serializer)        
+    }
+    
+    override void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
+        for (declaration : declarations.filter(VariableDeclaration)) {
             for (valuedObject : declaration.valuedObjects) {
-                indent
-                code.append("public ")
-                val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
+                (0..depth).forEach[indent]
+                if (!valuedObject.localVariable) code.append("public ")
+                val declarationType = if (declaration instanceof ClassDeclaration) {
+                    declaration.name
+                } else if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) {
                     declaration.type.serializeHR
-                    else declaration.hostType
+                } else {
+                    declaration.hostType
+                }
                 code.append(declarationType)
                 if (valuedObject.isArray) {
                     for (cardinality : valuedObject.cardinalities) {
@@ -82,21 +101,46 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
                 code.append(";\n")
             }
         }
-        
-        code.globalObjectAdditions(serializer)        
+    }
+    
+    protected def void generateClassDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
+        for (declaration : declarations.filter(ClassDeclaration)) {
+            hasClasses = true
+            (0..depth).forEach[indent]
+            code.append("public class ")
+            code.append(declaration.name)
+            code.append(" {\n")
+            declaration.declarations.generateClassDeclarations(depth + 1, serializer)
+            declaration.declarations.generateDeclarations(depth + 1, serializer)
+            if (declaration.declarations.exists[it instanceof ClassDeclaration || valuedObjects.exists[!cardinalities.nullOrEmpty]]) {
+                code.append("\n")
+                declaration.declarations.createConstructor(declaration.name, null, serializer)
+            }
+            (0..depth).forEach[indent]
+            code.append("}\n\n")
+        }
     }
     
     override generateDone() {
-        if (hasArrays) createConstructor(serializer)
+        if (hasArrays || hasClasses) scg.declarations.createConstructor(className, null, serializer)
     }
     
-    protected def createConstructor(extension CCodeSerializeHRExtensions serializer) {
+    protected def createConstructor(List<Declaration> declarations, String contructorName, String additionalCode, extension CCodeSerializeHRExtensions serializer) {
         code.append("\n" + indentation)
-        code.append("public " + className + "() {\n")
+        code.append("public " + contructorName + "() {\n")
+        if (!additionalCode.nullOrEmpty) {
+            code.append("  " + additionalCode)
+        }
         
-        for (declaration : scg.declarations.filter(VariableDeclaration)) {
-            for (valuedObject : declaration.valuedObjects.filter[ isArray ]) {
-                valuedObject.createArrayForCardinalityIndex(0, serializer)
+        for (declaration : declarations.filter(VariableDeclaration)) {
+            val isClass = declaration instanceof ClassDeclaration
+            for (valuedObject : declaration.valuedObjects) {
+                if (valuedObject.isArray) {
+                    valuedObject.createArrayForCardinalityIndex(0, serializer)
+                } else if (isClass) {
+                    indent(2)
+                    code.append(valuedObject.name + " = new " + (declaration as ClassDeclaration).name + "();\n")
+                }
             }
         }
         
@@ -107,9 +151,9 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
         val declaration = valuedObject.variableDeclaration
 
         switch(declaration.type) {
-        case ValueType.BOOL,
-        case ValueType.FLOAT,
-        case ValueType.INT: {            
+        case BOOL,
+        case FLOAT,
+        case INT: {            
             indent(2)
             code.append(valuedObject.name + " = new " + declaration.type.serializeHR)
             for (c : valuedObject.cardinalities) {
@@ -118,7 +162,7 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append(";\n")
         }
         default:
-            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + declaration.type.serializeHR, serializer)
+            valuedObject.createArrayForCardinalityIndexHelper(index, valuedObject.name, " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name else declaration.type.serializeHR, serializer)
         }
     }
     
@@ -138,9 +182,19 @@ class JavaCodeGeneratorStructModule extends CCodeGeneratorStructModule {
             code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
             valuedObject.createArrayForCardinalityIndexHelper(index + 1, 
                 assignmentPart + "[" + i + "]",
-                " = new " + declaration.type.serializeHR,
+                " = new " + if (declaration instanceof ClassDeclaration) (declaration as ClassDeclaration).name + "()" else declaration.type.serializeHR,
                 serializer
             )
+            indent(2 + index)
+            code.append("}\n")
+        } else if (declaration instanceof ClassDeclaration) {
+            indent(2 + index)
+            code.append("for (int " + i + " = 0; " + i + " < " + cardinality.serializeHR + "; " + i + "++) {\n")
+            indent(2 + index + 1)
+            code.append(assignmentPart + "[" + i + "]")
+            code.append(" = new ")
+            code.append(declaration.name)
+            code.append("();\n") 
             indent(2 + index)
             code.append("}\n")
         }                

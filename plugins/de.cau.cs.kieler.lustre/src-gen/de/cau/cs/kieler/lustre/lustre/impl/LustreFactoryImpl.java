@@ -66,48 +66,28 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
     switch (eClass.getClassifierID())
     {
       case LustrePackage.LUSTRE_PROGRAM: return createLustreProgram();
-      case LustrePackage.PACKAGE_DECLARATION: return createPackage_Declaration();
-      case LustrePackage.PACKAGE_PROVIDED: return createPackage_Provided();
-      case LustrePackage.PACKAGE_PROVIDED_IO: return createPackage_Provided_IO();
-      case LustrePackage.ENTITY_DECLARATION: return createEntity_Declaration();
-      case LustrePackage.TYPE_DECLARATION: return createType_Declaration();
-      case LustrePackage.TYPE: return createType();
-      case LustrePackage.ARRAY_TYPE: return createArray_Type();
-      case LustrePackage.RECORD_TYPE: return createRecord_Type();
-      case LustrePackage.FIELD: return createField();
-      case LustrePackage.CONSTANT_DECLARATION: return createConstant_Declaration();
-      case LustrePackage.VARIABLE_DECLARATION: return createVariable_Declaration();
-      case LustrePackage.NODE_DECLARATION: return createNode_Declaration();
-      case LustrePackage.EQUATION: return createEquation();
-      case LustrePackage.ASSERTION: return createAssertion();
+      case LustrePackage.PACK_LIST: return createPackList();
+      case LustrePackage.MODEL_DECLARATION: return createModelDeclaration();
+      case LustrePackage.PROVIDE: return createProvide();
+      case LustrePackage.PACKAGE_DECLARATION: return createPackageDeclaration();
+      case LustrePackage.PACKAGE_EQUATION: return createPackageEquation();
+      case LustrePackage.PACK_BODY: return createPackBody();
+      case LustrePackage.TYPE_DECLARATION: return createTypeDeclaration();
+      case LustrePackage.EXTERNAL_NODE_DECLARATION: return createExternalNodeDeclaration();
       case LustrePackage.AUTOMATON: return createAutomaton();
       case LustrePackage.ASTATE: return createAState();
       case LustrePackage.ATRANSITION: return createATransition();
-      case LustrePackage.LEFT_PART: return createLeft_Part();
-      case LustrePackage.LEFT_LIST: return createLeft_List();
-      case LustrePackage.LEFT: return createLeft();
-      case LustrePackage.SELECTOR: return createSelector();
-      case LustrePackage.EXPRESSION: return createExpression();
-      case LustrePackage.VARIABLE_REFERENCE: return createVariableReference();
-      case LustrePackage.IF_THEN_ELSE: return createIfThenElse();
-      case LustrePackage.FBY: return createFby();
-      case LustrePackage.ARROW: return createArrow();
-      case LustrePackage.OR: return createOr();
-      case LustrePackage.AND: return createAnd();
-      case LustrePackage.EQUALITY: return createEquality();
-      case LustrePackage.COMPARISON: return createComparison();
-      case LustrePackage.MOD: return createMod();
-      case LustrePackage.PLUS: return createPlus();
-      case LustrePackage.MINUS: return createMinus();
-      case LustrePackage.MUL: return createMul();
-      case LustrePackage.DIV: return createDiv();
-      case LustrePackage.NOT: return createNot();
-      case LustrePackage.UMINUS: return createUMinus();
-      case LustrePackage.PRE: return createPre();
-      case LustrePackage.CURRENT: return createCurrent();
-      case LustrePackage.BOOL_CONSTANT: return createBoolConstant();
-      case LustrePackage.FLOAT_CONSTANT: return createFloatConstant();
-      case LustrePackage.INT_CONSTANT: return createIntConstant();
+      case LustrePackage.PARAMS: return createParams();
+      case LustrePackage.STATIC_PARAM: return createStaticParam();
+      case LustrePackage.STATIC_ARG: return createStaticArg();
+      case LustrePackage.BY_NAME_STATIC_ARG: return createByNameStaticArg();
+      case LustrePackage.CLOCKED_VARIABLE_DECLARATION: return createClockedVariableDeclaration();
+      case LustrePackage.NODE_DECLARATION: return createNodeDeclaration();
+      case LustrePackage.NODE_VALUED_OBJECT: return createNodeValuedObject();
+      case LustrePackage.EQUATION: return createEquation();
+      case LustrePackage.ASSERTION: return createAssertion();
+      case LustrePackage.LUSTRE_VALUED_OBJECT: return createLustreValuedObject();
+      case LustrePackage.NODE_REFERENCE: return createNodeReference();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -118,6 +98,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public LustreProgram createLustreProgram()
   {
     LustreProgramImpl lustreProgram = new LustreProgramImpl();
@@ -129,10 +110,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Declaration createPackage_Declaration()
+  @Override
+  public PackList createPackList()
   {
-    Package_DeclarationImpl package_Declaration = new Package_DeclarationImpl();
-    return package_Declaration;
+    PackListImpl packList = new PackListImpl();
+    return packList;
   }
 
   /**
@@ -140,10 +122,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Provided createPackage_Provided()
+  @Override
+  public ModelDeclaration createModelDeclaration()
   {
-    Package_ProvidedImpl package_Provided = new Package_ProvidedImpl();
-    return package_Provided;
+    ModelDeclarationImpl modelDeclaration = new ModelDeclarationImpl();
+    return modelDeclaration;
   }
 
   /**
@@ -151,10 +134,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Package_Provided_IO createPackage_Provided_IO()
+  @Override
+  public Provide createProvide()
   {
-    Package_Provided_IOImpl package_Provided_IO = new Package_Provided_IOImpl();
-    return package_Provided_IO;
+    ProvideImpl provide = new ProvideImpl();
+    return provide;
   }
 
   /**
@@ -162,10 +146,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Entity_Declaration createEntity_Declaration()
+  @Override
+  public PackageDeclaration createPackageDeclaration()
   {
-    Entity_DeclarationImpl entity_Declaration = new Entity_DeclarationImpl();
-    return entity_Declaration;
+    PackageDeclarationImpl packageDeclaration = new PackageDeclarationImpl();
+    return packageDeclaration;
   }
 
   /**
@@ -173,10 +158,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Type_Declaration createType_Declaration()
+  @Override
+  public PackageEquation createPackageEquation()
   {
-    Type_DeclarationImpl type_Declaration = new Type_DeclarationImpl();
-    return type_Declaration;
+    PackageEquationImpl packageEquation = new PackageEquationImpl();
+    return packageEquation;
   }
 
   /**
@@ -184,10 +170,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Type createType()
+  @Override
+  public PackBody createPackBody()
   {
-    TypeImpl type = new TypeImpl();
-    return type;
+    PackBodyImpl packBody = new PackBodyImpl();
+    return packBody;
   }
 
   /**
@@ -195,10 +182,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Array_Type createArray_Type()
+  @Override
+  public TypeDeclaration createTypeDeclaration()
   {
-    Array_TypeImpl array_Type = new Array_TypeImpl();
-    return array_Type;
+    TypeDeclarationImpl typeDeclaration = new TypeDeclarationImpl();
+    return typeDeclaration;
   }
 
   /**
@@ -206,10 +194,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Record_Type createRecord_Type()
+  @Override
+  public ExternalNodeDeclaration createExternalNodeDeclaration()
   {
-    Record_TypeImpl record_Type = new Record_TypeImpl();
-    return record_Type;
+    ExternalNodeDeclarationImpl externalNodeDeclaration = new ExternalNodeDeclarationImpl();
+    return externalNodeDeclaration;
   }
 
   /**
@@ -217,72 +206,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Field createField()
-  {
-    FieldImpl field = new FieldImpl();
-    return field;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Constant_Declaration createConstant_Declaration()
-  {
-    Constant_DeclarationImpl constant_Declaration = new Constant_DeclarationImpl();
-    return constant_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Variable_Declaration createVariable_Declaration()
-  {
-    Variable_DeclarationImpl variable_Declaration = new Variable_DeclarationImpl();
-    return variable_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Node_Declaration createNode_Declaration()
-  {
-    Node_DeclarationImpl node_Declaration = new Node_DeclarationImpl();
-    return node_Declaration;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Equation createEquation()
-  {
-    EquationImpl equation = new EquationImpl();
-    return equation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Assertion createAssertion()
-  {
-    AssertionImpl assertion = new AssertionImpl();
-    return assertion;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  @Override
   public Automaton createAutomaton()
   {
     AutomatonImpl automaton = new AutomatonImpl();
@@ -294,6 +218,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public AState createAState()
   {
     AStateImpl aState = new AStateImpl();
@@ -305,6 +230,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ATransition createATransition()
   {
     ATransitionImpl aTransition = new ATransitionImpl();
@@ -316,10 +242,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Left_Part createLeft_Part()
+  @Override
+  public Params createParams()
   {
-    Left_PartImpl left_Part = new Left_PartImpl();
-    return left_Part;
+    ParamsImpl params = new ParamsImpl();
+    return params;
   }
 
   /**
@@ -327,10 +254,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Left_List createLeft_List()
+  @Override
+  public StaticParam createStaticParam()
   {
-    Left_ListImpl left_List = new Left_ListImpl();
-    return left_List;
+    StaticParamImpl staticParam = new StaticParamImpl();
+    return staticParam;
   }
 
   /**
@@ -338,10 +266,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Left createLeft()
+  @Override
+  public StaticArg createStaticArg()
   {
-    LeftImpl left = new LeftImpl();
-    return left;
+    StaticArgImpl staticArg = new StaticArgImpl();
+    return staticArg;
   }
 
   /**
@@ -349,10 +278,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Selector createSelector()
+  @Override
+  public ByNameStaticArg createByNameStaticArg()
   {
-    SelectorImpl selector = new SelectorImpl();
-    return selector;
+    ByNameStaticArgImpl byNameStaticArg = new ByNameStaticArgImpl();
+    return byNameStaticArg;
   }
 
   /**
@@ -360,10 +290,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression createExpression()
+  @Override
+  public ClockedVariableDeclaration createClockedVariableDeclaration()
   {
-    ExpressionImpl expression = new ExpressionImpl();
-    return expression;
+    ClockedVariableDeclarationImpl clockedVariableDeclaration = new ClockedVariableDeclarationImpl();
+    return clockedVariableDeclaration;
   }
 
   /**
@@ -371,10 +302,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public VariableReference createVariableReference()
+  @Override
+  public NodeDeclaration createNodeDeclaration()
   {
-    VariableReferenceImpl variableReference = new VariableReferenceImpl();
-    return variableReference;
+    NodeDeclarationImpl nodeDeclaration = new NodeDeclarationImpl();
+    return nodeDeclaration;
   }
 
   /**
@@ -382,10 +314,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public IfThenElse createIfThenElse()
+  @Override
+  public NodeValuedObject createNodeValuedObject()
   {
-    IfThenElseImpl ifThenElse = new IfThenElseImpl();
-    return ifThenElse;
+    NodeValuedObjectImpl nodeValuedObject = new NodeValuedObjectImpl();
+    return nodeValuedObject;
   }
 
   /**
@@ -393,10 +326,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Fby createFby()
+  @Override
+  public Equation createEquation()
   {
-    FbyImpl fby = new FbyImpl();
-    return fby;
+    EquationImpl equation = new EquationImpl();
+    return equation;
   }
 
   /**
@@ -404,10 +338,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Arrow createArrow()
+  @Override
+  public Assertion createAssertion()
   {
-    ArrowImpl arrow = new ArrowImpl();
-    return arrow;
+    AssertionImpl assertion = new AssertionImpl();
+    return assertion;
   }
 
   /**
@@ -415,10 +350,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Or createOr()
+  @Override
+  public LustreValuedObject createLustreValuedObject()
   {
-    OrImpl or = new OrImpl();
-    return or;
+    LustreValuedObjectImpl lustreValuedObject = new LustreValuedObjectImpl();
+    return lustreValuedObject;
   }
 
   /**
@@ -426,10 +362,11 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public And createAnd()
+  @Override
+  public NodeReference createNodeReference()
   {
-    AndImpl and = new AndImpl();
-    return and;
+    NodeReferenceImpl nodeReference = new NodeReferenceImpl();
+    return nodeReference;
   }
 
   /**
@@ -437,160 +374,7 @@ public class LustreFactoryImpl extends EFactoryImpl implements LustreFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Equality createEquality()
-  {
-    EqualityImpl equality = new EqualityImpl();
-    return equality;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Comparison createComparison()
-  {
-    ComparisonImpl comparison = new ComparisonImpl();
-    return comparison;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Mod createMod()
-  {
-    ModImpl mod = new ModImpl();
-    return mod;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Plus createPlus()
-  {
-    PlusImpl plus = new PlusImpl();
-    return plus;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Minus createMinus()
-  {
-    MinusImpl minus = new MinusImpl();
-    return minus;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Mul createMul()
-  {
-    MulImpl mul = new MulImpl();
-    return mul;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Div createDiv()
-  {
-    DivImpl div = new DivImpl();
-    return div;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Not createNot()
-  {
-    NotImpl not = new NotImpl();
-    return not;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public UMinus createUMinus()
-  {
-    UMinusImpl uMinus = new UMinusImpl();
-    return uMinus;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Pre createPre()
-  {
-    PreImpl pre = new PreImpl();
-    return pre;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Current createCurrent()
-  {
-    CurrentImpl current = new CurrentImpl();
-    return current;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public BoolConstant createBoolConstant()
-  {
-    BoolConstantImpl boolConstant = new BoolConstantImpl();
-    return boolConstant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FloatConstant createFloatConstant()
-  {
-    FloatConstantImpl floatConstant = new FloatConstantImpl();
-    return floatConstant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IntConstant createIntConstant()
-  {
-    IntConstantImpl intConstant = new IntConstantImpl();
-    return intConstant;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
+  @Override
   public LustrePackage getLustrePackage()
   {
     return (LustrePackage)getEPackage();

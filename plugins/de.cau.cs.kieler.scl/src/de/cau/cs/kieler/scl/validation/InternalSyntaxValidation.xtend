@@ -30,6 +30,8 @@ import org.eclipse.xtext.parser.IParseResult
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic
 import de.cau.cs.kieler.scl.SCLProgram
 import de.cau.cs.kieler.scl.StatementContainer
+import de.cau.cs.kieler.scl.Loop
+import org.eclipse.xtext.nodemodel.impl.CompositeNodeWithSemanticElement
 
 /**
  * @author als
@@ -54,8 +56,14 @@ class InternalSyntaxValidation {
                 if (container instanceof List<?>) {
                     val idx = container.indexOf(part)
                     if (idx >= 0 && idx < container.size -1) {
-                        if (node.syntaxErrorMessage == null) {
-                            diag += new XtextSyntaxDiagnostic(new SemicolonSyntaxErrorWrapperNode(if (part instanceof Assignment) node.parent else node))
+                        if (node.syntaxErrorMessage === null) {
+                            var attachNode = node;
+                            if (part instanceof Assignment) {
+                                while (!(attachNode instanceof CompositeNodeWithSemanticElement) && attachNode.parent !== null) {
+                                    attachNode = attachNode.parent
+                                }
+                            }
+                            diag += new XtextSyntaxDiagnostic(new SemicolonSyntaxErrorWrapperNode(attachNode))
                         } 
                     }
                 }
@@ -82,6 +90,7 @@ class InternalSyntaxValidation {
         switch(obj) {
             Label,
             ScopeStatement,
+            Loop,
             Thread: return true
             Conditional: {
                 if (node !== null && node.grammarElement instanceof Keyword) {

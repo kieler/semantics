@@ -19,7 +19,7 @@ import de.cau.cs.kieler.klighd.util.KlighdSynthesisProperties
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import java.util.WeakHashMap
 import org.eclipse.emf.ecore.EObject
@@ -31,18 +31,19 @@ import org.eclipse.ui.IMemento
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
 import static de.cau.cs.kieler.simulation.ui.view.diagram.SimulationAction.*
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * @author als
  *
  */
-class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, SimulationListener {
+class KiCoDiagramViewContribution implements KiCoModelViewUIContributor, ISimulationListener {
     
     private val simulateActions = new WeakHashMap<KiCoModelUpdateController, SimulationAction>()
     private var long simulationResourceTimeStamp = URIConverter.NULL_TIME_STAMP
     
     new() {
-        SimulationUI.registerObserver(this)
+        CentralSimulation.addListener(this)
     }
     
     override contributeControls(KiCoModelUpdateController muc, IToolBarManager toolBar, IMenuManager menu) {

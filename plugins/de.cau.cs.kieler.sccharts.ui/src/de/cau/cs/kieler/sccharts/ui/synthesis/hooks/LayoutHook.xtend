@@ -157,7 +157,7 @@ class LayoutHook extends SynthesisActionHook {
 
     override processRegion(Region region, KNode node) {
         val regions = region.parentState?.regions
-        if (region !== null) {
+        if (regions !== null) {
             node.setLayoutOption(CoreOptions.PRIORITY, regions.size - regions.indexOf(region))
             
             if (region instanceof DataflowRegion){

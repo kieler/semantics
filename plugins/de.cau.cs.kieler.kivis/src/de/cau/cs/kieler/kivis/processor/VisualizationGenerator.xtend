@@ -103,12 +103,10 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                     vizFolder = vizFile.absoluteFile.parentFile.toPath
                 } else {
                     // Path seems to be relative
-                    val inputModel = compilationContext.originalModel
-                    if (inputModel instanceof EObject) {
-                        if (inputModel.eResource !== null && inputModel.eResource.URI !== null) {
-                            vizFolder = inputModel.eResource.URI.directory
-                            vizFile = vizFolder.resolve(vizFile.toPath).toFile
-                        }
+                    val resource = environment.findResource
+                    if (resource.URI !== null) {
+                        vizFolder = resource.URI.directory
+                        vizFile = vizFolder.resolve(vizFile.toPath).toFile
                     }
                 }
                 if (!vizFile.exists) {
@@ -210,7 +208,7 @@ class VisualizationGenerator extends InplaceProcessor<Object> {
                 // Register file
                 environment.setProperty(VISUALIZATION, target.absoluteFile.toURI.toURL.toString)
                 
-                logger.closeLog("visualization-generation.log").snapshot
+                logger.saveLog(environment, "visualization-generation.log")
             }
         } else if (environment.getProperty(FAIL)) {
             environment.errors.add("Cannot find visualization file")

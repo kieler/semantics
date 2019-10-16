@@ -38,15 +38,15 @@ class KiCoolClassLoader extends ClassLoader {
         this.classLoader.clear
     }
     
-    public def addClassFileByName(String className, String classPath) {
+    def addClassFileByName(String className, String classPath) {
         classPaths.put(className, classPath)
     } 
     
-    public def addAdditionalClassLoader(ClassLoader classLoader) {
+    def addAdditionalClassLoader(ClassLoader classLoader) {
         this.classLoader += classLoader 
     }
     
-    public def addAdditionalBundle(Bundle bundle) {
+    def addAdditionalBundle(Bundle bundle) {
         this.bundles += bundle
     }
     

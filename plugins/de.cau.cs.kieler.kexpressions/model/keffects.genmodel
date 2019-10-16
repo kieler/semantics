@@ -57,6 +57,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/target"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//Link/tag"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/reference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/originalSource"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference keffects.ecore#//Link/originalTarget"/>
     </genClasses>
     <genClasses image="false" ecoreClass="keffects.ecore#//Dependency"/>
     <genClasses ecoreClass="keffects.ecore#//DataDependency">
@@ -64,5 +66,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/concurrent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute keffects.ecore#//DataDependency/confluent"/>
     </genClasses>
+    <genClasses ecoreClass="keffects.ecore#//ControlDependency"/>
   </genPackages>
 </genmodel:GenModel>

@@ -60,7 +60,7 @@ class AwaitKernelTransformation extends InplaceProcessor<EsterelProgram> impleme
     // -------------------------------------------------------------------------
     // -- Injections 
     // -------------------------------------------------------------------------
-    extension EsterelFactory = EsterelFactory.eINSTANCE
+    extension EsterelFactory eFac = EsterelFactory.eINSTANCE
     extension SCLFactory = SCLFactory.eINSTANCE
     extension KExpressionsFactory = KExpressionsFactory.eINSTANCE
     
@@ -90,7 +90,7 @@ class AwaitKernelTransformation extends InplaceProcessor<EsterelProgram> impleme
         val trap = createTrap.trace(await) => [
             trapSignals += trapSig
         ]
-        val loop = createLoop.trace(await)
+        val loop = eFac.createLoop.trace(await)
         trap.statements += loop
         loop.statements += createPresent.trace(await) => [
             expression = await.delay.expression

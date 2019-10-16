@@ -18,6 +18,10 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import org.eclipse.xtend.lib.annotations.Accessors
 import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.Declaration
+import java.util.List
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
+import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 /**
  * C Code Generator Struct Module
@@ -57,13 +61,39 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
     
     protected def generate(extension CCodeSerializeHRExtensions serializer) {
         // Add the declarations of the model.
-        for (declaration : scg.declarations) {
-            for (valuedObject : declaration.valuedObjects) {
-                if (declaration instanceof VariableDeclaration) {
+        scg.declarations.generateDeclarations(0, serializer)
+    }
+    
+    def void generateDeclarations(List<Declaration> declarations, int depth, extension CCodeSerializeHRExtensions serializer) {
+        for (declaration : declarations) {
+            if (declaration instanceof ClassDeclaration) {
+                (0..depth).forEach[code.append(indentation)]
+                code.append("struct ")
+                code.append(declaration.name)
+                if (!declaration.host) {
+                    code.append(" {\n")
+                    declaration.declarations.generateDeclarations(depth + 1, serializer)
+                    (0..depth).forEach[code.append(indentation)]
+                    code.append("}")
+                }
+                for (valuedObject : declaration.valuedObjects) {
+                    code.append(" ")
+                    code.append(valuedObject.name)
+                    if (valuedObject.isArray) {
+                        for (cardinality : valuedObject.cardinalities) {
+                            code.append("[" + cardinality.serializeHR + "]")
+                        }
+                    }
+                    if (valuedObject !== declaration.valuedObjects.last) code.append(", ")
+                }
+                code.append(";\n")
+            } else if (declaration instanceof VariableDeclaration) {
+                for (valuedObject : declaration.valuedObjects) {
+                    (0..depth).forEach[code.append(indentation)]
                     val declarationType = if (declaration.type != ValueType.HOST || declaration.hostType.nullOrEmpty) 
                         declaration.type.serializeHR
                         else declaration.hostType
-                    code.append(indentation + declarationType)
+                    code.append(declarationType)
                     code.append(" ")
                     code.append(valuedObject.name)
                     if (valuedObject.isArray) {
@@ -72,6 +102,26 @@ class CCodeGeneratorStructModule extends SCGCodeGeneratorModule {
                         }
                     }
                     code.append(";\n")
+                }
+            } else if (declaration instanceof ReferenceDeclaration) {
+                for (valuedObject : declaration.valuedObjects) {
+                    val myModule = parent as CCodeGeneratorModule
+                    val module = codeGeneratorModuleMap.get(declaration.reference) as CCodeGeneratorModule
+                    if (module !== null) {
+                        code.append(indentation)
+                        code.append(module.struct.name)
+                        code.append(" ")
+                        code.append(valuedObject.name)
+                        code.append(";\n")
+                        
+                        myModule.reset.code.append(indentation)
+                        myModule.reset.code.append(module.reset.name)
+                        myModule.reset.code.append("(&")
+                        myModule.reset.code.append(getVariableName).append(separator)
+                        myModule.reset.code.append(valuedObject.name)
+                        myModule.reset.code.append(");\n")
+                    }
+                
                 }
             }
         }

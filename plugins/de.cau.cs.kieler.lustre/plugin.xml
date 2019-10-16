@@ -9,29 +9,5 @@
             uri="http://www.cau.de/cs/kieler/lustre/Lustre">
       </package>
    </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.resource.extension">
-      <ExtensionInformation
-            ePackageName="lustre"
-            editor_id="de.cau.cs.kieler.lustre.Lustre"
-            extensionName="lus"
-            isXMI="false">
-      </ExtensionInformation>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.processor">
-      <Processor
-            class="de.cau.cs.kieler.lustre.transformations.LustreToSccTransformation">
-      </Processor>
-      <Processor
-            class="de.cau.cs.kieler.lustre.processors.SCCToLustre">
-      </Processor>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.kicool.system">
-      <TransformationSystem
-            system="system/de.cau.cs.kieler.lustre.sccharts.netlist.c.kico">
-      </TransformationSystem>
-   </extension>
 
 </plugin>

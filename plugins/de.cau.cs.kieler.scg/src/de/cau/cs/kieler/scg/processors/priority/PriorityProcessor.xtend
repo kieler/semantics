@@ -14,12 +14,12 @@ package de.cau.cs.kieler.scg.processors.priority
 
 import de.cau.cs.kieler.annotations.AnnotationsFactory
 import de.cau.cs.kieler.scg.extensions.SCCExtensions
-import javax.inject.Inject
 import de.cau.cs.kieler.kicool.compilation.InplaceProcessor
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.kicool.kitt.tracing.Traceable
 import de.cau.cs.kieler.core.properties.IProperty
 import de.cau.cs.kieler.core.properties.Property
+import com.google.inject.Inject
 
 /**
  * Class to calculate the priorities of nodes of an SCG for the priority based compilation.

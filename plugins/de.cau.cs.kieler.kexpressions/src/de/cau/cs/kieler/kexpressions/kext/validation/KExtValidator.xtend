@@ -15,11 +15,12 @@ import de.cau.cs.kieler.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.kexpressions.kext.AnnotatedExpression
+import de.cau.cs.kieler.kexpressions.kext.ClassDeclaration
 import de.cau.cs.kieler.kexpressions.kext.Kext
 import de.cau.cs.kieler.kexpressions.kext.TestEntity
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.validation.Check
-import de.cau.cs.kieler.kexpressions.kext.StructDeclaration
+import de.cau.cs.kieler.kexpressions.TextExpression
 
 //import org.eclipse.xtext.validation.Check
 
@@ -38,13 +39,7 @@ class KExtValidator extends AbstractKExtValidator {
     
     static val WRONG_CARDINALITY_TYPE = "Array cardinalities must be an int literal or a reference to a constant int object."
     static val String NO_CONST_LITERAL = "Const objects must be bound to literals";
-    
-    @Check
-    public def void checkStructDeclaration(StructDeclaration struct) {
-        // TODO remove when implemented
-        error("Struct declarations are not yet supported", struct, null)
-    }
-    
+       
     @Check
     public def void checkCheckAnnotation(TestEntity testEntity) {
         val rootElement = EcoreUtil2.getRootContainer(testEntity) as Kext;
@@ -108,28 +103,28 @@ class KExtValidator extends AbstractKExtValidator {
         }
     }
 
-   @Check
-   def void checkConstBinding(VariableDeclaration declaration) {
-       if (declaration.isConst) {
-           for (valuedObject : declaration.getValuedObjects) {
-               val initialValue = valuedObject.getInitialValue
-               if (initialValue != null) {
-                   var ok = false
-                   // If it is a literal, it's ok.
-                   if (initialValue instanceof Value) ok = true
-                   
-                   // If it is an subtraction operator expression with a single literal, it's ok. E.g., -12
-                   if (initialValue instanceof OperatorExpression) {
-                       if (initialValue.operator == OperatorType.SUB) {
-                           if (initialValue.subExpressions.size == 1 &&
-                               initialValue.subExpressions.head instanceof Value) ok = true
-                       } 
-                   }
-                   if (!ok) error(NO_CONST_LITERAL, valuedObject, null, -1);
-               }
-           }
-       }
-    }
+//   @Check
+//   def void checkConstBinding(VariableDeclaration declaration) {
+//       if (declaration.isConst) {
+//           for (valuedObject : declaration.getValuedObjects) {
+//               val initialValue = valuedObject.getInitialValue
+//               if (initialValue != null) {
+//                   var ok = false
+//                   // If it is a literal, it's ok.
+//                   if (initialValue instanceof Value) ok = true
+//                   
+//                   // If it is an subtraction operator expression with a single literal, it's ok. E.g., -12
+//                   if (initialValue instanceof OperatorExpression) {
+//                       if (initialValue.operator == OperatorType.SUB) {
+//                           if (initialValue.subExpressions.size == 1 &&
+//                               initialValue.subExpressions.head instanceof Value) ok = true
+//                       } 
+//                   }
+//                   if (!ok) error(NO_CONST_LITERAL, valuedObject, null, -1);
+//               }
+//           }
+//       }
+//    }
     
     @Check
     def void checkPureSignal(VariableDeclaration declaration) {
@@ -138,4 +133,5 @@ class KExtValidator extends AbstractKExtValidator {
                 declaration, null, -1)
         }
     }
+
 }

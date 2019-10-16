@@ -44,6 +44,14 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/BITWISE_NOT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/CONDITIONAL"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/FBY"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/CURRENT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/WHEN"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INIT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/INTDIV"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/LOGICAL_XOR"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/IMPLIES"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/ATMOSTONEOF"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//OperatorType/NOR"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//ValueType">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/PURE"/>
@@ -60,16 +68,25 @@
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLOCK"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/JSON"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/STRUCT"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/CLASS"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/ENUM"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//ValueType/VOID"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//PriorityProtocol">
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLICT"/>
       <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//PriorityProtocol/CONFLUENT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="kexpressions.ecore#//AccessModifier">
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PUBLIC"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PROTECTED"/>
+      <genEnumLiterals ecoreEnumLiteral="kexpressions.ecore#//AccessModifier/PRIVATE"/>
     </genEnums>
     <genClasses ecoreClass="kexpressions.ecore#//Expression"/>
     <genClasses ecoreClass="kexpressions.ecore#//ValuedObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/combineOperator"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/initialValue"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObject/cardinalities"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ValuedObject/label"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ValuedObjectReference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference kexpressions.ecore#//ValuedObjectReference/valuedObject"/>
@@ -120,7 +137,7 @@
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//Declaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//Declaration/valuedObjects"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/private"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//Declaration/access"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//VariableDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//VariableDeclaration/type"/>
@@ -143,6 +160,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/global"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleDeclaration/priorities"/>
+    </genClasses>
+    <genClasses ecoreClass="kexpressions.ecore#//MethodDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//MethodDeclaration/returnType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference kexpressions.ecore#//MethodDeclaration/parameterDeclarations"/>
     </genClasses>
     <genClasses ecoreClass="kexpressions.ecore#//ScheduleObjectReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute kexpressions.ecore#//ScheduleObjectReference/priority"/>

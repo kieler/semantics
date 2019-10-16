@@ -160,7 +160,7 @@ class SCGLoopHook extends SynthesisHook {
         cc.startEnvironment.setProperty(Tracing.ACTIVE_TRACING, true)
         
         val dependecyAnalysis = cc.processorMap.entrySet.findFirst[
-            key.id.equals("de.cau.cs.kieler.scg.processors.transformators.dependency")
+            key.id.equals("de.cau.cs.kieler.scg.processors.dependency")
         ]?.value
         if (dependecyAnalysis === null) throw new NullPointerException("Can not find dependency transformation in compilation system")
         // Stop after the dependency analysis

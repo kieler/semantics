@@ -3,6 +3,8 @@
  */
 package de.cau.cs.kieler.lustre.lustre;
 
+import de.cau.cs.kieler.kexpressions.Expression;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -29,10 +31,6 @@ public interface ATransition extends EObject
   /**
    * Returns the value of the '<em><b>Strong</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Strong</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Strong</em>' attribute.
    * @see #setStrong(boolean)
@@ -55,10 +53,6 @@ public interface ATransition extends EObject
   /**
    * Returns the value of the '<em><b>Condition</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Condition</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Condition</em>' containment reference.
    * @see #setCondition(Expression)
@@ -81,10 +75,6 @@ public interface ATransition extends EObject
   /**
    * Returns the value of the '<em><b>History</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>History</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>History</em>' attribute.
    * @see #setHistory(boolean)
@@ -107,10 +97,6 @@ public interface ATransition extends EObject
   /**
    * Returns the value of the '<em><b>Next State</b></em>' reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Next State</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Next State</em>' reference.
    * @see #setNextState(AState)

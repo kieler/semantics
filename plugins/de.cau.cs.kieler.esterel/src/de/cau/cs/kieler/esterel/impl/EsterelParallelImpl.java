@@ -71,6 +71,7 @@ public class EsterelParallelImpl extends StatementImpl implements EsterelParalle
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<Statement> getStatements() {
         if (statements == null) {
             statements = new EObjectContainmentEList<Statement>(Statement.class, this, EsterelPackage.ESTEREL_PARALLEL__STATEMENTS);

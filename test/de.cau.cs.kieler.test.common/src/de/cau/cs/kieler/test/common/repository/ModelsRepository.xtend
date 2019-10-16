@@ -41,9 +41,9 @@ import static extension java.lang.Boolean.*
 class ModelsRepository {
     
     /* Environment Variable Keys */
-    private static val BAMBOO_WD_KEY = "bamboo_working_directory"
-    private static val BAMBOO_MODELS_REPOSITORY_KEY = "bamboo_models_repository"
-    private static val MODELS_REPOSITORY_KEY = "models_repository"
+    public static val BAMBOO_WD_KEY = "bamboo_working_directory"
+    public static val BAMBOO_MODELS_REPOSITORY_KEY = "bamboo_models_repository"
+    public static val MODELS_REPOSITORY_KEY = "models_repository"
     
     /** Models retrieved form repository */
     private static val List<TestModelData> models = newLinkedList

@@ -84,6 +84,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public de.cau.cs.kieler.scl.Module getModule() {
         if (module != null && module.eIsProxy()) {
             InternalEObject oldModule = (InternalEObject)module;
@@ -110,6 +111,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setModule(de.cau.cs.kieler.scl.Module newModule) {
         de.cau.cs.kieler.scl.Module oldModule = module;
         module = newModule;
@@ -122,6 +124,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getNewName() {
         return newName;
     }
@@ -131,6 +134,7 @@ public class ModuleRenamingImpl extends MinimalEObjectImpl.Container implements 
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setNewName(String newNewName) {
         String oldNewName = newName;
         newName = newNewName;

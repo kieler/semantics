@@ -25,7 +25,6 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensio
 import de.cau.cs.kieler.kicool.compilation.ProcessorType
 import de.cau.cs.kieler.scg.Assignment
 import de.cau.cs.kieler.scg.Conditional
-import de.cau.cs.kieler.scg.ControlDependency
 import de.cau.cs.kieler.scg.ControlFlow
 import de.cau.cs.kieler.scg.Entry
 import de.cau.cs.kieler.scg.Exit
@@ -53,6 +52,10 @@ import de.cau.cs.kieler.kicool.compilation.Processor
 import de.cau.cs.kieler.kexpressions.kext.extensions.ValuedObjectMapping
 import de.cau.cs.kieler.scg.ExpressionDependency
 import de.cau.cs.kieler.kicool.compilation.VariableStore
+import de.cau.cs.kieler.kexpressions.keffects.ControlDependency
+import java.util.Map
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
+import de.cau.cs.kieler.kexpressions.MethodDeclaration
 
 /** 
  * @author ssm
@@ -70,10 +73,13 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     @Inject extension KExpressionsComplexCreateExtensions 
     @Inject extension KEffectsExtensions
     @Inject extension AnnotationsExtensions    
+    @Inject extension SCGMethodExtensions
+    
     
     public static val IProperty<Boolean> SGT_EXCLUDE_GUARD_ASSIGNMENT_CONTROL_DEPENDENCIES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.excludeGuardAssignmentControlDependencies", true)     
     
+    val globalVOMap = <ValuedObject, ValuedObject>newHashMap
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.guards"
@@ -95,42 +101,52 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 it.pragmas += pragma.copy
             }              
         ] 
+        creationalTransformation(model, SCGGraphs)    
+        
+        val SCGMap = <SCGraph, SCGraph> newHashMap
         for (scg : model.scgs) {
-            SCGGraphs.scgs += 
-            scg.createGuards => [
+            SCGMap.put(scg, ScgFactory::eINSTANCE.createSCGraph)
+        }
+            
+        for (scg : model.scgs.ignoreMethods) {
+            SCGGraphs.scgs += scg.createGuards(SCGMap.get(scg), SCGMap) => [
                 label = scg.label
                 name = scg.name
                 SCGGraphs.scgs += it    
             ]
-        }        
+        }
+        // retain method SCGs
+        SCGGraphs.scgs.addAll(0, model.scgs.copyMethodSCGs(globalVOMap))
+        
         setModel(SCGGraphs)
-    }    
+    }
 
 	/**
 	 * {@inherited}
 	 */
-    def SCGraph createGuards(SCGraph scg) {
+    def SCGraph createGuards(SCGraph scg, SCGraph newSCG, Map<SCGraph, SCGraph> SCGMap) {
         /**
          * Since we want to build a new SCG, we cannot use the SCG copy extensions because it would 
          * preserve all previous (node) data.
          * Therefore, we only copy the interface and extend the declaration by the guards of the 
          * basic blocks.
          */
-        val newSCG = ScgFactory::eINSTANCE.createSCGraph => [
+        newSCG => [
             annotations += createStringAnnotation(SCGFeatures.GUARDS_ID, SCGFeatures.GUARDS_NAME)
             label = scg.label
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
         
-        creationalTransformation(scg,newSCG)
-        scg.setDefaultTrace
+//        creationalTransformation(scg,newSCG)
+//        scg.setDefaultTrace
         newSCG.trace(scg)
         
         val hostcodeAnnotations = scg.getAnnotations(SCGAnnotations.ANNOTATION_HOSTCODE)
         hostcodeAnnotations.forEach[
             newSCG.createStringAnnotation(SCGAnnotations.ANNOTATION_HOSTCODE, (it as StringAnnotation).values.head)
         ]
-        val valuedObjectMap = scg.copyDeclarations(newSCG)
+        val valuedObjectMap = scg.copyDeclarations(newSCG, SCGMap)
+        valuedObjectMap.entrySet.forEach[globalVOMap.put(key, value.head)]
         val schedulingBlockCache = scg.createSchedulingBlockCache
         val GAMap = <Guard, Assignment> newHashMap
         val VAMap = <ValuedObject, Assignment> newHashMap
@@ -142,7 +158,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
         // Fix VO association in VariableStore
         val voStore = VariableStore.get(environment)
         valuedObjectMap.entrySet.forEach[ entry |
-            val info = voStore.variables.get(entry.key.name).findFirst[valuedObject == entry.key]
+            val info = voStore.getInfo(entry.key)
             if (info !== null) info.valuedObject = entry.value.head
         ]
         
@@ -232,7 +248,11 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     if (node instanceof Assignment) {
                         ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
                     } else if (node instanceof Conditional) {
-                        ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        if (dependency.target instanceof Guard) {
+                            ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        } else { // method call with writer is in condition
+                            ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
+                        }
                     }
                     if (ta !== null) {
                         val targetAssignment = ta

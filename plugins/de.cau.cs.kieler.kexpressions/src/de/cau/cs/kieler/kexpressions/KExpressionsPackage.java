@@ -66,7 +66,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getSchedulable()
      * @generated
      */
-    int SCHEDULABLE = 31;
+    int SCHEDULABLE = 32;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -170,13 +170,22 @@ public interface KExpressionsPackage extends EPackage {
     int VALUED_OBJECT__CARDINALITIES = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 3;
 
     /**
+     * The feature id for the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int VALUED_OBJECT__LABEL = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 4;
+
+    /**
      * The number of structural features of the '<em>Valued Object</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 4;
+    int VALUED_OBJECT_FEATURE_COUNT = AnnotationsPackage.NAMED_OBJECT_FEATURE_COUNT + 5;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -808,13 +817,13 @@ public interface KExpressionsPackage extends EPackage {
     int DECLARATION__VALUED_OBJECTS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 0;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int DECLARATION__PRIVATE = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
+    int DECLARATION__ACCESS = AnnotationsPackage.ANNOTATABLE_FEATURE_COUNT + 1;
 
     /**
      * The number of structural features of the '<em>Declaration</em>' class.
@@ -854,13 +863,13 @@ public interface KExpressionsPackage extends EPackage {
     int VARIABLE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int VARIABLE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int VARIABLE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -990,13 +999,13 @@ public interface KExpressionsPackage extends EPackage {
     int REFERENCE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int REFERENCE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int REFERENCE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Reference</b></em>' reference.
@@ -1063,13 +1072,13 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
 
     /**
-     * The feature id for the '<em><b>Private</b></em>' attribute.
+     * The feature id for the '<em><b>Access</b></em>' attribute.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int SCHEDULE_DECLARATION__PRIVATE = DECLARATION__PRIVATE;
+    int SCHEDULE_DECLARATION__ACCESS = DECLARATION__ACCESS;
 
     /**
      * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1108,6 +1117,79 @@ public interface KExpressionsPackage extends EPackage {
     int SCHEDULE_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl <em>Method Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getMethodDeclaration()
+     * @generated
+     */
+    int METHOD_DECLARATION = 22;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__ANNOTATIONS = DECLARATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Valued Objects</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__VALUED_OBJECTS = DECLARATION__VALUED_OBJECTS;
+
+    /**
+     * The feature id for the '<em><b>Access</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__ACCESS = DECLARATION__ACCESS;
+
+    /**
+     * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__SCHEDULE = DECLARATION_FEATURE_COUNT + 0;
+
+    /**
+     * The feature id for the '<em><b>Return Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__RETURN_TYPE = DECLARATION_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Parameter Declarations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION__PARAMETER_DECLARATIONS = DECLARATION_FEATURE_COUNT + 2;
+
+    /**
+     * The number of structural features of the '<em>Method Declaration</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int METHOD_DECLARATION_FEATURE_COUNT = DECLARATION_FEATURE_COUNT + 3;
+
+    /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1115,7 +1197,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getScheduleObjectReference()
      * @generated
      */
-    int SCHEDULE_OBJECT_REFERENCE = 22;
+    int SCHEDULE_OBJECT_REFERENCE = 23;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1179,7 +1261,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getParameter()
      * @generated
      */
-    int PARAMETER = 23;
+    int PARAMETER = 24;
 
     /**
      * The feature id for the '<em><b>Call By Reference</b></em>' attribute.
@@ -1243,7 +1325,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCall()
      * @generated
      */
-    int CALL = 24;
+    int CALL = 25;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1280,7 +1362,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceCall()
      * @generated
      */
-    int REFERENCE_CALL = 25;
+    int REFERENCE_CALL = 26;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1344,7 +1426,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getFunctionCall()
      * @generated
      */
-    int FUNCTION_CALL = 26;
+    int FUNCTION_CALL = 27;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1390,7 +1472,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPrintCall()
      * @generated
      */
-    int PRINT_CALL = 27;
+    int PRINT_CALL = 28;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1427,7 +1509,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomCall()
      * @generated
      */
-    int RANDOM_CALL = 28;
+    int RANDOM_CALL = 29;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1464,7 +1546,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getRandomizeCall()
      * @generated
      */
-    int RANDOMIZE_CALL = 29;
+    int RANDOMIZE_CALL = 30;
 
     /**
      * The feature id for the '<em><b>Schedule</b></em>' containment reference list.
@@ -1501,7 +1583,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getReferenceable()
      * @generated
      */
-    int REFERENCEABLE = 30;
+    int REFERENCEABLE = 31;
 
     /**
      * The number of structural features of the '<em>Referenceable</em>' class.
@@ -1520,7 +1602,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getExternString()
      * @generated
      */
-    int EXTERN_STRING = 32;
+    int EXTERN_STRING = 33;
 
     /**
      * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1557,7 +1639,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getCombineOperator()
      * @generated
      */
-    int COMBINE_OPERATOR = 33;
+    int COMBINE_OPERATOR = 34;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.OperatorType <em>Operator Type</em>}' enum.
@@ -1567,7 +1649,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getOperatorType()
      * @generated
      */
-    int OPERATOR_TYPE = 34;
+    int OPERATOR_TYPE = 35;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.ValueType <em>Value Type</em>}' enum.
@@ -1577,7 +1659,7 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getValueType()
      * @generated
      */
-    int VALUE_TYPE = 35;
+    int VALUE_TYPE = 36;
 
     /**
      * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.PriorityProtocol <em>Priority Protocol</em>}' enum.
@@ -1587,7 +1669,18 @@ public interface KExpressionsPackage extends EPackage {
      * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getPriorityProtocol()
      * @generated
      */
-    int PRIORITY_PROTOCOL = 36;
+    int PRIORITY_PROTOCOL = 37;
+
+
+    /**
+     * The meta object id for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
+     * @generated
+     */
+    int ACCESS_MODIFIER = 38;
 
 
     /**
@@ -1642,6 +1735,17 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EReference getValuedObject_Cardinalities();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getLabel <em>Label</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Label</em>'.
+     * @see de.cau.cs.kieler.kexpressions.ValuedObject#getLabel()
+     * @see #getValuedObject()
+     * @generated
+     */
+    EAttribute getValuedObject_Label();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ValuedObjectReference <em>Valued Object Reference</em>}'.
@@ -2012,15 +2116,15 @@ public interface KExpressionsPackage extends EPackage {
     EReference getDeclaration_ValuedObjects();
 
     /**
-     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Declaration#isPrivate <em>Private</em>}'.
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.Declaration#getAccess <em>Access</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @return the meta object for the attribute '<em>Private</em>'.
-     * @see de.cau.cs.kieler.kexpressions.Declaration#isPrivate()
+     * @return the meta object for the attribute '<em>Access</em>'.
+     * @see de.cau.cs.kieler.kexpressions.Declaration#getAccess()
      * @see #getDeclaration()
      * @generated
      */
-    EAttribute getDeclaration_Private();
+    EAttribute getDeclaration_Access();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.VariableDeclaration <em>Variable Declaration</em>}'.
@@ -2227,6 +2331,38 @@ public interface KExpressionsPackage extends EPackage {
      * @generated
      */
     EAttribute getScheduleDeclaration_Priorities();
+
+    /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration <em>Method Declaration</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Method Declaration</em>'.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration
+     * @generated
+     */
+    EClass getMethodDeclaration();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType <em>Return Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Return Type</em>'.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration#getReturnType()
+     * @see #getMethodDeclaration()
+     * @generated
+     */
+    EAttribute getMethodDeclaration_ReturnType();
+
+    /**
+     * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations <em>Parameter Declarations</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Parameter Declarations</em>'.
+     * @see de.cau.cs.kieler.kexpressions.MethodDeclaration#getParameterDeclarations()
+     * @see #getMethodDeclaration()
+     * @generated
+     */
+    EReference getMethodDeclaration_ParameterDeclarations();
 
     /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.kexpressions.ScheduleObjectReference <em>Schedule Object Reference</em>}'.
@@ -2489,6 +2625,16 @@ public interface KExpressionsPackage extends EPackage {
     EEnum getPriorityProtocol();
 
     /**
+     * Returns the meta object for enum '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for enum '<em>Access Modifier</em>'.
+     * @see de.cau.cs.kieler.kexpressions.AccessModifier
+     * @generated
+     */
+    EEnum getAccessModifier();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2553,6 +2699,14 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EReference VALUED_OBJECT__CARDINALITIES = eINSTANCE.getValuedObject_Cardinalities();
+
+        /**
+         * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute VALUED_OBJECT__LABEL = eINSTANCE.getValuedObject_Label();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ValuedObjectReferenceImpl <em>Valued Object Reference</em>}' class.
@@ -2869,12 +3023,12 @@ public interface KExpressionsPackage extends EPackage {
         EReference DECLARATION__VALUED_OBJECTS = eINSTANCE.getDeclaration_ValuedObjects();
 
         /**
-         * The meta object literal for the '<em><b>Private</b></em>' attribute feature.
+         * The meta object literal for the '<em><b>Access</b></em>' attribute feature.
          * <!-- begin-user-doc -->
          * <!-- end-user-doc -->
          * @generated
          */
-        EAttribute DECLARATION__PRIVATE = eINSTANCE.getDeclaration_Private();
+        EAttribute DECLARATION__ACCESS = eINSTANCE.getDeclaration_Access();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
@@ -3033,6 +3187,32 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EAttribute SCHEDULE_DECLARATION__PRIORITIES = eINSTANCE.getScheduleDeclaration_Priorities();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl <em>Method Declaration</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.impl.MethodDeclarationImpl
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getMethodDeclaration()
+         * @generated
+         */
+        EClass METHOD_DECLARATION = eINSTANCE.getMethodDeclaration();
+
+        /**
+         * The meta object literal for the '<em><b>Return Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute METHOD_DECLARATION__RETURN_TYPE = eINSTANCE.getMethodDeclaration_ReturnType();
+
+        /**
+         * The meta object literal for the '<em><b>Parameter Declarations</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference METHOD_DECLARATION__PARAMETER_DECLARATIONS = eINSTANCE.getMethodDeclaration_ParameterDeclarations();
 
         /**
          * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.impl.ScheduleObjectReferenceImpl <em>Schedule Object Reference</em>}' class.
@@ -3263,6 +3443,16 @@ public interface KExpressionsPackage extends EPackage {
          * @generated
          */
         EEnum PRIORITY_PROTOCOL = eINSTANCE.getPriorityProtocol();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.kexpressions.AccessModifier <em>Access Modifier</em>}' enum.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.kexpressions.AccessModifier
+         * @see de.cau.cs.kieler.kexpressions.impl.KExpressionsPackageImpl#getAccessModifier()
+         * @generated
+         */
+        EEnum ACCESS_MODIFIER = eINSTANCE.getAccessModifier();
 
     }
 

@@ -24,7 +24,7 @@ abstract class InplaceProcessor<T> extends Processor<T, T> {
     /**
      * Type of the processor.
      */
-    override final def ProcessorType getType() {
+    override final ProcessorType getType() {
         return ProcessorType.ENDOGENOUS_TRANSFORMATOR
     }
         

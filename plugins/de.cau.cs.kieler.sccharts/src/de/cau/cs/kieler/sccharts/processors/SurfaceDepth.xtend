@@ -131,7 +131,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         val dco = environment.getProperty(ENABLE_DCO)
 
         if (scso || sito || dco) {
-            snapshot
+            if (environment.inDeveloperMode) snapshot
             var optimizedRootState = rootState
             
             if (scso) optimizedRootState = optimizedRootState.optimizeSuperflousConditionalStates
@@ -329,10 +329,11 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
         var doDTO = environment.getProperty(ENABLE_DTO)
 
         if (doDTO) {
+            //if (environment.inDeveloperMode) snapshot
             var done = false
             while (!done) {
                 done = true
-                if (stateAfterDepth.incomingTransitions.size == 2) {
+                if (stateAfterDepth.incomingTransitions.size == 2 && !stateAfterDepth.initial) {
 
                     // T1 is the incoming node from the surface
                     var T1tmp = stateAfterDepth.incomingTransitions.get(0)
@@ -348,6 +349,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
                     if (K1.outgoingTransitions.exists[it != T1]
                         && K2.outgoingTransitions.exists[it != T2]
                         && K1 != K2
+                        && T1.immediate == T2.immediate
                     ) {
                         val TK1 = K1.outgoingTransitions.findFirst[it != T1]
                         val TK2 = K2.outgoingTransitions.findFirst[it != T2]
@@ -368,6 +370,7 @@ class SurfaceDepth extends SCChartsProcessor implements Traceable {
                             K2.parentRegion.states.remove(K2)
                             done = false
                             T2tmp = t
+                            //if (environment.inDeveloperMode) snapshot
                         }
                     }
                 }

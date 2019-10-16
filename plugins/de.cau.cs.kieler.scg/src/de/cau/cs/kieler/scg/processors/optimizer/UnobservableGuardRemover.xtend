@@ -25,6 +25,7 @@ import de.cau.cs.kieler.scg.processors.analyzer.SingleLoop
 import java.util.Set
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
+import de.cau.cs.kieler.scg.extensions.SCGMethodExtensions
 
 /**
  * @author ssm
@@ -34,6 +35,7 @@ import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 class UnobservableGuardRemover extends InplaceProcessor<SCGraphs> implements Traceable {
 
     @Inject extension SCGDependencyExtensions
+    @Inject extension SCGMethodExtensions
     
     override getId() {
         "de.cau.cs.kieler.scg.processors.unobservableGuardRemover"
@@ -65,7 +67,7 @@ class UnobservableGuardRemover extends InplaceProcessor<SCGraphs> implements Tra
         val unobservableNodes = <Node> newHashSet
         unobservableLoops.forEach[ unobservableNodes.addAll(it.criticalNodes) ]
         
-        for (scg : model.scgs) {
+        for (scg : model.scgs.ignoreMethods) {
             scg.performIneffectiveGuardRemoval(unobservableNodes)
         }
     }
