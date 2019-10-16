@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:#TextRulerContext">
+         <command
+               commandId="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+               icon="platform:/plugin/de.cau.cs.kieler.sccharts.debug/icons/brkp_obj.png"
+               label="Toggle Breakpoint"
+               style="toggle">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.sccharts.text.sct.Sct.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+            description="Toggle Breakpoint in specified Line."
+            id="de.cau.cs.kieler.sccharts.text.ui.toggleBreakpointCommand"
+            name="Toggle Breakpoint Command">
+      </command>
+   </extension>
+    <extension point="org.eclipse.ui.editorActions">
+    <editorContribution
+          targetID="de.cau.cs.kieler.sccharts.text.SCTX"
+          id="de.cau.cs.kieler.sccharts.debug.doubleClick">
+       <action
+             label="Not Used"
+             class="de.cau.cs.kieler.sccharts.debug.TextRulerHandler"
+             style="push"
+             actionID="RulerDoubleClick"
+             id="de.cau.cs.kieler.sccharts.debug.toggleDoubleClick"/>
+    </editorContribution>
+ </extension>
+   <extension
+         point="org.eclipse.debug.core.breakpoints">
+      <breakpoint
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpoint"
+            id="scchartsBreakpoint"
+            markerType="de.cau.cs.kieler.sccharts.debug.scchartsBreakpointMarker">
+      </breakpoint>
+   </extension>
+   <extension
+         id="scchartsBreakpointMarker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.debug.core.lineBreakpointMarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.debug.ui.debugModelPresentations">
+      <debugModelPresentation
+            class="de.cau.cs.kieler.sccharts.debug.ui.SCChartsDebugModelPresentation"
+            id="scchartsDebugModelPresentation">
+      </debugModelPresentation>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.adapters">
+      <factory
+            adaptableType="de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter"
+            class="de.cau.cs.kieler.sccharts.debug.SCChartsBreakpointTargetAdapterFactory">
+         <adapter
+               type="org.eclipse.xtext.ui.editor.XtextEditor">
+         </adapter>
+      </factory>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="de.cau.cs.kieler.simulation">
+         <view
+               id="org.eclipse.debug.ui.BreakpointView"
+               minimized="false"
+               ratio="0.8"
+               relationship="right"
+               relative="de.cau.cs.kieler.kico.selection"
+               visible="true">
+         </view>
+         <actionSet
+               id=" org.eclipse.jdt.debug.ui.JDTDebugActionSet">
+         </actionSet>
+      </perspectiveExtension>
+    </extension>
+</plugin>
