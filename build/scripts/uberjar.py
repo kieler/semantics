@@ -149,10 +149,10 @@ def main(args):
             with open(join(traget_dir, args.name + '-linuxJava8'), 'wb') as file:
                 write_script(file, 'exec java -Xmx512m -jar $0 "$@"\n', code)
             # windows
-            with open(join(traget_dir, args.name + '-win'), 'wb') as file:
-                write_script(file, '-ne @java -Xmx512m %s -jar %%0 %%* \r\n -ne @exit /b \r\n' % java9_options, code) # escaped percent sign because of format string!
-            with open(join(traget_dir, args.name + '-winJava8'), 'wb') as file:
-                write_script(file, '-ne @java -Xmx512m -jar %0 %* \r\n -ne @exit /b \r\n', code)
+            with open(join(traget_dir, args.name + '-win.bat'), 'wb') as file:
+                write_script(file, 'java -Xmx512m %s -jar %%0 %%* \r\n exit /b \r\n' % java9_options, code) # escaped percent sign because of format string!
+            with open(join(traget_dir, args.name + '-winJava8.bat'), 'wb') as file:
+                write_script(file, 'java -Xmx512m -jar %0 %* \r\n exit /b \r\n', code)
             # osx
             with open(join(traget_dir, args.name + '-osx'), 'wb') as file:
                 write_script(file, 'exec java -XstartOnFirstThread -Xmx512m %s -jar $0 "$@"' % java9_options, code)

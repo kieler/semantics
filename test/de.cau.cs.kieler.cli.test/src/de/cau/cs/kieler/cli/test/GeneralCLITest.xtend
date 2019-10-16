@@ -25,11 +25,12 @@ import java.nio.file.Files
  */
 class GeneralCLITest extends AbstractCLITest {
     
-    static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-linux")
-    static val compiler = new File("./bin/kico")
+    static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-" + platformExe )
+    static val compiler = new File("./bin/kico.bat")
     
     @BeforeClass
     static def void setUpOnce() throws Exception {
+        
         setupCompiler(artifact, compiler)
     }
 

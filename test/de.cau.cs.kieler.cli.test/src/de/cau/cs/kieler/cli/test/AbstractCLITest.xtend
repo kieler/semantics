@@ -75,6 +75,10 @@ abstract class AbstractCLITest {
     }
     
     protected def invoke(List<String> command) {
+        return command.invoke(null, timeout, escapeOptions)
+    }
+    
+    static protected def invoke(List<String> command, List<String> outputs, int timeout, boolean escapeOptions){
         println("Invoking: " + command.join(" "))
         val pb = new ProcessBuilder(command)
         //pb.directory(directory)
@@ -85,7 +89,10 @@ abstract class AbstractCLITest {
             val pReader = new BufferedReader(new InputStreamReader(p.inputStream));
             var String line = null;
             while ( (line = pReader.readLine()) !== null) {
-                println(line)
+                if( outputs !== null )
+                    outputs.add(line)
+                else
+                    println(line)
             }
             
             val intime = p.waitFor(timeout, TimeUnit.SECONDS)
@@ -101,4 +108,26 @@ abstract class AbstractCLITest {
         }
     }
     
+    static val OS = System.getProperty("os.name").toLowerCase();
+    static protected def getPlatformExe() {
+        val command = #["java", "-version"]
+        val outputs = newArrayList
+        command.invoke(outputs, 10, false)
+        if( outputs.get( 0 ).indexOf( "\"1.8.") > 0 )
+        {
+            if( OS.indexOf("win") >= 0 )
+                return "winJava8.bat"
+            if( OS.indexOf("mac" ) >= 0 )
+                return "osxJava8"
+            return "linuxJava8"
+        }
+        else
+        {
+            if( OS.indexOf("win") >= 0 )
+                return "win.bat"
+            if( OS.indexOf("mac" ) >= 0 )
+                return "osx"
+            return "linux"
+        }
+    }
 }

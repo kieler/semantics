@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue
  */
 class SCChartsCLITest extends AbstractCLITest {
     
-    static val artifact = new File("../../build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-linux")
+    static val artifact = new File("../../build/de.cau.cs.kieler.sccharts.cli/target/exe/scc-" + platformExe)
     static val compiler = new File("./bin/scc")
     
     @BeforeClass
