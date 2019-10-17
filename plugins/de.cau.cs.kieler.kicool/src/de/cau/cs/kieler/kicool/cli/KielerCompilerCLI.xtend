@@ -93,7 +93,7 @@ class KielerCompilerCLI implements Runnable, Observer {
     @Parameters(description = "the files and/or directories to process.")
     protected List<File> files;
     
-    @Option(names = #["--list-systems"], description = "lists all ava   ilable compilation systems.")
+    @Option(names = #["--list-systems"], description = "lists all available compilation systems.")
     protected boolean listSystems;
     
     @Option(names = #["--help"], usageHelp = true, description = "displays this help message.")
@@ -170,16 +170,14 @@ class KielerCompilerCLI implements Runnable, Observer {
                 for (prop : properties.entrySet) {
                     try {
                         val json = KExtStandaloneParser.parseJsonObject("{\"" + prop.key + "\":" + prop.value + "}")
-                        jsonProps += json
-                    } catch (Exception _) {
-                        try {
-                            val json = KExtStandaloneParser.parseJsonObject("{\"" + prop.key + "\":\"" + prop.value + "\"}")
+                        if (json !== null) {
                             jsonProps += json
-                        } catch (Exception e) {
-                            
-                            if (verbose) println("Could not parse value of compiler property %s. Value set as string %s".format(prop.key, prop.value))
+                        } else {
                             rawProps.put(prop.key, prop.value)
                         }
+                    } catch (Exception e) {
+                        if (verbose) println("Could not parse value of compiler property %s. Value set as string %s".format(prop.key, prop.value))
+                        rawProps.put(prop.key, prop.value)
                     }
                 }
             }
@@ -481,8 +479,9 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
             }
         } catch (Exception e) {
-            if( dest.listFiles.empty )
+            if(dest.listFiles.empty) {
                 dest.delete
+            }
             println("Exception when saving model")
             e.printStackTrace
             return false
