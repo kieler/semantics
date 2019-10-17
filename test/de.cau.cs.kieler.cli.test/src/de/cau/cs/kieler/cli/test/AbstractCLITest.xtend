@@ -78,6 +78,10 @@ abstract class AbstractCLITest {
         return command.invoke(null, timeout, escapeOptions)
     }
     
+    protected def invoke(List<String> command, List<String> outputs) {
+        return command.invoke(outputs, timeout, escapeOptions)
+    }
+    
     static protected def invoke(List<String> command, List<String> outputs, int timeout, boolean escapeOptions){
         println("Invoking: " + command.join(" "))
         val pb = new ProcessBuilder(command)

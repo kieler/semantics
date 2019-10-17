@@ -127,4 +127,15 @@ class SCChartsCLIParametersTest extends AbstractCLITest {
         // check results
         assertExists(new File(dest, "test"))
     }
+    
+    @Test
+    def void testListSystemsOption() {
+        // compiler
+        val command = #[compiler.path, "--list-systems"]
+        val output = newArrayList
+        assertEquals("Exit value not zero", 0, command.invoke(output))
+        
+        // check results
+        assertTrue( "There are no Systems in the output of --list-systems", output.size > 3 )
+    }
 }
