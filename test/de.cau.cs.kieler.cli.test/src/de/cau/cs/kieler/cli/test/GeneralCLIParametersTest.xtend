@@ -24,7 +24,7 @@ import java.nio.file.Files
  * @author kolja
  *
  */
-class CLIParametersTest extends AbstractCLITest {
+class GeneralCLIParametersTest extends AbstractCLITest {
     static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-" + platformExe )
     static val compiler = new File("./bin/kico-" + platformExe) // this is needed because if the windows version is used, then the file has to end with .bat
     
@@ -35,7 +35,7 @@ class CLIParametersTest extends AbstractCLITest {
 
     @Test
     def void testTryAllOption() {
-        val dir = setupTest("try-all-test")
+        val dir = setupTest("kicool-try-all-test")
         val errorSrc = new File(dir, "sctx/error/syntaxerror.sctx")
         val src = new File(dir, "sctx/abo/abo.sctx")
         val dest = new File(dir, "sctx/result")
@@ -55,7 +55,7 @@ class CLIParametersTest extends AbstractCLITest {
     
     @Test
     def void testSystemFileOption() {
-        val dir = setupTest("system-file-test")
+        val dir = setupTest("kicool-system-file-test")
         val src1 = new File(dir, "sctx/abo/abo.sctx")
         val src2 = new File(dir, "sctx/abro/abro.sctx")
         val system = new File(dir, "kico/de.cau.cs.kieler.sccharts.netlist.java.kico")
@@ -71,7 +71,7 @@ class CLIParametersTest extends AbstractCLITest {
     
     @Test
     def void testIntermediateOption() {
-        val dir = setupTest("intermediate-test")
+        val dir = setupTest("kicool-intermediate-test")
         val src1 = new File(dir, "sctx/abo/abo.sctx")
         val src2 = new File(dir, "sctx/abro/abro.sctx")
         val dest = new File(dir, "intermediate")
@@ -90,5 +90,41 @@ class CLIParametersTest extends AbstractCLITest {
             for (f : model.listFiles)
                 assertTrue("Intermediate model '" + f.path + "' does not exist", f.listFiles.size > 0)
         }
+    }
+    
+    @Test
+    def void testFilterOption() {
+        val dir = setupTest("kicool-filter-test")
+        val src = new File(dir, "sctx/filter")
+        val dest = new File(dir, "output")
+        if( !dest.exists )
+            dest.mkdir
+        
+        // compiler
+        val command = #[compiler.path, "-v", "-f", "*.sctx", "-s", "de.cau.cs.kieler.sccharts.netlist", src.path, "-o", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+        
+        // check results
+        assertEquals("There are more output files then expected in '" + dest.path + "'", dest.listFiles.size, 4)
+        assertExists(new File(dest, "ABO.c"))
+        assertExists(new File(dest, "ABO.h"))
+        assertExists(new File(dest, "ABRO.c"))
+        assertExists(new File(dest, "ABRO.h"))
+    }
+    
+    @Test
+    def void testPropertyOption() {
+        val dir = setupTest("kicool-property-test")
+        val src = new File(dir, "sctx/abo/abo.sctx")
+        val dest = new File(dir, "output")
+        if( !dest.exists )
+            dest.mkdir
+        
+        // compiler
+        val command = #[compiler.path, "-v", "-i", "-P", "de.cau.cs.kieler.kicool.deploy.project.generated.name=test", "-s", "de.cau.cs.kieler.sccharts.netlist", src.path, "-o", dest.path, "-g", dest.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+        
+        // check results
+        assertExists(new File(dest, "test"))
     }
 }

@@ -57,7 +57,7 @@ class KExtStandaloneParser {
         res.standaloneParse = true
         res.load(new ByteArrayInputStream(text.getBytes(encoding)), emptyMap)
         
-        if (!res.contents.empty) {
+        if (!res.contents.empty && res.errors.empty) {
             val kext = res.contents.head
             if (kext instanceof Kext) {
                 if (!kext.scopes.empty) {
