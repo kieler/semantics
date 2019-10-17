@@ -54,5 +54,9 @@ interface KielerLanguage {
         }
         return null
     }
+    
+    def boolean isXtextLanguage() {
+        return true
+    }
 
 }
