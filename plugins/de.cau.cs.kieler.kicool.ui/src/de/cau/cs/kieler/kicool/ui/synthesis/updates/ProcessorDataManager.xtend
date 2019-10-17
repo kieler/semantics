@@ -319,7 +319,7 @@ class ProcessorDataManager {
             }
         }
         
-        var envText = "pTime: %dms".format(processorInstance.environment.getProperty(PROCESSOR_TIME).doubleValue / 1000_000)
+        var envText = "pTime: %dms".format((processorInstance.environment.getProperty(PROCESSOR_TIME).doubleValue / 1000_000) as long)
         val mMetric = processorInstance.environment.getProperty(METRIC)
         if (mMetric !== null) envText += "\nmMetric: " + String.format(Locale.US, "%.3f", mMetric as Double) 
         NODE_ENVIRONMENT.findNode(nodeIdMap)?.setLabel(envText)
