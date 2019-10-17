@@ -18,10 +18,14 @@ Require-Bundle: org.eclipse.ui,
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtend.lib,
- org.eclipse.xtend.lib.macro
+ org.eclipse.xtend.lib.macro,
+ de.cau.cs.kieler.kicool.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Import-Package: de.cau.cs.kieler.klighd,
+Import-Package: de.cau.cs.kieler.annotations,
+ de.cau.cs.kieler.kexpressions.keffects,
+ de.cau.cs.kieler.klighd,
+ de.cau.cs.kieler.klighd.krendering.extensions,
  de.cau.cs.kieler.klighd.ui.view,
  de.cau.cs.kieler.sccharts,
  de.cau.cs.kieler.sccharts.impl,

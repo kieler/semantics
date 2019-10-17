@@ -18,6 +18,8 @@ import org.eclipse.debug.core.IBreakpointListener;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
+
 import de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook;
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
 
@@ -32,6 +34,8 @@ public class BreakpointListener implements IBreakpointListener {
     
 //    private BreakpointVisualizationHook visHook = BreakpointVisualizationHook.getInstance();
 
+    private EObjectAtOffsetHelper offsetHelper = new EObjectAtOffsetHelper();
+    
     /**
      * When a breakpoint is added and enabled, it will get highlighted.
      * 
@@ -43,6 +47,7 @@ public class BreakpointListener implements IBreakpointListener {
             if (breakpoint.isEnabled()) {
                 int line = ((LineBreakpoint) breakpoint).getLineNumber();
                 EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
+                // TODO call visualization to display new breakpoint
 //                visHook.handleHighlight(obj, true);
             }
         } catch (CoreException e) {
@@ -59,7 +64,10 @@ public class BreakpointListener implements IBreakpointListener {
     public void breakpointRemoved(IBreakpoint breakpoint, IMarkerDelta delta) {
         try {
             int line = ((LineBreakpoint) breakpoint).getLineNumber();
+            
+//            EObject obj = offsetHelper.resolveElementAt(resource, offset)
             EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
+            // TODO call visualization to remove breakpoint
 //            visHook.handleHighlight(obj, false);
         } catch (CoreException e) {
             e.printStackTrace();
@@ -79,6 +87,7 @@ public class BreakpointListener implements IBreakpointListener {
                 int line = ((LineBreakpoint) breakpoint).getLineNumber();
                 EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
                 if (breakpoint.isEnabled()) {
+                    // TODO call visualization to change breakpoint
 //                    visHook.handleHighlight(obj, true);
                 } else {
 //                    visHook.handleHighlight(obj, false);
