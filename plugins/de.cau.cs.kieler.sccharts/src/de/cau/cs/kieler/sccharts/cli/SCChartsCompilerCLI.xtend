@@ -43,8 +43,7 @@ class SCChartsCompilerCLI extends KielerCompilerCLI {
     }
     
     override getAvailableInputLanguagesMap() {
-        SCTXStandaloneSetup.doSetup()
         // only support sctx input
-        return Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().filter[k, v| v instanceof IResourceFactory && "sctx".equals(k)].mapValues[it as IResourceFactory]
+        #{"sctx" -> new SCTXStandaloneSetup}
     }
 }

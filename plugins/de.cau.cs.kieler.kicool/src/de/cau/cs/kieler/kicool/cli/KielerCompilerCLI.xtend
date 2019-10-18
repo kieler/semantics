@@ -43,9 +43,7 @@ import org.apache.log4j.Logger
 import org.apache.log4j.PatternLayout
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.resource.ResourceSet
-import org.eclipse.xtext.resource.IResourceFactory
 import picocli.CommandLine
 import picocli.CommandLine.Command
 import picocli.CommandLine.Option
@@ -122,25 +120,26 @@ class KielerCompilerCLI implements Runnable, Observer {
             if (listSystems) {
                 println("Available compilation systems:")
                 //TODO highlight those matching the input filter?
-                for (entry : availableSystems.entrySet) {
+                for (entry : availableSystems.entrySet.sortBy[key]) {
                     println("  " + entry.key + " - " + entry.value.label)
                 }
                 System.exit(0)
             }
             
             // Collect files
-            val fileMatcher = FileSystems.getDefault().getPathMatcher("glob:**/" + filter)
+            val folderMatcher = FileSystems.getDefault().getPathMatcher("glob:**/" + filter)
+            val fileMatcher = FileSystems.getDefault().getPathMatcher("glob:" + filter)
             val modelFiles = newArrayList
             if (files !== null) {
                 for (file : files) {
                     if (file.isFile) {
-                        if (fileMatcher.matches(file.toPath)) {
+                        if (fileMatcher.matches(file.toPath) || folderMatcher.matches(file.toPath)) {
                             modelFiles += file
                         } else {
                             println("Source file %s does not match input pattern %s!".format(file, filter))
                         }
                     } else if (file.isDirectory) {
-                        modelFiles += Files.walk(file.toPath).filter[Files.isRegularFile(it) && fileMatcher.matches(it)].map[toFile].iterator.toIterable
+                        modelFiles += Files.walk(file.toPath).filter[Files.isRegularFile(it) && (fileMatcher.matches(it) || folderMatcher.matches(it))].map[toFile].iterator.toIterable
                     } else {
                         println("%s does not exist".format(file))
                     }
@@ -188,7 +187,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     println("Directory for generated files (%s) is a file".format(genCodeDir))
                     System.exit(-1)
                 }
-                if (!genCodeDir.exists && genCodeDir.mkdirs) {
+                if (!genCodeDir.exists && !genCodeDir.mkdirs) {
                     println("Cannot create directory for generated code: %s".format(genCodeDir))
                     System.exit(-1)
                 }
@@ -206,7 +205,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     model = new CodeContainer()
                     (model as CodeContainer).addProxy(file, new String(Files.readAllBytes(file.toPath)))
                 } else {
-                    val res = languages.get(ext).createResource(URI.createFileURI(file.canonicalPath))
+                    val res = languages.get(ext).injector.getInstance(ResourceSet).createResource(URI.createFileURI(file.canonicalPath))
                     res.load(emptyMap)
                     if (!res.errors.empty) {
                         println("Error(s) in parsed model (%s)".format(file))
@@ -308,14 +307,12 @@ class KielerCompilerCLI implements Runnable, Observer {
         }
     }
     
-    protected def getAvailableSystemsMap() {
-        return KiCoolRegistration.getSystemModels.toMap[id]
-    }
+    protected def Map<String, de.cau.cs.kieler.kicool.System> getAvailableSystemsMap() {
+        return KiCoolRegistration.systemModels.toMap[id]
+    } 
     
-    protected def getAvailableInputLanguagesMap() {
-        val langs = KielerLanguage.allRegisteredLanguages
-        langs.forEach[injector] // performs registration
-        return Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().filter[k, v| v instanceof IResourceFactory].mapValues[it as IResourceFactory]
+    protected def Map<String, KielerLanguage> getAvailableInputLanguagesMap() {
+        return KielerLanguage.allRegisteredLanguages.fold(newHashMap)[ map, lang | lang.supportedResourceExtensions.forEach[ map.put(it, lang) ]; map]
     }
     
     override update(Observable o, Object event) {
@@ -348,7 +345,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                 val processorDir = if (intermediates) {
                     val pinf = ProjectInfrastructure.getProjectInfrastructure(env)
                     val dir = new File(pinf.generatedCodeFolder, event.processorInstance.id)
-                    if (dir.isFile || (!dir.exists && dir.mkdirs)) {
+                    if (dir.isFile || (!dir.exists && !dir.mkdirs)) {
                         println("Cannot create folder for intermediate results %s".format(dir))
                     }
                     dir
@@ -417,7 +414,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     if (model.files.size == 1) {
                         dest.createNewFile
                     } else {
-                        if (dest.mkdirs) {
+                        if (!dest.mkdirs) {
                             println("Could not create output directory: %s".format(dest))
                             return false
                         }

@@ -12,22 +12,32 @@
  */
 package de.cau.cs.kieler.scg
 
-import de.cau.cs.kieler.core.services.KielerLanguage
+import com.google.inject.Binder
 import com.google.inject.Guice
 import com.google.inject.Injector
+import com.google.inject.Module
+import de.cau.cs.kieler.core.services.KielerLanguage
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl
 
 /**
  * @author als
  */
 class SCGInternalLanguage implements KielerLanguage {
-    
+
     static Injector injector
     
     def static doSetup() {
         if (injector === null) {
-            injector = Guice.createInjector
+            injector = Guice.createInjector(new Module() {
+                override configure(Binder binder) {
+                    binder.bind(ResourceSet).to(ResourceSetImpl)
+                    binder.bind(Resource).to(XMIResourceImpl)
+                }
+            })
             // do registration
             Resource.Factory.Registry.INSTANCE.getExtensionToFactoryMap().put("scg", injector.getInstance(XMIResourceFactoryImpl))
         }
