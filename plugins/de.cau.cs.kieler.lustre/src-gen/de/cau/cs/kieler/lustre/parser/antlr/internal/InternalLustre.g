@@ -3150,9 +3150,9 @@ ruleFbyExpression returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0());
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsWhenExpressionParserRuleCall_1_1_1_0());
 						}
-						lv_subExpressions_3_0=ruleAtomicValuedExpression
+						lv_subExpressions_3_0=ruleWhenExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
@@ -3161,7 +3161,7 @@ ruleFbyExpression returns [EObject current=null]
 								$current,
 								"subExpressions",
 								lv_subExpressions_3_0,
-								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
+								"de.cau.cs.kieler.lustre.Lustre.WhenExpression");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3175,9 +3175,9 @@ ruleFbyExpression returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0());
+							newCompositeNode(grammarAccess.getFbyExpressionAccess().getSubExpressionsWhenExpressionParserRuleCall_1_2_1_0());
 						}
-						lv_subExpressions_5_0=ruleAtomicValuedExpression
+						lv_subExpressions_5_0=ruleWhenExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getFbyExpressionRule());
@@ -3186,7 +3186,7 @@ ruleFbyExpression returns [EObject current=null]
 								$current,
 								"subExpressions",
 								lv_subExpressions_5_0,
-								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
+								"de.cau.cs.kieler.lustre.Lustre.WhenExpression");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -3502,87 +3502,94 @@ ruleInitExpression returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		{
+			/* */
+		}
+		{
+			newCompositeNode(grammarAccess.getInitExpressionAccess().getTernaryOperationParserRuleCall_0());
+		}
+		this_TernaryOperation_0=ruleTernaryOperation
+		{
+			$current = $this_TernaryOperation_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		(
 			(
 				{
 					/* */
 				}
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getInitExpressionAccess().getOperatorExpressionAction_0_0(),
+					$current = forceCreateModelElementAndAdd(
+						grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0(),
 						$current);
 				}
 			)
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_0_1_0());
-					}
-					lv_subExpressions_1_0=ruleTernaryOperation
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_1_1_0_0());
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_1_0,
-							"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
-						afterParserOrEnumRuleCall();
-					}
+						lv_operator_2_0=ruleInitOperator
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							set(
+								$current,
+								"operator",
+								lv_operator_2_0,
+								"de.cau.cs.kieler.lustre.Lustre.InitOperator");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_1_1_0());
+						}
+						lv_subExpressions_3_0=ruleTernaryOperation
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_3_0,
+								"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)
 			(
+				otherlv_4='->'
+				{
+					newLeafNode(otherlv_4, grammarAccess.getInitExpressionAccess().getHyphenMinusGreaterThanSignKeyword_1_2_0());
+				}
 				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getOperatorInitOperatorEnumRuleCall_0_2_0());
-					}
-					lv_operator_2_0=ruleInitOperator
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_1_2_1_0());
 						}
-						set(
-							$current,
-							"operator",
-							lv_operator_2_0,
-							"de.cau.cs.kieler.lustre.Lustre.InitOperator");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getInitExpressionAccess().getSubExpressionsTernaryOperationParserRuleCall_0_3_0());
-					}
-					lv_subExpressions_3_0=ruleTernaryOperation
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+						lv_subExpressions_5_0=ruleTernaryOperation
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getInitExpressionRule());
+							}
+							add(
+								$current,
+								"subExpressions",
+								lv_subExpressions_5_0,
+								"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
+							afterParserOrEnumRuleCall();
 						}
-						add(
-							$current,
-							"subExpressions",
-							lv_subExpressions_3_0,
-							"de.cau.cs.kieler.lustre.Lustre.TernaryOperation");
-						afterParserOrEnumRuleCall();
-					}
+					)
 				)
-			)
-		)
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getInitExpressionAccess().getTernaryOperationParserRuleCall_1());
-		}
-		this_TernaryOperation_4=ruleTernaryOperation
-		{
-			$current = $this_TernaryOperation_4.current;
-			afterParserOrEnumRuleCall();
-		}
+			)*
+		)?
 	)
 ;
 

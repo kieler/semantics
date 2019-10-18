@@ -270,12 +270,10 @@ NegExpression returns kexpressions::Expression:
 @Override 
 FbyExpression returns kexpressions::Expression:
     WhenExpression
-    (
-        {kexpressions::OperatorExpression.subExpressions+=current}
-        (operator=FbyOperator subExpressions+=AtomicValuedExpression)
-        ('fby' subExpressions+=AtomicValuedExpression)*
-    )?
-;
+    ({kexpressions::OperatorExpression.subExpressions+=current}
+        (operator=FbyOperator subExpressions+=WhenExpression)
+        ('fby' subExpressions+=WhenExpression)*
+    )?;
 
 WhenExpression returns kexpressions::Expression:
     {kexpressions::OperatorExpression} 
@@ -303,10 +301,11 @@ BoolExpression returns kexpressions::Expression:
 
 @Override    
 InitExpression returns kexpressions::Expression:
-    {kexpressions::OperatorExpression} 
-    subExpressions += TernaryOperation operator=InitOperator subExpressions += TernaryOperation
-    | TernaryOperation
-;
+    TernaryOperation 
+    ({kexpressions::OperatorExpression.subExpressions+=current} 
+        (operator=InitOperator subExpressions+=TernaryOperation) 
+        ('->' subExpressions+=TernaryOperation)*
+    )?;
 
 // Overwide Ternary operator to support if ... then ... else
 @Override 

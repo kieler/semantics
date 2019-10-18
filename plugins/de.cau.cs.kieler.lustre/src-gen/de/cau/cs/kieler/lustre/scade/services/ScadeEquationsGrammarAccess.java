@@ -742,7 +742,7 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	//@Override
 	//FbyExpression kexpressions::Expression:
 	//	WhenExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
+	//	subExpressions+=WhenExpression) ('fby' subExpressions+=WhenExpression)*)?;
 	public LustreGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaLustre.getFbyExpressionAccess();
 	}
@@ -798,9 +798,8 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//@Override
 	//InitExpression kexpressions::Expression:
-	//	{kexpressions::OperatorExpression} subExpressions+=TernaryOperation operator=InitOperator
-	//	subExpressions+=TernaryOperation
-	//	| TernaryOperation;
+	//	TernaryOperation ({kexpressions::OperatorExpression.subExpressions+=current} (operator=InitOperator
+	//	subExpressions+=TernaryOperation) ('->' subExpressions+=TernaryOperation)*)?;
 	public LustreGrammarAccess.InitExpressionElements getInitExpressionAccess() {
 		return gaLustre.getInitExpressionAccess();
 	}

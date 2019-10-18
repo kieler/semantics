@@ -346,6 +346,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 						|| rule == grammarAccess.getPreExpressionRule()
 						|| rule == grammarAccess.getBoolExpressionRule()
 						|| rule == grammarAccess.getInitExpressionRule()
+						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getTernaryOperationRule()
 						|| rule == grammarAccess.getImpliesExpressionRule()
 						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
@@ -606,16 +607,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -695,16 +691,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -785,16 +776,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -892,16 +878,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -993,16 +974,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1087,16 +1063,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1176,16 +1147,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1265,16 +1231,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1354,16 +1315,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1443,16 +1399,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1535,16 +1486,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1641,16 +1587,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1735,16 +1676,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1829,16 +1765,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1924,16 +1855,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -1998,6 +1924,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     PreExpression returns OperatorExpression
 	 *     BoolExpression returns OperatorExpression
 	 *     InitExpression returns OperatorExpression
+	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
 	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression
@@ -2055,16 +1982,11 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *             subExpressions+=AtomicValuedExpression*
 	 *         ) | 
 	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (
-	 *             subExpressions+=FbyExpression_OperatorExpression_1_0 
-	 *             operator=FbyOperator 
-	 *             subExpressions+=AtomicValuedExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
+	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
 	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
 	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=TernaryOperation operator=InitOperator subExpressions+=TernaryOperation) | 
+	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
 	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
 	 *         (
 	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
@@ -2162,6 +2084,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     PreExpression returns ValuedObjectString
 	 *     BoolExpression returns ValuedObjectString
 	 *     InitExpression returns ValuedObjectString
+	 *     InitExpression.OperatorExpression_1_0 returns ValuedObjectString
 	 *     TernaryOperation returns ValuedObjectString
 	 *     ImpliesExpression returns ValuedObjectString
 	 *     ImpliesExpression.OperatorExpression_1_0 returns ValuedObjectString
@@ -2245,6 +2168,7 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     PreExpression returns OperatorExpression
 	 *     BoolExpression returns OperatorExpression
 	 *     InitExpression returns OperatorExpression
+	 *     InitExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     TernaryOperation returns OperatorExpression
 	 *     ImpliesExpression returns OperatorExpression
 	 *     ImpliesExpression.OperatorExpression_1_0 returns OperatorExpression

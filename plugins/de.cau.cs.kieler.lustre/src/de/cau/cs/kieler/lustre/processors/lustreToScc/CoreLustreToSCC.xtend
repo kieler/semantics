@@ -203,11 +203,6 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     case PRE: {
                         convertedExpression = processPreExpression(subExpressionList.head, state)
                     }
-                    case INTDIV: {
-                        convertedExpression = createOperatorExpression(OperatorType.INTDIV) => [
-                            subExpressions.addAll(subExpressionList)
-                        ]
-                    }
                     default: {
                         convertedExpression = createOperatorExpression(kExpression.operator) => [
                             subExpressions.addAll(subExpressionList)

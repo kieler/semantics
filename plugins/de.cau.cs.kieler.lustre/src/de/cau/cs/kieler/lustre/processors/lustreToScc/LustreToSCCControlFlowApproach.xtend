@@ -188,7 +188,6 @@ class LustreToSCCControlFlowApproach extends LustreToSCCharts {
                     return transformConditional(valObj, expression as OperatorExpression, state, varState, controlflowRegion)
                 }
                 case IMPLIES,
-                case INTDIV,
                 case BITWISE_XOR,
                 case ATMOSTONEOF, 
                 case NOR: {

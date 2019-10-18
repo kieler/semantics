@@ -256,11 +256,9 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) '(' (ambiguity) operator=ConditionalOperator
 	 *     (rule start) '(' (ambiguity) operator=NotOperator
-	 *     (rule start) '(' (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) '(' (ambiguity) {OperatorExpression.subExpressions+=}
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__a(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
@@ -274,7 +272,6 @@ public abstract class AbstractScadeEquationsSyntacticSequencer extends AbstractS
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) operator=ConditionalOperator
 	 *     (rule start) (ambiguity) operator=NotOperator
-	 *     (rule start) (ambiguity) subExpressions+=TernaryOperation
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}
 	 */
 	protected void emit_AtomicExpression_AtomicValuedExpression___LeftParenthesisKeyword_4_0_a_LeftParenthesisKeyword_1_0__p(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
