@@ -15,7 +15,6 @@ package de.cau.cs.kieler.lustre.scade.processors
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kicool.compilation.Processor
@@ -34,6 +33,14 @@ import java.util.HashSet
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TracingEcoreUtil.*
 import de.cau.cs.kieler.kexpressions.ValuedObject
+import de.cau.cs.kieler.kexpressions.ValueType
+import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
+import de.cau.cs.kieler.lustre.lustre.Equation
+import de.cau.cs.kieler.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.kexpressions.Value
+import de.cau.cs.kieler.kexpressions.BoolValue
+import de.cau.cs.kieler.kexpressions.IntValue
+import de.cau.cs.kieler.kexpressions.FloatValue
 
 /**
  * @author lgr
@@ -43,9 +50,11 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
+    @Inject extension KExpressionsTypeExtensions
     @Inject extension LustreCreateExtension
     @Inject extension ScadeTransformationExtensions
     
+    var HashMap<ValuedObject, Equation> equationMap = newHashMap 
     var HashMap<String, ValuedObject> variableMap = newHashMap
     var HashSet<String> writtenVariables = newHashSet
     var HashSet<String> readVariables = newHashSet
@@ -91,6 +100,22 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
         for (equation : scadeProgram.equations) {
             equation.processEquation(node)
         }
+        
+        for (varDecl : node.variables.immutableCopy) {
+            for (valObj : varDecl.valuedObjects.immutableCopy) {
+                valObj.substituteVariables(node)
+            }
+        }
+        
+        for (equation : node.equations) {
+            var type = equation.expression.approximateType
+            var valObj = equation.reference.valuedObject
+            if (valObj instanceof LustreValuedObject) {
+                valObj.type = type
+            } else {
+                (valObj.eContainer as LustreVariableDeclaration).type = type
+            }
+        }
     }
     
     def initializeValuedObjectStringMaps(ScadeProgram scadeProgram) {
@@ -129,6 +154,7 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
         for (key : keySet) {
             var varDecl = createLustreVariableDeclaration => [
                 valuedObjects += variableMap.get(key)
+                type = ValueType.BOOL
             ]
             if (readVariables.contains(key) && !writtenVariables.contains(key)) {
                 node.inputs += varDecl
@@ -159,7 +185,11 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
                         lustreEquation.references += lustreValObj.reference
                     }
                     lustreEquation.expression = convertExpression(equation.expression, node)
+                    equationMap.put(lustreValObj, lustreEquation)
                     var type = determineType(lustreEquation.expression, newHashSet)
+                    if (type == ValueType.UNKNOWN) {
+                        type = inferType(lustreEquation.expression)
+                    }
                     if (lustreValObj instanceof LustreValuedObject) {
                         lustreValObj.type = type
                     } else {
@@ -170,6 +200,107 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
             lustreEquation.operator = equation.operator
             node.equations += lustreEquation
         }
+    }
+    
+    private def substituteVariables(ValuedObject valObj, NodeDeclaration node) {
+        var eq = equationMap.get(valObj)
+        
+        var remove = false
+        for (equation : node.equations) {
+            if (equation !== eq) {
+                if (equation.expression instanceof ValuedObjectReference 
+                    && (equation.expression as ValuedObjectReference).valuedObject === valObj 
+                    && eq.expression.contains(valObj)) {
+                        remove = true
+                        equation.expression = eq.expression.copy.replaceValObj(valObj, equation.reference)
+                }
+                equation.expression = equation.expression.replaceValObj(valObj, eq.expression)
+            }
+        }
+        
+        if (remove || !eq.expression.contains(valObj)) {
+            node.equations.remove(eq)
+            valObj.variableDeclaration.remove
+        }
+    }
+    
+    private dispatch def Expression replaceValObj(Expression expression, ValuedObject valObj, Expression replacement) {
+        return expression
+    }
+    
+    private dispatch def Expression replaceValObj(OperatorExpression expression, ValuedObject valObj, Expression replacement) {
+        for (subExpr : expression.subExpressions) {
+            subExpr.replace(subExpr.replaceValObj(valObj, replacement.copy))
+        }
+        
+        return expression
+    }
+    
+    private dispatch def Expression replaceValObj(ValuedObjectReference expression, ValuedObject valObj, Expression replacement) {
+        if (expression.valuedObject === valObj) {
+            return replacement.copy
+        }
+        return expression
+    }
+    
+    private dispatch def boolean contains(Expression expression, ValuedObject valObj) {
+        return false
+    }
+    
+    private dispatch def boolean contains(OperatorExpression expression, ValuedObject valObj) {
+        var subContain = false
+        for (subExpr : expression.subExpressions) {
+            subContain = subContain || subExpr.contains(valObj)
+        }
+        
+        return subContain
+    }
+    
+    private dispatch def boolean contains(ValuedObjectReference expression, ValuedObject valObj) {
+        if (expression.valuedObject === valObj) {
+            return true
+        }
+        return false
+    }
+    
+    private dispatch def ValueType approximateType(OperatorExpression expression) {
+        switch (expression.operator) {
+            case ATMOSTONEOF, case BITWISE_AND, case BITWISE_NOT, case BITWISE_OR, case BITWISE_XOR, 
+            case EQ, case IMPLIES, case LOGICAL_AND, case LOGICAL_OR, case GEQ, case GT, case LEQ, case LT, case NE, case NOR, case NOT: {
+                return ValueType.BOOL
+            }
+            case ADD, case DIV, case MULT, case SUB, case MOD, case SHIFT_LEFT, case SHIFT_RIGHT, case SHIFT_RIGHT_UNSIGNED, case POSTFIX_ADD, case POSTFIX_SUB: {
+                return ValueType.INT
+            }
+            case CURRENT, case WHEN, case VAL, case PRE: {
+                return approximateType(expression.subExpressions.get(0))
+            }
+            case CONDITIONAL: {
+                return approximateType(expression.subExpressions.get(1))
+            }            
+            case FBY, case INIT: {
+                var currType = ValueType.UNKNOWN
+                for (subExpr : expression.subExpressions) {
+                    var subType = approximateType(subExpr)
+                    if (subType !== ValueType.UNKNOWN) {
+                        currType = subType
+                    }
+                }
+                return currType
+            }
+        }
+    }
+    
+    private dispatch def ValueType approximateType(BoolValue expression) {
+        return ValueType.BOOL
+    }
+    
+    private dispatch def ValueType approximateType(IntValue expression) {
+        return ValueType.INT
+    }
+    
+    private dispatch def ValueType approximateType(FloatValue expression) {
+        return ValueType.FLOAT
     }
     
     /**
