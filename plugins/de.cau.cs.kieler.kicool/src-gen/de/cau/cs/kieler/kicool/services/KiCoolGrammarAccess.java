@@ -1676,7 +1676,6 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//// Mehrstellig: 1. first, 2. last, no matter comma, if pre, reevaluate to fby
 	//InitExpression Expression:
 	//	FbyExpression ({OperatorExpression.subExpressions+=current} (operator=InitOperator subExpressions+=FbyExpression)
 	//	('->' subExpressions+=FbyExpression)*)?;
@@ -1688,7 +1687,6 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getInitExpressionAccess().getRule();
 	}
 	
-	//// Mehrstellig chain of values starting at first tick
 	//FbyExpression Expression:
 	//	ImpliesExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
 	//	subExpressions+=ImpliesExpression) ('fby' subExpressions+=ImpliesExpression)*)?;
@@ -1700,7 +1698,6 @@ public class KiCoolGrammarAccess extends AbstractGrammarElementFinder {
 		return getFbyExpressionAccess().getRule();
 	}
 	
-	//// LeftAssozicative
 	//ImpliesExpression Expression:
 	//	AtMostOneOfExpression ({OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
 	//	subExpressions+=AtMostOneOfExpression) ('implies' subExpressions+=AtMostOneOfExpression)*)?;

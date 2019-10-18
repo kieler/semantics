@@ -368,14 +368,14 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     INIT(28, "INIT", "->"), /**
-     * The '<em><b>INTDIV</b></em>' literal object.
+     * The '<em><b>ATMOSTONEOF</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #INTDIV_VALUE
+     * @see #ATMOSTONEOF_VALUE
      * @generated
      * @ordered
      */
-    INTDIV(29, "INTDIV", "div"), /**
+    ATMOSTONEOF(29, "ATMOSTONEOF", "#"), /**
      * The '<em><b>NOR</b></em>' literal object.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -391,15 +391,7 @@ public enum OperatorType implements Enumerator {
      * @generated
      * @ordered
      */
-    IMPLIES(31, "IMPLIES", "implies"), /**
-     * The '<em><b>ATMOSTONEOF</b></em>' literal object.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #ATMOSTONEOF_VALUE
-     * @generated
-     * @ordered
-     */
-    ATMOSTONEOF(32, "ATMOSTONEOF", "#");
+    IMPLIES(31, "IMPLIES", "implies");
 
     /**
      * The '<em><b>NOT</b></em>' literal value.
@@ -838,19 +830,15 @@ public enum OperatorType implements Enumerator {
     public static final int INIT_VALUE = 28;
 
     /**
-     * The '<em><b>INTDIV</b></em>' literal value.
+     * The '<em><b>ATMOSTONEOF</b></em>' literal value.
      * <!-- begin-user-doc -->
-     * <p>
-     * If the meaning of '<em><b>INTDIV</b></em>' literal object isn't clear,
-     * there really should be more of a description here...
-     * </p>
      * <!-- end-user-doc -->
-     * @see #INTDIV
-     * @model literal="div"
+     * @see #ATMOSTONEOF
+     * @model literal="#"
      * @generated
      * @ordered
      */
-    public static final int INTDIV_VALUE = 29;
+    public static final int ATMOSTONEOF_VALUE = 29;
 
     /**
      * The '<em><b>NOR</b></em>' literal value.
@@ -881,17 +869,6 @@ public enum OperatorType implements Enumerator {
      * @ordered
      */
     public static final int IMPLIES_VALUE = 31;
-
-    /**
-     * The '<em><b>ATMOSTONEOF</b></em>' literal value.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see #ATMOSTONEOF
-     * @model literal="#"
-     * @generated
-     * @ordered
-     */
-    public static final int ATMOSTONEOF_VALUE = 32;
 
     /**
      * An array of all the '<em><b>Operator Type</b></em>' enumerators.
@@ -931,10 +908,9 @@ public enum OperatorType implements Enumerator {
             CURRENT,
             WHEN,
             INIT,
-            INTDIV,
+            ATMOSTONEOF,
             NOR,
             IMPLIES,
-            ATMOSTONEOF,
         };
 
     /**
@@ -1020,10 +996,9 @@ public enum OperatorType implements Enumerator {
             case CURRENT_VALUE: return CURRENT;
             case WHEN_VALUE: return WHEN;
             case INIT_VALUE: return INIT;
-            case INTDIV_VALUE: return INTDIV;
+            case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
             case NOR_VALUE: return NOR;
             case IMPLIES_VALUE: return IMPLIES;
-            case ATMOSTONEOF_VALUE: return ATMOSTONEOF;
         }
         return null;
     }
