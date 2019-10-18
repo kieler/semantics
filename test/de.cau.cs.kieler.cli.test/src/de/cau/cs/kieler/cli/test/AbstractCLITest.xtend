@@ -12,14 +12,16 @@
  */
 package de.cau.cs.kieler.cli.test
 
+import de.cau.cs.kieler.core.Platform
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.nio.file.Files
+import java.util.Comparator
 import java.util.List
 import java.util.concurrent.TimeUnit
+
 import static org.junit.Assert.assertTrue
-import java.util.Comparator
 
 import static extension java.lang.String.format
 
@@ -33,12 +35,6 @@ abstract class AbstractCLITest {
     val res = new File("./resources")
     
     protected var timeout = 10
-    protected var escapeOptions = true
-    
-    def assertExists(File file) {
-        assertTrue("Expected result %s does not exist.".format(file), file.exists)
-        assertTrue("Expected result %s is empty.".format(file), file.length > 0)
-    }
     
     protected static def setupCompiler(File artifact, File compiler) {
         if (!artifact.isFile) {
@@ -48,7 +44,7 @@ abstract class AbstractCLITest {
             compiler.delete
         }
         com.google.common.io.Files.copy(artifact, compiler)
-        compiler.executable = true
+        assertTrue("Cannot set executable flag of compiler", compiler.setExecutable(true))
     }
     
     protected def setupTest(String name) {
@@ -75,17 +71,21 @@ abstract class AbstractCLITest {
     }
     
     protected def invoke(List<String> command) {
-        return command.invoke(null, timeout, escapeOptions)
+        return command.invoke(null, timeout, null)
+    }
+    
+    protected def invoke(List<String> command, File workingDirectory) {
+        return command.invoke(null, timeout, workingDirectory)
     }
     
     protected def invoke(List<String> command, List<String> outputs) {
-        return command.invoke(outputs, timeout, escapeOptions)
+        return command.invoke(outputs, timeout, null)
     }
     
-    static protected def invoke(List<String> command, List<String> outputs, int timeout, boolean escapeOptions){
+    static protected def invoke(List<String> command, List<String> outputs, int timeout, File workingDirectory){
         println("Invoking: " + command.join(" "))
         val pb = new ProcessBuilder(command)
-        //pb.directory(directory)
+        if (workingDirectory !== null) pb.directory(workingDirectory)
         pb.redirectErrorStream(true)
         
         try {
@@ -112,26 +112,29 @@ abstract class AbstractCLITest {
         }
     }
     
-    static val OS = System.getProperty("os.name").toLowerCase();
-    static protected def getPlatformExe() {
+    def assertExists(File file) {
+        assertTrue("Expected result %s does not exist.".format(file), file.exists)
+        assertTrue("Expected result %s is empty.".format(file), file.length > 0)
+    }
+    
+    static protected def getPlatformExePostfix() {
+        // get system java version
         val command = #["java", "-version"]
         val outputs = newArrayList
-        command.invoke(outputs, 10, false)
-        if( outputs.get( 0 ).indexOf( "\"1.8.") > 0 )
-        {
-            if( OS.indexOf("win") >= 0 )
-                return "winJava8.bat"
-            if( OS.indexOf("mac" ) >= 0 )
-                return "osxJava8"
-            return "linuxJava8"
-        }
-        else
-        {
-            if( OS.indexOf("win") >= 0 )
-                return "win.bat"
-            if( OS.indexOf("mac" ) >= 0 )
-                return "osx"
-            return "linux"
+        command.invoke(outputs, 10, null)
+        
+        if (outputs.head.contains("1.8.")) {
+            switch (Platform.getOS) {
+                case WIN: return "winJava8.bat"
+                case MAC: return "osxJava8"
+                default: return "linuxJava8"
+            }
+        } else {
+            switch (Platform.getOS) {
+                case WIN: return "win.bat"
+                case MAC: return "osx"
+                default: return "linux"
+            }
         }
     }
 }

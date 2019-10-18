@@ -12,21 +12,21 @@
  */
 package de.cau.cs.kieler.cli.test
 
+import de.cau.cs.kieler.core.Platform
 import java.io.File
+import java.nio.file.Files
 import org.junit.BeforeClass
 import org.junit.Test
 
 import static org.junit.Assert.assertEquals
-import static org.junit.Assert.assertTrue
-import java.nio.file.Files
 
 /** 
  * @author als
  */
 class GeneralCLITest extends AbstractCLITest {
     
-    static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-" + platformExe )
-    static val compiler = new File("./bin/kico-" + platformExe) // this is needed because if the windows version is used, then the file has to end with .bat
+    static val artifact = new File("../../build/de.cau.cs.kieler.kicool.cli/target/exe/kico-" + platformExePostfix )
+    static val compiler = new File("./bin/kico" + (Platform.isWindows ? ".bat" : "")) // this is needed because if the windows version is used, then the file has to end with .bat
     
     @BeforeClass
     static def void setUpOnce() throws Exception {
