@@ -89,7 +89,7 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
     public static val IProperty<Boolean> REMOVE_JOIN_NODES = 
         new Property<Boolean>("de.cau.cs.kieler.scg.processors.guards.removeJoinNodes", false)     
 
-    
+  
     val globalVOMap = <ValuedObject, ValuedObject>newHashMap
     
     override getId() {
@@ -147,6 +147,8 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
             label = scg.label
             scg.copyAnnotations(it, <String> newHashSet("main", "voLink"))
         ]
+        
+        val use_sc_plus_semantics = environment.getProperty(BasicBlockTransformation.USE_SC_PLUS_SEMANTICS)
         
 //        creationalTransformation(scg,newSCG)
 //        scg.setDefaultTrace
@@ -229,7 +231,9 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                 if (lastSB !== null && i > 1) {
                     val lastAssignment = GAMap.get(lastSB.guards.head)
                     if (lastAssignment !== null) {
-                        lastAssignment.createControlDependency(assignment)
+                        if (!use_sc_plus_semantics) {
+                            lastAssignment.createControlDependency(assignment)
+                        }
                     }
                 }
                 
