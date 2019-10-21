@@ -37,16 +37,20 @@ import de.cau.cs.kieler.kexpressions.ValueType
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
-import de.cau.cs.kieler.kexpressions.Value
 import de.cau.cs.kieler.kexpressions.BoolValue
 import de.cau.cs.kieler.kexpressions.IntValue
 import de.cau.cs.kieler.kexpressions.FloatValue
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 
 /**
  * @author lgr
  *
  */
 class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
+        
+    public static val IProperty<Boolean> SUBSTITUTION = 
+        new Property<Boolean>("de.cau.cs.kieler.lustre.scade.processors.scadeToLustre.substitution", false)
     
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KExpressionsCreateExtensions
@@ -96,14 +100,16 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
         initializeValuedObjectStringMaps(scadeProgram)
         determineInputOutputVariable(node)
         
-        // Transform the actual equations
         for (equation : scadeProgram.equations) {
             equation.processEquation(node)
         }
         
-        for (varDecl : node.variables.immutableCopy) {
-            for (valObj : varDecl.valuedObjects.immutableCopy) {
-                valObj.substituteVariables(node)
+        val substitute = environment.getProperty(SUBSTITUTION)?:SUBSTITUTION.^default
+        if (substitute) {
+            for (varDecl : node.variables.immutableCopy) {
+                for (valObj : varDecl.valuedObjects.immutableCopy) {
+                    valObj.substituteVariables(node)
+                }
             }
         }
         
@@ -301,6 +307,10 @@ class ScadeEquationsToLustre extends Processor<ScadeProgram, LustreProgram> {
     
     private dispatch def ValueType approximateType(FloatValue expression) {
         return ValueType.FLOAT
+    }
+    
+    private dispatch def ValueType approximateType(ValuedObjectReference expression) {
+        return expression.valuedObject.type
     }
     
     /**
