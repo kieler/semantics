@@ -61,7 +61,7 @@ public class SCChartsDebugPlugin extends AbstractUIPlugin {
     /**
      * The instance for the breakpoint listener.
      */
-    public BreakpointListener listener = new BreakpointListener();
+    public SCTXBreakpointListener listener = new SCTXBreakpointListener();
 
     /**
      * Saves the data corresponding to a debug schedule in relation to the schedule chosen.

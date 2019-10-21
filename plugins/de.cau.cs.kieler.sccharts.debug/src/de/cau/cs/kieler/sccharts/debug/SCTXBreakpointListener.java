@@ -18,7 +18,6 @@ import org.eclipse.debug.core.IBreakpointListener;
 import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.debug.core.model.LineBreakpoint;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.resource.EObjectAtOffsetHelper;
 
 import de.cau.cs.kieler.sccharts.debug.ui.BreakpointVisualizationHook;
 import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
@@ -30,11 +29,9 @@ import de.cau.cs.kieler.sccharts.debug.ui.SCChartsBreakpointTargetAdapter;
  * @author lgr
  *
  */
-public class BreakpointListener implements IBreakpointListener {
+public class SCTXBreakpointListener implements IBreakpointListener {
     
     private BreakpointVisualizationHook visHook = BreakpointVisualizationHook.getInstance();
-
-    private EObjectAtOffsetHelper offsetHelper = new EObjectAtOffsetHelper();
     
     /**
      * When a breakpoint is added and enabled, it will get highlighted.
