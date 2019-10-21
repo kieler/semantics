@@ -17,7 +17,6 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
-import de.cau.cs.kieler.kexpressions.extensions.KExpressionsCreateExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsTypeExtensions
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
@@ -29,6 +28,7 @@ import de.cau.cs.kieler.sccharts.extensions.SCChartsActionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsControlflowRegionExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.extensions.SCChartsTransitionExtensions
+import java.util.List
 
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
 
@@ -46,7 +46,6 @@ class FollowedBy extends SCChartsProcessor implements Traceable {
     @Inject extension KExpressionsValuedObjectExtensions
     @Inject extension KEffectsExtensions
     @Inject extension KExpressionsDeclarationExtensions
-    @Inject extension KExpressionsCreateExtensions
     @Inject extension KExpressionsTypeExtensions
 
     static val GENERATED_PREFIX = "__fbp_"
@@ -79,41 +78,72 @@ class FollowedBy extends SCChartsProcessor implements Traceable {
 
             if (parent !== null) {
                 
-                val localVariable = createValuedObject => [name = GENERATED_PREFIX + fby.key]
-                parent.declarations += createVariableDeclaration(fby.value.inferType) => [
-                    valuedObjects += localVariable
-                ]
+                var localVariable = createValuedObject => [name = GENERATED_PREFIX + fby.key]
+                var varDecl = createVariableDeclaration(fby.value.inferType) 
+                varDecl.valuedObjects += localVariable
+                parent.declarations += varDecl
                 voStore.update(localVariable, SCCHARTS_GENERATED)
 
-                val fbyRegion = parent.createControlflowRegion(GENERATED_PREFIX + fby.key) => [final = true]
+                var replacementVar = localVariable
+                var subExprCopy = fby.value.subExpressions.immutableCopy
+                for (subExpr : subExprCopy.indexed) {
+                    if (fby.value.subExpressions.indexOf(subExpr.value) < fby.value.subExpressions.size -1) {
+                        
+                        val subExprRegion = parent.createControlflowRegion(GENERATED_PREFIX + fby.key + subExpr.key)
+                        
+                        var init = subExprRegion.createInitialState("init")
+                        var delay = subExprRegion.createState("delay")
+                        var loop = subExprRegion.createState("loop")
+                        
+                        val tmp1 = createValuedObject => [name = GENERATED_PREFIX + "next" + subExpr.key]
+                        parent.declarations += createVariableDeclaration(fby.value.inferType) => [
+                            valuedObjects += tmp1
+                        ]
+                        voStore.update(tmp1, SCCHARTS_GENERATED)
                 
-                var immediate = true
-                var State state1 = null
-                var State state2 = fbyRegion.createInitialState(GENERATED_PREFIX + 0) 
-                for (subFby : fby.value.subExpressions.immutableCopy.indexed) {
-                    state1 = state2
-                    state2 = fbyRegion.createState(GENERATED_PREFIX + (subFby.key + 1))
-                    var transition = createTransitionTo(state1, state2) => [
-                        effects += createAssignment(localVariable, createNumerousPreExpression(subFby.value, subFby.key))
-                    ]
-                    if (immediate) {
-                        transition.immediate = true
-                        immediate = false
+                        val assignment1 = createAssignment(localVariable, subExpr.value)
+                        createImmediateTransitionTo(init, delay) => [
+                            effects += assignment1
+                        ]
+                        
+                        val assignment2 = createAssignment(localVariable, tmp1.reference)
+                        createTransitionTo(loop, delay) => [
+                            effects += assignment2
+                        ]
+                        
+                        if (!subExpr.value.isLastButOneIndex(subExprCopy)) {
+                            val tmp2 = createValuedObject => [name = GENERATED_PREFIX + "tmp" + subExpr.key]
+                            parent.declarations += createVariableDeclaration(fby.value.inferType) => [
+                                valuedObjects += tmp2
+                            ]
+                            voStore.update(tmp2, SCCHARTS_GENERATED)
+                            
+                            createImmediateTransitionTo(delay, loop) => [
+                                effects += createAssignment(tmp1, tmp2.reference)
+                            ]
+                            localVariable = tmp2
+                        } else {
+                            createImmediateTransitionTo(delay, loop) => [
+                                effects += createAssignment(tmp1, fby.value.subExpressions.last)
+                            ]
+                        }
                     }
                 }
-                createImmediateTransitionTo(state2, state1)
 
-                fby.value.replace(localVariable.reference)
+                fby.value.replace(replacementVar.reference)
             }
         }
     }
     
-    private def Expression createNumerousPreExpression(Expression expression, int amount) {
-        var newExpr = expression
-        for (var i = 0; i < amount; i++) {
-            newExpr = createPreExpression(newExpr)
+    private def isLastButOneIndex (Expression subExpr, List<Expression> list) {
+        var index = list.indexOf(subExpr)
+        if (index == -1) {
+            return false
+        } else if (index == (list.size - 2)) {
+            return true
+        } else {
+            return false
         }
-        
-        return newExpr
     }
+    
 }
