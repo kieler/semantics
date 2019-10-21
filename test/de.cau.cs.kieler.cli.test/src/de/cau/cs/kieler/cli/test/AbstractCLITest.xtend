@@ -38,9 +38,13 @@ abstract class AbstractCLITest {
     
     protected static def setupCompiler(File artifact, File compiler) {
         assertTrue("Cannot find compiler artifact in " + artifact, artifact.isFile)
+        
         if (compiler.exists) {
             compiler.delete
+        } else if (!compiler.parentFile.exists) {
+            assertTrue(compiler.parentFile.mkdirs)
         }
+        
         Files.copy(artifact.toPath, compiler.toPath)
         assertTrue("Failed to copy compiler to " + compiler, compiler.file)
         assertTrue("Cannot set executable flag of compiler", compiler.setExecutable(true))
