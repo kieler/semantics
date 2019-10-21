@@ -33,6 +33,7 @@ import de.cau.cs.kieler.kicool.registration.ModelInformation
 import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Files
+import java.nio.file.Path
 import java.util.List
 import java.util.Map
 import java.util.Observable
@@ -175,7 +176,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                             rawProps.put(prop.key, prop.value)
                         }
                     } catch (Exception e) {
-                        if (verbose) println("Could not parse value of compiler property %s. Value set as string %s".format(prop.key, prop.value))
+                        if (verbose) println("Could not parse value of compiler property %s. Value set as string: %s".format(prop.key, prop.value))
                         rawProps.put(prop.key, prop.value)
                     }
                 }
@@ -242,10 +243,10 @@ class KielerCompilerCLI implements Runnable, Observer {
                     val cc = Compile.createCompilationContext(system, model)
                     cc.startEnvironment.setProperty(Environment.INPLACE, !intermediates)
                     cc.startEnvironment.setProperty(SOURCE_FILE, file)
-                    cc.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, file.absolutePath)
+                    cc.startEnvironment.setProperty(ProjectInfrastructure.MODEL_FILE_PATH, file.canonicalPath)
                     cc.startEnvironment.setProperty(ProjectInfrastructure.USE_TEMPORARY_PROJECT, false)
                     if (genCodeDir !== null) {
-                        cc.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, genCodeDir.absolutePath)
+                        cc.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_FOLDER_ROOT, genCodeDir.canonicalPath)
                         cc.startEnvironment.setProperty(ProjectInfrastructure.GENERATED_NAME, file.name)
                     }
                     
@@ -348,7 +349,11 @@ class KielerCompilerCLI implements Runnable, Observer {
                     if (dir.isFile || (!dir.exists && !dir.mkdirs)) {
                         println("Cannot create folder for intermediate results %s".format(dir))
                     }
-                    dir
+                    if (genCodeDir !== null) {
+                       new File(genCodeDir, genCodeDir.canonicalFile.toPath.relativize(dir.canonicalFile.toPath).toString)
+                    } else {
+                       Path.of(".").toAbsolutePath.relativize(dir.canonicalFile.toPath).toFile
+                    }
                 }
                 if ((verbose || intermediates) && env.logs !== null && !env.logs.files.empty) {
                     for (log : env.logs.files) {
@@ -383,7 +388,7 @@ class KielerCompilerCLI implements Runnable, Observer {
             if (file.isFile && systemId.endsWith(".kico")) {
                 try {
                 val ResourceSet rs = kicoInjector.getInstance(typeof(ResourceSet))
-                val resource = rs.getResource(URI.createFileURI(file.absolutePath), true)
+                val resource = rs.getResource(URI.createFileURI(file.canonicalPath), true)
                     val system = resource.contents.head
                     if (system instanceof de.cau.cs.kieler.kicool.System) {
                         return system
