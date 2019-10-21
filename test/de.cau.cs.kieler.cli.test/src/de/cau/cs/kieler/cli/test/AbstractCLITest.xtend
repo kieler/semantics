@@ -37,13 +37,12 @@ abstract class AbstractCLITest {
     protected var timeout = 10
     
     protected static def setupCompiler(File artifact, File compiler) {
-        if (!artifact.isFile) {
-            throw new Exception("Cannot find compiler in " + artifact)
-        }
+        assertTrue("Cannot find compiler artifact in " + artifact, artifact.isFile)
         if (compiler.exists) {
             compiler.delete
         }
-        com.google.common.io.Files.copy(artifact, compiler)
+        Files.copy(artifact.toPath, compiler.toPath)
+        assertTrue("Failed to copy compiler to " + compiler, compiler.file)
         assertTrue("Cannot set executable flag of compiler", compiler.setExecutable(true))
     }
     
