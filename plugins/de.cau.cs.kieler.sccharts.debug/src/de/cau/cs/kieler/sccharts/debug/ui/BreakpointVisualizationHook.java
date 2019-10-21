@@ -62,7 +62,7 @@ import de.cau.cs.kieler.sccharts.Scope;
 import de.cau.cs.kieler.sccharts.State;
 import de.cau.cs.kieler.sccharts.Transition;
 import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
-//import de.cau.cs.kieler.sccharts.klighd.hooks.SynthesisHook;
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.SynthesisHook;
 
 /**
  * This class handles the highlighting. The methods that handle highlighting are implemented here
@@ -72,7 +72,7 @@ import de.cau.cs.kieler.sccharts.debug.SCChartsDebugPlugin;
  * @author lgr
  *
  */
-public class BreakpointVisualizationHook /*extends SynthesisHook */ {
+public class BreakpointVisualizationHook extends SynthesisHook {
 
     private static HashMap<State, KNode> states = new HashMap<>();
     private static HashMap<Transition, KEdge> transitions = new HashMap<>();
@@ -140,8 +140,7 @@ public class BreakpointVisualizationHook /*extends SynthesisHook */ {
     /**
      * {@inheritDoc}
      */
-    //@Override
-    // TODO make this override the right thing
+    @Override
     public void start(Scope scope, KNode node) {
         if (scope instanceof State) {
             SCChartsBreakpointTargetAdapter.getInstance().updateLineEObjectMap((EObject) scope);
@@ -154,8 +153,7 @@ public class BreakpointVisualizationHook /*extends SynthesisHook */ {
     /**
      * {@inheritDoc}
      */
-    //@Override
-    //TODO make this override the right thing
+    @Override
     public void processState(State state, KNode node) {
         IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getActiveEditor();
@@ -171,8 +169,7 @@ public class BreakpointVisualizationHook /*extends SynthesisHook */ {
     /**
      * {@inheritDoc}
      */
-    //@Override
-    // TODO make this override the right thing
+    @Override
     public void processTransition(Transition transition, KEdge edge) {
         IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage().getActiveEditor();
@@ -188,15 +185,15 @@ public class BreakpointVisualizationHook /*extends SynthesisHook */ {
     /**
      * {@inheritDoc}
      */
-//    @Override
-//    public ViewContext getUsedContext() {
-//        return super.getUsedContext();
-//    }
+    @Override
+    public ViewContext getUsedContext() {
+        return super.getUsedContext();
+    }
 
     /**
      * {@inheritDoc}
      */
-//    @Override
+    @Override
     public void finish(Scope scope, KNode node) {
         if (scope instanceof State) {
 

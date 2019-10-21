@@ -113,8 +113,7 @@ public class SCChartsBreakpointTargetAdapter implements IToggleBreakpointsTarget
                     }
                 }
             }
-
-            // TODO commented out for first testing
+            
             if (lineToModelElement.containsKey(lineNumber + 1)) {
                 // Create a new breakpoint in the specified line.
                 SCChartsDebugPlugin.getDefault().setDirtyBreakpointList();
