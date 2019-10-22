@@ -352,7 +352,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     if (genCodeDir !== null) {
                        new File(genCodeDir, genCodeDir.canonicalFile.toPath.relativize(dir.canonicalFile.toPath).toString)
                     } else {
-                       Path.of(".").toAbsolutePath.relativize(dir.canonicalFile.toPath).toFile
+                        (new File(".")).canonicalFile.toPath.relativize(dir.canonicalFile.toPath).toFile
                     }
                 }
                 if ((verbose || intermediates) && env.logs !== null && !env.logs.files.empty) {
