@@ -39,6 +39,7 @@ import org.eclipse.swt.widgets.Control
 
 import static extension de.cau.cs.kieler.kicool.util.KiCoolUtils.*
 import org.eclipse.swt.widgets.Display
+import java.util.Comparator
 
 /**
  * The SystemSelectionManager keeps track of available systems and reacts to user input regarding selected systems. 
@@ -51,9 +52,26 @@ class SystemSelectionManager implements SelectionListener {
 
     public static val TEMPORARY_SYSTEM_PREFIX = "TMP "
     public static val PROJECT_SYSTEM_PREFIX = "PROJECT "
+    
+    static val Comparator<Class<?>> TYPE_SORTER = new Comparator<Class<?>>() {
+        override compare(Class<?> o1, Class<?> o2) {
+            if(o1 === null)
+                return 1
+            if( o2 === null )
+                return -1
+            if( o2 == o1 )
+                return 0
+            if (o1.isAssignableFrom(o2)) {
+                return 1
+            } else if (o2.isAssignableFrom(o1)) {
+                return -1
+            } else {
+                return 0
+            }
+        }
+    }
 
-    private val index = new ArrayList<String>(KiCoolRegistration.getSystemModels.size + 10)
-    static val Map<String, String> projectSystemFiles = <String, String>newHashMap
+    private val index = new ArrayList<SystemSelectionEntry>(KiCoolRegistration.getSystemModels.size + 10)
     private var CompilerView view
     private var Class<?> modelClassFilter
     private var Combo combo;
@@ -106,7 +124,7 @@ class SystemSelectionManager implements SelectionListener {
     private def void processProjectFiles(IResource[] files, IProgressMonitor monitor) {
         val injector = KiCoolStandaloneSetup.doSetup
         monitor?.beginTask("Checking project: ", IProgressMonitor.UNKNOWN)
-        for(file : files) {
+        for (file : files) {
             if (monitor?.canceled || !file.exists) {
                 return
             }
@@ -121,44 +139,89 @@ class SystemSelectionManager implements SelectionListener {
                     val newSystem = resource.getContents().head
                     if (newSystem instanceof System) {
                         val system = newSystem as System
-                        system.id = system.id + "." + new Date().time
-                        KiCoolRegistration.registerTemporarySystem(system)
-                        projectSystemFiles.put(system.id, file.rawLocation.makeAbsolute.toString)
-                        val id = system.id
-                        var name = system.label
-                        if (name.nullOrEmpty) name = id
-                        name = PROJECT_SYSTEM_PREFIX + name
-                        val finalName = name
-                        Display.getDefault().asyncExec(new Runnable() {
-                            override run() {
-                                combo.add(finalName)
-                            }
-                        } )
-                        index.add(system.id)
+                        if (system.hasInput(modelClassFilter)) {
+                            system.id = system.id + "." + new Date().time
+                            KiCoolRegistration.registerTemporarySystem(system)
+                            val entry = new SystemSelectionEntry(system, file.rawLocation.makeAbsolute.toString)
+                            Display.getDefault().asyncExec(new Runnable() {
+                                override run() {
+                                    entry.addSystem
+                                }
+                            })
+                        }
                     }
                 } catch (Exception e) {
                     (new Exception("Could not load project related system: " + file, e)).printStackTrace
                 }
-                
+
             }
+        }
+    }
+    
+    private def removeSystem(String id) {
+        val i = index.indexOf(id.systemEntryById)
+        if (id.systemEntryById?.path !== null)
+            KiCoolRegistration.removeTemporarySystem(id)
+        if (i >= 0) {
+            try {
+                combo.remove(i)
+                index.remove(i)
+            } catch (Exception _) {
+            }
+        }
+    }
+    
+    private def removeProjectSystem(String path) {
+        systemEntryByFile(path)?.id?.removeSystem
+    }
+
+    private def selected(SystemSelectionEntry entry) {
+        if (index.size == 0 || combo.selectionIndex < 0 )
+            return false
+        return index.get(combo.selectionIndex).id == entry.id ||
+            (index.get(combo.selectionIndex).path !== null && index.get(combo.selectionIndex) == entry.path)
+    }
+
+    private def addSystem(SystemSelectionEntry entry) {
+        val selected = entry.selected
+        var position = 0
+        for (e : index) {
+            if (e.isLowerAs(entry, modelClassFilter)) {
+                combo.add(entry.showName, position)
+                index.add(position, entry)
+                if (selected) {
+                    combo.select(position)
+                    view.editPartSystemManager.activeSystem = entry.id
+                }
+                return
+            }
+            position += 1
+        }
+        combo.add(entry.showName)
+        index.add(entry)
+        if (selected) {
+            combo.select(position)
+            view.editPartSystemManager.activeSystem = entry.id
         }
     }
 
     private def updateSystemList(boolean filter, boolean updateView) {
         // determine the path of the system file if the selected system is a project system
         var activeSystem = view.editPartSystemManager.activeSystemId
-        var String activeSystemPath = null
-        if (activeSystem != null && isProjectSystem(activeSystem))
-            activeSystemPath = projectSystemFiles.get(activeSystem)
 
         if(combo === null || combo.disposed) return;
-        combo.removeAll
-        index.clear
-
-        for (s : projectSystemFiles.keySet) {
-            KiCoolRegistration.removeTemporarySystem(s)
+        if (projectSystemFinder.state == Job.RUNNING) {
+            projectSystemFinder.cancel
         }
-        projectSystemFiles.clear
+        combo.removeAll
+        for (e : index) {
+            if (e.path != null)
+                KiCoolRegistration.removeTemporarySystem(e.id)
+        }
+        index.clear
+        
+        while( index.size > 0 )
+            index.get( 0 ).id.removeSystem
 
         val model = if(filter) ModelReaderUtil.readModelFromEditor(view.editPartSystemManager.activeEditor)
         if (model !== null && model.class !== modelClassFilter) {
@@ -170,12 +233,7 @@ class SystemSelectionManager implements SelectionListener {
         for (system : systems.filter[!filter || hasInput(modelClassFilter)].filter [
             public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked)
         ].filter[!developer || (view !== null && view.developerToggle !== null && view.developerToggle.checked)]) {
-            val id = system.id
-            var name = system.label
-            if(name.nullOrEmpty) name = id
-            if(KiCoolRegistration.isTemporarySystem(id)) name = TEMPORARY_SYSTEM_PREFIX + name
-            combo.add(name)
-            index.add(system.id)
+            new SystemSelectionEntry(system, null).addSystem
         }
 
         val editor = CompilerViewPartListener.getActiveEditor();
@@ -204,27 +262,17 @@ class SystemSelectionManager implements SelectionListener {
         val defaultSystemID = DefaultSystemAssociation.getDefaultSystem(
             view.editPartSystemManager.activeEditor?.editorSite?.id)
         if (defaultSystemID !== null) {
-            val idx = index.indexOf(defaultSystemID)
+            val idx = index.indexOf(defaultSystemID.systemEntryById)
             if (idx >= 0) {
                 defaultIndex = idx
             }
         }
 
         // Previously selected
-        if (activeSystemPath != null) {
-            // determine the new temporary system id of the previous selected project system using the path to the project system file
-            for (e : projectSystemFiles.entrySet) {
-                if (e.value == activeSystemPath) {
-                    activeSystem = e.key
-                    view.editPartSystemManager.activeSystem = activeSystem
-                }
-            }
-        }
-
         if (activeSystem !== null && index.contains(activeSystem)) {
-            defaultIndex = index.indexOf(activeSystem)
-        } else {
-            view.editPartSystemManager.activeSystem = index.get(defaultIndex)
+            defaultIndex = index.indexOf(activeSystem.systemEntryById)
+        } else if (index.size > defaultIndex) {
+            view.editPartSystemManager.activeSystem = index.get(defaultIndex)?.id
         }
 
         combo.setTextLimit(36)
@@ -247,7 +295,7 @@ class SystemSelectionManager implements SelectionListener {
         if (combo.selectionIndex < 0) {
             return null
         }
-        return index.get(combo.selectionIndex)
+        return index.get(combo.selectionIndex).id
     }
 
     def setTemporarySystem(System system) {
@@ -261,12 +309,8 @@ class SystemSelectionManager implements SelectionListener {
         view.updateToolbar
     }
 
-    def isProjectSystem(String id) {
-        projectSystemFiles.containsKey(id)
-    }
-
     def getProjectSystemFilePath(String id) {
-        projectSystemFiles.get(id)
+        id.systemEntryById.path
     }
 
     override widgetDefaultSelected(SelectionEvent e) {
@@ -274,7 +318,7 @@ class SystemSelectionManager implements SelectionListener {
 
     override widgetSelected(SelectionEvent e) {
         if (combo.selectionIndex != -1) {
-            val id = index.get(combo.selectionIndex)
+            val id = index.get(combo.selectionIndex)?.id
             if (!id.nullOrEmpty) {
                 view.editPartSystemManager.setActiveSystem(id)
                 view.editPartSystemManager.intermediateSelection = null
@@ -284,7 +328,7 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     def widgetSelectFirst(boolean updateView) {
-        val id = index.get(0)
+        val id = index.size > 0 ? index.get(0).id : null
         if (!id.nullOrEmpty) {
             // Workaround: show always the identity system.
             view.editPartSystemManager.setActiveSystem("de.cau.cs.kieler.kicool.identity")
@@ -293,4 +337,68 @@ class SystemSelectionManager implements SelectionListener {
         }
     }
 
+    private def <K, V> getKey(Map<K, V> map, V v) {
+        for (entry : map.entrySet()) {
+            if (entry.value == v)
+                return entry.key
+        }
+        return null
+    }
+
+    private def systemEntryById(String id) {
+        for (e : index) {
+            if (e.id == id)
+                return e
+        }
+        return null
+    }
+
+    private def systemEntryByFile(String path) {
+        for (e : index) {
+            if (e.path == path && e.path !== null)
+                return e
+        }
+        return null
+    }
+
+    private static class SystemSelectionEntry {
+        private var System system;
+        private var String path;
+        private var String showName;
+
+        new(System system, String path) {
+            this.system = system
+            this.path = path
+            showName = system.label
+            if (showName.nullOrEmpty)
+                showName = system.id
+            if (path != null)
+                showName = PROJECT_SYSTEM_PREFIX + showName
+            else if (KiCoolRegistration.isTemporarySystem(system.id))
+                showName = TEMPORARY_SYSTEM_PREFIX + showName
+        }
+
+        def isLowerAs(SystemSelectionEntry e, Class<?> classFilter) {
+            if (classFilter !== null) {
+                if( TYPE_SORTER.compare(system.findInputClass, e.system.findInputClass) > 0 )
+                    return true
+                if( TYPE_SORTER.compare(system.findInputClass, e.system.findInputClass) == 0 )
+                    return showName.compareTo(e.showName) > 0
+                return false
+            }
+            return showName.compareTo(e.showName) > 0
+        }
+
+        def getShowName() {
+            return showName
+        }
+
+        def getId() {
+            return system.id
+        }
+
+        def getPath() {
+            return path
+        }
+    }
 }
