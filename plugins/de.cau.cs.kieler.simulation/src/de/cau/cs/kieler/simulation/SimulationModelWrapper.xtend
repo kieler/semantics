@@ -30,13 +30,14 @@ import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.xtend.lib.annotations.FinalFieldsConstructor
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 
 /**
  * @author als
  * @kieler.design proposed
  * @kieler.rating proposed yellow
  */
-class SimulationModelWrapper extends ExecutableContainer implements Simulatable {
+class SimulationModelWrapper implements Simulatable, ExecutableContainerWrapper {
     
     private static val POOL = Executors.newCachedThreadPool
 
@@ -61,7 +62,6 @@ class SimulationModelWrapper extends ExecutableContainer implements Simulatable 
     package val jsonQueue = new ArrayBlockingQueue<JsonObject>(1)
     
     new (ExecutableContainer executable, Environment environment) {
-        super(executable.file)
         this.executable = executable
         this.environment = environment
         this.variables = new SimulationVariableStore(VariableStore.get(environment))
@@ -197,10 +197,9 @@ class SimulationModelWrapper extends ExecutableContainer implements Simulatable 
         id
     }
     
-    override getProcessBuilder() {
-        executable.getProcessBuilder()
+    override ExecutableContainer getExecutableContainer() {
+        return executable
     }
-    
 }
 
 @FinalFieldsConstructor

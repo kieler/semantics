@@ -21,6 +21,7 @@ import de.cau.cs.kieler.kicool.KiCoolStandaloneSetup
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
 import de.cau.cs.kieler.kicool.compilation.Compile
 import de.cau.cs.kieler.kicool.compilation.ExecutableContainer
+import de.cau.cs.kieler.kicool.compilation.ExecutableContainerWrapper
 import de.cau.cs.kieler.kicool.compilation.internal.EnvironmentPropertyHolder
 import de.cau.cs.kieler.kicool.compilation.observer.CompilationFinished
 import de.cau.cs.kieler.kicool.compilation.observer.ProcessorError
@@ -33,7 +34,6 @@ import de.cau.cs.kieler.kicool.registration.ModelInformation
 import java.io.File
 import java.nio.file.FileSystems
 import java.nio.file.Files
-import java.nio.file.Path
 import java.util.List
 import java.util.Map
 import java.util.Observable
@@ -272,7 +272,7 @@ class KielerCompilerCLI implements Runnable, Observer {
                     if (!noOutput && cc.allErrors.empty) {
                         if (verbose) println("Saving compilation result")
                         val dest = if (output === null) {
-                            file.parentFile
+                            file.canonicalFile.parentFile
                         } else if (output.exists) {
                             output
                         } else if (modelFiles.size > 1) {
@@ -460,14 +460,16 @@ class KielerCompilerCLI implements Runnable, Observer {
                             ModelUtil.saveModel(model, target.URI)
                         }
                     }
-                } else if (model instanceof ExecutableContainer) {
+                } else if (model instanceof ExecutableContainer ||
+                          (model instanceof ExecutableContainerWrapper && (model as ExecutableContainerWrapper).executableContainer !== null)) {
+                    val exe = (model instanceof ExecutableContainerWrapper) ? model.executableContainer : model as ExecutableContainer
                     if (dest.isFile) {
                         if (verbose) println("Writing to %s".format(dest))
-                        Files.copy(model.file.toPath, dest.toPath)
+                        Files.copy(exe.file.toPath, dest.toPath)
                     } else {
                         val target = new File(dest, name)
                         if (verbose) println("Writing to %s".format(target))
-                        Files.copy(model.file.toPath, target.toPath)
+                        Files.copy(exe.file.toPath, target.toPath)
                     }
                 } else {
                     if (dest.isFile) {
@@ -481,9 +483,6 @@ class KielerCompilerCLI implements Runnable, Observer {
                 }
             }
         } catch (Exception e) {
-            if(dest.listFiles.empty) {
-                dest.delete
-            }
             println("Exception when saving model")
             e.printStackTrace
             return false

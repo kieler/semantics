@@ -60,3 +60,8 @@ class ExecutableJarContainer extends ExecutableContainer {
         return pb
     }  
 }
+
+interface ExecutableContainerWrapper {
+    
+    def ExecutableContainer getExecutableContainer();
+}
