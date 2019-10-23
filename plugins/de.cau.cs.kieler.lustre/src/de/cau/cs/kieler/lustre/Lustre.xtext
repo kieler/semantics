@@ -315,7 +315,6 @@ TernaryOperation returns kexpressions::Expression:
     | ImpliesExpression
 ;
 
-@Override 
 ImpliesExpression returns kexpressions::Expression:
     LogicalXorExpression
     (

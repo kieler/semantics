@@ -427,11 +427,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     {
                     int LA5_4 = input.LA(2);
 
-                    if ( (LA5_4==26) ) {
-                        alt5=3;
-                    }
-                    else if ( ((LA5_4>=27 && LA5_4<=28)) ) {
+                    if ( ((LA5_4>=27 && LA5_4<=28)) ) {
                         alt5=4;
+                    }
+                    else if ( (LA5_4==26) ) {
+                        alt5=3;
                     }
 
 
@@ -14029,11 +14029,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 {
                 int LA107_1 = input.LA(2);
 
-                if ( ((LA107_1>=91 && LA107_1<=93)) ) {
-                    alt107=1;
-                }
-                else if ( (LA107_1==RULE_ID||LA107_1==RULE_COMMENT_ANNOTATION||LA107_1==90) ) {
+                if ( (LA107_1==RULE_ID||LA107_1==RULE_COMMENT_ANNOTATION||LA107_1==90) ) {
                     alt107=2;
+                }
+                else if ( ((LA107_1>=91 && LA107_1<=93)) ) {
+                    alt107=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -14807,11 +14807,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 {
                 int LA118_1 = input.LA(2);
 
-                if ( (LA118_1==RULE_ID||LA118_1==RULE_COMMENT_ANNOTATION||LA118_1==90) ) {
-                    alt118=2;
-                }
-                else if ( ((LA118_1>=91 && LA118_1<=93)) ) {
+                if ( ((LA118_1>=91 && LA118_1<=93)) ) {
                     alt118=1;
+                }
+                else if ( (LA118_1==RULE_ID||LA118_1==RULE_COMMENT_ANNOTATION||LA118_1==90) ) {
+                    alt118=2;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
@@ -27306,304 +27306,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleSumExpression"
 
 
-    // $ANTLR start "entryRuleNoneOfExpression"
-    // InternalLustre.g:9883:1: entryRuleNoneOfExpression returns [EObject current=null] : iv_ruleNoneOfExpression= ruleNoneOfExpression EOF ;
-    public final EObject entryRuleNoneOfExpression() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleNoneOfExpression = null;
-
-
-        try {
-            // InternalLustre.g:9883:57: (iv_ruleNoneOfExpression= ruleNoneOfExpression EOF )
-            // InternalLustre.g:9884:2: iv_ruleNoneOfExpression= ruleNoneOfExpression EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getNoneOfExpressionRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleNoneOfExpression=ruleNoneOfExpression();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleNoneOfExpression; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleNoneOfExpression"
-
-
-    // $ANTLR start "ruleNoneOfExpression"
-    // InternalLustre.g:9890:1: ruleNoneOfExpression returns [EObject current=null] : ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) | this_AtomicValuedExpression_7= ruleAtomicValuedExpression ) ;
-    public final EObject ruleNoneOfExpression() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
-        Enumerator lv_operator_1_0 = null;
-
-        EObject lv_subExpressions_3_0 = null;
-
-        EObject lv_subExpressions_5_0 = null;
-
-        EObject this_AtomicValuedExpression_7 = null;
-
-
-
-        	enterRule();
-
-        try {
-            // InternalLustre.g:9896:2: ( ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) | this_AtomicValuedExpression_7= ruleAtomicValuedExpression ) )
-            // InternalLustre.g:9897:2: ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) | this_AtomicValuedExpression_7= ruleAtomicValuedExpression )
-            {
-            // InternalLustre.g:9897:2: ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) | this_AtomicValuedExpression_7= ruleAtomicValuedExpression )
-            int alt254=2;
-            alt254 = dfa254.predict(input);
-            switch (alt254) {
-                case 1 :
-                    // InternalLustre.g:9898:3: ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' )
-                    {
-                    // InternalLustre.g:9898:3: ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' )
-                    // InternalLustre.g:9899:4: () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')'
-                    {
-                    // InternalLustre.g:9899:4: ()
-                    // InternalLustre.g:9900:5: 
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      					/* */
-                      				
-                    }
-                    if ( state.backtracking==0 ) {
-
-                      					current = forceCreateModelElement(
-                      						grammarAccess.getNoneOfExpressionAccess().getOperatorExpressionAction_0_0(),
-                      						current);
-                      				
-                    }
-
-                    }
-
-                    // InternalLustre.g:9909:4: ( (lv_operator_1_0= ruleNoneOfOperator ) )
-                    // InternalLustre.g:9910:5: (lv_operator_1_0= ruleNoneOfOperator )
-                    {
-                    // InternalLustre.g:9910:5: (lv_operator_1_0= ruleNoneOfOperator )
-                    // InternalLustre.g:9911:6: lv_operator_1_0= ruleNoneOfOperator
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      						newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_0_1_0());
-                      					
-                    }
-                    pushFollow(FollowSets000.FOLLOW_61);
-                    lv_operator_1_0=ruleNoneOfOperator();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      						if (current==null) {
-                      							current = createModelElementForParent(grammarAccess.getNoneOfExpressionRule());
-                      						}
-                      						set(
-                      							current,
-                      							"operator",
-                      							lv_operator_1_0,
-                      							"de.cau.cs.kieler.kexpressions.KExpressions.NoneOfOperator");
-                      						afterParserOrEnumRuleCall();
-                      					
-                    }
-
-                    }
-
-
-                    }
-
-                    otherlv_2=(Token)match(input,29,FollowSets000.FOLLOW_50); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      				newLeafNode(otherlv_2, grammarAccess.getNoneOfExpressionAccess().getLeftParenthesisKeyword_0_2());
-                      			
-                    }
-                    // InternalLustre.g:9932:4: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
-                    // InternalLustre.g:9933:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-                    {
-                    // InternalLustre.g:9933:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-                    // InternalLustre.g:9934:6: lv_subExpressions_3_0= ruleAtomicValuedExpression
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      						newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
-                      					
-                    }
-                    pushFollow(FollowSets000.FOLLOW_32);
-                    lv_subExpressions_3_0=ruleAtomicValuedExpression();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      						if (current==null) {
-                      							current = createModelElementForParent(grammarAccess.getNoneOfExpressionRule());
-                      						}
-                      						add(
-                      							current,
-                      							"subExpressions",
-                      							lv_subExpressions_3_0,
-                      							"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
-                      						afterParserOrEnumRuleCall();
-                      					
-                    }
-
-                    }
-
-
-                    }
-
-                    // InternalLustre.g:9951:4: (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )*
-                    loop253:
-                    do {
-                        int alt253=2;
-                        int LA253_0 = input.LA(1);
-
-                        if ( (LA253_0==23) ) {
-                            alt253=1;
-                        }
-
-
-                        switch (alt253) {
-                    	case 1 :
-                    	    // InternalLustre.g:9952:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
-                    	    {
-                    	    otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_50); if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      					newLeafNode(otherlv_4, grammarAccess.getNoneOfExpressionAccess().getCommaKeyword_0_4_0());
-                    	      				
-                    	    }
-                    	    // InternalLustre.g:9956:5: ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
-                    	    // InternalLustre.g:9957:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
-                    	    {
-                    	    // InternalLustre.g:9957:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
-                    	    // InternalLustre.g:9958:7: lv_subExpressions_5_0= ruleAtomicValuedExpression
-                    	    {
-                    	    if ( state.backtracking==0 ) {
-
-                    	      							newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0());
-                    	      						
-                    	    }
-                    	    pushFollow(FollowSets000.FOLLOW_32);
-                    	    lv_subExpressions_5_0=ruleAtomicValuedExpression();
-
-                    	    state._fsp--;
-                    	    if (state.failed) return current;
-                    	    if ( state.backtracking==0 ) {
-
-                    	      							if (current==null) {
-                    	      								current = createModelElementForParent(grammarAccess.getNoneOfExpressionRule());
-                    	      							}
-                    	      							add(
-                    	      								current,
-                    	      								"subExpressions",
-                    	      								lv_subExpressions_5_0,
-                    	      								"de.cau.cs.kieler.kexpressions.KExpressions.AtomicValuedExpression");
-                    	      							afterParserOrEnumRuleCall();
-                    	      						
-                    	    }
-
-                    	    }
-
-
-                    	    }
-
-
-                    	    }
-                    	    break;
-
-                    	default :
-                    	    break loop253;
-                        }
-                    } while (true);
-
-                    otherlv_6=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      				newLeafNode(otherlv_6, grammarAccess.getNoneOfExpressionAccess().getRightParenthesisKeyword_0_5());
-                      			
-                    }
-
-                    }
-
-
-                    }
-                    break;
-                case 2 :
-                    // InternalLustre.g:9982:3: this_AtomicValuedExpression_7= ruleAtomicValuedExpression
-                    {
-                    if ( state.backtracking==0 ) {
-
-                      			/* */
-                      		
-                    }
-                    if ( state.backtracking==0 ) {
-
-                      			newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getAtomicValuedExpressionParserRuleCall_1());
-                      		
-                    }
-                    pushFollow(FollowSets000.FOLLOW_2);
-                    this_AtomicValuedExpression_7=ruleAtomicValuedExpression();
-
-                    state._fsp--;
-                    if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
-
-                      			current = this_AtomicValuedExpression_7;
-                      			afterParserOrEnumRuleCall();
-                      		
-                    }
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleNoneOfExpression"
-
-
     // $ANTLR start "entryRuleAtomicValuedExpression"
-    // InternalLustre.g:9997:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
+    // InternalLustre.g:9883:1: entryRuleAtomicValuedExpression returns [EObject current=null] : iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF ;
     public final EObject entryRuleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27611,8 +27315,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:9997:63: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
-            // InternalLustre.g:9998:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
+            // InternalLustre.g:9883:63: (iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF )
+            // InternalLustre.g:9884:2: iv_ruleAtomicValuedExpression= ruleAtomicValuedExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAtomicValuedExpressionRule()); 
@@ -27643,7 +27347,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtomicValuedExpression"
-    // InternalLustre.g:10004:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) ;
+    // InternalLustre.g:9890:1: ruleAtomicValuedExpression returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) ;
     public final EObject ruleAtomicValuedExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27666,15 +27370,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10010:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) )
-            // InternalLustre.g:10011:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
+            // InternalLustre.g:9896:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression ) )
+            // InternalLustre.g:9897:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
             {
-            // InternalLustre.g:10011:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
-            int alt255=6;
-            alt255 = dfa255.predict(input);
-            switch (alt255) {
+            // InternalLustre.g:9897:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )
+            int alt253=6;
+            alt253 = dfa253.predict(input);
+            switch (alt253) {
                 case 1 :
-                    // InternalLustre.g:10012:3: this_IntValue_0= ruleIntValue
+                    // InternalLustre.g:9898:3: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27701,7 +27405,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:10024:3: this_FloatValue_1= ruleFloatValue
+                    // InternalLustre.g:9910:3: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27728,7 +27432,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:10036:3: this_StringValue_2= ruleStringValue
+                    // InternalLustre.g:9922:3: this_StringValue_2= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27755,7 +27459,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:10048:3: this_VectorValue_3= ruleVectorValue
+                    // InternalLustre.g:9934:3: this_VectorValue_3= ruleVectorValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27782,10 +27486,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:10060:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+                    // InternalLustre.g:9946:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
                     {
-                    // InternalLustre.g:10060:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
-                    // InternalLustre.g:10061:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
+                    // InternalLustre.g:9946:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+                    // InternalLustre.g:9947:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
                     {
                     otherlv_4=(Token)match(input,29,FollowSets000.FOLLOW_48); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -27827,7 +27531,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalLustre.g:10082:3: this_AtomicExpression_7= ruleAtomicExpression
+                    // InternalLustre.g:9968:3: this_AtomicExpression_7= ruleAtomicExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27878,7 +27582,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObjectTestExpression"
-    // InternalLustre.g:10097:1: entryRuleValuedObjectTestExpression returns [EObject current=null] : iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF ;
+    // InternalLustre.g:9983:1: entryRuleValuedObjectTestExpression returns [EObject current=null] : iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF ;
     public final EObject entryRuleValuedObjectTestExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27886,8 +27590,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10097:67: (iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF )
-            // InternalLustre.g:10098:2: iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF
+            // InternalLustre.g:9983:67: (iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF )
+            // InternalLustre.g:9984:2: iv_ruleValuedObjectTestExpression= ruleValuedObjectTestExpression EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectTestExpressionRule()); 
@@ -27918,7 +27622,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObjectTestExpression"
-    // InternalLustre.g:10104:1: ruleValuedObjectTestExpression returns [EObject current=null] : ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference ) ;
+    // InternalLustre.g:9990:1: ruleValuedObjectTestExpression returns [EObject current=null] : ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference ) ;
     public final EObject ruleValuedObjectTestExpression() throws RecognitionException {
         EObject current = null;
 
@@ -27940,35 +27644,35 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10110:2: ( ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference ) )
-            // InternalLustre.g:10111:2: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference )
+            // InternalLustre.g:9996:2: ( ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference ) )
+            // InternalLustre.g:9997:2: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference )
             {
-            // InternalLustre.g:10111:2: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference )
-            int alt258=2;
-            int LA258_0 = input.LA(1);
+            // InternalLustre.g:9997:2: ( ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' ) | this_ValuedObjectReference_7= ruleValuedObjectReference )
+            int alt256=2;
+            int LA256_0 = input.LA(1);
 
-            if ( (LA258_0==107||LA258_0==110) ) {
-                alt258=1;
+            if ( (LA256_0==107||LA256_0==110) ) {
+                alt256=1;
             }
-            else if ( (LA258_0==RULE_ID) ) {
-                alt258=2;
+            else if ( (LA256_0==RULE_ID) ) {
+                alt256=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 258, 0, input);
+                    new NoViableAltException("", 256, 0, input);
 
                 throw nvae;
             }
-            switch (alt258) {
+            switch (alt256) {
                 case 1 :
-                    // InternalLustre.g:10112:3: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' )
+                    // InternalLustre.g:9998:3: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' )
                     {
-                    // InternalLustre.g:10112:3: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' )
-                    // InternalLustre.g:10113:4: () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')'
+                    // InternalLustre.g:9998:3: ( () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')' )
+                    // InternalLustre.g:9999:4: () ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )? otherlv_6= ')'
                     {
-                    // InternalLustre.g:10113:4: ()
-                    // InternalLustre.g:10114:5: 
+                    // InternalLustre.g:9999:4: ()
+                    // InternalLustre.g:10000:5: 
                     {
                     if ( state.backtracking==0 ) {
 
@@ -27985,32 +27689,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:10123:4: ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) )
-                    // InternalLustre.g:10124:5: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
+                    // InternalLustre.g:10009:4: ( ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) ) )
+                    // InternalLustre.g:10010:5: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
                     {
-                    // InternalLustre.g:10124:5: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
-                    // InternalLustre.g:10125:6: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
+                    // InternalLustre.g:10010:5: ( (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator ) )
+                    // InternalLustre.g:10011:6: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
                     {
-                    // InternalLustre.g:10125:6: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
-                    int alt256=2;
-                    int LA256_0 = input.LA(1);
+                    // InternalLustre.g:10011:6: (lv_operator_1_1= rulePreOperator | lv_operator_1_2= ruleValOperator )
+                    int alt254=2;
+                    int LA254_0 = input.LA(1);
 
-                    if ( (LA256_0==107) ) {
-                        alt256=1;
+                    if ( (LA254_0==107) ) {
+                        alt254=1;
                     }
-                    else if ( (LA256_0==110) ) {
-                        alt256=2;
+                    else if ( (LA254_0==110) ) {
+                        alt254=2;
                     }
                     else {
                         if (state.backtracking>0) {state.failed=true; return current;}
                         NoViableAltException nvae =
-                            new NoViableAltException("", 256, 0, input);
+                            new NoViableAltException("", 254, 0, input);
 
                         throw nvae;
                     }
-                    switch (alt256) {
+                    switch (alt254) {
                         case 1 :
-                            // InternalLustre.g:10126:7: lv_operator_1_1= rulePreOperator
+                            // InternalLustre.g:10012:7: lv_operator_1_1= rulePreOperator
                             {
                             if ( state.backtracking==0 ) {
 
@@ -28039,7 +27743,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                             }
                             break;
                         case 2 :
-                            // InternalLustre.g:10142:7: lv_operator_1_2= ruleValOperator
+                            // InternalLustre.g:10028:7: lv_operator_1_2= ruleValOperator
                             {
                             if ( state.backtracking==0 ) {
 
@@ -28082,11 +27786,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_2, grammarAccess.getValuedObjectTestExpressionAccess().getLeftParenthesisKeyword_0_2());
                       			
                     }
-                    // InternalLustre.g:10164:4: ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) )
-                    // InternalLustre.g:10165:5: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
+                    // InternalLustre.g:10050:4: ( (lv_subExpressions_3_0= ruleValuedObjectTestExpression ) )
+                    // InternalLustre.g:10051:5: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
                     {
-                    // InternalLustre.g:10165:5: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
-                    // InternalLustre.g:10166:6: lv_subExpressions_3_0= ruleValuedObjectTestExpression
+                    // InternalLustre.g:10051:5: (lv_subExpressions_3_0= ruleValuedObjectTestExpression )
+                    // InternalLustre.g:10052:6: lv_subExpressions_3_0= ruleValuedObjectTestExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28117,16 +27821,16 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:10183:4: (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )?
-                    int alt257=2;
-                    int LA257_0 = input.LA(1);
+                    // InternalLustre.g:10069:4: (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) ) )?
+                    int alt255=2;
+                    int LA255_0 = input.LA(1);
 
-                    if ( (LA257_0==23) ) {
-                        alt257=1;
+                    if ( (LA255_0==23) ) {
+                        alt255=1;
                     }
-                    switch (alt257) {
+                    switch (alt255) {
                         case 1 :
-                            // InternalLustre.g:10184:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) )
+                            // InternalLustre.g:10070:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleValuedObjectReference ) )
                             {
                             otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_30); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -28134,11 +27838,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                               					newLeafNode(otherlv_4, grammarAccess.getValuedObjectTestExpressionAccess().getCommaKeyword_0_4_0());
                               				
                             }
-                            // InternalLustre.g:10188:5: ( (lv_subExpressions_5_0= ruleValuedObjectReference ) )
-                            // InternalLustre.g:10189:6: (lv_subExpressions_5_0= ruleValuedObjectReference )
+                            // InternalLustre.g:10074:5: ( (lv_subExpressions_5_0= ruleValuedObjectReference ) )
+                            // InternalLustre.g:10075:6: (lv_subExpressions_5_0= ruleValuedObjectReference )
                             {
-                            // InternalLustre.g:10189:6: (lv_subExpressions_5_0= ruleValuedObjectReference )
-                            // InternalLustre.g:10190:7: lv_subExpressions_5_0= ruleValuedObjectReference
+                            // InternalLustre.g:10075:6: (lv_subExpressions_5_0= ruleValuedObjectReference )
+                            // InternalLustre.g:10076:7: lv_subExpressions_5_0= ruleValuedObjectReference
                             {
                             if ( state.backtracking==0 ) {
 
@@ -28188,7 +27892,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:10214:3: this_ValuedObjectReference_7= ruleValuedObjectReference
+                    // InternalLustre.g:10100:3: this_ValuedObjectReference_7= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28239,7 +27943,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePrimeID"
-    // InternalLustre.g:10229:1: entryRulePrimeID returns [String current=null] : iv_rulePrimeID= rulePrimeID EOF ;
+    // InternalLustre.g:10115:1: entryRulePrimeID returns [String current=null] : iv_rulePrimeID= rulePrimeID EOF ;
     public final String entryRulePrimeID() throws RecognitionException {
         String current = null;
 
@@ -28247,8 +27951,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10229:47: (iv_rulePrimeID= rulePrimeID EOF )
-            // InternalLustre.g:10230:2: iv_rulePrimeID= rulePrimeID EOF
+            // InternalLustre.g:10115:47: (iv_rulePrimeID= rulePrimeID EOF )
+            // InternalLustre.g:10116:2: iv_rulePrimeID= rulePrimeID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPrimeIDRule()); 
@@ -28279,7 +27983,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePrimeID"
-    // InternalLustre.g:10236:1: rulePrimeID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '\\'' )* ) ;
+    // InternalLustre.g:10122:1: rulePrimeID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '\\'' )* ) ;
     public final AntlrDatatypeRuleToken rulePrimeID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -28290,11 +27994,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10242:2: ( (this_ID_0= RULE_ID (kw= '\\'' )* ) )
-            // InternalLustre.g:10243:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
+            // InternalLustre.g:10128:2: ( (this_ID_0= RULE_ID (kw= '\\'' )* ) )
+            // InternalLustre.g:10129:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
             {
-            // InternalLustre.g:10243:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
-            // InternalLustre.g:10244:3: this_ID_0= RULE_ID (kw= '\\'' )*
+            // InternalLustre.g:10129:2: (this_ID_0= RULE_ID (kw= '\\'' )* )
+            // InternalLustre.g:10130:3: this_ID_0= RULE_ID (kw= '\\'' )*
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_123); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -28307,20 +28011,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(this_ID_0, grammarAccess.getPrimeIDAccess().getIDTerminalRuleCall_0());
               		
             }
-            // InternalLustre.g:10251:3: (kw= '\\'' )*
-            loop259:
+            // InternalLustre.g:10137:3: (kw= '\\'' )*
+            loop257:
             do {
-                int alt259=2;
-                int LA259_0 = input.LA(1);
+                int alt257=2;
+                int LA257_0 = input.LA(1);
 
-                if ( (LA259_0==85) ) {
-                    alt259=1;
+                if ( (LA257_0==85) ) {
+                    alt257=1;
                 }
 
 
-                switch (alt259) {
+                switch (alt257) {
             	case 1 :
-            	    // InternalLustre.g:10252:4: kw= '\\''
+            	    // InternalLustre.g:10138:4: kw= '\\''
             	    {
             	    kw=(Token)match(input,85,FollowSets000.FOLLOW_123); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -28334,7 +28038,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop259;
+            	    break loop257;
                 }
             } while (true);
 
@@ -28363,7 +28067,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleValuedObjectReference"
-    // InternalLustre.g:10262:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
+    // InternalLustre.g:10148:1: entryRuleValuedObjectReference returns [EObject current=null] : iv_ruleValuedObjectReference= ruleValuedObjectReference EOF ;
     public final EObject entryRuleValuedObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28371,8 +28075,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10262:62: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
-            // InternalLustre.g:10263:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
+            // InternalLustre.g:10148:62: (iv_ruleValuedObjectReference= ruleValuedObjectReference EOF )
+            // InternalLustre.g:10149:2: iv_ruleValuedObjectReference= ruleValuedObjectReference EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getValuedObjectReferenceRule()); 
@@ -28403,7 +28107,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValuedObjectReference"
-    // InternalLustre.g:10269:1: ruleValuedObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) ;
+    // InternalLustre.g:10155:1: ruleValuedObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) ;
     public final EObject ruleValuedObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28419,17 +28123,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10275:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) )
-            // InternalLustre.g:10276:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
+            // InternalLustre.g:10161:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ) )
+            // InternalLustre.g:10162:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
             {
-            // InternalLustre.g:10276:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
-            // InternalLustre.g:10277:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            // InternalLustre.g:10162:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? )
+            // InternalLustre.g:10163:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
             {
-            // InternalLustre.g:10277:3: ( ( rulePrimeID ) )
-            // InternalLustre.g:10278:4: ( rulePrimeID )
+            // InternalLustre.g:10163:3: ( ( rulePrimeID ) )
+            // InternalLustre.g:10164:4: ( rulePrimeID )
             {
-            // InternalLustre.g:10278:4: ( rulePrimeID )
-            // InternalLustre.g:10279:5: rulePrimeID
+            // InternalLustre.g:10164:4: ( rulePrimeID )
+            // InternalLustre.g:10165:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -28464,20 +28168,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10296:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
-            loop260:
+            // InternalLustre.g:10182:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            loop258:
             do {
-                int alt260=2;
-                int LA260_0 = input.LA(1);
+                int alt258=2;
+                int LA258_0 = input.LA(1);
 
-                if ( (LA260_0==74) ) {
-                    alt260=1;
+                if ( (LA258_0==74) ) {
+                    alt258=1;
                 }
 
 
-                switch (alt260) {
+                switch (alt258) {
             	case 1 :
-            	    // InternalLustre.g:10297:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
+            	    // InternalLustre.g:10183:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,74,FollowSets000.FOLLOW_23); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -28485,11 +28189,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_1, grammarAccess.getValuedObjectReferenceAccess().getLeftSquareBracketKeyword_1_0());
             	      			
             	    }
-            	    // InternalLustre.g:10301:4: ( (lv_indices_2_0= ruleExpression ) )
-            	    // InternalLustre.g:10302:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalLustre.g:10187:4: ( (lv_indices_2_0= ruleExpression ) )
+            	    // InternalLustre.g:10188:5: (lv_indices_2_0= ruleExpression )
             	    {
-            	    // InternalLustre.g:10302:5: (lv_indices_2_0= ruleExpression )
-            	    // InternalLustre.g:10303:6: lv_indices_2_0= ruleExpression
+            	    // InternalLustre.g:10188:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalLustre.g:10189:6: lv_indices_2_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -28531,20 +28235,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop260;
+            	    break loop258;
                 }
             } while (true);
 
-            // InternalLustre.g:10325:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
-            int alt261=2;
-            int LA261_0 = input.LA(1);
+            // InternalLustre.g:10211:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            int alt259=2;
+            int LA259_0 = input.LA(1);
 
-            if ( (LA261_0==39) ) {
-                alt261=1;
+            if ( (LA259_0==39) ) {
+                alt259=1;
             }
-            switch (alt261) {
+            switch (alt259) {
                 case 1 :
-                    // InternalLustre.g:10326:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalLustre.g:10212:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
                     otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_30); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28552,11 +28256,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_4, grammarAccess.getValuedObjectReferenceAccess().getFullStopKeyword_2_0());
                       			
                     }
-                    // InternalLustre.g:10330:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
-                    // InternalLustre.g:10331:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalLustre.g:10216:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalLustre.g:10217:5: (lv_subReference_5_0= ruleValuedObjectReference )
                     {
-                    // InternalLustre.g:10331:5: (lv_subReference_5_0= ruleValuedObjectReference )
-                    // InternalLustre.g:10332:6: lv_subReference_5_0= ruleValuedObjectReference
+                    // InternalLustre.g:10217:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalLustre.g:10218:6: lv_subReference_5_0= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -28618,7 +28322,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleScheduleObjectReference"
-    // InternalLustre.g:10354:1: entryRuleScheduleObjectReference returns [EObject current=null] : iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF ;
+    // InternalLustre.g:10240:1: entryRuleScheduleObjectReference returns [EObject current=null] : iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF ;
     public final EObject entryRuleScheduleObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28626,8 +28330,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10354:64: (iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF )
-            // InternalLustre.g:10355:2: iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF
+            // InternalLustre.g:10240:64: (iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF )
+            // InternalLustre.g:10241:2: iv_ruleScheduleObjectReference= ruleScheduleObjectReference EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getScheduleObjectReferenceRule()); 
@@ -28658,7 +28362,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleScheduleObjectReference"
-    // InternalLustre.g:10361:1: ruleScheduleObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) ;
+    // InternalLustre.g:10247:1: ruleScheduleObjectReference returns [EObject current=null] : ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) ;
     public final EObject ruleScheduleObjectReference() throws RecognitionException {
         EObject current = null;
 
@@ -28668,17 +28372,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10367:2: ( ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) )
-            // InternalLustre.g:10368:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
+            // InternalLustre.g:10253:2: ( ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) ) )
+            // InternalLustre.g:10254:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
             {
-            // InternalLustre.g:10368:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
-            // InternalLustre.g:10369:3: ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) )
+            // InternalLustre.g:10254:2: ( ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) ) )
+            // InternalLustre.g:10255:3: ( ( rulePrimeID ) ) ( (lv_priority_1_0= RULE_INT ) )
             {
-            // InternalLustre.g:10369:3: ( ( rulePrimeID ) )
-            // InternalLustre.g:10370:4: ( rulePrimeID )
+            // InternalLustre.g:10255:3: ( ( rulePrimeID ) )
+            // InternalLustre.g:10256:4: ( rulePrimeID )
             {
-            // InternalLustre.g:10370:4: ( rulePrimeID )
-            // InternalLustre.g:10371:5: rulePrimeID
+            // InternalLustre.g:10256:4: ( rulePrimeID )
+            // InternalLustre.g:10257:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -28713,11 +28417,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10388:3: ( (lv_priority_1_0= RULE_INT ) )
-            // InternalLustre.g:10389:4: (lv_priority_1_0= RULE_INT )
+            // InternalLustre.g:10274:3: ( (lv_priority_1_0= RULE_INT ) )
+            // InternalLustre.g:10275:4: (lv_priority_1_0= RULE_INT )
             {
-            // InternalLustre.g:10389:4: (lv_priority_1_0= RULE_INT )
-            // InternalLustre.g:10390:5: lv_priority_1_0= RULE_INT
+            // InternalLustre.g:10275:4: (lv_priority_1_0= RULE_INT )
+            // InternalLustre.g:10276:5: lv_priority_1_0= RULE_INT
             {
             lv_priority_1_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -28768,7 +28472,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleReferenceCall"
-    // InternalLustre.g:10410:1: entryRuleReferenceCall returns [EObject current=null] : iv_ruleReferenceCall= ruleReferenceCall EOF ;
+    // InternalLustre.g:10296:1: entryRuleReferenceCall returns [EObject current=null] : iv_ruleReferenceCall= ruleReferenceCall EOF ;
     public final EObject entryRuleReferenceCall() throws RecognitionException {
         EObject current = null;
 
@@ -28776,8 +28480,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10410:54: (iv_ruleReferenceCall= ruleReferenceCall EOF )
-            // InternalLustre.g:10411:2: iv_ruleReferenceCall= ruleReferenceCall EOF
+            // InternalLustre.g:10296:54: (iv_ruleReferenceCall= ruleReferenceCall EOF )
+            // InternalLustre.g:10297:2: iv_ruleReferenceCall= ruleReferenceCall EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getReferenceCallRule()); 
@@ -28808,7 +28512,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleReferenceCall"
-    // InternalLustre.g:10417:1: ruleReferenceCall returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) ;
+    // InternalLustre.g:10303:1: ruleReferenceCall returns [EObject current=null] : ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) ;
     public final EObject ruleReferenceCall() throws RecognitionException {
         EObject current = null;
 
@@ -28832,17 +28536,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10423:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) )
-            // InternalLustre.g:10424:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
+            // InternalLustre.g:10309:2: ( ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) ) )
+            // InternalLustre.g:10310:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
             {
-            // InternalLustre.g:10424:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
-            // InternalLustre.g:10425:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
+            // InternalLustre.g:10310:2: ( ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' ) )
+            // InternalLustre.g:10311:3: ( ( rulePrimeID ) ) (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )* (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )? ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
             {
-            // InternalLustre.g:10425:3: ( ( rulePrimeID ) )
-            // InternalLustre.g:10426:4: ( rulePrimeID )
+            // InternalLustre.g:10311:3: ( ( rulePrimeID ) )
+            // InternalLustre.g:10312:4: ( rulePrimeID )
             {
-            // InternalLustre.g:10426:4: ( rulePrimeID )
-            // InternalLustre.g:10427:5: rulePrimeID
+            // InternalLustre.g:10312:4: ( rulePrimeID )
+            // InternalLustre.g:10313:5: rulePrimeID
             {
             if ( state.backtracking==0 ) {
 
@@ -28877,20 +28581,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10444:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
-            loop262:
+            // InternalLustre.g:10330:3: (otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']' )*
+            loop260:
             do {
-                int alt262=2;
-                int LA262_0 = input.LA(1);
+                int alt260=2;
+                int LA260_0 = input.LA(1);
 
-                if ( (LA262_0==74) ) {
-                    alt262=1;
+                if ( (LA260_0==74) ) {
+                    alt260=1;
                 }
 
 
-                switch (alt262) {
+                switch (alt260) {
             	case 1 :
-            	    // InternalLustre.g:10445:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
+            	    // InternalLustre.g:10331:4: otherlv_1= '[' ( (lv_indices_2_0= ruleExpression ) ) otherlv_3= ']'
             	    {
             	    otherlv_1=(Token)match(input,74,FollowSets000.FOLLOW_23); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -28898,11 +28602,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_1, grammarAccess.getReferenceCallAccess().getLeftSquareBracketKeyword_1_0());
             	      			
             	    }
-            	    // InternalLustre.g:10449:4: ( (lv_indices_2_0= ruleExpression ) )
-            	    // InternalLustre.g:10450:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalLustre.g:10335:4: ( (lv_indices_2_0= ruleExpression ) )
+            	    // InternalLustre.g:10336:5: (lv_indices_2_0= ruleExpression )
             	    {
-            	    // InternalLustre.g:10450:5: (lv_indices_2_0= ruleExpression )
-            	    // InternalLustre.g:10451:6: lv_indices_2_0= ruleExpression
+            	    // InternalLustre.g:10336:5: (lv_indices_2_0= ruleExpression )
+            	    // InternalLustre.g:10337:6: lv_indices_2_0= ruleExpression
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -28944,20 +28648,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop262;
+            	    break loop260;
                 }
             } while (true);
 
-            // InternalLustre.g:10473:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
-            int alt263=2;
-            int LA263_0 = input.LA(1);
+            // InternalLustre.g:10359:3: (otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) ) )?
+            int alt261=2;
+            int LA261_0 = input.LA(1);
 
-            if ( (LA263_0==39) ) {
-                alt263=1;
+            if ( (LA261_0==39) ) {
+                alt261=1;
             }
-            switch (alt263) {
+            switch (alt261) {
                 case 1 :
-                    // InternalLustre.g:10474:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalLustre.g:10360:4: otherlv_4= '.' ( (lv_subReference_5_0= ruleValuedObjectReference ) )
                     {
                     otherlv_4=(Token)match(input,39,FollowSets000.FOLLOW_30); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -28965,11 +28669,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       				newLeafNode(otherlv_4, grammarAccess.getReferenceCallAccess().getFullStopKeyword_2_0());
                       			
                     }
-                    // InternalLustre.g:10478:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
-                    // InternalLustre.g:10479:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalLustre.g:10364:4: ( (lv_subReference_5_0= ruleValuedObjectReference ) )
+                    // InternalLustre.g:10365:5: (lv_subReference_5_0= ruleValuedObjectReference )
                     {
-                    // InternalLustre.g:10479:5: (lv_subReference_5_0= ruleValuedObjectReference )
-                    // InternalLustre.g:10480:6: lv_subReference_5_0= ruleValuedObjectReference
+                    // InternalLustre.g:10365:5: (lv_subReference_5_0= ruleValuedObjectReference )
+                    // InternalLustre.g:10366:6: lv_subReference_5_0= ruleValuedObjectReference
                     {
                     if ( state.backtracking==0 ) {
 
@@ -29006,29 +28710,29 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10498:3: ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
-            int alt265=2;
-            int LA265_0 = input.LA(1);
+            // InternalLustre.g:10384:3: ( (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' ) | otherlv_11= '()' )
+            int alt263=2;
+            int LA263_0 = input.LA(1);
 
-            if ( (LA265_0==29) ) {
-                alt265=1;
+            if ( (LA263_0==29) ) {
+                alt263=1;
             }
-            else if ( (LA265_0==31) ) {
-                alt265=2;
+            else if ( (LA263_0==31) ) {
+                alt263=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 265, 0, input);
+                    new NoViableAltException("", 263, 0, input);
 
                 throw nvae;
             }
-            switch (alt265) {
+            switch (alt263) {
                 case 1 :
-                    // InternalLustre.g:10499:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
+                    // InternalLustre.g:10385:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
                     {
-                    // InternalLustre.g:10499:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
-                    // InternalLustre.g:10500:5: otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')'
+                    // InternalLustre.g:10385:4: (otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')' )
+                    // InternalLustre.g:10386:5: otherlv_6= '(' ( (lv_parameters_7_0= ruleParameter ) ) (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )* otherlv_10= ')'
                     {
                     otherlv_6=(Token)match(input,29,FollowSets000.FOLLOW_113); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29036,11 +28740,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                       					newLeafNode(otherlv_6, grammarAccess.getReferenceCallAccess().getLeftParenthesisKeyword_3_0_0());
                       				
                     }
-                    // InternalLustre.g:10504:5: ( (lv_parameters_7_0= ruleParameter ) )
-                    // InternalLustre.g:10505:6: (lv_parameters_7_0= ruleParameter )
+                    // InternalLustre.g:10390:5: ( (lv_parameters_7_0= ruleParameter ) )
+                    // InternalLustre.g:10391:6: (lv_parameters_7_0= ruleParameter )
                     {
-                    // InternalLustre.g:10505:6: (lv_parameters_7_0= ruleParameter )
-                    // InternalLustre.g:10506:7: lv_parameters_7_0= ruleParameter
+                    // InternalLustre.g:10391:6: (lv_parameters_7_0= ruleParameter )
+                    // InternalLustre.g:10392:7: lv_parameters_7_0= ruleParameter
                     {
                     if ( state.backtracking==0 ) {
 
@@ -29071,20 +28775,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:10523:5: (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )*
-                    loop264:
+                    // InternalLustre.g:10409:5: (otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) ) )*
+                    loop262:
                     do {
-                        int alt264=2;
-                        int LA264_0 = input.LA(1);
+                        int alt262=2;
+                        int LA262_0 = input.LA(1);
 
-                        if ( (LA264_0==23) ) {
-                            alt264=1;
+                        if ( (LA262_0==23) ) {
+                            alt262=1;
                         }
 
 
-                        switch (alt264) {
+                        switch (alt262) {
                     	case 1 :
-                    	    // InternalLustre.g:10524:6: otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) )
+                    	    // InternalLustre.g:10410:6: otherlv_8= ',' ( (lv_parameters_9_0= ruleParameter ) )
                     	    {
                     	    otherlv_8=(Token)match(input,23,FollowSets000.FOLLOW_113); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -29092,11 +28796,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      						newLeafNode(otherlv_8, grammarAccess.getReferenceCallAccess().getCommaKeyword_3_0_2_0());
                     	      					
                     	    }
-                    	    // InternalLustre.g:10528:6: ( (lv_parameters_9_0= ruleParameter ) )
-                    	    // InternalLustre.g:10529:7: (lv_parameters_9_0= ruleParameter )
+                    	    // InternalLustre.g:10414:6: ( (lv_parameters_9_0= ruleParameter ) )
+                    	    // InternalLustre.g:10415:7: (lv_parameters_9_0= ruleParameter )
                     	    {
-                    	    // InternalLustre.g:10529:7: (lv_parameters_9_0= ruleParameter )
-                    	    // InternalLustre.g:10530:8: lv_parameters_9_0= ruleParameter
+                    	    // InternalLustre.g:10415:7: (lv_parameters_9_0= ruleParameter )
+                    	    // InternalLustre.g:10416:8: lv_parameters_9_0= ruleParameter
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -29132,7 +28836,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop264;
+                    	    break loop262;
                         }
                     } while (true);
 
@@ -29149,7 +28853,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:10554:4: otherlv_11= '()'
+                    // InternalLustre.g:10440:4: otherlv_11= '()'
                     {
                     otherlv_11=(Token)match(input,31,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29188,7 +28892,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleParameter"
-    // InternalLustre.g:10563:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
+    // InternalLustre.g:10449:1: entryRuleParameter returns [EObject current=null] : iv_ruleParameter= ruleParameter EOF ;
     public final EObject entryRuleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -29196,8 +28900,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10563:50: (iv_ruleParameter= ruleParameter EOF )
-            // InternalLustre.g:10564:2: iv_ruleParameter= ruleParameter EOF
+            // InternalLustre.g:10449:50: (iv_ruleParameter= ruleParameter EOF )
+            // InternalLustre.g:10450:2: iv_ruleParameter= ruleParameter EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getParameterRule()); 
@@ -29228,7 +28932,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleParameter"
-    // InternalLustre.g:10570:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
+    // InternalLustre.g:10456:1: ruleParameter returns [EObject current=null] : ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) ;
     public final EObject ruleParameter() throws RecognitionException {
         EObject current = null;
 
@@ -29241,36 +28945,36 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10576:2: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
-            // InternalLustre.g:10577:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalLustre.g:10462:2: ( ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) ) )
+            // InternalLustre.g:10463:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
             {
-            // InternalLustre.g:10577:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
-            // InternalLustre.g:10578:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
+            // InternalLustre.g:10463:2: ( ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) ) )
+            // InternalLustre.g:10464:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )? ( (lv_expression_2_0= ruleExpression ) )
             {
-            // InternalLustre.g:10578:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
-            int alt267=2;
-            int LA267_0 = input.LA(1);
+            // InternalLustre.g:10464:3: ( ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) ) )?
+            int alt265=2;
+            int LA265_0 = input.LA(1);
 
-            if ( (LA267_0==80||LA267_0==86) ) {
-                alt267=1;
+            if ( (LA265_0==80||LA265_0==86) ) {
+                alt265=1;
             }
-            switch (alt267) {
+            switch (alt265) {
                 case 1 :
-                    // InternalLustre.g:10579:4: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
+                    // InternalLustre.g:10465:4: ( (lv_pureOutput_0_0= '!' ) )? ( (lv_callByReference_1_0= '&' ) )
                     {
-                    // InternalLustre.g:10579:4: ( (lv_pureOutput_0_0= '!' ) )?
-                    int alt266=2;
-                    int LA266_0 = input.LA(1);
+                    // InternalLustre.g:10465:4: ( (lv_pureOutput_0_0= '!' ) )?
+                    int alt264=2;
+                    int LA264_0 = input.LA(1);
 
-                    if ( (LA266_0==86) ) {
-                        alt266=1;
+                    if ( (LA264_0==86) ) {
+                        alt264=1;
                     }
-                    switch (alt266) {
+                    switch (alt264) {
                         case 1 :
-                            // InternalLustre.g:10580:5: (lv_pureOutput_0_0= '!' )
+                            // InternalLustre.g:10466:5: (lv_pureOutput_0_0= '!' )
                             {
-                            // InternalLustre.g:10580:5: (lv_pureOutput_0_0= '!' )
-                            // InternalLustre.g:10581:6: lv_pureOutput_0_0= '!'
+                            // InternalLustre.g:10466:5: (lv_pureOutput_0_0= '!' )
+                            // InternalLustre.g:10467:6: lv_pureOutput_0_0= '!'
                             {
                             lv_pureOutput_0_0=(Token)match(input,86,FollowSets000.FOLLOW_126); if (state.failed) return current;
                             if ( state.backtracking==0 ) {
@@ -29295,11 +28999,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:10593:4: ( (lv_callByReference_1_0= '&' ) )
-                    // InternalLustre.g:10594:5: (lv_callByReference_1_0= '&' )
+                    // InternalLustre.g:10479:4: ( (lv_callByReference_1_0= '&' ) )
+                    // InternalLustre.g:10480:5: (lv_callByReference_1_0= '&' )
                     {
-                    // InternalLustre.g:10594:5: (lv_callByReference_1_0= '&' )
-                    // InternalLustre.g:10595:6: lv_callByReference_1_0= '&'
+                    // InternalLustre.g:10480:5: (lv_callByReference_1_0= '&' )
+                    // InternalLustre.g:10481:6: lv_callByReference_1_0= '&'
                     {
                     lv_callByReference_1_0=(Token)match(input,80,FollowSets000.FOLLOW_23); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -29327,11 +29031,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10608:3: ( (lv_expression_2_0= ruleExpression ) )
-            // InternalLustre.g:10609:4: (lv_expression_2_0= ruleExpression )
+            // InternalLustre.g:10494:3: ( (lv_expression_2_0= ruleExpression ) )
+            // InternalLustre.g:10495:4: (lv_expression_2_0= ruleExpression )
             {
-            // InternalLustre.g:10609:4: (lv_expression_2_0= ruleExpression )
-            // InternalLustre.g:10610:5: lv_expression_2_0= ruleExpression
+            // InternalLustre.g:10495:4: (lv_expression_2_0= ruleExpression )
+            // InternalLustre.g:10496:5: lv_expression_2_0= ruleExpression
             {
             if ( state.backtracking==0 ) {
 
@@ -29387,7 +29091,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIntValue"
-    // InternalLustre.g:10631:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
+    // InternalLustre.g:10517:1: entryRuleIntValue returns [EObject current=null] : iv_ruleIntValue= ruleIntValue EOF ;
     public final EObject entryRuleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -29395,8 +29099,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10631:49: (iv_ruleIntValue= ruleIntValue EOF )
-            // InternalLustre.g:10632:2: iv_ruleIntValue= ruleIntValue EOF
+            // InternalLustre.g:10517:49: (iv_ruleIntValue= ruleIntValue EOF )
+            // InternalLustre.g:10518:2: iv_ruleIntValue= ruleIntValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntValueRule()); 
@@ -29427,7 +29131,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntValue"
-    // InternalLustre.g:10638:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    // InternalLustre.g:10524:1: ruleIntValue returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
     public final EObject ruleIntValue() throws RecognitionException {
         EObject current = null;
 
@@ -29437,14 +29141,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10644:2: ( ( (lv_value_0_0= RULE_INT ) ) )
-            // InternalLustre.g:10645:2: ( (lv_value_0_0= RULE_INT ) )
+            // InternalLustre.g:10530:2: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // InternalLustre.g:10531:2: ( (lv_value_0_0= RULE_INT ) )
             {
-            // InternalLustre.g:10645:2: ( (lv_value_0_0= RULE_INT ) )
-            // InternalLustre.g:10646:3: (lv_value_0_0= RULE_INT )
+            // InternalLustre.g:10531:2: ( (lv_value_0_0= RULE_INT ) )
+            // InternalLustre.g:10532:3: (lv_value_0_0= RULE_INT )
             {
-            // InternalLustre.g:10646:3: (lv_value_0_0= RULE_INT )
-            // InternalLustre.g:10647:4: lv_value_0_0= RULE_INT
+            // InternalLustre.g:10532:3: (lv_value_0_0= RULE_INT )
+            // InternalLustre.g:10533:4: lv_value_0_0= RULE_INT
             {
             lv_value_0_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29492,7 +29196,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloatValue"
-    // InternalLustre.g:10666:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
+    // InternalLustre.g:10552:1: entryRuleFloatValue returns [EObject current=null] : iv_ruleFloatValue= ruleFloatValue EOF ;
     public final EObject entryRuleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -29500,8 +29204,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10666:51: (iv_ruleFloatValue= ruleFloatValue EOF )
-            // InternalLustre.g:10667:2: iv_ruleFloatValue= ruleFloatValue EOF
+            // InternalLustre.g:10552:51: (iv_ruleFloatValue= ruleFloatValue EOF )
+            // InternalLustre.g:10553:2: iv_ruleFloatValue= ruleFloatValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloatValueRule()); 
@@ -29532,7 +29236,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloatValue"
-    // InternalLustre.g:10673:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    // InternalLustre.g:10559:1: ruleFloatValue returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
     public final EObject ruleFloatValue() throws RecognitionException {
         EObject current = null;
 
@@ -29542,14 +29246,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10679:2: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
-            // InternalLustre.g:10680:2: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalLustre.g:10565:2: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // InternalLustre.g:10566:2: ( (lv_value_0_0= RULE_FLOAT ) )
             {
-            // InternalLustre.g:10680:2: ( (lv_value_0_0= RULE_FLOAT ) )
-            // InternalLustre.g:10681:3: (lv_value_0_0= RULE_FLOAT )
+            // InternalLustre.g:10566:2: ( (lv_value_0_0= RULE_FLOAT ) )
+            // InternalLustre.g:10567:3: (lv_value_0_0= RULE_FLOAT )
             {
-            // InternalLustre.g:10681:3: (lv_value_0_0= RULE_FLOAT )
-            // InternalLustre.g:10682:4: lv_value_0_0= RULE_FLOAT
+            // InternalLustre.g:10567:3: (lv_value_0_0= RULE_FLOAT )
+            // InternalLustre.g:10568:4: lv_value_0_0= RULE_FLOAT
             {
             lv_value_0_0=(Token)match(input,RULE_FLOAT,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29597,7 +29301,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleBoolValue"
-    // InternalLustre.g:10701:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
+    // InternalLustre.g:10587:1: entryRuleBoolValue returns [EObject current=null] : iv_ruleBoolValue= ruleBoolValue EOF ;
     public final EObject entryRuleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -29605,8 +29309,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10701:50: (iv_ruleBoolValue= ruleBoolValue EOF )
-            // InternalLustre.g:10702:2: iv_ruleBoolValue= ruleBoolValue EOF
+            // InternalLustre.g:10587:50: (iv_ruleBoolValue= ruleBoolValue EOF )
+            // InternalLustre.g:10588:2: iv_ruleBoolValue= ruleBoolValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getBoolValueRule()); 
@@ -29637,7 +29341,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBoolValue"
-    // InternalLustre.g:10708:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
+    // InternalLustre.g:10594:1: ruleBoolValue returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOLEAN ) ) ;
     public final EObject ruleBoolValue() throws RecognitionException {
         EObject current = null;
 
@@ -29647,14 +29351,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10714:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
-            // InternalLustre.g:10715:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalLustre.g:10600:2: ( ( (lv_value_0_0= RULE_BOOLEAN ) ) )
+            // InternalLustre.g:10601:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
             {
-            // InternalLustre.g:10715:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
-            // InternalLustre.g:10716:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalLustre.g:10601:2: ( (lv_value_0_0= RULE_BOOLEAN ) )
+            // InternalLustre.g:10602:3: (lv_value_0_0= RULE_BOOLEAN )
             {
-            // InternalLustre.g:10716:3: (lv_value_0_0= RULE_BOOLEAN )
-            // InternalLustre.g:10717:4: lv_value_0_0= RULE_BOOLEAN
+            // InternalLustre.g:10602:3: (lv_value_0_0= RULE_BOOLEAN )
+            // InternalLustre.g:10603:4: lv_value_0_0= RULE_BOOLEAN
             {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29702,7 +29406,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleStringValue"
-    // InternalLustre.g:10736:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
+    // InternalLustre.g:10622:1: entryRuleStringValue returns [EObject current=null] : iv_ruleStringValue= ruleStringValue EOF ;
     public final EObject entryRuleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -29710,8 +29414,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10736:52: (iv_ruleStringValue= ruleStringValue EOF )
-            // InternalLustre.g:10737:2: iv_ruleStringValue= ruleStringValue EOF
+            // InternalLustre.g:10622:52: (iv_ruleStringValue= ruleStringValue EOF )
+            // InternalLustre.g:10623:2: iv_ruleStringValue= ruleStringValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getStringValueRule()); 
@@ -29742,7 +29446,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStringValue"
-    // InternalLustre.g:10743:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    // InternalLustre.g:10629:1: ruleStringValue returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
     public final EObject ruleStringValue() throws RecognitionException {
         EObject current = null;
 
@@ -29752,14 +29456,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10749:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
-            // InternalLustre.g:10750:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalLustre.g:10635:2: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // InternalLustre.g:10636:2: ( (lv_value_0_0= RULE_STRING ) )
             {
-            // InternalLustre.g:10750:2: ( (lv_value_0_0= RULE_STRING ) )
-            // InternalLustre.g:10751:3: (lv_value_0_0= RULE_STRING )
+            // InternalLustre.g:10636:2: ( (lv_value_0_0= RULE_STRING ) )
+            // InternalLustre.g:10637:3: (lv_value_0_0= RULE_STRING )
             {
-            // InternalLustre.g:10751:3: (lv_value_0_0= RULE_STRING )
-            // InternalLustre.g:10752:4: lv_value_0_0= RULE_STRING
+            // InternalLustre.g:10637:3: (lv_value_0_0= RULE_STRING )
+            // InternalLustre.g:10638:4: lv_value_0_0= RULE_STRING
             {
             lv_value_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29807,7 +29511,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValue"
-    // InternalLustre.g:10771:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
+    // InternalLustre.g:10657:1: entryRuleVectorValue returns [EObject current=null] : iv_ruleVectorValue= ruleVectorValue EOF ;
     public final EObject entryRuleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -29815,8 +29519,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10771:52: (iv_ruleVectorValue= ruleVectorValue EOF )
-            // InternalLustre.g:10772:2: iv_ruleVectorValue= ruleVectorValue EOF
+            // InternalLustre.g:10657:52: (iv_ruleVectorValue= ruleVectorValue EOF )
+            // InternalLustre.g:10658:2: iv_ruleVectorValue= ruleVectorValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueRule()); 
@@ -29847,7 +29551,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValue"
-    // InternalLustre.g:10778:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
+    // InternalLustre.g:10664:1: ruleVectorValue returns [EObject current=null] : (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) ;
     public final EObject ruleVectorValue() throws RecognitionException {
         EObject current = null;
 
@@ -29863,11 +29567,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10784:2: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
-            // InternalLustre.g:10785:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalLustre.g:10670:2: ( (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' ) )
+            // InternalLustre.g:10671:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
             {
-            // InternalLustre.g:10785:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
-            // InternalLustre.g:10786:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
+            // InternalLustre.g:10671:2: (otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}' )
+            // InternalLustre.g:10672:3: otherlv_0= '{' ( (lv_values_1_0= ruleVectorValueMember ) ) (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )* otherlv_4= '}'
             {
             otherlv_0=(Token)match(input,22,FollowSets000.FOLLOW_127); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -29875,11 +29579,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getVectorValueAccess().getLeftCurlyBracketKeyword_0());
               		
             }
-            // InternalLustre.g:10790:3: ( (lv_values_1_0= ruleVectorValueMember ) )
-            // InternalLustre.g:10791:4: (lv_values_1_0= ruleVectorValueMember )
+            // InternalLustre.g:10676:3: ( (lv_values_1_0= ruleVectorValueMember ) )
+            // InternalLustre.g:10677:4: (lv_values_1_0= ruleVectorValueMember )
             {
-            // InternalLustre.g:10791:4: (lv_values_1_0= ruleVectorValueMember )
-            // InternalLustre.g:10792:5: lv_values_1_0= ruleVectorValueMember
+            // InternalLustre.g:10677:4: (lv_values_1_0= ruleVectorValueMember )
+            // InternalLustre.g:10678:5: lv_values_1_0= ruleVectorValueMember
             {
             if ( state.backtracking==0 ) {
 
@@ -29910,20 +29614,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:10809:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
-            loop268:
+            // InternalLustre.g:10695:3: (otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) ) )*
+            loop266:
             do {
-                int alt268=2;
-                int LA268_0 = input.LA(1);
+                int alt266=2;
+                int LA266_0 = input.LA(1);
 
-                if ( (LA268_0==23) ) {
-                    alt268=1;
+                if ( (LA266_0==23) ) {
+                    alt266=1;
                 }
 
 
-                switch (alt268) {
+                switch (alt266) {
             	case 1 :
-            	    // InternalLustre.g:10810:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalLustre.g:10696:4: otherlv_2= ',' ( (lv_values_3_0= ruleVectorValueMember ) )
             	    {
             	    otherlv_2=(Token)match(input,23,FollowSets000.FOLLOW_127); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -29931,11 +29635,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_2, grammarAccess.getVectorValueAccess().getCommaKeyword_2_0());
             	      			
             	    }
-            	    // InternalLustre.g:10814:4: ( (lv_values_3_0= ruleVectorValueMember ) )
-            	    // InternalLustre.g:10815:5: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalLustre.g:10700:4: ( (lv_values_3_0= ruleVectorValueMember ) )
+            	    // InternalLustre.g:10701:5: (lv_values_3_0= ruleVectorValueMember )
             	    {
-            	    // InternalLustre.g:10815:5: (lv_values_3_0= ruleVectorValueMember )
-            	    // InternalLustre.g:10816:6: lv_values_3_0= ruleVectorValueMember
+            	    // InternalLustre.g:10701:5: (lv_values_3_0= ruleVectorValueMember )
+            	    // InternalLustre.g:10702:6: lv_values_3_0= ruleVectorValueMember
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -29971,7 +29675,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop268;
+            	    break loop266;
                 }
             } while (true);
 
@@ -30006,7 +29710,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVectorValueMember"
-    // InternalLustre.g:10842:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
+    // InternalLustre.g:10728:1: entryRuleVectorValueMember returns [EObject current=null] : iv_ruleVectorValueMember= ruleVectorValueMember EOF ;
     public final EObject entryRuleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -30014,8 +29718,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10842:58: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
-            // InternalLustre.g:10843:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
+            // InternalLustre.g:10728:58: (iv_ruleVectorValueMember= ruleVectorValueMember EOF )
+            // InternalLustre.g:10729:2: iv_ruleVectorValueMember= ruleVectorValueMember EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVectorValueMemberRule()); 
@@ -30046,7 +29750,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVectorValueMember"
-    // InternalLustre.g:10849:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
+    // InternalLustre.g:10735:1: ruleVectorValueMember returns [EObject current=null] : (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) ;
     public final EObject ruleVectorValueMember() throws RecognitionException {
         EObject current = null;
 
@@ -30061,15 +29765,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10855:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
-            // InternalLustre.g:10856:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            // InternalLustre.g:10741:2: ( (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue ) )
+            // InternalLustre.g:10742:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
             {
-            // InternalLustre.g:10856:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
-            int alt269=3;
-            alt269 = dfa269.predict(input);
-            switch (alt269) {
+            // InternalLustre.g:10742:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )
+            int alt267=3;
+            alt267 = dfa267.predict(input);
+            switch (alt267) {
                 case 1 :
-                    // InternalLustre.g:10857:3: this_BoolExpression_0= ruleBoolExpression
+                    // InternalLustre.g:10743:3: this_BoolExpression_0= ruleBoolExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30096,7 +29800,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:10869:3: this_ValuedExpression_1= ruleValuedExpression
+                    // InternalLustre.g:10755:3: this_ValuedExpression_1= ruleValuedExpression
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30123,7 +29827,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:10881:3: this_IgnoreValue_2= ruleIgnoreValue
+                    // InternalLustre.g:10767:3: this_IgnoreValue_2= ruleIgnoreValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30174,7 +29878,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIgnoreValue"
-    // InternalLustre.g:10896:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
+    // InternalLustre.g:10782:1: entryRuleIgnoreValue returns [EObject current=null] : iv_ruleIgnoreValue= ruleIgnoreValue EOF ;
     public final EObject entryRuleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -30182,8 +29886,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10896:52: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
-            // InternalLustre.g:10897:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
+            // InternalLustre.g:10782:52: (iv_ruleIgnoreValue= ruleIgnoreValue EOF )
+            // InternalLustre.g:10783:2: iv_ruleIgnoreValue= ruleIgnoreValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIgnoreValueRule()); 
@@ -30214,7 +29918,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIgnoreValue"
-    // InternalLustre.g:10903:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
+    // InternalLustre.g:10789:1: ruleIgnoreValue returns [EObject current=null] : ( () otherlv_1= '_' ) ;
     public final EObject ruleIgnoreValue() throws RecognitionException {
         EObject current = null;
 
@@ -30224,14 +29928,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10909:2: ( ( () otherlv_1= '_' ) )
-            // InternalLustre.g:10910:2: ( () otherlv_1= '_' )
+            // InternalLustre.g:10795:2: ( ( () otherlv_1= '_' ) )
+            // InternalLustre.g:10796:2: ( () otherlv_1= '_' )
             {
-            // InternalLustre.g:10910:2: ( () otherlv_1= '_' )
-            // InternalLustre.g:10911:3: () otherlv_1= '_'
+            // InternalLustre.g:10796:2: ( () otherlv_1= '_' )
+            // InternalLustre.g:10797:3: () otherlv_1= '_'
             {
-            // InternalLustre.g:10911:3: ()
-            // InternalLustre.g:10912:4: 
+            // InternalLustre.g:10797:3: ()
+            // InternalLustre.g:10798:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -30279,7 +29983,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnyValue"
-    // InternalLustre.g:10929:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
+    // InternalLustre.g:10815:1: entryRuleAnyValue returns [EObject current=null] : iv_ruleAnyValue= ruleAnyValue EOF ;
     public final EObject entryRuleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -30287,8 +29991,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10929:49: (iv_ruleAnyValue= ruleAnyValue EOF )
-            // InternalLustre.g:10930:2: iv_ruleAnyValue= ruleAnyValue EOF
+            // InternalLustre.g:10815:49: (iv_ruleAnyValue= ruleAnyValue EOF )
+            // InternalLustre.g:10816:2: iv_ruleAnyValue= ruleAnyValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnyValueRule()); 
@@ -30319,7 +30023,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnyValue"
-    // InternalLustre.g:10936:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
+    // InternalLustre.g:10822:1: ruleAnyValue returns [EObject current=null] : (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) ;
     public final EObject ruleAnyValue() throws RecognitionException {
         EObject current = null;
 
@@ -30336,43 +30040,43 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:10942:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
-            // InternalLustre.g:10943:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            // InternalLustre.g:10828:2: ( (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue ) )
+            // InternalLustre.g:10829:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
             {
-            // InternalLustre.g:10943:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
-            int alt270=4;
+            // InternalLustre.g:10829:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_BoolValue_2= ruleBoolValue | this_StringValue_3= ruleStringValue )
+            int alt268=4;
             switch ( input.LA(1) ) {
             case RULE_INT:
                 {
-                alt270=1;
+                alt268=1;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt270=2;
+                alt268=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt270=3;
+                alt268=3;
                 }
                 break;
             case RULE_STRING:
                 {
-                alt270=4;
+                alt268=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 270, 0, input);
+                    new NoViableAltException("", 268, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt270) {
+            switch (alt268) {
                 case 1 :
-                    // InternalLustre.g:10944:3: this_IntValue_0= ruleIntValue
+                    // InternalLustre.g:10830:3: this_IntValue_0= ruleIntValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30399,7 +30103,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:10956:3: this_FloatValue_1= ruleFloatValue
+                    // InternalLustre.g:10842:3: this_FloatValue_1= ruleFloatValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30426,7 +30130,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:10968:3: this_BoolValue_2= ruleBoolValue
+                    // InternalLustre.g:10854:3: this_BoolValue_2= ruleBoolValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30453,7 +30157,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:10980:3: this_StringValue_3= ruleStringValue
+                    // InternalLustre.g:10866:3: this_StringValue_3= ruleStringValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30504,7 +30208,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectValue"
-    // InternalLustre.g:10995:1: entryRuleJsonObjectValue returns [EObject current=null] : iv_ruleJsonObjectValue= ruleJsonObjectValue EOF ;
+    // InternalLustre.g:10881:1: entryRuleJsonObjectValue returns [EObject current=null] : iv_ruleJsonObjectValue= ruleJsonObjectValue EOF ;
     public final EObject entryRuleJsonObjectValue() throws RecognitionException {
         EObject current = null;
 
@@ -30512,8 +30216,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:10995:56: (iv_ruleJsonObjectValue= ruleJsonObjectValue EOF )
-            // InternalLustre.g:10996:2: iv_ruleJsonObjectValue= ruleJsonObjectValue EOF
+            // InternalLustre.g:10881:56: (iv_ruleJsonObjectValue= ruleJsonObjectValue EOF )
+            // InternalLustre.g:10882:2: iv_ruleJsonObjectValue= ruleJsonObjectValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonObjectValueRule()); 
@@ -30544,7 +30248,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectValue"
-    // InternalLustre.g:11002:1: ruleJsonObjectValue returns [EObject current=null] : ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) ;
+    // InternalLustre.g:10888:1: ruleJsonObjectValue returns [EObject current=null] : ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) ;
     public final EObject ruleJsonObjectValue() throws RecognitionException {
         EObject current = null;
 
@@ -30560,14 +30264,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11008:2: ( ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) )
-            // InternalLustre.g:11009:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
+            // InternalLustre.g:10894:2: ( ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' ) )
+            // InternalLustre.g:10895:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
             {
-            // InternalLustre.g:11009:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
-            // InternalLustre.g:11010:3: () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}'
+            // InternalLustre.g:10895:2: ( () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}' )
+            // InternalLustre.g:10896:3: () otherlv_1= '{' ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )? otherlv_5= '}'
             {
-            // InternalLustre.g:11010:3: ()
-            // InternalLustre.g:11011:4: 
+            // InternalLustre.g:10896:3: ()
+            // InternalLustre.g:10897:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -30590,22 +30294,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectValueAccess().getLeftCurlyBracketKeyword_1());
               		
             }
-            // InternalLustre.g:11024:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
-            int alt272=2;
-            int LA272_0 = input.LA(1);
+            // InternalLustre.g:10910:3: ( ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )* )?
+            int alt270=2;
+            int LA270_0 = input.LA(1);
 
-            if ( (LA272_0==RULE_STRING) ) {
-                alt272=1;
+            if ( (LA270_0==RULE_STRING) ) {
+                alt270=1;
             }
-            switch (alt272) {
+            switch (alt270) {
                 case 1 :
-                    // InternalLustre.g:11025:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
+                    // InternalLustre.g:10911:4: ( (lv_members_2_0= ruleJsonObjectMember ) ) (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
                     {
-                    // InternalLustre.g:11025:4: ( (lv_members_2_0= ruleJsonObjectMember ) )
-                    // InternalLustre.g:11026:5: (lv_members_2_0= ruleJsonObjectMember )
+                    // InternalLustre.g:10911:4: ( (lv_members_2_0= ruleJsonObjectMember ) )
+                    // InternalLustre.g:10912:5: (lv_members_2_0= ruleJsonObjectMember )
                     {
-                    // InternalLustre.g:11026:5: (lv_members_2_0= ruleJsonObjectMember )
-                    // InternalLustre.g:11027:6: lv_members_2_0= ruleJsonObjectMember
+                    // InternalLustre.g:10912:5: (lv_members_2_0= ruleJsonObjectMember )
+                    // InternalLustre.g:10913:6: lv_members_2_0= ruleJsonObjectMember
                     {
                     if ( state.backtracking==0 ) {
 
@@ -30636,20 +30340,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:11044:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
-                    loop271:
+                    // InternalLustre.g:10930:4: (otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) ) )*
+                    loop269:
                     do {
-                        int alt271=2;
-                        int LA271_0 = input.LA(1);
+                        int alt269=2;
+                        int LA269_0 = input.LA(1);
 
-                        if ( (LA271_0==23) ) {
-                            alt271=1;
+                        if ( (LA269_0==23) ) {
+                            alt269=1;
                         }
 
 
-                        switch (alt271) {
+                        switch (alt269) {
                     	case 1 :
-                    	    // InternalLustre.g:11045:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
+                    	    // InternalLustre.g:10931:5: otherlv_3= ',' ( (lv_members_4_0= ruleJsonObjectMember ) )
                     	    {
                     	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_3); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -30657,11 +30361,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonObjectValueAccess().getCommaKeyword_2_1_0());
                     	      				
                     	    }
-                    	    // InternalLustre.g:11049:5: ( (lv_members_4_0= ruleJsonObjectMember ) )
-                    	    // InternalLustre.g:11050:6: (lv_members_4_0= ruleJsonObjectMember )
+                    	    // InternalLustre.g:10935:5: ( (lv_members_4_0= ruleJsonObjectMember ) )
+                    	    // InternalLustre.g:10936:6: (lv_members_4_0= ruleJsonObjectMember )
                     	    {
-                    	    // InternalLustre.g:11050:6: (lv_members_4_0= ruleJsonObjectMember )
-                    	    // InternalLustre.g:11051:7: lv_members_4_0= ruleJsonObjectMember
+                    	    // InternalLustre.g:10936:6: (lv_members_4_0= ruleJsonObjectMember )
+                    	    // InternalLustre.g:10937:7: lv_members_4_0= ruleJsonObjectMember
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -30697,7 +30401,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop271;
+                    	    break loop269;
                         }
                     } while (true);
 
@@ -30738,7 +30442,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonObjectMember"
-    // InternalLustre.g:11078:1: entryRuleJsonObjectMember returns [EObject current=null] : iv_ruleJsonObjectMember= ruleJsonObjectMember EOF ;
+    // InternalLustre.g:10964:1: entryRuleJsonObjectMember returns [EObject current=null] : iv_ruleJsonObjectMember= ruleJsonObjectMember EOF ;
     public final EObject entryRuleJsonObjectMember() throws RecognitionException {
         EObject current = null;
 
@@ -30746,8 +30450,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11078:57: (iv_ruleJsonObjectMember= ruleJsonObjectMember EOF )
-            // InternalLustre.g:11079:2: iv_ruleJsonObjectMember= ruleJsonObjectMember EOF
+            // InternalLustre.g:10964:57: (iv_ruleJsonObjectMember= ruleJsonObjectMember EOF )
+            // InternalLustre.g:10965:2: iv_ruleJsonObjectMember= ruleJsonObjectMember EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonObjectMemberRule()); 
@@ -30778,7 +30482,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonObjectMember"
-    // InternalLustre.g:11085:1: ruleJsonObjectMember returns [EObject current=null] : ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
+    // InternalLustre.g:10971:1: ruleJsonObjectMember returns [EObject current=null] : ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) ;
     public final EObject ruleJsonObjectMember() throws RecognitionException {
         EObject current = null;
 
@@ -30791,17 +30495,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11091:2: ( ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
-            // InternalLustre.g:11092:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalLustre.g:10977:2: ( ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) ) )
+            // InternalLustre.g:10978:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
             {
-            // InternalLustre.g:11092:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
-            // InternalLustre.g:11093:3: ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalLustre.g:10978:2: ( ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) ) )
+            // InternalLustre.g:10979:3: ( (lv_key_0_0= RULE_STRING ) ) otherlv_1= ':' ( (lv_value_2_0= ruleJsonValue ) )
             {
-            // InternalLustre.g:11093:3: ( (lv_key_0_0= RULE_STRING ) )
-            // InternalLustre.g:11094:4: (lv_key_0_0= RULE_STRING )
+            // InternalLustre.g:10979:3: ( (lv_key_0_0= RULE_STRING ) )
+            // InternalLustre.g:10980:4: (lv_key_0_0= RULE_STRING )
             {
-            // InternalLustre.g:11094:4: (lv_key_0_0= RULE_STRING )
-            // InternalLustre.g:11095:5: lv_key_0_0= RULE_STRING
+            // InternalLustre.g:10980:4: (lv_key_0_0= RULE_STRING )
+            // InternalLustre.g:10981:5: lv_key_0_0= RULE_STRING
             {
             lv_key_0_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_129); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -30833,11 +30537,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_1, grammarAccess.getJsonObjectMemberAccess().getColonKeyword_1());
               		
             }
-            // InternalLustre.g:11115:3: ( (lv_value_2_0= ruleJsonValue ) )
-            // InternalLustre.g:11116:4: (lv_value_2_0= ruleJsonValue )
+            // InternalLustre.g:11001:3: ( (lv_value_2_0= ruleJsonValue ) )
+            // InternalLustre.g:11002:4: (lv_value_2_0= ruleJsonValue )
             {
-            // InternalLustre.g:11116:4: (lv_value_2_0= ruleJsonValue )
-            // InternalLustre.g:11117:5: lv_value_2_0= ruleJsonValue
+            // InternalLustre.g:11002:4: (lv_value_2_0= ruleJsonValue )
+            // InternalLustre.g:11003:5: lv_value_2_0= ruleJsonValue
             {
             if ( state.backtracking==0 ) {
 
@@ -30893,7 +30597,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonArrayValue"
-    // InternalLustre.g:11138:1: entryRuleJsonArrayValue returns [EObject current=null] : iv_ruleJsonArrayValue= ruleJsonArrayValue EOF ;
+    // InternalLustre.g:11024:1: entryRuleJsonArrayValue returns [EObject current=null] : iv_ruleJsonArrayValue= ruleJsonArrayValue EOF ;
     public final EObject entryRuleJsonArrayValue() throws RecognitionException {
         EObject current = null;
 
@@ -30901,8 +30605,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11138:55: (iv_ruleJsonArrayValue= ruleJsonArrayValue EOF )
-            // InternalLustre.g:11139:2: iv_ruleJsonArrayValue= ruleJsonArrayValue EOF
+            // InternalLustre.g:11024:55: (iv_ruleJsonArrayValue= ruleJsonArrayValue EOF )
+            // InternalLustre.g:11025:2: iv_ruleJsonArrayValue= ruleJsonArrayValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonArrayValueRule()); 
@@ -30933,7 +30637,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonArrayValue"
-    // InternalLustre.g:11145:1: ruleJsonArrayValue returns [EObject current=null] : ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) ;
+    // InternalLustre.g:11031:1: ruleJsonArrayValue returns [EObject current=null] : ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) ;
     public final EObject ruleJsonArrayValue() throws RecognitionException {
         EObject current = null;
 
@@ -30949,14 +30653,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11151:2: ( ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) )
-            // InternalLustre.g:11152:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
+            // InternalLustre.g:11037:2: ( ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' ) )
+            // InternalLustre.g:11038:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
             {
-            // InternalLustre.g:11152:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
-            // InternalLustre.g:11153:3: () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']'
+            // InternalLustre.g:11038:2: ( () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']' )
+            // InternalLustre.g:11039:3: () otherlv_1= '[' ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )? otherlv_5= ']'
             {
-            // InternalLustre.g:11153:3: ()
-            // InternalLustre.g:11154:4: 
+            // InternalLustre.g:11039:3: ()
+            // InternalLustre.g:11040:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -30979,22 +30683,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_1, grammarAccess.getJsonArrayValueAccess().getLeftSquareBracketKeyword_1());
               		
             }
-            // InternalLustre.g:11167:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
-            int alt274=2;
-            int LA274_0 = input.LA(1);
+            // InternalLustre.g:11053:3: ( ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )* )?
+            int alt272=2;
+            int LA272_0 = input.LA(1);
 
-            if ( (LA274_0==RULE_STRING||(LA274_0>=RULE_INT && LA274_0<=RULE_BOOLEAN)||LA274_0==22||LA274_0==74||LA274_0==88) ) {
-                alt274=1;
+            if ( (LA272_0==RULE_STRING||(LA272_0>=RULE_INT && LA272_0<=RULE_BOOLEAN)||LA272_0==22||LA272_0==74||LA272_0==88) ) {
+                alt272=1;
             }
-            switch (alt274) {
+            switch (alt272) {
                 case 1 :
-                    // InternalLustre.g:11168:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
+                    // InternalLustre.g:11054:4: ( (lv_elements_2_0= ruleJsonValue ) ) (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
                     {
-                    // InternalLustre.g:11168:4: ( (lv_elements_2_0= ruleJsonValue ) )
-                    // InternalLustre.g:11169:5: (lv_elements_2_0= ruleJsonValue )
+                    // InternalLustre.g:11054:4: ( (lv_elements_2_0= ruleJsonValue ) )
+                    // InternalLustre.g:11055:5: (lv_elements_2_0= ruleJsonValue )
                     {
-                    // InternalLustre.g:11169:5: (lv_elements_2_0= ruleJsonValue )
-                    // InternalLustre.g:11170:6: lv_elements_2_0= ruleJsonValue
+                    // InternalLustre.g:11055:5: (lv_elements_2_0= ruleJsonValue )
+                    // InternalLustre.g:11056:6: lv_elements_2_0= ruleJsonValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31025,20 +30729,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    // InternalLustre.g:11187:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
-                    loop273:
+                    // InternalLustre.g:11073:4: (otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) ) )*
+                    loop271:
                     do {
-                        int alt273=2;
-                        int LA273_0 = input.LA(1);
+                        int alt271=2;
+                        int LA271_0 = input.LA(1);
 
-                        if ( (LA273_0==23) ) {
-                            alt273=1;
+                        if ( (LA271_0==23) ) {
+                            alt271=1;
                         }
 
 
-                        switch (alt273) {
+                        switch (alt271) {
                     	case 1 :
-                    	    // InternalLustre.g:11188:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
+                    	    // InternalLustre.g:11074:5: otherlv_3= ',' ( (lv_elements_4_0= ruleJsonValue ) )
                     	    {
                     	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_130); if (state.failed) return current;
                     	    if ( state.backtracking==0 ) {
@@ -31046,11 +30750,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	      					newLeafNode(otherlv_3, grammarAccess.getJsonArrayValueAccess().getCommaKeyword_2_1_0());
                     	      				
                     	    }
-                    	    // InternalLustre.g:11192:5: ( (lv_elements_4_0= ruleJsonValue ) )
-                    	    // InternalLustre.g:11193:6: (lv_elements_4_0= ruleJsonValue )
+                    	    // InternalLustre.g:11078:5: ( (lv_elements_4_0= ruleJsonValue ) )
+                    	    // InternalLustre.g:11079:6: (lv_elements_4_0= ruleJsonValue )
                     	    {
-                    	    // InternalLustre.g:11193:6: (lv_elements_4_0= ruleJsonValue )
-                    	    // InternalLustre.g:11194:7: lv_elements_4_0= ruleJsonValue
+                    	    // InternalLustre.g:11079:6: (lv_elements_4_0= ruleJsonValue )
+                    	    // InternalLustre.g:11080:7: lv_elements_4_0= ruleJsonValue
                     	    {
                     	    if ( state.backtracking==0 ) {
 
@@ -31086,7 +30790,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop273;
+                    	    break loop271;
                         }
                     } while (true);
 
@@ -31127,7 +30831,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonValue"
-    // InternalLustre.g:11221:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
+    // InternalLustre.g:11107:1: entryRuleJsonValue returns [EObject current=null] : iv_ruleJsonValue= ruleJsonValue EOF ;
     public final EObject entryRuleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -31135,8 +30839,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11221:50: (iv_ruleJsonValue= ruleJsonValue EOF )
-            // InternalLustre.g:11222:2: iv_ruleJsonValue= ruleJsonValue EOF
+            // InternalLustre.g:11107:50: (iv_ruleJsonValue= ruleJsonValue EOF )
+            // InternalLustre.g:11108:2: iv_ruleJsonValue= ruleJsonValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonValueRule()); 
@@ -31167,7 +30871,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonValue"
-    // InternalLustre.g:11228:1: ruleJsonValue returns [EObject current=null] : (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) ;
+    // InternalLustre.g:11114:1: ruleJsonValue returns [EObject current=null] : (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) ;
     public final EObject ruleJsonValue() throws RecognitionException {
         EObject current = null;
 
@@ -31184,25 +30888,25 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11234:2: ( (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) )
-            // InternalLustre.g:11235:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
+            // InternalLustre.g:11120:2: ( (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue ) )
+            // InternalLustre.g:11121:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
             {
-            // InternalLustre.g:11235:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
-            int alt275=4;
+            // InternalLustre.g:11121:2: (this_JsonObjectValue_0= ruleJsonObjectValue | this_JsonArrayValue_1= ruleJsonArrayValue | this_NullValue_2= ruleNullValue | this_AnyValue_3= ruleAnyValue )
+            int alt273=4;
             switch ( input.LA(1) ) {
             case 22:
                 {
-                alt275=1;
+                alt273=1;
                 }
                 break;
             case 74:
                 {
-                alt275=2;
+                alt273=2;
                 }
                 break;
             case 88:
                 {
-                alt275=3;
+                alt273=3;
                 }
                 break;
             case RULE_STRING:
@@ -31210,20 +30914,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             case RULE_FLOAT:
             case RULE_BOOLEAN:
                 {
-                alt275=4;
+                alt273=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 275, 0, input);
+                    new NoViableAltException("", 273, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt275) {
+            switch (alt273) {
                 case 1 :
-                    // InternalLustre.g:11236:3: this_JsonObjectValue_0= ruleJsonObjectValue
+                    // InternalLustre.g:11122:3: this_JsonObjectValue_0= ruleJsonObjectValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31250,7 +30954,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11248:3: this_JsonArrayValue_1= ruleJsonArrayValue
+                    // InternalLustre.g:11134:3: this_JsonArrayValue_1= ruleJsonArrayValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31277,7 +30981,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:11260:3: this_NullValue_2= ruleNullValue
+                    // InternalLustre.g:11146:3: this_NullValue_2= ruleNullValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31304,7 +31008,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:11272:3: this_AnyValue_3= ruleAnyValue
+                    // InternalLustre.g:11158:3: this_AnyValue_3= ruleAnyValue
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31355,7 +31059,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleNullValue"
-    // InternalLustre.g:11287:1: entryRuleNullValue returns [EObject current=null] : iv_ruleNullValue= ruleNullValue EOF ;
+    // InternalLustre.g:11173:1: entryRuleNullValue returns [EObject current=null] : iv_ruleNullValue= ruleNullValue EOF ;
     public final EObject entryRuleNullValue() throws RecognitionException {
         EObject current = null;
 
@@ -31363,8 +31067,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11287:50: (iv_ruleNullValue= ruleNullValue EOF )
-            // InternalLustre.g:11288:2: iv_ruleNullValue= ruleNullValue EOF
+            // InternalLustre.g:11173:50: (iv_ruleNullValue= ruleNullValue EOF )
+            // InternalLustre.g:11174:2: iv_ruleNullValue= ruleNullValue EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getNullValueRule()); 
@@ -31395,7 +31099,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNullValue"
-    // InternalLustre.g:11294:1: ruleNullValue returns [EObject current=null] : ( () otherlv_1= 'null' ) ;
+    // InternalLustre.g:11180:1: ruleNullValue returns [EObject current=null] : ( () otherlv_1= 'null' ) ;
     public final EObject ruleNullValue() throws RecognitionException {
         EObject current = null;
 
@@ -31405,14 +31109,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11300:2: ( ( () otherlv_1= 'null' ) )
-            // InternalLustre.g:11301:2: ( () otherlv_1= 'null' )
+            // InternalLustre.g:11186:2: ( ( () otherlv_1= 'null' ) )
+            // InternalLustre.g:11187:2: ( () otherlv_1= 'null' )
             {
-            // InternalLustre.g:11301:2: ( () otherlv_1= 'null' )
-            // InternalLustre.g:11302:3: () otherlv_1= 'null'
+            // InternalLustre.g:11187:2: ( () otherlv_1= 'null' )
+            // InternalLustre.g:11188:3: () otherlv_1= 'null'
             {
-            // InternalLustre.g:11302:3: ()
-            // InternalLustre.g:11303:4: 
+            // InternalLustre.g:11188:3: ()
+            // InternalLustre.g:11189:4: 
             {
             if ( state.backtracking==0 ) {
 
@@ -31460,7 +31164,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonPragma"
-    // InternalLustre.g:11320:1: entryRuleJsonPragma returns [EObject current=null] : iv_ruleJsonPragma= ruleJsonPragma EOF ;
+    // InternalLustre.g:11206:1: entryRuleJsonPragma returns [EObject current=null] : iv_ruleJsonPragma= ruleJsonPragma EOF ;
     public final EObject entryRuleJsonPragma() throws RecognitionException {
         EObject current = null;
 
@@ -31468,8 +31172,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11320:51: (iv_ruleJsonPragma= ruleJsonPragma EOF )
-            // InternalLustre.g:11321:2: iv_ruleJsonPragma= ruleJsonPragma EOF
+            // InternalLustre.g:11206:51: (iv_ruleJsonPragma= ruleJsonPragma EOF )
+            // InternalLustre.g:11207:2: iv_ruleJsonPragma= ruleJsonPragma EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonPragmaRule()); 
@@ -31500,7 +31204,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonPragma"
-    // InternalLustre.g:11327:1: ruleJsonPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
+    // InternalLustre.g:11213:1: ruleJsonPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
     public final EObject ruleJsonPragma() throws RecognitionException {
         EObject current = null;
 
@@ -31514,11 +31218,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11333:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
-            // InternalLustre.g:11334:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalLustre.g:11219:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
+            // InternalLustre.g:11220:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
             {
-            // InternalLustre.g:11334:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
-            // InternalLustre.g:11335:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalLustre.g:11220:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalLustre.g:11221:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
             {
             otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -31526,11 +31230,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getJsonPragmaAccess().getNumberSignKeyword_0());
               		
             }
-            // InternalLustre.g:11339:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:11340:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11225:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11226:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:11340:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:11341:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:11226:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11227:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -31561,11 +31265,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:11358:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
-            // InternalLustre.g:11359:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalLustre.g:11244:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalLustre.g:11245:4: (lv_value_2_0= ruleJsonObjectValue )
             {
-            // InternalLustre.g:11359:4: (lv_value_2_0= ruleJsonObjectValue )
-            // InternalLustre.g:11360:5: lv_value_2_0= ruleJsonObjectValue
+            // InternalLustre.g:11245:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalLustre.g:11246:5: lv_value_2_0= ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
 
@@ -31621,7 +31325,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleJsonAnnotation"
-    // InternalLustre.g:11381:1: entryRuleJsonAnnotation returns [EObject current=null] : iv_ruleJsonAnnotation= ruleJsonAnnotation EOF ;
+    // InternalLustre.g:11267:1: entryRuleJsonAnnotation returns [EObject current=null] : iv_ruleJsonAnnotation= ruleJsonAnnotation EOF ;
     public final EObject entryRuleJsonAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31629,8 +31333,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11381:55: (iv_ruleJsonAnnotation= ruleJsonAnnotation EOF )
-            // InternalLustre.g:11382:2: iv_ruleJsonAnnotation= ruleJsonAnnotation EOF
+            // InternalLustre.g:11267:55: (iv_ruleJsonAnnotation= ruleJsonAnnotation EOF )
+            // InternalLustre.g:11268:2: iv_ruleJsonAnnotation= ruleJsonAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getJsonAnnotationRule()); 
@@ -31661,7 +31365,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleJsonAnnotation"
-    // InternalLustre.g:11388:1: ruleJsonAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
+    // InternalLustre.g:11274:1: ruleJsonAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) ;
     public final EObject ruleJsonAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31675,11 +31379,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11394:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
-            // InternalLustre.g:11395:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalLustre.g:11280:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) ) )
+            // InternalLustre.g:11281:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
             {
-            // InternalLustre.g:11395:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
-            // InternalLustre.g:11396:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalLustre.g:11281:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) ) )
+            // InternalLustre.g:11282:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_value_2_0= ruleJsonObjectValue ) )
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -31687,11 +31391,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getJsonAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:11400:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:11401:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11286:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11287:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:11401:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:11402:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:11287:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11288:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -31722,11 +31426,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:11419:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
-            // InternalLustre.g:11420:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalLustre.g:11305:3: ( (lv_value_2_0= ruleJsonObjectValue ) )
+            // InternalLustre.g:11306:4: (lv_value_2_0= ruleJsonObjectValue )
             {
-            // InternalLustre.g:11420:4: (lv_value_2_0= ruleJsonObjectValue )
-            // InternalLustre.g:11421:5: lv_value_2_0= ruleJsonObjectValue
+            // InternalLustre.g:11306:4: (lv_value_2_0= ruleJsonObjectValue )
+            // InternalLustre.g:11307:5: lv_value_2_0= ruleJsonObjectValue
             {
             if ( state.backtracking==0 ) {
 
@@ -31782,7 +31486,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAnnotation"
-    // InternalLustre.g:11442:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
+    // InternalLustre.g:11328:1: entryRuleAnnotation returns [EObject current=null] : iv_ruleAnnotation= ruleAnnotation EOF ;
     public final EObject entryRuleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31790,8 +31494,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11442:51: (iv_ruleAnnotation= ruleAnnotation EOF )
-            // InternalLustre.g:11443:2: iv_ruleAnnotation= ruleAnnotation EOF
+            // InternalLustre.g:11328:51: (iv_ruleAnnotation= ruleAnnotation EOF )
+            // InternalLustre.g:11329:2: iv_ruleAnnotation= ruleAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationRule()); 
@@ -31822,7 +31526,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAnnotation"
-    // InternalLustre.g:11449:1: ruleAnnotation returns [EObject current=null] : (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
+    // InternalLustre.g:11335:1: ruleAnnotation returns [EObject current=null] : (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
     public final EObject ruleAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31835,15 +31539,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11455:2: ( (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
-            // InternalLustre.g:11456:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalLustre.g:11341:2: ( (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
+            // InternalLustre.g:11342:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
-            // InternalLustre.g:11456:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt276=2;
-            alt276 = dfa276.predict(input);
-            switch (alt276) {
+            // InternalLustre.g:11342:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            int alt274=2;
+            alt274 = dfa274.predict(input);
+            switch (alt274) {
                 case 1 :
-                    // InternalLustre.g:11457:3: this_Annotation_0= superAnnotation
+                    // InternalLustre.g:11343:3: this_Annotation_0= superAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31870,7 +31574,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11469:3: this_JsonAnnotation_1= ruleJsonAnnotation
+                    // InternalLustre.g:11355:3: this_JsonAnnotation_1= ruleJsonAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -31921,7 +31625,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQuotedStringAnnotation"
-    // InternalLustre.g:11484:1: entryRuleQuotedStringAnnotation returns [EObject current=null] : iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF ;
+    // InternalLustre.g:11370:1: entryRuleQuotedStringAnnotation returns [EObject current=null] : iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF ;
     public final EObject entryRuleQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31929,8 +31633,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11484:63: (iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF )
-            // InternalLustre.g:11485:2: iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF
+            // InternalLustre.g:11370:63: (iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF )
+            // InternalLustre.g:11371:2: iv_ruleQuotedStringAnnotation= ruleQuotedStringAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQuotedStringAnnotationRule()); 
@@ -31961,7 +31665,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQuotedStringAnnotation"
-    // InternalLustre.g:11491:1: ruleQuotedStringAnnotation returns [EObject current=null] : (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
+    // InternalLustre.g:11377:1: ruleQuotedStringAnnotation returns [EObject current=null] : (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) ;
     public final EObject ruleQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -31974,15 +31678,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11497:2: ( (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
-            // InternalLustre.g:11498:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            // InternalLustre.g:11383:2: ( (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation ) )
+            // InternalLustre.g:11384:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
             {
-            // InternalLustre.g:11498:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
-            int alt277=2;
-            alt277 = dfa277.predict(input);
-            switch (alt277) {
+            // InternalLustre.g:11384:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )
+            int alt275=2;
+            alt275 = dfa275.predict(input);
+            switch (alt275) {
                 case 1 :
-                    // InternalLustre.g:11499:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
+                    // InternalLustre.g:11385:3: this_QuotedStringAnnotation_0= superQuotedStringAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32009,7 +31713,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11511:3: this_JsonAnnotation_1= ruleJsonAnnotation
+                    // InternalLustre.g:11397:3: this_JsonAnnotation_1= ruleJsonAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32060,7 +31764,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperAnnotation"
-    // InternalLustre.g:11526:1: entrySuperAnnotation returns [EObject current=null] : iv_superAnnotation= superAnnotation EOF ;
+    // InternalLustre.g:11412:1: entrySuperAnnotation returns [EObject current=null] : iv_superAnnotation= superAnnotation EOF ;
     public final EObject entrySuperAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32068,8 +31772,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11526:52: (iv_superAnnotation= superAnnotation EOF )
-            // InternalLustre.g:11527:2: iv_superAnnotation= superAnnotation EOF
+            // InternalLustre.g:11412:52: (iv_superAnnotation= superAnnotation EOF )
+            // InternalLustre.g:11413:2: iv_superAnnotation= superAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsAnnotationRule()); 
@@ -32100,7 +31804,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superAnnotation"
-    // InternalLustre.g:11533:1: superAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    // InternalLustre.g:11419:1: superAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
     public final EObject superAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32117,15 +31821,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11539:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
-            // InternalLustre.g:11540:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalLustre.g:11425:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalLustre.g:11426:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
-            // InternalLustre.g:11540:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt278=4;
-            alt278 = dfa278.predict(input);
-            switch (alt278) {
+            // InternalLustre.g:11426:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            int alt276=4;
+            alt276 = dfa276.predict(input);
+            switch (alt276) {
                 case 1 :
-                    // InternalLustre.g:11541:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalLustre.g:11427:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32152,7 +31856,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11553:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    // InternalLustre.g:11439:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32179,7 +31883,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:11565:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    // InternalLustre.g:11451:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32206,7 +31910,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:11577:3: this_TagAnnotation_3= ruleTagAnnotation
+                    // InternalLustre.g:11463:3: this_TagAnnotation_3= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32257,7 +31961,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperPragma"
-    // InternalLustre.g:11592:1: entrySuperPragma returns [EObject current=null] : iv_superPragma= superPragma EOF ;
+    // InternalLustre.g:11478:1: entrySuperPragma returns [EObject current=null] : iv_superPragma= superPragma EOF ;
     public final EObject entrySuperPragma() throws RecognitionException {
         EObject current = null;
 
@@ -32265,8 +31969,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11592:48: (iv_superPragma= superPragma EOF )
-            // InternalLustre.g:11593:2: iv_superPragma= superPragma EOF
+            // InternalLustre.g:11478:48: (iv_superPragma= superPragma EOF )
+            // InternalLustre.g:11479:2: iv_superPragma= superPragma EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsPragmaRule()); 
@@ -32297,7 +32001,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superPragma"
-    // InternalLustre.g:11599:1: superPragma returns [EObject current=null] : (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) ;
+    // InternalLustre.g:11485:1: superPragma returns [EObject current=null] : (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) ;
     public final EObject superPragma() throws RecognitionException {
         EObject current = null;
 
@@ -32310,15 +32014,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11605:2: ( (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) )
-            // InternalLustre.g:11606:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
+            // InternalLustre.g:11491:2: ( (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag ) )
+            // InternalLustre.g:11492:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
             {
-            // InternalLustre.g:11606:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
-            int alt279=2;
-            alt279 = dfa279.predict(input);
-            switch (alt279) {
+            // InternalLustre.g:11492:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )
+            int alt277=2;
+            alt277 = dfa277.predict(input);
+            switch (alt277) {
                 case 1 :
-                    // InternalLustre.g:11607:3: this_StringPragma_0= ruleStringPragma
+                    // InternalLustre.g:11493:3: this_StringPragma_0= ruleStringPragma
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32345,7 +32049,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11619:3: this_PragmaTag_1= rulePragmaTag
+                    // InternalLustre.g:11505:3: this_PragmaTag_1= rulePragmaTag
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32396,7 +32100,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperValuedAnnotation"
-    // InternalLustre.g:11634:1: entrySuperValuedAnnotation returns [EObject current=null] : iv_superValuedAnnotation= superValuedAnnotation EOF ;
+    // InternalLustre.g:11520:1: entrySuperValuedAnnotation returns [EObject current=null] : iv_superValuedAnnotation= superValuedAnnotation EOF ;
     public final EObject entrySuperValuedAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32404,8 +32108,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11634:58: (iv_superValuedAnnotation= superValuedAnnotation EOF )
-            // InternalLustre.g:11635:2: iv_superValuedAnnotation= superValuedAnnotation EOF
+            // InternalLustre.g:11520:58: (iv_superValuedAnnotation= superValuedAnnotation EOF )
+            // InternalLustre.g:11521:2: iv_superValuedAnnotation= superValuedAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsValuedAnnotationRule()); 
@@ -32436,7 +32140,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superValuedAnnotation"
-    // InternalLustre.g:11641:1: superValuedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) ;
+    // InternalLustre.g:11527:1: superValuedAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) ;
     public final EObject superValuedAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32451,15 +32155,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11647:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) )
-            // InternalLustre.g:11648:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
+            // InternalLustre.g:11533:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation ) )
+            // InternalLustre.g:11534:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
             {
-            // InternalLustre.g:11648:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
-            int alt280=3;
-            alt280 = dfa280.predict(input);
-            switch (alt280) {
+            // InternalLustre.g:11534:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )
+            int alt278=3;
+            alt278 = dfa278.predict(input);
+            switch (alt278) {
                 case 1 :
-                    // InternalLustre.g:11649:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalLustre.g:11535:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32486,7 +32190,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11661:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+                    // InternalLustre.g:11547:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32513,7 +32217,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:11673:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
+                    // InternalLustre.g:11559:3: this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32564,7 +32268,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entrySuperQuotedStringAnnotation"
-    // InternalLustre.g:11688:1: entrySuperQuotedStringAnnotation returns [EObject current=null] : iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF ;
+    // InternalLustre.g:11574:1: entrySuperQuotedStringAnnotation returns [EObject current=null] : iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF ;
     public final EObject entrySuperQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32572,8 +32276,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11688:64: (iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF )
-            // InternalLustre.g:11689:2: iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF
+            // InternalLustre.g:11574:64: (iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF )
+            // InternalLustre.g:11575:2: iv_superQuotedStringAnnotation= superQuotedStringAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getAnnotationsQuotedStringAnnotationRule()); 
@@ -32604,7 +32308,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "superQuotedStringAnnotation"
-    // InternalLustre.g:11695:1: superQuotedStringAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
+    // InternalLustre.g:11581:1: superQuotedStringAnnotation returns [EObject current=null] : (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) ;
     public final EObject superQuotedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32621,15 +32325,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11701:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
-            // InternalLustre.g:11702:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            // InternalLustre.g:11587:2: ( (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation ) )
+            // InternalLustre.g:11588:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
             {
-            // InternalLustre.g:11702:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
-            int alt281=4;
-            alt281 = dfa281.predict(input);
-            switch (alt281) {
+            // InternalLustre.g:11588:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )
+            int alt279=4;
+            alt279 = dfa279.predict(input);
+            switch (alt279) {
                 case 1 :
-                    // InternalLustre.g:11703:3: this_CommentAnnotation_0= ruleCommentAnnotation
+                    // InternalLustre.g:11589:3: this_CommentAnnotation_0= ruleCommentAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32656,7 +32360,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:11715:3: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
+                    // InternalLustre.g:11601:3: this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32683,7 +32387,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:11727:3: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
+                    // InternalLustre.g:11613:3: this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32710,7 +32414,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:11739:3: this_TagAnnotation_3= ruleTagAnnotation
+                    // InternalLustre.g:11625:3: this_TagAnnotation_3= ruleTagAnnotation
                     {
                     if ( state.backtracking==0 ) {
 
@@ -32761,7 +32465,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotation"
-    // InternalLustre.g:11754:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
+    // InternalLustre.g:11640:1: entryRuleCommentAnnotation returns [EObject current=null] : iv_ruleCommentAnnotation= ruleCommentAnnotation EOF ;
     public final EObject entryRuleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32769,8 +32473,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11754:58: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
-            // InternalLustre.g:11755:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
+            // InternalLustre.g:11640:58: (iv_ruleCommentAnnotation= ruleCommentAnnotation EOF )
+            // InternalLustre.g:11641:2: iv_ruleCommentAnnotation= ruleCommentAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotationRule()); 
@@ -32801,7 +32505,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotation"
-    // InternalLustre.g:11761:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
+    // InternalLustre.g:11647:1: ruleCommentAnnotation returns [EObject current=null] : ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32811,14 +32515,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11767:2: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
-            // InternalLustre.g:11768:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalLustre.g:11653:2: ( ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) ) )
+            // InternalLustre.g:11654:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
             {
-            // InternalLustre.g:11768:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
-            // InternalLustre.g:11769:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalLustre.g:11654:2: ( (lv_values_0_0= RULE_COMMENT_ANNOTATION ) )
+            // InternalLustre.g:11655:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
             {
-            // InternalLustre.g:11769:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
-            // InternalLustre.g:11770:4: lv_values_0_0= RULE_COMMENT_ANNOTATION
+            // InternalLustre.g:11655:3: (lv_values_0_0= RULE_COMMENT_ANNOTATION )
+            // InternalLustre.g:11656:4: lv_values_0_0= RULE_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -32866,7 +32570,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleCommentAnnotatonSL"
-    // InternalLustre.g:11789:1: entryRuleCommentAnnotatonSL returns [EObject current=null] : iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF ;
+    // InternalLustre.g:11675:1: entryRuleCommentAnnotatonSL returns [EObject current=null] : iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF ;
     public final EObject entryRuleCommentAnnotatonSL() throws RecognitionException {
         EObject current = null;
 
@@ -32874,8 +32578,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11789:59: (iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF )
-            // InternalLustre.g:11790:2: iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF
+            // InternalLustre.g:11675:59: (iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF )
+            // InternalLustre.g:11676:2: iv_ruleCommentAnnotatonSL= ruleCommentAnnotatonSL EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getCommentAnnotatonSLRule()); 
@@ -32906,7 +32610,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCommentAnnotatonSL"
-    // InternalLustre.g:11796:1: ruleCommentAnnotatonSL returns [EObject current=null] : ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) ;
+    // InternalLustre.g:11682:1: ruleCommentAnnotatonSL returns [EObject current=null] : ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) ;
     public final EObject ruleCommentAnnotatonSL() throws RecognitionException {
         EObject current = null;
 
@@ -32916,14 +32620,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11802:2: ( ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) )
-            // InternalLustre.g:11803:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
+            // InternalLustre.g:11688:2: ( ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) ) )
+            // InternalLustre.g:11689:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
             {
-            // InternalLustre.g:11803:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
-            // InternalLustre.g:11804:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
+            // InternalLustre.g:11689:2: ( (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION ) )
+            // InternalLustre.g:11690:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
             {
-            // InternalLustre.g:11804:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
-            // InternalLustre.g:11805:4: lv_values_0_0= RULE_SL_COMMENT_ANNOTATION
+            // InternalLustre.g:11690:3: (lv_values_0_0= RULE_SL_COMMENT_ANNOTATION )
+            // InternalLustre.g:11691:4: lv_values_0_0= RULE_SL_COMMENT_ANNOTATION
             {
             lv_values_0_0=(Token)match(input,RULE_SL_COMMENT_ANNOTATION,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -32971,7 +32675,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleTagAnnotation"
-    // InternalLustre.g:11824:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    // InternalLustre.g:11710:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
     public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -32979,8 +32683,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11824:54: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
-            // InternalLustre.g:11825:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
+            // InternalLustre.g:11710:54: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // InternalLustre.g:11711:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getTagAnnotationRule()); 
@@ -33011,7 +32715,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleTagAnnotation"
-    // InternalLustre.g:11831:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalLustre.g:11717:1: ruleTagAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33023,11 +32727,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11837:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalLustre.g:11838:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalLustre.g:11723:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalLustre.g:11724:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalLustre.g:11838:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalLustre.g:11839:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11724:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalLustre.g:11725:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33035,11 +32739,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:11843:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:11844:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11729:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11730:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:11844:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:11845:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:11730:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11731:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -33095,7 +32799,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePragmaTag"
-    // InternalLustre.g:11866:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
+    // InternalLustre.g:11752:1: entryRulePragmaTag returns [EObject current=null] : iv_rulePragmaTag= rulePragmaTag EOF ;
     public final EObject entryRulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -33103,8 +32807,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11866:50: (iv_rulePragmaTag= rulePragmaTag EOF )
-            // InternalLustre.g:11867:2: iv_rulePragmaTag= rulePragmaTag EOF
+            // InternalLustre.g:11752:50: (iv_rulePragmaTag= rulePragmaTag EOF )
+            // InternalLustre.g:11753:2: iv_rulePragmaTag= rulePragmaTag EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getPragmaTagRule()); 
@@ -33135,7 +32839,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePragmaTag"
-    // InternalLustre.g:11873:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
+    // InternalLustre.g:11759:1: rulePragmaTag returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) ;
     public final EObject rulePragmaTag() throws RecognitionException {
         EObject current = null;
 
@@ -33147,11 +32851,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11879:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
-            // InternalLustre.g:11880:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalLustre.g:11765:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ) )
+            // InternalLustre.g:11766:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
             {
-            // InternalLustre.g:11880:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
-            // InternalLustre.g:11881:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11766:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) )
+            // InternalLustre.g:11767:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) )
             {
             otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33159,11 +32863,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getPragmaTagAccess().getNumberSignKeyword_0());
               		
             }
-            // InternalLustre.g:11885:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:11886:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11771:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11772:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:11886:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:11887:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:11772:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11773:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -33219,7 +32923,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleKeyStringValueAnnotation"
-    // InternalLustre.g:11908:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    // InternalLustre.g:11794:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
     public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33227,8 +32931,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:11908:65: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
-            // InternalLustre.g:11909:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            // InternalLustre.g:11794:65: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // InternalLustre.g:11795:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getKeyStringValueAnnotationRule()); 
@@ -33259,7 +32963,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleKeyStringValueAnnotation"
-    // InternalLustre.g:11915:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    // InternalLustre.g:11801:1: ruleKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
     public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -33276,11 +32980,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:11921:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalLustre.g:11922:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:11807:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalLustre.g:11808:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalLustre.g:11922:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalLustre.g:11923:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalLustre.g:11808:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:11809:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -33288,11 +32992,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(otherlv_0, grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:11927:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:11928:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11813:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11814:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:11928:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:11929:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:11814:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11815:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
@@ -33323,11 +33027,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:11946:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalLustre.g:11947:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalLustre.g:11832:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalLustre.g:11833:4: (lv_values_2_0= ruleEStringAllTypes )
             {
-            // InternalLustre.g:11947:4: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalLustre.g:11948:5: lv_values_2_0= ruleEStringAllTypes
+            // InternalLustre.g:11833:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalLustre.g:11834:5: lv_values_2_0= ruleEStringAllTypes
             {
             if ( state.backtracking==0 ) {
 
@@ -33358,20 +33062,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:11965:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
-            loop282:
+            // InternalLustre.g:11851:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            loop280:
             do {
-                int alt282=2;
-                int LA282_0 = input.LA(1);
+                int alt280=2;
+                int LA280_0 = input.LA(1);
 
-                if ( (LA282_0==23) ) {
-                    alt282=1;
+                if ( (LA280_0==23) ) {
+                    alt280=1;
                 }
 
 
-                switch (alt282) {
+                switch (alt280) {
             	case 1 :
-            	    // InternalLustre.g:11966:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:11852:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
             	    {
             	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_133); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
@@ -33379,11 +33083,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	      				newLeafNode(otherlv_3, grammarAccess.getKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalLustre.g:11970:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalLustre.g:11971:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:11856:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:11857:5: (lv_values_4_0= ruleEStringAllTypes )
             	    {
-            	    // InternalLustre.g:11971:5: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalLustre.g:11972:6: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalLustre.g:11857:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:11858:6: lv_values_4_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
 
@@ -33399,6 +33103,464 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             	      						if (current==null) {
             	      							current = createModelElementForParent(grammarAccess.getKeyStringValueAnnotationRule());
+            	      						}
+            	      						add(
+            	      							current,
+            	      							"values",
+            	      							lv_values_4_0,
+            	      							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	      						afterParserOrEnumRuleCall();
+            	      					
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop280;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleKeyStringValueAnnotation"
+
+
+    // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
+    // InternalLustre.g:11880:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleRestrictedKeyStringValueAnnotation = null;
+
+
+        try {
+            // InternalLustre.g:11880:75: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
+            // InternalLustre.g:11881:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleRestrictedKeyStringValueAnnotation=ruleRestrictedKeyStringValueAnnotation();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleRestrictedKeyStringValueAnnotation; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleRestrictedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
+    // InternalLustre.g:11887:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
+    public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_3=null;
+        AntlrDatatypeRuleToken lv_name_1_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_2_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_4_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalLustre.g:11893:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
+            // InternalLustre.g:11894:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            {
+            // InternalLustre.g:11894:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalLustre.g:11895:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            {
+            otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+              		
+            }
+            // InternalLustre.g:11899:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11900:4: (lv_name_1_0= ruleExtendedID )
+            {
+            // InternalLustre.g:11900:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11901:5: lv_name_1_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_135);
+            lv_name_1_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+              					}
+              					set(
+              						current,
+              						"name",
+              						lv_name_1_0,
+              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:11918:3: ( (lv_values_2_0= ruleEStringBoolean ) )
+            // InternalLustre.g:11919:4: (lv_values_2_0= ruleEStringBoolean )
+            {
+            // InternalLustre.g:11919:4: (lv_values_2_0= ruleEStringBoolean )
+            // InternalLustre.g:11920:5: lv_values_2_0= ruleEStringBoolean
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_134);
+            lv_values_2_0=ruleEStringBoolean();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+              					}
+              					add(
+              						current,
+              						"values",
+              						lv_values_2_0,
+              						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:11937:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            loop281:
+            do {
+                int alt281=2;
+                int LA281_0 = input.LA(1);
+
+                if ( (LA281_0==23) ) {
+                    alt281=1;
+                }
+
+
+                switch (alt281) {
+            	case 1 :
+            	    // InternalLustre.g:11938:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    {
+            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_135); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	      			
+            	    }
+            	    // InternalLustre.g:11942:4: ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalLustre.g:11943:5: (lv_values_4_0= ruleEStringBoolean )
+            	    {
+            	    // InternalLustre.g:11943:5: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalLustre.g:11944:6: lv_values_4_0= ruleEStringBoolean
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
+            	      					
+            	    }
+            	    pushFollow(FollowSets000.FOLLOW_134);
+            	    lv_values_4_0=ruleEStringBoolean();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      						if (current==null) {
+            	      							current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+            	      						}
+            	      						add(
+            	      							current,
+            	      							"values",
+            	      							lv_values_4_0,
+            	      							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	      						afterParserOrEnumRuleCall();
+            	      					
+            	    }
+
+            	    }
+
+
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop281;
+                }
+            } while (true);
+
+
+            }
+
+
+            }
+
+            if ( state.backtracking==0 ) {
+
+              	leaveRule();
+
+            }
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
+
+
+    // $ANTLR start "entryRuleStringPragma"
+    // InternalLustre.g:11966:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
+    public final EObject entryRuleStringPragma() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleStringPragma = null;
+
+
+        try {
+            // InternalLustre.g:11966:53: (iv_ruleStringPragma= ruleStringPragma EOF )
+            // InternalLustre.g:11967:2: iv_ruleStringPragma= ruleStringPragma EOF
+            {
+            if ( state.backtracking==0 ) {
+               newCompositeNode(grammarAccess.getStringPragmaRule()); 
+            }
+            pushFollow(FollowSets000.FOLLOW_1);
+            iv_ruleStringPragma=ruleStringPragma();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+               current =iv_ruleStringPragma; 
+            }
+            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
+
+            }
+
+        }
+
+            catch (RecognitionException re) {
+                recover(input,re);
+                appendSkippedTokens();
+            }
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleStringPragma"
+
+
+    // $ANTLR start "ruleStringPragma"
+    // InternalLustre.g:11973:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
+    public final EObject ruleStringPragma() throws RecognitionException {
+        EObject current = null;
+
+        Token otherlv_0=null;
+        Token otherlv_3=null;
+        AntlrDatatypeRuleToken lv_name_1_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_2_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_4_0 = null;
+
+
+
+        	enterRule();
+
+        try {
+            // InternalLustre.g:11979:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalLustre.g:11980:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            {
+            // InternalLustre.g:11980:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:11981:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            {
+            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
+              		
+            }
+            // InternalLustre.g:11985:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:11986:4: (lv_name_1_0= ruleExtendedID )
+            {
+            // InternalLustre.g:11986:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:11987:5: lv_name_1_0= ruleExtendedID
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_133);
+            lv_name_1_0=ruleExtendedID();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+              					}
+              					set(
+              						current,
+              						"name",
+              						lv_name_1_0,
+              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:12004:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
+            // InternalLustre.g:12005:4: (lv_values_2_0= ruleEStringAllTypes )
+            {
+            // InternalLustre.g:12005:4: (lv_values_2_0= ruleEStringAllTypes )
+            // InternalLustre.g:12006:5: lv_values_2_0= ruleEStringAllTypes
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_134);
+            lv_values_2_0=ruleEStringAllTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+              					}
+              					add(
+              						current,
+              						"values",
+              						lv_values_2_0,
+              						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:12023:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            loop282:
+            do {
+                int alt282=2;
+                int LA282_0 = input.LA(1);
+
+                if ( (LA282_0==23) ) {
+                    alt282=1;
+                }
+
+
+                switch (alt282) {
+            	case 1 :
+            	    // InternalLustre.g:12024:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    {
+            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      				newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
+            	      			
+            	    }
+            	    // InternalLustre.g:12028:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:12029:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    {
+            	    // InternalLustre.g:12029:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:12030:6: lv_values_4_0= ruleEStringAllTypes
+            	    {
+            	    if ( state.backtracking==0 ) {
+
+            	      						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
+            	      					
+            	    }
+            	    pushFollow(FollowSets000.FOLLOW_134);
+            	    lv_values_4_0=ruleEStringAllTypes();
+
+            	    state._fsp--;
+            	    if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      						if (current==null) {
+            	      							current = createModelElementForParent(grammarAccess.getStringPragmaRule());
             	      						}
             	      						add(
             	      							current,
@@ -33444,31 +33606,31 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleKeyStringValueAnnotation"
+    // $ANTLR end "ruleStringPragma"
 
 
-    // $ANTLR start "entryRuleRestrictedKeyStringValueAnnotation"
-    // InternalLustre.g:11994:1: entryRuleRestrictedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12052:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleRestrictedKeyStringValueAnnotation = null;
+        EObject iv_ruleTypedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalLustre.g:11994:75: (iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF )
-            // InternalLustre.g:11995:2: iv_ruleRestrictedKeyStringValueAnnotation= ruleRestrictedKeyStringValueAnnotation EOF
+            // InternalLustre.g:12052:70: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
+            // InternalLustre.g:12053:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleRestrictedKeyStringValueAnnotation=ruleRestrictedKeyStringValueAnnotation();
+            iv_ruleTypedKeyStringValueAnnotation=ruleTypedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleRestrictedKeyStringValueAnnotation; 
+               current =iv_ruleTypedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -33484,51 +33646,55 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleRestrictedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleRestrictedKeyStringValueAnnotation"
-    // InternalLustre.g:12001:1: ruleRestrictedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) ;
-    public final EObject ruleRestrictedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12059:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
+    public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_3=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token otherlv_6=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_2_0 = null;
+        AntlrDatatypeRuleToken lv_type_3_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_4_0 = null;
+        AntlrDatatypeRuleToken lv_values_5_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalLustre.g:12007:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* ) )
-            // InternalLustre.g:12008:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
+            // InternalLustre.g:12065:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
+            // InternalLustre.g:12066:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
             {
-            // InternalLustre.g:12008:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )* )
-            // InternalLustre.g:12009:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringBoolean ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            // InternalLustre.g:12066:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:12067:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_0, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:12013:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12014:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12071:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:12072:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:12014:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12015:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:12072:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12073:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_135);
+            pushFollow(FollowSets000.FOLLOW_136);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33536,7 +33702,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
               					}
               					set(
               						current,
@@ -33552,32 +33718,38 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12032:3: ( (lv_values_2_0= ruleEStringBoolean ) )
-            // InternalLustre.g:12033:4: (lv_values_2_0= ruleEStringBoolean )
+            otherlv_2=(Token)match(input,74,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+              		
+            }
+            // InternalLustre.g:12094:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalLustre.g:12095:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalLustre.g:12033:4: (lv_values_2_0= ruleEStringBoolean )
-            // InternalLustre.g:12034:5: lv_values_2_0= ruleEStringBoolean
+            // InternalLustre.g:12095:4: (lv_type_3_0= ruleExtendedID )
+            // InternalLustre.g:12096:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_2_0());
+              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_134);
-            lv_values_2_0=ruleEStringBoolean();
+            pushFollow(FollowSets000.FOLLOW_104);
+            lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
               					}
-              					add(
+              					set(
               						current,
-              						"values",
-              						lv_values_2_0,
-              						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+              						"type",
+              						lv_type_3_0,
+              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               					afterParserOrEnumRuleCall();
               				
             }
@@ -33587,7 +33759,48 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12051:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) ) )*
+            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+              		
+            }
+            // InternalLustre.g:12117:3: ( (lv_values_5_0= ruleEStringAllTypes ) )
+            // InternalLustre.g:12118:4: (lv_values_5_0= ruleEStringAllTypes )
+            {
+            // InternalLustre.g:12118:4: (lv_values_5_0= ruleEStringAllTypes )
+            // InternalLustre.g:12119:5: lv_values_5_0= ruleEStringAllTypes
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_134);
+            lv_values_5_0=ruleEStringAllTypes();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              					}
+              					add(
+              						current,
+              						"values",
+              						lv_values_5_0,
+              						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:12136:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
             loop283:
             do {
                 int alt283=2;
@@ -33600,40 +33813,40 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                 switch (alt283) {
             	case 1 :
-            	    // InternalLustre.g:12052:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringBoolean ) )
+            	    // InternalLustre.g:12137:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
             	    {
-            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_135); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_133); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      				newLeafNode(otherlv_3, grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
+            	      				newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalLustre.g:12056:4: ( (lv_values_4_0= ruleEStringBoolean ) )
-            	    // InternalLustre.g:12057:5: (lv_values_4_0= ruleEStringBoolean )
+            	    // InternalLustre.g:12141:4: ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:12142:5: (lv_values_7_0= ruleEStringAllTypes )
             	    {
-            	    // InternalLustre.g:12057:5: (lv_values_4_0= ruleEStringBoolean )
-            	    // InternalLustre.g:12058:6: lv_values_4_0= ruleEStringBoolean
+            	    // InternalLustre.g:12142:5: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:12143:6: lv_values_7_0= ruleEStringAllTypes
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      						newCompositeNode(grammarAccess.getRestrictedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_3_1_0());
+            	      						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
             	      					
             	    }
             	    pushFollow(FollowSets000.FOLLOW_134);
-            	    lv_values_4_0=ruleEStringBoolean();
+            	    lv_values_7_0=ruleEStringAllTypes();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						if (current==null) {
-            	      							current = createModelElementForParent(grammarAccess.getRestrictedKeyStringValueAnnotationRule());
+            	      							current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
             	      						}
             	      						add(
             	      							current,
             	      							"values",
-            	      							lv_values_4_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+            	      							lv_values_7_0,
+            	      							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
             	      						afterParserOrEnumRuleCall();
             	      					
             	    }
@@ -33673,31 +33886,31 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleRestrictedKeyStringValueAnnotation"
+    // $ANTLR end "ruleTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleStringPragma"
-    // InternalLustre.g:12080:1: entryRuleStringPragma returns [EObject current=null] : iv_ruleStringPragma= ruleStringPragma EOF ;
-    public final EObject entryRuleStringPragma() throws RecognitionException {
+    // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12165:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleStringPragma = null;
+        EObject iv_ruleRestrictedTypedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalLustre.g:12080:53: (iv_ruleStringPragma= ruleStringPragma EOF )
-            // InternalLustre.g:12081:2: iv_ruleStringPragma= ruleStringPragma EOF
+            // InternalLustre.g:12165:80: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
+            // InternalLustre.g:12166:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getStringPragmaRule()); 
+               newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleStringPragma=ruleStringPragma();
+            iv_ruleRestrictedTypedKeyStringValueAnnotation=ruleRestrictedTypedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleStringPragma; 
+               current =iv_ruleRestrictedTypedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -33713,51 +33926,55 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleStringPragma"
+    // $ANTLR end "entryRuleRestrictedTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleStringPragma"
-    // InternalLustre.g:12087:1: ruleStringPragma returns [EObject current=null] : (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) ;
-    public final EObject ruleStringPragma() throws RecognitionException {
+    // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12172:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
+    public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_3=null;
+        Token otherlv_2=null;
+        Token otherlv_4=null;
+        Token otherlv_6=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_2_0 = null;
+        AntlrDatatypeRuleToken lv_type_3_0 = null;
 
-        AntlrDatatypeRuleToken lv_values_4_0 = null;
+        AntlrDatatypeRuleToken lv_values_5_0 = null;
+
+        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalLustre.g:12093:2: ( (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalLustre.g:12094:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:12178:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
+            // InternalLustre.g:12179:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
             {
-            // InternalLustre.g:12094:2: (otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )* )
-            // InternalLustre.g:12095:3: otherlv_0= '#' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= ruleEStringAllTypes ) ) (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            // InternalLustre.g:12179:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalLustre.g:12180:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             {
-            otherlv_0=(Token)match(input,89,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_0, grammarAccess.getStringPragmaAccess().getNumberSignKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:12099:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12100:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12184:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:12185:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:12100:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12101:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:12185:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12186:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getStringPragmaAccess().getNameExtendedIDParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_133);
+            pushFollow(FollowSets000.FOLLOW_136);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33765,7 +33982,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
               					}
               					set(
               						current,
@@ -33781,32 +33998,38 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12118:3: ( (lv_values_2_0= ruleEStringAllTypes ) )
-            // InternalLustre.g:12119:4: (lv_values_2_0= ruleEStringAllTypes )
+            otherlv_2=(Token)match(input,74,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+              		
+            }
+            // InternalLustre.g:12207:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalLustre.g:12208:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalLustre.g:12119:4: (lv_values_2_0= ruleEStringAllTypes )
-            // InternalLustre.g:12120:5: lv_values_2_0= ruleEStringAllTypes
+            // InternalLustre.g:12208:4: (lv_type_3_0= ruleExtendedID )
+            // InternalLustre.g:12209:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_2_0());
+              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_134);
-            lv_values_2_0=ruleEStringAllTypes();
+            pushFollow(FollowSets000.FOLLOW_104);
+            lv_type_3_0=ruleExtendedID();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
               					}
-              					add(
+              					set(
               						current,
-              						"values",
-              						lv_values_2_0,
-              						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+              						"type",
+              						lv_type_3_0,
+              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
               					afterParserOrEnumRuleCall();
               				
             }
@@ -33816,7 +34039,48 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12137:3: (otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) ) )*
+            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_135); if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+              		
+            }
+            // InternalLustre.g:12230:3: ( (lv_values_5_0= ruleEStringBoolean ) )
+            // InternalLustre.g:12231:4: (lv_values_5_0= ruleEStringBoolean )
+            {
+            // InternalLustre.g:12231:4: (lv_values_5_0= ruleEStringBoolean )
+            // InternalLustre.g:12232:5: lv_values_5_0= ruleEStringBoolean
+            {
+            if ( state.backtracking==0 ) {
+
+              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
+              				
+            }
+            pushFollow(FollowSets000.FOLLOW_134);
+            lv_values_5_0=ruleEStringBoolean();
+
+            state._fsp--;
+            if (state.failed) return current;
+            if ( state.backtracking==0 ) {
+
+              					if (current==null) {
+              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              					}
+              					add(
+              						current,
+              						"values",
+              						lv_values_5_0,
+              						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
+              					afterParserOrEnumRuleCall();
+              				
+            }
+
+            }
+
+
+            }
+
+            // InternalLustre.g:12249:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
             loop284:
             do {
                 int alt284=2;
@@ -33829,40 +34093,40 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                 switch (alt284) {
             	case 1 :
-            	    // InternalLustre.g:12138:4: otherlv_3= ',' ( (lv_values_4_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:12250:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
             	    {
-            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_135); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      				newLeafNode(otherlv_3, grammarAccess.getStringPragmaAccess().getCommaKeyword_3_0());
+            	      				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalLustre.g:12142:4: ( (lv_values_4_0= ruleEStringAllTypes ) )
-            	    // InternalLustre.g:12143:5: (lv_values_4_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:12254:4: ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalLustre.g:12255:5: (lv_values_7_0= ruleEStringBoolean )
             	    {
-            	    // InternalLustre.g:12143:5: (lv_values_4_0= ruleEStringAllTypes )
-            	    // InternalLustre.g:12144:6: lv_values_4_0= ruleEStringAllTypes
+            	    // InternalLustre.g:12255:5: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalLustre.g:12256:6: lv_values_7_0= ruleEStringBoolean
             	    {
             	    if ( state.backtracking==0 ) {
 
-            	      						newCompositeNode(grammarAccess.getStringPragmaAccess().getValuesEStringAllTypesParserRuleCall_3_1_0());
+            	      						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
             	      					
             	    }
             	    pushFollow(FollowSets000.FOLLOW_134);
-            	    lv_values_4_0=ruleEStringAllTypes();
+            	    lv_values_7_0=ruleEStringBoolean();
 
             	    state._fsp--;
             	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						if (current==null) {
-            	      							current = createModelElementForParent(grammarAccess.getStringPragmaRule());
+            	      							current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
             	      						}
             	      						add(
             	      							current,
             	      							"values",
-            	      							lv_values_4_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
+            	      							lv_values_7_0,
+            	      							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
             	      						afterParserOrEnumRuleCall();
             	      					
             	    }
@@ -33902,31 +34166,31 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleStringPragma"
+    // $ANTLR end "ruleRestrictedTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12166:1: entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
+    // InternalLustre.g:12278:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleTypedKeyStringValueAnnotation = null;
+        EObject iv_ruleQuotedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalLustre.g:12166:70: (iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF )
-            // InternalLustre.g:12167:2: iv_ruleTypedKeyStringValueAnnotation= ruleTypedKeyStringValueAnnotation EOF
+            // InternalLustre.g:12278:71: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
+            // InternalLustre.g:12279:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleTypedKeyStringValueAnnotation=ruleTypedKeyStringValueAnnotation();
+            iv_ruleQuotedKeyStringValueAnnotation=ruleQuotedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleTypedKeyStringValueAnnotation; 
+               current =iv_ruleQuotedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -33942,55 +34206,49 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleTypedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleQuotedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12173:1: ruleTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) ;
-    public final EObject ruleTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
+    // InternalLustre.g:12285:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
+    public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
+        Token lv_values_2_0=null;
+        Token otherlv_3=null;
+        Token lv_values_4_0=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_type_3_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_5_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalLustre.g:12179:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* ) )
-            // InternalLustre.g:12180:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
+            // InternalLustre.g:12291:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
+            // InternalLustre.g:12292:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
             {
-            // InternalLustre.g:12180:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )* )
-            // InternalLustre.g:12181:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringAllTypes ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalLustre.g:12292:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
+            // InternalLustre.g:12293:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_0, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:12185:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12186:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12297:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:12298:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:12186:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12187:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:12298:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12299:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_136);
+            pushFollow(FollowSets000.FOLLOW_3);
             lv_name_1_0=ruleExtendedID();
 
             state._fsp--;
@@ -33998,7 +34256,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              						current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
               					}
               					set(
               						current,
@@ -34014,80 +34272,28 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,74,FollowSets000.FOLLOW_5); if (state.failed) return current;
+            // InternalLustre.g:12316:3: ( (lv_values_2_0= RULE_STRING ) )
+            // InternalLustre.g:12317:4: (lv_values_2_0= RULE_STRING )
+            {
+            // InternalLustre.g:12317:4: (lv_values_2_0= RULE_STRING )
+            // InternalLustre.g:12318:5: lv_values_2_0= RULE_STRING
+            {
+            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_2, grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-              		
-            }
-            // InternalLustre.g:12208:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalLustre.g:12209:4: (lv_type_3_0= ruleExtendedID )
-            {
-            // InternalLustre.g:12209:4: (lv_type_3_0= ruleExtendedID )
-            // InternalLustre.g:12210:5: lv_type_3_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-
-              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
+              					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_104);
-            lv_type_3_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+              						current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
               					}
-              					set(
-              						current,
-              						"type",
-              						lv_type_3_0,
-              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              					afterParserOrEnumRuleCall();
-              				
-            }
-
-            }
-
-
-            }
-
-            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_133); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_4, grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-              		
-            }
-            // InternalLustre.g:12231:3: ( (lv_values_5_0= ruleEStringAllTypes ) )
-            // InternalLustre.g:12232:4: (lv_values_5_0= ruleEStringAllTypes )
-            {
-            // InternalLustre.g:12232:4: (lv_values_5_0= ruleEStringAllTypes )
-            // InternalLustre.g:12233:5: lv_values_5_0= ruleEStringAllTypes
-            {
-            if ( state.backtracking==0 ) {
-
-              					newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_5_0());
-              				
-            }
-            pushFollow(FollowSets000.FOLLOW_134);
-            lv_values_5_0=ruleEStringAllTypes();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
-              					}
-              					add(
+              					addWithLastConsumed(
               						current,
               						"values",
-              						lv_values_5_0,
-              						"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-              					afterParserOrEnumRuleCall();
+              						lv_values_2_0,
+              						"de.cau.cs.kieler.annotations.Annotations.STRING");
               				
             }
 
@@ -34096,7 +34302,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12250:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) ) )*
+            // InternalLustre.g:12334:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
             loop285:
             do {
                 int alt285=2;
@@ -34109,41 +34315,36 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                 switch (alt285) {
             	case 1 :
-            	    // InternalLustre.g:12251:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringAllTypes ) )
+            	    // InternalLustre.g:12335:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
             	    {
-            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_133); if (state.failed) return current;
+            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_3); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      				newLeafNode(otherlv_6, grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	      				newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
             	      			
             	    }
-            	    // InternalLustre.g:12255:4: ( (lv_values_7_0= ruleEStringAllTypes ) )
-            	    // InternalLustre.g:12256:5: (lv_values_7_0= ruleEStringAllTypes )
+            	    // InternalLustre.g:12339:4: ( (lv_values_4_0= RULE_STRING ) )
+            	    // InternalLustre.g:12340:5: (lv_values_4_0= RULE_STRING )
             	    {
-            	    // InternalLustre.g:12256:5: (lv_values_7_0= ruleEStringAllTypes )
-            	    // InternalLustre.g:12257:6: lv_values_7_0= ruleEStringAllTypes
+            	    // InternalLustre.g:12340:5: (lv_values_4_0= RULE_STRING )
+            	    // InternalLustre.g:12341:6: lv_values_4_0= RULE_STRING
             	    {
+            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      						newCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValuesEStringAllTypesParserRuleCall_6_1_0());
+            	      						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_134);
-            	    lv_values_7_0=ruleEStringAllTypes();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						if (current==null) {
-            	      							current = createModelElementForParent(grammarAccess.getTypedKeyStringValueAnnotationRule());
+            	      							current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
             	      						}
-            	      						add(
+            	      						addWithLastConsumed(
             	      							current,
             	      							"values",
-            	      							lv_values_7_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.EStringAllTypes");
-            	      						afterParserOrEnumRuleCall();
+            	      							lv_values_4_0,
+            	      							"de.cau.cs.kieler.annotations.Annotations.STRING");
             	      					
             	    }
 
@@ -34182,31 +34383,31 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleTypedKeyStringValueAnnotation"
+    // $ANTLR end "ruleQuotedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "entryRuleRestrictedTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12279:1: entryRuleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12362:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleRestrictedTypedKeyStringValueAnnotation = null;
+        EObject iv_ruleQuotedTypedKeyStringValueAnnotation = null;
 
 
         try {
-            // InternalLustre.g:12279:80: (iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF )
-            // InternalLustre.g:12280:2: iv_ruleRestrictedTypedKeyStringValueAnnotation= ruleRestrictedTypedKeyStringValueAnnotation EOF
+            // InternalLustre.g:12362:76: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
+            // InternalLustre.g:12363:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
             {
             if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule()); 
+               newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
             }
             pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleRestrictedTypedKeyStringValueAnnotation=ruleRestrictedTypedKeyStringValueAnnotation();
+            iv_ruleQuotedTypedKeyStringValueAnnotation=ruleQuotedTypedKeyStringValueAnnotation();
 
             state._fsp--;
             if (state.failed) return current;
             if ( state.backtracking==0 ) {
-               current =iv_ruleRestrictedTypedKeyStringValueAnnotation; 
+               current =iv_ruleQuotedTypedKeyStringValueAnnotation; 
             }
             match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
 
@@ -34222,52 +34423,50 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "entryRuleRestrictedTypedKeyStringValueAnnotation"
+    // $ANTLR end "entryRuleQuotedTypedKeyStringValueAnnotation"
 
 
-    // $ANTLR start "ruleRestrictedTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12286:1: ruleRestrictedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) ;
-    public final EObject ruleRestrictedTypedKeyStringValueAnnotation() throws RecognitionException {
+    // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
+    // InternalLustre.g:12369:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
+    public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_2=null;
         Token otherlv_4=null;
+        Token lv_values_5_0=null;
         Token otherlv_6=null;
+        Token lv_values_7_0=null;
         AntlrDatatypeRuleToken lv_name_1_0 = null;
 
         AntlrDatatypeRuleToken lv_type_3_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_5_0 = null;
-
-        AntlrDatatypeRuleToken lv_values_7_0 = null;
 
 
 
         	enterRule();
 
         try {
-            // InternalLustre.g:12292:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* ) )
-            // InternalLustre.g:12293:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
+            // InternalLustre.g:12375:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
+            // InternalLustre.g:12376:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
             {
-            // InternalLustre.g:12293:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )* )
-            // InternalLustre.g:12294:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= ruleEStringBoolean ) ) (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalLustre.g:12376:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
+            // InternalLustre.g:12377:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             {
             otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_0, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
+              			newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
               		
             }
-            // InternalLustre.g:12298:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12299:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12381:3: ( (lv_name_1_0= ruleExtendedID ) )
+            // InternalLustre.g:12382:4: (lv_name_1_0= ruleExtendedID )
             {
-            // InternalLustre.g:12299:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12300:5: lv_name_1_0= ruleExtendedID
+            // InternalLustre.g:12382:4: (lv_name_1_0= ruleExtendedID )
+            // InternalLustre.g:12383:5: lv_name_1_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
+              					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
               				
             }
             pushFollow(FollowSets000.FOLLOW_136);
@@ -34278,7 +34477,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
               					}
               					set(
               						current,
@@ -34297,18 +34496,18 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             otherlv_2=(Token)match(input,74,FollowSets000.FOLLOW_5); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_2, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+              			newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
               		
             }
-            // InternalLustre.g:12321:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalLustre.g:12322:4: (lv_type_3_0= ruleExtendedID )
+            // InternalLustre.g:12404:3: ( (lv_type_3_0= ruleExtendedID ) )
+            // InternalLustre.g:12405:4: (lv_type_3_0= ruleExtendedID )
             {
-            // InternalLustre.g:12322:4: (lv_type_3_0= ruleExtendedID )
-            // InternalLustre.g:12323:5: lv_type_3_0= ruleExtendedID
+            // InternalLustre.g:12405:4: (lv_type_3_0= ruleExtendedID )
+            // InternalLustre.g:12406:5: lv_type_3_0= ruleExtendedID
             {
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
+              					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
               				
             }
             pushFollow(FollowSets000.FOLLOW_104);
@@ -34319,7 +34518,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
               					}
               					set(
               						current,
@@ -34335,39 +34534,34 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_135); if (state.failed) return current;
+            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_3); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(otherlv_4, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+              			newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
               		
             }
-            // InternalLustre.g:12344:3: ( (lv_values_5_0= ruleEStringBoolean ) )
-            // InternalLustre.g:12345:4: (lv_values_5_0= ruleEStringBoolean )
+            // InternalLustre.g:12427:3: ( (lv_values_5_0= RULE_STRING ) )
+            // InternalLustre.g:12428:4: (lv_values_5_0= RULE_STRING )
             {
-            // InternalLustre.g:12345:4: (lv_values_5_0= ruleEStringBoolean )
-            // InternalLustre.g:12346:5: lv_values_5_0= ruleEStringBoolean
+            // InternalLustre.g:12428:4: (lv_values_5_0= RULE_STRING )
+            // InternalLustre.g:12429:5: lv_values_5_0= RULE_STRING
             {
+            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              					newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_5_0());
+              					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
               				
             }
-            pushFollow(FollowSets000.FOLLOW_134);
-            lv_values_5_0=ruleEStringBoolean();
-
-            state._fsp--;
-            if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+              						current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
               					}
-              					add(
+              					addWithLastConsumed(
               						current,
               						"values",
               						lv_values_5_0,
-              						"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-              					afterParserOrEnumRuleCall();
+              						"de.cau.cs.kieler.annotations.Annotations.STRING");
               				
             }
 
@@ -34376,7 +34570,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
             }
 
-            // InternalLustre.g:12363:3: (otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) ) )*
+            // InternalLustre.g:12445:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
             loop286:
             do {
                 int alt286=2;
@@ -34389,41 +34583,36 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
                 switch (alt286) {
             	case 1 :
-            	    // InternalLustre.g:12364:4: otherlv_6= ',' ( (lv_values_7_0= ruleEStringBoolean ) )
+            	    // InternalLustre.g:12446:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
             	    {
-            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_135); if (state.failed) return current;
+            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_3); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      				newLeafNode(otherlv_6, grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
+            	      				newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
             	      			
             	    }
-            	    // InternalLustre.g:12368:4: ( (lv_values_7_0= ruleEStringBoolean ) )
-            	    // InternalLustre.g:12369:5: (lv_values_7_0= ruleEStringBoolean )
+            	    // InternalLustre.g:12450:4: ( (lv_values_7_0= RULE_STRING ) )
+            	    // InternalLustre.g:12451:5: (lv_values_7_0= RULE_STRING )
             	    {
-            	    // InternalLustre.g:12369:5: (lv_values_7_0= ruleEStringBoolean )
-            	    // InternalLustre.g:12370:6: lv_values_7_0= ruleEStringBoolean
+            	    // InternalLustre.g:12451:5: (lv_values_7_0= RULE_STRING )
+            	    // InternalLustre.g:12452:6: lv_values_7_0= RULE_STRING
             	    {
+            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
-            	      						newCompositeNode(grammarAccess.getRestrictedTypedKeyStringValueAnnotationAccess().getValuesEStringBooleanParserRuleCall_6_1_0());
+            	      						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
             	      					
             	    }
-            	    pushFollow(FollowSets000.FOLLOW_134);
-            	    lv_values_7_0=ruleEStringBoolean();
-
-            	    state._fsp--;
-            	    if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      						if (current==null) {
-            	      							current = createModelElementForParent(grammarAccess.getRestrictedTypedKeyStringValueAnnotationRule());
+            	      							current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
             	      						}
-            	      						add(
+            	      						addWithLastConsumed(
             	      							current,
             	      							"values",
             	      							lv_values_7_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.EStringBoolean");
-            	      						afterParserOrEnumRuleCall();
+            	      							"de.cau.cs.kieler.annotations.Annotations.STRING");
             	      					
             	    }
 
@@ -34462,496 +34651,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end "ruleRestrictedTypedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "entryRuleQuotedKeyStringValueAnnotation"
-    // InternalLustre.g:12392:1: entryRuleQuotedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleQuotedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleQuotedKeyStringValueAnnotation = null;
-
-
-        try {
-            // InternalLustre.g:12392:71: (iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF )
-            // InternalLustre.g:12393:2: iv_ruleQuotedKeyStringValueAnnotation= ruleQuotedKeyStringValueAnnotation EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleQuotedKeyStringValueAnnotation=ruleQuotedKeyStringValueAnnotation();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleQuotedKeyStringValueAnnotation; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleQuotedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "ruleQuotedKeyStringValueAnnotation"
-    // InternalLustre.g:12399:1: ruleQuotedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) ;
-    public final EObject ruleQuotedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_0=null;
-        Token lv_values_2_0=null;
-        Token otherlv_3=null;
-        Token lv_values_4_0=null;
-        AntlrDatatypeRuleToken lv_name_1_0 = null;
-
-
-
-        	enterRule();
-
-        try {
-            // InternalLustre.g:12405:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* ) )
-            // InternalLustre.g:12406:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            {
-            // InternalLustre.g:12406:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )* )
-            // InternalLustre.g:12407:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) ( (lv_values_2_0= RULE_STRING ) ) (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
-            {
-            otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-              		
-            }
-            // InternalLustre.g:12411:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12412:4: (lv_name_1_0= ruleExtendedID )
-            {
-            // InternalLustre.g:12412:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12413:5: lv_name_1_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-
-              					newCompositeNode(grammarAccess.getQuotedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
-              				
-            }
-            pushFollow(FollowSets000.FOLLOW_3);
-            lv_name_1_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-              					}
-              					set(
-              						current,
-              						"name",
-              						lv_name_1_0,
-              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              					afterParserOrEnumRuleCall();
-              				
-            }
-
-            }
-
-
-            }
-
-            // InternalLustre.g:12430:3: ( (lv_values_2_0= RULE_STRING ) )
-            // InternalLustre.g:12431:4: (lv_values_2_0= RULE_STRING )
-            {
-            // InternalLustre.g:12431:4: (lv_values_2_0= RULE_STRING )
-            // InternalLustre.g:12432:5: lv_values_2_0= RULE_STRING
-            {
-            lv_values_2_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					newLeafNode(lv_values_2_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_2_0());
-              				
-            }
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-              					}
-              					addWithLastConsumed(
-              						current,
-              						"values",
-              						lv_values_2_0,
-              						"de.cau.cs.kieler.annotations.Annotations.STRING");
-              				
-            }
-
-            }
-
-
-            }
-
-            // InternalLustre.g:12448:3: (otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) ) )*
-            loop287:
-            do {
-                int alt287=2;
-                int LA287_0 = input.LA(1);
-
-                if ( (LA287_0==23) ) {
-                    alt287=1;
-                }
-
-
-                switch (alt287) {
-            	case 1 :
-            	    // InternalLustre.g:12449:4: otherlv_3= ',' ( (lv_values_4_0= RULE_STRING ) )
-            	    {
-            	    otherlv_3=(Token)match(input,23,FollowSets000.FOLLOW_3); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      				newLeafNode(otherlv_3, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getCommaKeyword_3_0());
-            	      			
-            	    }
-            	    // InternalLustre.g:12453:4: ( (lv_values_4_0= RULE_STRING ) )
-            	    // InternalLustre.g:12454:5: (lv_values_4_0= RULE_STRING )
-            	    {
-            	    // InternalLustre.g:12454:5: (lv_values_4_0= RULE_STRING )
-            	    // InternalLustre.g:12455:6: lv_values_4_0= RULE_STRING
-            	    {
-            	    lv_values_4_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      						newLeafNode(lv_values_4_0, grammarAccess.getQuotedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_3_1_0());
-            	      					
-            	    }
-            	    if ( state.backtracking==0 ) {
-
-            	      						if (current==null) {
-            	      							current = createModelElement(grammarAccess.getQuotedKeyStringValueAnnotationRule());
-            	      						}
-            	      						addWithLastConsumed(
-            	      							current,
-            	      							"values",
-            	      							lv_values_4_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	      					
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop287;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleQuotedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "entryRuleQuotedTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12476:1: entryRuleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF ;
-    public final EObject entryRuleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        EObject iv_ruleQuotedTypedKeyStringValueAnnotation = null;
-
-
-        try {
-            // InternalLustre.g:12476:76: (iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF )
-            // InternalLustre.g:12477:2: iv_ruleQuotedTypedKeyStringValueAnnotation= ruleQuotedTypedKeyStringValueAnnotation EOF
-            {
-            if ( state.backtracking==0 ) {
-               newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule()); 
-            }
-            pushFollow(FollowSets000.FOLLOW_1);
-            iv_ruleQuotedTypedKeyStringValueAnnotation=ruleQuotedTypedKeyStringValueAnnotation();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-               current =iv_ruleQuotedTypedKeyStringValueAnnotation; 
-            }
-            match(input,EOF,FollowSets000.FOLLOW_2); if (state.failed) return current;
-
-            }
-
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "entryRuleQuotedTypedKeyStringValueAnnotation"
-
-
-    // $ANTLR start "ruleQuotedTypedKeyStringValueAnnotation"
-    // InternalLustre.g:12483:1: ruleQuotedTypedKeyStringValueAnnotation returns [EObject current=null] : (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) ;
-    public final EObject ruleQuotedTypedKeyStringValueAnnotation() throws RecognitionException {
-        EObject current = null;
-
-        Token otherlv_0=null;
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token lv_values_5_0=null;
-        Token otherlv_6=null;
-        Token lv_values_7_0=null;
-        AntlrDatatypeRuleToken lv_name_1_0 = null;
-
-        AntlrDatatypeRuleToken lv_type_3_0 = null;
-
-
-
-        	enterRule();
-
-        try {
-            // InternalLustre.g:12489:2: ( (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* ) )
-            // InternalLustre.g:12490:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            {
-            // InternalLustre.g:12490:2: (otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )* )
-            // InternalLustre.g:12491:3: otherlv_0= '@' ( (lv_name_1_0= ruleExtendedID ) ) otherlv_2= '[' ( (lv_type_3_0= ruleExtendedID ) ) otherlv_4= ']' ( (lv_values_5_0= RULE_STRING ) ) (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
-            {
-            otherlv_0=(Token)match(input,90,FollowSets000.FOLLOW_5); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0());
-              		
-            }
-            // InternalLustre.g:12495:3: ( (lv_name_1_0= ruleExtendedID ) )
-            // InternalLustre.g:12496:4: (lv_name_1_0= ruleExtendedID )
-            {
-            // InternalLustre.g:12496:4: (lv_name_1_0= ruleExtendedID )
-            // InternalLustre.g:12497:5: lv_name_1_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-
-              					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
-              				
-            }
-            pushFollow(FollowSets000.FOLLOW_136);
-            lv_name_1_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-              					}
-              					set(
-              						current,
-              						"name",
-              						lv_name_1_0,
-              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              					afterParserOrEnumRuleCall();
-              				
-            }
-
-            }
-
-
-            }
-
-            otherlv_2=(Token)match(input,74,FollowSets000.FOLLOW_5); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_2, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
-              		
-            }
-            // InternalLustre.g:12518:3: ( (lv_type_3_0= ruleExtendedID ) )
-            // InternalLustre.g:12519:4: (lv_type_3_0= ruleExtendedID )
-            {
-            // InternalLustre.g:12519:4: (lv_type_3_0= ruleExtendedID )
-            // InternalLustre.g:12520:5: lv_type_3_0= ruleExtendedID
-            {
-            if ( state.backtracking==0 ) {
-
-              					newCompositeNode(grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0());
-              				
-            }
-            pushFollow(FollowSets000.FOLLOW_104);
-            lv_type_3_0=ruleExtendedID();
-
-            state._fsp--;
-            if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElementForParent(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-              					}
-              					set(
-              						current,
-              						"type",
-              						lv_type_3_0,
-              						"de.cau.cs.kieler.annotations.Annotations.ExtendedID");
-              					afterParserOrEnumRuleCall();
-              				
-            }
-
-            }
-
-
-            }
-
-            otherlv_4=(Token)match(input,75,FollowSets000.FOLLOW_3); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			newLeafNode(otherlv_4, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
-              		
-            }
-            // InternalLustre.g:12541:3: ( (lv_values_5_0= RULE_STRING ) )
-            // InternalLustre.g:12542:4: (lv_values_5_0= RULE_STRING )
-            {
-            // InternalLustre.g:12542:4: (lv_values_5_0= RULE_STRING )
-            // InternalLustre.g:12543:5: lv_values_5_0= RULE_STRING
-            {
-            lv_values_5_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              					newLeafNode(lv_values_5_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_5_0());
-              				
-            }
-            if ( state.backtracking==0 ) {
-
-              					if (current==null) {
-              						current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-              					}
-              					addWithLastConsumed(
-              						current,
-              						"values",
-              						lv_values_5_0,
-              						"de.cau.cs.kieler.annotations.Annotations.STRING");
-              				
-            }
-
-            }
-
-
-            }
-
-            // InternalLustre.g:12559:3: (otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) ) )*
-            loop288:
-            do {
-                int alt288=2;
-                int LA288_0 = input.LA(1);
-
-                if ( (LA288_0==23) ) {
-                    alt288=1;
-                }
-
-
-                switch (alt288) {
-            	case 1 :
-            	    // InternalLustre.g:12560:4: otherlv_6= ',' ( (lv_values_7_0= RULE_STRING ) )
-            	    {
-            	    otherlv_6=(Token)match(input,23,FollowSets000.FOLLOW_3); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      				newLeafNode(otherlv_6, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getCommaKeyword_6_0());
-            	      			
-            	    }
-            	    // InternalLustre.g:12564:4: ( (lv_values_7_0= RULE_STRING ) )
-            	    // InternalLustre.g:12565:5: (lv_values_7_0= RULE_STRING )
-            	    {
-            	    // InternalLustre.g:12565:5: (lv_values_7_0= RULE_STRING )
-            	    // InternalLustre.g:12566:6: lv_values_7_0= RULE_STRING
-            	    {
-            	    lv_values_7_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_134); if (state.failed) return current;
-            	    if ( state.backtracking==0 ) {
-
-            	      						newLeafNode(lv_values_7_0, grammarAccess.getQuotedTypedKeyStringValueAnnotationAccess().getValuesSTRINGTerminalRuleCall_6_1_0());
-            	      					
-            	    }
-            	    if ( state.backtracking==0 ) {
-
-            	      						if (current==null) {
-            	      							current = createModelElement(grammarAccess.getQuotedTypedKeyStringValueAnnotationRule());
-            	      						}
-            	      						addWithLastConsumed(
-            	      							current,
-            	      							"values",
-            	      							lv_values_7_0,
-            	      							"de.cau.cs.kieler.annotations.Annotations.STRING");
-            	      					
-            	    }
-
-            	    }
-
-
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop288;
-                }
-            } while (true);
-
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
     // $ANTLR end "ruleQuotedTypedKeyStringValueAnnotation"
 
 
     // $ANTLR start "entryRuleEStringBoolean"
-    // InternalLustre.g:12587:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
+    // InternalLustre.g:12473:1: entryRuleEStringBoolean returns [String current=null] : iv_ruleEStringBoolean= ruleEStringBoolean EOF ;
     public final String entryRuleEStringBoolean() throws RecognitionException {
         String current = null;
 
@@ -34959,8 +34663,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:12587:54: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
-            // InternalLustre.g:12588:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
+            // InternalLustre.g:12473:54: (iv_ruleEStringBoolean= ruleEStringBoolean EOF )
+            // InternalLustre.g:12474:2: iv_ruleEStringBoolean= ruleEStringBoolean EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringBooleanRule()); 
@@ -34991,7 +34695,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringBoolean"
-    // InternalLustre.g:12594:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
+    // InternalLustre.g:12480:1: ruleEStringBoolean returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) ;
     public final AntlrDatatypeRuleToken ruleEStringBoolean() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35004,38 +34708,38 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12600:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
-            // InternalLustre.g:12601:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            // InternalLustre.g:12486:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN ) )
+            // InternalLustre.g:12487:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
             {
-            // InternalLustre.g:12601:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
-            int alt289=3;
+            // InternalLustre.g:12487:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN )
+            int alt287=3;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt289=1;
+                alt287=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt289=2;
+                alt287=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt289=3;
+                alt287=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 289, 0, input);
+                    new NoViableAltException("", 287, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt289) {
+            switch (alt287) {
                 case 1 :
-                    // InternalLustre.g:12602:3: this_STRING_0= RULE_STRING
+                    // InternalLustre.g:12488:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35052,7 +34756,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:12610:3: this_ExtendedID_1= ruleExtendedID
+                    // InternalLustre.g:12496:3: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35078,7 +34782,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:12621:3: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalLustre.g:12507:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35119,7 +34823,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleEStringAllTypes"
-    // InternalLustre.g:12632:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
+    // InternalLustre.g:12518:1: entryRuleEStringAllTypes returns [String current=null] : iv_ruleEStringAllTypes= ruleEStringAllTypes EOF ;
     public final String entryRuleEStringAllTypes() throws RecognitionException {
         String current = null;
 
@@ -35127,8 +34831,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:12632:55: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
-            // InternalLustre.g:12633:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
+            // InternalLustre.g:12518:55: (iv_ruleEStringAllTypes= ruleEStringAllTypes EOF )
+            // InternalLustre.g:12519:2: iv_ruleEStringAllTypes= ruleEStringAllTypes EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getEStringAllTypesRule()); 
@@ -35159,7 +34863,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEStringAllTypes"
-    // InternalLustre.g:12639:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
+    // InternalLustre.g:12525:1: ruleEStringAllTypes returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) ;
     public final AntlrDatatypeRuleToken ruleEStringAllTypes() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35176,41 +34880,41 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12645:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
-            // InternalLustre.g:12646:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            // InternalLustre.g:12531:2: ( (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger ) )
+            // InternalLustre.g:12532:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
             {
-            // InternalLustre.g:12646:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
-            int alt290=5;
+            // InternalLustre.g:12532:2: (this_STRING_0= RULE_STRING | this_ExtendedID_1= ruleExtendedID | this_BOOLEAN_2= RULE_BOOLEAN | this_Integer_3= ruleInteger | this_Floateger_4= ruleFloateger )
+            int alt288=5;
             switch ( input.LA(1) ) {
             case RULE_STRING:
                 {
-                alt290=1;
+                alt288=1;
                 }
                 break;
             case RULE_ID:
                 {
-                alt290=2;
+                alt288=2;
                 }
                 break;
             case RULE_BOOLEAN:
                 {
-                alt290=3;
+                alt288=3;
                 }
                 break;
             case 84:
                 {
-                int LA290_4 = input.LA(2);
+                int LA288_4 = input.LA(2);
 
-                if ( (LA290_4==RULE_FLOAT) ) {
-                    alt290=5;
+                if ( (LA288_4==RULE_INT) ) {
+                    alt288=4;
                 }
-                else if ( (LA290_4==RULE_INT) ) {
-                    alt290=4;
+                else if ( (LA288_4==RULE_FLOAT) ) {
+                    alt288=5;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 290, 4, input);
+                        new NoViableAltException("", 288, 4, input);
 
                     throw nvae;
                 }
@@ -35218,25 +34922,25 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                 break;
             case RULE_INT:
                 {
-                alt290=4;
+                alt288=4;
                 }
                 break;
             case RULE_FLOAT:
                 {
-                alt290=5;
+                alt288=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 290, 0, input);
+                    new NoViableAltException("", 288, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt290) {
+            switch (alt288) {
                 case 1 :
-                    // InternalLustre.g:12647:3: this_STRING_0= RULE_STRING
+                    // InternalLustre.g:12533:3: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)match(input,RULE_STRING,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35253,7 +34957,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:12655:3: this_ExtendedID_1= ruleExtendedID
+                    // InternalLustre.g:12541:3: this_ExtendedID_1= ruleExtendedID
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35279,7 +34983,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:12666:3: this_BOOLEAN_2= RULE_BOOLEAN
+                    // InternalLustre.g:12552:3: this_BOOLEAN_2= RULE_BOOLEAN
                     {
                     this_BOOLEAN_2=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35296,7 +35000,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:12674:3: this_Integer_3= ruleInteger
+                    // InternalLustre.g:12560:3: this_Integer_3= ruleInteger
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35322,7 +35026,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:12685:3: this_Floateger_4= ruleFloateger
+                    // InternalLustre.g:12571:3: this_Floateger_4= ruleFloateger
                     {
                     if ( state.backtracking==0 ) {
 
@@ -35372,7 +35076,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleExtendedID"
-    // InternalLustre.g:12699:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
+    // InternalLustre.g:12585:1: entryRuleExtendedID returns [String current=null] : iv_ruleExtendedID= ruleExtendedID EOF ;
     public final String entryRuleExtendedID() throws RecognitionException {
         String current = null;
 
@@ -35380,8 +35084,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:12699:50: (iv_ruleExtendedID= ruleExtendedID EOF )
-            // InternalLustre.g:12700:2: iv_ruleExtendedID= ruleExtendedID EOF
+            // InternalLustre.g:12585:50: (iv_ruleExtendedID= ruleExtendedID EOF )
+            // InternalLustre.g:12586:2: iv_ruleExtendedID= ruleExtendedID EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getExtendedIDRule()); 
@@ -35412,7 +35116,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleExtendedID"
-    // InternalLustre.g:12706:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
+    // InternalLustre.g:12592:1: ruleExtendedID returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) ;
     public final AntlrDatatypeRuleToken ruleExtendedID() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35425,11 +35129,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12712:2: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
-            // InternalLustre.g:12713:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalLustre.g:12598:2: ( (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? ) )
+            // InternalLustre.g:12599:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
             {
-            // InternalLustre.g:12713:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
-            // InternalLustre.g:12714:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
+            // InternalLustre.g:12599:2: (this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )? )
+            // InternalLustre.g:12600:3: this_ID_0= RULE_ID ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )* (kw= '#' this_INT_5= RULE_INT )?
             {
             this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_137); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -35442,50 +35146,50 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
               			newLeafNode(this_ID_0, grammarAccess.getExtendedIDAccess().getIDTerminalRuleCall_0());
               		
             }
-            // InternalLustre.g:12721:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
-            loop292:
+            // InternalLustre.g:12607:3: ( (kw= '.' | kw= '-' ) this_ID_3= RULE_ID )*
+            loop290:
             do {
-                int alt292=2;
-                int LA292_0 = input.LA(1);
+                int alt290=2;
+                int LA290_0 = input.LA(1);
 
-                if ( (LA292_0==84) ) {
-                    int LA292_2 = input.LA(2);
+                if ( (LA290_0==84) ) {
+                    int LA290_2 = input.LA(2);
 
-                    if ( (LA292_2==RULE_ID) ) {
-                        alt292=1;
+                    if ( (LA290_2==RULE_ID) ) {
+                        alt290=1;
                     }
 
 
                 }
-                else if ( (LA292_0==39) ) {
-                    alt292=1;
+                else if ( (LA290_0==39) ) {
+                    alt290=1;
                 }
 
 
-                switch (alt292) {
+                switch (alt290) {
             	case 1 :
-            	    // InternalLustre.g:12722:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
+            	    // InternalLustre.g:12608:4: (kw= '.' | kw= '-' ) this_ID_3= RULE_ID
             	    {
-            	    // InternalLustre.g:12722:4: (kw= '.' | kw= '-' )
-            	    int alt291=2;
-            	    int LA291_0 = input.LA(1);
+            	    // InternalLustre.g:12608:4: (kw= '.' | kw= '-' )
+            	    int alt289=2;
+            	    int LA289_0 = input.LA(1);
 
-            	    if ( (LA291_0==39) ) {
-            	        alt291=1;
+            	    if ( (LA289_0==39) ) {
+            	        alt289=1;
             	    }
-            	    else if ( (LA291_0==84) ) {
-            	        alt291=2;
+            	    else if ( (LA289_0==84) ) {
+            	        alt289=2;
             	    }
             	    else {
             	        if (state.backtracking>0) {state.failed=true; return current;}
             	        NoViableAltException nvae =
-            	            new NoViableAltException("", 291, 0, input);
+            	            new NoViableAltException("", 289, 0, input);
 
             	        throw nvae;
             	    }
-            	    switch (alt291) {
+            	    switch (alt289) {
             	        case 1 :
-            	            // InternalLustre.g:12723:5: kw= '.'
+            	            // InternalLustre.g:12609:5: kw= '.'
             	            {
             	            kw=(Token)match(input,39,FollowSets000.FOLLOW_5); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -35498,7 +35202,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	            }
             	            break;
             	        case 2 :
-            	            // InternalLustre.g:12729:5: kw= '-'
+            	            // InternalLustre.g:12615:5: kw= '-'
             	            {
             	            kw=(Token)match(input,84,FollowSets000.FOLLOW_5); if (state.failed) return current;
             	            if ( state.backtracking==0 ) {
@@ -35529,20 +35233,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop292;
+            	    break loop290;
                 }
             } while (true);
 
-            // InternalLustre.g:12743:3: (kw= '#' this_INT_5= RULE_INT )?
-            int alt293=2;
-            int LA293_0 = input.LA(1);
+            // InternalLustre.g:12629:3: (kw= '#' this_INT_5= RULE_INT )?
+            int alt291=2;
+            int LA291_0 = input.LA(1);
 
-            if ( (LA293_0==89) ) {
-                alt293=1;
+            if ( (LA291_0==89) ) {
+                alt291=1;
             }
-            switch (alt293) {
+            switch (alt291) {
                 case 1 :
-                    // InternalLustre.g:12744:4: kw= '#' this_INT_5= RULE_INT
+                    // InternalLustre.g:12630:4: kw= '#' this_INT_5= RULE_INT
                     {
                     kw=(Token)match(input,89,FollowSets000.FOLLOW_125); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35593,7 +35297,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleInteger"
-    // InternalLustre.g:12761:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
+    // InternalLustre.g:12647:1: entryRuleInteger returns [String current=null] : iv_ruleInteger= ruleInteger EOF ;
     public final String entryRuleInteger() throws RecognitionException {
         String current = null;
 
@@ -35601,8 +35305,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:12761:47: (iv_ruleInteger= ruleInteger EOF )
-            // InternalLustre.g:12762:2: iv_ruleInteger= ruleInteger EOF
+            // InternalLustre.g:12647:47: (iv_ruleInteger= ruleInteger EOF )
+            // InternalLustre.g:12648:2: iv_ruleInteger= ruleInteger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getIntegerRule()); 
@@ -35633,7 +35337,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInteger"
-    // InternalLustre.g:12768:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
+    // InternalLustre.g:12654:1: ruleInteger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_INT_1= RULE_INT ) ;
     public final AntlrDatatypeRuleToken ruleInteger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35644,22 +35348,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12774:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
-            // InternalLustre.g:12775:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalLustre.g:12660:2: ( ( (kw= '-' )? this_INT_1= RULE_INT ) )
+            // InternalLustre.g:12661:2: ( (kw= '-' )? this_INT_1= RULE_INT )
             {
-            // InternalLustre.g:12775:2: ( (kw= '-' )? this_INT_1= RULE_INT )
-            // InternalLustre.g:12776:3: (kw= '-' )? this_INT_1= RULE_INT
+            // InternalLustre.g:12661:2: ( (kw= '-' )? this_INT_1= RULE_INT )
+            // InternalLustre.g:12662:3: (kw= '-' )? this_INT_1= RULE_INT
             {
-            // InternalLustre.g:12776:3: (kw= '-' )?
-            int alt294=2;
-            int LA294_0 = input.LA(1);
+            // InternalLustre.g:12662:3: (kw= '-' )?
+            int alt292=2;
+            int LA292_0 = input.LA(1);
 
-            if ( (LA294_0==84) ) {
-                alt294=1;
+            if ( (LA292_0==84) ) {
+                alt292=1;
             }
-            switch (alt294) {
+            switch (alt292) {
                 case 1 :
-                    // InternalLustre.g:12777:4: kw= '-'
+                    // InternalLustre.g:12663:4: kw= '-'
                     {
                     kw=(Token)match(input,84,FollowSets000.FOLLOW_125); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35710,7 +35414,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFloateger"
-    // InternalLustre.g:12794:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
+    // InternalLustre.g:12680:1: entryRuleFloateger returns [String current=null] : iv_ruleFloateger= ruleFloateger EOF ;
     public final String entryRuleFloateger() throws RecognitionException {
         String current = null;
 
@@ -35718,8 +35422,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // InternalLustre.g:12794:49: (iv_ruleFloateger= ruleFloateger EOF )
-            // InternalLustre.g:12795:2: iv_ruleFloateger= ruleFloateger EOF
+            // InternalLustre.g:12680:49: (iv_ruleFloateger= ruleFloateger EOF )
+            // InternalLustre.g:12681:2: iv_ruleFloateger= ruleFloateger EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFloategerRule()); 
@@ -35750,7 +35454,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFloateger"
-    // InternalLustre.g:12801:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
+    // InternalLustre.g:12687:1: ruleFloateger returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) ;
     public final AntlrDatatypeRuleToken ruleFloateger() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35761,22 +35465,22 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12807:2: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
-            // InternalLustre.g:12808:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalLustre.g:12693:2: ( ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT ) )
+            // InternalLustre.g:12694:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
             {
-            // InternalLustre.g:12808:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
-            // InternalLustre.g:12809:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
+            // InternalLustre.g:12694:2: ( (kw= '-' )? this_FLOAT_1= RULE_FLOAT )
+            // InternalLustre.g:12695:3: (kw= '-' )? this_FLOAT_1= RULE_FLOAT
             {
-            // InternalLustre.g:12809:3: (kw= '-' )?
-            int alt295=2;
-            int LA295_0 = input.LA(1);
+            // InternalLustre.g:12695:3: (kw= '-' )?
+            int alt293=2;
+            int LA293_0 = input.LA(1);
 
-            if ( (LA295_0==84) ) {
-                alt295=1;
+            if ( (LA293_0==84) ) {
+                alt293=1;
             }
-            switch (alt295) {
+            switch (alt293) {
                 case 1 :
-                    // InternalLustre.g:12810:4: kw= '-'
+                    // InternalLustre.g:12696:4: kw= '-'
                     {
                     kw=(Token)match(input,84,FollowSets000.FOLLOW_138); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35827,7 +35531,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValueType"
-    // InternalLustre.g:12827:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) ;
+    // InternalLustre.g:12713:1: ruleValueType returns [Enumerator current=null] : ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
@@ -35839,41 +35543,41 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12833:2: ( ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) )
-            // InternalLustre.g:12834:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
+            // InternalLustre.g:12719:2: ( ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) ) )
+            // InternalLustre.g:12720:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
             {
-            // InternalLustre.g:12834:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
-            int alt296=3;
+            // InternalLustre.g:12720:2: ( (enumLiteral_0= 'bool' ) | (enumLiteral_1= 'int' ) | (enumLiteral_2= 'real' ) )
+            int alt294=3;
             switch ( input.LA(1) ) {
             case 91:
                 {
-                alt296=1;
+                alt294=1;
                 }
                 break;
             case 92:
                 {
-                alt296=2;
+                alt294=2;
                 }
                 break;
             case 93:
                 {
-                alt296=3;
+                alt294=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 296, 0, input);
+                    new NoViableAltException("", 294, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt296) {
+            switch (alt294) {
                 case 1 :
-                    // InternalLustre.g:12835:3: (enumLiteral_0= 'bool' )
+                    // InternalLustre.g:12721:3: (enumLiteral_0= 'bool' )
                     {
-                    // InternalLustre.g:12835:3: (enumLiteral_0= 'bool' )
-                    // InternalLustre.g:12836:4: enumLiteral_0= 'bool'
+                    // InternalLustre.g:12721:3: (enumLiteral_0= 'bool' )
+                    // InternalLustre.g:12722:4: enumLiteral_0= 'bool'
                     {
                     enumLiteral_0=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35889,10 +35593,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:12843:3: (enumLiteral_1= 'int' )
+                    // InternalLustre.g:12729:3: (enumLiteral_1= 'int' )
                     {
-                    // InternalLustre.g:12843:3: (enumLiteral_1= 'int' )
-                    // InternalLustre.g:12844:4: enumLiteral_1= 'int'
+                    // InternalLustre.g:12729:3: (enumLiteral_1= 'int' )
+                    // InternalLustre.g:12730:4: enumLiteral_1= 'int'
                     {
                     enumLiteral_1=(Token)match(input,92,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35908,10 +35612,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:12851:3: (enumLiteral_2= 'real' )
+                    // InternalLustre.g:12737:3: (enumLiteral_2= 'real' )
                     {
-                    // InternalLustre.g:12851:3: (enumLiteral_2= 'real' )
-                    // InternalLustre.g:12852:4: enumLiteral_2= 'real'
+                    // InternalLustre.g:12737:3: (enumLiteral_2= 'real' )
+                    // InternalLustre.g:12738:4: enumLiteral_2= 'real'
                     {
                     enumLiteral_2=(Token)match(input,93,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -35951,7 +35655,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleEnumType"
-    // InternalLustre.g:12862:1: ruleEnumType returns [Enumerator current=null] : (enumLiteral_0= 'enum' ) ;
+    // InternalLustre.g:12748:1: ruleEnumType returns [Enumerator current=null] : (enumLiteral_0= 'enum' ) ;
     public final Enumerator ruleEnumType() throws RecognitionException {
         Enumerator current = null;
 
@@ -35961,11 +35665,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12868:2: ( (enumLiteral_0= 'enum' ) )
-            // InternalLustre.g:12869:2: (enumLiteral_0= 'enum' )
+            // InternalLustre.g:12754:2: ( (enumLiteral_0= 'enum' ) )
+            // InternalLustre.g:12755:2: (enumLiteral_0= 'enum' )
             {
-            // InternalLustre.g:12869:2: (enumLiteral_0= 'enum' )
-            // InternalLustre.g:12870:3: enumLiteral_0= 'enum'
+            // InternalLustre.g:12755:2: (enumLiteral_0= 'enum' )
+            // InternalLustre.g:12756:3: enumLiteral_0= 'enum'
             {
             enumLiteral_0=(Token)match(input,94,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -35999,7 +35703,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAssignOperator"
-    // InternalLustre.g:12879:1: ruleAssignOperator returns [Enumerator current=null] : (enumLiteral_0= '=' ) ;
+    // InternalLustre.g:12765:1: ruleAssignOperator returns [Enumerator current=null] : (enumLiteral_0= '=' ) ;
     public final Enumerator ruleAssignOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36009,11 +35713,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12885:2: ( (enumLiteral_0= '=' ) )
-            // InternalLustre.g:12886:2: (enumLiteral_0= '=' )
+            // InternalLustre.g:12771:2: ( (enumLiteral_0= '=' ) )
+            // InternalLustre.g:12772:2: (enumLiteral_0= '=' )
             {
-            // InternalLustre.g:12886:2: (enumLiteral_0= '=' )
-            // InternalLustre.g:12887:3: enumLiteral_0= '='
+            // InternalLustre.g:12772:2: (enumLiteral_0= '=' )
+            // InternalLustre.g:12773:3: enumLiteral_0= '='
             {
             enumLiteral_0=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36047,7 +35751,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCompareOperator"
-    // InternalLustre.g:12896:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
+    // InternalLustre.g:12782:1: ruleCompareOperator returns [Enumerator current=null] : ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36062,56 +35766,56 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12902:2: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
-            // InternalLustre.g:12903:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            // InternalLustre.g:12788:2: ( ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) ) )
+            // InternalLustre.g:12789:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
             {
-            // InternalLustre.g:12903:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
-            int alt297=6;
+            // InternalLustre.g:12789:2: ( (enumLiteral_0= '=' ) | (enumLiteral_1= '<' ) | (enumLiteral_2= '<=' ) | (enumLiteral_3= '>' ) | (enumLiteral_4= '>=' ) | (enumLiteral_5= '<>' ) )
+            int alt295=6;
             switch ( input.LA(1) ) {
             case 21:
                 {
-                alt297=1;
+                alt295=1;
                 }
                 break;
             case 95:
                 {
-                alt297=2;
+                alt295=2;
                 }
                 break;
             case 96:
                 {
-                alt297=3;
+                alt295=3;
                 }
                 break;
             case 97:
                 {
-                alt297=4;
+                alt295=4;
                 }
                 break;
             case 98:
                 {
-                alt297=5;
+                alt295=5;
                 }
                 break;
             case 99:
                 {
-                alt297=6;
+                alt295=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 297, 0, input);
+                    new NoViableAltException("", 295, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt297) {
+            switch (alt295) {
                 case 1 :
-                    // InternalLustre.g:12904:3: (enumLiteral_0= '=' )
+                    // InternalLustre.g:12790:3: (enumLiteral_0= '=' )
                     {
-                    // InternalLustre.g:12904:3: (enumLiteral_0= '=' )
-                    // InternalLustre.g:12905:4: enumLiteral_0= '='
+                    // InternalLustre.g:12790:3: (enumLiteral_0= '=' )
+                    // InternalLustre.g:12791:4: enumLiteral_0= '='
                     {
                     enumLiteral_0=(Token)match(input,21,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36127,10 +35831,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:12912:3: (enumLiteral_1= '<' )
+                    // InternalLustre.g:12798:3: (enumLiteral_1= '<' )
                     {
-                    // InternalLustre.g:12912:3: (enumLiteral_1= '<' )
-                    // InternalLustre.g:12913:4: enumLiteral_1= '<'
+                    // InternalLustre.g:12798:3: (enumLiteral_1= '<' )
+                    // InternalLustre.g:12799:4: enumLiteral_1= '<'
                     {
                     enumLiteral_1=(Token)match(input,95,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36146,10 +35850,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:12920:3: (enumLiteral_2= '<=' )
+                    // InternalLustre.g:12806:3: (enumLiteral_2= '<=' )
                     {
-                    // InternalLustre.g:12920:3: (enumLiteral_2= '<=' )
-                    // InternalLustre.g:12921:4: enumLiteral_2= '<='
+                    // InternalLustre.g:12806:3: (enumLiteral_2= '<=' )
+                    // InternalLustre.g:12807:4: enumLiteral_2= '<='
                     {
                     enumLiteral_2=(Token)match(input,96,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36165,10 +35869,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:12928:3: (enumLiteral_3= '>' )
+                    // InternalLustre.g:12814:3: (enumLiteral_3= '>' )
                     {
-                    // InternalLustre.g:12928:3: (enumLiteral_3= '>' )
-                    // InternalLustre.g:12929:4: enumLiteral_3= '>'
+                    // InternalLustre.g:12814:3: (enumLiteral_3= '>' )
+                    // InternalLustre.g:12815:4: enumLiteral_3= '>'
                     {
                     enumLiteral_3=(Token)match(input,97,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36184,10 +35888,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:12936:3: (enumLiteral_4= '>=' )
+                    // InternalLustre.g:12822:3: (enumLiteral_4= '>=' )
                     {
-                    // InternalLustre.g:12936:3: (enumLiteral_4= '>=' )
-                    // InternalLustre.g:12937:4: enumLiteral_4= '>='
+                    // InternalLustre.g:12822:3: (enumLiteral_4= '>=' )
+                    // InternalLustre.g:12823:4: enumLiteral_4= '>='
                     {
                     enumLiteral_4=(Token)match(input,98,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36203,10 +35907,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalLustre.g:12944:3: (enumLiteral_5= '<>' )
+                    // InternalLustre.g:12830:3: (enumLiteral_5= '<>' )
                     {
-                    // InternalLustre.g:12944:3: (enumLiteral_5= '<>' )
-                    // InternalLustre.g:12945:4: enumLiteral_5= '<>'
+                    // InternalLustre.g:12830:3: (enumLiteral_5= '<>' )
+                    // InternalLustre.g:12831:4: enumLiteral_5= '<>'
                     {
                     enumLiteral_5=(Token)match(input,99,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36246,7 +35950,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalOrOperator"
-    // InternalLustre.g:12955:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
+    // InternalLustre.g:12841:1: ruleLogicalOrOperator returns [Enumerator current=null] : (enumLiteral_0= 'or' ) ;
     public final Enumerator ruleLogicalOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36256,11 +35960,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12961:2: ( (enumLiteral_0= 'or' ) )
-            // InternalLustre.g:12962:2: (enumLiteral_0= 'or' )
+            // InternalLustre.g:12847:2: ( (enumLiteral_0= 'or' ) )
+            // InternalLustre.g:12848:2: (enumLiteral_0= 'or' )
             {
-            // InternalLustre.g:12962:2: (enumLiteral_0= 'or' )
-            // InternalLustre.g:12963:3: enumLiteral_0= 'or'
+            // InternalLustre.g:12848:2: (enumLiteral_0= 'or' )
+            // InternalLustre.g:12849:3: enumLiteral_0= 'or'
             {
             enumLiteral_0=(Token)match(input,62,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36294,7 +35998,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalAndOperator"
-    // InternalLustre.g:12972:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
+    // InternalLustre.g:12858:1: ruleLogicalAndOperator returns [Enumerator current=null] : (enumLiteral_0= 'and' ) ;
     public final Enumerator ruleLogicalAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36304,11 +36008,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12978:2: ( (enumLiteral_0= 'and' ) )
-            // InternalLustre.g:12979:2: (enumLiteral_0= 'and' )
+            // InternalLustre.g:12864:2: ( (enumLiteral_0= 'and' ) )
+            // InternalLustre.g:12865:2: (enumLiteral_0= 'and' )
             {
-            // InternalLustre.g:12979:2: (enumLiteral_0= 'and' )
-            // InternalLustre.g:12980:3: enumLiteral_0= 'and'
+            // InternalLustre.g:12865:2: (enumLiteral_0= 'and' )
+            // InternalLustre.g:12866:3: enumLiteral_0= 'and'
             {
             enumLiteral_0=(Token)match(input,63,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36342,7 +36046,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNotOperator"
-    // InternalLustre.g:12989:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
+    // InternalLustre.g:12875:1: ruleNotOperator returns [Enumerator current=null] : (enumLiteral_0= 'not' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36352,11 +36056,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:12995:2: ( (enumLiteral_0= 'not' ) )
-            // InternalLustre.g:12996:2: (enumLiteral_0= 'not' )
+            // InternalLustre.g:12881:2: ( (enumLiteral_0= 'not' ) )
+            // InternalLustre.g:12882:2: (enumLiteral_0= 'not' )
             {
-            // InternalLustre.g:12996:2: (enumLiteral_0= 'not' )
-            // InternalLustre.g:12997:3: enumLiteral_0= 'not'
+            // InternalLustre.g:12882:2: (enumLiteral_0= 'not' )
+            // InternalLustre.g:12883:3: enumLiteral_0= 'not'
             {
             enumLiteral_0=(Token)match(input,100,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36390,7 +36094,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFbyOperator"
-    // InternalLustre.g:13006:1: ruleFbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'fby' ) ;
+    // InternalLustre.g:12892:1: ruleFbyOperator returns [Enumerator current=null] : (enumLiteral_0= 'fby' ) ;
     public final Enumerator ruleFbyOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36400,11 +36104,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13012:2: ( (enumLiteral_0= 'fby' ) )
-            // InternalLustre.g:13013:2: (enumLiteral_0= 'fby' )
+            // InternalLustre.g:12898:2: ( (enumLiteral_0= 'fby' ) )
+            // InternalLustre.g:12899:2: (enumLiteral_0= 'fby' )
             {
-            // InternalLustre.g:13013:2: (enumLiteral_0= 'fby' )
-            // InternalLustre.g:13014:3: enumLiteral_0= 'fby'
+            // InternalLustre.g:12899:2: (enumLiteral_0= 'fby' )
+            // InternalLustre.g:12900:3: enumLiteral_0= 'fby'
             {
             enumLiteral_0=(Token)match(input,56,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36438,7 +36142,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModOperator"
-    // InternalLustre.g:13023:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
+    // InternalLustre.g:12909:1: ruleModOperator returns [Enumerator current=null] : (enumLiteral_0= 'mod' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36448,11 +36152,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13029:2: ( (enumLiteral_0= 'mod' ) )
-            // InternalLustre.g:13030:2: (enumLiteral_0= 'mod' )
+            // InternalLustre.g:12915:2: ( (enumLiteral_0= 'mod' ) )
+            // InternalLustre.g:12916:2: (enumLiteral_0= 'mod' )
             {
-            // InternalLustre.g:13030:2: (enumLiteral_0= 'mod' )
-            // InternalLustre.g:13031:3: enumLiteral_0= 'mod'
+            // InternalLustre.g:12916:2: (enumLiteral_0= 'mod' )
+            // InternalLustre.g:12917:3: enumLiteral_0= 'mod'
             {
             enumLiteral_0=(Token)match(input,54,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36486,7 +36190,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCurrentOperator"
-    // InternalLustre.g:13040:1: ruleCurrentOperator returns [Enumerator current=null] : (enumLiteral_0= 'current' ) ;
+    // InternalLustre.g:12926:1: ruleCurrentOperator returns [Enumerator current=null] : (enumLiteral_0= 'current' ) ;
     public final Enumerator ruleCurrentOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36496,11 +36200,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13046:2: ( (enumLiteral_0= 'current' ) )
-            // InternalLustre.g:13047:2: (enumLiteral_0= 'current' )
+            // InternalLustre.g:12932:2: ( (enumLiteral_0= 'current' ) )
+            // InternalLustre.g:12933:2: (enumLiteral_0= 'current' )
             {
-            // InternalLustre.g:13047:2: (enumLiteral_0= 'current' )
-            // InternalLustre.g:13048:3: enumLiteral_0= 'current'
+            // InternalLustre.g:12933:2: (enumLiteral_0= 'current' )
+            // InternalLustre.g:12934:3: enumLiteral_0= 'current'
             {
             enumLiteral_0=(Token)match(input,101,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36534,7 +36238,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleWhenOperator"
-    // InternalLustre.g:13057:1: ruleWhenOperator returns [Enumerator current=null] : (enumLiteral_0= 'when' ) ;
+    // InternalLustre.g:12943:1: ruleWhenOperator returns [Enumerator current=null] : (enumLiteral_0= 'when' ) ;
     public final Enumerator ruleWhenOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36544,11 +36248,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13063:2: ( (enumLiteral_0= 'when' ) )
-            // InternalLustre.g:13064:2: (enumLiteral_0= 'when' )
+            // InternalLustre.g:12949:2: ( (enumLiteral_0= 'when' ) )
+            // InternalLustre.g:12950:2: (enumLiteral_0= 'when' )
             {
-            // InternalLustre.g:13064:2: (enumLiteral_0= 'when' )
-            // InternalLustre.g:13065:3: enumLiteral_0= 'when'
+            // InternalLustre.g:12950:2: (enumLiteral_0= 'when' )
+            // InternalLustre.g:12951:3: enumLiteral_0= 'when'
             {
             enumLiteral_0=(Token)match(input,34,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36582,7 +36286,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleInitOperator"
-    // InternalLustre.g:13074:1: ruleInitOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
+    // InternalLustre.g:12960:1: ruleInitOperator returns [Enumerator current=null] : (enumLiteral_0= '->' ) ;
     public final Enumerator ruleInitOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36592,11 +36296,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13080:2: ( (enumLiteral_0= '->' ) )
-            // InternalLustre.g:13081:2: (enumLiteral_0= '->' )
+            // InternalLustre.g:12966:2: ( (enumLiteral_0= '->' ) )
+            // InternalLustre.g:12967:2: (enumLiteral_0= '->' )
             {
-            // InternalLustre.g:13081:2: (enumLiteral_0= '->' )
-            // InternalLustre.g:13082:3: enumLiteral_0= '->'
+            // InternalLustre.g:12967:2: (enumLiteral_0= '->' )
+            // InternalLustre.g:12968:3: enumLiteral_0= '->'
             {
             enumLiteral_0=(Token)match(input,57,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36630,7 +36334,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLogicalXorOperator"
-    // InternalLustre.g:13091:1: ruleLogicalXorOperator returns [Enumerator current=null] : (enumLiteral_0= 'xor' ) ;
+    // InternalLustre.g:12977:1: ruleLogicalXorOperator returns [Enumerator current=null] : (enumLiteral_0= 'xor' ) ;
     public final Enumerator ruleLogicalXorOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36640,11 +36344,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13097:2: ( (enumLiteral_0= 'xor' ) )
-            // InternalLustre.g:13098:2: (enumLiteral_0= 'xor' )
+            // InternalLustre.g:12983:2: ( (enumLiteral_0= 'xor' ) )
+            // InternalLustre.g:12984:2: (enumLiteral_0= 'xor' )
             {
-            // InternalLustre.g:13098:2: (enumLiteral_0= 'xor' )
-            // InternalLustre.g:13099:3: enumLiteral_0= 'xor'
+            // InternalLustre.g:12984:2: (enumLiteral_0= 'xor' )
+            // InternalLustre.g:12985:3: enumLiteral_0= 'xor'
             {
             enumLiteral_0=(Token)match(input,61,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36678,7 +36382,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleImpliesOperator"
-    // InternalLustre.g:13108:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= '=>' ) ;
+    // InternalLustre.g:12994:1: ruleImpliesOperator returns [Enumerator current=null] : (enumLiteral_0= '=>' ) ;
     public final Enumerator ruleImpliesOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36688,11 +36392,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13114:2: ( (enumLiteral_0= '=>' ) )
-            // InternalLustre.g:13115:2: (enumLiteral_0= '=>' )
+            // InternalLustre.g:13000:2: ( (enumLiteral_0= '=>' ) )
+            // InternalLustre.g:13001:2: (enumLiteral_0= '=>' )
             {
-            // InternalLustre.g:13115:2: (enumLiteral_0= '=>' )
-            // InternalLustre.g:13116:3: enumLiteral_0= '=>'
+            // InternalLustre.g:13001:2: (enumLiteral_0= '=>' )
+            // InternalLustre.g:13002:3: enumLiteral_0= '=>'
             {
             enumLiteral_0=(Token)match(input,60,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36726,7 +36430,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIntDivOperator"
-    // InternalLustre.g:13125:1: ruleIntDivOperator returns [Enumerator current=null] : (enumLiteral_0= 'div' ) ;
+    // InternalLustre.g:13011:1: ruleIntDivOperator returns [Enumerator current=null] : (enumLiteral_0= 'div' ) ;
     public final Enumerator ruleIntDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36736,11 +36440,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13131:2: ( (enumLiteral_0= 'div' ) )
-            // InternalLustre.g:13132:2: (enumLiteral_0= 'div' )
+            // InternalLustre.g:13017:2: ( (enumLiteral_0= 'div' ) )
+            // InternalLustre.g:13018:2: (enumLiteral_0= 'div' )
             {
-            // InternalLustre.g:13132:2: (enumLiteral_0= 'div' )
-            // InternalLustre.g:13133:3: enumLiteral_0= 'div'
+            // InternalLustre.g:13018:2: (enumLiteral_0= 'div' )
+            // InternalLustre.g:13019:3: enumLiteral_0= 'div'
             {
             enumLiteral_0=(Token)match(input,55,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36774,7 +36478,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleConditionalOperator"
-    // InternalLustre.g:13142:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= 'if' ) ;
+    // InternalLustre.g:13028:1: ruleConditionalOperator returns [Enumerator current=null] : (enumLiteral_0= 'if' ) ;
     public final Enumerator ruleConditionalOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36784,11 +36488,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13148:2: ( (enumLiteral_0= 'if' ) )
-            // InternalLustre.g:13149:2: (enumLiteral_0= 'if' )
+            // InternalLustre.g:13034:2: ( (enumLiteral_0= 'if' ) )
+            // InternalLustre.g:13035:2: (enumLiteral_0= 'if' )
             {
-            // InternalLustre.g:13149:2: (enumLiteral_0= 'if' )
-            // InternalLustre.g:13150:3: enumLiteral_0= 'if'
+            // InternalLustre.g:13035:2: (enumLiteral_0= 'if' )
+            // InternalLustre.g:13036:3: enumLiteral_0= 'if'
             {
             enumLiteral_0=(Token)match(input,48,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36822,7 +36526,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAtMostOneOperator"
-    // InternalLustre.g:13159:1: ruleAtMostOneOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
+    // InternalLustre.g:13045:1: ruleAtMostOneOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
     public final Enumerator ruleAtMostOneOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36832,11 +36536,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13165:2: ( (enumLiteral_0= '#' ) )
-            // InternalLustre.g:13166:2: (enumLiteral_0= '#' )
+            // InternalLustre.g:13051:2: ( (enumLiteral_0= '#' ) )
+            // InternalLustre.g:13052:2: (enumLiteral_0= '#' )
             {
-            // InternalLustre.g:13166:2: (enumLiteral_0= '#' )
-            // InternalLustre.g:13167:3: enumLiteral_0= '#'
+            // InternalLustre.g:13052:2: (enumLiteral_0= '#' )
+            // InternalLustre.g:13053:3: enumLiteral_0= '#'
             {
             enumLiteral_0=(Token)match(input,89,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36870,7 +36574,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleNorOperator"
-    // InternalLustre.g:13176:1: ruleNorOperator returns [Enumerator current=null] : (enumLiteral_0= 'nor' ) ;
+    // InternalLustre.g:13062:1: ruleNorOperator returns [Enumerator current=null] : (enumLiteral_0= 'nor' ) ;
     public final Enumerator ruleNorOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -36880,11 +36584,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13182:2: ( (enumLiteral_0= 'nor' ) )
-            // InternalLustre.g:13183:2: (enumLiteral_0= 'nor' )
+            // InternalLustre.g:13068:2: ( (enumLiteral_0= 'nor' ) )
+            // InternalLustre.g:13069:2: (enumLiteral_0= 'nor' )
             {
-            // InternalLustre.g:13183:2: (enumLiteral_0= 'nor' )
-            // InternalLustre.g:13184:3: enumLiteral_0= 'nor'
+            // InternalLustre.g:13069:2: (enumLiteral_0= 'nor' )
+            // InternalLustre.g:13070:3: enumLiteral_0= 'nor'
             {
             enumLiteral_0=(Token)match(input,102,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -36918,7 +36622,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePriorityProtocol"
-    // InternalLustre.g:13193:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
+    // InternalLustre.g:13079:1: rulePriorityProtocol returns [Enumerator current=null] : ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) ;
     public final Enumerator rulePriorityProtocol() throws RecognitionException {
         Enumerator current = null;
 
@@ -36929,32 +36633,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13199:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
-            // InternalLustre.g:13200:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
+            // InternalLustre.g:13085:2: ( ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) ) )
+            // InternalLustre.g:13086:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
             {
-            // InternalLustre.g:13200:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
-            int alt298=2;
-            int LA298_0 = input.LA(1);
+            // InternalLustre.g:13086:2: ( (enumLiteral_0= 'conflicting' ) | (enumLiteral_1= 'commuting' ) )
+            int alt296=2;
+            int LA296_0 = input.LA(1);
 
-            if ( (LA298_0==103) ) {
-                alt298=1;
+            if ( (LA296_0==103) ) {
+                alt296=1;
             }
-            else if ( (LA298_0==104) ) {
-                alt298=2;
+            else if ( (LA296_0==104) ) {
+                alt296=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 298, 0, input);
+                    new NoViableAltException("", 296, 0, input);
 
                 throw nvae;
             }
-            switch (alt298) {
+            switch (alt296) {
                 case 1 :
-                    // InternalLustre.g:13201:3: (enumLiteral_0= 'conflicting' )
+                    // InternalLustre.g:13087:3: (enumLiteral_0= 'conflicting' )
                     {
-                    // InternalLustre.g:13201:3: (enumLiteral_0= 'conflicting' )
-                    // InternalLustre.g:13202:4: enumLiteral_0= 'conflicting'
+                    // InternalLustre.g:13087:3: (enumLiteral_0= 'conflicting' )
+                    // InternalLustre.g:13088:4: enumLiteral_0= 'conflicting'
                     {
                     enumLiteral_0=(Token)match(input,103,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -36970,10 +36674,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13209:3: (enumLiteral_1= 'commuting' )
+                    // InternalLustre.g:13095:3: (enumLiteral_1= 'commuting' )
                     {
-                    // InternalLustre.g:13209:3: (enumLiteral_1= 'commuting' )
-                    // InternalLustre.g:13210:4: enumLiteral_1= 'commuting'
+                    // InternalLustre.g:13095:3: (enumLiteral_1= 'commuting' )
+                    // InternalLustre.g:13096:4: enumLiteral_1= 'commuting'
                     {
                     enumLiteral_1=(Token)match(input,104,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37013,7 +36717,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePostfixOperator"
-    // InternalLustre.g:13220:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
+    // InternalLustre.g:13106:1: rulePostfixOperator returns [Enumerator current=null] : ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) ;
     public final Enumerator rulePostfixOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37024,32 +36728,32 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13226:2: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
-            // InternalLustre.g:13227:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            // InternalLustre.g:13112:2: ( ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) ) )
+            // InternalLustre.g:13113:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
             {
-            // InternalLustre.g:13227:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
-            int alt299=2;
-            int LA299_0 = input.LA(1);
+            // InternalLustre.g:13113:2: ( (enumLiteral_0= '++' ) | (enumLiteral_1= '--' ) )
+            int alt297=2;
+            int LA297_0 = input.LA(1);
 
-            if ( (LA299_0==105) ) {
-                alt299=1;
+            if ( (LA297_0==105) ) {
+                alt297=1;
             }
-            else if ( (LA299_0==106) ) {
-                alt299=2;
+            else if ( (LA297_0==106) ) {
+                alt297=2;
             }
             else {
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 299, 0, input);
+                    new NoViableAltException("", 297, 0, input);
 
                 throw nvae;
             }
-            switch (alt299) {
+            switch (alt297) {
                 case 1 :
-                    // InternalLustre.g:13228:3: (enumLiteral_0= '++' )
+                    // InternalLustre.g:13114:3: (enumLiteral_0= '++' )
                     {
-                    // InternalLustre.g:13228:3: (enumLiteral_0= '++' )
-                    // InternalLustre.g:13229:4: enumLiteral_0= '++'
+                    // InternalLustre.g:13114:3: (enumLiteral_0= '++' )
+                    // InternalLustre.g:13115:4: enumLiteral_0= '++'
                     {
                     enumLiteral_0=(Token)match(input,105,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37065,10 +36769,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13236:3: (enumLiteral_1= '--' )
+                    // InternalLustre.g:13122:3: (enumLiteral_1= '--' )
                     {
-                    // InternalLustre.g:13236:3: (enumLiteral_1= '--' )
-                    // InternalLustre.g:13237:4: enumLiteral_1= '--'
+                    // InternalLustre.g:13122:3: (enumLiteral_1= '--' )
+                    // InternalLustre.g:13123:4: enumLiteral_1= '--'
                     {
                     enumLiteral_1=(Token)match(input,106,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -37108,7 +36812,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePreOperator"
-    // InternalLustre.g:13247:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
+    // InternalLustre.g:13133:1: rulePreOperator returns [Enumerator current=null] : (enumLiteral_0= 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37118,11 +36822,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13253:2: ( (enumLiteral_0= 'pre' ) )
-            // InternalLustre.g:13254:2: (enumLiteral_0= 'pre' )
+            // InternalLustre.g:13139:2: ( (enumLiteral_0= 'pre' ) )
+            // InternalLustre.g:13140:2: (enumLiteral_0= 'pre' )
             {
-            // InternalLustre.g:13254:2: (enumLiteral_0= 'pre' )
-            // InternalLustre.g:13255:3: enumLiteral_0= 'pre'
+            // InternalLustre.g:13140:2: (enumLiteral_0= 'pre' )
+            // InternalLustre.g:13141:3: enumLiteral_0= 'pre'
             {
             enumLiteral_0=(Token)match(input,107,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37156,7 +36860,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseNotOperator"
-    // InternalLustre.g:13264:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
+    // InternalLustre.g:13150:1: ruleBitwiseNotOperator returns [Enumerator current=null] : (enumLiteral_0= '~' ) ;
     public final Enumerator ruleBitwiseNotOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37166,11 +36870,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13270:2: ( (enumLiteral_0= '~' ) )
-            // InternalLustre.g:13271:2: (enumLiteral_0= '~' )
+            // InternalLustre.g:13156:2: ( (enumLiteral_0= '~' ) )
+            // InternalLustre.g:13157:2: (enumLiteral_0= '~' )
             {
-            // InternalLustre.g:13271:2: (enumLiteral_0= '~' )
-            // InternalLustre.g:13272:3: enumLiteral_0= '~'
+            // InternalLustre.g:13157:2: (enumLiteral_0= '~' )
+            // InternalLustre.g:13158:3: enumLiteral_0= '~'
             {
             enumLiteral_0=(Token)match(input,108,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37204,7 +36908,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseXOrOperator"
-    // InternalLustre.g:13281:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
+    // InternalLustre.g:13167:1: ruleBitwiseXOrOperator returns [Enumerator current=null] : (enumLiteral_0= '^' ) ;
     public final Enumerator ruleBitwiseXOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37214,11 +36918,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13287:2: ( (enumLiteral_0= '^' ) )
-            // InternalLustre.g:13288:2: (enumLiteral_0= '^' )
+            // InternalLustre.g:13173:2: ( (enumLiteral_0= '^' ) )
+            // InternalLustre.g:13174:2: (enumLiteral_0= '^' )
             {
-            // InternalLustre.g:13288:2: (enumLiteral_0= '^' )
-            // InternalLustre.g:13289:3: enumLiteral_0= '^'
+            // InternalLustre.g:13174:2: (enumLiteral_0= '^' )
+            // InternalLustre.g:13175:3: enumLiteral_0= '^'
             {
             enumLiteral_0=(Token)match(input,35,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37252,7 +36956,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseOrOperator"
-    // InternalLustre.g:13298:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
+    // InternalLustre.g:13184:1: ruleBitwiseOrOperator returns [Enumerator current=null] : (enumLiteral_0= '|' ) ;
     public final Enumerator ruleBitwiseOrOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37262,11 +36966,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13304:2: ( (enumLiteral_0= '|' ) )
-            // InternalLustre.g:13305:2: (enumLiteral_0= '|' )
+            // InternalLustre.g:13190:2: ( (enumLiteral_0= '|' ) )
+            // InternalLustre.g:13191:2: (enumLiteral_0= '|' )
             {
-            // InternalLustre.g:13305:2: (enumLiteral_0= '|' )
-            // InternalLustre.g:13306:3: enumLiteral_0= '|'
+            // InternalLustre.g:13191:2: (enumLiteral_0= '|' )
+            // InternalLustre.g:13192:3: enumLiteral_0= '|'
             {
             enumLiteral_0=(Token)match(input,109,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37300,7 +37004,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleBitwiseAndOperator"
-    // InternalLustre.g:13315:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
+    // InternalLustre.g:13201:1: ruleBitwiseAndOperator returns [Enumerator current=null] : (enumLiteral_0= '&' ) ;
     public final Enumerator ruleBitwiseAndOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37310,11 +37014,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13321:2: ( (enumLiteral_0= '&' ) )
-            // InternalLustre.g:13322:2: (enumLiteral_0= '&' )
+            // InternalLustre.g:13207:2: ( (enumLiteral_0= '&' ) )
+            // InternalLustre.g:13208:2: (enumLiteral_0= '&' )
             {
-            // InternalLustre.g:13322:2: (enumLiteral_0= '&' )
-            // InternalLustre.g:13323:3: enumLiteral_0= '&'
+            // InternalLustre.g:13208:2: (enumLiteral_0= '&' )
+            // InternalLustre.g:13209:3: enumLiteral_0= '&'
             {
             enumLiteral_0=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37348,7 +37052,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAddOperator"
-    // InternalLustre.g:13332:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
+    // InternalLustre.g:13218:1: ruleAddOperator returns [Enumerator current=null] : (enumLiteral_0= '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37358,11 +37062,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13338:2: ( (enumLiteral_0= '+' ) )
-            // InternalLustre.g:13339:2: (enumLiteral_0= '+' )
+            // InternalLustre.g:13224:2: ( (enumLiteral_0= '+' ) )
+            // InternalLustre.g:13225:2: (enumLiteral_0= '+' )
             {
-            // InternalLustre.g:13339:2: (enumLiteral_0= '+' )
-            // InternalLustre.g:13340:3: enumLiteral_0= '+'
+            // InternalLustre.g:13225:2: (enumLiteral_0= '+' )
+            // InternalLustre.g:13226:3: enumLiteral_0= '+'
             {
             enumLiteral_0=(Token)match(input,83,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37396,7 +37100,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleSubOperator"
-    // InternalLustre.g:13349:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
+    // InternalLustre.g:13235:1: ruleSubOperator returns [Enumerator current=null] : (enumLiteral_0= '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37406,11 +37110,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13355:2: ( (enumLiteral_0= '-' ) )
-            // InternalLustre.g:13356:2: (enumLiteral_0= '-' )
+            // InternalLustre.g:13241:2: ( (enumLiteral_0= '-' ) )
+            // InternalLustre.g:13242:2: (enumLiteral_0= '-' )
             {
-            // InternalLustre.g:13356:2: (enumLiteral_0= '-' )
-            // InternalLustre.g:13357:3: enumLiteral_0= '-'
+            // InternalLustre.g:13242:2: (enumLiteral_0= '-' )
+            // InternalLustre.g:13243:3: enumLiteral_0= '-'
             {
             enumLiteral_0=(Token)match(input,84,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37444,7 +37148,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMultOperator"
-    // InternalLustre.g:13366:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
+    // InternalLustre.g:13252:1: ruleMultOperator returns [Enumerator current=null] : (enumLiteral_0= '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37454,11 +37158,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13372:2: ( (enumLiteral_0= '*' ) )
-            // InternalLustre.g:13373:2: (enumLiteral_0= '*' )
+            // InternalLustre.g:13258:2: ( (enumLiteral_0= '*' ) )
+            // InternalLustre.g:13259:2: (enumLiteral_0= '*' )
             {
-            // InternalLustre.g:13373:2: (enumLiteral_0= '*' )
-            // InternalLustre.g:13374:3: enumLiteral_0= '*'
+            // InternalLustre.g:13259:2: (enumLiteral_0= '*' )
+            // InternalLustre.g:13260:3: enumLiteral_0= '*'
             {
             enumLiteral_0=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37492,7 +37196,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleDivOperator"
-    // InternalLustre.g:13383:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
+    // InternalLustre.g:13269:1: ruleDivOperator returns [Enumerator current=null] : (enumLiteral_0= '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37502,11 +37206,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13389:2: ( (enumLiteral_0= '/' ) )
-            // InternalLustre.g:13390:2: (enumLiteral_0= '/' )
+            // InternalLustre.g:13275:2: ( (enumLiteral_0= '/' ) )
+            // InternalLustre.g:13276:2: (enumLiteral_0= '/' )
             {
-            // InternalLustre.g:13390:2: (enumLiteral_0= '/' )
-            // InternalLustre.g:13391:3: enumLiteral_0= '/'
+            // InternalLustre.g:13276:2: (enumLiteral_0= '/' )
+            // InternalLustre.g:13277:3: enumLiteral_0= '/'
             {
             enumLiteral_0=(Token)match(input,53,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37540,7 +37244,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleValOperator"
-    // InternalLustre.g:13400:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
+    // InternalLustre.g:13286:1: ruleValOperator returns [Enumerator current=null] : (enumLiteral_0= 'val' ) ;
     public final Enumerator ruleValOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37550,11 +37254,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13406:2: ( (enumLiteral_0= 'val' ) )
-            // InternalLustre.g:13407:2: (enumLiteral_0= 'val' )
+            // InternalLustre.g:13292:2: ( (enumLiteral_0= 'val' ) )
+            // InternalLustre.g:13293:2: (enumLiteral_0= 'val' )
             {
-            // InternalLustre.g:13407:2: (enumLiteral_0= 'val' )
-            // InternalLustre.g:13408:3: enumLiteral_0= 'val'
+            // InternalLustre.g:13293:2: (enumLiteral_0= 'val' )
+            // InternalLustre.g:13294:3: enumLiteral_0= 'val'
             {
             enumLiteral_0=(Token)match(input,110,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37588,7 +37292,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftLeftOperator"
-    // InternalLustre.g:13417:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
+    // InternalLustre.g:13303:1: ruleShiftLeftOperator returns [Enumerator current=null] : (enumLiteral_0= '<<' ) ;
     public final Enumerator ruleShiftLeftOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37598,11 +37302,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13423:2: ( (enumLiteral_0= '<<' ) )
-            // InternalLustre.g:13424:2: (enumLiteral_0= '<<' )
+            // InternalLustre.g:13309:2: ( (enumLiteral_0= '<<' ) )
+            // InternalLustre.g:13310:2: (enumLiteral_0= '<<' )
             {
-            // InternalLustre.g:13424:2: (enumLiteral_0= '<<' )
-            // InternalLustre.g:13425:3: enumLiteral_0= '<<'
+            // InternalLustre.g:13310:2: (enumLiteral_0= '<<' )
+            // InternalLustre.g:13311:3: enumLiteral_0= '<<'
             {
             enumLiteral_0=(Token)match(input,111,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37636,7 +37340,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightOperator"
-    // InternalLustre.g:13434:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
+    // InternalLustre.g:13320:1: ruleShiftRightOperator returns [Enumerator current=null] : (enumLiteral_0= '>>' ) ;
     public final Enumerator ruleShiftRightOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37646,11 +37350,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13440:2: ( (enumLiteral_0= '>>' ) )
-            // InternalLustre.g:13441:2: (enumLiteral_0= '>>' )
+            // InternalLustre.g:13326:2: ( (enumLiteral_0= '>>' ) )
+            // InternalLustre.g:13327:2: (enumLiteral_0= '>>' )
             {
-            // InternalLustre.g:13441:2: (enumLiteral_0= '>>' )
-            // InternalLustre.g:13442:3: enumLiteral_0= '>>'
+            // InternalLustre.g:13327:2: (enumLiteral_0= '>>' )
+            // InternalLustre.g:13328:3: enumLiteral_0= '>>'
             {
             enumLiteral_0=(Token)match(input,81,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37684,7 +37388,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleShiftRightUnsignedOperator"
-    // InternalLustre.g:13451:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
+    // InternalLustre.g:13337:1: ruleShiftRightUnsignedOperator returns [Enumerator current=null] : (enumLiteral_0= '>>>' ) ;
     public final Enumerator ruleShiftRightUnsignedOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37694,11 +37398,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13457:2: ( (enumLiteral_0= '>>>' ) )
-            // InternalLustre.g:13458:2: (enumLiteral_0= '>>>' )
+            // InternalLustre.g:13343:2: ( (enumLiteral_0= '>>>' ) )
+            // InternalLustre.g:13344:2: (enumLiteral_0= '>>>' )
             {
-            // InternalLustre.g:13458:2: (enumLiteral_0= '>>>' )
-            // InternalLustre.g:13459:3: enumLiteral_0= '>>>'
+            // InternalLustre.g:13344:2: (enumLiteral_0= '>>>' )
+            // InternalLustre.g:13345:3: enumLiteral_0= '>>>'
             {
             enumLiteral_0=(Token)match(input,82,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37731,104 +37435,8 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     // $ANTLR end "ruleShiftRightUnsignedOperator"
 
 
-    // $ANTLR start "ruleAtMostOneOfOperator"
-    // InternalLustre.g:13468:1: ruleAtMostOneOfOperator returns [Enumerator current=null] : (enumLiteral_0= '#' ) ;
-    public final Enumerator ruleAtMostOneOfOperator() throws RecognitionException {
-        Enumerator current = null;
-
-        Token enumLiteral_0=null;
-
-
-        	enterRule();
-
-        try {
-            // InternalLustre.g:13474:2: ( (enumLiteral_0= '#' ) )
-            // InternalLustre.g:13475:2: (enumLiteral_0= '#' )
-            {
-            // InternalLustre.g:13475:2: (enumLiteral_0= '#' )
-            // InternalLustre.g:13476:3: enumLiteral_0= '#'
-            {
-            enumLiteral_0=(Token)match(input,89,FollowSets000.FOLLOW_2); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			current = grammarAccess.getAtMostOneOfOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration().getEnumLiteral().getInstance();
-              			newLeafNode(enumLiteral_0, grammarAccess.getAtMostOneOfOperatorAccess().getATMOSTONEOFEnumLiteralDeclaration());
-              		
-            }
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleAtMostOneOfOperator"
-
-
-    // $ANTLR start "ruleNoneOfOperator"
-    // InternalLustre.g:13485:1: ruleNoneOfOperator returns [Enumerator current=null] : (enumLiteral_0= 'nor' ) ;
-    public final Enumerator ruleNoneOfOperator() throws RecognitionException {
-        Enumerator current = null;
-
-        Token enumLiteral_0=null;
-
-
-        	enterRule();
-
-        try {
-            // InternalLustre.g:13491:2: ( (enumLiteral_0= 'nor' ) )
-            // InternalLustre.g:13492:2: (enumLiteral_0= 'nor' )
-            {
-            // InternalLustre.g:13492:2: (enumLiteral_0= 'nor' )
-            // InternalLustre.g:13493:3: enumLiteral_0= 'nor'
-            {
-            enumLiteral_0=(Token)match(input,102,FollowSets000.FOLLOW_2); if (state.failed) return current;
-            if ( state.backtracking==0 ) {
-
-              			current = grammarAccess.getNoneOfOperatorAccess().getNOREnumLiteralDeclaration().getEnumLiteral().getInstance();
-              			newLeafNode(enumLiteral_0, grammarAccess.getNoneOfOperatorAccess().getNOREnumLiteralDeclaration());
-              		
-            }
-
-            }
-
-
-            }
-
-            if ( state.backtracking==0 ) {
-
-              	leaveRule();
-
-            }
-        }
-
-            catch (RecognitionException re) {
-                recover(input,re);
-                appendSkippedTokens();
-            }
-        finally {
-        }
-        return current;
-    }
-    // $ANTLR end "ruleNoneOfOperator"
-
-
     // $ANTLR start "ruleHostType"
-    // InternalLustre.g:13502:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
+    // InternalLustre.g:13354:1: ruleHostType returns [Enumerator current=null] : (enumLiteral_0= 'host' ) ;
     public final Enumerator ruleHostType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37838,11 +37446,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13508:2: ( (enumLiteral_0= 'host' ) )
-            // InternalLustre.g:13509:2: (enumLiteral_0= 'host' )
+            // InternalLustre.g:13360:2: ( (enumLiteral_0= 'host' ) )
+            // InternalLustre.g:13361:2: (enumLiteral_0= 'host' )
             {
-            // InternalLustre.g:13509:2: (enumLiteral_0= 'host' )
-            // InternalLustre.g:13510:3: enumLiteral_0= 'host'
+            // InternalLustre.g:13361:2: (enumLiteral_0= 'host' )
+            // InternalLustre.g:13362:3: enumLiteral_0= 'host'
             {
             enumLiteral_0=(Token)match(input,71,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37876,7 +37484,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleStructType"
-    // InternalLustre.g:13519:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
+    // InternalLustre.g:13371:1: ruleStructType returns [Enumerator current=null] : (enumLiteral_0= 'struct' ) ;
     public final Enumerator ruleStructType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37886,11 +37494,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13525:2: ( (enumLiteral_0= 'struct' ) )
-            // InternalLustre.g:13526:2: (enumLiteral_0= 'struct' )
+            // InternalLustre.g:13377:2: ( (enumLiteral_0= 'struct' ) )
+            // InternalLustre.g:13378:2: (enumLiteral_0= 'struct' )
             {
-            // InternalLustre.g:13526:2: (enumLiteral_0= 'struct' )
-            // InternalLustre.g:13527:3: enumLiteral_0= 'struct'
+            // InternalLustre.g:13378:2: (enumLiteral_0= 'struct' )
+            // InternalLustre.g:13379:3: enumLiteral_0= 'struct'
             {
             enumLiteral_0=(Token)match(input,112,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37924,7 +37532,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleClassType"
-    // InternalLustre.g:13536:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
+    // InternalLustre.g:13388:1: ruleClassType returns [Enumerator current=null] : (enumLiteral_0= 'class' ) ;
     public final Enumerator ruleClassType() throws RecognitionException {
         Enumerator current = null;
 
@@ -37934,11 +37542,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13542:2: ( (enumLiteral_0= 'class' ) )
-            // InternalLustre.g:13543:2: (enumLiteral_0= 'class' )
+            // InternalLustre.g:13394:2: ( (enumLiteral_0= 'class' ) )
+            // InternalLustre.g:13395:2: (enumLiteral_0= 'class' )
             {
-            // InternalLustre.g:13543:2: (enumLiteral_0= 'class' )
-            // InternalLustre.g:13544:3: enumLiteral_0= 'class'
+            // InternalLustre.g:13395:2: (enumLiteral_0= 'class' )
+            // InternalLustre.g:13396:3: enumLiteral_0= 'class'
             {
             enumLiteral_0=(Token)match(input,113,FollowSets000.FOLLOW_2); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -37972,7 +37580,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleCombineOperator"
-    // InternalLustre.g:13553:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
+    // InternalLustre.g:13405:1: ruleCombineOperator returns [Enumerator current=null] : ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
@@ -37989,66 +37597,66 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13559:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
-            // InternalLustre.g:13560:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            // InternalLustre.g:13411:2: ( ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) ) )
+            // InternalLustre.g:13412:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
             {
-            // InternalLustre.g:13560:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
-            int alt300=8;
+            // InternalLustre.g:13412:2: ( (enumLiteral_0= 'none' ) | (enumLiteral_1= '+' ) | (enumLiteral_2= '*' ) | (enumLiteral_3= 'max' ) | (enumLiteral_4= 'min' ) | (enumLiteral_5= '|' ) | (enumLiteral_6= '&' ) | (enumLiteral_7= 'host' ) )
+            int alt298=8;
             switch ( input.LA(1) ) {
             case 114:
                 {
-                alt300=1;
+                alt298=1;
                 }
                 break;
             case 83:
                 {
-                alt300=2;
+                alt298=2;
                 }
                 break;
             case 52:
                 {
-                alt300=3;
+                alt298=3;
                 }
                 break;
             case 115:
                 {
-                alt300=4;
+                alt298=4;
                 }
                 break;
             case 116:
                 {
-                alt300=5;
+                alt298=5;
                 }
                 break;
             case 109:
                 {
-                alt300=6;
+                alt298=6;
                 }
                 break;
             case 80:
                 {
-                alt300=7;
+                alt298=7;
                 }
                 break;
             case 71:
                 {
-                alt300=8;
+                alt298=8;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 300, 0, input);
+                    new NoViableAltException("", 298, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt300) {
+            switch (alt298) {
                 case 1 :
-                    // InternalLustre.g:13561:3: (enumLiteral_0= 'none' )
+                    // InternalLustre.g:13413:3: (enumLiteral_0= 'none' )
                     {
-                    // InternalLustre.g:13561:3: (enumLiteral_0= 'none' )
-                    // InternalLustre.g:13562:4: enumLiteral_0= 'none'
+                    // InternalLustre.g:13413:3: (enumLiteral_0= 'none' )
+                    // InternalLustre.g:13414:4: enumLiteral_0= 'none'
                     {
                     enumLiteral_0=(Token)match(input,114,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38064,10 +37672,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13569:3: (enumLiteral_1= '+' )
+                    // InternalLustre.g:13421:3: (enumLiteral_1= '+' )
                     {
-                    // InternalLustre.g:13569:3: (enumLiteral_1= '+' )
-                    // InternalLustre.g:13570:4: enumLiteral_1= '+'
+                    // InternalLustre.g:13421:3: (enumLiteral_1= '+' )
+                    // InternalLustre.g:13422:4: enumLiteral_1= '+'
                     {
                     enumLiteral_1=(Token)match(input,83,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38083,10 +37691,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13577:3: (enumLiteral_2= '*' )
+                    // InternalLustre.g:13429:3: (enumLiteral_2= '*' )
                     {
-                    // InternalLustre.g:13577:3: (enumLiteral_2= '*' )
-                    // InternalLustre.g:13578:4: enumLiteral_2= '*'
+                    // InternalLustre.g:13429:3: (enumLiteral_2= '*' )
+                    // InternalLustre.g:13430:4: enumLiteral_2= '*'
                     {
                     enumLiteral_2=(Token)match(input,52,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38102,10 +37710,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:13585:3: (enumLiteral_3= 'max' )
+                    // InternalLustre.g:13437:3: (enumLiteral_3= 'max' )
                     {
-                    // InternalLustre.g:13585:3: (enumLiteral_3= 'max' )
-                    // InternalLustre.g:13586:4: enumLiteral_3= 'max'
+                    // InternalLustre.g:13437:3: (enumLiteral_3= 'max' )
+                    // InternalLustre.g:13438:4: enumLiteral_3= 'max'
                     {
                     enumLiteral_3=(Token)match(input,115,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38121,10 +37729,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:13593:3: (enumLiteral_4= 'min' )
+                    // InternalLustre.g:13445:3: (enumLiteral_4= 'min' )
                     {
-                    // InternalLustre.g:13593:3: (enumLiteral_4= 'min' )
-                    // InternalLustre.g:13594:4: enumLiteral_4= 'min'
+                    // InternalLustre.g:13445:3: (enumLiteral_4= 'min' )
+                    // InternalLustre.g:13446:4: enumLiteral_4= 'min'
                     {
                     enumLiteral_4=(Token)match(input,116,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38140,10 +37748,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // InternalLustre.g:13601:3: (enumLiteral_5= '|' )
+                    // InternalLustre.g:13453:3: (enumLiteral_5= '|' )
                     {
-                    // InternalLustre.g:13601:3: (enumLiteral_5= '|' )
-                    // InternalLustre.g:13602:4: enumLiteral_5= '|'
+                    // InternalLustre.g:13453:3: (enumLiteral_5= '|' )
+                    // InternalLustre.g:13454:4: enumLiteral_5= '|'
                     {
                     enumLiteral_5=(Token)match(input,109,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38159,10 +37767,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // InternalLustre.g:13609:3: (enumLiteral_6= '&' )
+                    // InternalLustre.g:13461:3: (enumLiteral_6= '&' )
                     {
-                    // InternalLustre.g:13609:3: (enumLiteral_6= '&' )
-                    // InternalLustre.g:13610:4: enumLiteral_6= '&'
+                    // InternalLustre.g:13461:3: (enumLiteral_6= '&' )
+                    // InternalLustre.g:13462:4: enumLiteral_6= '&'
                     {
                     enumLiteral_6=(Token)match(input,80,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38178,10 +37786,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // InternalLustre.g:13617:3: (enumLiteral_7= 'host' )
+                    // InternalLustre.g:13469:3: (enumLiteral_7= 'host' )
                     {
-                    // InternalLustre.g:13617:3: (enumLiteral_7= 'host' )
-                    // InternalLustre.g:13618:4: enumLiteral_7= 'host'
+                    // InternalLustre.g:13469:3: (enumLiteral_7= 'host' )
+                    // InternalLustre.g:13470:4: enumLiteral_7= 'host'
                     {
                     enumLiteral_7=(Token)match(input,71,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38221,7 +37829,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAccessModifier"
-    // InternalLustre.g:13628:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
+    // InternalLustre.g:13480:1: ruleAccessModifier returns [Enumerator current=null] : ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) ;
     public final Enumerator ruleAccessModifier() throws RecognitionException {
         Enumerator current = null;
 
@@ -38233,41 +37841,41 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13634:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
-            // InternalLustre.g:13635:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            // InternalLustre.g:13486:2: ( ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) ) )
+            // InternalLustre.g:13487:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
             {
-            // InternalLustre.g:13635:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
-            int alt301=3;
+            // InternalLustre.g:13487:2: ( (enumLiteral_0= 'public' ) | (enumLiteral_1= 'protected' ) | (enumLiteral_2= 'private' ) )
+            int alt299=3;
             switch ( input.LA(1) ) {
             case 117:
                 {
-                alt301=1;
+                alt299=1;
                 }
                 break;
             case 118:
                 {
-                alt301=2;
+                alt299=2;
                 }
                 break;
             case 119:
                 {
-                alt301=3;
+                alt299=3;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 301, 0, input);
+                    new NoViableAltException("", 299, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt301) {
+            switch (alt299) {
                 case 1 :
-                    // InternalLustre.g:13636:3: (enumLiteral_0= 'public' )
+                    // InternalLustre.g:13488:3: (enumLiteral_0= 'public' )
                     {
-                    // InternalLustre.g:13636:3: (enumLiteral_0= 'public' )
-                    // InternalLustre.g:13637:4: enumLiteral_0= 'public'
+                    // InternalLustre.g:13488:3: (enumLiteral_0= 'public' )
+                    // InternalLustre.g:13489:4: enumLiteral_0= 'public'
                     {
                     enumLiteral_0=(Token)match(input,117,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38283,10 +37891,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13644:3: (enumLiteral_1= 'protected' )
+                    // InternalLustre.g:13496:3: (enumLiteral_1= 'protected' )
                     {
-                    // InternalLustre.g:13644:3: (enumLiteral_1= 'protected' )
-                    // InternalLustre.g:13645:4: enumLiteral_1= 'protected'
+                    // InternalLustre.g:13496:3: (enumLiteral_1= 'protected' )
+                    // InternalLustre.g:13497:4: enumLiteral_1= 'protected'
                     {
                     enumLiteral_1=(Token)match(input,118,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38302,10 +37910,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13652:3: (enumLiteral_2= 'private' )
+                    // InternalLustre.g:13504:3: (enumLiteral_2= 'private' )
                     {
-                    // InternalLustre.g:13652:3: (enumLiteral_2= 'private' )
-                    // InternalLustre.g:13653:4: enumLiteral_2= 'private'
+                    // InternalLustre.g:13504:3: (enumLiteral_2= 'private' )
+                    // InternalLustre.g:13505:4: enumLiteral_2= 'private'
                     {
                     enumLiteral_2=(Token)match(input,119,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38345,7 +37953,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMethodReturnType"
-    // InternalLustre.g:13663:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
+    // InternalLustre.g:13515:1: ruleMethodReturnType returns [Enumerator current=null] : ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) ;
     public final Enumerator ruleMethodReturnType() throws RecognitionException {
         Enumerator current = null;
 
@@ -38359,51 +37967,51 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	enterRule();
 
         try {
-            // InternalLustre.g:13669:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
-            // InternalLustre.g:13670:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            // InternalLustre.g:13521:2: ( ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) ) )
+            // InternalLustre.g:13522:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
             {
-            // InternalLustre.g:13670:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
-            int alt302=5;
+            // InternalLustre.g:13522:2: ( (enumLiteral_0= 'void' ) | (enumLiteral_1= 'bool' ) | (enumLiteral_2= 'int' ) | (enumLiteral_3= 'float' ) | (enumLiteral_4= 'string' ) )
+            int alt300=5;
             switch ( input.LA(1) ) {
             case 120:
                 {
-                alt302=1;
+                alt300=1;
                 }
                 break;
             case 91:
                 {
-                alt302=2;
+                alt300=2;
                 }
                 break;
             case 92:
                 {
-                alt302=3;
+                alt300=3;
                 }
                 break;
             case 121:
                 {
-                alt302=4;
+                alt300=4;
                 }
                 break;
             case 122:
                 {
-                alt302=5;
+                alt300=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 302, 0, input);
+                    new NoViableAltException("", 300, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt302) {
+            switch (alt300) {
                 case 1 :
-                    // InternalLustre.g:13671:3: (enumLiteral_0= 'void' )
+                    // InternalLustre.g:13523:3: (enumLiteral_0= 'void' )
                     {
-                    // InternalLustre.g:13671:3: (enumLiteral_0= 'void' )
-                    // InternalLustre.g:13672:4: enumLiteral_0= 'void'
+                    // InternalLustre.g:13523:3: (enumLiteral_0= 'void' )
+                    // InternalLustre.g:13524:4: enumLiteral_0= 'void'
                     {
                     enumLiteral_0=(Token)match(input,120,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38419,10 +38027,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // InternalLustre.g:13679:3: (enumLiteral_1= 'bool' )
+                    // InternalLustre.g:13531:3: (enumLiteral_1= 'bool' )
                     {
-                    // InternalLustre.g:13679:3: (enumLiteral_1= 'bool' )
-                    // InternalLustre.g:13680:4: enumLiteral_1= 'bool'
+                    // InternalLustre.g:13531:3: (enumLiteral_1= 'bool' )
+                    // InternalLustre.g:13532:4: enumLiteral_1= 'bool'
                     {
                     enumLiteral_1=(Token)match(input,91,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38438,10 +38046,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // InternalLustre.g:13687:3: (enumLiteral_2= 'int' )
+                    // InternalLustre.g:13539:3: (enumLiteral_2= 'int' )
                     {
-                    // InternalLustre.g:13687:3: (enumLiteral_2= 'int' )
-                    // InternalLustre.g:13688:4: enumLiteral_2= 'int'
+                    // InternalLustre.g:13539:3: (enumLiteral_2= 'int' )
+                    // InternalLustre.g:13540:4: enumLiteral_2= 'int'
                     {
                     enumLiteral_2=(Token)match(input,92,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38457,10 +38065,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // InternalLustre.g:13695:3: (enumLiteral_3= 'float' )
+                    // InternalLustre.g:13547:3: (enumLiteral_3= 'float' )
                     {
-                    // InternalLustre.g:13695:3: (enumLiteral_3= 'float' )
-                    // InternalLustre.g:13696:4: enumLiteral_3= 'float'
+                    // InternalLustre.g:13547:3: (enumLiteral_3= 'float' )
+                    // InternalLustre.g:13548:4: enumLiteral_3= 'float'
                     {
                     enumLiteral_3=(Token)match(input,121,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38476,10 +38084,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // InternalLustre.g:13703:3: (enumLiteral_4= 'string' )
+                    // InternalLustre.g:13555:3: (enumLiteral_4= 'string' )
                     {
-                    // InternalLustre.g:13703:3: (enumLiteral_4= 'string' )
-                    // InternalLustre.g:13704:4: enumLiteral_4= 'string'
+                    // InternalLustre.g:13555:3: (enumLiteral_4= 'string' )
+                    // InternalLustre.g:13556:4: enumLiteral_4= 'string'
                     {
                     enumLiteral_4=(Token)match(input,122,FollowSets000.FOLLOW_2); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
@@ -38697,17 +38305,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
 
         // InternalLustre.g:1816:5: (otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) ) )*
-        loop324:
+        loop322:
         do {
-            int alt324=2;
-            int LA324_0 = input.LA(1);
+            int alt322=2;
+            int LA322_0 = input.LA(1);
 
-            if ( (LA324_0==23) ) {
-                alt324=1;
+            if ( (LA322_0==23) ) {
+                alt322=1;
             }
 
 
-            switch (alt324) {
+            switch (alt322) {
         	case 1 :
         	    // InternalLustre.g:1817:6: otherlv_11= ',' ( (lv_references_12_0= ruleValuedObjectReference ) )
         	    {
@@ -38739,7 +38347,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop324;
+        	    break loop322;
             }
         } while (true);
 
@@ -39432,17 +39040,17 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         }
 
         // InternalLustre.g:6199:4: (otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) ) )*
-        loop346:
+        loop344:
         do {
-            int alt346=2;
-            int LA346_0 = input.LA(1);
+            int alt344=2;
+            int LA344_0 = input.LA(1);
 
-            if ( (LA346_0==23) ) {
-                alt346=1;
+            if ( (LA344_0==23) ) {
+                alt344=1;
             }
 
 
-            switch (alt346) {
+            switch (alt344) {
         	case 1 :
         	    // InternalLustre.g:6200:5: otherlv_20= ',' ( (lv_valuedObjects_21_0= ruleValuedObject ) )
         	    {
@@ -39474,7 +39082,7 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop346;
+        	    break loop344;
             }
         } while (true);
 
@@ -39868,148 +39476,18 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred284_InternalLustre
 
-    // $ANTLR start synpred287_InternalLustre
-    public final void synpred287_InternalLustre_fragment() throws RecognitionException {   
-        Token otherlv_2=null;
-        Token otherlv_4=null;
-        Token otherlv_6=null;
-        Enumerator lv_operator_1_0 = null;
-
-        EObject lv_subExpressions_3_0 = null;
-
-        EObject lv_subExpressions_5_0 = null;
-
-
-        // InternalLustre.g:9898:3: ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) )
-        // InternalLustre.g:9898:3: ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' )
-        {
-        // InternalLustre.g:9898:3: ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' )
-        // InternalLustre.g:9899:4: () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')'
-        {
-        // InternalLustre.g:9899:4: ()
-        // InternalLustre.g:9900:5: 
-        {
-        if ( state.backtracking==0 ) {
-
-          					/* */
-          				
-        }
-
-        }
-
-        // InternalLustre.g:9909:4: ( (lv_operator_1_0= ruleNoneOfOperator ) )
-        // InternalLustre.g:9910:5: (lv_operator_1_0= ruleNoneOfOperator )
-        {
-        // InternalLustre.g:9910:5: (lv_operator_1_0= ruleNoneOfOperator )
-        // InternalLustre.g:9911:6: lv_operator_1_0= ruleNoneOfOperator
-        {
-        if ( state.backtracking==0 ) {
-
-          						newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getOperatorNoneOfOperatorEnumRuleCall_0_1_0());
-          					
-        }
-        pushFollow(FollowSets000.FOLLOW_61);
-        lv_operator_1_0=ruleNoneOfOperator();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-        otherlv_2=(Token)match(input,29,FollowSets000.FOLLOW_50); if (state.failed) return ;
-        // InternalLustre.g:9932:4: ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) )
-        // InternalLustre.g:9933:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-        {
-        // InternalLustre.g:9933:5: (lv_subExpressions_3_0= ruleAtomicValuedExpression )
-        // InternalLustre.g:9934:6: lv_subExpressions_3_0= ruleAtomicValuedExpression
-        {
-        if ( state.backtracking==0 ) {
-
-          						newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_3_0());
-          					
-        }
-        pushFollow(FollowSets000.FOLLOW_32);
-        lv_subExpressions_3_0=ruleAtomicValuedExpression();
-
-        state._fsp--;
-        if (state.failed) return ;
-
-        }
-
-
-        }
-
-        // InternalLustre.g:9951:4: (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )*
-        loop368:
-        do {
-            int alt368=2;
-            int LA368_0 = input.LA(1);
-
-            if ( (LA368_0==23) ) {
-                alt368=1;
-            }
-
-
-            switch (alt368) {
-        	case 1 :
-        	    // InternalLustre.g:9952:5: otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
-        	    {
-        	    otherlv_4=(Token)match(input,23,FollowSets000.FOLLOW_50); if (state.failed) return ;
-        	    // InternalLustre.g:9956:5: ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) )
-        	    // InternalLustre.g:9957:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
-        	    {
-        	    // InternalLustre.g:9957:6: (lv_subExpressions_5_0= ruleAtomicValuedExpression )
-        	    // InternalLustre.g:9958:7: lv_subExpressions_5_0= ruleAtomicValuedExpression
-        	    {
-        	    if ( state.backtracking==0 ) {
-
-        	      							newCompositeNode(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0());
-        	      						
-        	    }
-        	    pushFollow(FollowSets000.FOLLOW_32);
-        	    lv_subExpressions_5_0=ruleAtomicValuedExpression();
-
-        	    state._fsp--;
-        	    if (state.failed) return ;
-
-        	    }
-
-
-        	    }
-
-
-        	    }
-        	    break;
-
-        	default :
-        	    break loop368;
-            }
-        } while (true);
-
-        otherlv_6=(Token)match(input,30,FollowSets000.FOLLOW_2); if (state.failed) return ;
-
-        }
-
-
-        }
-    }
-    // $ANTLR end synpred287_InternalLustre
-
-    // $ANTLR start synpred292_InternalLustre
-    public final void synpred292_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred290_InternalLustre
+    public final void synpred290_InternalLustre_fragment() throws RecognitionException {   
         Token otherlv_4=null;
         Token otherlv_6=null;
         EObject this_ValuedExpression_5 = null;
 
 
-        // InternalLustre.g:10060:3: ( (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) )
-        // InternalLustre.g:10060:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+        // InternalLustre.g:9946:3: ( (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) )
+        // InternalLustre.g:9946:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
         {
-        // InternalLustre.g:10060:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
-        // InternalLustre.g:10061:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
+        // InternalLustre.g:9946:3: (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' )
+        // InternalLustre.g:9947:4: otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')'
         {
         otherlv_4=(Token)match(input,29,FollowSets000.FOLLOW_48); if (state.failed) return ;
         pushFollow(FollowSets000.FOLLOW_60);
@@ -40024,15 +39502,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred292_InternalLustre
+    // $ANTLR end synpred290_InternalLustre
 
-    // $ANTLR start synpred306_InternalLustre
-    public final void synpred306_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred304_InternalLustre
+    public final void synpred304_InternalLustre_fragment() throws RecognitionException {   
         EObject this_BoolExpression_0 = null;
 
 
-        // InternalLustre.g:10857:3: (this_BoolExpression_0= ruleBoolExpression )
-        // InternalLustre.g:10857:3: this_BoolExpression_0= ruleBoolExpression
+        // InternalLustre.g:10743:3: (this_BoolExpression_0= ruleBoolExpression )
+        // InternalLustre.g:10743:3: this_BoolExpression_0= ruleBoolExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40047,15 +39525,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred306_InternalLustre
+    // $ANTLR end synpred304_InternalLustre
 
-    // $ANTLR start synpred307_InternalLustre
-    public final void synpred307_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred305_InternalLustre
+    public final void synpred305_InternalLustre_fragment() throws RecognitionException {   
         EObject this_ValuedExpression_1 = null;
 
 
-        // InternalLustre.g:10869:3: (this_ValuedExpression_1= ruleValuedExpression )
-        // InternalLustre.g:10869:3: this_ValuedExpression_1= ruleValuedExpression
+        // InternalLustre.g:10755:3: (this_ValuedExpression_1= ruleValuedExpression )
+        // InternalLustre.g:10755:3: this_ValuedExpression_1= ruleValuedExpression
         {
         if ( state.backtracking==0 ) {
 
@@ -40070,15 +39548,15 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred307_InternalLustre
+    // $ANTLR end synpred305_InternalLustre
 
-    // $ANTLR start synpred321_InternalLustre
-    public final void synpred321_InternalLustre_fragment() throws RecognitionException {   
+    // $ANTLR start synpred319_InternalLustre
+    public final void synpred319_InternalLustre_fragment() throws RecognitionException {   
         EObject this_KeyStringValueAnnotation_1 = null;
 
 
-        // InternalLustre.g:11553:3: (this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation )
-        // InternalLustre.g:11553:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
+        // InternalLustre.g:11439:3: (this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation )
+        // InternalLustre.g:11439:3: this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation
         {
         if ( state.backtracking==0 ) {
 
@@ -40093,24 +39571,10 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
 
         }
     }
-    // $ANTLR end synpred321_InternalLustre
+    // $ANTLR end synpred319_InternalLustre
 
     // Delegated rules
 
-    public final boolean synpred306_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred306_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred120_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -40251,11 +39715,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred287_InternalLustre() {
+    public final boolean synpred53_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred287_InternalLustre_fragment(); // can never throw exception
+            synpred53_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -40265,11 +39729,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred53_InternalLustre() {
+    public final boolean synpred319_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
         try {
-            synpred53_InternalLustre_fragment(); // can never throw exception
+            synpred319_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -40377,6 +39841,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred305_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred305_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred236_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -40410,20 +39888,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred116_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred292_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred292_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -40531,6 +39995,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
+    public final boolean synpred304_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred304_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
     public final boolean synpred179_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -40615,34 +40093,6 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         state.failed=false;
         return success;
     }
-    public final boolean synpred307_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred307_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
-    public final boolean synpred321_InternalLustre() {
-        state.backtracking++;
-        int start = input.mark();
-        try {
-            synpred321_InternalLustre_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !state.failed;
-        input.rewind(start);
-        state.backtracking--;
-        state.failed=false;
-        return success;
-    }
     public final boolean synpred282_InternalLustre() {
         state.backtracking++;
         int start = input.mark();
@@ -40690,6 +40140,20 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred234_InternalLustre_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !state.failed;
+        input.rewind(start);
+        state.backtracking--;
+        state.failed=false;
+        return success;
+    }
+    public final boolean synpred290_InternalLustre() {
+        state.backtracking++;
+        int start = input.mark();
+        try {
+            synpred290_InternalLustre_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -40769,15 +40233,14 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
     protected DFA244 dfa244 = new DFA244(this);
     protected DFA250 dfa250 = new DFA250(this);
     protected DFA251 dfa251 = new DFA251(this);
-    protected DFA254 dfa254 = new DFA254(this);
-    protected DFA255 dfa255 = new DFA255(this);
-    protected DFA269 dfa269 = new DFA269(this);
+    protected DFA253 dfa253 = new DFA253(this);
+    protected DFA267 dfa267 = new DFA267(this);
+    protected DFA274 dfa274 = new DFA274(this);
+    protected DFA275 dfa275 = new DFA275(this);
     protected DFA276 dfa276 = new DFA276(this);
     protected DFA277 dfa277 = new DFA277(this);
     protected DFA278 dfa278 = new DFA278(this);
     protected DFA279 dfa279 = new DFA279(this);
-    protected DFA280 dfa280 = new DFA280(this);
-    protected DFA281 dfa281 = new DFA281(this);
     static final String dfa_1s = "\103\uffff";
     static final String dfa_2s = "\1\1\102\uffff";
     static final String dfa_3s = "\1\5\76\uffff\1\0\3\uffff";
@@ -43641,71 +43104,11 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             throw nvae;
         }
     }
-    static final String[] dfa_109s = {
-            "\2\2\1\uffff\3\2\14\uffff\1\2\6\uffff\1\2\73\uffff\1\2\14\uffff\1\1\4\uffff\1\2\2\uffff\1\2",
-            "\1\uffff",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
-    };
-    static final short[][] dfa_109 = unpackEncodedStringArray(dfa_109s);
-
-    class DFA254 extends DFA {
-
-        public DFA254(BaseRecognizer recognizer) {
-            this.recognizer = recognizer;
-            this.decisionNumber = 254;
-            this.eot = dfa_22;
-            this.eof = dfa_22;
-            this.min = dfa_23;
-            this.max = dfa_24;
-            this.accept = dfa_25;
-            this.special = dfa_26;
-            this.transition = dfa_109;
-        }
-        public String getDescription() {
-            return "9897:2: ( ( () ( (lv_operator_1_0= ruleNoneOfOperator ) ) otherlv_2= '(' ( (lv_subExpressions_3_0= ruleAtomicValuedExpression ) ) (otherlv_4= ',' ( (lv_subExpressions_5_0= ruleAtomicValuedExpression ) ) )* otherlv_6= ')' ) | this_AtomicValuedExpression_7= ruleAtomicValuedExpression )";
-        }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
-            TokenStream input = (TokenStream)_input;
-        	int _s = s;
-            switch ( s ) {
-                    case 0 : 
-                        int LA254_1 = input.LA(1);
-
-                         
-                        int index254_1 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred287_InternalLustre()) ) {s = 12;}
-
-                        else if ( (true) ) {s = 2;}
-
-                         
-                        input.seek(index254_1);
-                        if ( s>=0 ) return s;
-                        break;
-            }
-            if (state.backtracking>0) {state.failed=true; return -1;}
-            NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 254, _s, input);
-            error(nvae);
-            throw nvae;
-        }
-    }
-    static final String dfa_110s = "\1\4\4\uffff\1\0\7\uffff";
-    static final String dfa_111s = "\1\156\4\uffff\1\0\7\uffff";
-    static final String dfa_112s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\5\uffff\1\5";
-    static final String dfa_113s = "\5\uffff\1\0\7\uffff}>";
-    static final String[] dfa_114s = {
+    static final String dfa_109s = "\1\4\4\uffff\1\0\7\uffff";
+    static final String dfa_110s = "\1\156\4\uffff\1\0\7\uffff";
+    static final String dfa_111s = "\1\uffff\1\1\1\2\1\3\1\4\1\uffff\1\6\5\uffff\1\5";
+    static final String dfa_112s = "\5\uffff\1\0\7\uffff}>";
+    static final String[] dfa_113s = {
             "\1\3\1\6\1\uffff\1\1\1\2\1\6\14\uffff\1\4\6\uffff\1\5\73\uffff\1\6\14\uffff\1\6\4\uffff\1\6\2\uffff\1\6",
             "",
             "",
@@ -43720,61 +43123,61 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             "",
             ""
     };
+    static final char[] dfa_109 = DFA.unpackEncodedStringToUnsignedChars(dfa_109s);
     static final char[] dfa_110 = DFA.unpackEncodedStringToUnsignedChars(dfa_110s);
-    static final char[] dfa_111 = DFA.unpackEncodedStringToUnsignedChars(dfa_111s);
+    static final short[] dfa_111 = DFA.unpackEncodedString(dfa_111s);
     static final short[] dfa_112 = DFA.unpackEncodedString(dfa_112s);
-    static final short[] dfa_113 = DFA.unpackEncodedString(dfa_113s);
-    static final short[][] dfa_114 = unpackEncodedStringArray(dfa_114s);
+    static final short[][] dfa_113 = unpackEncodedStringArray(dfa_113s);
 
-    class DFA255 extends DFA {
+    class DFA253 extends DFA {
 
-        public DFA255(BaseRecognizer recognizer) {
+        public DFA253(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 255;
+            this.decisionNumber = 253;
             this.eot = dfa_22;
             this.eof = dfa_22;
-            this.min = dfa_110;
-            this.max = dfa_111;
-            this.accept = dfa_112;
-            this.special = dfa_113;
-            this.transition = dfa_114;
+            this.min = dfa_109;
+            this.max = dfa_110;
+            this.accept = dfa_111;
+            this.special = dfa_112;
+            this.transition = dfa_113;
         }
         public String getDescription() {
-            return "10011:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
+            return "9897:2: (this_IntValue_0= ruleIntValue | this_FloatValue_1= ruleFloatValue | this_StringValue_2= ruleStringValue | this_VectorValue_3= ruleVectorValue | (otherlv_4= '(' this_ValuedExpression_5= ruleValuedExpression otherlv_6= ')' ) | this_AtomicExpression_7= ruleAtomicExpression )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA255_5 = input.LA(1);
+                        int LA253_5 = input.LA(1);
 
                          
-                        int index255_5 = input.index();
+                        int index253_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred292_InternalLustre()) ) {s = 12;}
+                        if ( (synpred290_InternalLustre()) ) {s = 12;}
 
                         else if ( (true) ) {s = 6;}
 
                          
-                        input.seek(index255_5);
+                        input.seek(index253_5);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 255, _s, input);
+                new NoViableAltException(getDescription(), 253, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_115s = "\22\uffff";
-    static final String dfa_116s = "\1\4\1\uffff\15\0\3\uffff";
-    static final String dfa_117s = "\1\156\1\uffff\15\0\3\uffff";
-    static final String dfa_118s = "\1\uffff\1\1\16\uffff\1\3\1\2";
-    static final String dfa_119s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
-    static final String[] dfa_120s = {
+    static final String dfa_114s = "\22\uffff";
+    static final String dfa_115s = "\1\4\1\uffff\15\0\3\uffff";
+    static final String dfa_116s = "\1\156\1\uffff\15\0\3\uffff";
+    static final String dfa_117s = "\1\uffff\1\1\16\uffff\1\3\1\2";
+    static final String dfa_118s = "\2\uffff\1\0\1\1\1\2\1\3\1\4\1\5\1\6\1\7\1\10\1\11\1\12\1\13\1\14\3\uffff}>";
+    static final String[] dfa_119s = {
             "\1\5\1\11\1\uffff\1\3\1\4\1\10\14\uffff\1\6\6\uffff\1\7\22\uffff\1\1\43\uffff\1\2\2\uffff\1\20\1\uffff\1\14\12\uffff\1\1\1\16\1\15\4\uffff\1\12\2\uffff\1\13",
             "",
             "\1\uffff",
@@ -43795,243 +43198,243 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             ""
     };
 
-    static final short[] dfa_115 = DFA.unpackEncodedString(dfa_115s);
+    static final short[] dfa_114 = DFA.unpackEncodedString(dfa_114s);
+    static final char[] dfa_115 = DFA.unpackEncodedStringToUnsignedChars(dfa_115s);
     static final char[] dfa_116 = DFA.unpackEncodedStringToUnsignedChars(dfa_116s);
-    static final char[] dfa_117 = DFA.unpackEncodedStringToUnsignedChars(dfa_117s);
+    static final short[] dfa_117 = DFA.unpackEncodedString(dfa_117s);
     static final short[] dfa_118 = DFA.unpackEncodedString(dfa_118s);
-    static final short[] dfa_119 = DFA.unpackEncodedString(dfa_119s);
-    static final short[][] dfa_120 = unpackEncodedStringArray(dfa_120s);
+    static final short[][] dfa_119 = unpackEncodedStringArray(dfa_119s);
 
-    class DFA269 extends DFA {
+    class DFA267 extends DFA {
 
-        public DFA269(BaseRecognizer recognizer) {
+        public DFA267(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 269;
-            this.eot = dfa_115;
-            this.eof = dfa_115;
-            this.min = dfa_116;
-            this.max = dfa_117;
-            this.accept = dfa_118;
-            this.special = dfa_119;
-            this.transition = dfa_120;
+            this.decisionNumber = 267;
+            this.eot = dfa_114;
+            this.eof = dfa_114;
+            this.min = dfa_115;
+            this.max = dfa_116;
+            this.accept = dfa_117;
+            this.special = dfa_118;
+            this.transition = dfa_119;
         }
         public String getDescription() {
-            return "10856:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
+            return "10742:2: (this_BoolExpression_0= ruleBoolExpression | this_ValuedExpression_1= ruleValuedExpression | this_IgnoreValue_2= ruleIgnoreValue )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA269_2 = input.LA(1);
+                        int LA267_2 = input.LA(1);
 
                          
-                        int index269_2 = input.index();
+                        int index267_2 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_2);
+                        input.seek(index267_2);
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA269_3 = input.LA(1);
+                        int LA267_3 = input.LA(1);
 
                          
-                        int index269_3 = input.index();
+                        int index267_3 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_3);
+                        input.seek(index267_3);
                         if ( s>=0 ) return s;
                         break;
                     case 2 : 
-                        int LA269_4 = input.LA(1);
+                        int LA267_4 = input.LA(1);
 
                          
-                        int index269_4 = input.index();
+                        int index267_4 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_4);
+                        input.seek(index267_4);
                         if ( s>=0 ) return s;
                         break;
                     case 3 : 
-                        int LA269_5 = input.LA(1);
+                        int LA267_5 = input.LA(1);
 
                          
-                        int index269_5 = input.index();
+                        int index267_5 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_5);
+                        input.seek(index267_5);
                         if ( s>=0 ) return s;
                         break;
                     case 4 : 
-                        int LA269_6 = input.LA(1);
+                        int LA267_6 = input.LA(1);
 
                          
-                        int index269_6 = input.index();
+                        int index267_6 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_6);
+                        input.seek(index267_6);
                         if ( s>=0 ) return s;
                         break;
                     case 5 : 
-                        int LA269_7 = input.LA(1);
+                        int LA267_7 = input.LA(1);
 
                          
-                        int index269_7 = input.index();
+                        int index267_7 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_7);
+                        input.seek(index267_7);
                         if ( s>=0 ) return s;
                         break;
                     case 6 : 
-                        int LA269_8 = input.LA(1);
+                        int LA267_8 = input.LA(1);
 
                          
-                        int index269_8 = input.index();
+                        int index267_8 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_8);
+                        input.seek(index267_8);
                         if ( s>=0 ) return s;
                         break;
                     case 7 : 
-                        int LA269_9 = input.LA(1);
+                        int LA267_9 = input.LA(1);
 
                          
-                        int index269_9 = input.index();
+                        int index267_9 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_9);
+                        input.seek(index267_9);
                         if ( s>=0 ) return s;
                         break;
                     case 8 : 
-                        int LA269_10 = input.LA(1);
+                        int LA267_10 = input.LA(1);
 
                          
-                        int index269_10 = input.index();
+                        int index267_10 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_10);
+                        input.seek(index267_10);
                         if ( s>=0 ) return s;
                         break;
                     case 9 : 
-                        int LA269_11 = input.LA(1);
+                        int LA267_11 = input.LA(1);
 
                          
-                        int index269_11 = input.index();
+                        int index267_11 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_11);
+                        input.seek(index267_11);
                         if ( s>=0 ) return s;
                         break;
                     case 10 : 
-                        int LA269_12 = input.LA(1);
+                        int LA267_12 = input.LA(1);
 
                          
-                        int index269_12 = input.index();
+                        int index267_12 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_12);
+                        input.seek(index267_12);
                         if ( s>=0 ) return s;
                         break;
                     case 11 : 
-                        int LA269_13 = input.LA(1);
+                        int LA267_13 = input.LA(1);
 
                          
-                        int index269_13 = input.index();
+                        int index267_13 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_13);
+                        input.seek(index267_13);
                         if ( s>=0 ) return s;
                         break;
                     case 12 : 
-                        int LA269_14 = input.LA(1);
+                        int LA267_14 = input.LA(1);
 
                          
-                        int index269_14 = input.index();
+                        int index267_14 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred306_InternalLustre()) ) {s = 1;}
+                        if ( (synpred304_InternalLustre()) ) {s = 1;}
 
-                        else if ( (synpred307_InternalLustre()) ) {s = 17;}
+                        else if ( (synpred305_InternalLustre()) ) {s = 17;}
 
                          
-                        input.seek(index269_14);
+                        input.seek(index267_14);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 269, _s, input);
+                new NoViableAltException(getDescription(), 267, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_121s = "\12\uffff";
-    static final String dfa_122s = "\3\uffff\1\1\4\uffff\2\1";
-    static final String dfa_123s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\2\4";
-    static final String dfa_124s = "\1\132\1\uffff\1\5\1\172\1\5\1\10\1\7\1\uffff\2\172";
-    static final String dfa_125s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
-    static final String dfa_126s = "\12\uffff}>";
-    static final String[] dfa_127s = {
+    static final String dfa_120s = "\12\uffff";
+    static final String dfa_121s = "\3\uffff\1\1\4\uffff\2\1";
+    static final String dfa_122s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\2\4";
+    static final String dfa_123s = "\1\132\1\uffff\1\5\1\172\1\5\1\10\1\7\1\uffff\2\172";
+    static final String dfa_124s = "\1\uffff\1\1\5\uffff\1\2\2\uffff";
+    static final String dfa_125s = "\12\uffff}>";
+    static final String[] dfa_126s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -44044,33 +43447,33 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             "\7\1\7\uffff\1\1\3\uffff\1\7\3\uffff\1\1\46\uffff\12\1\3\uffff\2\1\4\uffff\1\1\5\uffff\4\1\22\uffff\2\1\3\uffff\6\1"
     };
 
+    static final short[] dfa_120 = DFA.unpackEncodedString(dfa_120s);
     static final short[] dfa_121 = DFA.unpackEncodedString(dfa_121s);
-    static final short[] dfa_122 = DFA.unpackEncodedString(dfa_122s);
+    static final char[] dfa_122 = DFA.unpackEncodedStringToUnsignedChars(dfa_122s);
     static final char[] dfa_123 = DFA.unpackEncodedStringToUnsignedChars(dfa_123s);
-    static final char[] dfa_124 = DFA.unpackEncodedStringToUnsignedChars(dfa_124s);
+    static final short[] dfa_124 = DFA.unpackEncodedString(dfa_124s);
     static final short[] dfa_125 = DFA.unpackEncodedString(dfa_125s);
-    static final short[] dfa_126 = DFA.unpackEncodedString(dfa_126s);
-    static final short[][] dfa_127 = unpackEncodedStringArray(dfa_127s);
+    static final short[][] dfa_126 = unpackEncodedStringArray(dfa_126s);
 
-    class DFA276 extends DFA {
+    class DFA274 extends DFA {
 
-        public DFA276(BaseRecognizer recognizer) {
+        public DFA274(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 276;
-            this.eot = dfa_121;
-            this.eof = dfa_122;
-            this.min = dfa_123;
-            this.max = dfa_124;
-            this.accept = dfa_125;
-            this.special = dfa_126;
-            this.transition = dfa_127;
+            this.decisionNumber = 274;
+            this.eot = dfa_120;
+            this.eof = dfa_121;
+            this.min = dfa_122;
+            this.max = dfa_123;
+            this.accept = dfa_124;
+            this.special = dfa_125;
+            this.transition = dfa_126;
         }
         public String getDescription() {
-            return "11456:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
+            return "11342:2: (this_Annotation_0= superAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_128s = "\1\132\1\uffff\1\5\1\132\2\5\1\7\1\uffff\2\132";
-    static final String[] dfa_129s = {
+    static final String dfa_127s = "\1\132\1\uffff\1\5\1\132\2\5\1\7\1\uffff\2\132";
+    static final String[] dfa_128s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -44082,153 +43485,153 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             "\2\1\4\uffff\1\1\13\uffff\1\7\20\uffff\1\4\42\uffff\1\1\11\uffff\1\5\4\uffff\1\6\1\1",
             "\2\1\4\uffff\1\1\13\uffff\1\7\63\uffff\1\1\17\uffff\1\1"
     };
-    static final char[] dfa_128 = DFA.unpackEncodedStringToUnsignedChars(dfa_128s);
-    static final short[][] dfa_129 = unpackEncodedStringArray(dfa_129s);
+    static final char[] dfa_127 = DFA.unpackEncodedStringToUnsignedChars(dfa_127s);
+    static final short[][] dfa_128 = unpackEncodedStringArray(dfa_128s);
 
-    class DFA277 extends DFA {
+    class DFA275 extends DFA {
 
-        public DFA277(BaseRecognizer recognizer) {
+        public DFA275(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 277;
-            this.eot = dfa_121;
-            this.eof = dfa_122;
-            this.min = dfa_123;
-            this.max = dfa_128;
-            this.accept = dfa_125;
-            this.special = dfa_126;
-            this.transition = dfa_129;
+            this.decisionNumber = 275;
+            this.eot = dfa_120;
+            this.eof = dfa_121;
+            this.min = dfa_122;
+            this.max = dfa_127;
+            this.accept = dfa_124;
+            this.special = dfa_125;
+            this.transition = dfa_128;
         }
         public String getDescription() {
-            return "11498:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
+            return "11384:2: (this_QuotedStringAnnotation_0= superQuotedStringAnnotation | this_JsonAnnotation_1= ruleJsonAnnotation )";
         }
     }
-    static final String dfa_130s = "\26\uffff";
-    static final String dfa_131s = "\3\uffff\1\7\4\uffff\1\12\2\uffff\2\7\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff\1\12\1\uffff";
-    static final String dfa_132s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\1\uffff\1\5\2\uffff\2\4\10\5\1\0";
-    static final String dfa_133s = "\1\132\1\uffff\1\5\1\172\1\5\1\10\1\7\1\uffff\1\172\2\uffff\2\172\1\5\1\172\1\5\1\172\1\5\1\172\1\5\1\172\1\0";
-    static final String dfa_134s = "\1\uffff\1\1\5\uffff\1\4\1\uffff\1\3\1\2\13\uffff";
-    static final String dfa_135s = "\25\uffff\1\0}>";
-    static final String[] dfa_136s = {
+    static final String dfa_129s = "\26\uffff";
+    static final String dfa_130s = "\3\uffff\1\12\5\uffff\1\10\1\uffff\2\12\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff\1\10\1\uffff";
+    static final String dfa_131s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\2\uffff\1\5\1\uffff\2\4\10\5\1\0";
+    static final String dfa_132s = "\1\132\1\uffff\1\5\1\172\1\5\1\10\1\7\2\uffff\1\172\1\uffff\2\172\1\5\1\172\1\5\1\172\1\5\1\172\1\5\1\172\1\0";
+    static final String dfa_133s = "\1\uffff\1\1\5\uffff\1\3\1\2\1\uffff\1\4\13\uffff";
+    static final String dfa_134s = "\25\uffff\1\0}>";
+    static final String[] dfa_135s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\14\uffff\1\4\31\uffff\11\7\1\11\3\uffff\2\7\4\uffff\1\5\4\uffff\1\6\4\7\22\uffff\2\7\3\uffff\6\7",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\22\uffff\2\12\3\uffff\6\12",
             "\1\13",
-            "\1\13\1\uffff\2\12",
+            "\1\13\1\uffff\2\10",
             "\1\14",
             "",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\15\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\3\uffff\5\12\13\uffff\2\7\5\uffff\2\12\3\uffff\6\12",
             "",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\15\31\uffff\11\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\14\uffff\1\4\31\uffff\11\7\1\11\3\uffff\2\7\4\uffff\1\5\4\uffff\1\6\4\7\22\uffff\2\7\3\uffff\6\7",
-            "\1\12\1\10\1\7\3\12\1\7\7\uffff\1\7\7\uffff\1\7\46\uffff\11\7\1\11\3\uffff\2\7\4\uffff\1\12\5\uffff\4\7\22\uffff\2\7\3\uffff\6\7",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\14\uffff\1\4\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\5\4\uffff\1\6\4\12\22\uffff\2\12\3\uffff\6\12",
+            "\1\10\1\11\1\12\3\10\1\12\7\uffff\1\12\7\uffff\1\12\46\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\10\5\uffff\4\12\22\uffff\2\12\3\uffff\6\12",
             "\1\16",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\17\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\3\uffff\5\12\13\uffff\2\7\5\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\17\31\uffff\11\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "\1\20",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\21\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\3\uffff\5\12\13\uffff\2\7\5\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\21\31\uffff\11\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "\1\22",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\23\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\3\uffff\5\12\13\uffff\2\7\5\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\23\31\uffff\11\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "\1\24",
-            "\2\12\3\uffff\1\12\7\uffff\1\12\2\uffff\1\7\1\uffff\1\12\2\uffff\1\12\2\uffff\1\7\1\uffff\1\7\7\uffff\1\25\31\uffff\11\12\1\7\3\uffff\2\12\4\uffff\1\12\1\7\3\uffff\5\12\13\uffff\2\7\5\uffff\2\12\3\uffff\6\12",
+            "\2\10\3\uffff\1\10\7\uffff\1\10\2\uffff\1\12\1\uffff\1\10\2\uffff\1\10\2\uffff\1\12\1\uffff\1\12\7\uffff\1\25\31\uffff\11\10\1\12\3\uffff\2\10\4\uffff\1\10\1\12\3\uffff\5\10\13\uffff\2\12\5\uffff\2\10\3\uffff\6\10",
             "\1\uffff"
     };
 
+    static final short[] dfa_129 = DFA.unpackEncodedString(dfa_129s);
     static final short[] dfa_130 = DFA.unpackEncodedString(dfa_130s);
-    static final short[] dfa_131 = DFA.unpackEncodedString(dfa_131s);
+    static final char[] dfa_131 = DFA.unpackEncodedStringToUnsignedChars(dfa_131s);
     static final char[] dfa_132 = DFA.unpackEncodedStringToUnsignedChars(dfa_132s);
-    static final char[] dfa_133 = DFA.unpackEncodedStringToUnsignedChars(dfa_133s);
+    static final short[] dfa_133 = DFA.unpackEncodedString(dfa_133s);
     static final short[] dfa_134 = DFA.unpackEncodedString(dfa_134s);
-    static final short[] dfa_135 = DFA.unpackEncodedString(dfa_135s);
-    static final short[][] dfa_136 = unpackEncodedStringArray(dfa_136s);
+    static final short[][] dfa_135 = unpackEncodedStringArray(dfa_135s);
 
-    class DFA278 extends DFA {
+    class DFA276 extends DFA {
 
-        public DFA278(BaseRecognizer recognizer) {
+        public DFA276(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 278;
-            this.eot = dfa_130;
-            this.eof = dfa_131;
-            this.min = dfa_132;
-            this.max = dfa_133;
-            this.accept = dfa_134;
-            this.special = dfa_135;
-            this.transition = dfa_136;
+            this.decisionNumber = 276;
+            this.eot = dfa_129;
+            this.eof = dfa_130;
+            this.min = dfa_131;
+            this.max = dfa_132;
+            this.accept = dfa_133;
+            this.special = dfa_134;
+            this.transition = dfa_135;
         }
         public String getDescription() {
-            return "11540:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
+            return "11426:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             TokenStream input = (TokenStream)_input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA278_21 = input.LA(1);
+                        int LA276_21 = input.LA(1);
 
                          
-                        int index278_21 = input.index();
+                        int index276_21 = input.index();
                         input.rewind();
                         s = -1;
-                        if ( (synpred321_InternalLustre()) ) {s = 10;}
+                        if ( (synpred319_InternalLustre()) ) {s = 8;}
 
-                        else if ( (true) ) {s = 7;}
+                        else if ( (true) ) {s = 10;}
 
                          
-                        input.seek(index278_21);
+                        input.seek(index276_21);
                         if ( s>=0 ) return s;
                         break;
             }
             if (state.backtracking>0) {state.failed=true; return -1;}
             NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 278, _s, input);
+                new NoViableAltException(getDescription(), 276, _s, input);
             error(nvae);
             throw nvae;
         }
     }
-    static final String dfa_137s = "\2\uffff\1\7\5\uffff\2\7";
-    static final String dfa_138s = "\1\131\1\5\1\4\2\5\1\7\2\uffff\2\4";
-    static final String dfa_139s = "\1\131\1\5\1\131\1\5\1\10\1\7\2\uffff\1\131\1\124";
-    static final String dfa_140s = "\6\uffff\1\1\1\2\2\uffff";
-    static final String[] dfa_141s = {
+    static final String dfa_136s = "\2\uffff\1\6\5\uffff\2\6";
+    static final String dfa_137s = "\1\131\1\5\1\4\2\5\1\7\2\uffff\2\4";
+    static final String dfa_138s = "\1\131\1\5\1\131\1\5\1\10\1\7\2\uffff\1\131\1\124";
+    static final String dfa_139s = "\6\uffff\1\2\1\1\2\uffff";
+    static final String[] dfa_140s = {
             "\1\1",
             "\1\2",
-            "\2\6\1\uffff\3\6\35\uffff\1\3\54\uffff\1\4\4\uffff\1\5",
+            "\2\7\1\uffff\3\7\35\uffff\1\3\54\uffff\1\4\4\uffff\1\5",
             "\1\10",
-            "\1\10\1\uffff\2\6",
+            "\1\10\1\uffff\2\7",
             "\1\11",
             "",
             "",
-            "\2\6\1\uffff\3\6\35\uffff\1\3\54\uffff\1\4\4\uffff\1\5",
-            "\2\6\1\uffff\3\6\112\uffff\1\6"
+            "\2\7\1\uffff\3\7\35\uffff\1\3\54\uffff\1\4\4\uffff\1\5",
+            "\2\7\1\uffff\3\7\112\uffff\1\7"
     };
-    static final short[] dfa_137 = DFA.unpackEncodedString(dfa_137s);
+    static final short[] dfa_136 = DFA.unpackEncodedString(dfa_136s);
+    static final char[] dfa_137 = DFA.unpackEncodedStringToUnsignedChars(dfa_137s);
     static final char[] dfa_138 = DFA.unpackEncodedStringToUnsignedChars(dfa_138s);
-    static final char[] dfa_139 = DFA.unpackEncodedStringToUnsignedChars(dfa_139s);
-    static final short[] dfa_140 = DFA.unpackEncodedString(dfa_140s);
-    static final short[][] dfa_141 = unpackEncodedStringArray(dfa_141s);
+    static final short[] dfa_139 = DFA.unpackEncodedString(dfa_139s);
+    static final short[][] dfa_140 = unpackEncodedStringArray(dfa_140s);
 
-    class DFA279 extends DFA {
+    class DFA277 extends DFA {
 
-        public DFA279(BaseRecognizer recognizer) {
+        public DFA277(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 279;
-            this.eot = dfa_121;
-            this.eof = dfa_137;
-            this.min = dfa_138;
-            this.max = dfa_139;
-            this.accept = dfa_140;
-            this.special = dfa_126;
-            this.transition = dfa_141;
+            this.decisionNumber = 277;
+            this.eot = dfa_120;
+            this.eof = dfa_136;
+            this.min = dfa_137;
+            this.max = dfa_138;
+            this.accept = dfa_139;
+            this.special = dfa_125;
+            this.transition = dfa_140;
         }
         public String getDescription() {
-            return "11606:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
+            return "11492:2: (this_StringPragma_0= ruleStringPragma | this_PragmaTag_1= rulePragmaTag )";
         }
     }
-    static final String dfa_142s = "\13\uffff";
-    static final String dfa_143s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\2\uffff\2\4";
-    static final String dfa_144s = "\1\132\1\uffff\1\5\1\131\1\5\1\10\1\7\2\uffff\1\131\1\124";
-    static final String dfa_145s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
-    static final String dfa_146s = "\13\uffff}>";
-    static final String[] dfa_147s = {
+    static final String dfa_141s = "\13\uffff";
+    static final String dfa_142s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\2\uffff\2\4";
+    static final String dfa_143s = "\1\132\1\uffff\1\5\1\131\1\5\1\10\1\7\2\uffff\1\131\1\124";
+    static final String dfa_144s = "\1\uffff\1\1\5\uffff\1\2\1\3\2\uffff";
+    static final String dfa_145s = "\13\uffff}>";
+    static final String[] dfa_146s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -44242,37 +43645,37 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             "\2\7\1\uffff\3\7\100\uffff\1\10\11\uffff\1\7"
     };
 
-    static final short[] dfa_142 = DFA.unpackEncodedString(dfa_142s);
+    static final short[] dfa_141 = DFA.unpackEncodedString(dfa_141s);
+    static final char[] dfa_142 = DFA.unpackEncodedStringToUnsignedChars(dfa_142s);
     static final char[] dfa_143 = DFA.unpackEncodedStringToUnsignedChars(dfa_143s);
-    static final char[] dfa_144 = DFA.unpackEncodedStringToUnsignedChars(dfa_144s);
+    static final short[] dfa_144 = DFA.unpackEncodedString(dfa_144s);
     static final short[] dfa_145 = DFA.unpackEncodedString(dfa_145s);
-    static final short[] dfa_146 = DFA.unpackEncodedString(dfa_146s);
-    static final short[][] dfa_147 = unpackEncodedStringArray(dfa_147s);
+    static final short[][] dfa_146 = unpackEncodedStringArray(dfa_146s);
 
-    class DFA280 extends DFA {
+    class DFA278 extends DFA {
 
-        public DFA280(BaseRecognizer recognizer) {
+        public DFA278(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 280;
-            this.eot = dfa_142;
-            this.eof = dfa_142;
-            this.min = dfa_143;
-            this.max = dfa_144;
-            this.accept = dfa_145;
-            this.special = dfa_146;
-            this.transition = dfa_147;
+            this.decisionNumber = 278;
+            this.eot = dfa_141;
+            this.eof = dfa_141;
+            this.min = dfa_142;
+            this.max = dfa_143;
+            this.accept = dfa_144;
+            this.special = dfa_145;
+            this.transition = dfa_146;
         }
         public String getDescription() {
-            return "11648:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
+            return "11534:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_KeyStringValueAnnotation_1= ruleKeyStringValueAnnotation | this_TypedKeyStringValueAnnotation_2= ruleTypedKeyStringValueAnnotation )";
         }
     }
-    static final String dfa_148s = "\14\uffff";
-    static final String dfa_149s = "\3\uffff\1\7\6\uffff\2\7";
-    static final String dfa_150s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\3\uffff\2\4";
-    static final String dfa_151s = "\1\132\1\uffff\1\5\1\132\2\5\1\7\3\uffff\2\132";
-    static final String dfa_152s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
-    static final String dfa_153s = "\14\uffff}>";
-    static final String[] dfa_154s = {
+    static final String dfa_147s = "\14\uffff";
+    static final String dfa_148s = "\3\uffff\1\7\6\uffff\2\7";
+    static final String dfa_149s = "\1\12\1\uffff\1\5\1\4\2\5\1\7\3\uffff\2\4";
+    static final String dfa_150s = "\1\132\1\uffff\1\5\1\132\2\5\1\7\3\uffff\2\132";
+    static final String dfa_151s = "\1\uffff\1\1\5\uffff\1\4\1\3\1\2\2\uffff";
+    static final String dfa_152s = "\14\uffff}>";
+    static final String[] dfa_153s = {
             "\1\1\117\uffff\1\2",
             "",
             "\1\3",
@@ -44287,29 +43690,29 @@ public class InternalLustreParser extends AbstractInternalAntlrParser {
             "\1\11\1\7\4\uffff\1\7\77\uffff\1\10\17\uffff\1\7"
     };
 
+    static final short[] dfa_147 = DFA.unpackEncodedString(dfa_147s);
     static final short[] dfa_148 = DFA.unpackEncodedString(dfa_148s);
-    static final short[] dfa_149 = DFA.unpackEncodedString(dfa_149s);
+    static final char[] dfa_149 = DFA.unpackEncodedStringToUnsignedChars(dfa_149s);
     static final char[] dfa_150 = DFA.unpackEncodedStringToUnsignedChars(dfa_150s);
-    static final char[] dfa_151 = DFA.unpackEncodedStringToUnsignedChars(dfa_151s);
+    static final short[] dfa_151 = DFA.unpackEncodedString(dfa_151s);
     static final short[] dfa_152 = DFA.unpackEncodedString(dfa_152s);
-    static final short[] dfa_153 = DFA.unpackEncodedString(dfa_153s);
-    static final short[][] dfa_154 = unpackEncodedStringArray(dfa_154s);
+    static final short[][] dfa_153 = unpackEncodedStringArray(dfa_153s);
 
-    class DFA281 extends DFA {
+    class DFA279 extends DFA {
 
-        public DFA281(BaseRecognizer recognizer) {
+        public DFA279(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 281;
-            this.eot = dfa_148;
-            this.eof = dfa_149;
-            this.min = dfa_150;
-            this.max = dfa_151;
-            this.accept = dfa_152;
-            this.special = dfa_153;
-            this.transition = dfa_154;
+            this.decisionNumber = 279;
+            this.eot = dfa_147;
+            this.eof = dfa_148;
+            this.min = dfa_149;
+            this.max = dfa_150;
+            this.accept = dfa_151;
+            this.special = dfa_152;
+            this.transition = dfa_153;
         }
         public String getDescription() {
-            return "11702:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
+            return "11588:2: (this_CommentAnnotation_0= ruleCommentAnnotation | this_QuotedKeyStringValueAnnotation_1= ruleQuotedKeyStringValueAnnotation | this_QuotedTypedKeyStringValueAnnotation_2= ruleQuotedTypedKeyStringValueAnnotation | this_TagAnnotation_3= ruleTagAnnotation )";
         }
     }
  

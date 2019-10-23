@@ -270,10 +270,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 					sequence_AddExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
-				else if (rule == grammarAccess.getAtMostOneOfExpressionRule()) {
-					sequence_AtMostOneOfExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NoneOfExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
 				else if (rule == grammarAccess.getBitwiseOrExpressionRule()) {
 					sequence_BitwiseAndExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
@@ -302,10 +298,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 				}
 				else if (rule == grammarAccess.getMultExpressionRule()) {
 					sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
-					return; 
-				}
-				else if (rule == grammarAccess.getNoneOfExpressionRule()) {
-					sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NoneOfExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftExpressionsRule()
@@ -656,91 +648,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     )
 	 */
 	protected void sequence_AddExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     AtMostOneOfExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (
-	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
-	 *             operator=AddOperator 
-	 *             subExpressions+=ProductExpression 
-	 *             subExpressions+=ProductExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
-	 *             operator=SubOperator 
-	 *             subExpressions+=ProductExpression 
-	 *             subExpressions+=ProductExpression*
-	 *         ) | 
-	 *         (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
-	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
-	 *     )
-	 */
-	protected void sequence_AtMostOneOfExpression_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NoneOfExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1364,90 +1271,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     )
 	 */
 	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_MultExpression_NegExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     NoneOfExpression returns OperatorExpression
-	 *
-	 * Constraint:
-	 *     (
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_0_0 
-	 *             operator=MultOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_1_0 
-	 *             operator=DivOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=ProductExpression_OperatorExpression_1_2_0 
-	 *             operator=ModOperator 
-	 *             subExpressions+=IntDivExpression 
-	 *             subExpressions+=IntDivExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=IntDivExpression_OperatorExpression_1_0 
-	 *             operator=IntDivOperator 
-	 *             subExpressions+=NegExpression 
-	 *             subExpressions+=AtomicValuedExpression*
-	 *         ) | 
-	 *         (operator=SubOperator subExpressions+=NegExpression) | 
-	 *         (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=WhenExpression subExpressions+=WhenExpression*) | 
-	 *         (subExpressions+=AtomicValuedExpression operator=WhenOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=CurrentOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (operator=PreOperator subExpressions+=AtomicValuedExpression) | 
-	 *         (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation*) | 
-	 *         (operator=ConditionalOperator subExpressions+=TernaryOperation subExpressions+=TernaryOperation subExpressions+=TernaryOperation) | 
-	 *         (
-	 *             subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *             operator=ImpliesOperator 
-	 *             subExpressions+=LogicalXorExpression 
-	 *             subExpressions+=LogicalXorExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalXorExpression_OperatorExpression_1_0 
-	 *             operator=LogicalXorOperator 
-	 *             subExpressions+=LogicalOrExpression 
-	 *             subExpressions+=LogicalOrExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalOrExpression_OperatorExpression_1_0 
-	 *             operator=LogicalOrOperator 
-	 *             subExpressions+=LogicalAndExpression 
-	 *             subExpressions+=LogicalAndExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=LogicalAndExpression_OperatorExpression_1_0 
-	 *             operator=LogicalAndOperator 
-	 *             subExpressions+=CompareOperation 
-	 *             subExpressions+=CompareOperation*
-	 *         ) | 
-	 *         ((operator=AtMostOneOperator | operator=NorOperator) subExpressions+=Expression subExpressions+=Expression*) | 
-	 *         (operator=NotOperator subExpressions+=NotExpression) | 
-	 *         (subExpressions+=CompareOperation_OperatorExpression_1_0 operator=CompareOperator subExpressions+=NotOrValuedExpression) | 
-	 *         (
-	 *             subExpressions+=SumExpression_OperatorExpression_1_0_0 
-	 *             operator=AddOperator 
-	 *             subExpressions+=ProductExpression 
-	 *             subExpressions+=ProductExpression*
-	 *         ) | 
-	 *         (
-	 *             subExpressions+=SumExpression_OperatorExpression_1_1_0 
-	 *             operator=SubOperator 
-	 *             subExpressions+=ProductExpression 
-	 *             subExpressions+=ProductExpression*
-	 *         ) | 
-	 *         (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*)
-	 *     )
-	 */
-	protected void sequence_CompareOperation_CurrentExpression_FbyExpression_ImpliesExpression_InitExpression_IntDivExpression_LogicalAndExpression_LogicalOrExpression_LogicalXorExpression_NegExpression_NoneOfExpression_NorAtMostOneExpression_NotExpression_PreExpression_ProductExpression_SumExpression_TernaryOperation_WhenExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -2132,8 +1955,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     DivExpression.OperatorExpression_1_0 returns ValuedObjectString
 	 *     ModExpression returns ValuedObjectString
 	 *     ModExpression.OperatorExpression_1_0 returns ValuedObjectString
-	 *     AtMostOneOfExpression returns ValuedObjectString
-	 *     NoneOfExpression returns ValuedObjectString
 	 *     AtomicValuedExpression returns ValuedObjectString
 	 *     VectorValueMember returns ValuedObjectString
 	 *
@@ -2216,8 +2037,6 @@ public abstract class AbstractScadeEquationsSemanticSequencer extends LustreSema
 	 *     DivExpression.OperatorExpression_1_0 returns OperatorExpression
 	 *     ModExpression returns OperatorExpression
 	 *     ModExpression.OperatorExpression_1_0 returns OperatorExpression
-	 *     AtMostOneOfExpression returns OperatorExpression
-	 *     NoneOfExpression returns OperatorExpression
 	 *     AtomicValuedExpression returns OperatorExpression
 	 *     VectorValueMember returns OperatorExpression
 	 *

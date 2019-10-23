@@ -288,10 +288,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getBoolValueRule()
@@ -362,10 +358,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFloatValueRule()
@@ -433,10 +425,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getFunctionCallRule()
@@ -506,10 +494,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getIntValueRule()
@@ -541,40 +525,40 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 			case KExpressionsPackage.OPERATOR_EXPRESSION:
 				if (rule == grammarAccess.getAddExpressionRule()
 						|| action == grammarAccess.getAddExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_AddExpression_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getBoolScheduleExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getDivExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getModExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getMultExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftLeftExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getShiftRightUnsignedExpressionRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getSubExpressionRule()
 						|| action == grammarAccess.getSubExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getRootRule()
@@ -619,14 +603,10 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueMemberRule()) {
-					sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
+					sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(context, (OperatorExpression) semanticObject); 
 					return; 
 				}
 				else if (rule == grammarAccess.getValuedObjectTestExpressionRule()) {
@@ -705,10 +685,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getRandomCallRule()
@@ -774,10 +750,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getRandomizeCallRule()
@@ -843,10 +815,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getReferenceCallRule()
@@ -953,10 +921,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getStringValueRule()
@@ -1024,10 +988,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getTextExpressionRule()
@@ -1108,10 +1068,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getValuedObjectTestExpressionRule()
@@ -1201,10 +1157,6 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 						|| action == grammarAccess.getInitExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
 						|| rule == grammarAccess.getFbyExpressionRule()
 						|| action == grammarAccess.getFbyExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getImpliesExpressionRule()
-						|| action == grammarAccess.getImpliesExpressionAccess().getOperatorExpressionSubExpressionsAction_1_0()
-						|| rule == grammarAccess.getAtMostOneOfExpressionRule()
-						|| rule == grammarAccess.getNoneOfExpressionRule()
 						|| rule == grammarAccess.getAtomicExpressionRule()
 						|| rule == grammarAccess.getAtomicValuedExpressionRule()
 						|| rule == grammarAccess.getVectorValueRule()
@@ -1504,21 +1456,18 @@ public abstract class AbstractSCTXSemanticSequencer extends SCLSemanticSequencer
 	 *                 subExpressions+=AtomicValuedExpression?
 	 *             ) | 
 	 *             (subExpressions+=InitExpression_OperatorExpression_1_0 operator=InitOperator subExpressions+=FbyExpression subExpressions+=FbyExpression*) | 
-	 *             (subExpressions+=FbyExpression_OperatorExpression_1_0 operator=FbyOperator subExpressions+=ImpliesExpression subExpressions+=ImpliesExpression*) | 
 	 *             (
-	 *                 subExpressions+=ImpliesExpression_OperatorExpression_1_0 
-	 *                 operator=ImpliesOperator 
-	 *                 subExpressions+=AtMostOneOfExpression 
-	 *                 subExpressions+=AtMostOneOfExpression*
+	 *                 subExpressions+=FbyExpression_OperatorExpression_1_0 
+	 *                 operator=FbyOperator 
+	 *                 subExpressions+=AtomicValuedExpression 
+	 *                 subExpressions+=AtomicValuedExpression*
 	 *             ) | 
-	 *             (operator=AtMostOneOfOperator subExpressions+=NoneOfExpression subExpressions+=NoneOfExpression*) | 
-	 *             (operator=NoneOfOperator subExpressions+=AtomicValuedExpression subExpressions+=AtomicValuedExpression*) | 
 	 *             ((operator=PreOperator | operator=ValOperator) subExpressions+=ValuedObjectTestExpression subExpressions+=ValuedObjectReference?)
 	 *         ) 
 	 *         schedule+=ScheduleObjectReference?
 	 *     )
 	 */
-	protected void sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
+	protected void sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_BoolScheduleExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(ISerializationContext context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

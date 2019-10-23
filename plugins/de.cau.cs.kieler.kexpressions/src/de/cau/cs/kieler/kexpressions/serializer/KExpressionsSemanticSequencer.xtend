@@ -30,48 +30,48 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
     @Inject
     private KExpressionsGrammarAccess grammarAccess;
     
-    override sequence_AddExpression_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_AddExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
     
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
     
     
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_ModExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_MultExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftLeftExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_ShiftRightUnsignedExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SubExpression_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
         
-    override sequence_AtMostOneOfExpression_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_ImpliesExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NoneOfExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
+    override sequence_BitwiseAndExpression_BitwiseNotExpression_BitwiseOrExpression_BitwiseXOrExpression_CompareOperation_FbyExpression_InitExpression_LogicalAndExpression_LogicalOrExpression_NegExpression_NotExpression_ProductExpression_ShiftExpressions_SumExpression_TernaryOperation_ValuedObjectTestExpression(
         ISerializationContext context, OperatorExpression semanticObject) {
             sequenceOperatorExpression(context, semanticObject)
     }
@@ -250,32 +250,9 @@ class KExpressionsSemanticSequencer extends AbstractKExpressionsSemanticSequence
                     semanticObject,
                     grammarAccess.fbyExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
                     grammarAccess.fbyExpressionAccess.operatorFbyOperatorEnumRuleCall_1_1_0_0,
-                    grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_1_1_1_0,
-                    grammarAccess.fbyExpressionAccess.subExpressionsImpliesExpressionParserRuleCall_1_2_1_0
+                    grammarAccess.fbyExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_1_1_1_0,
+                    grammarAccess.fbyExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_1_2_1_0
                 )
-            }            
-            case IMPLIES: {
-                feeder.multiOP(
-                    semanticObject,
-                    grammarAccess.impliesExpressionAccess.operatorExpressionSubExpressionsAction_1_0,
-                    grammarAccess.impliesExpressionAccess.operatorImpliesOperatorEnumRuleCall_1_1_0_0,
-                    grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_1_1_1_0,
-                    grammarAccess.impliesExpressionAccess.subExpressionsAtMostOneOfExpressionParserRuleCall_1_2_1_0
-                )
-            }
-            case ATMOSTONEOF: {
-                feeder.accept(grammarAccess.atMostOneOfExpressionAccess.operatorAtMostOneOfOperatorEnumRuleCall_0_1_0, op)
-                feeder.accept(grammarAccess.atMostOneOfExpressionAccess.subExpressionsNoneOfExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.head, 0)
-                for (var i = 1; i < semanticObject.subExpressions.length; i++) {
-                    feeder.accept(grammarAccess.atMostOneOfExpressionAccess.subExpressionsNoneOfExpressionParserRuleCall_0_4_1_0, semanticObject.subExpressions.get(i), i)
-                }
-            }
-            case NOR: {
-                feeder.accept(grammarAccess.noneOfExpressionAccess.operatorNoneOfOperatorEnumRuleCall_0_1_0, op)
-                feeder.accept(grammarAccess.noneOfExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_3_0, semanticObject.subExpressions.head, 0)
-                for (var i = 1; i < semanticObject.subExpressions.length; i++) {
-                    feeder.accept(grammarAccess.noneOfExpressionAccess.subExpressionsAtomicValuedExpressionParserRuleCall_0_4_1_0, semanticObject.subExpressions.get(i), i)
-                }
             }
             case SHIFT_LEFT: {
                 feeder.multiOP(

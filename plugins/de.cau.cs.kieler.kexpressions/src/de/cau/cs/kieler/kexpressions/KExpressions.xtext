@@ -286,28 +286,11 @@ InitExpression returns Expression:
     )?;
     
 FbyExpression returns Expression:
-    ImpliesExpression
+    AtomicValuedExpression
     ({OperatorExpression.subExpressions+=current}
-        (operator=FbyOperator subExpressions+=ImpliesExpression)
-        ('fby' subExpressions+=ImpliesExpression)*
+        (operator=FbyOperator subExpressions+=AtomicValuedExpression)
+        ('fby' subExpressions+=AtomicValuedExpression)*
     )?;
-
-ImpliesExpression returns Expression:
-    AtMostOneOfExpression
-    ({OperatorExpression.subExpressions+=current}
-        (operator=ImpliesOperator subExpressions+=AtMostOneOfExpression)
-        ('implies' subExpressions+=AtMostOneOfExpression)*
-    )?;
-    
-AtMostOneOfExpression returns Expression:
-    {OperatorExpression} 
-    operator=AtMostOneOfOperator '(' subExpressions += NoneOfExpression  (',' subExpressions += NoneOfExpression )*')'
-    | NoneOfExpression;
-    
-NoneOfExpression returns Expression:
-    {OperatorExpression} 
-    operator=NoneOfOperator '(' subExpressions += AtomicValuedExpression  (',' subExpressions += AtomicValuedExpression )*')'
-    | AtomicValuedExpression;
     
 // Atomic Expression Rule
 // An atomic expression is either a simple boolean value, a test expression, another boolean expression

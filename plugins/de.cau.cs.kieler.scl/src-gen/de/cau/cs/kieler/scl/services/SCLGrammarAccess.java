@@ -2678,7 +2678,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -2976,9 +2977,10 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -3035,8 +3037,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}
@@ -3112,49 +3114,14 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FbyExpression Expression:
-	//	ImpliesExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=ImpliesExpression) ('fby' subExpressions+=ImpliesExpression)*)?;
+	//	AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
+	//	subExpressions+=AtomicValuedExpression) ('fby' subExpressions+=AtomicValuedExpression)*)?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
 	
 	public ParserRule getFbyExpressionRule() {
 		return getFbyExpressionAccess().getRule();
-	}
-	
-	//ImpliesExpression Expression:
-	//	AtMostOneOfExpression ({OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
-	//	subExpressions+=AtMostOneOfExpression) ('implies' subExpressions+=AtMostOneOfExpression)*)?;
-	public KExpressionsGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
-		return gaKExpressions.getImpliesExpressionAccess();
-	}
-	
-	public ParserRule getImpliesExpressionRule() {
-		return getImpliesExpressionAccess().getRule();
-	}
-	
-	//AtMostOneOfExpression Expression:
-	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
-	//	subExpressions+=NoneOfExpression)* ')'
-	//	| NoneOfExpression;
-	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
-		return gaKExpressions.getAtMostOneOfExpressionAccess();
-	}
-	
-	public ParserRule getAtMostOneOfExpressionRule() {
-		return getAtMostOneOfExpressionAccess().getRule();
-	}
-	
-	//NoneOfExpression Expression:
-	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=AtomicValuedExpression (','
-	//	subExpressions+=AtomicValuedExpression)* ')'
-	//	| AtomicValuedExpression;
-	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
-		return gaKExpressions.getNoneOfExpressionAccess();
-	}
-	
-	public ParserRule getNoneOfExpressionRule() {
-		return getNoneOfExpressionAccess().getRule();
 	}
 	
 	//// Atomic Expression Rule

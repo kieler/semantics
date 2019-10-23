@@ -105,8 +105,6 @@ public abstract class AbstractKiCoolSyntacticSequencer extends AbstractSyntactic
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
-	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
-	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) value=FLOAT
@@ -140,8 +138,6 @@ public abstract class AbstractKiCoolSyntacticSequencer extends AbstractSyntactic
 	 *     (rule start) (ambiguity) 'randomize' (rule start)
 	 *     (rule start) (ambiguity) '{' values+=VectorValueMember
 	 *     (rule start) (ambiguity) annotations+=Annotation
-	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
-	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=PreOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) operator=ValOperator
@@ -163,8 +159,6 @@ public abstract class AbstractKiCoolSyntacticSequencer extends AbstractSyntactic
 	 *     ('(' | '(')+
 	 *
 	 * This ambiguous syntax occurs at:
-	 *     (rule start) (ambiguity) operator=AtMostOneOfOperator
-	 *     (rule start) (ambiguity) operator=NoneOfOperator
 	 *     (rule start) (ambiguity) operator=SubOperator
 	 *     (rule start) (ambiguity) subExpressions+=AtomicValuedExpression
 	 *     (rule start) (ambiguity) {OperatorExpression.subExpressions+=}

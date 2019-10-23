@@ -7,12 +7,12 @@ import com.google.inject.Inject
 import de.cau.cs.kieler.esterel.DelayExpression
 import de.cau.cs.kieler.esterel.EsterelParallel
 import de.cau.cs.kieler.esterel.EsterelThread
+import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.esterel.TickReference
 import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess
-import org.eclipse.xtext.serializer.ISerializationContext
-import de.cau.cs.kieler.esterel.SignalReference
 import de.cau.cs.kieler.kexpressions.OperatorExpression
 import de.cau.cs.kieler.kexpressions.OperatorType
+import org.eclipse.xtext.serializer.ISerializationContext
 
 class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
 
@@ -476,7 +476,7 @@ class EsterelSemanticSequencer extends AbstractEsterelSemanticSequencer {
      *         )
      *     )
      */
-    protected override sequence_AddExpression_AndExpression_AtMostOneOfExpression_CompareOperation_DivExpression_FbyExpression_ImpliesExpression_InitExpression_ModExpression_MultExpression_NegExpression_NoneOfExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
+    protected override sequence_AddExpression_AndExpression_CompareOperation_DivExpression_FbyExpression_InitExpression_ModExpression_MultExpression_NegExpression_NotExpression_OrExpression_SubExpression_TernaryOperation_ValuedObjectPreExpression(ISerializationContext context, OperatorExpression semanticObject) {
         context.sequenceValuedOperatorExpression(semanticObject)
     }
     

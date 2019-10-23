@@ -821,7 +821,6 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTernaryOperationAccess().getRule();
 	}
 	
-	//@Override
 	//ImpliesExpression kexpressions::Expression:
 	//	LogicalXorExpression ({kexpressions::OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
 	//	subExpressions+=LogicalXorExpression) ('=>' subExpressions+=LogicalXorExpression)*)?;
@@ -1903,30 +1902,6 @@ public class ScadeEquationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getModExpressionRule() {
 		return getModExpressionAccess().getRule();
-	}
-	
-	//AtMostOneOfExpression Expression:
-	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
-	//	subExpressions+=NoneOfExpression)* ')'
-	//	| NoneOfExpression;
-	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
-		return gaKExpressions.getAtMostOneOfExpressionAccess();
-	}
-	
-	public ParserRule getAtMostOneOfExpressionRule() {
-		return getAtMostOneOfExpressionAccess().getRule();
-	}
-	
-	//NoneOfExpression Expression:
-	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=AtomicValuedExpression (','
-	//	subExpressions+=AtomicValuedExpression)* ')'
-	//	| AtomicValuedExpression;
-	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
-		return gaKExpressions.getNoneOfExpressionAccess();
-	}
-	
-	public ParserRule getNoneOfExpressionRule() {
-		return getNoneOfExpressionAccess().getRule();
 	}
 	
 	//// Atomic Valued Expression Rule

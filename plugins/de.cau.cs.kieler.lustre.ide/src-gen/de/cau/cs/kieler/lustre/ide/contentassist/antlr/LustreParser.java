@@ -87,8 +87,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getBitwiseNotExpressionAccess().getAlternatives(), "rule__BitwiseNotExpression__Alternatives");
 			builder.put(grammarAccess.getShiftExpressionsAccess().getAlternatives_1(), "rule__ShiftExpressions__Alternatives_1");
 			builder.put(grammarAccess.getSumExpressionAccess().getAlternatives_1(), "rule__SumExpression__Alternatives_1");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getAlternatives(), "rule__AtMostOneOfExpression__Alternatives");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getAlternatives(), "rule__NoneOfExpression__Alternatives");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getAlternatives(), "rule__AtomicValuedExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getAlternatives(), "rule__ValuedObjectTestExpression__Alternatives");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAlternatives_0_1_0(), "rule__ValuedObjectTestExpression__OperatorAlternatives_0_1_0");
@@ -360,10 +358,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1(), "rule__ModExpression__Group_1__0");
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_1(), "rule__ModExpression__Group_1_1__0");
 			builder.put(grammarAccess.getModExpressionAccess().getGroup_1_2(), "rule__ModExpression__Group_1_2__0");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getGroup_0(), "rule__AtMostOneOfExpression__Group_0__0");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getGroup_0_4(), "rule__AtMostOneOfExpression__Group_0_4__0");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getGroup_0(), "rule__NoneOfExpression__Group_0__0");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getGroup_0_4(), "rule__NoneOfExpression__Group_0_4__0");
 			builder.put(grammarAccess.getAtomicValuedExpressionAccess().getGroup_4(), "rule__AtomicValuedExpression__Group_4__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0(), "rule__ValuedObjectTestExpression__Group_0__0");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getGroup_0_4(), "rule__ValuedObjectTestExpression__Group_0_4__0");
@@ -775,12 +769,6 @@ public class LustreParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getModExpressionAccess().getOperatorAssignment_1_1_0(), "rule__ModExpression__OperatorAssignment_1_1_0");
 			builder.put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_1_1(), "rule__ModExpression__SubExpressionsAssignment_1_1_1");
 			builder.put(grammarAccess.getModExpressionAccess().getSubExpressionsAssignment_1_2_1(), "rule__ModExpression__SubExpressionsAssignment_1_2_1");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getOperatorAssignment_0_1(), "rule__AtMostOneOfExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__AtMostOneOfExpression__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getAtMostOneOfExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__AtMostOneOfExpression__SubExpressionsAssignment_0_4_1");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getOperatorAssignment_0_1(), "rule__NoneOfExpression__OperatorAssignment_0_1");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__NoneOfExpression__SubExpressionsAssignment_0_3");
-			builder.put(grammarAccess.getNoneOfExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__NoneOfExpression__SubExpressionsAssignment_0_4_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getOperatorAssignment_0_1(), "rule__ValuedObjectTestExpression__OperatorAssignment_0_1");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_3(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_3");
 			builder.put(grammarAccess.getValuedObjectTestExpressionAccess().getSubExpressionsAssignment_0_4_1(), "rule__ValuedObjectTestExpression__SubExpressionsAssignment_0_4_1");

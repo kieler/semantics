@@ -3506,49 +3506,14 @@ public class SCEstGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FbyExpression Expression:
-	//	ImpliesExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
-	//	subExpressions+=ImpliesExpression) ('fby' subExpressions+=ImpliesExpression)*)?;
+	//	super::AtomicValuedExpression ({OperatorExpression.subExpressions+=current} (operator=FbyOperator
+	//	subExpressions+=super::AtomicValuedExpression) ('fby' subExpressions+=super::AtomicValuedExpression)*)?;
 	public KExpressionsGrammarAccess.FbyExpressionElements getFbyExpressionAccess() {
 		return gaKExpressions.getFbyExpressionAccess();
 	}
 	
 	public ParserRule getFbyExpressionRule() {
 		return getFbyExpressionAccess().getRule();
-	}
-	
-	//ImpliesExpression Expression:
-	//	AtMostOneOfExpression ({OperatorExpression.subExpressions+=current} (operator=ImpliesOperator
-	//	subExpressions+=AtMostOneOfExpression) ('implies' subExpressions+=AtMostOneOfExpression)*)?;
-	public KExpressionsGrammarAccess.ImpliesExpressionElements getImpliesExpressionAccess() {
-		return gaKExpressions.getImpliesExpressionAccess();
-	}
-	
-	public ParserRule getImpliesExpressionRule() {
-		return getImpliesExpressionAccess().getRule();
-	}
-	
-	//AtMostOneOfExpression Expression:
-	//	{OperatorExpression} operator=AtMostOneOfOperator '(' subExpressions+=NoneOfExpression (','
-	//	subExpressions+=NoneOfExpression)* ')'
-	//	| NoneOfExpression;
-	public KExpressionsGrammarAccess.AtMostOneOfExpressionElements getAtMostOneOfExpressionAccess() {
-		return gaKExpressions.getAtMostOneOfExpressionAccess();
-	}
-	
-	public ParserRule getAtMostOneOfExpressionRule() {
-		return getAtMostOneOfExpressionAccess().getRule();
-	}
-	
-	//NoneOfExpression Expression:
-	//	{OperatorExpression} operator=NoneOfOperator '(' subExpressions+=super::AtomicValuedExpression (','
-	//	subExpressions+=super::AtomicValuedExpression)* ')'
-	//	| super::AtomicValuedExpression;
-	public KExpressionsGrammarAccess.NoneOfExpressionElements getNoneOfExpressionAccess() {
-		return gaKExpressions.getNoneOfExpressionAccess();
-	}
-	
-	public ParserRule getNoneOfExpressionRule() {
-		return getNoneOfExpressionAccess().getRule();
 	}
 	
 	//// Valued Object Test Expression Rule
