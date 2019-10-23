@@ -136,7 +136,7 @@ class ToHybridDataflow extends SCChartsProcessor {
                 cfr.replace(vo, newVO)
                 
                 val dfass = createAssignment(stateReference, newVO, vo.reference)
-                dfr.effects += dfass
+                dfr.equations += dfass
                 
                 if (vo.local) localVariables += vo 
             } 
@@ -159,7 +159,7 @@ class ToHybridDataflow extends SCChartsProcessor {
                 cfr.replace(vo, newVO)
                 
                 val dfass = createAssignment(vo, stateReference.reference => [ subReference = newVO.reference ])
-                dfr.effects += dfass
+                dfr.equations += dfass
                 
                 if (vo.local) localVariables += vo 
             } 

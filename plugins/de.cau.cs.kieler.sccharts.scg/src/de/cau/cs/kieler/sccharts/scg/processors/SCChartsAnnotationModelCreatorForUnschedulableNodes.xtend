@@ -30,7 +30,6 @@ import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.scg.SCGraphs
 import de.cau.cs.kieler.scg.processors.analyzer.TarjanSCC
 import de.cau.cs.kieler.scg.processors.analyzer.LoopData
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 
 /** 
  * @author ssm
@@ -66,26 +65,26 @@ class SCChartsAnnotationModelCreatorForUnschedulableNodes implements IAnnotation
                 val actions = state.actions + state.outgoingTransitions
                 
                 val equations = if (state.regions.exists[ it instanceof DataflowRegion ]) 
-                   state.regions.filter(DataflowRegion).map[ effects ].flatten.filter(Assignment)
-                   else (<Effect> newArrayList)
+                   state.regions.filter(DataflowRegion).map[ equations ].flatten
+                   else (<Assignment> newArrayList)
                 
 
                 
                 val assignments = actions.map[ effects ].flatten.filter(Assignment)
                 
                 for (assignment : assignments + equations) {
-                    if ((assignment as Assignment).heuristicallyTheSameTo(guardedNodes)) {
+                    if (assignment.heuristicallyTheSameTo(guardedNodes)) {
                         var onLoop = false
-                        if ((assignment as Assignment).heuristicallyTheSameTo(guardedNodesOnLoop)) {
+                        if (assignment.heuristicallyTheSameTo(guardedNodesOnLoop)) {
                             environment.errors.add(originalModel, 
                                "On Causal Loop!", 
-                               assignment.eContainer, (assignment as Assignment).valuedObject.name)
+                               assignment.eContainer, assignment.valuedObject.name)
                             onLoop = true
                         }
                         if (!environment.getProperty(ONLY_SHOW_SPECIFIC) && !onLoop) {
                             environment.errors.add(originalModel, 
                                "Not schedulable!", 
-                               assignment.eContainer, true, null, null, (assignment as Assignment).valuedObject.name)
+                               assignment.eContainer, true, null, null, assignment.valuedObject.name)
                         }
                     }
                 }

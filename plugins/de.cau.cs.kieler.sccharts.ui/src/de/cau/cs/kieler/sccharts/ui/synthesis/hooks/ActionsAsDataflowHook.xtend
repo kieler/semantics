@@ -113,9 +113,9 @@ class ActionsAsDataflowHook extends SynthesisHook {
                     effectCopy.expression = createConditionalExpression(triggerCopy, effectCopy.expression)
                 }
                 switch (action) {
-                    EntryAction: dfEntry.effects += effectCopy
-                    DuringAction: dfDuring.effects += effectCopy
-                    ExitAction: dfExit.effects += effectCopy
+                    EntryAction: dfEntry.equations += effectCopy
+                    DuringAction: dfDuring.equations += effectCopy
+                    ExitAction: dfExit.equations += effectCopy
                 }
             }
         }

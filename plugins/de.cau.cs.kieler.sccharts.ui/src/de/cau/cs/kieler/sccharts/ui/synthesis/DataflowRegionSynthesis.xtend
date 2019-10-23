@@ -13,10 +13,10 @@
 package de.cau.cs.kieler.sccharts.ui.synthesis
 
 import com.google.inject.Inject
-import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsDeclarationExtensions
 import de.cau.cs.kieler.kicool.ui.kitt.tracing.TracingVisualizationProperties
+import de.cau.cs.kieler.klighd.KlighdConstants
 import de.cau.cs.kieler.klighd.SynthesisOption
 import de.cau.cs.kieler.klighd.kgraph.KNode
 import de.cau.cs.kieler.klighd.krendering.ViewSynthesisShared
@@ -24,21 +24,21 @@ import de.cau.cs.kieler.klighd.krendering.extensions.KRenderingExtensions
 import de.cau.cs.kieler.klighd.util.KlighdProperties
 import de.cau.cs.kieler.sccharts.DataflowRegion
 import de.cau.cs.kieler.sccharts.extensions.SCChartsSerializeHRExtensions
-import de.cau.cs.kieler.sccharts.extensions.TextFormat
 import de.cau.cs.kieler.sccharts.ui.synthesis.actions.ReferenceExpandAction
-import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
 import de.cau.cs.kieler.sccharts.ui.synthesis.styles.DataflowRegionStyles
+import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.alg.layered.options.GreedySwitchType
 import org.eclipse.elk.alg.layered.options.LayeredOptions
-import org.eclipse.elk.alg.layered.options.NodePlacementStrategy
 import org.eclipse.elk.core.math.ElkPadding
 import org.eclipse.elk.core.options.CoreOptions
 import org.eclipse.elk.core.options.Direction
 import org.eclipse.elk.core.options.EdgeRouting
 
-import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
-
 import static extension de.cau.cs.kieler.klighd.syntheses.DiagramSyntheses.*
+import static de.cau.cs.kieler.sccharts.ui.synthesis.GeneralSynthesisOptions.*
+import de.cau.cs.kieler.annotations.extensions.AnnotationsExtensions
+import de.cau.cs.kieler.sccharts.ui.synthesis.hooks.actions.MemorizingExpandCollapseAction
+import de.cau.cs.kieler.sccharts.extensions.TextFormat
 
 /**
  * @author ssm
@@ -61,17 +61,17 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
     @Inject extension KExpressionsDeclarationExtensions
     @Inject extension DataflowRegionStyles
     @Inject extension SCChartsSerializeHRExtensions
-    @Inject extension EffectSynthesis
+    @Inject extension EquationSynthesis 
     @Inject extension AnnotationsExtensions
     @Inject extension CommentSynthesis
     @Inject extension AdaptiveZoom
     
-    @Inject EffectSynthesis effectSynthesis
+    @Inject EquationSynthesis equationSynthesis
     
     override getDisplayedSynthesisOptions() {
         val options = newArrayList(CIRCUIT)
         
-        options.addAll(effectSynthesis.displayedSynthesisOptions)
+        options.addAll(equationSynthesis.displayedSynthesisOptions)
         
         return options
     }   
@@ -175,8 +175,8 @@ class DataflowRegionSynthesis extends SubSynthesis<DataflowRegion, KNode> {
             ]
         }           
 
-        // translate all direct dataflow effects
-        node.children += region.effects.performTransformation(node)
+        // translate all direct dataflow equations
+        node.children += region.equations.performTranformation(node)
 
         if (!CIRCUIT.booleanValue) {
             node.setLayoutOption(CoreOptions::PADDING, new ElkPadding(18d, 7d, 7d, 7d));

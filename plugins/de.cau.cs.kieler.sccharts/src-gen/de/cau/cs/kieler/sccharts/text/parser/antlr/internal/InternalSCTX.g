@@ -2207,18 +2207,18 @@ ruleDataflowRegion returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_0_2_0());
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0());
 						}
-						lv_effects_17_0=ruleDataflowRegionEffects
+						lv_equations_17_0=ruleAssignment
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 							}
 							add(
 								$current,
-								"effects",
-								lv_effects_17_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.DataflowRegionEffects");
+								"equations",
+								lv_equations_17_0,
+								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 							afterParserOrEnumRuleCall();
 						}
 					)
@@ -2256,101 +2256,23 @@ ruleDataflowRegion returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_1_2_0());
+							newCompositeNode(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0());
 						}
-						lv_effects_21_0=ruleDataflowRegionEffects
+						lv_equations_21_0=ruleAssignment
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getDataflowRegionRule());
 							}
 							add(
 								$current,
-								"effects",
-								lv_effects_21_0,
-								"de.cau.cs.kieler.sccharts.text.SCTX.DataflowRegionEffects");
+								"equations",
+								lv_equations_21_0,
+								"de.cau.cs.kieler.kexpressions.keffects.KEffects.Assignment");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)*
 			)
-		)
-	)
-;
-
-// Entry rule entryRuleDataflowRegionEffects
-entryRuleDataflowRegionEffects returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getDataflowRegionEffectsRule()); }
-	iv_ruleDataflowRegionEffects=ruleDataflowRegionEffects
-	{ $current=$iv_ruleDataflowRegionEffects.current; }
-	EOF;
-
-// Rule DataflowRegionEffects
-ruleDataflowRegionEffects returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getDataflowRegionEffectsAccess().getAssignmentParserRuleCall_0());
-		}
-		this_Assignment_0=ruleAssignment
-		{
-			$current = $this_Assignment_0.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			/* */
-		}
-		{
-			newCompositeNode(grammarAccess.getDataflowRegionEffectsAccess().getPostfixEffectParserRuleCall_1());
-		}
-		this_PostfixEffect_1=rulePostfixEffect
-		{
-			$current = $this_PostfixEffect_1.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		(
-			otherlv_2='emit'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_2_0());
-			}
-			{
-				/* */
-			}
-			{
-				newCompositeNode(grammarAccess.getDataflowRegionEffectsAccess().getValuedEmissionParserRuleCall_2_1());
-			}
-			this_ValuedEmission_3=ruleValuedEmission
-			{
-				$current = $this_ValuedEmission_3.current;
-				afterParserOrEnumRuleCall();
-			}
-		)
-		    |
-		(
-			otherlv_4='emit'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_3_0());
-			}
-			{
-				/* */
-			}
-			{
-				newCompositeNode(grammarAccess.getDataflowRegionEffectsAccess().getPureEmissionParserRuleCall_3_1());
-			}
-			this_PureEmission_5=rulePureEmission
-			{
-				$current = $this_PureEmission_5.current;
-				afterParserOrEnumRuleCall();
-			}
 		)
 	)
 ;

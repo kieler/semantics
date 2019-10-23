@@ -350,31 +350,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-// Entry rule entryRuleDataflowRegionEffects
-entryRuleDataflowRegionEffects
-:
-{ before(grammarAccess.getDataflowRegionEffectsRule()); }
-	 ruleDataflowRegionEffects
-{ after(grammarAccess.getDataflowRegionEffectsRule()); } 
-	 EOF 
-;
-
-// Rule DataflowRegionEffects
-ruleDataflowRegionEffects 
-	@init {
-		int stackSize = keepStackSize();
-	}
-	:
-	(
-		{ before(grammarAccess.getDataflowRegionEffectsAccess().getAlternatives()); }
-		(rule__DataflowRegionEffects__Alternatives)
-		{ after(grammarAccess.getDataflowRegionEffectsAccess().getAlternatives()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 // Entry rule entryRuleIntOrReference
 entryRuleIntOrReference
 :
@@ -4774,39 +4749,6 @@ rule__DataflowRegion__Alternatives_9
 		{ before(grammarAccess.getDataflowRegionAccess().getGroup_9_1()); }
 		(rule__DataflowRegion__Group_9_1__0)
 		{ after(grammarAccess.getDataflowRegionAccess().getGroup_9_1()); }
-	)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Alternatives
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	(
-		{ before(grammarAccess.getDataflowRegionEffectsAccess().getAssignmentParserRuleCall_0()); }
-		ruleAssignment
-		{ after(grammarAccess.getDataflowRegionEffectsAccess().getAssignmentParserRuleCall_0()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getDataflowRegionEffectsAccess().getPostfixEffectParserRuleCall_1()); }
-		rulePostfixEffect
-		{ after(grammarAccess.getDataflowRegionEffectsAccess().getPostfixEffectParserRuleCall_1()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getDataflowRegionEffectsAccess().getGroup_2()); }
-		(rule__DataflowRegionEffects__Group_2__0)
-		{ after(grammarAccess.getDataflowRegionEffectsAccess().getGroup_2()); }
-	)
-	|
-	(
-		{ before(grammarAccess.getDataflowRegionEffectsAccess().getGroup_3()); }
-		(rule__DataflowRegionEffects__Group_3__0)
-		{ after(grammarAccess.getDataflowRegionEffectsAccess().getGroup_3()); }
 	)
 ;
 finally {
@@ -11417,9 +11359,9 @@ rule__DataflowRegion__Group_9_0__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDataflowRegionAccess().getEffectsAssignment_9_0_2()); }
-	(rule__DataflowRegion__EffectsAssignment_9_0_2)*
-	{ after(grammarAccess.getDataflowRegionAccess().getEffectsAssignment_9_0_2()); }
+	{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_0_2()); }
+	(rule__DataflowRegion__EquationsAssignment_9_0_2)*
+	{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_0_2()); }
 )
 ;
 finally {
@@ -11524,117 +11466,9 @@ rule__DataflowRegion__Group_9_1__2__Impl
 	}
 :
 (
-	{ before(grammarAccess.getDataflowRegionAccess().getEffectsAssignment_9_1_2()); }
-	(rule__DataflowRegion__EffectsAssignment_9_1_2)*
-	{ after(grammarAccess.getDataflowRegionAccess().getEffectsAssignment_9_1_2()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__DataflowRegionEffects__Group_2__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__DataflowRegionEffects__Group_2__0__Impl
-	rule__DataflowRegionEffects__Group_2__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_2__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_2_0()); }
-	'emit'
-	{ after(grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_2_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_2__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__DataflowRegionEffects__Group_2__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_2__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getDataflowRegionEffectsAccess().getValuedEmissionParserRuleCall_2_1()); }
-	ruleValuedEmission
-	{ after(grammarAccess.getDataflowRegionEffectsAccess().getValuedEmissionParserRuleCall_2_1()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-rule__DataflowRegionEffects__Group_3__0
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__DataflowRegionEffects__Group_3__0__Impl
-	rule__DataflowRegionEffects__Group_3__1
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_3__0__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_3_0()); }
-	'emit'
-	{ after(grammarAccess.getDataflowRegionEffectsAccess().getEmitKeyword_3_0()); }
-)
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_3__1
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-	rule__DataflowRegionEffects__Group_3__1__Impl
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__DataflowRegionEffects__Group_3__1__Impl
-	@init {
-		int stackSize = keepStackSize();
-	}
-:
-(
-	{ before(grammarAccess.getDataflowRegionEffectsAccess().getPureEmissionParserRuleCall_3_1()); }
-	rulePureEmission
-	{ after(grammarAccess.getDataflowRegionEffectsAccess().getPureEmissionParserRuleCall_3_1()); }
+	{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_1_2()); }
+	(rule__DataflowRegion__EquationsAssignment_9_1_2)*
+	{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignment_9_1_2()); }
 )
 ;
 finally {
@@ -38530,15 +38364,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DataflowRegion__EffectsAssignment_9_0_2
+rule__DataflowRegion__EquationsAssignment_9_0_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_0_2_0()); }
-		ruleDataflowRegionEffects
-		{ after(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_0_2_0()); }
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0()); }
+		ruleAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_0_2_0()); }
 	)
 ;
 finally {
@@ -38560,15 +38394,15 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__DataflowRegion__EffectsAssignment_9_1_2
+rule__DataflowRegion__EquationsAssignment_9_1_2
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_1_2_0()); }
-		ruleDataflowRegionEffects
-		{ after(grammarAccess.getDataflowRegionAccess().getEffectsDataflowRegionEffectsParserRuleCall_9_1_2_0()); }
+		{ before(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0()); }
+		ruleAssignment
+		{ after(grammarAccess.getDataflowRegionAccess().getEquationsAssignmentParserRuleCall_9_1_2_0()); }
 	)
 ;
 finally {

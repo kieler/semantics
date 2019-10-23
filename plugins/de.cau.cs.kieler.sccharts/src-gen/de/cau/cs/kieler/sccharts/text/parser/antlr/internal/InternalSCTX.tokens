@@ -1,4 +1,5 @@
 '!'=33
+<<<<<<< HEAD
 '!='=144
 '#'=105
 '%'=97
@@ -6,9 +7,19 @@
 '&&'=87
 '&'=34
 '&='=129
+=======
+'!='=140
+'#'=101
+'%'=96
+'%='=124
+'&&'=86
+'&'=34
+'&='=125
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 '('=31
-'()'=70
+'()'=69
 ')'=32
+<<<<<<< HEAD
 '*'=95
 '*='=126
 '+'=93
@@ -54,19 +65,70 @@
 'combine'=82
 'commuting'=123
 'conflicting'=122
+=======
+'*'=94
+'*='=122
+'+'=92
+'++'=133
+'+='=120
+','=20
+'-'=93
+'--'=134
+'-='=121
+'->'=145
+'.'=82
+'/'=95
+'/='=123
+':'=48
+';'=42
+'<'=136
+'<<'=89
+'<<='=128
+'<='=137
+'='=80
+'=='=135
+'>'=138
+'>='=139
+'>>'=90
+'>>='=129
+'>>>'=91
+'>>>='=130
+'?'=144
+'@'=102
+'Pr'=52
+'Pr='=39
+'['=36
+'\''=97
+']'=37
+'^'=88
+'^='=127
+'_'=99
+'abort to'=103
+'auto'=108
+'bool'=113
+'class'=147
+'clock'=117
+'combine'=81
+'commuting'=119
+'conflicting'=118
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 'connector'=26
-'const'=61
+'const'=60
 'dataflow'=49
 'deferred'=43
+<<<<<<< HEAD
 'delayed'=110
+=======
+'delayed'=106
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 'do'=41
-'during'=54
-'else'=74
-'emit'=51
-'entry'=52
-'exit'=55
-'expression'=77
+'during'=53
+'else'=73
+'entry'=51
+'exit'=54
+'expression'=76
 'extends'=19
+<<<<<<< HEAD
 'extern'=80
 'fby'=99
 'final'=24
@@ -97,9 +159,39 @@
 'none'=152
 'nor'=149
 'null'=104
+=======
+'extern'=79
+'final'=24
+'float'=115
+'for'=47
+'global'=63
+'go to'=67
+'goto'=71
+'history'=111
+'host'=65
+'if'=38
+'immediate'=107
+'import'=17
+'initial'=23
+'input'=61
+'int'=114
+'is'=28
+'join to'=104
+'label'=44
+'max'=149
+'max='=132
+'method'=68
+'min'=150
+'min='=131
+'module'=70
+'nondeterministic'=40
+'none'=148
+'null'=100
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 'once'=50
-'output'=63
+'output'=62
 'override'=45
+<<<<<<< HEAD
 'period'=60
 'policy'=67
 'pre'=145
@@ -125,9 +217,37 @@
 'string'=120
 'struct'=150
 'succeeding'=59
+=======
+'period'=59
+'policy'=66
+'pre'=141
+'preceding'=57
+'print'=83
+'private'=153
+'protected'=152
+'public'=151
+'pure'=112
+'random'=98
+'randomize'=84
+'ref'=78
+'region'=46
+'reset'=109
+'return'=72
+'scchart'=18
+'schedule'=29
+'scope'=75
+'shallow history'=110
+'signal'=77
+'state'=27
+'static'=64
+'string'=116
+'struct'=146
+'succeeding'=58
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 'super.'=30
-'suspend'=57
+'suspend'=56
 'to'=35
+<<<<<<< HEAD
 'undefined'=109
 'val'=147
 'violation'=25
@@ -140,6 +260,20 @@
 '||'=86
 '}'=22
 '~'=146
+=======
+'undefined'=105
+'val'=143
+'violation'=25
+'void'=154
+'weak'=55
+'while'=74
+'{'=21
+'|'=87
+'|='=126
+'||'=85
+'}'=22
+'~'=142
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 RULE_ANY_OTHER=16
 RULE_BOOLEAN=9
 RULE_COMMENT_ANNOTATION=10
@@ -208,10 +342,13 @@ T__151=151
 T__152=152
 T__153=153
 T__154=154
+<<<<<<< HEAD
 T__155=155
 T__156=156
 T__157=157
 T__158=158
+=======
+>>>>>>> parent of f198eaaf77... scc df: changed df regions to contain effects instead of assignments
 T__17=17
 T__18=18
 T__19=19

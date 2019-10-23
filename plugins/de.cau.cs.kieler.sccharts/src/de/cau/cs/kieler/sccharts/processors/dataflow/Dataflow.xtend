@@ -41,7 +41,6 @@ import de.cau.cs.kieler.kexpressions.ReferenceDeclaration
 
 import static extension de.cau.cs.kieler.kicool.kitt.tracing.TransformationTracing.*
 import static extension org.eclipse.emf.ecore.util.EcoreUtil.*
-import de.cau.cs.kieler.kexpressions.keffects.Effect
 
 /**
  * @author ssm
@@ -113,15 +112,15 @@ class Dataflow extends SCChartsProcessor {
         }
         
         // Search for used referenced declarations.
-        val rdEquationMappingForTracing = <ValuedObject, Effect> newHashMap
+        val rdEquationMappingForTracing = <ValuedObject, Assignment> newHashMap
         val rdInstances = <ValuedObject> newLinkedHashSet
-        for (effect : dataflowRegion.effects.immutableCopy.filter[it instanceof Assignment]) {
-            (effect as Assignment).allAssignmentReferences.filter[ 
+        for (equation : dataflowRegion.equations.immutableCopy) {
+            equation.allAssignmentReferences.filter[ 
                 isReferenceDeclarationReference &&
                 (it.valuedObject.eContainer as ReferenceDeclaration).extern.size == 0
             ].forEach[
                 rdInstances += it.valuedObject
-                rdEquationMappingForTracing.put(it.valuedObject, effect)
+                rdEquationMappingForTracing.put(it.valuedObject, equation)
             ]
         }
         
@@ -168,12 +167,12 @@ class Dataflow extends SCChartsProcessor {
         }
         
         // Replace the equations and correct external references.
-        for (eq : dataflowRegion.effects.immutableCopy.filter[it instanceof Assignment].indexed) {
-            val processedEquations = <Pair<Integer, Effect>> newLinkedList
+        for (eq : dataflowRegion.equations.immutableCopy.indexed) {
+            val processedEquations = <Pair<Integer, Assignment>> newLinkedList
             // Process tuples.
-            if ((eq.value as Assignment).expression instanceof VectorValue) {
-                val vectorValues = (eq.value as Assignment).expression.asVectorValue.values
-                val rdInstance = (eq.value as Assignment).reference.valuedObject
+            if (eq.value.expression instanceof VectorValue) {
+                val vectorValues = eq.value.expression.asVectorValue.values
+                val rdInstance = eq.value.reference.valuedObject
                 
                 var idx = 0
                 if (rdInstance.isModelReference) {
@@ -186,7 +185,7 @@ class Dataflow extends SCChartsProcessor {
                                 if (!(value instanceof IgnoreValue)) {
                                     val newAssignment = createAssignment(rdInstance, valuedObject, value).
                                         trace(rdEquationMappingForTracing.get(rdInstance))
-                                    val newEq = new Pair<Integer, Effect>(idx + eq.key * 100, newAssignment)
+                                    val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
                                     processedEquations += newEq
                                 } else {
                                     vectorValues.head.remove
@@ -201,7 +200,7 @@ class Dataflow extends SCChartsProcessor {
                             val newAssignment = createAssignment(rdInstance, value).
                                 trace(rdEquationMappingForTracing.get(rdInstance))
                             newAssignment.indices += createIntValue(idx)
-                            val newEq = new Pair<Integer, Effect>(idx + eq.key * 100, newAssignment)
+                            val newEq = new Pair<Integer, Assignment>(idx + eq.key * 100, newAssignment)
                             processedEquations += newEq
                         }
                         idx++
@@ -234,8 +233,8 @@ class Dataflow extends SCChartsProcessor {
                         trace(dataflowRegion)
                 }
                 
-                eqTrans.addAssignment((equation.value as Assignment))
-                for (reference : (equation.value as Assignment).allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
+                eqTrans.addAssignment(equation.value)
+                for (reference : equation.value.allAssignmentReferences.filter[ isReferenceDeclarationReference ].toList) {
                     if (reference.subReference !== null) {
                         val refPair = new Pair<ValuedObject, ValuedObject>(reference.valuedObject, reference.subReference.valuedObject)
                         val replacement = referenceReplacements.get(refPair)

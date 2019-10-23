@@ -316,7 +316,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 operator = AssignOperator.ASSIGN
                 expression = rightSide
             ]
-            dfRegion.effects += dataflowAssignment
+            dfRegion.equations += dataflowAssignment
         }
     }
 
@@ -363,7 +363,7 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                     operator = AssignOperator.ASSIGN
                     expression = rightSideReference
                 ]
-                dfRegion.effects += dataflowAssignment
+                dfRegion.equations += dataflowAssignment
 
             }
         }

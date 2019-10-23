@@ -963,10 +963,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubExpressionsProductExpressionParserRuleCall_1_1_3_1_0 = (RuleCall)cSubExpressionsAssignment_1_1_3_1.eContents().get(0);
 		
 		//SumExpression Expression:
-		//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-		//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-		//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-		//	subExpressions+=ProductExpression)*)*;
+		//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+		//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+		//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
@@ -1304,8 +1303,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 		//// Example: 2 * 4
 		//MultExpression Expression:
-		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-		//	('*' subExpressions+=NegExpression)*)?;
+		//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+		//	subExpressions+=NegExpression)*)?;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
@@ -4260,10 +4259,9 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
-	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
-	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
-	//	subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
+	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
+	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
 	public SumExpressionElements getSumExpressionAccess() {
 		return pSumExpression;
 	}
@@ -4320,8 +4318,8 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
-	//	('*' subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
+	//	subExpressions+=NegExpression)*)?;
 	public MultExpressionElements getMultExpressionAccess() {
 		return pMultExpression;
 	}
