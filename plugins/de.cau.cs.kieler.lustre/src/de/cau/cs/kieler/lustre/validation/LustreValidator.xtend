@@ -2,8 +2,6 @@ package de.cau.cs.kieler.lustre.validation
 
 import com.google.inject.Inject
 import de.cau.cs.kieler.kexpressions.Expression
-import de.cau.cs.kieler.kexpressions.OperatorExpression
-import de.cau.cs.kieler.kexpressions.OperatorType
 import de.cau.cs.kieler.kexpressions.ReferenceCall
 import de.cau.cs.kieler.kexpressions.ValuedObject
 import de.cau.cs.kieler.kexpressions.ValuedObjectReference
@@ -11,7 +9,6 @@ import de.cau.cs.kieler.kexpressions.VariableDeclaration
 import de.cau.cs.kieler.kexpressions.extensions.KExpressionsValuedObjectExtensions
 import de.cau.cs.kieler.kexpressions.keffects.Assignment
 import de.cau.cs.kieler.lustre.lustre.AState
-import de.cau.cs.kieler.lustre.lustre.Assertion
 import de.cau.cs.kieler.lustre.lustre.ClockedVariableDeclaration
 import de.cau.cs.kieler.lustre.lustre.Equation
 import de.cau.cs.kieler.lustre.lustre.ExternalNodeDeclaration
@@ -30,70 +27,68 @@ import java.util.Set
 import org.eclipse.emf.common.util.EList
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.validation.Check
+import de.cau.cs.kieler.lustre.extensions.LustreElementOperationsExtensions
 
 /**
  * This class contains custom validation rules. 
  * 
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  * 
- * @author cpa
+ * @author lgr
  */
-class LustreValidator extends AbstractLustreValidator {    
-    
-    @Inject extension KExpressionsValuedObjectExtensions
-    
+class LustreValidator extends AbstractLustreValidator {
+
     static val String DUPLICATE_VARIABLE = "The variable is declared multiple times in this body."
+    static val String UNUSED_VARIABLE = "The variable is not defined through any equations."
     static val String NOT_SUPPORTED_FEATURE = "The feature is not supported."
     static val String EQUATION_LIST_PARAM_NUM_MISMATCH = "Left side of equation does not match number of return values of the ReferenceCall."
-    static val String CLOCK_MISMATCH = "The clock of this variable declaration does not correspond to the one used in equations."
+    static val String CLOCK_EXPRESSION_MISMATCH = "The clocks in this expression are not compatible. "
     static val String OUTPUT_NOT_DEFINED = "The output is not defined through equations."
     static val String MULTIPLE_DEFINITIONS = "The variable is defined multiple times through equations."
-    
+
+    @Inject extension KExpressionsValuedObjectExtensions
+    @Inject extension LustreElementOperationsExtensions
+
     /*
      * Checks for not supported language features.
-     */    
+     */
     @Check
     def checkModelDeclaration(ModelDeclaration modelDeclaration) {
         featureNotSupported(modelDeclaration);
     }
-    
+
     @Check
     def checkPackageDeclaration(PackageDeclaration packageDeclaration) {
         featureNotSupported(packageDeclaration);
     }
-    
+
     @Check
     def checkPackageEquation(PackageEquation packageEquation) {
         featureNotSupported(packageEquation);
     }
-    
+
     @Check
     def checkExternalNodeDeclaration(ExternalNodeDeclaration externalNodeDeclaration) {
         featureNotSupported(externalNodeDeclaration);
     }
-    
+
     @Check
     def checkTypeDeclaration(TypeDeclaration typeNodeDeclaration) {
         featureNotSupported(typeNodeDeclaration);
     }
-    
+
     @Check
     def checkStaticParam(StaticParam staticParam) {
         featureNotSupported(staticParam);
     }
-    
+
     @Check
     def checkNodeReference(NodeReference nodeReference) {
         featureNotSupported(nodeReference);
     }
-    
-    @Check
-    def checkAssertion(Assertion assertion) {
-//        featureNotSupported(assertion);
-    }
-    
+
     /*
-     * Check actual language things.
+     * Check actual language properties.
      */
     @Check
     override void checkPureSignal(VariableDeclaration declaration) {
@@ -101,34 +96,34 @@ class LustreValidator extends AbstractLustreValidator {
         // has the type pure (which is default). This is not an error, so override this method to 
         // ignore this check 
     }
-    
+
     @Check
     def void checkDuplicateVariable(NodeDeclaration nodeDeclaration) {
         val Set<String> variableNames = newHashSet()
         var superContainer = nodeDeclaration.eContainer
-        
+
         // Check the constants
         if (superContainer instanceof PackBody) {
             for (constantVariableDeclaration : superContainer.constants) {
                 warnVariableExistsOrAddVariableToSet(variableNames, constantVariableDeclaration.valuedObjects)
             }
         }
-        
+
         // Check the input parameter
         for (parameter : nodeDeclaration.input.parameter) {
-            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects) 
+            warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
         }
-        
+
         // Check the output parameter
         for (parameter : nodeDeclaration.output.parameter) {
             warnVariableExistsOrAddVariableToSet(variableNames, parameter.valuedObjects)
         }
-        
+
         // Check the node constant variables        
         for (constantDeclaration : nodeDeclaration.constants) {
             warnVariableExistsOrAddVariableToSet(variableNames, constantDeclaration.valuedObjects)
         }
-        
+
         // Check the node variables        
         for (clockedVariableDeclaration : nodeDeclaration.variables) {
             warnVariableExistsOrAddVariableToSet(variableNames, clockedVariableDeclaration.vardecl.valuedObjects)
@@ -136,40 +131,66 @@ class LustreValidator extends AbstractLustreValidator {
     }
     
     @Check
-    def checkDuplicateNodeName (PackBody packBody) {
-        val Set<String> variableNames = newHashSet()
+    def void checkVariableUnused(NodeDeclaration nodeDeclaration) {
+        val Set<ValuedObject> variableNamesDefined = newHashSet()
+
+        // Add all constants and variables used in the node to a set
+        for (constantDeclaration : nodeDeclaration.constants) {
+            for (ValuedObject constValObj : constantDeclaration.valuedObjects) {
+                variableNamesDefined.add(constValObj)
+            }
+        }
+        for (clockedVariableDeclaration : nodeDeclaration.variables) {
+            for (ValuedObject valObj : clockedVariableDeclaration.vardecl.valuedObjects) {
+                variableNamesDefined.add(valObj)
+            }
+        }
         
+        // Derive all variables defined through equations
+        val Set<ValuedObject> variableNamesUsed = getValuedObjectsFromEquations(nodeDeclaration.equations)
+        variableNamesUsed.addAll(getValuedObjectsFromAutomatons(nodeDeclaration.automatons))
+        
+        // For those that are not defined, show a warning
+        variableNamesDefined.removeAll(variableNamesUsed)
+        
+        for (valObj : variableNamesDefined) {
+            warning(UNUSED_VARIABLE, valObj, null)
+        }
+    }
+
+    @Check
+    def checkDuplicateNodeName(PackBody packBody) {
+        val Set<String> variableNames = newHashSet()
+
         for (node : packBody.nodes) {
             warnVariableExistsOrAddVariableToSet(variableNames, node.valuedObjects)
         }
-        
-        
+
     }
-    
+
     @Check
-    def checkWhenExpressionVariableClockDefinition(OperatorExpression expression) {
-        if (expression.operator == OperatorType.WHEN) {
-            if (expression.subExpressions.get(1) instanceof ValuedObjectReference) {
-                var clock = (expression.subExpressions.get(1) as ValuedObjectReference).valuedObject
-
-                // Find corresponding assignment
-                var containedElement = expression.eContainer
-                while (containedElement instanceof Expression) {
-                    containedElement = containedElement.eContainer
-                }
-
-                if (containedElement instanceof Assignment) {
-                    var varDeclaration = containedElement.reference.valuedObject.declaration.eContainer
-                    if (varDeclaration instanceof ClockedVariableDeclaration) {
-                        if (varDeclaration.clockExpr instanceof ValuedObjectReference) {
-                            var clockExpr = (varDeclaration.clockExpr as ValuedObjectReference).valuedObject
-                            if (clockExpr !== clock) {
-                                error(CLOCK_MISMATCH, varDeclaration, null)
-                            }
+    def checkClockConsistency(Expression expression) {
+        val expressionContainer = expression.eContainer
+        if (expressionContainer instanceof Equation) {
+            if (expressionContainer.reference !== expression) {
+                
+                if (expressionContainer.reference !== null) {
+                    val referenceDeclaration = expressionContainer.reference.valuedObject.declaration.eContainer
+                    var clockExpr = null as ValuedObject;
+                    if (referenceDeclaration instanceof ClockedVariableDeclaration) {
+                        if (referenceDeclaration.clockExpr instanceof ValuedObjectReference) {
+                            clockExpr = (referenceDeclaration.clockExpr as ValuedObjectReference).valuedObject
                         }
-                    } else {
-                        error(CLOCK_MISMATCH, varDeclaration, null)
                     }
+    
+                    try {
+                        if (!areClocksEqual(clockExpr, expression)) {
+                            error(CLOCK_EXPRESSION_MISMATCH, expressionContainer, null)
+                        }
+                    } catch (IllegalStateException e) {
+                        error(CLOCK_EXPRESSION_MISMATCH + "\n" + e.message, expressionContainer, null)
+                    }
+    
                 }
             }
         }
@@ -205,10 +226,10 @@ class LustreValidator extends AbstractLustreValidator {
             }
         }
     }
-       
-    @Check 
+
+    @Check
     def checkOutputDefined(NodeDeclaration node) {
-        var HashSet<ValuedObject> valuedObjectSet = new HashSet
+        var HashSet<ValuedObject> valuedObjectSet = newHashSet
         
         // Save all variables from assignments
         for (Assignment equation : node.equations) {
@@ -228,7 +249,7 @@ class LustreValidator extends AbstractLustreValidator {
                 }
             }
         }
-        
+
         var currAutomatons = new LinkedList(node.automatons)
         while (!currAutomatons.isEmpty) {
             var automaton = currAutomatons.head
@@ -241,7 +262,7 @@ class LustreValidator extends AbstractLustreValidator {
             }
             currAutomatons.remove(automaton)
         }
-        
+
         for (VariableDeclaration varDecl : node.output.parameter) {
             for (ValuedObject valObj : varDecl.valuedObjects) {
                 if (!valuedObjectSet.contains(valObj)) {
@@ -250,13 +271,7 @@ class LustreValidator extends AbstractLustreValidator {
             }
         }
     }
-    
-    
-    
-    
-    
-    
-    
+
     private def warnVariableExistsOrAddVariableToSet(Set<String> set, EList<ValuedObject> valuedObjectList) {
         for (valuedObject : valuedObjectList) {
             val name = valuedObject.name
@@ -267,7 +282,7 @@ class LustreValidator extends AbstractLustreValidator {
             }
         }
     }
-    
+
     private def featureNotSupported(EObject object) {
         error(NOT_SUPPORTED_FEATURE + object.class.toString, object, null);
     }

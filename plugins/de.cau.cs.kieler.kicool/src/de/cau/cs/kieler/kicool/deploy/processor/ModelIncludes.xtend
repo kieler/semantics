@@ -12,28 +12,31 @@
  */
 package de.cau.cs.kieler.kicool.deploy.processor
 
-import de.cau.cs.kieler.core.properties.IProperty
-import de.cau.cs.kieler.core.properties.Property
-import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import de.cau.cs.kieler.annotations.Pragmatable
 import de.cau.cs.kieler.annotations.StringPragma
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.kicool.compilation.CodeContainer
+import de.cau.cs.kieler.kicool.compilation.Processor
+import de.cau.cs.kieler.kicool.compilation.ProcessorType
+import de.cau.cs.kieler.kicool.deploy.Logger
+import de.cau.cs.kieler.kicool.deploy.ProjectInfrastructure
 import java.io.File
 import java.io.FileWriter
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.kicool.deploy.TemplatePosition.*
+
 import static extension de.cau.cs.kieler.kicool.deploy.TemplateInjection.*
-import org.eclipse.xtend.lib.annotations.Accessors
 
 /**
  * @author ssm
  * @kieler.design 2018-11-22 proposed
  * @kieler.rating 2018-11-22 proposed yellow
  */
-class ModelIncludes extends AbstractDeploymentProcessor<Object> {
+class ModelIncludes extends Processor<Object, CodeContainer> {
 
 // TODO: This looks pretty similar to the AbstractTemplateGeneratorProcessor. Think about a good inheritance structure.
-
     public static val PRAGMA_INCLUDE = "include"
     public static val PRAGMA_LIBINCLUDE = "libinclude"
     
@@ -43,8 +46,14 @@ class ModelIncludes extends AbstractDeploymentProcessor<Object> {
     public static val IProperty<String> INCLUDES_FORMAT = 
         new Property<String>("de.cau.cs.kieler.deploy.model.includes.format", "#include \"%s\"")    
     public static val IProperty<String> LIBINCLUDES_FORMAT = 
-        new Property<String>("de.cau.cs.kieler.deploy.model.includes.format", "#include <%s>")    
-
+        new Property<String>("de.cau.cs.kieler.deploy.model.includes.format", "#include <%s>")  
+          
+    val logger = new Logger
+    
+    override getType() {
+        return ProcessorType.EXOGENOUS_TRANSFORMATOR
+    }
+    
     override getId() {
         "de.cau.cs.kieler.kicool.deploy.model.includes"
     }
@@ -113,7 +122,10 @@ class ModelIncludes extends AbstractDeploymentProcessor<Object> {
                     e.printStackTrace(logger)
                 }
             }
-        }        
+        }
+        
+        logger.saveLog(environment, "model-includes-template.log")
+        model = cc
     }
     
     def relativeTemplatePath(String fileName) {

@@ -141,6 +141,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getName()
   {
     return name;
@@ -151,6 +152,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setName(String newName)
   {
     String oldName = name;
@@ -164,6 +166,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public ValueType getType()
   {
     return type;
@@ -174,6 +177,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setType(ValueType newType)
   {
     ValueType oldType = type;
@@ -187,6 +191,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<String> getEnums()
   {
     if (enums == null)
@@ -201,6 +206,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VariableDeclaration getVariables()
   {
     return variables;
@@ -228,6 +234,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVariables(VariableDeclaration newVariables)
   {
     if (newVariables != variables)
@@ -249,6 +256,7 @@ public class TypeDeclarationImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<VariableDeclaration> getValues()
   {
     if (values == null)

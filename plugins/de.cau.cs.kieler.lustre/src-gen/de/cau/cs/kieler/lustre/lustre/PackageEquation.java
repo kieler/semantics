@@ -30,10 +30,6 @@ public interface PackageEquation extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -56,10 +52,6 @@ public interface PackageEquation extends EObject
   /**
    * Returns the value of the '<em><b>Eq Or Is</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Eq Or Is</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Eq Or Is</em>' attribute.
    * @see #setEqOrIs(String)
@@ -83,10 +75,6 @@ public interface PackageEquation extends EObject
    * Returns the value of the '<em><b>By Name Static Args</b></em>' containment reference list.
    * The list contents are of type {@link de.cau.cs.kieler.lustre.lustre.ByNameStaticArg}.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>By Name Static Args</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>By Name Static Args</em>' containment reference list.
    * @see de.cau.cs.kieler.lustre.lustre.LustrePackage#getPackageEquation_ByNameStaticArgs()

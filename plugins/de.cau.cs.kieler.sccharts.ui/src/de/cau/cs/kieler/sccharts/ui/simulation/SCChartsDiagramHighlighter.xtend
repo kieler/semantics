@@ -24,11 +24,13 @@ import de.cau.cs.kieler.sccharts.Transition
 import de.cau.cs.kieler.sccharts.extensions.SCChartsStateExtensions
 import de.cau.cs.kieler.sccharts.iterators.StateIterator
 import de.cau.cs.kieler.sccharts.processors.TakenTransitionSignaling
+import de.cau.cs.kieler.simulation.SimulationContext
+import de.cau.cs.kieler.simulation.ide.visualization.Highlighting
+import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import java.util.List
 import java.util.Set
 import de.cau.cs.kieler.simulation.ui.visualization.DiagramHighlighter
 import de.cau.cs.kieler.simulation.SimulationContext
-import de.cau.cs.kieler.simulation.ui.visualization.Highlighting
 import de.cau.cs.kieler.kicool.ui.klighd.models.ModelChain
 
 /**

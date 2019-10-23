@@ -17,6 +17,7 @@ import java.io.ByteArrayOutputStream
 import java.io.PrintStream
 import java.nio.charset.StandardCharsets
 import java.io.UnsupportedEncodingException
+import de.cau.cs.kieler.kicool.environments.Environment
 
 /**
  * @author als
@@ -31,12 +32,24 @@ class Logger extends PrintStream {
         super(new ByteArrayOutputStream, true, charset.name)
     }
     
+    def saveLog(Environment env, String logFileName) {
+        val log = closeLog(logFileName).files.head
+        env.logs.files += log
+        return log
+    }
+    
     def closeLog(String logFileName) {
         val cc = new CodeContainer => [add(logFileName, new String((this.out as ByteArrayOutputStream).toByteArray, charset))]
         this.out.close
         this.close
         return cc
-    }  
+    }
+    
+    def saveIntermediateLog(Environment env, String logFileName) {
+        val log = intermediateLog(logFileName).files.head
+        env.logs.files += log
+        return log
+    }
 
     def intermediateLog(String logFileName) {
         val cc = new CodeContainer => [add(logFileName, new String((this.out as ByteArrayOutputStream).toByteArray, charset))]
@@ -45,7 +58,7 @@ class Logger extends PrintStream {
         return cc
     }  
     
-    static def newLogger(Object object, String headline) {
+    static def newLogger(Object ignore, String headline) {
         val logger = new Logger
         logger.println(headline)
         logger.println

@@ -904,7 +904,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
 		private final Assignment cInitializationDeclarationAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
-		private final RuleCall cInitializationDeclarationVariableDeclarationWOSemicolonParserRuleCall_2_0_0 = (RuleCall)cInitializationDeclarationAssignment_2_0.eContents().get(0);
+		private final RuleCall cInitializationDeclarationLoopDeclarationParserRuleCall_2_0_0 = (RuleCall)cInitializationDeclarationAssignment_2_0.eContents().get(0);
 		private final Assignment cInitializationAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final RuleCall cInitializationEffectOrAssignmentParserRuleCall_2_1_0 = (RuleCall)cInitializationAssignment_2_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
@@ -924,7 +924,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonSemicolonKeyword_12_0 = (Keyword)cSemicolonAssignment_12.eContents().get(0);
 		
 		//ForLoop Loop:
-		//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+		//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
 		//	';'
 		//	condition=BoolExpression
 		//	';'
@@ -936,9 +936,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//	semicolon?=';'?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)? ';'
-		//condition=BoolExpression ';' afterthought=EffectOrAssignment? ')' '{' declarations+=Declaration* statements+=Statement*
-		//'}' semicolon?=';'?
+		//'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)? ';' condition=BoolExpression
+		//';' afterthought=EffectOrAssignment? ')' '{' declarations+=Declaration* statements+=Statement* '}' semicolon?=';'?
 		public Group getGroup() { return cGroup; }
 		
 		//'for'
@@ -947,14 +946,14 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 		
-		//(initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+		//(initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
-		//initializationDeclaration=VariableDeclarationWOSemicolon
+		//initializationDeclaration=LoopDeclaration
 		public Assignment getInitializationDeclarationAssignment_2_0() { return cInitializationDeclarationAssignment_2_0; }
 		
-		//VariableDeclarationWOSemicolon
-		public RuleCall getInitializationDeclarationVariableDeclarationWOSemicolonParserRuleCall_2_0_0() { return cInitializationDeclarationVariableDeclarationWOSemicolonParserRuleCall_2_0_0; }
+		//LoopDeclaration
+		public RuleCall getInitializationDeclarationLoopDeclarationParserRuleCall_2_0_0() { return cInitializationDeclarationLoopDeclarationParserRuleCall_2_0_0; }
 		
 		//initialization=EffectOrAssignment
 		public Assignment getInitializationAssignment_2_1() { return cInitializationAssignment_2_1; }
@@ -1006,6 +1005,65 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//';'
 		public Keyword getSemicolonSemicolonKeyword_12_0() { return cSemicolonSemicolonKeyword_12_0; }
+	}
+	public class LoopDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.LoopDeclaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
+		private final Assignment cTypeAssignment_1_0 = (Assignment)cAlternatives_1.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_1_0_0 = (RuleCall)cTypeAssignment_1_0.eContents().get(0);
+		private final Group cGroup_1_1 = (Group)cAlternatives_1.eContents().get(1);
+		private final Assignment cTypeAssignment_1_1_0 = (Assignment)cGroup_1_1.eContents().get(0);
+		private final RuleCall cTypeHostTypeEnumRuleCall_1_1_0_0 = (RuleCall)cTypeAssignment_1_1_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_1_1_1_0 = (RuleCall)cHostTypeAssignment_1_1_1.eContents().get(0);
+		private final Assignment cValuedObjectsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValuedObjectsValuedObjectParserRuleCall_2_0 = (RuleCall)cValuedObjectsAssignment_2.eContents().get(0);
+		
+		//LoopDeclaration kexpressions::VariableDeclaration:
+		//	annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+		
+		//type=ValueType | type=HostType hostType=STRING
+		public Alternatives getAlternatives_1() { return cAlternatives_1; }
+		
+		//type=ValueType
+		public Assignment getTypeAssignment_1_0() { return cTypeAssignment_1_0; }
+		
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_1_0_0() { return cTypeValueTypeEnumRuleCall_1_0_0; }
+		
+		//type=HostType hostType=STRING
+		public Group getGroup_1_1() { return cGroup_1_1; }
+		
+		//type=HostType
+		public Assignment getTypeAssignment_1_1_0() { return cTypeAssignment_1_1_0; }
+		
+		//HostType
+		public RuleCall getTypeHostTypeEnumRuleCall_1_1_0_0() { return cTypeHostTypeEnumRuleCall_1_1_0_0; }
+		
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_1_1_1() { return cHostTypeAssignment_1_1_1; }
+		
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_1_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_1_1_1_0; }
+		
+		//valuedObjects+=ValuedObject
+		public Assignment getValuedObjectsAssignment_2() { return cValuedObjectsAssignment_2; }
+		
+		//ValuedObject
+		public RuleCall getValuedObjectsValuedObjectParserRuleCall_2_0() { return cValuedObjectsValuedObjectParserRuleCall_2_0; }
 	}
 	public class EffectOrAssignmentElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "de.cau.cs.kieler.scl.SCL.EffectOrAssignment");
@@ -1689,6 +1747,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	private final ParallelElements pParallel;
 	private final ScopeStatementElements pScopeStatement;
 	private final ForLoopElements pForLoop;
+	private final LoopDeclarationElements pLoopDeclaration;
 	private final EffectOrAssignmentElements pEffectOrAssignment;
 	private final WhileLoopElements pWhileLoop;
 	private final ModuleCallElements pModuleCall;
@@ -1738,6 +1797,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 		this.pParallel = new ParallelElements();
 		this.pScopeStatement = new ScopeStatementElements();
 		this.pForLoop = new ForLoopElements();
+		this.pLoopDeclaration = new LoopDeclarationElements();
 		this.pEffectOrAssignment = new EffectOrAssignmentElements();
 		this.pWhileLoop = new WhileLoopElements();
 		this.pModuleCall = new ModuleCallElements();
@@ -2009,7 +2069,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//ForLoop Loop:
-	//	'for' '(' (initializationDeclaration=VariableDeclarationWOSemicolon | initialization=EffectOrAssignment)?
+	//	'for' '(' (initializationDeclaration=LoopDeclaration | initialization=EffectOrAssignment)?
 	//	';'
 	//	condition=BoolExpression
 	//	';'
@@ -2025,6 +2085,16 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getForLoopRule() {
 		return getForLoopAccess().getRule();
+	}
+	
+	//LoopDeclaration kexpressions::VariableDeclaration:
+	//	annotations+=Annotation* (type=ValueType | type=HostType hostType=STRING) valuedObjects+=ValuedObject;
+	public LoopDeclarationElements getLoopDeclarationAccess() {
+		return pLoopDeclaration;
+	}
+	
+	public ParserRule getLoopDeclarationRule() {
+		return getLoopDeclarationAccess().getRule();
 	}
 	
 	//EffectOrAssignment keffects::Assignment:
@@ -2433,7 +2503,7 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//ValuedObject kexpressions::ValuedObject:
 	//	annotations+=QuotedStringAnnotation*
 	//	name=PrimeID ('[' cardinalities+=Expression ']')* ('=' initialValue=Expression)? ('combine'
-	//	combineOperator=CombineOperator)?;
+	//	combineOperator=CombineOperator)? ('label' label=STRING)?;
 	public KExtGrammarAccess.ValuedObjectElements getValuedObjectAccess() {
 		return gaKExt.getValuedObjectAccess();
 	}
@@ -2608,7 +2678,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// A print functions that enables target-independent prints in the model.    
 	//PrintCallEffect keffects::PrintCallEffect:
 	//	annotations+=Annotation*
-	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule' schedule+=ScheduleObjectReference+)?;
+	//	'print' ('(' parameters+=Parameter (',' parameters+=Parameter)* ')') ('schedule'
+	//	schedule+=ScheduleObjectReference+)?;
 	public KEffectsGrammarAccess.PrintCallEffectElements getPrintCallEffectAccess() {
 		return gaKEffects.getPrintCallEffectAccess();
 	}
@@ -2906,9 +2977,10 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SumExpression Expression:
-	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator subExpressions+=ProductExpression
-	//	('+' subExpressions+=ProductExpression)* | {OperatorExpression.subExpressions+=current} operator=SubOperator
-	//	subExpressions+=ProductExpression ('-' subExpressions+=ProductExpression)*)*;
+	//	ProductExpression ({OperatorExpression.subExpressions+=current} operator=AddOperator
+	//	subExpressions+=ProductExpression ('+' subExpressions+=ProductExpression)* |
+	//	{OperatorExpression.subExpressions+=current} operator=SubOperator subExpressions+=ProductExpression ('-'
+	//	subExpressions+=ProductExpression)*)*;
 	public KExpressionsGrammarAccess.SumExpressionElements getSumExpressionAccess() {
 		return gaKExpressions.getSumExpressionAccess();
 	}
@@ -2965,8 +3037,8 @@ public class SCLGrammarAccess extends AbstractGrammarElementFinder {
 	//// if necessary.  The warning can be ignored since the operator will only override itself in this loop.
 	//// Example: 2 * 4
 	//MultExpression Expression:
-	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression) ('*'
-	//	subExpressions+=NegExpression)*)?;
+	//	NegExpression ({OperatorExpression.subExpressions+=current} (operator=MultOperator subExpressions+=NegExpression)
+	//	('*' subExpressions+=NegExpression)*)?;
 	public KExpressionsGrammarAccess.MultExpressionElements getMultExpressionAccess() {
 		return gaKExpressions.getMultExpressionAccess();
 	}

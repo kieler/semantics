@@ -161,7 +161,7 @@ class JavaCompiler extends AbstractSystemCompilerProcessor<Object, ExecutableCon
         }
         
         // report
-        logger.closeLog("java-compiler-report.log").snapshot
+        logger.saveLog(environment, "java-compiler.log")
         infra.refresh
     }
 

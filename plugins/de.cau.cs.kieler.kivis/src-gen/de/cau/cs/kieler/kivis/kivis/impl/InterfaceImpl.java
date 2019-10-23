@@ -116,6 +116,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getElement()
   {
     return element;
@@ -126,6 +127,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setElement(String newElement)
   {
     String oldElement = element;
@@ -139,6 +141,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getVariable()
   {
     return variable;
@@ -149,6 +152,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVariable(String newVariable)
   {
     String oldVariable = variable;
@@ -162,6 +166,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public String getPool()
   {
     return pool;
@@ -172,6 +177,7 @@ public class InterfaceImpl extends MinimalEObjectImpl.Container implements Inter
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setPool(String newPool)
   {
     String oldPool = pool;

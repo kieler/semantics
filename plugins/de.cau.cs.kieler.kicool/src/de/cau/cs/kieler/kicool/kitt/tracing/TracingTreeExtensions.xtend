@@ -27,19 +27,12 @@ import java.util.LinkedList
 import java.util.List
 import java.util.Map
 import java.util.Map.Entry
-import org.eclipse.emf.compare.EMFCompare
-import org.eclipse.emf.compare.match.DefaultComparisonFactory
-import org.eclipse.emf.compare.match.DefaultEqualityHelperFactory
-import org.eclipse.emf.compare.match.DefaultMatchEngine
-import org.eclipse.emf.compare.scope.FilterComparisonScope
-import org.eclipse.emf.compare.utils.UseIdentifiers
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.emf.ecore.util.EcoreUtil.Copier
 
 import static com.google.common.base.Preconditions.*
-import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl
-import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl
+import de.cau.cs.kieler.core.services.KielerServiceLoader
 
 /**
  * Extension for easier access and manipulation of TranformationTrees.
@@ -394,17 +387,7 @@ class TracingTreeExtensions {
 
     // -------------------------------------------------------------------------
     // Analyzer
-    val LinkedList<Class<? extends EObject>> matchIgnoreClasses = new LinkedList;
 
-    /**
-     * Returns a mutable list of classes which instances should be excluded in matching process.
-     * A matching is started when calling {@link findModelInTree} to check if the given model instance 
-     * matches the model internally stored by EObjectWrapper in a ModelWrapper.
-     * @returns list of ignored classes for matching
-     */
-    def getMatchIgnoreClasses() {
-        matchIgnoreClasses;
-    }
 
     /**
      * Searches given transformation tree for matching model-nodes for given model instance and typeID.
@@ -717,41 +700,7 @@ class TracingTreeExtensions {
         element.EObject = obj;
     }
 
-    /**
-     * @return null if models are not identically else bijective mapping between matching objects
-     */
-    private def matchModels(EObject left, EObject right) {
-        if (left === null || right === null) {
-            return null;
-        }
-  
-        val builder = EMFCompare.builder()
-        builder.matchEngineFactoryRegistry = new MatchEngineFactoryRegistryImpl() => [
-            val matchEngineFactory = new MatchEngineFactoryImpl(UseIdentifiers.NEVER)
-            matchEngineFactory.setRanking(1000)
-            add(matchEngineFactory)
-        ]
-        val comparator = builder.build
-
-        val scope = new FilterComparisonScope(left, right, null);
-        scope.setEObjectContentFilter(
-            [ EObject eo |
-                matchIgnoreClasses.forall [
-                    !it.isInstance(eo);
-                ]
-            ]);
-        val comparison = comparator.compare(scope);
-
-        if (comparison.differences.empty && comparison.matches.size == 1) {
-            val map = new HashMap(left.eAllContents.size);
-            comparison.matches.forEach [
-                map.put(it.left, it.right);
-                it.allSubmatches.forEach [
-                    map.put(it.left, it.right);
-                ];
-            ];
-            return map;
-        }
-        return null;
+    private def HashMap<EObject, EObject> matchModels(EObject left, EObject right) {
+        KielerServiceLoader.load(ITracingTreeComparator).head?.matchModels(left, right);
     }
 }

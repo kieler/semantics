@@ -30,10 +30,6 @@ public interface ClockedVariableDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Vardecl</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Vardecl</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Vardecl</em>' containment reference.
    * @see #setVardecl(VariableDeclaration)
@@ -56,10 +52,6 @@ public interface ClockedVariableDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Clock Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Clock Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Clock Expr</em>' containment reference.
    * @see #setClockExpr(Expression)

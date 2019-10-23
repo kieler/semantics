@@ -3,8 +3,6 @@ package de.cau.cs.kieler.simulation.ui.view
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
-import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import java.util.Set
 import org.eclipse.core.runtime.IProgressMonitor
@@ -21,9 +19,12 @@ import org.eclipse.ui.menus.WorkbenchWindowControlContribution
 import org.eclipse.ui.progress.UIJob
 import org.eclipse.ui.statushandlers.StatusManager
 
-import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
+import static de.cau.cs.kieler.simulation.ide.CentralSimulation.*
+import static de.cau.cs.kieler.simulation.ui.SimulationUI.updateUI
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
-class SimulationControlButtons extends WorkbenchWindowControlContribution implements SimulationListener {
+class SimulationControlButtons extends WorkbenchWindowControlContribution implements ISimulationListener {
     
     private static val PLAY_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/runIcon.png")
     private static val PAUSE_ICON = SimulationUIPlugin.imageDescriptorFromPlugin(SimulationUIPlugin.PLUGIN_ID, "icons/pauseIcon.png")
@@ -57,7 +58,7 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                         } else {
                             currentSimulation.play()
                         }
-                    } else if (SimulationUI.canRestartSimulation) {
+                    } else if (canRestartSimulation) {
                         currentSimulation.start(currentSimulation.isAsynchronous)
                     }
                 }
@@ -90,7 +91,7 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
         stop.imageDescriptor = STOP_ICON
         
         // -- Register Listener --
-        if (listen) registerObserver(this)
+        if (listen) CentralSimulation.addListener(this)
     }
     
     override getName() {
@@ -123,14 +124,14 @@ class SimulationControlButtons extends WorkbenchWindowControlContribution implem
                         stop.enabled = true
                     }
                     case STOP: {
-                        playpause.enabled = SimulationUI.canRestartSimulation
+                        playpause.enabled = canRestartSimulation
                         step.enabled = false
                         stop.enabled = false
                     }
                 }
             }
             if (!sim.running) {
-                playpause.enabled = SimulationUI.canRestartSimulation
+                playpause.enabled = canRestartSimulation
                 playpause.imageDescriptor = RESTART_ICON
                 playpause.toolTipText = "Restart Simulation"
             } else if (sim.playing && sim.mode.supportsPausing) {

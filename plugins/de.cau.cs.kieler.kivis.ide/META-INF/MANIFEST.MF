@@ -6,7 +6,7 @@ Bundle-Version: 1.1.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.kivis.ide;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.core.runtime,
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  de.cau.cs.kieler.kivis;bundle-version="0.14.0",
  com.google.guava,
  org.eclipse.xtext.xbase.lib,
@@ -14,9 +14,15 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib.macro,
  com.google.inject;bundle-version="3.0.0",
  org.eclipse.xtext.util;bundle-version="2.12.0",
- org.eclipse.xtext.ide
+ org.eclipse.xtext.ide,
+ de.cau.cs.kieler.simulation.ide,
+ de.cau.cs.kieler.simulation,
+ javax.servlet;bundle-version="3.1.0",
+ de.cau.cs.kieler.kicool,
+ org.eclipse.jetty.servlet;bundle-version="9.4.18",
+ de.cau.cs.kieler.language.server
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: de.cau.cs.kieler.kivis.ide,
  de.cau.cs.kieler.kivis.ide.contentassist.antlr,
- de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal
-
+ de.cau.cs.kieler.kivis.ide.contentassist.antlr.internal,
+ de.cau.cs.kieler.kivis.ide.highlighting

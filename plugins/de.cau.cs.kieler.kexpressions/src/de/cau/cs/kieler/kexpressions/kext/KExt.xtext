@@ -258,7 +258,8 @@ ValuedObject returns kexpressions::ValuedObject:
     ('=' initialValue=Expression)?
     ( 'combine'
       (combineOperator = CombineOperator)
-    )?;
+    )?
+    ('label' label=STRING)?;
     
 SimpleValuedObject returns kexpressions::ValuedObject:
     annotations+=QuotedStringAnnotation*

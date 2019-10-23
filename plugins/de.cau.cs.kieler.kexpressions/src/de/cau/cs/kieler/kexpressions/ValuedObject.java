@@ -27,6 +27,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCombineOperator <em>Combine Operator</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getInitialValue <em>Initial Value</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getCardinalities <em>Cardinalities</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kexpressions.ValuedObject#getLabel <em>Label</em>}</li>
  * </ul>
  *
  * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject()
@@ -104,5 +105,27 @@ public interface ValuedObject extends NamedObject, Annotatable, Referenceable {
      * @generated
      */
     EList<Expression> getCardinalities();
+
+    /**
+     * Returns the value of the '<em><b>Label</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Label</em>' attribute.
+     * @see #setLabel(String)
+     * @see de.cau.cs.kieler.kexpressions.KExpressionsPackage#getValuedObject_Label()
+     * @model
+     * @generated
+     */
+    String getLabel();
+
+    /**
+     * Sets the value of the '{@link de.cau.cs.kieler.kexpressions.ValuedObject#getLabel <em>Label</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Label</em>' attribute.
+     * @see #getLabel()
+     * @generated
+     */
+    void setLabel(String value);
 
 } // ValuedObject

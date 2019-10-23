@@ -10,10 +10,13 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  */
-package de.cau.cs.kieler.kivis.processor
+package de.cau.cs.kieler.kivis.ui.processor
 
-import de.cau.cs.kieler.kivis.KiVisConstants
+import com.google.gson.JsonElement
+import de.cau.cs.kieler.core.properties.IProperty
+import de.cau.cs.kieler.core.properties.Property
 import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
+import java.util.Map
 
 /**
  * @author als
@@ -21,6 +24,9 @@ import de.cau.cs.kieler.simulation.internal.processor.SimulationProcessor
  * @kieler.rating proposed yellow
  */
 class SimulationVisualizationValues extends SimulationProcessor {
+    
+    public static val IProperty<Map<String, JsonElement>> VALUES = 
+        new Property<Map<String, JsonElement>>("de.cau.cs.kieler.kivis.visualization.inputs", null)
     
     public static val ID = "de.cau.cs.kieler.kivis.internal.values"
     
@@ -33,7 +39,7 @@ class SimulationVisualizationValues extends SimulationProcessor {
     }
     
     override process() {
-        val patch = environment.getProperty(KiVisConstants.VISUALIZATION_INPUTS)
+        val patch = environment.getProperty(VALUES)
         if (patch !== null) {
             synchronized (patch) {
                 dataPool.setValues(patch)

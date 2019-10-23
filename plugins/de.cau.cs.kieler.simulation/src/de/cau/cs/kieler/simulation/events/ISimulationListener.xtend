@@ -23,7 +23,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
  * @author aas
  *
  */
-interface SimulationListener extends Observer {
+interface ISimulationListener extends Observer {
     
     static val disabledListeners = newHashSet()
     

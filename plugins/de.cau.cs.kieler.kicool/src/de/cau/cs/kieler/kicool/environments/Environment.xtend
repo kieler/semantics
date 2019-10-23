@@ -75,6 +75,9 @@ class Environment extends EnvironmentPropertyHolder {
 
     public static val IProperty<Infos> INFOS = 
         new Property<Infos>("de.cau.cs.kieler.kicool.infos", new Infos)
+
+    public static val IProperty<Logs> LOGS = 
+        new Property<Logs>("de.cau.cs.kieler.kicool.logs", null)
         
     public static val IProperty<Long> START_TIMESTAMP = 
         new Property<Long>("de.cau.cs.kieler.kicool.startTimestamp", new Long(0))
@@ -140,6 +143,11 @@ class Environment extends EnvironmentPropertyHolder {
     
     def getInfos() {
         getProperty(INFOS)
+    }
+    
+    def getLogs() {
+        if (getProperty(LOGS) === null) setProperty(LOGS, new Logs)
+        return getProperty(LOGS)
     }
     
     def getStatus() {

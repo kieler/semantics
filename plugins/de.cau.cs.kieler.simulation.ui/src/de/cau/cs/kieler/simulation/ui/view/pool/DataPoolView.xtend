@@ -19,11 +19,10 @@ import de.cau.cs.kieler.simulation.DataPoolEntry
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
 import de.cau.cs.kieler.simulation.events.TraceFinishedEvent
 import de.cau.cs.kieler.simulation.events.TraceMismatchEvent
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.trace.TraceFileUtil
-import de.cau.cs.kieler.simulation.ui.SimulationUI
 import de.cau.cs.kieler.simulation.ui.SimulationUIPlugin
 import de.cau.cs.kieler.simulation.ui.view.SimulationControlButtons
 import java.io.File
@@ -35,6 +34,7 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.resources.ResourcesPlugin
 import org.eclipse.core.runtime.IStatus
+import org.eclipse.core.runtime.Path
 import org.eclipse.core.runtime.Status
 import org.eclipse.jface.action.Action
 import org.eclipse.jface.action.IAction
@@ -48,6 +48,7 @@ import org.eclipse.jface.viewers.ColumnViewerEditor
 import org.eclipse.jface.viewers.ColumnViewerEditorActivationStrategy
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport
 import org.eclipse.jface.viewers.FocusCellOwnerDrawHighlighter
+import org.eclipse.jface.viewers.IElementComparer
 import org.eclipse.jface.viewers.IStructuredContentProvider
 import org.eclipse.jface.viewers.LabelProvider
 import org.eclipse.jface.viewers.StructuredSelection
@@ -79,8 +80,8 @@ import org.eclipse.ui.statushandlers.StatusManager
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static de.cau.cs.kieler.simulation.ui.SimulationUI.*
-import org.eclipse.core.runtime.Path
-import org.eclipse.jface.viewers.IElementComparer
+import de.cau.cs.kieler.simulation.events.ISimulationListener
+import de.cau.cs.kieler.simulation.ide.server.SimulationServer
 
 /**
  * Displays the data of a running simulation.
@@ -88,7 +89,7 @@ import org.eclipse.jface.viewers.IElementComparer
  * @author als, aas, ssm
  * 
  */
-class DataPoolView extends ViewPart implements SimulationListener {
+class DataPoolView extends ViewPart implements ISimulationListener {
 
     /**
      * The id of the view from the plugin.xml
@@ -139,6 +140,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
     private var IAction menuResetSelectedUserValue
     private var MenuManager menuSimulationListenersSubmenu
     private var IMenuListener menuSimulationListenersSubmenuPoplulator
+    private var IAction menuStartSever
     private var IAction menuHelp
 
     // -- Toolbar --
@@ -184,7 +186,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
         updateButtonEnabling(null, null)
 
         // Register for events
-        SimulationUI.registerObserver(this)
+        CentralSimulation.addListener(this)
     }
 
     /**
@@ -370,7 +372,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                 // Remove old actions
                 menuSimulationListenersSubmenu.removeAll
                 // Create new actions
-                for (listener : SimulationUI.observers.filter[canBeDisabled].sortBy[name]) {
+                for (listener : CentralSimulation.listeners.filter[canBeDisabled].sortBy[name]) {
                     val action = new Action(listener.name, IAction.AS_CHECK_BOX) {
                         override run() {
                             listener.enabled = checked
@@ -382,6 +384,13 @@ class DataPoolView extends ViewPart implements SimulationListener {
                 }
             }
         }
+        menuStartSever = new Action("Start Simulation Server") {
+            override run() {
+                SimulationServer.start
+            }
+        }
+        menuStartSever.toolTipText = "Starts the simulation server to allow remote connetions to the simulation"
+        
         // The toolbar items are ordered from left to right in the order that they are added
         menuHelp = new Action("Show Controls") {
             override run() {
@@ -409,6 +418,8 @@ class DataPoolView extends ViewPart implements SimulationListener {
             add(new Separator)
             add(menuResetAllUserValues)
             add(menuResetSelectedUserValue)
+            add(new Separator)
+            add(menuStartSever)
             add(menuHelp)
         ]
 
@@ -434,7 +445,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
     private def void addKeyListeners() {
         viewer.control.addKeyListener(new KeyAdapter() {
             override keyPressed(KeyEvent e) {
-                val sim = SimulationUI.currentSimulation
+                val sim = currentSimulation
                 if(sim === null) return
                 val mod = e.stateMask
                 // CTRL + RIGHT: step history forward
@@ -616,8 +627,8 @@ class DataPoolView extends ViewPart implements SimulationListener {
         historyColumn.labelProvider = new AbstractDataPoolColumnLabelProvider(this) {
             override String getText(Object element) {
                 if(element instanceof DataPoolEntry) {
-                    if (SimulationUI.currentSimulation !== null && !SimulationUI.currentSimulation.history.empty) {
-                        val values = SimulationUI.currentSimulation.history.take(SHOWN_HISTORY_LENGTH).map[
+                    if (currentSimulation !== null && !currentSimulation.history.empty) {
+                        val values = currentSimulation.history.take(SHOWN_HISTORY_LENGTH).map[
                             val entry = entries.get(element.name)
                             if (entry !== null) {
                                 val value = entry.rawValue
@@ -632,7 +643,7 @@ class DataPoolView extends ViewPart implements SimulationListener {
                             }
                             return "null"
                         ]
-                        return values.join(", ") + if (SimulationUI.currentSimulation.history.size > SHOWN_HISTORY_LENGTH) " ..." else ""
+                        return values.join(", ") + if (currentSimulation.history.size > SHOWN_HISTORY_LENGTH) " ..." else ""
                     }
                 }
                 return ""

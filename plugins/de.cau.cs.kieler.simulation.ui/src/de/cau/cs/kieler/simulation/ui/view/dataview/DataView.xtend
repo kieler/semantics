@@ -16,7 +16,7 @@ import de.cau.cs.kieler.simulation.DataPool
 import de.cau.cs.kieler.simulation.SimulationContext
 import de.cau.cs.kieler.simulation.events.SimulationControlEvent
 import de.cau.cs.kieler.simulation.events.SimulationEvent
-import de.cau.cs.kieler.simulation.events.SimulationListener
+import de.cau.cs.kieler.simulation.ide.CentralSimulation
 import de.cau.cs.kieler.simulation.ui.SimulationUI
 import org.eclipse.swt.SWT
 import org.eclipse.swt.dnd.DND
@@ -28,6 +28,7 @@ import org.eclipse.swt.layout.RowLayout
 import org.eclipse.swt.widgets.Composite
 import org.eclipse.swt.widgets.Control
 import org.eclipse.ui.part.ViewPart
+import de.cau.cs.kieler.simulation.events.ISimulationListener
 
 /**
  * Displays the data of a running simulation in graphical canvas panels.
@@ -36,7 +37,7 @@ import org.eclipse.ui.part.ViewPart
  * @kieler.design 2017-12-04 proposed
  * @kieler.rating 2017-12-04 proposed yellow  
  */
-class DataView extends ViewPart implements SimulationListener {
+class DataView extends ViewPart implements ISimulationListener {
     
     public static val BORDER_MARGIN = 4
     
@@ -46,7 +47,7 @@ class DataView extends ViewPart implements SimulationListener {
     protected val dataObservers = <DataObserver> newLinkedList
     
     new() {
-        SimulationUI.registerObserver(this)
+        CentralSimulation.addListener(this)
     }
     
     override createPartControl(Composite parent) {
@@ -153,11 +154,11 @@ class DataView extends ViewPart implements SimulationListener {
             
             override drop(DropTargetEvent event) {
                 if (event.data instanceof String) {
-                    dataPool = SimulationUI.currentSimulation.dataPool
+                    dataPool = CentralSimulation.currentSimulation.dataPool
                     for (varName : (event.data as String).split(",")) {
                         createDataObserver(dataPool, varName, parent)
                     }
-                    updateValues(SimulationUI.currentSimulation)
+                    updateValues(CentralSimulation.currentSimulation)
                 }
             }
             

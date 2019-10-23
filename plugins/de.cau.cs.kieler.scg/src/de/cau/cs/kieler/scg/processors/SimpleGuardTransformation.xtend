@@ -248,7 +248,11 @@ class SimpleGuardTransformation extends Processor<SCGraphs, SCGraphs> implements
                     if (node instanceof Assignment) {
                         ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
                     } else if (node instanceof Conditional) {
-                        ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        if (dependency.target instanceof Guard) {
+                            ta = VAMap.get(valuedObjectMap.get((dependency.target as Guard).valuedObject).peek)
+                        } else { // method call with writer is in condition
+                            ta = VAMap.get(valuedObjectMap.get(schedulingBlockCache.get(dependency.target).guards.head.valuedObject).peek)
+                        }
                     }
                     if (ta !== null) {
                         val targetAssignment = ta

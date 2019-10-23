@@ -80,6 +80,7 @@ public class ClockedVariableDeclarationImpl extends MinimalEObjectImpl.Container
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public VariableDeclaration getVardecl()
   {
     return vardecl;
@@ -107,6 +108,7 @@ public class ClockedVariableDeclarationImpl extends MinimalEObjectImpl.Container
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setVardecl(VariableDeclaration newVardecl)
   {
     if (newVardecl != vardecl)
@@ -128,6 +130,7 @@ public class ClockedVariableDeclarationImpl extends MinimalEObjectImpl.Container
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public Expression getClockExpr()
   {
     return clockExpr;
@@ -155,6 +158,7 @@ public class ClockedVariableDeclarationImpl extends MinimalEObjectImpl.Container
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public void setClockExpr(Expression newClockExpr)
   {
     if (newClockExpr != clockExpr)

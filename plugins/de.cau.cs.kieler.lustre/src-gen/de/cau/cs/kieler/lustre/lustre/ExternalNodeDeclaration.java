@@ -30,10 +30,6 @@ public interface ExternalNodeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Is Unsafe</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Is Unsafe</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Is Unsafe</em>' attribute.
    * @see #setIsUnsafe(boolean)
@@ -56,10 +52,6 @@ public interface ExternalNodeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Has State</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Has State</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Has State</em>' attribute.
    * @see #setHasState(boolean)
@@ -82,10 +74,6 @@ public interface ExternalNodeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' attribute.
    * @see #setName(String)
@@ -108,10 +96,6 @@ public interface ExternalNodeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Input</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Input</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Input</em>' containment reference.
    * @see #setInput(Params)
@@ -134,10 +118,6 @@ public interface ExternalNodeDeclaration extends EObject
   /**
    * Returns the value of the '<em><b>Output</b></em>' containment reference.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Output</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Output</em>' containment reference.
    * @see #setOutput(Params)

@@ -26,5 +26,5 @@ import org.eclipse.xtend.lib.annotations.Data
     String id
     boolean isPublic
     boolean simulation
-    
+    boolean snapshotSystem
 }

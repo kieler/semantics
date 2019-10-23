@@ -73,6 +73,7 @@ public class ParamsImpl extends MinimalEObjectImpl.Container implements Params
    * <!-- end-user-doc -->
    * @generated
    */
+  @Override
   public EList<VariableDeclaration> getParameter()
   {
     if (parameter == null)

@@ -183,7 +183,7 @@ class InriaEsterelCodeGenerator extends AbstractSystemCompilerProcessor<EsterelP
         }
         
         // report
-        logger.closeLog("esterel-compiler-report.log").snapshot
+        logger.saveLog(environment, "esterel-compiler.log")
         infra.refresh
     }
     

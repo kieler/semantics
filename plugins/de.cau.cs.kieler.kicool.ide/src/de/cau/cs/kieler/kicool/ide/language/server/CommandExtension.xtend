@@ -30,7 +30,7 @@ interface CommandExtension {
      * Compiles file given by uri with compilationsystem given by command.
      */
     @JsonNotification('compile')
-    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel);
+    def void compile(String uri, String clientId, String command, boolean inplace, boolean showResultingModel, boolean snapshot);
     
     /**
      * Cancels the current compilation by stopping the current compilation thread.
@@ -50,8 +50,8 @@ interface CommandExtension {
      * @param uri URI as string to get compilation systems for
      * @param filter boolean indicating whether compilation systems should be filtered
      */
-    @JsonRequest('get-systems')
-    def CompletableFuture<Object> getSystems(String uri, boolean filterSystems)
+    @JsonNotification('get-systems')
+    def void getSystems(String uri)
     
     /**
      * Cancels get systems thread by force if it takes too long.

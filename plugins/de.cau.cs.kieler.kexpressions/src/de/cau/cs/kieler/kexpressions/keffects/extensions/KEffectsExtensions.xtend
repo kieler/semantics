@@ -26,6 +26,7 @@ import de.cau.cs.kieler.kexpressions.extensions.KExpressionsComplexCreateExtensi
 import de.cau.cs.kieler.kexpressions.CombineOperator
 import de.cau.cs.kieler.kexpressions.keffects.Emission
 import org.eclipse.emf.common.util.EList
+import java.util.List
 
 /**
  * @author ssm
@@ -135,11 +136,19 @@ class KEffectsExtensions {
         if (assignment.reference === null) null else assignment.reference.valuedObject
     }
     
-    def EList<Expression> getIndices(Assignment assignment) {
+    def List<Expression> getIndices(Assignment assignment) {
         if (assignment.reference === null) {
             return null
         } else {
             return assignment.reference.indices
+        }
+    }
+    
+    def Iterable<Expression> getIndicesAndSubIndices(Assignment assignment) {
+        if (assignment.reference === null) {
+            return null
+        } else {
+            return (assignment.reference.indices?:emptyList) + assignment.reference.subReference.indicesAndSubIndices
         }
     }
     

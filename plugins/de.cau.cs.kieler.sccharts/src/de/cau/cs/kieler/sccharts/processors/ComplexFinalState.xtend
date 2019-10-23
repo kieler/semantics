@@ -166,6 +166,12 @@ class ComplexFinalState extends SCChartsProcessor implements Traceable {
         
         // If there are regions that cannot terminate, then we do not need to transform something
         if (!state.regionsMayTerminate) {
+            // If cannot terminate then simply remove final flag
+            for (region : state.controlflowRegions) {
+                for (cfs : region.allFinalStates.filter[isComplexFinalState]) {
+                    cfs.final = false;
+                }
+            }
            return;
         }
         
