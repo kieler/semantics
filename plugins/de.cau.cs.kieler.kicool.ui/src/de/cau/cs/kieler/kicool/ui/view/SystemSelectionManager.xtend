@@ -55,12 +55,12 @@ class SystemSelectionManager implements SelectionListener {
     
     static val Comparator<Class<?>> TYPE_SORTER = new Comparator<Class<?>>() {
         override compare(Class<?> o1, Class<?> o2) {
+            if( o2 == o1 )
+                return 0
             if(o1 === null)
                 return 1
             if( o2 === null )
                 return -1
-            if( o2 == o1 )
-                return 0
             if (o1.isAssignableFrom(o2)) {
                 return 1
             } else if (o2.isAssignableFrom(o1)) {
@@ -72,6 +72,7 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     private val index = new ArrayList<SystemSelectionEntry>(KiCoolRegistration.getSystemModels.size + 10)
+    private val presortedSystems = new ArrayList<SystemSelectionEntry>(KiCoolRegistration.getSystemModels.size + 10)
     private var CompilerView view
     private var Class<?> modelClassFilter
     private var Combo combo;
@@ -142,10 +143,10 @@ class SystemSelectionManager implements SelectionListener {
                         if (system.hasInput(modelClassFilter)) {
                             system.id = system.id + "." + new Date().time
                             KiCoolRegistration.registerTemporarySystem(system)
-                            val entry = new SystemSelectionEntry(system, file.rawLocation.makeAbsolute.toString)
                             Display.getDefault().asyncExec(new Runnable() {
                                 override run() {
-                                    entry.addSystem
+                                    system.addToPresortedList(file.rawLocation.makeAbsolute.toString)
+                                    system.id.systemEntryById.makeVisible
                                 }
                             })
                         }
@@ -157,52 +158,12 @@ class SystemSelectionManager implements SelectionListener {
             }
         }
     }
-    
-    private def removeSystem(String id) {
-        val i = index.indexOf(id.systemEntryById)
-        if (id.systemEntryById?.path !== null)
-            KiCoolRegistration.removeTemporarySystem(id)
-        if (i >= 0) {
-            try {
-                combo.remove(i)
-                index.remove(i)
-            } catch (Exception _) {
-            }
-        }
-    }
-    
-    private def removeProjectSystem(String path) {
-        systemEntryByFile(path)?.id?.removeSystem
-    }
 
     private def selected(SystemSelectionEntry entry) {
         if (index.size == 0 || combo.selectionIndex < 0 )
             return false
         return index.get(combo.selectionIndex).id == entry.id ||
             (index.get(combo.selectionIndex).path !== null && index.get(combo.selectionIndex) == entry.path)
-    }
-
-    private def addSystem(SystemSelectionEntry entry) {
-        val selected = entry.selected
-        var position = 0
-        for (e : index) {
-            if (e.isLowerAs(entry, modelClassFilter)) {
-                combo.add(entry.showName, position)
-                index.add(position, entry)
-                if (selected) {
-                    combo.select(position)
-                    view.editPartSystemManager.activeSystem = entry.id
-                }
-                return
-            }
-            position += 1
-        }
-        combo.add(entry.showName)
-        index.add(entry)
-        if (selected) {
-            combo.select(position)
-            view.editPartSystemManager.activeSystem = entry.id
-        }
     }
 
     private def updateSystemList(boolean filter, boolean updateView) {
@@ -214,14 +175,7 @@ class SystemSelectionManager implements SelectionListener {
             projectSystemFinder.cancel
         }
         combo.removeAll
-        for (e : index) {
-            if (e.path != null)
-                KiCoolRegistration.removeTemporarySystem(e.id)
-        }
         index.clear
-        
-        while( index.size > 0 )
-            index.get( 0 ).id.removeSystem
 
         val model = if(filter) ModelReaderUtil.readModelFromEditor(view.editPartSystemManager.activeEditor)
         if (model !== null && model.class !== modelClassFilter) {
@@ -230,10 +184,13 @@ class SystemSelectionManager implements SelectionListener {
         val systems = newLinkedList
         systems.addAll(KiCoolRegistration.getSystemModels.filter(System))
 
+        val visibleSystems = newArrayList
+    
         for (system : systems.filter[!filter || hasInput(modelClassFilter)].filter [
             public || (view !== null && view.showPrivateSystemsToggle !== null && view.showPrivateSystemsToggle.checked)
         ].filter[!developer || (view !== null && view.developerToggle !== null && view.developerToggle.checked)]) {
-            new SystemSelectionEntry(system, null).addSystem
+            system.addToPresortedList(null)
+            visibleSystems.add(system.id)
         }
 
         val editor = CompilerViewPartListener.getActiveEditor();
@@ -254,6 +211,13 @@ class SystemSelectionManager implements SelectionListener {
                 }
             }
         }
+        
+        for (entry : presortedSystems) {
+            if (visibleSystems.contains(entry.id)) {
+                combo.add(entry.showName)
+                index.add(entry)
+            }
+        }
 
         // Base default
         var defaultIndex = 0
@@ -269,7 +233,7 @@ class SystemSelectionManager implements SelectionListener {
         }
 
         // Previously selected
-        if (activeSystem !== null && index.contains(activeSystem)) {
+        if (activeSystem !== null && activeSystem.systemEntryById != null) {
             defaultIndex = index.indexOf(activeSystem.systemEntryById)
         } else if (index.size > defaultIndex) {
             view.editPartSystemManager.activeSystem = index.get(defaultIndex)?.id
@@ -346,7 +310,7 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     private def systemEntryById(String id) {
-        for (e : index) {
+        for (e : presortedSystems) {
             if (e.id == id)
                 return e
         }
@@ -354,20 +318,87 @@ class SystemSelectionManager implements SelectionListener {
     }
 
     private def systemEntryByFile(String path) {
-        for (e : index) {
+        for (e : presortedSystems) {
             if (e.path == path && e.path !== null)
                 return e
         }
         return null
     }
 
+    private def addToPresortedList(System s, String path) {
+        var select = false
+        var visible = false
+        if (path !== null) {
+            val old = path.systemEntryByFile
+            if (old !== null) {
+                visible = old.visible
+                select = visible && old.selected
+                if (visible) {
+                    val oldPos = index.indexOf(old)
+                    combo.remove(oldPos)
+                    index.remove(oldPos)
+                }
+                KiCoolRegistration.removeTemporarySystem(old.id)
+                presortedSystems.remove(presortedSystems.indexOf(old))
+            }
+        }
+        if (s.id.systemEntryById === null) {
+            val entry = new SystemSelectionEntry(s, path)
+            var position = 0
+            for (e : presortedSystems) {
+                if (e.isLowerAs(entry)) {
+                    presortedSystems.add(position, entry)
+                    if (visible) {
+                        entry.makeVisible
+                        if (select) {
+                            view.editPartSystemManager.activeSystem = entry.id
+                            combo.select(index.indexOf(entry))
+                        }
+                    }
+                    return
+                }
+                position += 1
+            }
+            presortedSystems.add(entry)
+            if (visible) {
+                entry.makeVisible
+                if (select) {
+                    view.editPartSystemManager.activeSystem = entry.id
+                    combo.select(index.indexOf(entry))
+                }
+            }
+        }
+    }
+
+    def visible(SystemSelectionEntry entry) {
+        return index.contains(entry)
+    }
+    
+    def makeVisible(SystemSelectionEntry entry) {
+        if (index.contains(entry))
+            return
+        var position = 0
+        for (e : index) {
+            if (e.isLowerAs(entry)) {
+                combo.add(entry.showName, position)
+                index.add(position, entry)
+                return
+            }
+            position += 1
+        }
+        combo.add(entry.showName)
+        index.add(entry)
+    }
+    
     private static class SystemSelectionEntry {
-        private var System system;
-        private var String path;
-        private var String showName;
+        var System system
+        var String path
+        var String showName
+        var Class<?> input
 
         new(System system, String path) {
             this.system = system
+            input = system.findInputClass
             this.path = path
             showName = system.label
             if (showName.nullOrEmpty)
@@ -378,15 +409,12 @@ class SystemSelectionManager implements SelectionListener {
                 showName = TEMPORARY_SYSTEM_PREFIX + showName
         }
 
-        def isLowerAs(SystemSelectionEntry e, Class<?> classFilter) {
-            if (classFilter !== null) {
-                if( TYPE_SORTER.compare(system.findInputClass, e.system.findInputClass) > 0 )
-                    return true
-                if( TYPE_SORTER.compare(system.findInputClass, e.system.findInputClass) == 0 )
-                    return showName.compareTo(e.showName) > 0
-                return false
-            }
-            return showName.compareTo(e.showName) > 0
+        def isLowerAs(SystemSelectionEntry e) {
+            if( TYPE_SORTER.compare(input, e.input) > 0 )
+                return true
+            if( TYPE_SORTER.compare(input, e.input) == 0 )
+                return showName.compareTo(e.showName) > 0
+            return false
         }
 
         def getShowName() {
