@@ -49,4 +49,48 @@ class GeneralCLITest extends AbstractCLITest {
         val destContent = new String(Files.readAllBytes(dest.toPath))
         assertEquals(srcContent.replaceAll("\\s+",""), destContent.replaceAll("\\s+",""))
     }
+    
+    @Test
+    def void testSimulationExeCompile() {
+        val dir = setupTest("simulation-exe-compile")
+        val src = new File(dir, "sctx/abo/abo.sctx")
+        val dest = new File(dir, "sctx/abo/simulation.exe")
+        val dest2 = new File(dir, "sctx/abo/sim")
+        
+        // compiler
+        val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.sccharts.simulation.netlist.c", src.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+        
+        // check results
+        assertExists(dest)
+        
+        // compiler
+        val command2 = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.sccharts.simulation.netlist.c", "-o", dest2.path, src.path]
+        assertEquals("Exit value not zero", 0, command2.invoke)
+        
+        // check results
+        assertExists(dest2)
+    }
+    
+    @Test
+    def void testSimulationJarCompile() {
+        val dir = setupTest("simulation-jar-compile")
+        val src = new File(dir, "sctx/abo/abo.sctx")
+        val dest = new File(dir, "sctx/abo/Simulation.jar")
+        val dest2 = new File(dir, "sctx/abo/sim.jar")
+        
+        // compiler
+        val command = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.sccharts.simulation.netlist.java", src.path]
+        assertEquals("Exit value not zero", 0, command.invoke)
+        
+        // check results
+        assertExists(dest)
+        
+        // compiler
+        val command2 = #[compiler.path, "-v", "-s", "de.cau.cs.kieler.sccharts.simulation.netlist.java", "-o", dest2.path, src.path]
+        assertEquals("Exit value not zero", 0, command2.invoke)
+        
+        // check results
+        assertExists(dest2)
+    }
 }
