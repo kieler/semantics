@@ -108,7 +108,7 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
          }
          var resLabel = nodeASTClass + "\n"
          
-         if(node instanceof IASTIdExpression) {
+         /*if(node instanceof IASTIdExpression) {
              resLabel += "ist ne CPPASTIdExpression"
              if((node as IASTIdExpression).getRoleForName(node.getName) == IASTNameOwner.r_declaration) {
                  resLabel += "\nIs a declaration"
@@ -124,10 +124,10 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
              resLabel += "\ngetBinding: " + nodeName.getBinding
              resLabel += "\ngetPreBinding: " + nodeName.getPreBinding
              resLabel += "\nresolveBinding: " + nodeName.resolveBinding
-             resLabel += "\nresolvePreBinding: " + nodeName.resolvePreBinding*/
-         }
+             resLabel += "\nresolvePreBinding: " + nodeName.resolvePreBinding
+         }*/
           
-         for(var i = 0; i < node.getNodeLocations.length; i++) {
+         /*for(var i = 0; i < node.getNodeLocations.length; i++) {
             val nodeOffset = node.getNodeLocations.get(i).getNodeOffset
             resLabel += "nodeOffset[" + i + "]: " + nodeOffset + "\n"
             val nodeLength = node.getNodeLocations.get(i).getNodeLength
@@ -135,7 +135,7 @@ class SCChartASTExtractor extends ExogenousProcessor<IASTTranslationUnit, SCChar
          }
          resLabel += "FileLocation: " + node.getFileLocation + "\n"
          resLabel += "ContainingFileName: " + node.getContainingFilename
-         
+         */
          for (var i = 0; i < node.children.length; i++) {
              var child = printChildren(cRegion, node.children.get(i))
              res.createTransitionTo(child)
