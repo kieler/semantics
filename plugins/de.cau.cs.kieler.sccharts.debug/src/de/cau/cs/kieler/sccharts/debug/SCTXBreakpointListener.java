@@ -41,7 +41,7 @@ public class SCTXBreakpointListener implements IBreakpointListener {
     @Override
     public void breakpointAdded(IBreakpoint breakpoint) {
         try {
-            if (breakpoint.isEnabled()) {
+            if (breakpoint instanceof LineBreakpoint && breakpoint.isEnabled()) {
                 int line = ((LineBreakpoint) breakpoint).getLineNumber();
                 EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
 
@@ -60,9 +60,11 @@ public class SCTXBreakpointListener implements IBreakpointListener {
     @Override
     public void breakpointRemoved(IBreakpoint breakpoint, IMarkerDelta delta) {
         try {
-            int line = ((LineBreakpoint) breakpoint).getLineNumber();
-            EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
-            visHook.handleHighlight(obj, false);
+            if (breakpoint instanceof LineBreakpoint) {
+                int line = ((LineBreakpoint) breakpoint).getLineNumber();
+                EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
+                visHook.handleHighlight(obj, false);
+            }
         } catch (CoreException e) {
             e.printStackTrace();
         }
@@ -77,7 +79,7 @@ public class SCTXBreakpointListener implements IBreakpointListener {
     @Override
     public void breakpointChanged(IBreakpoint breakpoint, IMarkerDelta delta) {
         try {
-            if (delta != null) {
+            if (breakpoint instanceof LineBreakpoint && delta != null) {
                 int line = ((LineBreakpoint) breakpoint).getLineNumber();
                 EObject obj = SCChartsBreakpointTargetAdapter.lineToModelElement.get(line);
                 if (breakpoint.isEnabled()) {
