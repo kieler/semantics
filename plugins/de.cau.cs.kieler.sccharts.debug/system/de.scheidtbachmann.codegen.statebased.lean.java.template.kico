@@ -1,0 +1,13 @@
+system de.scheidtbachmann.statemachine.codegen.statebased.lean.java.template
+  label "State-based Compilation (Java) lean-mode (Template) - Scheidt & Bachmann"
+	start config {
+	  "de.cau.cs.kieler.sccharts.complexFinalState.createFinalRegions":true,
+    "de.cau.cs.kieler.kicool.kitt.tracingActive": true
+  }
+
+system de.cau.cs.kieler.sccharts.extended
+de.cau.cs.kieler.sccharts.processors.regionDependencies
+de.cau.cs.kieler.sccharts.processors.regionDependencySort
+de.scheidtbachmann.statemachine.processors.stateOrigin
+pre process de.cau.cs.kieler.sccharts.processors.voRise 
+de.scheidtbachmann.statemachine.codegen.statebased.lean.java

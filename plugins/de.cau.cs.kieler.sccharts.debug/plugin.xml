@@ -93,4 +93,19 @@
          </actionSet>
       </perspectiveExtension>
     </extension>
+   <extension
+         point="org.eclipse.jdt.debug.breakpointListeners">
+      <breakpointListener
+            class="de.cau.cs.kieler.sccharts.debug.JavaBreakpointListener"
+            filter="*"
+            id="de.cau.cs.kieler.sccharts.debug.JavaBreakpointListener">
+      </breakpointListener>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.kicool.ui.system">
+      <defaultSystem
+            editor="de.cau.cs.kieler.sccharts.debug.defaultSystem1"
+            id="de.cau.cs.kieler.sccharts.debug.defaultSystem1">
+      </defaultSystem>
+   </extension>
 </plugin>

@@ -1,0 +1,5 @@
+system de.scheidtbachmann.statemachine.codegen.statebased.lean.java.template.selective
+	label "State-based Compilation (Java) lean-mode (Template, Selective) - Scheidt & Bachmann"
+  
+de.scheidtbachmann.statemachine.processors.modelselect
+system de.scheidtbachmann.statemachine.codegen.statebased.lean.java.template
