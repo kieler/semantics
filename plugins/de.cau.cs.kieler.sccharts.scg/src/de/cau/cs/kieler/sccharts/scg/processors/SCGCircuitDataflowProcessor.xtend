@@ -125,7 +125,7 @@ class SCGCircuitDataflowProcessor extends Processor<SCGraphs, SCCharts> implemen
                     for (n : scg.nodes) {
                         if (n instanceof Assignment) {
                             nr.equations.add(
-                                n.reference.valuedObject.createAssignment(n.expression).transformAssignment(map))
+                                n.reference.valuedObject.createAssignment(n.expression.copy).transformAssignment(map))
                         }
                     }
                 ])
