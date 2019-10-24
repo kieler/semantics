@@ -194,6 +194,15 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
 
                 var Expression convertedExpression
                 switch (kExpression.operator) {
+                    case NOR: {
+                        convertedExpression = processNorExpression(subExpressionList, state)
+                    }
+                    case IMPLIES: {
+                        convertedExpression = processImpliesExpression(subExpressionList, state)
+                    }
+                    case ATMOSTONEOF: {
+                        convertedExpression = processAtMostOneExpression(subExpressionList, state)
+                    }
                     case WHEN: {
                         convertedExpression = processWhenExpression(subExpressionList, state)
                     }
@@ -224,6 +233,61 @@ abstract class CoreLustreToSCC extends Processor<LustreProgram, SCCharts> {
                 return kExpression.copy
             }
         }
+    }
+    
+    protected def Expression processNorExpression(Stack<Expression> subExpressionList, State state) {
+        var transformedOpExpr = createNotExpression(createLogicalOrExpression => [
+                subExpressions += subExpressionList])
+        return transformedOpExpr
+    }
+    
+    protected def Expression processImpliesExpression(Stack<Expression> subExpressionList, State state) {
+            var transformedOpExpr = createLogicalOrExpression
+            var subExpressions = subExpressionList.toList
+            var lastExpr = subExpressions.last
+            subExpressions.remove(lastExpr)
+            
+            for (subExpr : subExpressions.immutableCopy) {
+                transformedOpExpr.subExpressions += createNotExpression(subExpr)
+            }
+            transformedOpExpr.subExpressions += lastExpr
+            
+            return transformedOpExpr
+    }
+    
+    protected def Expression processAtMostOneExpression(Stack<Expression> subExpressionList, State state) {
+        
+            var none = createNotExpression(createLogicalOrExpression => [
+                subExpressions += subExpressionList.map[copy] ])
+            
+            var transformedOpExpr = createLogicalOrExpression
+            transformedOpExpr.subExpressions += none
+            
+            for (subExp : subExpressionList) {
+                var andExpr = createLogicalAndExpression 
+                andExpr.subExpressions += subExp.copy
+                
+                var orExpr = createLogicalOrExpression
+                orExpr.subExpressions += subExpressionList.without(subExp).map[copy]
+                
+                andExpr.subExpressions += createNotExpression(orExpr)
+                
+                transformedOpExpr.subExpressions += andExpr
+            }
+            
+            return transformedOpExpr
+    }
+    
+    private def without(Stack<Expression> list, Expression elem) {
+        var newList = newArrayList
+        
+        for (listElem : list) {
+            if (listElem !== elem) {
+                newList.add(listElem)
+            }
+        }
+        
+        newList
     }
 
     protected def processWhenExpression(Stack<Expression> subExpressionList, State state) {

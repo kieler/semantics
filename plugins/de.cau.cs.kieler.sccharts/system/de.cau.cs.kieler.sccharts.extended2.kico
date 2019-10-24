@@ -10,11 +10,6 @@ de.cau.cs.kieler.sccharts.processors.prTransitions
 de.cau.cs.kieler.sccharts.processors.^const
 pre process de.cau.cs.kieler.sccharts.processors.period
 de.cau.cs.kieler.sccharts.processors.timedautomata
-[ label "Equivalences"
-    de.cau.cs.kieler.sccharts.processors.^implies
-    de.cau.cs.kieler.sccharts.processors.atMostOne
-    de.cau.cs.kieler.sccharts.processors.^nor
-]
 de.cau.cs.kieler.sccharts.processors.initOperator2
 de.cau.cs.kieler.sccharts.processors.followedBy
 de.cau.cs.kieler.sccharts.processors.history
