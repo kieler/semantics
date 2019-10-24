@@ -465,10 +465,12 @@ class KielerCompilerCLI implements Runnable, Observer {
                     val exe = (model instanceof ExecutableContainerWrapper) ? model.executableContainer : model as ExecutableContainer
                     if (dest.isFile) {
                         if (verbose) println("Writing to %s".format(dest))
+                        if (dest.exists) dest.delete
                         Files.copy(exe.file.toPath, dest.toPath)
                     } else {
-                        val target = new File(dest, name)
+                        val target = new File(dest, exe.file.name)
                         if (verbose) println("Writing to %s".format(target))
+                        if (target.exists) target.delete
                         Files.copy(exe.file.toPath, target.toPath)
                     }
                 } else {
